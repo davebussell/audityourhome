@@ -1,0 +1,109 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { programs, programBySlug } from '../../lib/data';
+
+export function getStaticPaths() {
+  return programs.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const p = programBySlug(slug!)!;
+
+const statusLabel = p.status === 'active' ? 'Active' : p.status === 'active-limited' ? 'Active — limits apply' : 'Closed';
+const statusCls = p.status === 'active' ? 'chip-active' : p.status === 'active-limited' ? 'chip-limited' : 'chip-closed';
+
+const title = `${p.name} — ${statusLabel} (verified ${p.lastVerified}) | AuditYourHome`;
+const description = `${p.headline}. Status, amounts, audit requirements, and who qualifies — verified against the official page on ${p.lastVerified}.`;
+
+const faqs = [
+  { q: `Is ${p.shortName} still available?`, a: `${statusLabel}. ${p.headline}. Verified against the official page on ${p.lastVerified}.` },
+  { q: `Does ${p.shortName} require a home energy audit?`, a: p.auditRequirementNote },
+  { q: `Who runs ${p.shortName}?`, a: p.runBy },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: p.shortName, path: `/programs/${p.slug}/` },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>{p.shortName}</span>
+    </nav>
+
+    <div class="page-hero">
+      <div class="headrow">
+        <h1>{p.name}</h1>
+        <span class={`chip ${statusCls}`}>{statusLabel}</span>
+      </div>
+      <p class="lede measure">{p.headline}</p>
+      <p class="meta">Run by {p.runBy} · verified against the official page {p.lastVerified}</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-pad">
+        <h3>{p.status === 'closed' ? 'What it offered' : 'What it pays'}</h3>
+        <ul class="amounts">
+          {p.amounts.map((a) => (
+            <li><span class="money">{a.value}</span><span>{a.label}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>The audit question</h3>
+        <p>
+          {p.auditRequired ? (
+            <span class="chip chip-info">Audit required</span>
+          ) : (
+            <span class="chip chip-neutral">No audit required</span>
+          )}
+        </p>
+        <p>{p.auditRequirementNote}</p>
+        <h3 style="margin-top:18px;">Who qualifies</h3>
+        <p class="mb-0">{p.whoQualifies}</p>
+      </div>
+    </div>
+
+    {p.notes && (
+      <div class="card card-pad note">
+        <h4>Worth knowing</h4>
+        <p class="mb-0">{p.notes}</p>
+      </div>
+    )}
+
+    <p class="official">
+      <a class="btn btn-ghost" href={p.officialUrl} rel="noopener" target="_blank">Official program page ↗</a>
+      <span class="small">Always confirm details there before spending — programs change faster than any tracker.</span>
+    </p>
+
+    {p.status !== 'closed' && p.auditRequired && (
+      <LeadForm
+        heading="Start with the required assessment"
+        sub={`${p.shortName} requires a registered energy advisor. We'll match you with a licensed service organization for your area.`}
+        context={`program-${p.slug}`}
+      />
+    )}
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .headrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .headrow h1 { margin-bottom: 0; }
+  .amounts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .amounts li { display: flex; gap: 12px; align-items: baseline; }
+  .amounts .money { font-size: 17px; white-space: nowrap; }
+  .note { border-left: 4px solid var(--warn); margin: 18px 0; }
+  .note h4 { margin-bottom: 6px; }
+  .official { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 22px 0; }
+</style>

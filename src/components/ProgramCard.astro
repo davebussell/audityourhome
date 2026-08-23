@@ -1,0 +1,59 @@
+---
+import type { Program } from '../lib/data';
+
+interface Props {
+  program: Program;
+  /** Hide the amounts list for compact contexts */
+  compact?: boolean;
+}
+const { program: p, compact = false } = Astro.props;
+
+const statusChip =
+  p.status === 'active'
+    ? { cls: 'chip-active', label: 'Active' }
+    : p.status === 'active-limited'
+      ? { cls: 'chip-limited', label: 'Active · limits apply' }
+      : { cls: 'chip-closed', label: 'Closed' };
+---
+
+<article class="card card-pad prog">
+  <div class="head">
+    <h3><a href={`/programs/${p.slug}/`}>{p.shortName}</a></h3>
+    <span class={`chip ${statusChip.cls}`}>{statusChip.label}</span>
+  </div>
+  <p class="headline">{p.headline}</p>
+
+  {!compact && p.status !== 'closed' && (
+    <ul class="amounts">
+      {p.amounts.map((a) => (
+        <li>
+          <span class="money">{a.value}</span>{' '}
+          <span class="lbl">— {a.label}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <p class="audit-note">
+    {p.auditRequired ? (
+      <span class="chip chip-info">Audit required</span>
+    ) : (
+      <span class="chip chip-neutral">No audit required</span>
+    )}
+    <span class="meta">Verified {p.lastVerified}</span>
+  </p>
+</article>
+
+<style>
+  .prog { display: flex; flex-direction: column; gap: 10px; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .head h3 { margin: 0; font-size: 18.5px; }
+  .head a { color: var(--ink); text-decoration: none; }
+  .head a:hover { color: var(--heat-deep); }
+  .headline { margin: 0; font-size: 15px; color: var(--muted); }
+  .amounts { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 7px; }
+  .amounts li { font-size: 14.5px; line-height: 1.5; }
+  .amounts .money { font-size: 15.5px; }
+  .amounts .lbl { color: var(--muted); }
+  .audit-note { margin: auto 0 0; padding-top: 8px; display: flex; align-items: center; gap: 12px; }
+</style>

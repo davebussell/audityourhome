@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config/site';
+import { breadcrumbSchema } from '../lib/schema';
+
+const title = 'Get listed — for service organizations & energy advisors | AuditYourHome';
+const description =
+  'Free verified listings for NRCan-licensed service organizations. Homeowners arrive knowing their era profile, upgrade path, and rebate eligibility — the most qualified audit lead there is. No shared lead lists.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'For professionals', path: '/for-professionals/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">For professionals</p>
+      <h1>Demand generation for the people doing real audits</h1>
+      <p class="lede measure">
+        The federal programs closed and the phones went quiet — while generalist platforms sell the
+        same "energy audit" lead to a dozen HVAC reps. We're building the opposite: a directory
+        where only licensed service organizations are listed, and homeowners arrive pre-qualified
+        by our planner.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card card-pad">
+        <h3>Free verified listing</h3>
+        <p class="mb-0">
+          Claim your profile, confirm your NRCan registration and service area, and appear across
+          your cities' directory pages. Free — the trust layer only works if it's complete.
+        </p>
+      </div>
+      <div class="card card-pad">
+        <h3>Leads that know things</h3>
+        <p class="mb-0">
+          Planner users arrive knowing their home's era profile, their likely upgrade sequence, and
+          which rebates apply. When we introduce a homeowner, it's to <strong>one</strong> provider
+          — never a shared list.
+        </p>
+      </div>
+      <div class="card card-pad">
+        <h3>Transparency gets featured</h3>
+        <p class="mb-0">
+          Publish your assessment pricing and we sort you first. Homeowners reward it, and so does
+          our ranking — no pay-to-rank, ever.
+        </p>
+      </div>
+    </div>
+
+    <div class="card card-pad claim">
+      <h2>Claim or add your organization</h2>
+      <p>
+        Email <a href={`mailto:${SITE.contactEmail}?subject=Provider%20listing`}>{SITE.contactEmail}</a> with:
+      </p>
+      <ol>
+        <li>Your organization name and NRCan service-organization status</li>
+        <li>Service areas (cities or postal prefixes)</li>
+        <li>Assessment pricing if you publish it (we hope you will)</li>
+        <li>Booking method — phone, form, or a scheduling link</li>
+      </ol>
+      <p class="mb-0 small">
+        We verify registration before listing, mark verified profiles, and correct or remove any
+        listing on request from the organization. Onboarding with online-booking support is on the
+        roadmap — early listers shape it.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .claim { margin-top: 24px; border-top: 4px solid var(--heat); }
+  .claim ol { margin: 0 0 16px; padding-left: 22px; display: grid; gap: 8px; }
+</style>

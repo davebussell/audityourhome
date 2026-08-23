@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import issues from '../../data/issues.json';
+
+const title = 'Fix a home energy problem — diagnosis first, products second | AuditYourHome';
+const description =
+  'Start from the symptom: drafts, ice dams, high bills, condensation, a cold basement. Each guide covers likely causes by home era, DIY first steps, the fix ladder, and the Ontario rebates that apply.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Fix an issue', path: '/issues/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Fix an issue</p>
+      <h1>Start from what's bugging you</h1>
+      <p class="lede measure">
+        Homes announce their problems — drafts, icicles, foggy windows, bills that sting. Each
+        guide works backwards from the symptom to the actual cause (which is rarely what the first
+        salesperson says), then forward to the cheapest fix that works and the rebates that pay for
+        it.
+      </p>
+    </div>
+
+    <div class="issue-grid">
+      {issues.map((i) => (
+        <a class="card issue-card" href={`/issues/${i.slug}/`}>
+          <h2>{i.name}</h2>
+          <p class="small">{i.symptom}</p>
+          <span class="go">Diagnose it →</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="card card-pad more">
+      <h3>Not sure which problem is yours?</h3>
+      <p class="mb-0">
+        <a href="/plan/">The planner</a> profiles your whole house in six questions and sequences
+        the fixes — symptoms included.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .issue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .issue-card { padding: 24px 26px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s ease; }
+  .issue-card:hover { border-color: var(--heat); }
+  .issue-card h2 { font-size: 19px; margin: 0; color: var(--ink); }
+  .issue-card .small { margin: 0; }
+  .issue-card .go { margin-top: 10px; font-weight: 700; font-size: 14px; color: var(--heat-deep); }
+  .more { border-left: 4px solid var(--heat); margin-top: 28px; }
+</style>

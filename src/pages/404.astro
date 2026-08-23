@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Page not found | AuditYourHome';
+const description = 'That page has gone missing — like heat through an uninsulated attic.';
+---
+
+<Base title={title} description={description} indexable={false}>
+  <div class="container">
+    <div class="page-hero tac">
+      <p class="eyebrow">404</p>
+      <h1>This page leaked out</h1>
+      <p class="lede">Like heat through an uninsulated attic. Let's get you somewhere sealed:</p>
+      <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+        <a class="btn btn-primary" href="/plan/">Start the planner</a>
+        <a class="btn btn-ghost" href="/find/">Find an auditor</a>
+        <a class="btn btn-ghost" href="/programs/">Program tracker</a>
+      </p>
+    </div>
+  </div>
+</Base>

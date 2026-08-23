@@ -1,0 +1,83 @@
+---
+import { SITE } from '../config/site';
+import { regions } from '../lib/data';
+
+interface Props {
+  heading?: string;
+  sub?: string;
+  /** Pre-select a region */
+  region?: string;
+  /** Context tag submitted with the lead */
+  context?: string;
+}
+const {
+  heading = 'Get matched with a registered advisor',
+  sub = 'Tell us where you are and what you’re planning. We’ll connect you with a registered service organization for your area — no spam, no shared lead lists.',
+  region = '',
+  context = 'general',
+} = Astro.props;
+
+const hasEndpoint = SITE.formEndpoint.length > 0;
+const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20(${encodeURIComponent(context)})`;
+---
+
+<div class="card leadform" id="lead-form">
+  <h3>{heading}</h3>
+  <p class="small">{sub}</p>
+
+  {hasEndpoint ? (
+    <form method="POST" action={SITE.formEndpoint}>
+      <input type="hidden" name="context" value={context} />
+      <div class="grid-2">
+        <div class="field">
+          <label for="lf-name">Name</label>
+          <input id="lf-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="lf-email">Email</label>
+          <input id="lf-email" name="email" type="email" autocomplete="email" required />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for="lf-postal">Postal code</label>
+          <input id="lf-postal" name="postal" type="text" autocomplete="postal-code" required />
+        </div>
+        <div class="field">
+          <label for="lf-region">Area</label>
+          <select id="lf-region" name="region">
+            <option value="">Choose your area…</option>
+            {regions.map((r) => (
+              <option value={r.slug} selected={r.slug === region}>{r.name}</option>
+            ))}
+            <option value="other-ontario">Elsewhere in Ontario</option>
+            <option value="outside-ontario">Outside Ontario</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="lf-message">What are you planning? <span class="optional">(optional)</span></label>
+        <textarea id="lf-message" name="message" rows="3" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Request my match</button>
+      <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. See our <a href="/privacy/">privacy note</a>.</p>
+    </form>
+  ) : (
+    <div class="fallback">
+      <p>
+        Email us what you’re planning and your postal code — we’ll reply with registered service
+        organizations for your area and which rebates apply.
+      </p>
+      <a class="btn btn-primary" href={mailtoFallback}>Email {SITE.contactEmail}</a>
+      <p class="meta">Direct booking is coming — this inbox is answered by a person.</p>
+    </div>
+  )}
+</div>
+
+<style>
+  .leadform { padding: 28px 30px; border-top: 4px solid var(--heat); }
+  .leadform h3 { margin-bottom: 4px; }
+  .optional { font-weight: 400; color: var(--faint); }
+  .consent { margin-top: 12px; }
+  .fallback { display: grid; gap: 10px; justify-items: start; }
+</style>

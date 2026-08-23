@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'How a home energy audit works (EnerGuide, step by step) | AuditYourHome';
+const description =
+  'What actually happens during an EnerGuide home energy assessment: the blower door test, thermal imaging, your rating and upgrade report, and how the audit unlocks Ontario rebates.';
+
+const faqs = [
+  { q: 'How long does the assessment take?', a: 'Plan for 2–3 hours on site for a typical house. The advisor needs access to the attic hatch, basement, mechanical room, and every exterior wall.' },
+  { q: 'What is a blower door test?', a: 'A calibrated fan seals into an exterior door and depressurizes the house, measuring exactly how leaky it is and revealing where outside air gets in. It is the single measurement that separates a real energy audit from a sales walkthrough.' },
+  { q: 'What do I get afterwards?', a: 'Your EnerGuide rating and label, plus a renovation upgrade report: a prioritized list of improvements with modeled savings — the document Ontario’s assessment-path rebates are built around.' },
+  { q: 'Do I need the follow-up visit?', a: 'Only if you want the rebates: the follow-up re-tests the house after upgrades, documents the improvement, and triggers the Home Renovation Savings payments, including the $600 assessment rebate.' },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'How it works', path: '/how-it-works/' },
+  ]),
+  faqSchema(faqs),
+];
+
+const steps = [
+  { n: '01', h: 'Book a registered advisor', p: 'EnerGuide assessments are performed by energy advisors registered with Natural Resources Canada, working under licensed service organizations — the only providers whose reports count for rebates. That’s who our directory lists.' },
+  { n: '02', h: 'The walkthrough & measurements', p: 'The advisor measures insulation levels in the attic and walls, inventories windows and doors, records your heating, cooling, and water-heating equipment, and photographs it all for quality assurance.' },
+  { n: '03', h: 'The blower door test', p: 'The house is depressurized with a calibrated fan to measure air leakage precisely. On a cold day you can feel every leak the moment the fan spins up — most homeowners call this the moment the house stops being a mystery.' },
+  { n: '04', h: 'Your rating & upgrade report', p: 'You receive an EnerGuide rating (gigajoules per year — lower is better), an official label, and a renovation upgrade report that ranks improvements by impact for your specific house.' },
+  { n: '05', h: 'Upgrade with the rebates', p: 'Do two or more recommended upgrades and Ontario’s Home Renovation Savings pays: $600 for the assessments, up to $7,700 for insulation, $100 per window/door opening, and more.' },
+  { n: '06', h: 'The follow-up seals it', p: 'The same advisor re-tests, documents your improvement, and your rebates pay out. You keep the before/after numbers — useful at resale, and satisfying forever.' },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">How it works</p>
+      <h1>What actually happens in an energy audit</h1>
+      <p class="lede measure">
+        An EnerGuide assessment is a measurement visit, not a sales visit: a registered advisor
+        tests your house with real instruments and hands you a prioritized plan. Here's the whole
+        arc, from booking to rebate cheque.
+      </p>
+    </div>
+
+    <div class="timeline">
+      {steps.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+
+    <LeadForm heading="Ready to measure instead of guess?" context="how-it-works" />
+  </div>
+</Base>
+
+<style>
+  .timeline { display: grid; gap: 14px; margin-bottom: 40px; max-width: 800px; }
+  .tstep { display: flex; gap: 20px; padding: 22px 26px; align-items: flex-start; }
+  .tn { font-family: var(--mono); font-weight: 600; font-size: 14px; color: var(--heat); padding-top: 3px; }
+  .tstep h3 { margin-bottom: 4px; }
+  .tstep p { font-size: 15px; color: var(--muted); }
+</style>

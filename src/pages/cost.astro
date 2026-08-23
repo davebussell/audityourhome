@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { SITE } from '../config/site';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Home energy audit cost in Ontario (2026) — real numbers | AuditYourHome';
+const description =
+  'What an EnerGuide home energy assessment actually costs in Ontario in 2026: $400–$700 initial, $200–$400 follow-up, minus the $600 Home Renovation Savings rebate. Published prices, no bait.';
+
+const faqs = [
+  {
+    q: 'How much is a home energy audit in Ontario in 2026?',
+    a: 'Typical market pricing is $400–$700 for the initial EnerGuide assessment and $200–$400 for the follow-up visit; NRCan cites a $600–$1,000 typical combined range. Larger homes add $50–$150. The Home Renovation Savings Program rebates $600 after you complete the assessment path, bringing typical net cost to roughly $0–$400.',
+  },
+  {
+    q: 'Why do so few providers publish prices?',
+    a: 'Habit, mostly — the industry runs on phone quotes. NRCan itself tells homeowners to expect a wide range. We mark the providers who publish prices and feature them first; transparency is the sort we reward.',
+  },
+  {
+    q: 'Is a "free energy audit" real?',
+    a: 'In Ontario, a truly free EnerGuide assessment is rare — free walkthroughs are usually sales visits for insulation, windows, or HVAC. A real assessment includes a blower door test and produces an EnerGuide rating and report from an NRCan-registered advisor. If there is no blower door, it is not the audit the rebate programs require.',
+  },
+  {
+    q: 'What does the price include?',
+    a: 'The initial visit: 2–3 hours on site, blower door airtightness test, insulation measurements, window/door inventory, HVAC details, and afterwards your EnerGuide rating, label, and a renovation upgrade report. The follow-up visit re-tests after your upgrades and unlocks the rebates.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Cost guide', path: '/cost/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Cost guide · updated {SITE.dataReviewDate}</p>
+      <h1>What a home energy audit costs in Ontario</h1>
+      <p class="lede measure">
+        Short version: expect <strong>$400–$700</strong> for the initial EnerGuide assessment,
+        <strong> $200–$400</strong> for the follow-up — and a <strong>$600 rebate</strong> that
+        covers most of it if you complete Ontario's Home Renovation Savings assessment path.
+      </p>
+    </div>
+
+    <div class="tablewrap card">
+      <table>
+        <caption class="sr-only">Ontario home energy audit costs, 2026</caption>
+        <thead>
+          <tr><th>Item</th><th>Typical price</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Initial EnerGuide assessment</strong></td><td><span class="money">$400–$700</span> + HST</td><td>Blower door, measurements, rating, upgrade report</td></tr>
+          <tr><td><strong>Follow-up assessment</strong></td><td><span class="money">$200–$400</span> + HST</td><td>Re-test after upgrades; unlocks HRSP rebates</td></tr>
+          <tr><td>Large home surcharge</td><td><span class="money">$50–$150</span></td><td>Common above ~2,500 sq ft</td></tr>
+          <tr><td>HRSP assessment rebate</td><td><span class="money">−$600</span></td><td>Paid after completing the assessment path (2+ upgrades)</td></tr>
+          <tr><td><strong>Typical net cost</strong></td><td><span class="money">$0–$400</span></td><td>When you follow through on the rebate path</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="measure prose">
+      <h2>The honest context</h2>
+      <p>
+        NRCan's own guidance pegs a typical evaluation at $600–$1,000 all-in, and prices are almost
+        never published — of the providers in our directory, only a couple post rates openly (for
+        example, Windfall Ecology Centre at $500 + HST initial / $250 follow-up). That opacity is an
+        industry habit, not a law of nature, and it's why we surface published prices first.
+      </p>
+      <p>
+        Two warnings worth their weight: first, the federal <strong>Greener Homes Grant and Loan are
+        closed</strong> — any site or salesperson promising them is out of date, including on the cost
+        of "free" evaluations those programs once subsidized. Second, a <strong>"free audit" from an
+        insulation or HVAC company is a sales visit</strong>, not an EnerGuide assessment — it won't
+        qualify you for the assessment-path rebates, and its recommendations tend to match what the
+        company sells.
+      </p>
+      <p>
+        Whether the audit pays for itself depends on your home, which is exactly what it measures:
+        audit-guided retrofits of older Ontario homes typically cut total energy use 15–35%. On a
+        $3,000/year energy bill, that's $450–$1,050 a year — every year. Start with
+        <a href="/plan/"> the planner</a> to see your likely numbers before you book.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+
+    <LeadForm
+      heading="Get a real quote"
+      sub="We'll match you with a registered service organization for your area — and tell you if a published-price provider serves you."
+      context="cost-guide"
+    />
+  </div>
+</Base>
+
+<style>
+  .tablewrap { margin-bottom: 32px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .prose { margin-bottom: 36px; }
+  .prose h2 { margin-top: 8px; }
+</style>

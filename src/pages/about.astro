@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config/site';
+import { breadcrumbSchema } from '../lib/schema';
+
+const title = 'About AuditYourHome — and how we handle data | AuditYourHome';
+const description =
+  'Why AuditYourHome exists, how listings are compiled and verified, how program data stays current, and the editorial rules we hold ourselves to.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">About</p>
+      <h1>Why this site exists</h1>
+      <p class="lede measure">
+        Canada's official tool for finding an energy auditor is a phone list. Rebate programs
+        close with two weeks' notice while half the internet keeps advertising them. And the big
+        lead-gen platforms sell "energy audit" leads to solar and HVAC reps. Homeowners deserved a
+        better front door — so we built one.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>The rules we operate by</h2>
+      <p>
+        <strong>Only real auditors.</strong> Every provider listed is an NRCan-licensed service
+        organization — the only kind whose EnerGuide assessments qualify for rebate programs. We
+        do not list contractors whose "free audit" is a sales pitch, and we say so out loud.
+      </p>
+      <p>
+        <strong>No pay-to-rank.</strong> Ordering favours transparency (published prices first) and
+        community organizations — never payment. If we ever sell placement, it will be labelled as
+        such, separately from organic listings.
+      </p>
+      <p>
+        <strong>Dated claims.</strong> Program facts carry the date we verified them against the
+        official page — currently {SITE.dataReviewDate}. We list closed programs on purpose,
+        because "still advertising the Greener Homes Grant" is the fastest way to spot a stale
+        source.
+      </p>
+      <p>
+        <strong>Estimates labelled as estimates.</strong> The planner's savings figures are ranges
+        based on how similar homes typically perform, with every assumption published in our data
+        files. An EnerGuide assessment of your actual house replaces them — that's the point.
+      </p>
+      <p>
+        <strong>Corrections are fast.</strong> Listings are compiled from public sources (linked on
+        each profile). If something's wrong, email
+        <a href={`mailto:${SITE.contactEmail}`}> {SITE.contactEmail}</a> and we'll fix or remove it
+        promptly. Providers can claim their profiles free.
+      </p>
+      <h2>What's next</h2>
+      <p>
+        Online booking, provider-verified profiles, French for Quebec and francophone Ontario,
+        provincial expansion (Manitoba and Atlantic Canada first), and US launch in
+        audit-ordinance cities and HOMES-rebate states. If you want any of that sooner,
+        <a href={`mailto:${SITE.contactEmail}`}> tell us</a>.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .prose h2 { margin-top: 28px; }
+</style>

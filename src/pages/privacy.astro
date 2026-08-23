@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config/site';
+
+const title = 'Privacy | AuditYourHome';
+const description = 'What AuditYourHome collects (very little), what the planner does with your inputs (nothing — it runs in your browser), and how match requests are handled.';
+---
+
+<Base title={title} description={description}>
+  <div class="container">
+    <div class="page-hero">
+      <h1>Privacy, plainly</h1>
+    </div>
+    <div class="measure prose">
+      <p><strong>The planner runs in your browser.</strong> Postal codes, bills, and answers you enter into the Home Energy Planner are processed entirely on your device. They are not transmitted to us or anyone else, and they disappear when you leave (they appear in the page's link only if you use "copy link", so you control sharing).</p>
+      <p><strong>Match requests are shared narrowly.</strong> If you submit the match form, we use your details to connect you with one registered service organization serving your area, and for no other purpose. We don't sell contact lists, and we don't share your request with multiple companies.</p>
+      <p><strong>Email is email.</strong> If you email us, we have your email — we use it to reply.</p>
+      <p><strong>Analytics.</strong> If we add analytics, it will be privacy-respecting and cookieless, and this page will say exactly what it is.</p>
+      <p>Questions or removal requests: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.</p>
+      <p class="small">This page is a plain-language summary written for launch; a full PIPEDA-reviewed policy should replace it before significant lead volume. (Note to ourselves, in public.)</p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .prose p { margin-bottom: 16px; }
+</style>

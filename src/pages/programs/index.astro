@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProgramCard from '../../components/ProgramCard.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import { programs } from '../../lib/data';
+
+const title = 'Ontario energy rebate tracker — what’s actually live | AuditYourHome';
+const description =
+  'Every home energy rebate and financing program relevant to Ontario homeowners, verified against official pages: Home Renovation Savings, Toronto HELP, CMHC Eco — and the closed programs other sites still advertise.';
+
+const live = programs.filter((p) => p.status === 'active');
+const limited = programs.filter((p) => p.status === 'active-limited');
+const closed = programs.filter((p) => p.status === 'closed');
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Program tracker</p>
+      <h1>What's actually live right now</h1>
+      <p class="lede measure">
+        Rebate programs open, shrink, and close with little warning — the Greener Homes Loan died
+        with two weeks' notice. Every entry below is verified against its official page and stamped
+        with the date. Last full review: <strong>{SITE.dataReviewDate}</strong>.
+      </p>
+    </div>
+
+    <h2 class="grp"><span class="chip chip-active">Active</span> Live programs</h2>
+    <div class="grid-3">
+      {live.map((p) => <ProgramCard program={p} />)}
+    </div>
+
+    {limited.length > 0 && (
+      <>
+        <h2 class="grp"><span class="chip chip-limited">Limits apply</span> Active with restrictions</h2>
+        <div class="grid-3">
+          {limited.map((p) => <ProgramCard program={p} />)}
+        </div>
+      </>
+    )}
+
+    <h2 class="grp"><span class="chip chip-closed">Closed</span> Gone — but still advertised elsewhere</h2>
+    <p class="small measure">
+      We list closed programs on purpose: if a website or salesperson promises you one of these,
+      their information is stale — a useful trust test.
+    </p>
+    <div class="grid-3">
+      {closed.map((p) => <ProgramCard program={p} />)}
+    </div>
+
+    <div class="card card-pad note">
+      <h3>Outside Ontario?</h3>
+      <p class="mb-0">
+        Manitoba pays a $400 evaluation rebate, New Brunswick's evaluations are free, PEI's cost
+        $99, Nova Scotia runs assessment-based rebates, Quebec's Rénoclimat charges a fixed $150
+        (with government-assigned advisors), and BC's programs were cut in 2025–26. The
+        <a href="/plan/"> planner</a> gives a province-specific readout from your postal code —
+        full provincial pages are on the roadmap.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .grp { display: flex; align-items: center; gap: 12px; margin: 40px 0 16px; font-size: 22px; }
+  .note { border-left: 4px solid var(--steel); margin-top: 40px; }
+</style>

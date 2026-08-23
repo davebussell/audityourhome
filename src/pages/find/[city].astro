@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, cityDirectorySchema, faqSchema } from '../../lib/schema';
+import { regions, providersForRegion, regionBySlug } from '../../lib/data';
+
+export function getStaticPaths() {
+  return regions.map((r) => ({ params: { city: r.slug } }));
+}
+
+const { city } = Astro.params;
+const region = regionBySlug(city!)!;
+const list = providersForRegion(region.slug);
+
+const title = `Home energy auditors in ${region.name} (${list.length} registered providers) | AuditYourHome`;
+const description = `Compare ${list.length} NRCan-licensed service organizations delivering EnerGuide home energy assessments in ${region.name}. Registration shown, prices where published, rebate guidance included.`;
+
+const faqs = [
+  {
+    q: `What does an energy audit cost in ${region.name}?`,
+    a: 'Typical Ontario pricing is $400–$700 for the initial EnerGuide assessment and $200–$400 for the follow-up. The Home Renovation Savings Program rebates $600 of that on the assessment path. Few providers publish prices — the ones here that do are marked.',
+  },
+  {
+    q: `Which rebates apply in ${region.name}?`,
+    a: 'Home Renovation Savings (province-wide): $600 for assessments, up to $7,700 insulation, up to $12,000 heat pumps, up to $10,000 solar + battery. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.' + (region.slug === 'toronto' ? ' Toronto homeowners can also finance through the City’s HELP loans at posted rates up to $125,000.' : ''),
+  },
+  {
+    q: 'Are these providers vetted?',
+    a: 'Every listing is an NRCan-licensed service organization — the registration source is linked on each profile, compiled from public registries and provider websites and checked ' + SITE.dataReviewDate + '. We list no solar or HVAC sales reps as auditors.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Find an auditor', path: '/find/' },
+    { name: region.name, path: `/find/${region.slug}/` },
+  ]),
+  cityDirectorySchema(region, list.map((p) => p.name)),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/find/">Find an auditor</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
+    </nav>
+    <div class="page-hero">
+      <h1>Home energy auditors in {region.name}</h1>
+      <p class="lede">{region.intro}</p>
+      <p class="small">
+        {list.length} registered service organization{list.length === 1 ? '' : 's'} · compiled from
+        public sources, checked {SITE.dataReviewDate} ·
+        <a href="/plan/">not sure what you need? Start with the planner</a>
+      </p>
+    </div>
+
+    <div class="provider-grid">
+      {list.map((p) => <ProviderCard provider={p} />)}
+    </div>
+
+    <section class="tight">
+      <h2>Good to know</h2>
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </section>
+
+    <LeadForm
+      heading={`Get matched in ${region.name}`}
+      sub="Tell us what you're planning and we'll connect you with one registered service organization serving your area — not a shared lead list."
+      region={region.slug}
+      context={`directory-${region.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 24px; }
+</style>

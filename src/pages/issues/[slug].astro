@@ -1,0 +1,112 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import issuesData from '../../data/issues.json';
+import { programs } from '../../lib/data';
+
+export function getStaticPaths() {
+  return issuesData.map((i) => ({ params: { slug: i.slug } }));
+}
+
+const { slug } = Astro.params;
+const issue = issuesData.find((i) => i.slug === slug)!;
+const related = programs.filter((p) => issue.programIds.includes(p.id) && p.status !== 'closed');
+
+const title = `${issue.name} — causes, fixes, and Ontario rebates | AuditYourHome`;
+const description = issue.metaDescription;
+
+const faqs = [
+  { q: `What causes ${issue.name.toLowerCase()}?`, a: issue.likelyCauses.join(' ') },
+  { q: 'What would an energy audit find?', a: issue.auditMeasures.join(' ') },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Fix an issue', path: '/issues/' },
+    { name: issue.name, path: `/issues/${issue.slug}/` },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/issues/">Fix an issue</a> <span aria-hidden="true">/</span> <span>{issue.name}</span>
+    </nav>
+
+    <div class="page-hero">
+      <h1>{issue.name}</h1>
+      <p class="lede measure">{issue.symptom}</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-pad">
+        <h3>What it usually means</h3>
+        <ul class="clean">
+          {issue.likelyCauses.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>What an audit measures</h3>
+        <ul class="clean">
+          {issue.auditMeasures.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 18px;">
+      <div class="card card-pad">
+        <h3>Try first (cheap or free)</h3>
+        <ul class="clean check">
+          {issue.diyFirst.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>The fix ladder</h3>
+        <ol class="ladder">
+          {issue.fixLadder.map((f) => (
+            <li>
+              <span>{f.step}</span>
+              <span class="cost meta">{f.cost}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="meta">$ = under ~$1k · $$ = $1k–$5k · $$$ = $5k+ · $$$$ = $15k+</p>
+      </div>
+    </div>
+
+    {related.length > 0 && (
+      <div class="card card-pad rel">
+        <h3>Rebates that apply</h3>
+        <ul class="clean">
+          {related.map((p) => (
+            <li>
+              <a href={`/programs/${p.slug}/`}><strong>{p.shortName}</strong></a> — {p.headline}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <LeadForm
+      heading="Want it diagnosed properly?"
+      sub="A registered energy advisor measures instead of guessing — blower door, thermal imaging, and a written upgrade report priced against rebates."
+      context={`issue-${issue.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  ul.clean { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+  ul.clean.check { list-style: none; padding-left: 0; }
+  ul.clean.check li { padding-left: 26px; position: relative; }
+  ul.clean.check li::before { content: "✓"; position: absolute; left: 0; color: var(--pine); font-weight: 700; }
+  .ladder { margin: 0 0 10px; padding-left: 22px; display: grid; gap: 10px; font-size: 15px; }
+  .ladder li { display: flex; justify-content: space-between; gap: 14px; }
+  .rel { border-left: 4px solid var(--pine); margin-top: 18px; }
+</style>

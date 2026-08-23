@@ -1,0 +1,65 @@
+---
+import type { Provider } from '../lib/data';
+
+interface Props {
+  provider: Provider;
+  /** Compact variant for directory grids */
+  compact?: boolean;
+}
+const { provider: p, compact = false } = Astro.props;
+
+const typeLabel =
+  p.type === 'non-profit' ? 'Non-profit' : p.type === 'franchise' ? 'Franchise' : 'Company';
+---
+
+<article class="card card-pad pcard">
+  <div class="top">
+    <h3 class="name"><a href={`/providers/${p.slug}/`}>{p.name}</a></h3>
+    <span class="chip chip-neutral">{typeLabel}</span>
+  </div>
+
+  <p class="badge-verify">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 1.5 2.5 4v4c0 3.2 2.3 5.6 5.5 6.5 3.2-.9 5.5-3.3 5.5-6.5V4L8 1.5Z" fill="currentColor" opacity="0.18"/>
+      <path d="m5.4 8.1 1.8 1.8 3.4-3.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    {p.registration}
+  </p>
+
+  <p class="serves">{p.serviceNote}</p>
+
+  {p.pricing && (
+    <p class="pricing">
+      <span class="money">{p.pricing.preRetrofit}</span> initial ·
+      <span class="money">{p.pricing.postRetrofit}</span> follow-up
+      <span class="meta">published price</span>
+    </p>
+  )}
+  {!p.pricing && !compact && <p class="pricing none">Prices not published — ask when you contact them</p>}
+
+  {p.scaleClaim && !compact && <p class="small claim">{p.scaleClaim}</p>}
+
+  <div class="actions">
+    <a class="btn btn-primary btn-sm" href={`/providers/${p.slug}/`}>Details</a>
+    {p.website && (
+      <a class="btn btn-ghost btn-sm" href={p.website} rel="noopener nofollow" target="_blank">
+        Website
+      </a>
+    )}
+    {p.phone && <a class="btn btn-ghost btn-sm" href={`tel:${p.phone.replace(/[^0-9+]/g, '')}`}>{p.phone}</a>}
+  </div>
+</article>
+
+<style>
+  .pcard { display: flex; flex-direction: column; gap: 10px; }
+  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .name { margin: 0; font-size: 18.5px; }
+  .name a { color: var(--ink); text-decoration: none; }
+  .name a:hover { color: var(--heat-deep); }
+  .serves { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .pricing { margin: 0; font-size: 15px; }
+  .pricing .meta { margin-left: 6px; }
+  .pricing.none { font-size: 13.5px; color: var(--faint); }
+  .claim { margin: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
+</style>

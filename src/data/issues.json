@@ -1,0 +1,259 @@
+[
+  {
+    "slug": "drafty-rooms",
+    "name": "Drafts and cold rooms",
+    "symptom": "You can feel moving air near baseboards, outlets, or windows, and certain rooms never warm up.",
+    "likelyCauses": [
+      "Air leakage at the attic hatch, top plates, rim joists, and plumbing/wiring chases — the big leaks are almost never at the windows you can feel",
+      "Empty or settled wall insulation (very common pre-1965)",
+      "Duct runs that starve the far rooms (splits and two-storeys)"
+    ],
+    "auditMeasures": [
+      "Blower door test puts a number on total leakage and finds where it enters",
+      "Thermal camera maps cold wall sections and missing insulation without opening walls"
+    ],
+    "diyFirst": [
+      "Weatherstrip the attic hatch and exterior doors",
+      "Foam-gasket outlet covers on exterior walls",
+      "Hold a stick of incense near suspect spots on a windy day — smoke shows the leak"
+    ],
+    "fixLadder": [
+      { "step": "Targeted air sealing (attic + rim joist)", "cost": "$" },
+      { "step": "Blower-door-guided professional air sealing", "cost": "$$" },
+      { "step": "Wall insulation (drill-and-fill where cavities allow)", "cost": "$$$" }
+    ],
+    "categories": ["air-sealing", "wall-insulation", "attic-insulation"],
+    "programIds": ["hrsp-assessment"],
+    "metaDescription": "Why rooms feel drafty and cold, what a blower door test finds, DIY first steps, and which Ontario rebates cover air sealing and insulation."
+  },
+  {
+    "slug": "high-heating-bills",
+    "name": "Heating bills feel too high",
+    "symptom": "Winter gas or hydro bills that make you wince — and you're not sure if that's your house or just prices.",
+    "likelyCauses": [
+      "Envelope losses: thin attic, bare basement walls, leaky frame — the house sheds heat as fast as you buy it",
+      "Old equipment: mid-efficiency furnaces burn ~20% more gas than condensing units; electric baseboards cost 2–3× what a heat pump would",
+      "Oversized or short-cycling equipment wasting energy on starts"
+    ],
+    "auditMeasures": [
+      "The EnerGuide model splits your bill into envelope vs. equipment losses — so you fix the right one first",
+      "Blower door + thermal imaging quantify the envelope's share"
+    ],
+    "diyFirst": [
+      "Pull 12 months of bills and note your usage (m³ or kWh), not just dollars — our planner benchmarks it against similar homes",
+      "Set back the thermostat 3–4°C overnight; a smart thermostat automates it"
+    ],
+    "fixLadder": [
+      { "step": "Air sealing + attic top-up", "cost": "$$" },
+      { "step": "Basement insulation", "cost": "$$" },
+      { "step": "Heat pump at equipment end-of-life", "cost": "$$$" }
+    ],
+    "categories": ["air-sealing", "attic-insulation", "basement-insulation", "heat-pump", "controls"],
+    "programIds": ["hrsp-assessment", "hrsp-no-assessment", "toronto-help"],
+    "metaDescription": "How to tell whether high heating bills are your house or your equipment, what an energy audit reveals, and the Ontario rebates that cut the fix's cost."
+  },
+  {
+    "slug": "ice-dams",
+    "name": "Ice dams and icicles",
+    "symptom": "Thick ice ridges at the roof edge, big icicles, maybe water staining on ceilings after cold snaps.",
+    "likelyCauses": [
+      "Warm indoor air leaking into the attic (bypasses around chimneys, pot lights, hatches) melts roof snow, which refreezes at the cold eaves",
+      "Thin attic insulation letting heat conduct through",
+      "Blocked soffit ventilation trapping the heat"
+    ],
+    "auditMeasures": [
+      "Thermal imaging of the ceiling plane finds the exact bypasses feeding the melt",
+      "Attic inspection checks insulation depth and ventilation paths"
+    ],
+    "diyFirst": [
+      "Roof-rake the lower courses after big snowfalls (from the ground — stay off ladders)",
+      "Don't rely on heat cables — they treat the symptom, not the leak"
+    ],
+    "fixLadder": [
+      { "step": "Seal attic bypasses", "cost": "$" },
+      { "step": "Top up attic to R-60 + clear soffit baffles", "cost": "$$" }
+    ],
+    "categories": ["air-sealing", "attic-insulation", "ventilation"],
+    "programIds": ["hrsp-assessment"],
+    "metaDescription": "Ice dams are an attic air-leak problem, not a roof problem. What causes them, how an audit pinpoints the leaks, and the rebates that cover the fix."
+  },
+  {
+    "slug": "cold-second-floor",
+    "name": "Second floor too hot or too cold",
+    "symptom": "Bedrooms roast in July and freeze in January while the main floor is fine.",
+    "likelyCauses": [
+      "Leaky, unbalanced ductwork — long second-floor runs lose their air along the way",
+      "Attic heat load overhead (thin insulation) in summer",
+      "Rooms over garages with under-insulated floors",
+      "Single-zone systems fighting two-zone physics"
+    ],
+    "auditMeasures": [
+      "Duct testing measures leakage; thermal camera finds the under-insulated ceiling and garage-floor sections",
+      "Room-by-room heat-loss calculation shows whether the system can ever balance"
+    ],
+    "diyFirst": [
+      "Seasonal register balancing: partially close main-floor supplies in summer",
+      "Check the furnace fan setting — 'on' (continuous) evens temperatures for a few dollars a month"
+    ],
+    "fixLadder": [
+      { "step": "Duct sealing & balancing", "cost": "$" },
+      { "step": "Attic top-up", "cost": "$$" },
+      { "step": "Zoning or a ductless head for the problem floor", "cost": "$$$" }
+    ],
+    "categories": ["air-sealing", "attic-insulation", "heat-pump", "controls"],
+    "programIds": ["hrsp-assessment", "hrsp-no-assessment"],
+    "metaDescription": "Why second floors run hot in summer and cold in winter, the duct and attic fixes that actually work, and which Ontario rebates apply."
+  },
+  {
+    "slug": "condensation-mould",
+    "name": "Window condensation and musty air",
+    "symptom": "Water pooling on window sills, fogged glass, musty smells, maybe mould spots in corners or closets.",
+    "likelyCauses": [
+      "Too much indoor humidity for the ventilation you have — common in tighter 1980s+ homes without an HRV",
+      "Cold surfaces (single-pane windows, uninsulated wall corners) hitting dew point",
+      "Bathroom/kitchen fans that vent nowhere or never get used"
+    ],
+    "auditMeasures": [
+      "The audit checks ventilation rates against occupancy and airtightness — the actual ratio that causes condensation",
+      "Thermal imaging finds the cold spots where mould starts"
+    ],
+    "diyFirst": [
+      "Run bath fans 30 minutes after showers; verify they vent outside",
+      "Keep winter humidity near 30–40% (a $15 hygrometer tells you)",
+      "Don't buy windows to fix a ventilation problem"
+    ],
+    "fixLadder": [
+      { "step": "Fix/duct existing exhaust fans", "cost": "$" },
+      { "step": "Add an HRV", "cost": "$$$" },
+      { "step": "Insulate the cold surfaces (walls/corners) if imaging shows them", "cost": "$$$" }
+    ],
+    "categories": ["ventilation", "windows-doors", "wall-insulation"],
+    "programIds": ["hrsp-assessment"],
+    "metaDescription": "Window condensation is usually a ventilation problem, not a window problem. How an audit tells the difference before you spend $20k on glass."
+  },
+  {
+    "slug": "cold-basement",
+    "name": "Cold, damp basement",
+    "symptom": "The basement is 5°C colder than upstairs, feels damp, and nobody wants to spend time there.",
+    "likelyCauses": [
+      "Bare concrete walls — uninsulated foundations can shed 20%+ of a home's heat",
+      "Rim joist leakage (the draftiest 30 cm in most houses)",
+      "Slab moisture migrating through unsealed concrete"
+    ],
+    "auditMeasures": [
+      "Thermal imaging shows exactly how much wall is losing heat and where moisture concentrates",
+      "The audit sequences moisture control before insulation — order matters in basements"
+    ],
+    "diyFirst": [
+      "Seal rim joists with cut-and-cobble foam or hire it out cheaply",
+      "Check grading and downspouts before any interior moisture fix"
+    ],
+    "fixLadder": [
+      { "step": "Rim joist air sealing + insulation", "cost": "$" },
+      { "step": "Full-height foundation wall insulation", "cost": "$$$" }
+    ],
+    "categories": ["basement-insulation", "air-sealing"],
+    "programIds": ["hrsp-assessment", "toronto-help"],
+    "metaDescription": "Why basements run cold and damp, the insulation sequence that avoids mould, and Ontario rebates for basement insulation."
+  },
+  {
+    "slug": "summer-overheating",
+    "name": "House won't stay cool in summer",
+    "symptom": "The AC runs all day, upstairs never cools, and July bills rival January's.",
+    "likelyCauses": [
+      "Attic heat load — a 60°C attic over a thin insulation layer is a radiant heater aimed at your bedrooms",
+      "Duct leakage dumping cooled air into the attic or walls",
+      "Aging or oversized AC short-cycling"
+    ],
+    "auditMeasures": [
+      "Attic inspection + duct testing find the heat path",
+      "Cooling load calculation right-sizes replacement equipment"
+    ],
+    "diyFirst": [
+      "Close blinds on south/west glass through afternoons",
+      "Verify attic ventilation isn't blocked"
+    ],
+    "fixLadder": [
+      { "step": "Attic top-up + duct sealing", "cost": "$$" },
+      { "step": "Heat pump replacing the AC (cooling + heating in one)", "cost": "$$$" }
+    ],
+    "categories": ["attic-insulation", "air-sealing", "heat-pump"],
+    "programIds": ["hrsp-no-assessment", "hrsp-assessment"],
+    "metaDescription": "Why upstairs won't cool, the attic and duct fixes that beat a bigger AC, and how a heat pump swap earns Ontario rebates."
+  },
+  {
+    "slug": "switching-to-heat-pump",
+    "name": "Thinking about a heat pump",
+    "symptom": "Your furnace, AC, or baseboards are due — and everyone has an opinion about heat pumps.",
+    "likelyCauses": [
+      "Electric baseboard homes: the strongest case in Ontario — cold-climate heat pumps typically cut heating electricity 40–60%",
+      "Gas-heated homes: at current Ontario gas prices the bill case is modest — the wins are AC included, comfort, and emissions; hybrids hedge",
+      "Oversizing risk: without a heat-loss calculation, contractors guess — and guesses cost"
+    ],
+    "auditMeasures": [
+      "A room-by-room heat-loss calculation (the audit's core output) sizes the unit properly",
+      "Envelope findings first — insulation can shrink the heat pump you need by a full size class"
+    ],
+    "diyFirst": [
+      "Collect a year of bills before quotes — sizing from bills beats sizing from square footage",
+      "Get quotes for cold-climate units (rated at -25°C 'CC' performance), not just any heat pump"
+    ],
+    "fixLadder": [
+      { "step": "Audit + envelope quick wins", "cost": "$$" },
+      { "step": "Cold-climate heat pump (up to $12,000 HRSP rebate)", "cost": "$$$" }
+    ],
+    "categories": ["heat-pump", "air-sealing", "attic-insulation", "controls"],
+    "programIds": ["hrsp-no-assessment", "hrsp-assessment", "toronto-help"],
+    "metaDescription": "Whether a heat pump makes sense for your Ontario home — baseboard vs. gas economics, cold-climate sizing, and the up-to-$12,000 rebate path."
+  },
+  {
+    "slug": "planning-solar",
+    "name": "Planning solar panels",
+    "symptom": "You're curious whether your roof is worth panelling — and what the battery rebate actually covers.",
+    "likelyCauses": [
+      "Ontario's HRSP now offers up to $10,000 for solar + battery — the first meaningful provincial support in years",
+      "Roof age, orientation, and shading decide viability more than marketing does",
+      "Efficiency first: a cheaper-to-run house needs a smaller, cheaper array"
+    ],
+    "auditMeasures": [
+      "The audit establishes your real consumption baseline — the number a solar quote should be sized against",
+      "EnerGuide documentation supports resale value of the whole package"
+    ],
+    "diyFirst": [
+      "Check your roof's age first — re-shingling under panels later is expensive",
+      "Pull your annual kWh from your hydro account before talking to installers"
+    ],
+    "fixLadder": [
+      { "step": "Efficiency upgrades that shrink the target", "cost": "$$" },
+      { "step": "Solar + battery (up to $10,000 HRSP)", "cost": "$$$$" }
+    ],
+    "categories": ["solar", "controls"],
+    "programIds": ["hrsp-no-assessment", "toronto-help"],
+    "metaDescription": "How to plan rooftop solar in Ontario: the $10,000 solar + battery rebate, roof checks, and why efficiency-first sizing saves twice."
+  },
+  {
+    "slug": "buying-a-home",
+    "name": "Buying (or just bought) a home",
+    "symptom": "You want to know what the house will really cost to run — before you're the one paying its bills.",
+    "likelyCauses": [
+      "A pre-purchase or move-in energy audit reveals insulation, leakage, and equipment condition no home inspection quantifies",
+      "CMHC-insured buyers can claim a 25% mortgage-insurance premium refund after $20,000+ of eligible energy renovations",
+      "Move-in is the cheapest renovation window — empty rooms make insulation and sealing easy"
+    ],
+    "auditMeasures": [
+      "Full EnerGuide evaluation with rating and upgrade report — a renovation roadmap priced against rebates",
+      "Documentation that supports the CMHC Eco Improvement claim"
+    ],
+    "diyFirst": [
+      "Ask the seller for 12 months of utility bills — normal in Ontario, revealing everywhere",
+      "Book the audit for the week after closing, before furniture arrives"
+    ],
+    "fixLadder": [
+      { "step": "Move-in audit + quick wins (sealing, attic)", "cost": "$$" },
+      { "step": "Planned retrofit against HRSP + CMHC refund", "cost": "$$$" }
+    ],
+    "categories": ["air-sealing", "attic-insulation", "heat-pump", "basement-insulation"],
+    "programIds": ["hrsp-assessment", "cmhc-eco-improvement", "toronto-help"],
+    "metaDescription": "Why an energy audit belongs in your home purchase: real operating costs, a rebate-priced renovation roadmap, and the 25% CMHC premium refund."
+  }
+]

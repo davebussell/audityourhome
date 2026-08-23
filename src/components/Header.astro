@@ -1,0 +1,112 @@
+---
+import Logo from './Logo.astro';
+
+const nav = [
+  { href: '/plan/', label: 'Energy Planner' },
+  { href: '/find/', label: 'Find an auditor' },
+  { href: '/programs/', label: 'Rebates & programs' },
+  { href: '/issues/', label: 'Fix an issue' },
+  { href: '/cost/', label: 'Cost guide' },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container inner">
+    <Logo />
+    <nav aria-label="Main">
+      <button class="menu-btn" aria-expanded="false" aria-controls="site-nav" id="menuBtn">
+        Menu
+      </button>
+      <ul id="site-nav">
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+        <li class="cta"><a href="/plan/" class="btn btn-primary btn-sm">Check my home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: rgba(250, 248, 244, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 66px;
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul a:not(.btn) {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  ul a:not(.btn):hover { color: var(--heat-deep); }
+  ul a[aria-current='page'] {
+    color: var(--heat-deep);
+    text-decoration: underline;
+    text-decoration-color: var(--heat);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+  .menu-btn {
+    display: none;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 14px;
+    background: none;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 7px 16px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  @media (max-width: 920px) {
+    .menu-btn { display: inline-block; }
+    ul {
+      display: none;
+      position: absolute;
+      top: 66px;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 18px 22px 22px;
+      gap: 16px;
+      box-shadow: var(--shadow-md);
+    }
+    ul.open { display: flex; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('site-nav');
+  btn?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(!!open));
+  });
+</script>

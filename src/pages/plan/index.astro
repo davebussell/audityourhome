@@ -1,0 +1,703 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import archetypes from '../../data/archetypes.json';
+import issues from '../../data/issues.json';
+import savings from '../../data/savings.json';
+import rates from '../../data/rates.json';
+import { regions, providers, programs } from '../../lib/data';
+
+const title = 'Home Energy Planner — what your home needs, what it saves | AuditYourHome';
+const description =
+  'Answer six quick questions about your home and bills. Get a personalized read on what’s behind your walls, your smartest upgrade sequence, estimated savings, live Ontario rebates, and registered advisors near you.';
+
+const payload = {
+  archetypes,
+  issues: issues.map((i) => ({ slug: i.slug, name: i.name, categories: i.categories })),
+  savings,
+  rates,
+  regions: regions.map((r) => ({ slug: r.slug, name: r.name, fsa: r.fsaPrefixes })),
+  providers: providers.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    type: p.type,
+    serves: p.serves,
+    pricing: p.pricing ? `${p.pricing.preRetrofit} initial · ${p.pricing.postRetrofit} follow-up` : null,
+    registration: p.registration,
+  })),
+  programs: programs
+    .filter((p) => p.status !== 'closed')
+    .map((p) => ({ id: p.id, slug: p.slug, shortName: p.shortName, headline: p.headline, auditRequired: p.auditRequired, jurisdiction: p.jurisdiction })),
+};
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Home Energy Planner', path: '/plan/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Home Energy Planner</p>
+      <h1>What does <em>your</em> home actually need?</h1>
+      <p class="lede">
+        Six quick questions. No email required. You'll get the likely story behind your walls, a
+        prioritized upgrade plan with estimated savings, the rebates that are live right now, and
+        registered advisors for your area.
+      </p>
+    </div>
+
+    <div class="planner card" id="planner">
+      <!-- progress -->
+      <ol class="steps-nav" id="stepsNav" aria-label="Planner steps">
+        <li data-step="1" class="on">Location</li>
+        <li data-step="2">Your home</li>
+        <li data-step="3">Heating</li>
+        <li data-step="4">Symptoms</li>
+        <li data-step="5">Goals</li>
+        <li data-step="6">Bills</li>
+      </ol>
+
+      <form id="plannerForm" novalidate>
+        <!-- STEP 1 -->
+        <fieldset class="step on" data-step="1">
+          <legend><h2>Where's the house?</h2></legend>
+          <div class="field narrow">
+            <label for="postal">Postal code (or US ZIP)</label>
+            <input id="postal" name="postal" type="text" placeholder="e.g. M4E 2V5" autocomplete="postal-code" />
+            <p class="small hint">We use this to match programs and advisors for your area — it isn't stored or sent anywhere.</p>
+          </div>
+        </fieldset>
+
+        <!-- STEP 2 -->
+        <fieldset class="step" data-step="2">
+          <legend><h2>Tell us about the house</h2></legend>
+          <div class="field">
+            <span class="lbl">When was it built? <span class="hint-inline">(best guess is fine)</span></span>
+            <div class="radio-row" role="radiogroup" aria-label="Year built">
+              <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Before 1946</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>1946–1965</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1966-1980" /><span>1966–1980</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1981-1995" /><span>1981–1995</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1996-2010" /><span>1996–2010</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="2011-plus" /><span>2011 or later</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Home type</span>
+            <div class="radio-row" role="radiogroup" aria-label="Home type">
+              <label class="radio-pill"><input type="radio" name="htype" value="detached" checked /><span>Detached</span></label>
+              <label class="radio-pill"><input type="radio" name="htype" value="semi" /><span>Semi / townhome</span></label>
+              <label class="radio-pill"><input type="radio" name="htype" value="condo" /><span>Condo / apartment</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Rough size</span>
+            <div class="radio-row" role="radiogroup" aria-label="Home size">
+              <label class="radio-pill"><input type="radio" name="size" value="small" /><span>Under 1,200 sq ft</span></label>
+              <label class="radio-pill"><input type="radio" name="size" value="medium" checked /><span>1,200–2,000</span></label>
+              <label class="radio-pill"><input type="radio" name="size" value="large" /><span>2,000–3,000</span></label>
+              <label class="radio-pill"><input type="radio" name="size" value="xlarge" /><span>Over 3,000</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 3 -->
+        <fieldset class="step" data-step="3">
+          <legend><h2>How is it heated?</h2></legend>
+          <div class="radio-row big" role="radiogroup" aria-label="Heating type">
+            <label class="radio-pill"><input type="radio" name="heat" value="gas" checked /><span>Gas furnace / boiler</span></label>
+            <label class="radio-pill"><input type="radio" name="heat" value="electric" /><span>Electric baseboard</span></label>
+            <label class="radio-pill"><input type="radio" name="heat" value="heatpump" /><span>Heat pump already</span></label>
+            <label class="radio-pill"><input type="radio" name="heat" value="oil" /><span>Oil / propane</span></label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4 -->
+        <fieldset class="step" data-step="4">
+          <legend><h2>Anything bugging you about the house?</h2></legend>
+          <p class="small">Pick everything that applies — this tunes your plan.</p>
+          <div class="radio-row wrap" id="symptomRow">
+            <label class="radio-pill"><input type="checkbox" name="sym" value="drafty-rooms" /><span>Drafts / cold rooms</span></label>
+            <label class="radio-pill"><input type="checkbox" name="sym" value="high-heating-bills" /><span>High heating bills</span></label>
+            <label class="radio-pill"><input type="checkbox" name="sym" value="ice-dams" /><span>Ice dams / icicles</span></label>
+            <label class="radio-pill"><input type="checkbox" name="sym" value="cold-second-floor" /><span>2nd floor hot/cold</span></label>
+            <label class="radio-pill"><input type="checkbox" name="sym" value="condensation-mould" /><span>Condensation / musty air</span></label>
+            <label class="radio-pill"><input type="checkbox" name="sym" value="cold-basement" /><span>Cold basement</span></label>
+            <label class="radio-pill"><input type="checkbox" name="sym" value="summer-overheating" /><span>Won't stay cool in summer</span></label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 5 -->
+        <fieldset class="step" data-step="5">
+          <legend><h2>What are you hoping to do?</h2></legend>
+          <div class="radio-row wrap">
+            <label class="radio-pill"><input type="checkbox" name="goal" value="bills" checked /><span>Lower my bills</span></label>
+            <label class="radio-pill"><input type="checkbox" name="goal" value="comfort" /><span>Fix comfort problems</span></label>
+            <label class="radio-pill"><input type="checkbox" name="goal" value="heatpump" /><span>Get a heat pump</span></label>
+            <label class="radio-pill"><input type="checkbox" name="goal" value="solar" /><span>Add solar</span></label>
+            <label class="radio-pill"><input type="checkbox" name="goal" value="buying" /><span>Buying / just bought</span></label>
+            <label class="radio-pill"><input type="checkbox" name="goal" value="emissions" /><span>Cut emissions</span></label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 6 -->
+        <fieldset class="step" data-step="6">
+          <legend><h2>Add your bills for dollar estimates <span class="hint-inline">(optional)</span></h2></legend>
+          <p class="small">
+            Averages are fine — winter and summer bills differ, so think "typical month across the
+            year." Skip this and we'll show savings as percentages instead.
+          </p>
+          <div class="grid-2">
+            <div class="field" id="gasField">
+              <label for="gasBill">Average monthly natural gas bill ($)</label>
+              <input id="gasBill" name="gasBill" type="text" inputmode="decimal" placeholder="e.g. 145" />
+            </div>
+            <div class="field">
+              <label for="elecBill">Average monthly hydro bill ($)</label>
+              <input id="elecBill" name="elecBill" type="text" inputmode="decimal" placeholder="e.g. 160" />
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="wizard-actions">
+          <button type="button" class="btn btn-ghost" id="backBtn" hidden>Back</button>
+          <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results" hidden>
+      <div class="results-head">
+        <p class="eyebrow">Your plan</p>
+        <h2 id="rTitle">Your home's energy profile</h2>
+        <p class="small" id="rSub"></p>
+      </div>
+
+      <div id="rBenchmark"></div>
+      <div class="grid-2 profile-grid">
+        <div class="card card-pad" id="rWalls"></div>
+        <div class="card card-pad" id="rWatch"></div>
+      </div>
+      <div id="rSequence"></div>
+      <div id="rPrograms"></div>
+      <div id="rIssues"></div>
+      <div id="rProviders"></div>
+
+      <div class="card card-pad audit-cta" id="rAuditCta">
+        <h3>Estimates end where the audit begins</h3>
+        <p>
+          Everything above is based on how homes like yours typically perform — not a model of your
+          actual house. An EnerGuide evaluation (blower door test, thermal imaging, room-by-room
+          heat-loss model) turns these ranges into numbers for <em>your</em> address, and it's the
+          required first step for the biggest rebates. In Ontario, the $600 HRSP rebate covers most
+          of its cost.
+        </p>
+      </div>
+
+      <LeadForm
+        heading="Want this plan handled?"
+        sub="Send us your plan summary and we'll connect you with a registered service organization for your area."
+        context="planner"
+      />
+
+      <p class="small disclaimer">
+        Estimates are ranges based on typical performance of similar Ontario homes and the
+        assumptions in our published data files ({SITE.dataReviewDate}). They are not a guarantee of
+        savings. Program details change — confirm on official pages before spending. Nothing you
+        enter here is stored or transmitted; the planner runs entirely in your browser.
+      </p>
+      <div class="wizard-actions">
+        <button type="button" class="btn btn-ghost" id="restartBtn">Start over</button>
+        <button type="button" class="btn btn-ghost" id="copyLink">Copy link to this plan</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" id="planner-data" set:html={JSON.stringify(payload)} />
+</Base>
+
+<style>
+  .page-hero h1 em { font-style: normal; color: var(--heat); }
+  .planner { padding: 30px 34px 34px; margin-bottom: 24px; }
+  .steps-nav {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    list-style: none; margin: 0 0 26px; padding: 0 0 18px;
+    border-bottom: 1px solid var(--line);
+    counter-reset: step;
+  }
+  .steps-nav li {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
+    counter-increment: step;
+  }
+  .steps-nav li::before { content: counter(step) " · "; }
+  .steps-nav li.on { color: var(--heat-deep); }
+  .steps-nav li.done { color: var(--pine); }
+  fieldset.step { border: none; margin: 0; padding: 0; display: none; }
+  fieldset.step.on { display: block; }
+  legend h2 { font-size: 24px; margin-bottom: 14px; }
+  .lbl { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
+  .hint-inline { font-weight: 400; color: var(--faint); font-size: 0.85em; }
+  .hint { margin-top: 6px; }
+  .narrow { max-width: 340px; }
+  .radio-row.big span { font-size: 15.5px; padding: 11px 20px; }
+  .radio-row.wrap { max-width: 640px; }
+  .wizard-actions { display: flex; gap: 10px; margin-top: 26px; }
+  .results-head { margin: 40px 0 18px; }
+  .profile-grid { margin: 18px 0; }
+  .audit-cta { border-left: 4px solid var(--heat); margin: 26px 0; }
+  .disclaimer { max-width: 80ch; margin: 18px 0; color: var(--faint); }
+  #results > .card + .card { margin-top: 18px; }
+</style>
+
+<style is:global>
+  /* dynamically-rendered result blocks (injected via JS, so unscoped) */
+  .bench-card { border-left: 4px solid var(--steel); padding: 22px 26px; margin-bottom: 18px; }
+  .bench-card .figures { display: flex; flex-wrap: wrap; gap: 28px; margin: 10px 0 6px; }
+  .bench-card .fig .n { font-family: var(--display); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; }
+  .bench-card .fig .l { font-size: 13px; color: var(--muted); }
+  .bench-up { color: var(--heat-deep); }
+  .bench-ok { color: var(--pine); }
+  .kv { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+  .kv li { display: grid; grid-template-columns: 110px 1fr; gap: 12px; font-size: 14.5px; }
+  .kv .k { font-family: var(--mono); font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); padding-top: 2px; }
+  .watch-item { padding: 10px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+  .watch-item:first-of-type { border-top: none; padding-top: 4px; }
+  .watch-item b { display: block; }
+  .watch-item.safety b::before { content: "⚠ "; color: var(--dead); }
+  .seq { counter-reset: seq; display: grid; gap: 12px; margin: 16px 0; }
+  .seq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px 18px 58px; position: relative; }
+  .seq-item::before {
+    counter-increment: seq; content: counter(seq);
+    position: absolute; left: 18px; top: 18px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--heat); color: #fff;
+    font-family: var(--display); font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .seq-item h4 { margin: 0 0 4px; font-size: 16.5px; }
+  .seq-item .why { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .seq-item .nums { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; font-size: 14px; align-items: center; }
+  .seq-item .save { font-weight: 700; color: var(--pine); font-variant-numeric: tabular-nums; }
+  .seq-item .cost { color: var(--muted); }
+  .prog-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 15px; }
+  .prog-row:first-of-type { border-top: none; }
+  .prog-row a { font-weight: 700; text-decoration: none; color: var(--ink); }
+  .prog-row a:hover { color: var(--heat-deep); }
+  .prog-row .hl { color: var(--muted); font-size: 14px; flex: 1 1 100%; }
+  .mini-providers { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 14px; }
+  .mini-provider { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 14px 16px; font-size: 14px; }
+  .mini-provider a { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--ink); text-decoration: none; }
+  .mini-provider a:hover { color: var(--heat-deep); }
+  .mini-provider .reg { color: var(--pine); font-size: 12.5px; font-weight: 600; margin: 4px 0 0; }
+  .mini-provider .pr { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
+  .chip-link { text-decoration: none; }
+  .rsec { margin: 22px 0; }
+  .rsec > h3 { margin-bottom: 4px; }
+  .rsec > .sub { color: var(--muted); font-size: 14.5px; margin-bottom: 10px; }
+  .issue-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .issue-chips a { display: inline-block; font-size: 14px; font-weight: 600; color: var(--steel); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 7px 16px; text-decoration: none; }
+  .issue-chips a:hover { border-color: var(--heat); color: var(--heat-deep); }
+  .province-note { border-left: 4px solid var(--warn); padding: 18px 24px; }
+  .field-error { color: var(--dead); font-size: 13.5px; margin-top: 8px; font-weight: 600; }
+</style>
+
+<script>
+  const D = JSON.parse(document.getElementById('planner-data')!.textContent!);
+
+  const form = document.getElementById('plannerForm') as HTMLFormElement;
+  const stepsNav = document.getElementById('stepsNav')!;
+  const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement;
+  const backBtn = document.getElementById('backBtn') as HTMLButtonElement;
+  const resultsEl = document.getElementById('results')!;
+  const plannerEl = document.getElementById('planner')!;
+  const TOTAL = 6;
+  let step = 1;
+
+  const $ = (sel: string, root: ParentNode = document) => root.querySelector(sel) as HTMLElement;
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+  const money = (n: number) => '$' + Math.round(n / 10) * 10;
+
+  const PROVINCES: Record<string, string> = { A: 'NL', B: 'NS', C: 'PE', E: 'NB', G: 'QC', H: 'QC', J: 'QC', K: 'ON', L: 'ON', M: 'ON', N: 'ON', P: 'ON', R: 'MB', S: 'SK', T: 'AB', V: 'BC', X: 'NT', Y: 'YT' };
+
+  const PROVINCE_NOTES: Record<string, string> = {
+    QC: 'In Quebec, evaluations run through <b>Rénoclimat</b> at a fixed $150 + tax — but the government assigns the advisor (three authorized firms cover the province), so there’s no shopping around. <b>Hydro-Québec LogisVert</b> covers heat pumps and more with no audit needed. Our Quebec guide (en français aussi) is coming.',
+    MB: 'Manitoba is one of Canada’s better markets: <b>Efficiency Manitoba pays a $400 EnerGuide evaluation rebate</b> and runs insulation and heating programs on top.',
+    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> includes a <b>free</b> home energy evaluation by a certified advisor, with rebates to follow.',
+    NS: 'Efficiency Nova Scotia runs assessment-based rebates, with subsidized audits (~$199 via accredited partners) plus free income-qualified streams.',
+    PE: 'efficiencyPEI offers <b>$99 + HST</b> home energy assessments through five contracted partners — required for insulation rebates.',
+    BC: 'BC rebates were cut in 2025–26 and audits are optional for most of what remains; the EnerGuide-linked Home Energy Improvement Bonus ($750–$2,000) still exists.',
+    AB: 'Alberta has no provincial audit-linked rebate right now (Edmonton’s HERA is fully subscribed). Financing via Clean Energy Improvement (PACE) exists in some municipalities — audits here are about lower bills and pre-purchase clarity.',
+    SK: 'Saskatchewan’s Home Efficiency Retrofit Rebate ended in April 2026 — no active audit-linked program. An audit still pays through bill savings and resale documentation.',
+    NL: 'Newfoundland & Labrador has no broad audit-linked rebate (takeCHARGE covers equipment; NLHC serves low-income households).',
+    NT: 'Territorial programs vary — the Arctic Energy Alliance is the place to start.',
+    YT: 'Territorial programs vary — check Yukon’s Good Energy program.',
+  };
+
+  // ---------- wizard navigation ----------
+  function show(n: number) {
+    step = n;
+    form.querySelectorAll('fieldset.step').forEach((f) => f.classList.toggle('on', (f as HTMLElement).dataset.step === String(n)));
+    stepsNav.querySelectorAll('li').forEach((li) => {
+      const s = Number((li as HTMLElement).dataset.step);
+      li.classList.toggle('on', s === n);
+      li.classList.toggle('done', s < n);
+    });
+    backBtn.hidden = n === 1;
+    nextBtn.textContent = n === TOTAL ? 'See my plan' : 'Next';
+    $('.field-error')?.remove();
+    const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input`);
+    first?.focus({ preventScroll: true });
+  }
+
+  function fieldVal(name: string): string {
+    const el = form.querySelector<HTMLInputElement>(`[name="${name}"]:checked, input[name="${name}"]:not([type=radio]):not([type=checkbox])`);
+    return el?.value.trim() ?? '';
+  }
+  function multiVal(name: string): string[] {
+    return [...form.querySelectorAll<HTMLInputElement>(`[name="${name}"]:checked`)].map((el) => el.value);
+  }
+
+  function validate(n: number): boolean {
+    if (n === 2 && !fieldVal('age')) {
+      const fs = form.querySelector(`fieldset[data-step="2"] .field`)!;
+      if (!fs.querySelector('.field-error')) {
+        const err = document.createElement('p');
+        err.className = 'field-error';
+        err.textContent = 'Pick the closest era — a rough guess still produces a good plan.';
+        fs.appendChild(err);
+      }
+      return false;
+    }
+    return true;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (!validate(step)) return;
+    if (step < TOTAL) show(step + 1);
+    else finish();
+  });
+  backBtn.addEventListener('click', () => show(Math.max(1, step - 1)));
+  form.addEventListener('submit', (e) => e.preventDefault());
+
+  // ---------- interpretation helpers ----------
+  function parsePostal(raw: string) {
+    const v = raw.toUpperCase().replace(/\s+/g, '');
+    if (/^\d{5}/.test(v)) return { kind: 'us' as const };
+    const m = v.match(/^([A-Z]\d[A-Z])/);
+    if (!m) return { kind: 'none' as const };
+    const fsa = m[1];
+    const province = PROVINCES[fsa[0]] ?? null;
+    const region = D.regions.find((r: any) => r.fsa.some((p: string) => fsa.startsWith(p)));
+    return { kind: 'ca' as const, fsa, province, region };
+  }
+
+  function heatKey(heat: string) {
+    return heat === 'oil' ? 'oil' : heat === 'electric' ? 'electric' : 'gas';
+  }
+
+  function findMeasure(category: string, era: string, heat: string) {
+    const hk = heatKey(heat);
+    return D.savings.measures.find(
+      (m: any) =>
+        m.category === category &&
+        (!m.eras?.length || m.eras.includes(era)) &&
+        (!m.heatingTypes?.length || m.heatingTypes.includes(hk))
+    );
+  }
+
+  function buildSequence(arch: any, heat: string, syms: string[], goals: string[]) {
+    type Item = { category: string; action: string; why: string; score: number };
+    const items: Item[] = arch.priorities.map((p: any, i: number) => ({ ...p, score: i * 10 }));
+
+    const boost = (cat: string, by: number) => {
+      const it = items.find((i) => i.category === cat);
+      if (it) it.score -= by;
+    };
+    const ensure = (cat: string, action: string, why: string, score: number) => {
+      if (!items.find((i) => i.category === cat)) items.push({ category: cat, action, why, score });
+    };
+
+    if (heat === 'electric' || heat === 'oil') {
+      ensure('heat-pump', 'Cold-climate heat pump', 'Your heating fuel makes this the biggest single saving available.', -50);
+      boost('heat-pump', 100);
+    }
+    if (heat === 'heatpump') {
+      const idx = items.findIndex((i) => i.category === 'heat-pump');
+      if (idx >= 0) items.splice(idx, 1);
+      ensure('controls', 'Optimize the heat pump you have', 'Controls, balancing, and envelope work make an existing heat pump cheaper to run.', 45);
+    }
+    if (syms.includes('ice-dams')) { boost('air-sealing', 30); boost('attic-insulation', 25); }
+    if (syms.includes('drafty-rooms')) boost('air-sealing', 25);
+    if (syms.includes('cold-basement')) { boost('basement-insulation', 30); ensure('basement-insulation', 'Basement & rim joist insulation', 'Directly targets the cold-basement problem you flagged.', 25); }
+    if (syms.includes('summer-overheating')) { boost('attic-insulation', 20); boost('heat-pump', 10); }
+    if (syms.includes('cold-second-floor')) boost('air-sealing', 15);
+    if (syms.includes('condensation-mould')) ensure('ventilation', 'Ventilation check / HRV', 'Condensation and musty air are usually ventilation problems — fix the cause, not the windows.', -10);
+    if (goals.includes('heatpump')) boost('heat-pump', 40);
+    if (goals.includes('solar')) ensure('solar', 'Rooftop solar + battery', 'On your goal list — and HRSP currently pays up to $10,000 toward it.', 55);
+    if (goals.includes('emissions') && heat === 'gas') boost('heat-pump', 20);
+
+    items.sort((a, b) => a.score - b.score);
+    const seen = new Set<string>();
+    return items.filter((i) => (seen.has(i.category) ? false : (seen.add(i.category), true))).slice(0, 6);
+  }
+
+  // ---------- results ----------
+  function finish() {
+    const postal = fieldVal('postal');
+    const age = fieldVal('age');
+    const htype = fieldVal('htype') || 'detached';
+    const size = fieldVal('size') || 'medium';
+    const heat = fieldVal('heat') || 'gas';
+    const syms = multiVal('sym');
+    const goals = multiVal('goal');
+    const gasBill = parseFloat(fieldVal('gasBill').replace(/[^0-9.]/g, '')) || 0;
+    const elecBill = parseFloat(fieldVal('elecBill').replace(/[^0-9.]/g, '')) || 0;
+
+    const loc = parsePostal(postal);
+    const arch = D.archetypes.find((a: any) => a.id === age);
+    const isON = loc.kind !== 'ca' ? true : loc.province === 'ON'; // Ontario-first default when unknown
+    const isToronto = loc.kind === 'ca' && loc.fsa![0] === 'M';
+    const regionName = loc.kind === 'ca' && loc.region ? loc.region.name : null;
+
+    // header
+    $('#rTitle').textContent = `Your plan: ${arch.label.split('·')[1]?.trim() ?? arch.label} era home`;
+    $('#rSub').textContent = [
+      arch.years,
+      htype === 'condo' ? 'condo/apartment' : htype === 'semi' ? 'semi or townhome' : 'detached',
+      heat === 'gas' ? 'gas-heated' : heat === 'electric' ? 'electric baseboard' : heat === 'oil' ? 'oil/propane-heated' : 'heat pump equipped',
+      regionName ?? (loc.kind === 'ca' ? (loc.province ?? 'Canada') : loc.kind === 'us' ? 'United States' : 'Ontario (assumed)'),
+    ].join(' · ');
+
+    renderBenchmark(heat, size, age, gasBill, elecBill, isON, htype);
+    renderProfile(arch);
+    renderSequence(arch, heat, syms, goals, age, gasBill, elecBill, isON, isToronto, htype);
+    renderPrograms(loc, goals, isON, isToronto);
+    renderIssues(syms);
+    renderProviders(loc);
+
+    plannerEl.hidden = true;
+    resultsEl.hidden = false;
+    const url = new URL(location.href);
+    const params: Record<string, string> = { postal, age, htype, size, heat, sym: syms.join(','), goal: goals.join(','), gas: gasBill ? String(gasBill) : '', elec: elecBill ? String(elecBill) : '', done: '1' };
+    Object.entries(params).forEach(([k, v]) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k)));
+    history.replaceState(null, '', url);
+    const t = $('#rTitle');
+    t.setAttribute('tabindex', '-1');
+    t.focus({ preventScroll: false });
+  }
+
+  function renderBenchmark(heat: string, size: string, age: string, gasBill: number, elecBill: number, isON: boolean, htype: string) {
+    const el = $('#rBenchmark');
+    el.innerHTML = '';
+    const userAnnual = (gasBill + elecBill) * 12;
+    if (!userAnnual || !isON || htype === 'condo') return;
+    const R = D.rates.ontario;
+    const B = R.benchmarks;
+    const m = (B.eraMultiplier[age] ?? 1) * (B.sizeMultiplier[size] ?? 1);
+    let typical = 0;
+    if (heat === 'electric') typical = B.electricHeatedElecKwh * m * R.elecPerKwh;
+    else typical = B.gasHeatedGasM3 * m * R.gasPerM3 + B.gasHeatedElecKwh * (B.sizeMultiplier[size] ?? 1) * R.elecPerKwh;
+    const lo = typical * 0.85, hi = typical * 1.15;
+    const delta = Math.round(((userAnnual - typical) / typical) * 100);
+    let verdict = '';
+    let cls = 'bench-ok';
+    if (delta > 15) { verdict = `You're spending roughly <b class="bench-up">${delta}% more</b> than a typical similar home — that gap is your upgrade budget hiding in plain sight.`; cls = 'bench-up'; }
+    else if (delta < -15) { verdict = `You're spending about <b class="bench-ok">${Math.abs(delta)}% less</b> than a typical similar home — already efficient, so focus on comfort fixes and equipment timing.`; }
+    else { verdict = `You're within the typical range for similar homes — targeted upgrades can still take a meaningful bite.`; }
+    el.innerHTML = `
+      <div class="card bench-card">
+        <h3>Your bills vs. similar homes</h3>
+        <div class="figures">
+          <div class="fig"><div class="n ${cls}">${money(userAnnual)}</div><div class="l">your estimated annual energy spend</div></div>
+          <div class="fig"><div class="n">${money(lo)}–${money(hi)}</div><div class="l">typical for a ${esc(size)} ${esc(age)} era home (Ontario)</div></div>
+        </div>
+        <p class="small">${verdict}</p>
+        <p class="meta">Benchmark uses published rate + usage assumptions (${esc(D.rates.asOf)}) — rough by design. Your audit replaces this with a real model.</p>
+      </div>`;
+  }
+
+  function renderProfile(arch: any) {
+    $('#rWalls').innerHTML = `
+      <h3>What's probably behind your walls</h3>
+      <p class="small">${esc(arch.summary)}</p>
+      <ul class="kv">
+        <li><span class="k">Walls</span><span>${esc(arch.typical.walls)}</span></li>
+        <li><span class="k">Attic</span><span>${esc(arch.typical.attic)}</span></li>
+        <li><span class="k">Air leaks</span><span>${esc(arch.typical.airtightness)}</span></li>
+        <li><span class="k">Windows</span><span>${esc(arch.typical.windows)}</span></li>
+        <li><span class="k">Basement</span><span>${esc(arch.typical.basement)}</span></li>
+      </ul>`;
+    $('#rWatch').innerHTML = `
+      <h3>Watch for these</h3>
+      ${arch.watchFor.map((w: any) => `<div class="watch-item ${w.severity}"><b>${esc(w.flag)}</b>${esc(w.detail)}</div>`).join('')}`;
+  }
+
+  function renderSequence(arch: any, heat: string, syms: string[], goals: string[], age: string, gasBill: number, elecBill: number, isON: boolean, isToronto: boolean, htype: string) {
+    const el = $('#rSequence');
+    if (htype === 'condo') {
+      el.innerHTML = `
+        <div class="rsec"><h3>Condos work differently</h3>
+        <p class="sub">EnerGuide evaluations and most Ontario rebates target houses and townhomes — in a condo, the envelope and heating usually belong to the corporation. Your best levers: in-suite sealing, window coverings, a heat-pump conversation with your board, and pushing the corporation toward a building-level audit.</p></div>`;
+      return;
+    }
+    const R = D.rates.ontario;
+    let heatSpend = 0;
+    if (heat === 'gas' && gasBill) heatSpend = gasBill * 12 * R.benchmarks.heatShareOfGas;
+    if (heat === 'electric' && elecBill) heatSpend = elecBill * 12 * R.benchmarks.heatShareOfElectricHeatedElec;
+
+    const seq = buildSequence(arch, heat, syms, goals);
+    const rebateChip = (cat: string) => {
+      if (!isON) return '';
+      const map: Record<string, string> = {
+        'air-sealing': 'HRSP assessment path',
+        'attic-insulation': 'HRSP up to $7,700 insulation',
+        'wall-insulation': 'HRSP up to $7,700 insulation',
+        'basement-insulation': 'HRSP up to $7,700 insulation',
+        'windows-doors': 'HRSP $100/opening',
+        'heat-pump': 'HRSP up to $12,000',
+        'solar': 'HRSP up to $10,000',
+        'water-heating': 'HRSP $500',
+        'controls': 'HRSP $75–$100',
+      };
+      const label = map[cat];
+      const help = isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : '';
+      return label ? `<span class="chip chip-active">${label}</span>${help}` : help;
+    };
+
+    const rows = seq.map((item) => {
+      const m = findMeasure(item.category, age, heat);
+      let saveTxt = '';
+      if (m) {
+        if (m.fixedAnnual) saveTxt = `~${money(m.fixedAnnual[0])}–${money(m.fixedAnnual[1])}/yr`;
+        else if (m.pctHeating?.[1] > 0) {
+          saveTxt = heatSpend
+            ? `~${money(heatSpend * m.pctHeating[0])}–${money(heatSpend * m.pctHeating[1])}/yr`
+            : `~${Math.round(m.pctHeating[0] * 100)}–${Math.round(m.pctHeating[1] * 100)}% of heating costs`;
+        }
+      }
+      return `
+        <div class="seq-item">
+          <h4>${esc(item.action)}</h4>
+          <p class="why">${esc(item.why)}${m?.note ? ' ' + esc(m.note) : ''}</p>
+          <div class="nums">
+            ${saveTxt ? `<span class="save">${saveTxt}</span>` : ''}
+            ${m?.typicalCost ? `<span class="cost">typical cost ${esc(m.typicalCost)}</span>` : ''}
+            ${rebateChip(item.category)}
+          </div>
+        </div>`;
+    });
+
+    el.innerHTML = `
+      <div class="rsec">
+        <h3>Your upgrade sequence</h3>
+        <p class="sub">Ordered for your era, heating, and the problems you flagged. ${heatSpend ? 'Dollar ranges use your bills.' : 'Add your bills (start over → step 6) to see dollar ranges.'}</p>
+        <div class="seq">${rows.join('')}</div>
+        <p class="small">${esc(D.savings.wholeHouseNote)}</p>
+      </div>`;
+  }
+
+  function renderPrograms(loc: any, goals: string[], isON: boolean, isToronto: boolean) {
+    const el = $('#rPrograms');
+    const byId = (id: string) => D.programs.find((p: any) => p.id === id);
+    let html = '';
+    if (loc.kind === 'us') {
+      html = `<div class="card province-note"><h3>US launch is coming</h3><p class="small">Our US directory (HOMES-rebate states and audit-ordinance cities first) is in the works. Meanwhile: your utility may offer a free or cheap assessment — check before paying for one.</p></div>`;
+    } else if (loc.kind === 'ca' && loc.province && loc.province !== 'ON') {
+      html = `<div class="card province-note"><h3>Programs in ${esc(loc.province)}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary — check your utility.'}</p><p class="small"><a href="/programs/">See the full program tracker →</a></p></div>`;
+    } else {
+      const ids = ['hrsp-assessment', 'hrsp-no-assessment'];
+      if (isToronto) ids.push('toronto-help');
+      if (goals.includes('buying')) ids.push('cmhc-eco-improvement');
+      const rows = ids.map(byId).filter(Boolean).map((p: any) => `
+        <div class="prog-row">
+          <a href="/programs/${p.slug}/">${esc(p.shortName)}</a>
+          <span class="chip ${p.auditRequired ? 'chip-info' : 'chip-neutral'}">${p.auditRequired ? 'audit required' : 'no audit required'}</span>
+          <span class="hl">${esc(p.headline)}</span>
+        </div>`).join('');
+      html = `<h3>Programs you likely qualify for</h3><p class="sub">Verified against official pages — <a href="/programs/">full tracker here</a>.</p><div class="card card-pad">${rows}</div>`;
+    }
+    el.innerHTML = `<div class="rsec">${html}</div>`;
+  }
+
+  function renderIssues(syms: string[]) {
+    const el = $('#rIssues');
+    if (!syms.length) { el.innerHTML = ''; return; }
+    const chips = syms
+      .map((s) => D.issues.find((i: any) => i.slug === s))
+      .filter(Boolean)
+      .map((i: any) => `<a href="/issues/${i.slug}/">${esc(i.name)} →</a>`)
+      .join('');
+    el.innerHTML = `<div class="rsec"><h3>Deep-dives on your issues</h3><p class="sub">Causes, DIY first steps, and the fix ladder for each problem you flagged.</p><div class="issue-chips">${chips}</div></div>`;
+  }
+
+  function renderProviders(loc: any) {
+    const el = $('#rProviders');
+    const region = loc.kind === 'ca' ? loc.region : null;
+    if (!region) {
+      el.innerHTML = `<div class="rsec"><h3>Find a registered advisor</h3><p class="sub"><a href="/find/">Browse the Ontario directory</a> — every listing is an NRCan-registered service organization.</p></div>`;
+      return;
+    }
+    const all = D.providers.filter((p: any) => p.serves.includes(region.slug));
+    const list = all.slice(0, 4);
+    const cards = list.map((p: any) => `
+      <div class="mini-provider">
+        <a href="/providers/${p.slug}/">${esc(p.name)}</a>
+        <p class="reg">✓ ${esc(p.registration)}</p>
+        ${p.pricing ? `<p class="pr">${esc(p.pricing)}</p>` : ''}
+      </div>`).join('');
+    el.innerHTML = `
+      <div class="rsec">
+        <h3>Registered advisors serving ${esc(region.name)}</h3>
+        <p class="sub"><a href="/find/${region.slug}/">See all ${all.length} registered providers for ${esc(region.name)} →</a></p>
+        <div class="mini-providers">${cards}</div>
+      </div>`;
+  }
+
+  // ---------- restart / share / prefill ----------
+  document.getElementById('restartBtn')?.addEventListener('click', () => {
+    resultsEl.hidden = true;
+    plannerEl.hidden = false;
+    history.replaceState(null, '', location.pathname);
+    show(1);
+  });
+  document.getElementById('copyLink')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    try {
+      await navigator.clipboard.writeText(location.href);
+      btn.textContent = 'Link copied ✓';
+      setTimeout(() => (btn.textContent = 'Copy link to this plan'), 2000);
+    } catch { btn.textContent = location.href; }
+  });
+
+  (function prefill() {
+    const q = new URLSearchParams(location.search);
+    if (!q.size) return;
+    const set = (name: string, val: string | null) => {
+      if (!val) return;
+      const radio = form.querySelector<HTMLInputElement>(`[name="${name}"][value="${CSS.escape(val)}"]`);
+      if (radio) radio.checked = true;
+      else {
+        const input = form.querySelector<HTMLInputElement>(`input[name="${name}"]:not([type=radio]):not([type=checkbox])`);
+        if (input) input.value = val;
+      }
+    };
+    set('postal', q.get('postal'));
+    set('age', q.get('age'));
+    set('htype', q.get('htype'));
+    set('size', q.get('size'));
+    set('heat', q.get('heat'));
+    set('gasBill', q.get('gas'));
+    set('elecBill', q.get('elec'));
+    (q.get('sym') ?? '').split(',').filter(Boolean).forEach((v) => set('sym', v));
+    (q.get('goal') ?? '').split(',').filter(Boolean).forEach((v) => set('goal', v));
+    if (q.get('done') === '1' && q.get('age')) finish();
+  })();
+</script>

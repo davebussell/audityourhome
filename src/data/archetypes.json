@@ -1,0 +1,154 @@
+[
+  {
+    "id": "pre-1946",
+    "label": "Pre-1946 · Wartime & older",
+    "years": "Built before 1946",
+    "summary": "Solid brick or balloon-frame construction, usually with empty wall cavities, minimal original attic insulation, and lots of air leakage. These homes have the biggest savings potential in Ontario — and a few safety flags worth knowing before you insulate.",
+    "typical": {
+      "walls": "Often little or no insulation (solid masonry or empty stud cavities)",
+      "attic": "Minimal unless topped up by a previous owner",
+      "airtightness": "Very leaky — often 2–4× a modern home",
+      "windows": "Original single-pane (sometimes with storms) unless replaced",
+      "basement": "Stone or early concrete foundation, almost never insulated"
+    },
+    "watchFor": [
+      { "flag": "Knob-and-tube wiring", "detail": "Common before ~1950. Insulation can't be blown over live knob-and-tube — electricians and ESA rules come first, and insurers care. Budget for an electrical check before insulating walls or attic.", "severity": "safety" },
+      { "flag": "Vermiculite attic insulation", "detail": "Loose grey-brown pebbly insulation may contain asbestos (Zonolite era). Don't disturb it — testing and, if needed, professional removal come before any attic work.", "severity": "safety" },
+      { "flag": "Ice dams & uneven rooms", "detail": "Classic symptoms of attic bypasses — warm air leaking into the attic and melting roof snow.", "severity": "comfort" }
+    ],
+    "priorities": [
+      { "category": "air-sealing", "action": "Blower-door-guided air sealing", "why": "The cheapest big win in a leaky home — attic hatches, top plates, rim joists, chases." },
+      { "category": "attic-insulation", "action": "Attic to R-60 (after sealing & safety checks)", "why": "Highest return per dollar once bypasses are sealed." },
+      { "category": "basement-insulation", "action": "Basement & rim joist insulation", "why": "Uninsulated foundations can lose 20%+ of a home's heat." },
+      { "category": "wall-insulation", "action": "Wall insulation where cavities allow", "why": "Drill-and-fill for frame walls; interior/exterior strategies for solid brick — get advice before committing." },
+      { "category": "heat-pump", "action": "Right-sized heat pump at equipment end-of-life", "why": "After envelope work, a smaller, cheaper unit heats the whole house properly." }
+    ],
+    "auditAngle": "An EnerGuide blower door test usually reads very high here, and the thermal camera finds empty wall sections and attic bypasses you can't see. The audit also documents pre-retrofit condition — required for the HRSP assessment-path rebates."
+  },
+  {
+    "id": "1946-1965",
+    "label": "1946–1965 · Post-war",
+    "years": "Built 1946–1965",
+    "summary": "Post-war bungalows, storeys-and-a-half, and early splits. Walls have a little insulation (R-7 or so if any), attics are thin, basements bare, and many still run original or second-generation heating. Attic top-ups and basement insulation are the classic wins.",
+    "typical": {
+      "walls": "2×4 frame with thin batts or none (~R-0 to R-7)",
+      "attic": "R-10 to R-20 — well below today's R-60 target",
+      "airtightness": "Leaky, especially at rim joists and attic penetrations",
+      "windows": "Single or early double-pane unless replaced",
+      "basement": "Unfinished, uninsulated concrete is the norm"
+    },
+    "watchFor": [
+      { "flag": "Vermiculite attic insulation", "detail": "This era is squarely in the vermiculite window — check before disturbing attic insulation.", "severity": "safety" },
+      { "flag": "Aluminum wiring (late 1960s)", "detail": "Homes at the tail end of this era may have aluminum branch wiring — an electrician should verify connections before renovations.", "severity": "safety" },
+      { "flag": "Original oil tanks / conversions", "detail": "Former oil homes may have buried or basement tank remnants; insurers and lenders ask.", "severity": "cost" }
+    ],
+    "priorities": [
+      { "category": "attic-insulation", "action": "Attic top-up to R-60", "why": "Cheap, fast, and usually the single best payback in this era." },
+      { "category": "air-sealing", "action": "Air sealing with the attic work", "why": "Sealing before insulating locks in the gain." },
+      { "category": "basement-insulation", "action": "Basement walls & rim joist", "why": "Large bare-concrete heat loss; also makes basements usable." },
+      { "category": "heat-pump", "action": "Heat pump (or hybrid) at furnace end-of-life", "why": "These homes often have ductwork already — a straightforward swap." },
+      { "category": "windows-doors", "action": "Windows when budget allows", "why": "Comfort and noise improve more than bills — do envelope first." }
+    ],
+    "auditAngle": "The audit quantifies exactly how thin the attic and basement are and models which order of upgrades hits the HRSP two-upgrade minimum for the $600 assessment rebate plus insulation rebates."
+  },
+  {
+    "id": "1966-1980",
+    "label": "1966–1980 · Suburban expansion",
+    "years": "Built 1966–1980",
+    "summary": "Side-splits, back-splits, and early subdivisions. Some wall insulation (R-8 to R-12), modest attics, lots of electric baseboard from the 1970s — which makes this era Ontario's best heat-pump hunting ground.",
+    "typical": {
+      "walls": "R-8 to R-12 batts",
+      "attic": "Around R-20",
+      "airtightness": "Moderately leaky",
+      "windows": "Double-pane aluminum or early vinyl unless replaced",
+      "basement": "Partially finished, often uninsulated behind the finish"
+    },
+    "watchFor": [
+      { "flag": "Electric baseboard heating", "detail": "Common in 1970s builds. Swapping to a cold-climate heat pump typically cuts heating electricity 40–60% — and HRSP pays up to $12,000 for it.", "severity": "cost" },
+      { "flag": "Aluminum wiring (to ~1976)", "detail": "Verify with an electrician before renovation work.", "severity": "safety" },
+      { "flag": "UFFI (1977–1980)", "detail": "Urea-formaldehyde foam was used briefly; it mostly matters for disclosure, but know if you have it.", "severity": "cost" }
+    ],
+    "priorities": [
+      { "category": "heat-pump", "action": "Cold-climate heat pump (especially if baseboard-heated)", "why": "The biggest bill cut available to electrically heated homes of this era." },
+      { "category": "attic-insulation", "action": "Attic top-up to R-60", "why": "Still thin by modern standards; cheap win." },
+      { "category": "air-sealing", "action": "Air sealing", "why": "Split-levels leak at the many wall-roof junctions." },
+      { "category": "basement-insulation", "action": "Insulate behind basement finishes when renovating", "why": "Catch it during any basement project." },
+      { "category": "controls", "action": "Smart thermostat / zone controls", "why": "Low-cost trim on any heating system." }
+    ],
+    "auditAngle": "For baseboard-heated homes, the audit's heat-loss calculation right-sizes the heat pump — the difference between a unit that keeps up at -20°C and one that doesn't."
+  },
+  {
+    "id": "1981-1995",
+    "label": "1981–1995 · Poly & batts",
+    "years": "Built 1981–1995",
+    "summary": "Tighter construction with poly vapour barriers, R-12 to R-20 walls, and R-32-ish attics — but usually no heat-recovery ventilation, so humidity and stale air show up. Mid-efficiency furnaces from this era are overdue for replacement.",
+    "typical": {
+      "walls": "R-12 to R-20",
+      "attic": "Around R-32",
+      "airtightness": "Tighter — which makes ventilation matter",
+      "windows": "Double-pane; early low-E toward the end",
+      "basement": "Sometimes insulated to code minimums of the day"
+    },
+    "watchFor": [
+      { "flag": "Condensation & humidity", "detail": "Tight-ish envelope without an HRV — window condensation and musty air are ventilation problems, not window problems.", "severity": "comfort" },
+      { "flag": "Mid-efficiency furnace at end-of-life", "detail": "If the furnace predates ~2000 it's burning 20%+ more gas than needed — decision point for heat pump vs. high-efficiency gas.", "severity": "cost" }
+    ],
+    "priorities": [
+      { "category": "heat-pump", "action": "Heat pump or hybrid at furnace replacement", "why": "The natural upgrade moment for this era's aging equipment." },
+      { "category": "ventilation", "action": "Add an HRV if humidity is an issue", "why": "Fixes condensation at the source." },
+      { "category": "attic-insulation", "action": "Attic top-up R-32 → R-60", "why": "Modest but cheap." },
+      { "category": "air-sealing", "action": "Targeted air sealing", "why": "Rim joists and attic penetrations still leak." },
+      { "category": "water-heating", "action": "Heat pump water heater at tank end-of-life", "why": "HRSP pays $500 toward it." }
+    ],
+    "auditAngle": "The audit separates ventilation problems from insulation problems — the two get confused constantly in this era, and the wrong diagnosis wastes thousands on windows."
+  },
+  {
+    "id": "1996-2010",
+    "label": "1996–2010 · Code era",
+    "years": "Built 1996–2010",
+    "summary": "Reasonably insulated (R-40 attics late in the era), double-glazed, mostly high- or mid-efficiency gas. The wins are targeted: attic top-ups, duct sealing, equipment swaps at end-of-life, and fixing the bonus-room-over-garage cold spot.",
+    "typical": {
+      "walls": "R-17 to R-22",
+      "attic": "R-32 to R-40",
+      "airtightness": "Moderate",
+      "windows": "Double-glazed, low-E in later years",
+      "basement": "Partially insulated to code"
+    },
+    "watchFor": [
+      { "flag": "Room over the garage", "detail": "The classic cold room — floor insulation gaps and duct runs through unconditioned space.", "severity": "comfort" },
+      { "flag": "Builder-grade ductwork", "detail": "Leaky, unbalanced ducts make second floors hot in summer and cold in winter.", "severity": "comfort" }
+    ],
+    "priorities": [
+      { "category": "attic-insulation", "action": "Attic top-up to R-60", "why": "Still worthwhile at today's prices." },
+      { "category": "heat-pump", "action": "Heat pump / hybrid at AC or furnace replacement", "why": "Replace the AC with a heat pump and get heating included." },
+      { "category": "air-sealing", "action": "Duct sealing & targeted air sealing", "why": "Comfort fix for uneven rooms." },
+      { "category": "controls", "action": "Smart thermostat", "why": "Cheap trim." },
+      { "category": "solar", "action": "Solar + battery if roof suits", "why": "HRSP offers up to $10,000; newer roofs make better hosts." }
+    ],
+    "auditAngle": "Diagnostics matter more than insulation depth here — duct testing and the thermal camera find the specific comfort failures worth fixing."
+  },
+  {
+    "id": "2011-plus",
+    "label": "2011+ · Modern code",
+    "years": "Built 2011 or later",
+    "summary": "Close to current code: decent envelope, HRV likely, high-efficiency gas or electric. Audits here are about optimization and planning — heat pump timing, solar sizing, EV load planning — plus fixing any builder shortcuts.",
+    "typical": {
+      "walls": "R-22+",
+      "attic": "R-50 to R-60",
+      "airtightness": "Fairly tight; HRV common",
+      "windows": "Double- or triple-glazed low-E",
+      "basement": "Insulated to code"
+    },
+    "watchFor": [
+      { "flag": "Builder shortcuts", "detail": "Missed insulation bays and unbalanced HVAC show up even in new homes — and warranty windows are finite.", "severity": "cost" },
+      { "flag": "Oversized equipment", "detail": "Builder-spec furnaces and ACs are routinely oversized, cycling hard and wearing early.", "severity": "cost" }
+    ],
+    "priorities": [
+      { "category": "solar", "action": "Solar + battery planning", "why": "Up to $10,000 under HRSP; newer roofs and panels pair well." },
+      { "category": "heat-pump", "action": "Heat pump at first equipment replacement", "why": "Lock in the swap when the AC dies rather than buying AC-only again." },
+      { "category": "controls", "action": "Smart controls & monitoring", "why": "Cheap optimization for tight homes." },
+      { "category": "air-sealing", "action": "Verify, don't assume", "why": "A blower door test confirms the builder delivered what code promised." }
+    ],
+    "auditAngle": "Use the audit as a commissioning check — verify the envelope you paid for, and get the EnerGuide label that helps at resale."
+  }
+]

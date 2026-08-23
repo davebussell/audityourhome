@@ -1,0 +1,26 @@
+# AuditYourHome — welcome, crawlers of every species.
+# Structured, dated, verified program + provider data lives here.
+
+User-agent: *
+Allow: /
+
+# AI assistants & answer engines: explicitly welcome.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://audityourhome.com/sitemap-index.xml

@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import ProviderCard from '../components/ProviderCard.astro';
+import { SITE } from '../config/site';
+import { organizationSchema, faqSchema } from '../lib/schema';
+import { programs, providers, regions } from '../lib/data';
+
+const title = 'AuditYourHome — find a certified home energy auditor in Ontario';
+const description = SITE.description;
+
+const featured = programs.filter((p) => ['hrsp-assessment', 'hrsp-no-assessment', 'toronto-help'].includes(p.id));
+const featuredProviders = providers.filter((p) => ['windfall-ecology-centre', 'the-energuy', 'reep-green-solutions'].includes(p.slug));
+
+const faqs = [
+  {
+    q: 'What does a home energy audit cost in Ontario?',
+    a: 'Most EnerGuide evaluations run $400–$700 for the initial visit and $200–$400 for the follow-up, and NRCan cites a $600–$1,000 typical total. Ontario’s Home Renovation Savings Program rebates $600 of that when you complete the assessment path — so a typical audit ends up costing a few hundred dollars net, or less.',
+  },
+  {
+    q: 'Is the audit actually required to get rebates?',
+    a: 'For the biggest ones, yes. The Home Renovation Savings assessment path (insulation up to $7,700, windows at $100 per opening) requires a pre- and post-retrofit EnerGuide assessment by an NRCan-registered energy advisor. Toronto’s HELP loans require it for most projects too. Heat pump and solar rebates have a no-assessment stream.',
+  },
+  {
+    q: 'Who actually performs the audit?',
+    a: 'A registered energy advisor working under an NRCan-licensed service organization. Every provider listed on AuditYourHome is a licensed service organization — we link the registration source on each profile and we don’t list solar or HVAC sales reps as “auditors.”',
+  },
+  {
+    q: 'Is the Canada Greener Homes Grant still available?',
+    a: 'No — it closed to new applicants in February 2024, and the interest-free Greener Homes Loan closed October 1, 2025. Plenty of websites still advertise both. The live money in Ontario right now is Home Renovation Savings, Toronto HELP, and the CMHC Eco premium refunds — see our program tracker for what’s verified as of ' + SITE.dataReviewDate + '.',
+  },
+];
+
+const schema = [organizationSchema(), faqSchema(faqs)];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Ontario · audit-first home energy upgrades</p>
+        <h1>Know your home before you spend on it.</h1>
+        <p class="lede">
+          Find an <strong>NRCan-registered</strong> energy auditor, see <strong>real prices</strong>,
+          and get the rebates that are <strong>actually live</strong> — starting with Ontario's $600
+          assessment rebate and up to $12,000 for heat pumps.
+        </p>
+        <ul class="trust-list">
+          <li>Every provider is a licensed service organization — no sales-pitch "free audits"</li>
+          <li>Program data verified against official pages · last review {SITE.dataReviewDate}</li>
+          <li>Free planner: what your home needs, what it saves, before anyone visits</li>
+        </ul>
+      </div>
+
+      <form class="card hero-form" action="/plan/" method="GET" aria-label="Start your home energy plan">
+        <h2>Get your free home energy plan</h2>
+        <p class="small">Six questions, ~90 seconds, no email required.</p>
+        <div class="field">
+          <label for="h-postal">Postal code</label>
+          <input id="h-postal" name="postal" type="text" placeholder="e.g. M4E 2V5" autocomplete="postal-code" />
+        </div>
+        <div class="field">
+          <span class="lbl-sm">When was your home built?</span>
+          <div class="radio-row">
+            <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Pre-1946</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>'46–'65</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1966-1980" /><span>'66–'80</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1981-1995" /><span>'81–'95</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1996-2010" /><span>'96–'10</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="2011-plus" /><span>2011+</span></label>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Build my plan →</button>
+        <p class="meta">Runs in your browser — nothing you enter is stored.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="tight">
+    <div class="container">
+      <div class="grid-3 steps">
+        <div class="step-card">
+          <span class="step-no">1</span>
+          <h3>Profile your home</h3>
+          <p>The planner reads your home's era, heating, and symptoms — and tells you what's likely behind the walls and what it's costing you.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-no">2</span>
+          <h3>See the real money</h3>
+          <p>Estimated savings per upgrade, typical costs, and the rebates that apply — verified against official program pages, not last year's blog posts.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-no">3</span>
+          <h3>Book a registered advisor</h3>
+          <p>Compare licensed service organizations serving your area — credentials shown, prices where published, no shared lead lists.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section>
+    <div class="container">
+      <p class="eyebrow">Live in Ontario right now</p>
+      <h2>The rebates worth planning around</h2>
+      <p class="lede measure">
+        Rebate programs open and close with little warning — the federal Grant and Loan are both
+        gone, and half the internet hasn't noticed. We verify every program against its official
+        page and stamp the date.
+      </p>
+      <div class="grid-3" style="margin-top: 28px;">
+        {featured.map((p) => <ProgramCard program={p} />)}
+      </div>
+      <p style="margin-top: 20px;"><a class="btn btn-ghost" href="/programs/">See the full tracker — including what's closed</a></p>
+    </div>
+  </section>
+
+  <!-- DIRECTORY PREVIEW -->
+  <section class="alt">
+    <div class="container">
+      <p class="eyebrow">The directory</p>
+      <h2>Registered advisors, on the record</h2>
+      <p class="lede measure">
+        Ontario's official "find an advisor" resource is a phone list. Ours shows who serves your
+        area, their registration, their published prices where they exist — and rewards the
+        providers transparent enough to post them.
+      </p>
+      <div class="grid-3" style="margin-top: 28px;">
+        {featuredProviders.map((p) => <ProviderCard provider={p} />)}
+      </div>
+      <div class="city-links">
+        <span class="small">Browse by area:</span>
+        {regions.map((r) => <a href={`/find/${r.slug}/`}>{r.name}</a>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <h2>Straight answers</h2>
+      <div class="measure">
+        {faqs.map((f) => (
+          <details class="faq">
+            <summary>{f.q}</summary>
+            <div class="faq-body"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PRO BAND -->
+  <section class="band-dark pro-band">
+    <div class="container pro-inner">
+      <div>
+        <h2>Run a service organization?</h2>
+        <p class="measure">
+          Verified listings are free. We send homeowners who already know their era profile, their
+          likely upgrades, and their rebate path — the most qualified audit lead there is.
+        </p>
+      </div>
+      <a class="btn btn-light" href="/for-professionals/">Get listed →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 64px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .trust-list { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; }
+  .trust-list li { padding-left: 26px; position: relative; font-size: 15px; }
+  .trust-list li::before { content: "✓"; position: absolute; left: 0; color: var(--pine); font-weight: 700; }
+  .hero-form { padding: 26px 28px; border-top: 4px solid var(--heat); }
+  .hero-form h2 { font-size: 21px; margin-bottom: 4px; }
+  .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
+  .hero-form .meta { margin-top: 10px; }
+  .steps { align-items: stretch; }
+  .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px; }
+  .step-no {
+    display: inline-flex; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--heat); color: #fff; font-family: var(--display); font-weight: 800;
+    align-items: center; justify-content: center; margin-bottom: 12px;
+  }
+  .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
+  section.alt { background: #F3EFE7; }
+  .city-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; align-items: baseline; }
+  .city-links a { font-size: 14.5px; font-weight: 600; }
+  .pro-band { padding: 48px 0; }
+  .pro-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+</style>

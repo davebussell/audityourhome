@@ -1,0 +1,65 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import { regions, providers, providersForRegion } from '../../lib/data';
+
+const title = 'Find a home energy auditor in Ontario | AuditYourHome';
+const description =
+  'Browse NRCan-licensed service organizations delivering EnerGuide home energy assessments across Ontario. Registration shown, prices where published, no sales-pitch listings.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Find an auditor', path: '/find/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">The directory</p>
+      <h1>Find a registered energy auditor</h1>
+      <p class="lede">
+        Every listing is an NRCan-licensed service organization — the only kind of provider whose
+        EnerGuide assessments qualify for Ontario's rebate programs. {providers.length} providers
+        across {regions.length} areas, compiled from public registries and provider sites, checked
+        {SITE.dataReviewDate}.
+      </p>
+    </div>
+
+    <div class="region-grid">
+      {regions.map((r) => {
+        const count = providersForRegion(r.slug).length;
+        return (
+          <a class="card region-card" href={`/find/${r.slug}/`}>
+            <h2>{r.name}</h2>
+            <p class="small">{count} registered provider{count === 1 ? '' : 's'}</p>
+            <span class="go">Browse →</span>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="card card-pad elsewhere">
+      <h3>Elsewhere in Ontario?</h3>
+      <p class="mb-0">
+        Province-wide providers like The Energuy cover most of Ontario, and
+        <a href="/plan/"> the planner</a> matches programs to any Ontario postal code. If your area
+        isn't listed yet, <a href={`mailto:${SITE.contactEmail}`}>tell us where you are</a> — we
+        prioritize new areas by request.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .region-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .region-card { padding: 22px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 2px; transition: border-color 0.15s ease; }
+  .region-card:hover { border-color: var(--heat); }
+  .region-card h2 { font-size: 19px; margin: 0; color: var(--ink); }
+  .region-card .small { margin: 0; }
+  .region-card .go { margin-top: 10px; font-weight: 700; font-size: 14px; color: var(--heat-deep); }
+  .elsewhere { border-left: 4px solid var(--steel); }
+</style>
