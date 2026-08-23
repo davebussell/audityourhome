@@ -49,6 +49,17 @@ export interface Provider {
   profile: string;
   sources: string[];
   checkedOn: string;
+  reviewQuery: string;
+}
+
+/** Independent review-site links for a provider (search links — no scraped ratings). */
+export function reviewLinks(p: Provider) {
+  const q = encodeURIComponent(p.reviewQuery);
+  return {
+    google: `https://www.google.com/maps/search/?api=1&query=${q}`,
+    homestars: `https://homestars.com/search?search%5Bquery%5D=${q}`,
+    bbb: `https://www.bbb.org/search?find_country=CAN&find_text=${q}`,
+  };
 }
 
 export interface Region {

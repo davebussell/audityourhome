@@ -1,0 +1,132 @@
+{
+  "energy": [
+    {
+      "id": "blower-door",
+      "icon": "fan",
+      "name": "Blower door test",
+      "what": "A calibrated fan seals into an exterior door and depressurizes the house, measuring exactly how much air leaks in — and letting you feel where.",
+      "establishes": "Your airtightness number, where the big leaks are, and whether air sealing should be step one. The single measurement that separates a real audit from a sales walkthrough.",
+      "who": "NRCan-registered energy advisor",
+      "cost": "Included in every EnerGuide assessment"
+    },
+    {
+      "id": "thermal-imaging",
+      "icon": "camera",
+      "name": "Infrared (thermal) camera scan",
+      "what": "An IR camera maps cold and warm surfaces, revealing missing insulation, thermal bridges, and hidden moisture without opening a single wall.",
+      "establishes": "Which wall sections are actually empty, where the attic bypasses are, and whether that cold corner is an insulation gap or a leak. Most powerful when run during the blower door test on a cold day.",
+      "who": "Energy advisor or building-science contractor",
+      "cost": "Included by most advisors — confirm when booking"
+    },
+    {
+      "id": "heat-loss-calc",
+      "icon": "gauge",
+      "name": "Room-by-room heat-loss calculation (CSA F280)",
+      "what": "A formal calculation of how much heat each room loses at design temperature — the engineering answer to \"what size heat pump do I need?\"",
+      "establishes": "The correct equipment size. Contractors who skip this guess by square footage and routinely oversize — which costs more upfront and runs worse.",
+      "who": "Energy advisor or qualified HVAC designer",
+      "cost": "$150–$400 standalone; often bundled with an assessment"
+    },
+    {
+      "id": "duct-leakage",
+      "icon": "duct",
+      "name": "Duct leakage & airflow testing",
+      "what": "Pressure-tests your ductwork and measures actual airflow at each register to find where conditioned air disappears into walls and attics.",
+      "establishes": "Why the far rooms never get comfortable, and whether duct sealing or balancing will fix your hot-cold problems before you buy bigger equipment.",
+      "who": "HVAC contractor with duct-testing gear; some advisors",
+      "cost": "$200–$450 — ask for it if comfort is your issue"
+    },
+    {
+      "id": "combustion-safety",
+      "icon": "flame",
+      "name": "Combustion safety & spillage check",
+      "what": "Verifies that furnaces, water heaters, and fireplaces still vent safely — especially important before tightening up a leaky house.",
+      "establishes": "Whether air sealing could cause backdrafting or CO risk with your current appliances, and what venting changes must happen first.",
+      "who": "Energy advisor / licensed gas technician",
+      "cost": "Included when you have combustion appliances"
+    },
+    {
+      "id": "ventilation-assessment",
+      "icon": "droplet",
+      "name": "Ventilation & humidity assessment",
+      "what": "Measures your home's air exchange and humidity against occupancy, and checks that bath and kitchen fans actually move air outside.",
+      "establishes": "Whether condensation and musty air are a ventilation problem (fix: HRV, fans) or a cold-surface problem (fix: insulation) — the two get confused constantly, and the wrong diagnosis costs thousands.",
+      "who": "Energy advisor or HRAI ventilation contractor",
+      "cost": "Included in assessment observations; HRV sizing may be extra"
+    },
+    {
+      "id": "attic-inspection",
+      "icon": "attic",
+      "name": "Attic inspection & insulation depth check",
+      "what": "Physical inspection of insulation depth and condition, air bypasses, ventilation baffles — plus identification of vermiculite before anyone disturbs it.",
+      "establishes": "Exactly how much top-up you need, whether sealing must happen first, and any safety flags (vermiculite, knob-and-tube) that change the plan.",
+      "who": "Energy advisor",
+      "cost": "Included in every EnerGuide assessment"
+    },
+    {
+      "id": "bill-analysis",
+      "icon": "chart",
+      "name": "12-month utility bill analysis",
+      "what": "Your actual gas and hydro history, weather-normalized and split into baseload vs. heating — the ground truth every projection should start from.",
+      "establishes": "Your real baseline, how your home compares to similar ones, and the yardstick you'll use to verify savings after upgrades. Our planner does a rough version; your advisor's model refines it.",
+      "who": "You + your energy advisor",
+      "cost": "Bring your bills to the assessment — it sharpens everything"
+    }
+  ],
+  "health": [
+    {
+      "id": "radon",
+      "icon": "radon",
+      "name": "Radon test",
+      "what": "Radon is an invisible, odourless radioactive gas that seeps from the ground into basements — and the second-leading cause of lung cancer in Canada. Health Canada recommends every home be tested.",
+      "establishes": "Whether your long-term average exceeds Canada's 200 Bq/m³ guideline. Test for at least 3 months over winter with a ~$30–$60 kit, or hire a C-NRPP-certified professional. If levels are high, mitigation (a sub-slab depressurization fan) typically runs $2,000–$4,000 — and air-sealing a basement without knowing your radon level is doing it blind.",
+      "who": "DIY long-term kit or C-NRPP-certified measurement pro",
+      "cost": "$30–$60 DIY · pro measurement varies"
+    },
+    {
+      "id": "carbon-monoxide",
+      "icon": "co",
+      "name": "Carbon monoxide (CO) alarms & check",
+      "what": "CO from fuel-burning appliances is odourless and lethal. Ontario law requires CO alarms near sleeping areas in homes with fuel-burning appliances or attached garages.",
+      "establishes": "That your alarms exist, work, and haven't expired (they have end-of-life dates), and — via the audit's combustion spillage check — that appliances aren't backdrafting in the first place.",
+      "who": "You (alarms) + energy advisor / gas tech (spillage)",
+      "cost": "$40–$80 per alarm"
+    },
+    {
+      "id": "mold-iaq",
+      "icon": "mold",
+      "name": "Mold & indoor air quality sampling",
+      "what": "Air or surface sampling identifies mold species and spore concentrations when you can smell mustiness but can't find the source.",
+      "establishes": "Whether you have an active mold problem and where — but remember: sampling finds the symptom. The audit's moisture and ventilation diagnostics find the cause, and fixing the cause is the actual cure.",
+      "who": "IAQ/mold professional (CSSA or IICRC-affiliated)",
+      "cost": "$300–$600 for a typical sampling visit"
+    },
+    {
+      "id": "asbestos-vermiculite",
+      "icon": "hazard",
+      "name": "Asbestos & vermiculite sampling",
+      "what": "Homes built before ~1990 may contain asbestos in vermiculite attic insulation, duct wrap, floor tiles, or plaster. Lab analysis of a professionally-taken sample is the only way to know.",
+      "establishes": "Whether insulation or renovation work can proceed normally, or needs abatement first. Never disturb suspect vermiculite — sample first. This one changes the whole renovation sequence.",
+      "who": "Licensed asbestos/hazmat professional",
+      "cost": "$50–$150 per lab sample; abatement quoted separately"
+    },
+    {
+      "id": "lead-paint",
+      "icon": "paint",
+      "name": "Lead paint testing",
+      "what": "Homes built before 1960 very likely contain lead paint; before 1990, possibly. It matters when renovations will disturb painted surfaces — sanding old paint spreads lead dust.",
+      "establishes": "Whether window/trim replacement and wall work in an older home needs lead-safe practices. Swab kits screen cheaply; labs confirm.",
+      "who": "DIY swab kits or environmental testing firm",
+      "cost": "$15–$40 for swab kits"
+    },
+    {
+      "id": "well-water",
+      "icon": "water",
+      "name": "Well water testing (rural homes)",
+      "what": "Private wells should be tested at least annually for bacteria — free through Public Health Ontario — and periodically for nitrates and metals.",
+      "establishes": "That your water is safe, and a documented history that matters at resale. Rural buyers: test before closing.",
+      "who": "You + Public Health Ontario lab (bacteriological is free)",
+      "cost": "Free (bacteria) · $100–$300 (extended panels)"
+    }
+  ]
+}

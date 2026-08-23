@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import guides from '../../data/guides.json';
+import { regionBySlug, providersForRegion } from '../../lib/data';
+
+const title = 'Ontario home energy guides — city by city | AuditYourHome';
+const description =
+  'Regionally relevant home energy guides for Ontario: what audits find in your city\'s housing stock, which rebates apply, the tests to ask for, and the registered auditors serving your area.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/guides/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Guides</p>
+      <h1>Your city's housing has a story</h1>
+      <p class="lede measure">
+        Toronto's brick semis fail differently than Barrie's converted cottages or Kingston's
+        limestone. These guides read your region's housing stock like an auditor would — what's
+        behind the walls, what the local climate punishes, which rebates apply, and who can measure it.
+      </p>
+    </div>
+
+    <div class="featured-row">
+      <a class="card feat" href="/tests/">
+        <p class="eyebrow">Featured guide</p>
+        <h2>The complete home testing guide</h2>
+        <p class="small">Every test from blower doors and infrared scans to radon, CO, and vermiculite — what each establishes, who performs it, what it costs.</p>
+        <span class="go">Read it →</span>
+      </a>
+      <a class="card feat" href="/issues/">
+        <p class="eyebrow">Symptom-first</p>
+        <h2>Fix an issue</h2>
+        <p class="small">Ice dams, drafts, condensation, cold basements — diagnose from the symptom and follow the fix ladder.</p>
+        <span class="go">Browse issues →</span>
+      </a>
+      <a class="card feat" href="/cost/">
+        <p class="eyebrow">The money</p>
+        <h2>What an audit costs</h2>
+        <p class="small">Real 2026 Ontario numbers, the $600 rebate math, and the "free audit" warning.</p>
+        <span class="go">See the numbers →</span>
+      </a>
+    </div>
+
+    <h2 class="section-h">Regional guides</h2>
+    <div class="guide-grid">
+      {guides.map((g) => {
+        const region = regionBySlug(g.slug);
+        const count = providersForRegion(g.slug).length;
+        return (
+          <a class="card gcard" href={`/guides/${g.slug}/`}>
+            <h3>{region?.name ?? g.slug}</h3>
+            <p class="small">{g.intro.slice(0, 110)}…</p>
+            <span class="meta">{count} registered advisors · rebates · local findings</span>
+            <span class="go">Read the guide →</span>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .featured-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+  @media (max-width: 860px) { .featured-row { grid-template-columns: 1fr; } }
+  .feat { padding: 24px 26px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; border-top: 4px solid var(--heat); transition: border-color 0.15s ease; }
+  .feat:hover { border-color: var(--heat); }
+  .feat h2 { font-size: 20px; margin: 0; color: var(--ink); }
+  .feat .small, .gcard .small { margin: 0; }
+  .go { margin-top: auto; padding-top: 10px; font-weight: 700; font-size: 14px; color: var(--heat-deep); }
+  .section-h { margin-bottom: 18px; }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .gcard { padding: 22px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s ease; }
+  .gcard:hover { border-color: var(--heat); }
+  .gcard h3 { margin: 0; color: var(--ink); font-size: 19px; }
+</style>

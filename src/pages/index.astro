@@ -100,6 +100,69 @@ const schema = [organizationSchema(), faqSchema(faqs)];
     </div>
   </section>
 
+  <!-- THERMAL DIAGRAM -->
+  <section class="thermal-band">
+    <div class="container thermal-grid">
+      <div class="thermal-copy">
+        <p class="eyebrow">Where houses actually leak</p>
+        <h2>Your home has a heat signature</h2>
+        <p>
+          Through an infrared camera, every house glows where it's failing — attic bypasses,
+          empty wall cavities, rim joists, bare foundation walls. The planner predicts your
+          home's pattern from its era; the audit's <strong>blower door</strong> and
+          <strong> thermal scan</strong> measure it exactly.
+        </p>
+        <div class="test-chips">
+          <a href="/tests/#blower-door">Blower door test</a>
+          <a href="/tests/#thermal-imaging">Infrared scan</a>
+          <a href="/tests/#heat-loss-calc">Heat-loss calc</a>
+          <a href="/tests/#radon">Radon test</a>
+          <a href="/tests/" class="all">All tests →</a>
+        </div>
+      </div>
+      <div class="thermal-art" aria-hidden="true">
+        <svg viewBox="0 0 420 340" fill="none">
+          <defs>
+            <radialGradient id="hot1"><stop offset="0%" stop-color="#F2A03D" stop-opacity="0.95"/><stop offset="45%" stop-color="#E05C1F" stop-opacity="0.55"/><stop offset="100%" stop-color="#E05C1F" stop-opacity="0"/></radialGradient>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B2A3A"/><stop offset="100%" stop-color="#14202C"/></linearGradient>
+          </defs>
+          <rect x="0" y="0" width="420" height="340" rx="16" fill="url(#sky)"/>
+          <!-- ground -->
+          <rect x="0" y="252" width="420" height="88" fill="#0F1822" rx="0"/>
+          <line x1="24" y1="252" x2="396" y2="252" stroke="#2A3B4A" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <!-- house body -->
+          <path d="M96 132 210 58l114 74v120H96V132Z" fill="#1E2F41" stroke="#3C5570" stroke-width="2"/>
+          <!-- roof -->
+          <path d="M82 141 210 56l128 85" stroke="#7FAAC7" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <!-- attic floor -->
+          <line x1="96" y1="150" x2="324" y2="150" stroke="#3C5570" stroke-width="2"/>
+          <!-- floor -->
+          <line x1="96" y1="204" x2="324" y2="204" stroke="#3C5570" stroke-width="2"/>
+          <!-- basement -->
+          <rect x="96" y="252" width="228" height="52" fill="#182636" stroke="#3C5570" stroke-width="2"/>
+          <!-- windows -->
+          <rect x="130" y="166" width="30" height="26" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
+          <rect x="260" y="166" width="30" height="26" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
+          <rect x="130" y="216" width="30" height="26" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
+          <!-- door -->
+          <rect x="196" y="212" width="30" height="40" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
+          <!-- heat spots -->
+          <circle class="hot" cx="210" cy="148" r="42" fill="url(#hot1)"/>
+          <circle class="hot d2" cx="162" cy="180" r="26" fill="url(#hot1)"/>
+          <circle class="hot d3" cx="322" cy="204" r="30" fill="url(#hot1)"/>
+          <circle class="hot d4" cx="100" cy="252" r="30" fill="url(#hot1)"/>
+          <!-- labels -->
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#DCE5EC">
+            <text x="230" y="120">attic bypasses</text>
+            <text x="30" y="196">window drafts →</text>
+            <text x="332" y="230">← rim joist</text>
+            <text x="36" y="290">foundation wall ↑</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
   <!-- PROGRAMS -->
   <section>
     <div class="container">
@@ -134,6 +197,10 @@ const schema = [organizationSchema(), faqSchema(faqs)];
         <span class="small">Browse by area:</span>
         {regions.map((r) => <a href={`/find/${r.slug}/`}>{r.name}</a>)}
       </div>
+      <p class="small guides-link">
+        Or go deeper: <a href="/guides/"><strong>city-by-city home energy guides</strong></a> —
+        your region's housing stock, read like an auditor.
+      </p>
     </div>
   </section>
 
@@ -187,8 +254,27 @@ const schema = [organizationSchema(), faqSchema(faqs)];
   }
   .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
   section.alt { background: #F3EFE7; }
+  .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }
+  .thermal-band h2 { color: #fff; }
+  .thermal-band p { color: var(--navy-muted); }
+  .thermal-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 880px) { .thermal-grid { grid-template-columns: 1fr; } }
+  .thermal-art svg { width: 100%; height: auto; display: block; }
+  .hot { animation: hotpulse 3.2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  .hot.d2 { animation-delay: 0.8s; }
+  .hot.d3 { animation-delay: 1.6s; }
+  .hot.d4 { animation-delay: 2.4s; }
+  @keyframes hotpulse { 0%, 100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.12); } }
+  .test-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .test-chips a {
+    display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none;
+    color: var(--navy-ink); border: 1.5px solid var(--navy-line); border-radius: 999px; padding: 7px 15px;
+  }
+  .test-chips a:hover { border-color: #F08246; color: #fff; }
+  .test-chips a.all { background: var(--heat); border-color: var(--heat); color: #fff; }
   .city-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; align-items: baseline; }
   .city-links a { font-size: 14.5px; font-weight: 600; }
+  .guides-link { margin-top: 14px; }
   .pro-band { padding: 48px 0; }
   .pro-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
 </style>

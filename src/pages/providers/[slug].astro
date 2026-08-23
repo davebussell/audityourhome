@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, providerSchema } from '../../lib/schema';
-import { providers, providerBySlug, regionBySlug } from '../../lib/data';
+import { providers, providerBySlug, regionBySlug, reviewLinks } from '../../lib/data';
 
 export function getStaticPaths() {
   return providers.map((p) => ({ params: { slug: p.slug } }));
@@ -17,6 +17,7 @@ const title = `${p.name} — EnerGuide energy assessments | AuditYourHome`;
 const description = `${p.name}: ${p.registration}. Serving ${p.serviceNote}. Profile, service area, and how to book — on AuditYourHome, Ontario's audit-first directory.`;
 
 const typeLabel = p.type === 'non-profit' ? 'Non-profit organization' : p.type === 'franchise' ? 'Franchise network' : 'Company';
+const rv = reviewLinks(p);
 
 const schema = [
   breadcrumbSchema([
@@ -91,6 +92,20 @@ const schema = [
       </div>
     </div>
 
+    <div class="card card-pad reputation">
+      <h3>Check their reputation</h3>
+      <p class="small">
+        Read what real customers say before you book — we link you straight to the independent
+        sources rather than curating quotes. (On-platform verified reviews are on our roadmap.)
+      </p>
+      <div class="rep-links">
+        <a class="btn btn-ghost btn-sm" href={rv.google} rel="noopener nofollow" target="_blank">Google reviews ↗</a>
+        <a class="btn btn-ghost btn-sm" href={rv.homestars} rel="noopener nofollow" target="_blank">HomeStars ↗</a>
+        <a class="btn btn-ghost btn-sm" href={rv.bbb} rel="noopener nofollow" target="_blank">Better Business Bureau ↗</a>
+      </div>
+      <p class="meta mb-0">Search links — if a profile doesn't exist on a platform, that's worth knowing too.</p>
+    </div>
+
     <div class="card card-pad listing-note">
       <h4>About this listing</h4>
       <p class="small mb-0">
@@ -121,6 +136,8 @@ const schema = [
   .badge-verify.big .meta { font-weight: 400; }
   .detail-grid { margin-bottom: 18px; }
   .actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .reputation { border-left: 4px solid var(--pine); margin-bottom: 18px; }
+  .rep-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px; }
   .listing-note { border-left: 4px solid var(--steel); margin-bottom: 18px; }
   .listing-note h4 { margin-bottom: 6px; }
 </style>

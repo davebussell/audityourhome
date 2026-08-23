@@ -1,0 +1,133 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import ProgramCard from '../../components/ProgramCard.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import guides from '../../data/guides.json';
+import issuesData from '../../data/issues.json';
+import { regionBySlug, providersForRegion, programs } from '../../lib/data';
+
+export function getStaticPaths() {
+  return guides.map((g) => ({ params: { region: g.slug } }));
+}
+
+const { region: slug } = Astro.params;
+const g = guides.find((x) => x.slug === slug)!;
+const region = regionBySlug(slug!)!;
+const list = providersForRegion(slug!);
+const isToronto = slug === 'toronto';
+const featuredPrograms = programs.filter((p) =>
+  isToronto
+    ? ['hrsp-assessment', 'hrsp-no-assessment', 'toronto-help'].includes(p.id)
+    : ['hrsp-assessment', 'hrsp-no-assessment', 'cmhc-eco-improvement'].includes(p.id)
+);
+const topIssues = issuesData.filter((i) =>
+  ['high-heating-bills', 'drafty-rooms', 'ice-dams', 'switching-to-heat-pump'].includes(i.slug)
+);
+
+const title = `${g.title} (2026) | AuditYourHome`;
+const description = g.metaDescription;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/guides/' },
+    { name: region.name, path: `/guides/${slug}/` },
+  ]),
+  faqSchema(g.faq),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/guides/">Guides</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
+    </nav>
+
+    <div class="page-hero">
+      <p class="eyebrow">Regional guide · updated {SITE.dataReviewDate}</p>
+      <h1>{g.title}</h1>
+      <p class="lede measure">{g.intro}</p>
+    </div>
+
+    <div class="measure prose">
+      <h2>The housing stock, read like an auditor</h2>
+      <p>{g.housingStock}</p>
+    </div>
+
+    <div class="grid-2 twocol">
+      <div class="card card-pad">
+        <h3>What audits find in {region.name}</h3>
+        <ul class="findings">
+          {g.commonFindings.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>Tests to ask for by name</h3>
+        <ul class="findings">
+          <li><a href="/tests/#blower-door">Blower door test</a> — the leakage number that reorders your plan</li>
+          <li><a href="/tests/#thermal-imaging">Infrared scan</a> — finds the empty walls without opening them</li>
+          <li><a href="/tests/#heat-loss-calc">CSA F280 heat-loss calculation</a> — before any heat pump quote</li>
+          <li><a href="/tests/#radon">Radon test</a> — Health Canada recommends it for every home</li>
+        </ul>
+        <p class="small mb-0"><a href="/plan/">Run the planner</a> for the full test list matched to your house — it carries into your audit request automatically.</p>
+      </div>
+    </div>
+
+    <div class="measure prose">
+      <h2>The rebate angle</h2>
+      <p>{g.programAngle}</p>
+    </div>
+
+    <div class="grid-3 progrow">
+      {featuredPrograms.map((p) => <ProgramCard program={p} compact />)}
+    </div>
+
+    <h2 class="sec">Registered advisors serving {region.name}</h2>
+    <p class="small">
+      All {list.length} are NRCan-licensed service organizations — with direct links to their
+      Google, HomeStars, and BBB reviews. <a href={`/find/${slug}/`}>Full directory view →</a>
+    </p>
+    <div class="provider-grid">
+      {list.map((p) => <ProviderCard provider={p} compact />)}
+    </div>
+
+    <h2 class="sec">Common {region.name} problems, diagnosed</h2>
+    <div class="issue-chips">
+      {topIssues.map((i) => <a href={`/issues/${i.slug}/`}>{i.name} →</a>)}
+    </div>
+
+    <h2 class="sec">Local questions</h2>
+    <div class="measure">
+      {g.faq.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+
+    <LeadForm
+      heading={`Plan it properly in ${region.name}`}
+      sub="Tell us about your home and we'll match you with a registered service organization — with the right tests flagged for your situation."
+      region={slug}
+      context={`guide-${slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 24px; margin: 8px 0 10px; }
+  .twocol { margin: 26px 0; }
+  .findings { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .progrow { margin: 22px 0 8px; }
+  .sec { margin: 36px 0 10px; font-size: 24px; }
+  .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-top: 14px; }
+  .issue-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .issue-chips a { display: inline-block; font-size: 14px; font-weight: 600; color: var(--steel); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 7px 16px; text-decoration: none; }
+  .issue-chips a:hover { border-color: var(--heat); color: var(--heat-deep); }
+</style>

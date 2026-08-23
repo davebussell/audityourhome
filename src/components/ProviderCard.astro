@@ -1,5 +1,6 @@
 ---
 import type { Provider } from '../lib/data';
+import { reviewLinks } from '../lib/data';
 
 interface Props {
   provider: Provider;
@@ -7,6 +8,7 @@ interface Props {
   compact?: boolean;
 }
 const { provider: p, compact = false } = Astro.props;
+const rv = reviewLinks(p);
 
 const typeLabel =
   p.type === 'non-profit' ? 'Non-profit' : p.type === 'franchise' ? 'Franchise' : 'Company';
@@ -39,6 +41,13 @@ const typeLabel =
 
   {p.scaleClaim && !compact && <p class="small claim">{p.scaleClaim}</p>}
 
+  <p class="reviews">
+    Reviews:
+    <a href={rv.google} rel="noopener nofollow" target="_blank">Google</a> ·
+    <a href={rv.homestars} rel="noopener nofollow" target="_blank">HomeStars</a> ·
+    <a href={rv.bbb} rel="noopener nofollow" target="_blank">BBB</a>
+  </p>
+
   <div class="actions">
     <a class="btn btn-primary btn-sm" href={`/providers/${p.slug}/`}>Details</a>
     {p.website && (
@@ -61,5 +70,7 @@ const typeLabel =
   .pricing .meta { margin-left: 6px; }
   .pricing.none { font-size: 13.5px; color: var(--faint); }
   .claim { margin: 0; }
+  .reviews { margin: 0; font-size: 13px; color: var(--faint); }
+  .reviews a { font-weight: 600; }
   .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
 </style>

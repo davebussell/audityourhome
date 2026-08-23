@@ -54,7 +54,8 @@ const schema = [
       <p class="small">
         {list.length} registered service organization{list.length === 1 ? '' : 's'} · compiled from
         public sources, checked {SITE.dataReviewDate} ·
-        <a href="/plan/">not sure what you need? Start with the planner</a>
+        <a href={`/guides/${region.slug}/`}>read the full {region.name} guide</a> ·
+        <a href="/plan/">or start with the planner</a>
       </p>
     </div>
 

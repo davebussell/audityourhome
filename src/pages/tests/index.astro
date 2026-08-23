@@ -1,0 +1,129 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import tests from '../../data/tests.json';
+
+const title = 'The complete home testing guide — blower door to radon | AuditYourHome';
+const description =
+  'Every test your home might need, in one guide: blower door, infrared imaging, heat-loss calculation, duct testing, combustion safety — plus radon, CO, mold, asbestos, and lead. What each establishes, who performs it, and what it costs.';
+
+const faqs = [
+  {
+    q: 'Which tests are included in an EnerGuide assessment?',
+    a: 'The blower door test, attic inspection, and combustion spillage check are core to every EnerGuide evaluation, and most advisors include thermal imaging and bill analysis. Duct-leakage testing and a formal CSA F280 heat-loss calculation are often add-ons — ask for them by name when booking if comfort problems or a heat pump are on your list.',
+  },
+  {
+    q: 'Do I really need a radon test?',
+    a: 'Health Canada recommends every Canadian home be tested, because radon is the second-leading cause of lung cancer in Canada and levels vary house to house — even next door to each other. A long-term (3+ month) winter test with a $30–$60 kit is the standard approach; the guideline level is 200 Bq/m³. It matters extra when you plan to air-seal or finish a basement.',
+  },
+  {
+    q: 'What order should I do tests in?',
+    a: 'Energy tests come with the audit — book the EnerGuide assessment and ask for the add-ons your situation needs. Radon runs in parallel (it takes 3 months, so start the kit early, ideally over winter). Asbestos/vermiculite sampling comes before any insulation work in pre-1990 homes. Mold sampling only makes sense after moisture and ventilation diagnostics have located the cause.',
+  },
+  {
+    q: 'Can one professional do all of these?',
+    a: 'No — and be wary of anyone who claims to. Your NRCan-registered energy advisor covers the energy tests. Radon measurement pros carry C-NRPP certification, asbestos needs a licensed hazmat firm, and mold sampling is its own trade. The audit is the hub: its findings tell you which specialists you actually need.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">The testing guide</p>
+      <h1>Every test your home might need</h1>
+      <p class="lede measure">
+        A house can be measured — leakage, insulation, airflow, radon, moisture. This guide walks
+        every test worth knowing: what it establishes, who performs it, what it costs, and when to
+        ask for it by name. Measurements first, purchases second.
+      </p>
+      <p class="small">
+        Want this personalized? <a href="/plan/">The planner</a> picks the tests your specific home
+        needs and puts them in your audit request automatically.
+      </p>
+    </div>
+
+    <h2 class="cat"><span class="chip chip-active">Energy performance</span> The audit toolkit</h2>
+    <p class="measure small catnote">
+      These establish your home's energy requirements — what to fix, in what order, and what size
+      equipment to buy. Most come with an EnerGuide assessment; the marked ones are add-ons worth
+      requesting explicitly.
+    </p>
+    <div class="test-list">
+      {tests.energy.map((t) => (
+        <article class="card card-pad trow" id={t.id}>
+          <h3>{t.name}</h3>
+          <p>{t.what}</p>
+          <p class="est"><strong>What it establishes:</strong> {t.establishes}</p>
+          <p class="meta">Performed by: {t.who} · {t.cost}</p>
+        </article>
+      ))}
+    </div>
+
+    <h2 class="cat"><span class="chip chip-limited">Health &amp; safety</span> The tests audits don't cover</h2>
+    <p class="measure small catnote">
+      Your energy advisor will flag some of these, but they're separate tests by separate
+      professionals — and a few (radon above all) belong on every homeowner's list regardless of
+      any renovation plans.
+    </p>
+    <div class="test-list">
+      {tests.health.map((t) => (
+        <article class="card card-pad trow health" id={t.id}>
+          <h3>{t.name}</h3>
+          <p>{t.what}</p>
+          <p class="est"><strong>What it establishes:</strong> {t.establishes}</p>
+          <p class="meta">Performed by: {t.who} · {t.cost}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="card card-pad order-note">
+      <h3>The sensible sequence</h3>
+      <p class="mb-0">
+        Start your <strong>radon kit</strong> now (it needs 3 winter months). Book the
+        <strong> EnerGuide assessment</strong> and ask for the add-ons your symptoms call for —
+        duct testing for hot/cold rooms, a CSA F280 calculation before any heat pump quote. If your
+        home predates ~1990, <strong>sample suspect vermiculite before anyone touches the attic</strong>.
+        Fix causes before sampling for mold. And check your CO alarm expiry dates today — that one's
+        free.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+
+    <LeadForm
+      heading="Book the tests that matter for your home"
+      sub="Tell us your situation — we'll match you with a registered service organization and flag which add-on tests to request."
+      context="testing-guide"
+    />
+  </div>
+</Base>
+
+<style>
+  .cat { display: flex; align-items: center; gap: 12px; margin: 36px 0 8px; font-size: 23px; }
+  .catnote { margin-bottom: 18px; }
+  .test-list { display: grid; gap: 14px; margin-bottom: 16px; }
+  .trow h3 { margin-bottom: 6px; font-size: 19px; }
+  .trow p { font-size: 15px; margin-bottom: 8px; max-width: 90ch; }
+  .trow .est { color: var(--muted); }
+  .trow .est strong { color: var(--pine); }
+  .trow.health { border-left: 4px solid var(--warn); }
+  .order-note { border-left: 4px solid var(--heat); margin: 28px 0 36px; }
+</style>
