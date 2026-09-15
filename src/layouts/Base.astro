@@ -38,6 +38,15 @@ const blocks = [websiteSchema(), ...schema];
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
 
+    <!-- Google tag (gtag.js) — Click Shift Portfolio -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-QK0ETT28BD"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QK0ETT28BD');
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
