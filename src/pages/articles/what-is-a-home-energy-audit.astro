@@ -1,0 +1,140 @@
+---
+import Base from '../../layouts/Base.astro';
+import LocalSwitcher from '../../components/LocalSwitcher.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'What is a home energy audit? The measured answer | AuditYourHome';
+const description =
+  'A home energy audit (EnerGuide evaluation in Canada) is a measurement visit: blower door test, thermal imaging, room-by-room modelling — producing your official rating and a prioritized upgrade plan. What happens, what it establishes, what it isn\'t, and the local programs it unlocks.';
+
+const faqs = [
+  {
+    q: 'What exactly happens during a home energy audit?',
+    a: 'A registered energy advisor spends 2–3 hours measuring your house: insulation levels in the attic and walls, a window and door inventory, heating and cooling equipment details, and the centrepiece — a blower door test that depressurizes the house with a calibrated fan to measure air leakage precisely. Afterwards you receive your EnerGuide rating (in gigajoules per year — lower is better, 0 is net-zero) and a renovation upgrade report ranking improvements for your specific home.',
+  },
+  {
+    q: 'What\'s the difference between an energy audit, assessment, and evaluation?',
+    a: 'In Canada they\'re the same service under different names — the official term is "EnerGuide home evaluation," programs say "home energy assessment," and everyone else says "energy audit." What matters is the credential: performed by an energy advisor registered with Natural Resources Canada, working under a licensed service organization, producing an official EnerGuide rating.',
+  },
+  {
+    q: 'Is a free energy audit real?',
+    a: 'Usually not in the EnerGuide sense. A "free audit" from an insulation, window, or HVAC company is a sales walkthrough — no blower door, no rating, no rebate eligibility, and recommendations that reliably match what the company sells. Some provincial programs do subsidize real evaluations (New Brunswick\'s are free; PEI\'s cost $99), which is different: those are program-delivered EnerGuide evaluations.',
+  },
+  {
+    q: 'How much does a home energy audit cost?',
+    a: 'In Ontario, typically $400–$700 for the initial evaluation and $200–$400 for the follow-up, with a $600 Home Renovation Savings rebate covering most of it when you complete the assessment path. Costs vary by province — Quebec\'s Rénoclimat charges a fixed $150, PEI subsidizes to $99.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'What is a home energy audit?', path: '/articles/what-is-a-home-energy-audit/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>What is a home energy audit?</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
+      <h1>What is a home energy audit?</h1>
+      <p class="lede measure">
+        A home energy audit is a <strong>measurement visit</strong>: a registered professional
+        tests your house with real instruments and hands you a prioritized, modelled plan — the
+        difference between renovating on evidence and renovating on vibes. Here's the whole thing,
+        properly defined.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>The definition that matters</h2>
+      <p>
+        In Canada, the audit that counts is the <strong>EnerGuide home evaluation</strong>,
+        delivered by an <strong>energy advisor registered with Natural Resources Canada</strong>
+        working under a licensed service organization
+        (<a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations" rel="noopener">NRCan ↗</a>).
+        The visit produces three things: your <strong>EnerGuide rating</strong> — your home's
+        modelled annual energy use in gigajoules, where lower is better and 0 is a net-zero home —
+        an official label, and a <strong>renovation upgrade report</strong> that ranks
+        improvements by impact for your house specifically. That document is what rebate and
+        financing programs across the country are built around.
+      </p>
+
+      <h2>What gets measured</h2>
+      <p>
+        The centrepiece is the <a href="/tests/#blower-door"><strong>blower door test</strong></a> —
+        a calibrated fan depressurizes the house and measures exactly how leaky it is, to the
+        national CGSB airtightness testing standard. Most advisors pair it with
+        <a href="/tests/#thermal-imaging"><strong>infrared imaging</strong></a>, which maps missing
+        insulation and hidden moisture without opening walls, plus attic inspection, equipment
+        inventory, and — when a heat pump is in play — the
+        <a href="/tests/#heat-loss-calc"><strong>CSA F280 heat-loss calculation</strong></a> that
+        sizes it correctly. Our <a href="/tests/">complete testing guide</a> covers every
+        instrument, including the ones (like radon) the energy audit doesn't include.
+      </p>
+
+      <h2>What it is not</h2>
+      <p>
+        It is not the "free energy audit" a sales rep offers before quoting you windows. Those
+        walkthroughs carry no blower door, no rating, no rebate eligibility — and their findings
+        reliably match the seller's product line. The honest tell: ask whether the visit includes
+        a blower door test and produces an EnerGuide rating. If the answer is no, it's a sales
+        call, whatever it's named.
+      </p>
+
+      <h2>Why bother: the audit is the key, not the lock</h2>
+      <p>
+        Audit-guided whole-home retrofits of older Canadian homes typically land in the
+        <strong>15–35% range of total energy savings</strong> — but the more immediate reason is
+        that governments pay you to get one, because their rebate programs need its documentation.
+        Which programs, and what they require, depends entirely on where you live:
+      </p>
+    </div>
+
+    <LocalSwitcher heading="What an audit unlocks where you live" />
+
+    <div class="measure prose">
+      <h2>How to get one</h2>
+      <p>
+        Start with the <a href="/plan/">Home Energy Planner</a> — six questions, and it tells you
+        what your home's era likely needs, which tests to request by name, and every registered
+        advisor serving your area with their reviews. Or go straight to the
+        <a href="/find/">directory</a>. Either way: measurements first, purchases second.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations" rel="noopener">NRCan — EnerGuide home evaluations (the official definition)</a></li>
+        <li><a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" rel="noopener">NRCan — licensed service organizations</a></li>
+        <li><a href="https://www.homerenovationsavings.ca/with-assessment" rel="noopener">Home Renovation Savings — the Ontario rebate path (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat" rel="noopener">Québec — Rénoclimat</a></li>
+        <li><a href="https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/" rel="noopener">Better Homes BC — evaluation requirements (verified {SITE.dataReviewDate})</a></li>
+      </ul>
+    </div>
+
+    <LeadForm heading="Ready to measure instead of guess?" context="article-what-is" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>

@@ -18,8 +18,8 @@ export const SITE = {
   formEndpoint: '',
 
   /** Stamped across program pages — update whenever program data is re-verified. */
-  dataReviewDate: 'August 23, 2026',
-  dataReviewDateISO: '2026-08-23',
+  dataReviewDate: 'September 18, 2026',
+  dataReviewDateISO: '2026-09-18',
 
   /** v1 scope */
   launchRegion: 'Ontario',

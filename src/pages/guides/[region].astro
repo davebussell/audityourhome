@@ -85,6 +85,25 @@ const schema = [
       {featuredPrograms.map((p) => <ProgramCard program={p} compact />)}
     </div>
 
+    {'neighbourhoods' in g && (g as any).neighbourhoods?.length > 0 && (
+      <>
+        <h2 class="sec">{region.name} neighbourhoods, era by era</h2>
+        <p class="small">
+          Your street's construction era predicts what an audit will find. Jump to yours — then
+          <a href="/plan/"> run the planner</a> with your exact profile.
+        </p>
+        <div class="hood-grid">
+          {(g as any).neighbourhoods.map((n: any) => (
+            <article class="card card-pad hood" id={n.slug}>
+              <h3>Home energy audits in {n.name}</h3>
+              <p class="meta">{n.era} housing stock</p>
+              <p class="mb-0">{n.profile}</p>
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+
     <h2 class="sec">Registered advisors serving {region.name}</h2>
     <p class="small">
       All {list.length} are NRCan-licensed service organizations — with direct links to their
@@ -126,6 +145,11 @@ const schema = [
   .findings { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
   .progrow { margin: 22px 0 8px; }
   .sec { margin: 36px 0 10px; font-size: 24px; }
+  .hood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 780px) { .hood-grid { grid-template-columns: 1fr; } }
+  .hood h3 { font-size: 17.5px; margin-bottom: 2px; }
+  .hood .meta { margin-bottom: 8px; }
+  .hood p { font-size: 14.5px; }
   .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-top: 14px; }
   .issue-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .issue-chips a { display: inline-block; font-size: 14px; font-weight: 600; color: var(--steel); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 7px 16px; text-decoration: none; }

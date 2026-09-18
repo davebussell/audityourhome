@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import LocalSwitcher from '../../components/LocalSwitcher.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'When is an energy audit required? Ontario rules & standards | AuditYourHome';
+const description =
+  'When Ontario actually requires an energy audit — rebate paths, Toronto HELP, EWRB reporting for 50,000+ sq ft buildings — when it doesn\'t (selling a home), and the standards behind it all: EnerGuide, CGSB blower door testing, CSA F280, SB-12, and the National Building Code\'s tiers.';
+
+const faqs = [
+  {
+    q: 'Do I need an energy audit to sell my house in Ontario?',
+    a: 'No. Ontario has no mandatory home energy audit or labelling requirement at time of sale — a federal intent to move that way was signalled in 2022 but no law exists as of late 2026. Voluntary EnerGuide labels can help at resale, but nothing compels one. Anyone telling you an audit is legally required to list is wrong.',
+  },
+  {
+    q: 'When is an energy audit actually required in Ontario?',
+    a: 'Four real cases: the Home Renovation Savings assessment path (pre + post EnerGuide evaluations for its bundled rebates), Toronto\'s HELP loans (most projects), Ontario\'s EWRB regulation (annual energy/water reporting for buildings 50,000 sq ft and larger — reporting, with audits as the natural follow-on), and lender or insurer conditions on some specific products. Everything else is voluntary — and usually still worth it.',
+  },
+  {
+    q: 'What standard governs the blower door test?',
+    a: 'Airtightness testing in EnerGuide evaluations follows the national CGSB standard for determining air leakage (CAN/CGSB-149.10), which is why numbers are comparable between homes and over time. Heat pump sizing follows CSA F280 heat-loss/heat-gain calculations, and new-home energy efficiency in Ontario is governed by the Building Code\'s SB-12 supplementary standard.',
+  },
+  {
+    q: 'What are the National Building Code energy tiers?',
+    a: 'The 2020 National Building Code introduced tiered energy performance levels for new homes — each tier stepping toward net-zero-ready construction. Provinces adopt them on their own schedules; BC\'s Energy Step Code pioneered the approach. For existing-home renovations, the tiers matter mostly as the direction of travel: today\'s voluntary retrofit is tomorrow\'s baseline.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Energy audit requirements in Ontario', path: '/articles/energy-audit-requirements-ontario/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audit requirements &amp; standards</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
+      <h1>When is an energy audit required in Ontario — and what standards govern it?</h1>
+      <p class="lede measure">
+        Half the confusion in this market is the word "required." Here's the honest split: the
+        few cases where an audit is genuinely mandatory, the many where it's the paid gateway to
+        rebates, the myth about selling your home — and the standards stack underneath it all.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>Required, actually</h2>
+      <p>
+        <strong>Rebates:</strong> the Home Renovation Savings assessment path requires a pre- and
+        post-retrofit EnerGuide evaluation by an NRCan-registered advisor to unlock its bundle —
+        the $600 assessment rebate, insulation to $7,700, windows at $100 per opening
+        (<a href="https://www.homerenovationsavings.ca/with-assessment" rel="noopener">homerenovationsavings.ca ↗</a>).
+        <strong> Financing:</strong> Toronto's HELP loans require the assessment for most projects
+        (<a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="noopener">toronto.ca ↗</a>).
+        <strong> Large buildings:</strong> Ontario's EWRB regulation makes annual energy and water
+        reporting mandatory for buildings of <strong>50,000 square feet and up</strong>
+        (<a href="https://www.ontario.ca/page/report-energy-water-use-large-buildings" rel="noopener">ontario.ca ↗</a>) —
+        reporting rather than auditing, but the benchmark is what makes an ASHRAE audit the obvious
+        next step, and our <a href="/articles/energy-audit-services-toronto/">Toronto services
+        article</a> maps that side.
+      </p>
+
+      <h2>Not required — the selling myth</h2>
+      <p>
+        Ontario has <strong>no mandatory energy audit or label at time of sale</strong>. Ottawa
+        signalled intent toward EnerGuide labelling at listing back in 2022, but as of late 2026
+        only voluntary labelling programs exist across Canada
+        (<a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/national-approach-home-labelling/home-labelling-programs-canada" rel="noopener">NRCan's program list ↗</a>).
+        A voluntary label can still help a sale — documented efficiency is an asset — but nobody
+        can lawfully tell you it's required to list. (Contrast: Austin, Portland, and Berkeley do
+        mandate audits or scores at sale — a US pattern worth watching.)
+      </p>
+
+      <h2>The standards stack, decoded</h2>
+    </div>
+
+    <div class="tablewrap card">
+      <table>
+        <thead><tr><th>Standard</th><th>What it governs</th><th>Why you'd meet it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>EnerGuide Rating System</strong></td><td>Canada's official home energy rating (GJ/year; 0 = net-zero)</td><td>The rating and report every program references — <a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations" rel="noopener">NRCan ↗</a></td></tr>
+          <tr><td><strong>CAN/CGSB-149.10</strong></td><td>Airtightness (blower door) test method</td><td>Makes leakage numbers comparable across homes and years</td></tr>
+          <tr><td><strong>CSA F280</strong></td><td>Room-by-room heat-loss/heat-gain calculation</td><td>Correct heat pump and furnace sizing; required by several programs — <a href="/tests/#heat-loss-calc">details</a></td></tr>
+          <tr><td><strong>OBC SB-12</strong></td><td>Energy efficiency for new houses under Ontario's Building Code</td><td>Governs new builds and many additions — <a href="https://www.ontario.ca/page/ontarios-building-code" rel="noopener">ontario.ca ↗</a></td></tr>
+          <tr><td><strong>NBC 2020 tiers</strong></td><td>National model code's tiered energy performance for new homes</td><td>The net-zero-ready trajectory provinces are adopting — <a href="https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada" rel="noopener">Codes Canada ↗</a></td></tr>
+          <tr><td><strong>ASHRAE Standard 211</strong></td><td>Commercial audit levels 1–3</td><td>The framework for building audits — <a href="https://www.ashrae.org/technical-resources" rel="noopener">ASHRAE ↗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="measure prose">
+      <h2>Elsewhere in Canada, "required" means something different</h2>
+      <p>
+        The requirement patterns shift at every border — BC ties its Improvement Bonus to pre/post
+        evaluations and builds new homes to the Step Code's tiers; Quebec routes requirements
+        through Rénoclimat's own assigned evaluators. Switch the panel below to your region:
+      </p>
+    </div>
+
+    <LocalSwitcher heading="Requirements where you live" />
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://www.homerenovationsavings.ca/with-assessment" rel="noopener">Home Renovation Savings — assessment requirement (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="noopener">City of Toronto — HELP assessment requirement (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.ontario.ca/page/report-energy-water-use-large-buildings" rel="noopener">Ontario — EWRB large-building reporting</a></li>
+        <li><a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/national-approach-home-labelling/home-labelling-programs-canada" rel="noopener">NRCan — home labelling programs (voluntary status)</a></li>
+        <li><a href="https://www.ontario.ca/page/ontarios-building-code" rel="noopener">Ontario's Building Code (SB-12 context)</a></li>
+        <li><a href="https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada" rel="noopener">Codes Canada — National Building Code</a></li>
+        <li><a href="https://energystepcode.ca/" rel="noopener">BC Energy Step Code</a></li>
+      </ul>
+    </div>
+
+    <LeadForm heading="Meet the requirement, collect the rebates" sub="We'll match you with a registered service organization whose assessment satisfies the programs you're targeting." context="article-requirements" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .tablewrap { margin: 20px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>

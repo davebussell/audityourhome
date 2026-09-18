@@ -1,0 +1,130 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Energy audits in Prince George, Dawson Creek & Northern BC | AuditYourHome';
+const description =
+  'Home energy audits in Northern BC: what -30° winters do to the payback math, the Home Energy Improvement Bonus (now province-wide, $750–$2,000), CleanBC\'s income-qualified program, CSA F280 sizing for cold-climate heat pumps, and how to book an EnerGuide evaluation in Prince George or Dawson Creek.';
+
+const faqs = [
+  {
+    q: 'How do I book an energy audit in Prince George or Dawson Creek?',
+    a: 'Through an NRCan-registered service organization active in Northern BC — province-wide providers like The Energuy operate across BC, and Better Homes BC maintains an energy advisor list you can filter by location. Book the pre-upgrade EnerGuide evaluation before starting work if you want the Improvement Bonus.',
+  },
+  {
+    q: 'What rebates apply in Northern BC right now?',
+    a: 'The utility Home Renovation Rebate program (BC Hydro/FortisBC) covers equipment and envelope measures, and the Home Energy Improvement Bonus — extended province-wide for invoices dated May 15, 2026 onward — pays $20 per percentage-point EnerGuide improvement ($750 minimum, $2,000 maximum) when you complete three or more eligible upgrades with pre and post evaluations. Income-qualified households can access no-cost upgrades through the CleanBC Energy Savings Program.',
+  },
+  {
+    q: 'Do heat pumps work in Prince George winters?',
+    a: 'Cold-climate models sized from a real CSA F280 heat-loss calculation do — but Northern BC is exactly where sizing shortcuts fail publicly. At -30°C design temperatures, insist on the F280 calculation (BC\'s utility rebates require it), consider dual-fuel setups where gas is present, and treat the envelope work the audit identifies as the way to shrink the unit you need.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Energy audits in Northern BC', path: '/articles/energy-audits-northern-bc/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audits in Northern BC</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
+      <h1>Energy audits in Prince George, Dawson Creek &amp; Northern BC</h1>
+      <p class="lede measure">
+        Northern BC heats through winters the southern rebate brochures weren't written for —
+        -30° design temperatures, long shoulder seasons, wood-and-propane rural stock. That
+        climate is precisely why the audit math works harder here than almost anywhere in Canada.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>Why the north is the best audit country</h2>
+      <p>
+        Every measured leak costs more in Prince George than in Vancouver, because you buy heat
+        for more hours at deeper cold. The same blower-door-guided air sealing that saves a Lower
+        Mainland home 5% of heating costs saves a leaky northern home dramatically more in absolute
+        dollars — and the region's housing (1970s–90s subdivisions, rural properties on propane and
+        wood, converted seasonal cabins around the lakes) is full of exactly the empty walls, thin
+        attics, and rim-joist leakage an EnerGuide evaluation quantifies. Wood-heat homes get one
+        extra reason: the <a href="/tests/#combustion-safety">combustion safety and spillage
+        check</a> matters before any tightening.
+      </p>
+
+      <h2>The money, as of {SITE.dataReviewDate}</h2>
+      <p>
+        The headline change this year: the <strong>Home Energy Improvement Bonus</strong>, once a
+        northern-focused top-up, now applies <strong>province-wide</strong> for invoices dated
+        May 15, 2026 onward — <strong>$20 for every percentage-point improvement</strong> in your
+        EnerGuide rating, minimum $750, maximum $2,000, when you complete
+        <strong>three or more eligible upgrades</strong> with a pre- and post-upgrade evaluation by
+        a program-qualified advisor
+        (<a href="https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/" rel="noopener">Better Homes BC ↗</a>).
+        It stacks on the utility <strong>Home Renovation Rebate</strong> measures from BC Hydro and
+        FortisBC, and heat pump rebates in BC require a <strong>CSA F280 heat-load
+        calculation</strong> — the sizing document that matters most at northern design
+        temperatures. Income-qualified households have a separate door: the
+        <strong>CleanBC Energy Savings Program</strong> delivers no-cost upgrades
+        (<a href="https://betterhomes-esp.clearesult.ca/" rel="noopener">program portal ↗</a>).
+      </p>
+
+      <h2>Standards worth knowing up north</h2>
+      <p>
+        New construction across BC follows the <strong>Energy Step Code</strong>'s tiered
+        performance targets (<a href="https://energystepcode.ca/" rel="noopener">energystepcode.ca ↗</a>) —
+        with climate-zone adjustments that acknowledge the north's reality. For existing homes, the
+        pre/post <strong>EnerGuide evaluation</strong> is the program currency, the blower door
+        runs to the national CGSB method, and <strong>F280</strong> governs equipment sizing. If
+        you're comparing quotes, an advisor who volunteers those three terms unprompted is the one
+        to shortlist.
+      </p>
+
+      <h2>Booking it in the north</h2>
+      <p>
+        Supply is thinner than the Lower Mainland's but real: province-wide service organizations
+        — including <a href="/providers/the-energuy/">The Energuy</a>, active across BC — cover
+        Prince George, Dawson Creek, and the Highway 16/97 corridors, and Better Homes BC keeps an
+        <a href="https://betterhomesbc.ca/get-support/energy-advisors/" rel="noopener">energy
+        advisor list ↗</a> you can filter by area. Our full BC directory is in the works; meanwhile
+        the <a href="/plan/">planner</a> reads any BC postal code and returns the current program
+        stack for your situation.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/" rel="noopener">Better Homes BC — Home Renovation Rebate &amp; Improvement Bonus requirements (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://betterhomes-esp.clearesult.ca/" rel="noopener">CleanBC Energy Savings Program (income-qualified)</a></li>
+        <li><a href="https://energystepcode.ca/" rel="noopener">BC Energy Step Code</a></li>
+        <li><a href="https://betterhomesbc.ca/get-support/energy-advisors/" rel="noopener">Better Homes BC — energy advisor list</a></li>
+        <li><a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations" rel="noopener">NRCan — EnerGuide home evaluations</a></li>
+      </ul>
+    </div>
+
+    <LeadForm heading="Northern BC: get matched" sub="Tell us your community and heating fuel — we'll point you to registered organizations covering your area and the current BC program stack." context="article-northern-bc" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>

@@ -1,0 +1,137 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Home renovation loans in Toronto: HELP, and what else actually exists | AuditYourHome';
+const description =
+  'Financing a Toronto home renovation in 2026: the City\'s HELP program (up to $125,000 at 3.34%–4.75%), why the federal Greener Homes Loan is gone, the CMHC Eco 25% refund, and how an energy assessment unlocks the best terms.';
+
+const faqs = [
+  {
+    q: 'What is the Home Energy Loan Program (HELP)?',
+    a: 'Toronto\'s City-run financing for home energy retrofits: up to $125,000 (or 10% of your property\'s assessed value, whichever is less), at posted fixed rates of 3.34% (5-year) to 4.75% (20-year, valid to Sept 30, 2026) plus a 2% administrative charge. It\'s repaid through your property tax bill, and most projects require an EnerGuide home energy assessment first.',
+  },
+  {
+    q: 'Is the Canada Greener Homes Loan still available?',
+    a: 'No. The federal interest-free loan ($5,000–$40,000) closed to new applications on October 1, 2025, when its funding was fully committed. Many websites still advertise it — treat that as a sign the rest of their information is stale too. For Toronto homeowners, HELP is the closest living equivalent.',
+  },
+  {
+    q: 'Does HELP stay with me or the house if I sell?',
+    a: 'HELP is structured as a local improvement charge tied to the property and repaid via the property tax bill — an arrangement your lawyer and lender should review at sale or refinance time. Toronto\'s program pages cover the mechanics; ask the program team about discharge and assumption details before signing.',
+  },
+  {
+    q: 'Can I stack HELP with rebates?',
+    a: 'Yes — that\'s the play. A common Toronto sequence: EnerGuide assessment → HELP financing for the retrofit → Home Renovation Savings rebates on insulation ($7,700 max), windows, and heat pumps → the $600 assessment rebate → and for CMHC-insured recent buyers, the 25% Eco Improvement premium refund on top.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Home renovation loans in Toronto', path: '/articles/home-renovation-loans-toronto/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Home renovation loans in Toronto</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
+      <h1>Home renovation loans in Toronto: HELP, and what else actually exists</h1>
+      <p class="lede measure">
+        Search for renovation financing in Toronto and you'll find a graveyard of closed federal
+        programs still being advertised. Here's what's actually alive in 2026 — led by the City
+        program most homeowners have never heard of — and how an energy assessment turns borrowing
+        into stacked rebates.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>The one that's alive: Toronto's HELP</h2>
+      <p>
+        The <strong>Home Energy Loan Program</strong> is the City of Toronto's own financing for
+        energy retrofits — insulation, windows, heat pumps, solar, geothermal — and it's open now
+        (<a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="noopener">toronto.ca ↗</a>,
+        verified {SITE.dataReviewDate}). The shape of it: up to <strong>$125,000</strong> or 10%
+        of your property's assessed value, fixed posted rates currently
+        <strong>3.34% (5-year) to 4.75% (20-year)</strong> — the 20-year term reserved for solar,
+        geothermal, windows, and heat pumps — plus a 2% administrative charge, repaid through your
+        property tax bill. A $50,000 loan over 10 years runs roughly $455/month on the City's own
+        example. Most projects require an <strong>EnerGuide home energy assessment</strong> with a
+        registered advisor first; heat-pump-only and solar-only projects are exempt.
+      </p>
+
+      <h2>The one that's gone (and still haunting Google)</h2>
+      <p>
+        The federal <strong>Canada Greener Homes Loan</strong> — $40,000, interest-free — closed
+        to new applications <strong>October 1, 2025</strong> when its funding was fully committed
+        (<a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-loan" rel="noopener">NRCan ↗</a>).
+        No replacement was announced in Budget 2025. If a contractor or website is promising it,
+        their information is at least a year old — a useful trust test we apply across our
+        <a href="/programs/">program tracker</a>.
+      </p>
+
+      <h2>The refund that rides along: CMHC Eco Improvement</h2>
+      <p>
+        If you bought recently with a CMHC-insured mortgage, completing <strong>$20,000+</strong>
+        of eligible energy renovations earns a <strong>25% refund of your mortgage insurance
+        premium</strong> — applications within 2 years of closing
+        (<a href="https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products/cmhc-eco-improvement" rel="noopener">CMHC ↗</a>,
+        verified {SITE.dataReviewDate}). On Toronto premiums that's routinely thousands of dollars
+        for work you were financing anyway. Sagen and Canada Guaranty offer comparable programs.
+      </p>
+
+      <h2>The rest of the toolbox</h2>
+      <p>
+        Beyond the programs: secured lines of credit, mortgage refinancing, and purchase-plus-improvements
+        mortgages are the conventional routes banks offer for renovation money. Which fits depends
+        on your rate, equity, and timeline — we're a directory, not a lender, so take the
+        comparison to your broker or bank rather than to a website. (Nothing on this page is
+        financial advice; it's the program map we verify so you can ask better questions.)
+      </p>
+
+      <h2>The sequence that maximizes it</h2>
+      <p>
+        Toronto's stack rewards a specific order: <strong>book the EnerGuide assessment first</strong>
+        — it's the document HELP requires <em>and</em> the key to Home Renovation Savings' bundled
+        rebates (insulation up to $7,700, $100 per window opening, the $600 assessment rebate).
+        Finance through HELP, collect the rebates against the same work, then claim CMHC Eco if
+        you're an insured recent buyer. The <a href="/plan/">planner</a> builds your version of
+        this sequence, and the <a href="/find/toronto/">Toronto directory</a> lists every
+        registered advisor who can start it.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="noopener">City of Toronto — HELP (rates &amp; terms, verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-loan" rel="noopener">NRCan — Canada Greener Homes Loan (closed Oct 1, 2025)</a></li>
+        <li><a href="https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products/cmhc-eco-improvement" rel="noopener">CMHC — Eco Improvement premium refund (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.homerenovationsavings.ca/with-assessment" rel="noopener">Home Renovation Savings — assessment path (verified {SITE.dataReviewDate})</a></li>
+      </ul>
+    </div>
+
+    <LeadForm heading="Start with the assessment HELP requires" sub="We'll match you with a registered Toronto service organization — the first step for the loan and the rebates alike." region="toronto" context="article-toronto-loans" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>

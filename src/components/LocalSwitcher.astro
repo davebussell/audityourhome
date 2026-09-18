@@ -1,0 +1,147 @@
+---
+/**
+ * LocalSwitcher — drops region-specific programs, requirements, and standards
+ * into an otherwise-general article. Renders every region's block server-side
+ * (all content indexable); JS shows the chosen one and remembers it.
+ */
+interface Props {
+  heading?: string;
+}
+const { heading = 'Make this local' } = Astro.props;
+
+const LOCAL = [
+  {
+    id: 'ontario',
+    label: 'Ontario',
+    default: true,
+    programs:
+      'The Home Renovation Savings Program is the live rebate engine: a $600 rebate covering your initial + follow-up EnerGuide assessments, insulation up to $7,700, windows at $100 per opening on the assessment path, and heat pumps up to $12,000 on the no-assessment stream.',
+    programsLink: { label: 'HomeRenovationSavings.ca', url: 'https://www.homerenovationsavings.ca/with-assessment' },
+    requirements:
+      'Audits are required for: the HRSP assessment path (pre + post EnerGuide by an NRCan-registered advisor), and large buildings over 50,000 sq ft must report energy and water use annually under Ontario\'s EWRB regulation. New homes are built to the Building Code\'s SB-12 energy efficiency rules.',
+    requirementsLink: { label: 'Ontario EWRB (ontario.ca)', url: 'https://www.ontario.ca/page/report-energy-water-use-large-buildings' },
+    findLink: { label: 'Ontario auditor directory', url: '/find/' },
+  },
+  {
+    id: 'toronto',
+    label: 'Toronto',
+    programs:
+      'Toronto stacks three layers: Home Renovation Savings rebates, the City\'s HELP loans up to $125,000 (posted rates 3.34%–4.75% to Sept 30, 2026), and the $600 assessment rebate. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.',
+    programsLink: { label: 'Toronto HELP (toronto.ca)', url: 'https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/' },
+    requirements:
+      'HELP requires an EnerGuide assessment for most projects (heat-pump-only and solar-only are exempt). New construction follows the Toronto Green Standard on top of the Building Code, and 50,000+ sq ft buildings fall under provincial EWRB reporting.',
+    requirementsLink: { label: 'Toronto guide', url: '/guides/toronto/' },
+    findLink: { label: 'Toronto auditors', url: '/find/toronto/' },
+  },
+  {
+    id: 'bc',
+    label: 'British Columbia',
+    programs:
+      'The utility Home Renovation Rebate program (BC Hydro/FortisBC) runs equipment and envelope rebates, and the Home Energy Improvement Bonus — now province-wide as of May 2026 — pays $20 per percentage-point EnerGuide improvement ($750–$2,000) when you complete 3+ eligible upgrades with pre and post evaluations. Income-qualified households can access the CleanBC Energy Savings Program.',
+    programsLink: { label: 'Better Homes BC requirements', url: 'https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/' },
+    requirements:
+      'The Improvement Bonus requires pre + post EnerGuide evaluations by a program-qualified advisor. Heat pump rebates require a CSA F280 heat-load calculation. New construction is governed by the BC Energy Step Code\'s tiered performance targets.',
+    requirementsLink: { label: 'BC Energy Step Code', url: 'https://energystepcode.ca/' },
+    findLink: { label: 'BC coverage — start with the planner', url: '/plan/' },
+  },
+  {
+    id: 'quebec',
+    label: 'Quebec',
+    programs:
+      'Rénoclimat delivers evaluations at a fixed $150 + tax with government-assigned advisors, feeding insulation and air-sealing subsidies; Hydro-Québec\'s LogisVert covers heat pumps and efficient equipment with no audit required.',
+    programsLink: { label: 'Rénoclimat (quebec.ca)', url: 'https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat' },
+    requirements:
+      'Rénoclimat subsidies require its evaluation (booked through the program, not a chosen advisor). Novoclimat certifies high-efficiency new construction.',
+    requirementsLink: { label: 'LogisVert (Hydro-Québec)', url: 'https://www.hydroquebec.com/logisvert/' },
+    findLink: { label: 'How Quebec works — planner readout', url: '/plan/' },
+  },
+  {
+    id: 'prairies',
+    label: 'Manitoba · Sask. · Alberta',
+    programs:
+      'Manitoba is the strongest prairie market: Efficiency Manitoba pays a $400 EnerGuide evaluation rebate plus insulation and heating programs. Saskatchewan\'s HERR rebate ended in April 2026, and Alberta is municipal-only (PACE-style Clean Energy Improvement financing where offered).',
+    programsLink: { label: 'Efficiency Manitoba evaluation rebate', url: 'https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/' },
+    requirements:
+      'Manitoba\'s evaluation rebate requires an EnerGuide evaluation through a listed service organization. Elsewhere on the prairies, audits are driven by bill savings, pre-purchase clarity, and financing eligibility rather than rebate mandates.',
+    requirementsLink: { label: 'Program tracker', url: '/programs/' },
+    findLink: { label: 'Check your options — planner', url: '/plan/' },
+  },
+  {
+    id: 'atlantic',
+    label: 'Atlantic Canada',
+    programs:
+      'New Brunswick\'s Total Home Energy Savings Program includes a free home energy evaluation; efficiencyPEI subsidizes assessments to $99 + HST via contracted partners; Efficiency Nova Scotia runs assessment-based rebates plus free income-qualified streams.',
+    programsLink: { label: 'Save Energy NB', url: 'https://www.saveenergynb.ca/en/save-energy/residential/total-home-energy-savings-program/' },
+    requirements:
+      'PEI\'s insulation rebates require the subsidized assessment first; NB and NS rebate streams are built around their evaluations. Oil-heated homes throughout the region see the fastest conversion paybacks in Canada.',
+    requirementsLink: { label: 'efficiencyPEI assessments', url: 'https://www.princeedwardisland.ca/en/information/environment-energy-and-climate-action/home-energy-assessments' },
+    findLink: { label: 'Check your options — planner', url: '/plan/' },
+  },
+] as const;
+---
+
+<div class="localswitch card" data-localswitch>
+  <div class="ls-head">
+    <h3>{heading}</h3>
+    <label class="ls-pick">
+      <span>Your region:</span>
+      <select data-ls-select>
+        {LOCAL.map((r) => (
+          <option value={r.id} selected={'default' in r && r.default}>{r.label}</option>
+        ))}
+      </select>
+    </label>
+  </div>
+
+  {LOCAL.map((r) => (
+    <div class:list={['ls-block', { on: 'default' in r && r.default }]} data-ls-region={r.id}>
+      <p class="ls-lbl">Live programs</p>
+      <p>{r.programs} <a href={r.programsLink.url} rel="noopener">{r.programsLink.label} ↗</a></p>
+      <p class="ls-lbl">Requirements &amp; standards</p>
+      <p>{r.requirements} <a href={r.requirementsLink.url}>{r.requirementsLink.label}</a></p>
+      <p class="ls-find"><a href={r.findLink.url}><strong>{r.findLink.label} →</strong></a></p>
+    </div>
+  ))}
+  <p class="meta">Program facts re-verified against official pages Sept 18, 2026 — <a href="/programs/">tracker</a>.</p>
+</div>
+
+<style>
+  .localswitch { padding: 22px 26px; border-left: 4px solid var(--heat); margin: 26px 0; }
+  .ls-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .ls-head h3 { margin: 0; font-size: 19px; }
+  .ls-pick { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin: 0; }
+  .ls-pick select { width: auto; padding: 8px 12px; font-size: 14.5px; }
+  .ls-block { display: none; }
+  .ls-block.on { display: block; }
+  .ls-block p { font-size: 15px; margin-bottom: 10px; }
+  .ls-lbl {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--heat-deep);
+    margin: 12px 0 4px !important;
+  }
+  .ls-find { margin-top: 12px; }
+  .meta { margin: 8px 0 0; }
+  /* no-JS: show everything stacked */
+  html.no-js .ls-block { display: block; border-top: 1px solid var(--line); padding-top: 10px; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-localswitch]').forEach((root) => {
+    const select = root.querySelector<HTMLSelectElement>('[data-ls-select]')!;
+    const blocks = root.querySelectorAll<HTMLElement>('[data-ls-region]');
+    const KEY = 'ayh-region';
+    function show(id: string) {
+      blocks.forEach((b) => b.classList.toggle('on', b.dataset.lsRegion === id));
+    }
+    let saved: string | null = null;
+    try { saved = localStorage.getItem(KEY); } catch {}
+    if (saved && [...blocks].some((b) => b.dataset.lsRegion === saved)) {
+      select.value = saved;
+      show(saved);
+    }
+    select.addEventListener('change', () => {
+      show(select.value);
+      try { localStorage.setItem(KEY, select.value); } catch {}
+    });
+  });
+</script>

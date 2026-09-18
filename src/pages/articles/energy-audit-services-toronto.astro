@@ -1,0 +1,157 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Energy audit services in Toronto: homes, buildings, and who does what | AuditYourHome';
+const description =
+  'The complete map of energy audit services in Toronto: EnerGuide assessments for homes, ASHRAE Level 1–3 audits for commercial buildings, EWRB reporting for 50,000+ sq ft properties, and energy management services — with who is qualified to do each.';
+
+const faqs = [
+  {
+    q: 'What kinds of energy audits exist in Toronto?',
+    a: 'Three distinct services get called "energy audits": EnerGuide home assessments for houses and townhomes (performed by NRCan-registered energy advisors), ASHRAE Level 1–3 audits for commercial and multi-residential buildings (performed by engineering firms and certified energy managers), and ongoing energy management/benchmarking services, including the reporting large Ontario buildings must file under the EWRB regulation.',
+  },
+  {
+    q: 'Who is qualified to perform a home energy audit in Toronto?',
+    a: 'For anything connected to rebates or the City\'s HELP loans, it must be a registered energy advisor working under an NRCan-licensed service organization — that\'s who can issue the EnerGuide rating the programs require. Solar, HVAC, and insulation salespeople offering "free audits" are not performing this service.',
+  },
+  {
+    q: 'Does my Toronto building have to report its energy use?',
+    a: 'If it\'s 50,000 square feet or larger, yes — Ontario\'s Energy and Water Reporting and Benchmarking (EWRB) regulation requires annual reporting of energy and water use through Portfolio Manager. This is a provincial requirement that applies across Toronto.',
+  },
+  {
+    q: 'What is a mechanical engineering energy audit?',
+    a: 'Usually one of two things: an ASHRAE Level 2 or 3 audit of a building\'s mechanical systems (HVAC, domestic hot water, controls) performed by an engineering firm, or — residentially — a CSA F280 heat-loss/heat-gain calculation that sizes heating and cooling equipment properly. Which one you need depends on whether you own a building or a house.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Energy audit services in Toronto', path: '/articles/energy-audit-services-toronto/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audit services in Toronto</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
+      <h1>Energy audit services in Toronto: homes, buildings, and who does what</h1>
+      <p class="lede measure">
+        "Energy audit" means three different services in Toronto, performed by three different
+        kinds of professionals, under three different standards. Hiring the wrong one wastes
+        months. Here's the whole map — residential, commercial, and the reporting the province
+        already requires.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>1 · Homes: the EnerGuide assessment</h2>
+      <p>
+        For houses and townhomes, the service that counts is the <strong>EnerGuide home
+        evaluation</strong>: a registered energy advisor tests the house with a blower door,
+        measures insulation, models it room by room, and issues the official EnerGuide rating and
+        renovation upgrade report (<a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations" rel="noopener">NRCan's program page ↗</a>).
+        It's the gateway document for Toronto's money: the
+        <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>
+        ($600 assessment rebate, insulation to $7,700) and the City's
+        <a href="/programs/toronto-home-energy-loan-program/">HELP loans</a> up to $125,000, which
+        require the assessment for most projects
+        (<a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="noopener">toronto.ca ↗</a>).
+        Only advisors working under <strong>NRCan-licensed service organizations</strong> can
+        deliver it — our <a href="/find/toronto/">Toronto directory</a> lists all of them, with
+        review links.
+      </p>
+
+      <h2>2 · Commercial &amp; multi-residential: ASHRAE Level 1–3 audits</h2>
+      <p>
+        Office buildings, retail, industrial, and apartment buildings use a different framework:
+        the audit levels defined by <strong>ASHRAE Standard 211</strong>
+        (<a href="https://www.ashrae.org/technical-resources" rel="noopener">ashrae.org ↗</a>).
+        A <strong>Level 1</strong> walkthrough analyzes bills and flags low-cost measures; a
+        <strong>Level 2</strong> audit adds detailed engineering analysis of mechanical and
+        electrical systems with costed recommendations — this is what most people mean by a
+        "mechanical engineering energy audit"; a <strong>Level 3</strong> ("investment-grade")
+        audit models capital projects rigorously enough to finance against. These are performed by
+        engineering firms and certified energy managers, not residential energy advisors — a
+        distinction worth knowing before you request quotes.
+      </p>
+
+      <h2>3 · Energy management &amp; the reporting Ontario already requires</h2>
+      <p>
+        Beyond one-time audits sits ongoing <strong>energy management</strong>: utility bill
+        monitoring, benchmarking, and retro-commissioning. In Ontario this has a mandatory floor —
+        buildings of <strong>50,000 square feet or larger must report energy and water use
+        annually</strong> under the provincial Energy and Water Reporting and Benchmarking (EWRB)
+        regulation (<a href="https://www.ontario.ca/page/report-energy-water-use-large-buildings" rel="noopener">ontario.ca ↗</a>),
+        using ENERGY STAR Portfolio Manager. If you own or manage a qualifying Toronto building,
+        that reporting is not optional — and a Level 1–2 audit is the natural next step once your
+        benchmark shows where you stand. New construction in the city also builds to the
+        <strong>Toronto Green Standard</strong> on top of the Building Code
+        (<a href="https://www.toronto.ca/city-government/planning-development/official-plan-guidelines/toronto-green-standard/" rel="noopener">toronto.ca ↗</a>).
+      </p>
+
+      <h2>Which service do you actually need?</h2>
+    </div>
+
+    <div class="tablewrap card">
+      <table>
+        <thead><tr><th>You have…</th><th>You need…</th><th>Performed by</th></tr></thead>
+        <tbody>
+          <tr><td>A house or townhome</td><td>EnerGuide home evaluation (+ add-on tests as symptoms warrant)</td><td>NRCan-registered energy advisor — <a href="/find/toronto/">directory</a></td></tr>
+          <tr><td>A heat pump decision</td><td>CSA F280 heat-loss/heat-gain calculation</td><td>Energy advisor or qualified HVAC designer — <a href="/tests/#heat-loss-calc">details</a></td></tr>
+          <tr><td>A commercial or apartment building</td><td>ASHRAE Level 1 → 2 → 3 audit, as depth demands</td><td>Engineering firm / certified energy manager</td></tr>
+          <tr><td>A building ≥ 50,000 sq ft</td><td>Annual EWRB reporting (mandatory) + benchmarking</td><td>Owner/manager; support services exist — <a href="https://windfallcentre.ca/benchmarking/" rel="noopener">Ontario Benchmarking Help Centre ↗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="measure prose">
+      <h2>The Toronto money, briefly</h2>
+      <p>
+        Homeowners: the audit unlocks the stack — <a href="/programs/home-renovation-savings-assessment/">HRSP rebates</a>,
+        <a href="/programs/toronto-home-energy-loan-program/"> HELP financing</a> at posted rates
+        (3.34%–4.75% to Sept 30, 2026), and the
+        <a href="/programs/cmhc-eco-improvement/"> CMHC Eco Improvement</a> 25% premium refund for
+        recent buyers. Our <a href="/guides/toronto/">Toronto guide</a> walks the whole sequence,
+        and the <a href="/plan/">planner</a> matches the right tests to your house in ninety seconds.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations" rel="noopener">NRCan — EnerGuide home evaluations</a></li>
+        <li><a href="https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/" rel="noopener">City of Toronto — Home Energy Loan Program (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.ontario.ca/page/report-energy-water-use-large-buildings" rel="noopener">Ontario — EWRB reporting for large buildings</a></li>
+        <li><a href="https://www.homerenovationsavings.ca/with-assessment" rel="noopener">Home Renovation Savings — assessment path (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.ashrae.org/technical-resources" rel="noopener">ASHRAE — technical resources (Standard 211 audit levels)</a></li>
+        <li><a href="https://www.toronto.ca/city-government/planning-development/official-plan-guidelines/toronto-green-standard/" rel="noopener">City of Toronto — Toronto Green Standard</a></li>
+      </ul>
+    </div>
+
+    <LeadForm heading="Book the right audit in Toronto" sub="Tell us whether it's a home or a building — we'll point you to the right kind of professional, matched to your area." region="toronto" context="article-toronto-services" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .tablewrap { margin: 20px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>
