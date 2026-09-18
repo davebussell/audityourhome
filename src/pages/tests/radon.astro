@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import GearStrip from '../../components/GearStrip.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
@@ -118,6 +119,8 @@ const schema = [
         itself is its own C-NRPP certification — ask for it by name when getting quotes.
       </p>
     </div>
+
+    <GearStrip categories={['radon-monitors']} heading="Radon gear worth owning" />
 
     <h2>Common questions</h2>
     <div class="measure">

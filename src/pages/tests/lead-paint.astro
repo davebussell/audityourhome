@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import GearStrip from '../../components/GearStrip.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
@@ -108,6 +109,8 @@ const schema = [
         you whether you need to.
       </p>
     </div>
+
+    <GearStrip categories={['air-purifiers']} heading="During the work: keep dust down" />
 
     <h2>Common questions</h2>
     <div class="measure">

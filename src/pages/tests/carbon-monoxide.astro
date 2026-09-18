@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import GearStrip from '../../components/GearStrip.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
@@ -109,6 +110,8 @@ const schema = [
         <a href="/issues/switching-to-heat-pump/">heat pump</a>, which makes the whole question moot.
       </p>
     </div>
+
+    <GearStrip categories={['co-alarms']} heading="Alarms that meet the spec" />
 
     <h2>Common questions</h2>
     <div class="measure">

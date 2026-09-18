@@ -85,6 +85,29 @@ const schema = [
       {featuredPrograms.map((p) => <ProgramCard program={p} compact />)}
     </div>
 
+    {'homeHealth' in g && (g as any).homeHealth?.length > 0 && (
+      <>
+        <h2 class="sec">Monitor &amp; test in {region.name}: air, water, and what's in the walls</h2>
+        <p class="small measure">
+          Beyond energy, every area has its own home-health checklist — driven by local geology,
+          water sources, housing eras, and weather. Here's {region.name}'s, each item linked to
+          its full guide. The <a href="/tests/screener/">30-second screener</a> personalizes this
+          to your exact house.
+        </p>
+        <div class="hh-grid">
+          {(g as any).homeHealth.map((h: any) => (
+            <article class="card card-pad hh">
+              <h3><a href={h.link}>{h.name}</a></h3>
+              <p class="mb-0">{h.note}</p>
+            </article>
+          ))}
+        </div>
+        <p class="small hh-foot">
+          The gear side — monitors, alarms, kits — lives in the <a href="/products/">gear guides</a>.
+        </p>
+      </>
+    )}
+
     {'neighbourhoods' in g && (g as any).neighbourhoods?.length > 0 && (
       <>
         <h2 class="sec">{region.name} neighbourhoods, era by era</h2>
@@ -147,6 +170,14 @@ const schema = [
   .sec { margin: 36px 0 10px; font-size: 24px; }
   .hood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
   @media (max-width: 780px) { .hood-grid { grid-template-columns: 1fr; } }
+  .hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 780px) { .hh-grid { grid-template-columns: 1fr; } }
+  .hh { border-left: 4px solid var(--steel); }
+  .hh h3 { font-size: 17px; margin-bottom: 6px; }
+  .hh h3 a { color: var(--ink); text-decoration: none; }
+  .hh h3 a:hover { color: var(--heat-deep); }
+  .hh p { font-size: 14.5px; }
+  .hh-foot { margin: 12px 0 0; }
   .hood h3 { font-size: 17.5px; margin-bottom: 2px; }
   .hood .meta { margin-bottom: 8px; }
   .hood p { font-size: 14.5px; }

@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import GearStrip from '../../components/GearStrip.astro';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 import tests from '../../data/tests.json';
 
@@ -112,6 +113,8 @@ const schema = [
         </details>
       ))}
     </div>
+
+    <GearStrip categories={['radon-monitors', 'air-quality-monitors', 'co-alarms']} heading="The monitoring gear that pairs with these tests" />
 
     <LeadForm
       heading="Book the tests that matter for your home"

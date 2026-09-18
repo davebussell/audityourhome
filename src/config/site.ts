@@ -24,3 +24,19 @@ export const SITE = {
   /** v1 scope */
   launchRegion: 'Ontario',
 } as const;
+
+/**
+ * Amazon Associates configuration.
+ * amazonTagUS: Dave's account-wide Associates (US) tracking ID. To report this
+ * site's earnings separately, create an audityourhome-specific tracking ID in
+ * Associates Central and swap it here.
+ * amazonTagCA: null until the separate amazon.ca Associates application is
+ * approved — .ca links render untagged in the meantime and pick up the tag
+ * the moment it's filled in.
+ */
+export const AFFILIATE = {
+  amazonTagUS: 'clickshift-20' as string | null,
+  amazonTagCA: null as string | null,
+};
+
+export const HAS_AFFILIATE = Boolean(AFFILIATE.amazonTagUS || AFFILIATE.amazonTagCA);

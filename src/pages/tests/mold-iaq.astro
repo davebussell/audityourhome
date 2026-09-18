@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import GearStrip from '../../components/GearStrip.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
@@ -110,6 +111,8 @@ const schema = [
         or musty air in the planner, this is why it routed you here.
       </p>
     </div>
+
+    <GearStrip categories={['dehumidifiers-hygrometers', 'air-quality-monitors', 'air-purifiers']} heading="Measure and manage the air" />
 
     <h2>Common questions</h2>
     <div class="measure">

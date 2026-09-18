@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import productsData from '../../data/products.json';
+
+const title = 'Home monitoring & testing gear — honest picks | AuditYourHome';
+const description =
+  'The monitors, alarms, and test kits worth owning: radon monitors, air quality monitors, HEPA purifiers, CO alarms, dehumidifiers, and water test kits — three vetted picks per category, sized and priced for Canadian homes.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Gear guides', path: '/products/' },
+  ]),
+];
+
+const ELEMENT_LABEL: Record<string, string> = {
+  air: 'Air',
+  water: 'Water & moisture',
+  energy: 'Heat & energy',
+};
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Gear guides</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Gear guides · updated {SITE.dataReviewDate}</p>
+      <h1>Monitor it before you fix it</h1>
+      <p class="lede measure">
+        The measuring instruments of home health — radon monitors, air quality sensors, CO alarms,
+        hygrometers, water kits — plus the gear that acts on what they find. Three vetted picks per
+        category, what each is for, and the honest notes nobody puts on the box. Guides inform;
+        the <a href="/tests/screener/">screener</a> tells you which categories your home
+        actually needs.
+      </p>
+    </div>
+
+    <div class="cat-grid">
+      {productsData.categories.map((c) => (
+        <a class="card card-pad cat" href={`/products/${c.slug}/`}>
+          <p class="el">{ELEMENT_LABEL[c.element] ?? c.element}</p>
+          <h2>{c.name}</h2>
+          <p class="short">{c.short}</p>
+          <p class="picks">{c.picks.map((p) => p.name).join(' · ')}</p>
+          <p class="go">See the picks →</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="card card-pad how">
+      <h3>How these lists are made</h3>
+      <p class="mb-0">
+        Picks are the category benchmarks — the models that keep earning the recommendation on
+        performance, filter cost, and reliability — with price bands as of {SITE.dataReviewDate}.
+        Measurement comes first: every category links back to the
+        <a href="/tests/">testing guide</a> that tells you whether you need it at all, and the
+        <a href="/plan/">planner</a> folds the right categories into your home's plan.
+      </p>
+    </div>
+
+    <AffiliateDisclosure />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; margin-bottom: 26px; }
+  .cat { text-decoration: none; display: grid; gap: 6px; align-content: start; }
+  .cat:hover { border-color: var(--steel); }
+  .cat .el { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); margin: 0; font-weight: 600; }
+  .cat h2 { font-size: 20px; margin: 0; color: var(--ink); }
+  .cat .short { color: var(--muted); font-size: 14.5px; margin: 0; }
+  .cat .picks { font-size: 13px; color: var(--faint); margin: 2px 0 0; }
+  .cat .go { color: var(--heat-deep); font-weight: 600; font-size: 14px; margin: 4px 0 0; }
+  .how { border-left: 4px solid var(--pine); margin-bottom: 8px; }
+</style>

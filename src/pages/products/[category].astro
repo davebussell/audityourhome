@@ -1,0 +1,117 @@
+---
+import Base from '../../layouts/Base.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import { amazonCA, amazonUS } from '../../lib/affiliate';
+import productsData from '../../data/products.json';
+
+export function getStaticPaths() {
+  return productsData.categories.map((c) => ({ params: { category: c.slug } }));
+}
+
+const { category } = Astro.params;
+const c = productsData.categories.find((x) => x.slug === category)!;
+
+const ELEMENT_LABEL: Record<string, string> = {
+  air: 'Air',
+  water: 'Water & moisture',
+  energy: 'Heat & energy',
+};
+
+const title = `${c.name} — picks, sizing, and honest notes | AuditYourHome`;
+const description = `${c.short} ${c.picks.map((p) => p.name).join(', ')} — what each is for, planning prices, and the buying notes that matter in Canadian homes.`;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Gear guides', path: '/products/' },
+    { name: c.name, path: `/products/${c.slug}/` },
+  ]),
+];
+
+const testHref = `/tests/${c.relatedTests[0]}/`;
+const others = productsData.categories.filter((x) => x.slug !== c.slug).slice(0, 3);
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/products/">Gear guides</a> <span aria-hidden="true">/</span> <span>{c.name}</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Gear guide · {ELEMENT_LABEL[c.element] ?? c.element} · updated {SITE.dataReviewDate}</p>
+      <h1>{c.name}</h1>
+      <p class="lede measure">{c.why}</p>
+      <p class="small">
+        Not sure this category applies to your home? The <a href="/tests/screener/">30-second screener</a>
+        flags it if so, and <a href={testHref}>{c.relatedTestName}</a> covers the testing side.
+      </p>
+    </div>
+
+    <div class="pick-list">
+      {c.picks.map((p) => (
+        <article class="card pick">
+          <div class="p-main">
+            <p class="role">{p.role}</p>
+            <h2>{p.name}</h2>
+            <p class="p-why">{p.why}</p>
+          </div>
+          <div class="p-side">
+            <p class="band">{p.band}</p>
+            <a class="btn btn-primary btn-sm" href={amazonCA(p.q)} rel="nofollow sponsored noopener" target="_blank">Find on Amazon.ca ↗</a>
+            <a class="uslink" href={amazonUS(p.q)} rel="nofollow sponsored noopener" target="_blank">US: Amazon.com ↗</a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="meta pricenote">{productsData.pricesNote}</p>
+
+    <div class="card card-pad notes">
+      <h3>Before you buy</h3>
+      <ul>
+        {c.notes.map((n) => <li>{n}</li>)}
+      </ul>
+    </div>
+
+    <AffiliateDisclosure />
+
+    <div class="card card-pad next">
+      <div>
+        <h3>Measure, then act</h3>
+        <p class="mb-0 small">
+          Gear works best inside a plan: the planner reads your home's era, heating, and symptoms,
+          flags the tests that matter, and puts the right categories on your list.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/plan/">Build my plan →</a>
+    </div>
+
+    <p class="also">
+      Also in gear guides:
+      {others.map((o, i) => (
+        <span>{i > 0 && ' · '}<a href={`/products/${o.slug}/`}>{o.name}</a></span>
+      ))}
+    </p>
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .pick-list { display: grid; gap: 14px; margin-bottom: 14px; }
+  .pick { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; padding: 20px 22px; }
+  @media (max-width: 720px) { .pick { grid-template-columns: 1fr; } }
+  .role { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--heat-deep); font-weight: 600; margin: 0 0 4px; }
+  .pick h2 { font-size: 20px; margin: 0 0 6px; }
+  .p-why { font-size: 14.5px; color: var(--muted); margin: 0; max-width: 70ch; }
+  .p-side { display: grid; gap: 8px; align-content: start; justify-items: start; }
+  @media (min-width: 721px) { .p-side { border-left: 1px solid var(--line); padding-left: 18px; } }
+  .band { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  .uslink { font-size: 13px; color: var(--muted); }
+  .pricenote { margin: 0 0 22px; }
+  .notes { border-left: 4px solid var(--warn); }
+  .notes ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .next { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin: 8px 0 18px; }
+  .next h3 { margin-bottom: 4px; }
+  .also { font-size: 14px; color: var(--muted); margin-bottom: 30px; }
+</style>

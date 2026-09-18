@@ -1,0 +1,231 @@
+{
+  "pricesNote": "Price bands are September 2026 Canadian planning figures — street prices move, so treat them as budget bands and check the live listing.",
+  "categories": [
+    {
+      "slug": "radon-monitors",
+      "element": "air",
+      "name": "Radon monitors & test kits",
+      "short": "Continuous digital monitors and lab-analyzed kits for the one test every Canadian home needs.",
+      "why": "A lab-analyzed long-term kit is what Health Canada's protocol is built on — it produces the defensible 3-month average you make decisions with. A continuous digital monitor complements it: you watch levels move with seasons and renovations, and you verify a mitigation system keeps working year after year.",
+      "relatedTests": ["radon"],
+      "relatedTestName": "the radon testing guide",
+      "picks": [
+        {
+          "name": "Alpha-track long-term kit (C-NRPP-listed)",
+          "role": "The protocol test",
+          "why": "A passive detector you place for 3+ winter months and mail to an accredited lab — the exact test Health Canada's guidance is written around, and the cheapest defensible answer.",
+          "band": "$30–$60 incl. lab fee",
+          "q": "radon test kit long term alpha track Canada"
+        },
+        {
+          "name": "Airthings Corentium Home 2",
+          "role": "The battery monitor",
+          "why": "Battery-powered digital monitor with day/week/long-term averages on the display — easy to move room to room, and the long-term number is the one that matters.",
+          "band": "$200–$280",
+          "q": "Airthings Corentium Home 2 radon detector"
+        },
+        {
+          "name": "Ecosense RadonEye",
+          "role": "The fast reader",
+          "why": "The consumer monitor with the most sensitive readout — reacts in hours rather than days, which makes it the tool for watching what air-sealing or a new mitigation fan actually did.",
+          "band": "$250–$330",
+          "q": "Ecosense RadonEye RD200 radon monitor"
+        }
+      ],
+      "notes": [
+        "Decisions follow the 3-month average, never a daily readout — radon swings with weather.",
+        "After mitigation, a continuous monitor is the cheap insurance that the fan is still doing its job.",
+        "Levels above 200 Bq/m³? That's a C-NRPP mitigation quote, not a bigger monitor."
+      ]
+    },
+    {
+      "slug": "air-quality-monitors",
+      "element": "air",
+      "name": "Indoor air quality monitors",
+      "short": "PM2.5, CO₂, and humidity numbers for the air you actually breathe — smoke days included.",
+      "why": "You can't manage what you don't measure. A particle (PM2.5) reading tells you when wildfire smoke has made it indoors and whether the purifier is keeping up; CO₂ tells you whether the house is under-ventilated for the people in it — the same question the audit's ventilation assessment answers with instruments.",
+      "relatedTests": ["mold-iaq"],
+      "relatedTestName": "the mold & indoor air guide",
+      "picks": [
+        {
+          "name": "Airthings View Plus",
+          "role": "The everything monitor",
+          "why": "Radon, PM2.5, CO₂, humidity, VOCs, and pressure in one wall-mounted display — the single-device answer for a whole-home baseline.",
+          "band": "$350–$450",
+          "q": "Airthings View Plus air quality monitor"
+        },
+        {
+          "name": "Aranet4 Home",
+          "role": "The CO₂ truth-teller",
+          "why": "The reference consumer CO₂ monitor — e-ink display, years on a battery, NDIR sensor. Under ~800 ppm your ventilation is keeping up; sustained higher numbers make the case for an HRV.",
+          "band": "$250–$320",
+          "q": "Aranet4 Home CO2 monitor"
+        },
+        {
+          "name": "Amazon Smart Air Quality Monitor",
+          "role": "The budget particle counter",
+          "why": "PM2.5, VOC, humidity and temperature for the price of a dinner out — enough to see smoke infiltration and check purifier placement, minus the CO₂ sensor.",
+          "band": "$90–$120",
+          "q": "Amazon Smart Air Quality Monitor"
+        }
+      ],
+      "notes": [
+        "On wildfire-smoke days, indoor PM2.5 below ~12 µg/m³ is the target — if the number climbs when the purifier is running, it's undersized or mis-placed.",
+        "CO₂ is a proxy for ventilation, not a pollutant at household levels — it tells you when to ventilate and when an HRV would pay off.",
+        "Humidity readings on these double as your mould early-warning: winter target roughly 30–50%."
+      ]
+    },
+    {
+      "slug": "air-purifiers",
+      "element": "air",
+      "name": "Air purifiers (HEPA)",
+      "short": "True-HEPA units sized to the room — the practical defence on smoke days and the ally during dusty renovations.",
+      "why": "A properly sized true-HEPA purifier is the fastest air-quality win money can buy: it strips wildfire-smoke particles, renovation dust, and allergens from the room you actually live in. It treats symptoms, not causes — mould needs its moisture source fixed and radon needs mitigation — but on a smoke day or mid-renovation, nothing else works as fast.",
+      "relatedTests": ["mold-iaq"],
+      "relatedTestName": "the mold & indoor air guide",
+      "picks": [
+        {
+          "name": "Coway AP-1512HH Mighty",
+          "role": "The benchmark",
+          "why": "The default recommendation in this category for a decade — true HEPA, quiet, frugal on power, filters that don't cost a fortune. Right-sized for bedrooms and offices to ~35 m².",
+          "band": "$220–$300",
+          "q": "Coway AP-1512HH Mighty air purifier"
+        },
+        {
+          "name": "Winix 5500-2",
+          "role": "The smoke & odour value",
+          "why": "True HEPA plus a real washable carbon filter — the combination that handles wildfire-smoke smell, not just the particles. Regularly the best value per unit of clean air delivered.",
+          "band": "$200–$280",
+          "q": "Winix 5500-2 air purifier"
+        },
+        {
+          "name": "Levoit Core 600S",
+          "role": "The big-room unit",
+          "why": "Moves enough air for open-plan main floors and basements (~70 m²) with app control and an onboard particle sensor for auto mode.",
+          "band": "$280–$380",
+          "q": "Levoit Core 600S air purifier"
+        }
+      ],
+      "notes": [
+        "Size by the room: aim for a unit rated well above your room's area so it cleans on its quiet speeds — an undersized purifier on max is a loud purifier that loses.",
+        "\"True HEPA\" is the phrase that matters; \"HEPA-type\" filters are not the same thing.",
+        "The real cost is filters — price a year of replacements before choosing, and stock a spare set before smoke season.",
+        "During renovations in pre-1990 homes, a purifier is a supplement to containment and HEPA vacuuming, never a substitute — see the lead and asbestos guides."
+      ]
+    },
+    {
+      "slug": "co-alarms",
+      "element": "air",
+      "name": "Carbon monoxide alarms",
+      "short": "CSA-certified alarms — required by Ontario law near sleeping areas in homes with fuel appliances.",
+      "why": "If your home burns anything — gas, oil, propane, wood — or has an attached garage, Ontario law requires CO alarms adjacent to sleeping areas. They're $40–$80, they expire on a printed date, and they're the last line of defence behind the annual servicing and the audit's spillage check.",
+      "relatedTests": ["carbon-monoxide"],
+      "relatedTestName": "the carbon monoxide guide",
+      "picks": [
+        {
+          "name": "First Alert CO615",
+          "role": "The plug-in with display",
+          "why": "Plugs into any outlet with battery backup and shows the actual ppm reading — the display turns a mystery chirp into information.",
+          "band": "$45–$70",
+          "q": "First Alert CO615 carbon monoxide alarm plug in"
+        },
+        {
+          "name": "Kidde Nighthawk (digital display)",
+          "role": "The other benchmark",
+          "why": "The long-running Kidde equivalent — AC powered, battery backup, digital readout, and a peak-level memory button that tells you what happened while you were out.",
+          "band": "$45–$75",
+          "q": "Kidde Nighthawk carbon monoxide alarm digital display"
+        },
+        {
+          "name": "First Alert combination smoke + CO",
+          "role": "The consolidator",
+          "why": "Where a smoke alarm is due for replacement anyway, a combination unit covers both requirements in one ceiling spot — check it carries both CSA marks.",
+          "band": "$60–$100",
+          "q": "First Alert combination smoke carbon monoxide alarm Canada"
+        }
+      ],
+      "notes": [
+        "Look for CSA 6.19 certification — it's the Canadian standard CO alarms are tested to.",
+        "Every CO alarm has an end-of-life date printed on the back, typically 7–10 years from manufacture. Check yours today; replace on schedule.",
+        "One adjacent to each sleeping area is the legal minimum — one per storey with fuel appliances is the sensible spec.",
+        "An alarm is the backstop, not the fix: annual appliance servicing and the audit's combustion spillage check come first."
+      ]
+    },
+    {
+      "slug": "dehumidifiers-hygrometers",
+      "element": "water",
+      "name": "Dehumidifiers & hygrometers",
+      "short": "Measure the moisture first ($20), then knock summer basement humidity down to the 30–50% band.",
+      "why": "Half of Ontario's musty-basement problem is seasonal: warm humid summer air meeting cool foundation walls. A $20 hygrometer proves whether you have a humidity problem at all; a properly sized dehumidifier fixes the summer half. The winter half — condensation on cold surfaces — is an insulation and ventilation problem the audit diagnoses, and no dehumidifier fixes it.",
+      "relatedTests": ["mold-iaq"],
+      "relatedTestName": "the mold & indoor air guide",
+      "picks": [
+        {
+          "name": "Govee hygrometer (2-pack)",
+          "role": "Measure before you buy",
+          "why": "Bluetooth-logging thermo-hygrometers for about $30 a pair — one upstairs, one in the basement, and a week of data tells you whether you need a dehumidifier at all.",
+          "band": "$25–$40 (2-pack)",
+          "q": "Govee bluetooth hygrometer thermometer 2 pack"
+        },
+        {
+          "name": "Midea Cube (35–50 pint)",
+          "role": "The apartment-to-basement pick",
+          "why": "Compact footprint that nests for storage, app control, and a washable filter — sized right for typical basements at the 35-pint mark.",
+          "band": "$280–$400",
+          "q": "Midea Cube 35 pint dehumidifier"
+        },
+        {
+          "name": "hOmeLabs 50-pint",
+          "role": "The big-basement standard",
+          "why": "The straightforward high-capacity unit for large or wet basements — pair it with its drain-hose outlet so you never empty a bucket.",
+          "band": "$300–$420",
+          "q": "hOmeLabs 50 pint dehumidifier"
+        }
+      ],
+      "notes": [
+        "Winter indoor target is roughly 30–50% relative humidity; summer basements drift far above it without help.",
+        "Buy Energy Star and use the drain hose — the bucket is how dehumidifiers end up unplugged by November.",
+        "If humidity is fine but a cold corner still grows mould, that's a cold-surface (insulation) problem — the audit's thermal scan finds it.",
+        "Persistent high humidity in a tightened house is the textbook case for an HRV — ask the planner."
+      ]
+    },
+    {
+      "slug": "water-testing",
+      "element": "water",
+      "name": "Water test kits",
+      "short": "Lab-grade mail-in panels and screening strips — after you've used Ontario's free bacterial testing.",
+      "why": "Start with what's free: Public Health Ontario tests private well samples for E. coli and total coliforms at no charge. Paid kits earn their keep on what the free test doesn't cover — nitrates, metals like lead and arsenic, hardness, and city-water questions like lead service lines in pre-1960 neighbourhoods.",
+      "relatedTests": ["well-water"],
+      "relatedTestName": "the well water guide",
+      "picks": [
+        {
+          "name": "Tap Score mail-in lab panel",
+          "role": "The lab-grade answer",
+          "why": "Mail-in kits analyzed at accredited labs with a readable report — choose the well panel (nitrates, metals, minerals) or the city panel (lead, chlorine by-products). The serious option when you need numbers you'd act on.",
+          "band": "$150–$400 by panel",
+          "q": "Tap Score water test kit"
+        },
+        {
+          "name": "Health Metric well water kit",
+          "role": "The screening strips",
+          "why": "DIY strips for nitrate/nitrite, hardness, pH, iron and a bacteria presence test — a between-lab-tests screen, not a substitute for one.",
+          "band": "$40–$70",
+          "q": "Health Metric well water test kit"
+        },
+        {
+          "name": "Safe Home lead-in-water test",
+          "role": "The lead question",
+          "why": "Lab-verified single-issue kit for the pre-1960 city-home question: is there lead in this tap's water? Worth running on any older home with original plumbing.",
+          "band": "$40–$80",
+          "q": "Safe Home lead in drinking water test kit"
+        }
+      ],
+      "notes": [
+        "Ontario well owners: bacteriological testing is free through Public Health Ontario — never pay for what the public lab does better.",
+        "A TDS meter is not a safety test — it reads dissolved minerals, and dangerous water can score \"clean\". Skip it.",
+        "Test wells for chemistry when you move in, every few years after, and whenever taste, colour, or smell changes.",
+        "Keep every report — a documented water history matters at resale."
+      ]
+    }
+  ]
+}

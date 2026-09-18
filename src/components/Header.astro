@@ -1,112 +1,285 @@
 ---
 import Logo from './Logo.astro';
+import { NAV } from '../lib/nav';
 
-const nav = [
-  { href: '/plan/', label: 'Energy Planner' },
-  { href: '/find/', label: 'Find an auditor' },
-  { href: '/programs/', label: 'Rebates & programs' },
-  { href: '/tests/', label: 'Testing guide' },
-  { href: '/guides/', label: 'City guides' },
-];
 const path = Astro.url.pathname;
+
+/** plain-link active state */
+const isActive = (href?: string) => !!href && path.startsWith(href);
+/** mega-trigger active state: any link inside starts the current path */
+const sectionActive = (item: (typeof NAV)[number]) =>
+  item.columns?.some((c) => c.links.some((l) => path.startsWith(l.href.split('#')[0]) && l.href !== '/')) ?? false;
 ---
 
-<header class="site-header">
+<header class="site-header" id="siteHeader">
   <div class="container inner">
     <Logo />
-    <nav aria-label="Main">
-      <button class="menu-btn" aria-expanded="false" aria-controls="site-nav" id="menuBtn">
-        Menu
-      </button>
-      <ul id="site-nav">
-        {nav.map((item) => (
-          <li>
-            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
-              {item.label}
-            </a>
-          </li>
-        ))}
+    <nav aria-label="Main" class="mainnav">
+      <button class="menu-btn" aria-expanded="false" aria-controls="mobile-nav" id="menuBtn">Menu</button>
+
+      <!-- Desktop row -->
+      <ul class="deskrow" id="deskRow">
+        {NAV.map((item) =>
+          item.columns ? (
+            <li class="has-panel" data-nav={item.id}>
+              <button
+                class="trigger"
+                aria-expanded="false"
+                aria-controls={`panel-${item.id}`}
+                data-active={sectionActive(item) ? 'true' : undefined}
+              >
+                {item.label}
+                <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </li>
+          ) : (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          )
+        )}
         <li class="cta"><a href="/plan/" class="btn btn-primary btn-sm">Check my home</a></li>
       </ul>
     </nav>
+  </div>
+
+  <!-- Mega panels (desktop) -->
+  {NAV.filter((i) => i.columns).map((item) => (
+    <div class="panel" id={`panel-${item.id}`} data-panel={item.id} hidden>
+      <div class="container panel-inner">
+        {item.lead && (
+          <a class="lead" href={item.lead.href}>
+            <p class="lead-t">{item.lead.title}</p>
+            <p class="lead-d">{item.lead.desc}</p>
+            <p class="lead-c">{item.lead.cta}</p>
+          </a>
+        )}
+        <div class="cols" style={`--ncols:${item.columns!.length}`}>
+          {item.columns!.map((col) => (
+            <div class="col">
+              <p class="col-t">{col.title}</p>
+              <ul>
+                {col.links.map((l) => (
+                  <li>
+                    <a href={l.href}>
+                      <span class="l-label">{l.label}</span>
+                      {l.desc && <span class="l-desc">{l.desc}</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        {item.panelFoot && (
+          <p class="panel-foot"><a href={item.panelFoot.href}>{item.panelFoot.label}</a></p>
+        )}
+      </div>
+    </div>
+  ))}
+
+  <!-- Mobile drawer -->
+  <div class="mobile" id="mobile-nav" hidden>
+    {NAV.map((item) =>
+      item.columns ? (
+        <details class="m-group">
+          <summary>{item.label}</summary>
+          <div class="m-body">
+            {item.lead && <a class="m-lead" href={item.lead.href}>{item.lead.cta.replace(' →', '')} →</a>}
+            {item.columns.map((col) => (
+              <div class="m-col">
+                <p class="m-col-t">{col.title}</p>
+                {col.links.map((l) => (
+                  <a href={l.href}>{l.label}</a>
+                ))}
+              </div>
+            ))}
+          </div>
+        </details>
+      ) : (
+        <a class="m-link" href={item.href}>{item.label}</a>
+      )
+    )}
+    <a href="/plan/" class="btn btn-primary m-cta">Check my home</a>
   </div>
 </header>
 
 <style>
   .site-header {
-    background: rgba(250, 248, 244, 0.92);
+    background: rgba(250, 248, 244, 0.95);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;
     z-index: 50;
   }
-  .inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    height: 66px;
+  .inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 66px; }
+  .mainnav { display: flex; align-items: stretch; height: 100%; }
+
+  .deskrow { display: flex; align-items: stretch; gap: 4px; list-style: none; margin: 0; padding: 0; height: 66px; }
+  .deskrow > li { display: flex; align-items: stretch; }
+  .deskrow > li > a:not(.btn), .trigger {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--body);
+    font-weight: 600; font-size: 14.5px; color: var(--ink);
+    text-decoration: none; background: none; border: none; cursor: pointer;
+    padding: 0 11px; height: 100%;
   }
-  ul {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  ul a:not(.btn) {
-    font-weight: 600;
-    font-size: 14.5px;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  ul a:not(.btn):hover { color: var(--heat-deep); }
-  ul a[aria-current='page'] {
+  .deskrow > li > a:not(.btn):hover, .trigger:hover { color: var(--heat-deep); }
+  .deskrow a[aria-current='page'], .trigger[data-active='true'] {
     color: var(--heat-deep);
-    text-decoration: underline;
-    text-decoration-color: var(--heat);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
+    box-shadow: inset 0 -2px 0 var(--heat);
   }
+  .trigger[aria-expanded='true'] { color: var(--heat-deep); box-shadow: inset 0 -2px 0 var(--heat); }
+  .chev { width: 10px; height: 6px; transition: transform 0.15s; }
+  .trigger[aria-expanded='true'] .chev { transform: rotate(180deg); }
+  .cta { margin-left: 8px; align-items: center !important; }
+
+  /* Mega panel */
+  .panel {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+  }
+  .panel-inner { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 28px; padding-top: 24px; padding-bottom: 22px; }
+  .lead {
+    display: grid; gap: 6px; align-content: start; text-decoration: none;
+    background: var(--navy); border-radius: var(--radius-lg); padding: 20px 22px;
+  }
+  .lead:hover .lead-c { text-decoration: underline; }
+  .lead-t { font-family: var(--display); font-weight: 700; font-size: 17px; color: #fff; margin: 0; line-height: 1.25; }
+  .lead-d { font-size: 13.5px; color: var(--navy-muted); margin: 0; }
+  .lead-c { font-weight: 600; font-size: 14px; color: var(--heat); margin: 4px 0 0; }
+  .cols { display: grid; grid-template-columns: repeat(var(--ncols, 4), minmax(0, 1fr)); gap: 22px; }
+  .col-t { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); font-weight: 600; margin: 2px 0 10px; }
+  .col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .col a { display: grid; gap: 1px; text-decoration: none; }
+  .l-label { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .col a:hover .l-label { color: var(--heat-deep); }
+  .l-desc { font-size: 12.5px; color: var(--faint); }
+  .panel-foot { grid-column: 1 / -1; margin: 4px 0 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; }
+  .panel-foot a { color: var(--heat-deep); font-weight: 600; text-decoration: none; }
+  .panel-foot a:hover { text-decoration: underline; }
+
   .menu-btn {
     display: none;
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 14px;
-    background: none;
-    border: 1.5px solid var(--line-strong);
-    border-radius: 999px;
-    padding: 7px 16px;
-    cursor: pointer;
-    color: var(--ink);
+    font-family: var(--display); font-weight: 700; font-size: 14px;
+    background: none; border: 1.5px solid var(--line-strong); border-radius: 999px;
+    padding: 7px 16px; cursor: pointer; color: var(--ink);
+    align-self: center;
   }
+
+  /* Mobile drawer */
+  .mobile {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+    padding: 10px 22px 22px;
+    max-height: calc(100dvh - 66px); overflow-y: auto;
+  }
+  .m-group { border-bottom: 1px solid var(--line); }
+  .m-group summary {
+    list-style: none; cursor: pointer;
+    font-weight: 700; font-size: 15.5px; color: var(--ink);
+    padding: 14px 0; display: flex; justify-content: space-between; align-items: center;
+  }
+  .m-group summary::-webkit-details-marker { display: none; }
+  .m-group summary::after { content: '+'; font-family: var(--mono); color: var(--faint); font-size: 16px; }
+  .m-group[open] summary::after { content: '–'; }
+  .m-body { padding: 0 0 16px; display: grid; gap: 14px; }
+  .m-lead { font-weight: 700; font-size: 14.5px; color: var(--heat-deep); text-decoration: none; }
+  .m-col { display: grid; gap: 8px; }
+  .m-col-t { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); font-weight: 600; margin: 0; }
+  .m-col a { font-size: 14.5px; font-weight: 600; color: var(--ink); text-decoration: none; }
+  .m-link { display: block; font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .m-cta { margin-top: 16px; }
+
   @media (max-width: 920px) {
     .menu-btn { display: inline-block; }
-    ul {
-      display: none;
-      position: absolute;
-      top: 66px;
-      left: 0;
-      right: 0;
-      background: var(--card);
-      border-bottom: 1px solid var(--line);
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 18px 22px 22px;
-      gap: 16px;
-      box-shadow: var(--shadow-md);
-    }
-    ul.open { display: flex; }
+    .deskrow { display: none; }
+    .panel { display: none !important; }
+  }
+  @media (min-width: 921px) {
+    .mobile { display: none !important; }
   }
 </style>
 
 <script>
-  const btn = document.getElementById('menuBtn');
-  const nav = document.getElementById('site-nav');
-  btn?.addEventListener('click', () => {
-    const open = nav?.classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(!!open));
+  // ----- Desktop mega panels -----
+  const header = document.getElementById('siteHeader')!;
+  const triggers = Array.from(header.querySelectorAll<HTMLButtonElement>('.trigger'));
+  const panels = new Map<string, HTMLElement>();
+  header.querySelectorAll<HTMLElement>('.panel').forEach((p) => panels.set(p.dataset.panel!, p));
+
+  let openId: string | null = null;
+  let openTimer: number | undefined;
+  let closeTimer: number | undefined;
+  let openedAt = 0;
+
+  function setOpen(id: string | null) {
+    if (openId === id) return;
+    if (openId) {
+      panels.get(openId)!.hidden = true;
+      triggerFor(openId)?.setAttribute('aria-expanded', 'false');
+    }
+    openId = id;
+    if (id) {
+      openedAt = Date.now();
+      panels.get(id)!.hidden = false;
+      triggerFor(id)?.setAttribute('aria-expanded', 'true');
+    }
+  }
+  function triggerFor(id: string) {
+    return header.querySelector<HTMLButtonElement>(`[data-nav="${id}"] .trigger`);
+  }
+
+  triggers.forEach((btn) => {
+    const li = btn.closest<HTMLElement>('.has-panel')!;
+    const id = li.dataset.nav!;
+    btn.addEventListener('click', () => {
+      window.clearTimeout(openTimer);
+      // A click just after hover opened it means "open", not "close again".
+      if (openId === id && Date.now() - openedAt > 450) setOpen(null);
+      else setOpen(id);
+    });
+    li.addEventListener('mouseenter', () => {
+      window.clearTimeout(closeTimer);
+      openTimer = window.setTimeout(() => setOpen(id), 110);
+    });
+    li.addEventListener('mouseleave', () => {
+      window.clearTimeout(openTimer);
+      closeTimer = window.setTimeout(() => { if (openId === id) setOpen(null); }, 220);
+    });
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(id); panels.get(id)!.querySelector('a')?.focus(); }
+    });
+  });
+
+  panels.forEach((panel, id) => {
+    panel.addEventListener('mouseenter', () => window.clearTimeout(closeTimer));
+    panel.addEventListener('mouseleave', () => {
+      closeTimer = window.setTimeout(() => { if (openId === id) setOpen(null); }, 220);
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && openId) {
+      const t = triggerFor(openId);
+      setOpen(null);
+      t?.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (openId && !header.contains(e.target as Node)) setOpen(null);
+  });
+
+  // ----- Mobile drawer -----
+  const menuBtn = document.getElementById('menuBtn')!;
+  const mobile = document.getElementById('mobile-nav')!;
+  menuBtn.addEventListener('click', () => {
+    const open = mobile.hidden;
+    mobile.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', String(open));
   });
 </script>
