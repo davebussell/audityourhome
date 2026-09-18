@@ -1,0 +1,143 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import GearStrip from '../../components/GearStrip.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import guideData from '../../data/test-guides.json';
+import tests from '../../data/tests.json';
+
+export function getStaticPaths() {
+  return guideData.guides.map((g) => ({ params: { test: g.slug } }));
+}
+
+const { test } = Astro.params;
+const g = guideData.guides.find((x) => x.slug === test)!;
+const allNames: Record<string, string> = {};
+for (const t of [...tests.energy, ...tests.health]) allNames[t.id] = t.name;
+
+const title = `${g.name} — what's involved, how to get it done, and the fixes | AuditYourHome`;
+const description = g.lede.length > 155 ? g.lede.slice(0, 152).trimEnd() + '…' : g.lede;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: g.name, path: `/tests/${g.slug}/` },
+  ]),
+  faqSchema(g.faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>{g.name}</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Energy test guide · verified {SITE.dataReviewDate}</p>
+      <h1>{g.heroTitle}</h1>
+      <p class="lede measure">{g.lede}</p>
+    </div>
+
+    <div class="glance">
+      {g.glance.map((x) => (
+        <div class="g"><p class="k">{x.k}</p><p class="v">{x.v}</p></div>
+      ))}
+    </div>
+
+    <div class="measure prose">
+      <h2>{g.stepsHeading}</h2>
+    </div>
+
+    <ol class="steps measure">
+      {g.steps.map((s) => (
+        <li>
+          <h3>{s.t}</h3>
+          <p>{s.p}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="measure prose">
+      <h2>How to get it done</h2>
+      <p>{g.getIt}</p>
+    </div>
+
+    <div class="rem">
+      <h2>If it finds a problem: your remediation options</h2>
+      <p class="measure small remintro">{g.remediation.intro}</p>
+      <div class="rem-grid">
+        {g.remediation.options.map((o) => (
+          <article class="card card-pad ropt">
+            <p class="rband">{o.band}</p>
+            <h3>{o.name}</h3>
+            <p class="mb-0">{o.note}</p>
+          </article>
+        ))}
+      </div>
+      {g.remediation.footer && (
+        <div class="card card-pad callout measure">
+          <p class="mb-0">{g.remediation.footer}</p>
+        </div>
+      )}
+      <p class="meta">Cost figures are Ontario planning bands as of {SITE.dataReviewDate} — quotes vary with the house; use them to budget, not to negotiate.</p>
+    </div>
+
+    {g.gear.length > 0 && <GearStrip categories={g.gear} heading="Gear that pairs with this test" />}
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {g.faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {g.sources.map((s) => (
+          <li><a href={s.href} rel="noopener">{s.label} (verified {SITE.dataReviewDate})</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="related">
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      {g.related.map((r) => (
+        <a class="btn btn-ghost" href={`/tests/${r}/`}>Related: {allNames[r] ?? r}</a>
+      ))}
+    </div>
+
+    <LeadForm heading={g.leadHeading} sub={g.leadSub} context={`guide-${g.slug}`} />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 26px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 6px; display: grid; gap: 12px; }
+  .steps li { position: relative; padding: 14px 16px 14px 58px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 14px; }
+  .steps h3 { margin: 0 0 4px; font-size: 16.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .rem h2 { font-size: 23px; margin: 30px 0 6px; }
+  .remintro { margin-bottom: 14px; }
+  .rem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 780px) { .rem-grid { grid-template-columns: 1fr; } }
+  .ropt { border-left: 4px solid var(--pine); }
+  .ropt .rband { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--pine); margin: 0 0 4px; }
+  .ropt h3 { font-size: 17px; margin: 0 0 6px; }
+  .ropt p { font-size: 14.5px; color: var(--muted); }
+  .rem .meta { margin: 0 0 6px; }
+  .callout { border-left: 4px solid var(--heat); margin: 6px 0 14px; }
+  .callout p { font-size: 14.5px; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

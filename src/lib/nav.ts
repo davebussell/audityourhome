@@ -46,11 +46,11 @@ export const NAV: NavItem[] = [
       {
         title: 'Heat & energy',
         links: [
-          { href: '/tests/#blower-door', label: 'Blower door test', desc: 'Your airtightness number' },
-          { href: '/tests/#thermal-imaging', label: 'Infrared scan', desc: 'Finds the empty walls' },
-          { href: '/tests/#heat-loss-calc', label: 'Heat-loss calculation', desc: 'Sizes the heat pump right' },
-          { href: '/tests/#duct-leakage', label: 'Duct & airflow testing', desc: 'Why far rooms stay cold' },
-          { href: '/tests/#bill-analysis', label: 'Utility bill analysis', desc: 'Your real baseline' },
+          { href: '/tests/blower-door/', label: 'Blower door test', desc: 'Your airtightness number' },
+          { href: '/tests/thermal-imaging/', label: 'Infrared scan', desc: 'Finds the empty walls' },
+          { href: '/tests/heat-loss-calc/', label: 'Heat-loss calculation', desc: 'Sizes the heat pump right' },
+          { href: '/tests/duct-leakage/', label: 'Duct & airflow testing', desc: 'Why far rooms stay cold' },
+          { href: '/tests/bill-analysis/', label: 'Utility bill analysis', desc: 'Your real baseline' },
         ],
       },
       {
@@ -59,7 +59,7 @@ export const NAV: NavItem[] = [
           { href: '/tests/radon/', label: 'Radon', desc: 'The test every home needs' },
           { href: '/tests/carbon-monoxide/', label: 'Carbon monoxide', desc: 'Required by Ontario law' },
           { href: '/tests/mold-iaq/', label: 'Mold & indoor air', desc: 'Fix the cause, then clean' },
-          { href: '/tests/#ventilation-assessment', label: 'Ventilation & humidity', desc: 'Musty-air diagnostics' },
+          { href: '/tests/ventilation-assessment/', label: 'Ventilation & humidity', desc: 'Musty-air diagnostics' },
         ],
       },
       {
@@ -75,7 +75,7 @@ export const NAV: NavItem[] = [
         links: [
           { href: '/tests/asbestos-vermiculite/', label: 'Asbestos & vermiculite', desc: 'Sample before disturbing' },
           { href: '/tests/lead-paint/', label: 'Lead paint', desc: 'A $15 swab before sanding' },
-          { href: '/tests/#combustion-safety', label: 'Combustion safety', desc: 'Before tightening the house' },
+          { href: '/tests/combustion-safety/', label: 'Combustion safety', desc: 'Before tightening the house' },
         ],
       },
     ],

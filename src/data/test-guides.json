@@ -1,0 +1,354 @@
+{
+  "note": "Full guide content for the ENERGY tests, rendered by /tests/[test].astro. Health tests have hand-written pages. Cost figures are September 2026 Ontario planning bands — quotes vary; the caveat renders on every page.",
+  "guides": [
+    {
+      "slug": "blower-door",
+      "name": "Blower door test",
+      "heroTitle": "The blower door: one hour that reorders your whole plan",
+      "lede": "A calibrated fan seals into an exterior door and gently depressurizes your house, measuring exactly how much air leaks through the envelope — and, more usefully, letting you walk the house and feel where. It's the single measurement that separates a real audit from a sales walkthrough, and it's included in every EnerGuide assessment.",
+      "glance": [
+        { "k": "Cost", "v": "Included in EnerGuide" },
+        { "k": "Time on site", "v": "~1 hour" },
+        { "k": "Result", "v": "Air changes/hr @ 50 Pa" },
+        { "k": "Fixes start at", "v": "$50 DIY sealing" }
+      ],
+      "stepsHeading": "What's involved, start to finish",
+      "steps": [
+        { "t": "The setup", "p": "Your advisor mounts a fabric panel with a calibrated fan into an exterior door frame. Windows and doors get closed, fireplace ashes covered, combustion appliances set safely, dampers shut. You can stay home — it's tidy and quiet." },
+        { "t": "Depressurize to 50 pascals", "p": "The fan pulls air out until the house sits at a standard test pressure — roughly the effect of a stiff wind hitting every side of the house at once. Because the pressure is standardized (the national CGSB test method), your number is comparable to any other home's, and to your own house after upgrades." },
+        { "t": "Read the number", "p": "The result is air changes per hour at 50 Pa (ACH50): how many times per hour your home's entire air volume leaks out and gets replaced under test pressure. Your EnerGuide report benchmarks it against homes of your era — pre-war houses commonly test several times leakier than new code-built homes." },
+        { "t": "The leak walk — the most valuable 20 minutes", "p": "While the fan runs, air races in through every gap, and you can find leaks by hand: the attic hatch, rim joists in the basement, pot lights, plumbing stacks, trim, electrical penetrations. Take notes and photos — this is your air-sealing shopping list, ranked by what you can feel." },
+        { "t": "Retest after the work", "p": "A post-retrofit blower door proves what changed — it's built into the Home Renovation Savings assessment path (pre and post evaluations), and it's the honest scoreboard for any air-sealing money you spend." }
+      ],
+      "getIt": "You can't rent this result — it takes the calibrated fan and the trained operator, and it comes standard with every EnerGuide assessment. Book the assessment, and tell the advisor you want to do the leak walk with them rather than just receiving the number.",
+      "remediation": {
+        "intro": "A leaky result isn't bad news — it's the cheapest big opportunity in home energy. The options, from smallest to largest:",
+        "options": [
+          { "name": "The DIY sealing weekend", "band": "$50–$300", "note": "Caulk, low-expansion foam, and weatherstripping applied to the exact leaks you felt during the walk: attic hatch gasket, rim joist gaps, trim, plumbing and wiring penetrations. Dollar for dollar, the best return in home energy." },
+          { "name": "Professional air sealing", "band": "$500–$2,500", "note": "Attic-side sealing of top plates, pot lights, stacks and chases — the leaks you can't reach — done properly before any insulation top-up buries them." },
+          { "name": "Deep envelope measures", "band": "Project pricing", "note": "Rim-joist spray foam, and airtightness details folded into siding, window, or renovation projects you're doing anyway — the cheap moment to fix the hard leaks." }
+        ],
+        "footer": "Two guardrails: after any serious tightening, get the combustion spillage check repeated (a tighter house changes how appliances vent), and retest radon — sealing shifts your pressure balance. A tight house then earns proper ventilation: that's the HRV conversation."
+      },
+      "faqs": [
+        { "q": "What's a good number?", "a": "It's era-relative. New homes built to current code land dramatically tighter than pre-war housing, and your EnerGuide report benchmarks your result against comparable homes rather than an absolute pass/fail. The more useful framing: every point of improvement is heat you stop buying, and the leak walk tells you exactly where to earn it." },
+        { "q": "Is the test safe for my house?", "a": "Yes — it's a standard, gentle procedure. Ashes get covered so nothing puffs out of the fireplace, combustion appliances are handled per protocol, and the pressure involved is what a windy day already does to your house. It runs in occupied homes all day, every day." },
+        { "q": "I already know my house is drafty. Can I skip it?", "a": "Knowing it's drafty isn't knowing where, how much, or whether you improved. The measurement is your rebate baseline (the assessment path requires pre and post evaluations), the leak walk is your work plan, and the retest is your proof. Skipping it means sealing blind." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations (what the assessment includes)" },
+        { "href": "https://www.homerenovationsavings.ca/with-assessment", "label": "Home Renovation Savings — pre/post evaluation requirement" }
+      ],
+      "related": ["thermal-imaging", "attic-inspection"],
+      "gear": [],
+      "leadHeading": "Book the assessment, get the number",
+      "leadSub": "Every registered advisor we match runs the blower door as part of the EnerGuide assessment — tell us where you are and we'll connect you."
+    },
+    {
+      "slug": "thermal-imaging",
+      "name": "Infrared (thermal) camera scan",
+      "heroTitle": "Thermal imaging: seeing the empty walls without opening them",
+      "lede": "An infrared camera maps the temperature of every surface, and temperature tells stories: missing insulation reads as cold streaks, thermal bridges as dark ribs, hidden moisture as blotches that don't match the framing. It's the difference between guessing which walls are empty and photographing it.",
+      "glance": [
+        { "k": "Cost", "v": "Usually included — confirm" },
+        { "k": "Best conditions", "v": "≥10°C in/out difference" },
+        { "k": "Finds", "v": "Empty walls, bridges, moisture" },
+        { "k": "Pairs with", "v": "Blower door running" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Get the conditions right", "p": "IR needs a temperature difference of about 10°C or more between inside and out — a cold morning is perfect, and direct sun on a wall ruins the reading for hours. This is why winter audits produce the best imagery, and why a good advisor scans early or on overcast days." },
+        { "t": "Scan room by room from inside", "p": "Exterior walls, ceilings below attics, around windows and doors, behind furniture on outside walls, basement rim joists. Each frame is a temperature map of the assembly behind the drywall." },
+        { "t": "Run it during the blower door", "p": "With the house depressurized, leaking air chills the surfaces along its path — leaks light up as cold streams the camera sees and the hand alone would miss. The combination is the audit's most powerful diagnostic." },
+        { "t": "Read the patterns", "p": "Uniform wall = insulated. Striped cold bays between warm studs = empty or slumped cavity insulation. Cold ribs at every stud = thermal bridging. Irregular blotches that ignore the framing pattern = possible moisture — which gets verified with a moisture meter, not assumed." },
+        { "t": "Keep the images", "p": "The photos scope the fix precisely (which walls to drill-and-fill, which attic zones are thin) and the after-scan proves the contractor actually filled what they were paid to fill." }
+      ],
+      "getIt": "Most registered advisors include a thermal scan with the assessment — confirm when booking, since it's the item most worth asking for by name. Building-science contractors also scan standalone. Phone-clip IR cameras are a fun screening tool, but their resolution suits finding suspects, not proving scope.",
+      "remediation": {
+        "intro": "The scan's findings map to three different fixes — and one warning:",
+        "options": [
+          { "name": "Drill-and-fill wall insulation", "band": "Commonly $2–$5 / sq ft", "note": "Empty frame walls get dense-packed with cellulose through small holes, patched after. The scan tells the contractor exactly which bays — and the after-scan proves the fill." },
+          { "name": "Attic top-up (after air sealing)", "band": "$1,500–$3,500 typical", "note": "Thin or wind-washed attic zones the ceiling scan reveals — see the attic inspection guide for the seal-first sequence." },
+          { "name": "Thermal-bridge and detail fixes", "band": "Folded into renos", "note": "Cold ribs and corners are framing geometry — fixed economically only when siding, cladding, or interior renovations open that assembly anyway. Until then, they're a known quantity, not an emergency." }
+        ],
+        "footer": "The warning: moisture-pattern findings mean find the water first — roof, plumbing, grading, or condensation — before any insulation goes in. Insulating a wet assembly locks the problem in. That diagnosis path is the mold & indoor air guide's territory."
+      },
+      "faqs": [
+        { "q": "Can the camera see through walls?", "a": "No — it reads surface temperature only. The skill is inference: knowing what a healthy assembly's surface should look like at these conditions, and what empty bays, bridging, air leaks, and moisture each do to that pattern. That's why conditions and operator experience matter more than camera price." },
+        { "q": "Does it work in summer?", "a": "It can — a hot attic or air-conditioned interior can provide the needed temperature difference, and duct leaks show well in cooling season. But Canadian winters offer bigger, more reliable deltas, which is one more reason not to postpone an audit to spring." },
+        { "q": "My phone IR attachment found a cold spot. Now what?", "a": "Treat it as a lead, not a verdict. Low-resolution cameras find suspects; the advisor's scan under proper conditions (ideally with the blower door running) confirms whether it's missing insulation, an air leak, a bridge, or just a cold water pipe." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations" },
+        { "href": "https://www.homerenovationsavings.ca/with-assessment", "label": "Home Renovation Savings — insulation rebates the scan scopes" }
+      ],
+      "related": ["blower-door", "attic-inspection"],
+      "gear": [],
+      "leadHeading": "Get the scan with your assessment",
+      "leadSub": "We'll match you with a registered advisor and flag thermal imaging in your request — the add-on most worth confirming by name."
+    },
+    {
+      "slug": "heat-loss-calc",
+      "name": "Heat-loss calculation (CSA F280)",
+      "heroTitle": "The F280 heat-loss calculation: the $300 that saves the $15,000 mistake",
+      "lede": "Before anyone sells you a heat pump or furnace, someone should calculate — room by room, to the CSA F280 standard — how much heat your house actually loses on the coldest design day. Contractors who skip it size by square footage and habit, and habit oversizes. Oversized equipment costs more, cycles hard, dehumidifies poorly, and never feels right.",
+      "glance": [
+        { "k": "Cost", "v": "$150–$400 standalone" },
+        { "k": "Standard", "v": "CSA F280" },
+        { "k": "Output", "v": "BTU/h per room, design day" },
+        { "k": "Prevents", "v": "Oversized equipment" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Measure the envelope", "p": "Wall, window, ceiling and foundation areas with their real insulation values — ideally pulled straight from your EnerGuide assessment file, which is why bundling the calculation with the audit is both cheaper and more accurate than a standalone guess." },
+        { "t": "Apply your design temperature", "p": "Every Ontario locality has a design cold — the temperature your heating must handle. The calculation runs your envelope against that number, not a national average." },
+        { "t": "Account for air leakage and gains", "p": "Your blower door number feeds in (leaky homes lose more), along with internal and solar gains. This is what separates F280 from a square-footage rule of thumb." },
+        { "t": "Get room-by-room outputs", "p": "Not just a house total: each room's need in BTU/h. This is what exposes why the far bedroom never worked — and whether the fix is ducting, not a bigger furnace." },
+        { "t": "Size equipment against the number", "p": "Heat pump capacity tables at cold temperatures get compared to your load: what the unit delivers at −8°C and at design temperature, and what backup covers the gap. The equipment decision becomes arithmetic instead of salesmanship." }
+      ],
+      "getIt": "Energy advisors and qualified HVAC designers run F280 calculations; ask for the report by name, and expect $150–$400 standalone or less bundled with an assessment. The tell that you need it: a contractor who quotes equipment size from your square footage, your old furnace's label, or a walk-through glance.",
+      "remediation": {
+        "intro": "The calculation's 'issue' is usually a mismatch — between quotes, or between your house and what's installed. The options:",
+        "options": [
+          { "name": "Right-size the replacement", "band": "Often saves money", "note": "The most common outcome: the correct unit is smaller and cheaper than the habit quote. Never let the old furnace's size set the new one — the old one was probably oversized too, and your envelope may have improved since." },
+          { "name": "Shrink the load first, then buy", "band": "Sequencing, not spending", "note": "Air sealing and insulation reduce the number — done before equipment replacement, they let you buy a smaller heat pump. This is the whole logic of the retrofit sequence: envelope, then equipment." },
+          { "name": "Hybrid sizing", "band": "Design choice", "note": "Size the heat pump for most of the winter and let backup (electric or existing furnace) carry the coldest tail — often the economic optimum in cold climates, and only calculable with a real load number." },
+          { "name": "Fix distribution, not capacity", "band": "See duct testing", "note": "When one room fails but the house total is fine, the answer is airflow — ducts, returns, balancing — not a bigger machine pushing harder through the same bad ducts." }
+        ],
+        "footer": "Keep the F280 report with your quotes. A contractor who welcomes it is a contractor worth shortlisting; one who waves it off told you something useful too."
+      },
+      "faqs": [
+        { "q": "Why do contractors oversize?", "a": "Rules of thumb by square footage, fear of cold-day callbacks, and matching whatever was there before. The incentives all point to bigger, and none of them price in what oversizing costs you: short cycling, worse humidity control, more noise, higher purchase price, and — for heat pumps especially — efficiency lost to constant starts." },
+        { "q": "Isn't bigger at least safer?", "a": "No. A right-sized system runs long, steady, quiet cycles that hold temperature and wring out humidity. An oversized one blasts, satisfies the thermostat, and shuts off — repeatedly. For heat pumps, sizing to the real load is the difference between the technology working as advertised and a disappointing winter." },
+        { "q": "Do rebate programs require it?", "a": "Program rules vary and change, but the practical answer: heat pump incentive paths run through the EnerGuide assessment, and quotes built on a real load calculation are what a registered advisor can stand behind. Ask your advisor which current programs expect the F280 paper — and get it regardless, because the equipment is yours for 15+ years either way." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations (assessment data feeds the calc)" },
+        { "href": "https://www.homerenovationsavings.ca/with-assessment", "label": "Home Renovation Savings — heat pump rebates via the assessment path" }
+      ],
+      "related": ["duct-leakage", "bill-analysis"],
+      "gear": [],
+      "leadHeading": "Size it before anyone quotes it",
+      "leadSub": "Tell us you're considering a heat pump — we'll match you with an advisor who runs the F280 numbers before the sales visits start."
+    },
+    {
+      "slug": "duct-leakage",
+      "name": "Duct leakage & airflow testing",
+      "heroTitle": "Duct testing: where your heated air actually goes",
+      "lede": "Forced-air homes routinely lose a meaningful share of their conditioned air into walls, attics, and garages before it ever reaches a room — and the rooms at the end of the line pay for it. This test pressure-measures the duct system's leakage and reads the real airflow at every register, which is why it answers comfort complaints that new equipment never fixes.",
+      "glance": [
+        { "k": "Cost", "v": "$200–$450" },
+        { "k": "Measures", "v": "Leakage % + per-room CFM" },
+        { "k": "Explains", "v": "Cold far rooms" },
+        { "k": "Fixes", "v": "$300 mastic → $3,000 sealing" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Pressurize the ducts", "p": "Registers get taped off, a calibrated fan connects to the system, and the pressure it takes to hold a standard test level reveals total leakage — the same logic as the blower door, applied to the ductwork alone." },
+        { "t": "Measure real airflow at each register", "p": "A flow hood over every supply and return reads actual delivered air. Labels and design drawings say what should arrive; the hood says what does." },
+        { "t": "Find where the losses live", "p": "Runs through attics, garages, and bulkheads; disconnected boots; crushed flex duct; panned joist returns that leak from every seam. The test localizes the loss so the fix is surgical." },
+        { "t": "Check static pressure", "p": "High static pressure means the system is straining — usually undersized returns or restrictive filters — which quietly wrecks both comfort and equipment life, and matters double for a future heat pump." },
+        { "t": "Get the two numbers that decide everything", "p": "Leakage as a share of system airflow, and per-room delivered CFM against each room's need (which the F280 calculation defines). Together they say whether your comfort problem is distribution — and exactly where." }
+      ],
+      "getIt": "HVAC contractors with duct-testing gear and some energy advisors offer it — ask for it by name when comfort is your complaint, and pair it with the F280 room-by-room calculation so delivered air can be compared to required air. If you're quoted new equipment for a comfort problem without anyone measuring the ducts, that's the tell.",
+      "remediation": {
+        "intro": "Duct findings have a clean cost ladder:",
+        "options": [
+          { "name": "Hand-sealing accessible runs", "band": "$300–$800", "note": "Mastic and foil tape (never fabric 'duct tape', which dries and falls off) on the joints you can reach — basement trunks, boots, panned returns. High return when the leaks are accessible." },
+          { "name": "Aerosolized internal sealing", "band": "$2,000–$3,000", "note": "Sealant mist injected through the system plugs leaks from the inside — the answer when ducts run through closed walls and ceilings you're not opening." },
+          { "name": "Balancing, dampers, and added returns", "band": "$300–$1,500", "note": "Sometimes air arrives but in the wrong proportions: balancing dampers, a return added to a starved room, or a rerouted run fixes distribution without touching leakage." },
+          { "name": "Insulate ducts outside the envelope", "band": "$200–$600 DIY-able", "note": "Runs through unconditioned attics and garages lose heat even when airtight — wrap them after sealing them." }
+        ],
+        "footer": "And sometimes the honest finding is that the ducts are fine — the room loses too much heat through its walls and windows, and the fix is envelope, not airflow. That's a good $300 to have spent: it just saved you a duct renovation that wouldn't have worked."
+      },
+      "faqs": [
+        { "q": "Cold far bedroom — is it ducts or the room?", "a": "This test plus the thermal scan answers it definitively: the flow hood says whether enough air arrives, and the IR camera says whether the room bleeds heat faster than any airflow could replace. Chasing either fix without the measurements is coin-flipping with thousands of dollars." },
+        { "q": "Is duct cleaning the same thing?", "a": "No — cleaning removes dust; it doesn't find or fix leakage, airflow, or balance, and it rarely changes comfort or efficiency. If a company leads with cleaning for a comfort complaint, keep looking." },
+        { "q": "Can I just close vents in unused rooms to push air further?", "a": "It backfires: closing registers raises system pressure, which increases duct leakage and strains the blower — and in the worst cases stresses the heat exchanger. Balance dampers at the trunk, set by measurement, are the legitimate version of the same idea." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations" }
+      ],
+      "related": ["heat-loss-calc", "thermal-imaging"],
+      "gear": [],
+      "leadHeading": "Comfort problem? Measure before replacing",
+      "leadSub": "Tell us which rooms never work — we'll match you with an advisor and flag duct and airflow testing in your request."
+    },
+    {
+      "slug": "combustion-safety",
+      "name": "Combustion safety & spillage check",
+      "heroTitle": "The combustion safety check: tighten the house, keep the chimney honest",
+      "lede": "Furnaces, water heaters, and fireplaces that vent by natural draft rely on the house giving them air. Air-seal the house — the best energy move there is — and a bathroom fan or range hood can start winning the tug-of-war, pulling exhaust back inside. This check finds out before your CO alarm has to, and it's included in every audit of a home with combustion appliances.",
+      "glance": [
+        { "k": "Cost", "v": "Included with fuel appliances" },
+        { "k": "When", "v": "At audit + after tightening" },
+        { "k": "Checks", "v": "Draft, spillage, CO" },
+        { "k": "End-game fix", "v": "Sealed combustion" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Set up the worst case", "p": "House closed, and every exhaust device running at once — bath fans, range hood, dryer. The test asks: under maximum depressurization your own home can create, do the appliances still vent?" },
+        { "t": "Test draft at each appliance", "p": "Does the water heater's flue establish upward draft promptly when it fires? The orphaned water heater — left alone in a big chimney after a furnace upgrade — is the classic failure here." },
+        { "t": "Check for spillage", "p": "Smoke or a mirror at the draft hood shows whether combustion gases spill into the room during startup, and for how long. Brief startup spillage differs from sustained failure, and the protocol distinguishes them." },
+        { "t": "Measure CO in the flue", "p": "High carbon monoxide in the exhaust stream flags a combustion problem — burner, heat exchanger, or venting — worth a licensed gas technician's eyes regardless of draft." },
+        { "t": "Verdict, and retest after air sealing", "p": "The result either clears your air-sealing plans or sequences them: fix venting first, then tighten. After major envelope work, the check gets repeated — the house that passed at leaky may not pass at tight." }
+      ],
+      "getIt": "It's included in the EnerGuide assessment whenever you have combustion appliances — your job is just to make sure it happens and to ask for the results plainly. Fixes belong to licensed gas technicians (or WETT-certified specialists for wood). If you're air-sealing without an audit, book a gas tech to run the check anyway; it's the one test on this site with no safe DIY version.",
+      "remediation": {
+        "intro": "A failed or marginal result has a clear options ladder — and one hard rule: no further tightening until it's resolved.",
+        "options": [
+          { "name": "Fix the venting", "band": "$500–$2,500", "note": "A properly sized chimney liner (especially for orphaned water heaters), flue repairs, correct slope and connections. Often the whole fix." },
+          { "name": "Provide make-up air", "band": "$300–$1,500", "note": "A dedicated air supply so exhaust fans stop competing with chimneys — engineered, not a hole in the wall." },
+          { "name": "Move to sealed combustion", "band": "At replacement time", "note": "Direct-vent and power-vented equipment (condensing furnaces, power-vent water heaters) bring their own air through a sealed pipe — the whole backdraft question disappears, and the house can be as tight as you like." },
+          { "name": "Electrify and retire the chimney", "band": "The end state", "note": "A heat pump and heat-pump water heater remove combustion from the house entirely — the path our planner maps, with the rebates that currently apply." }
+        ],
+        "footer": "Meanwhile: working CO alarms adjacent to every sleeping area are Ontario law and your backstop — the CO guide covers placement and expiry dates. The alarm is the last line; this check is the first."
+      },
+      "faqs": [
+        { "q": "I have CO alarms. Isn't that enough?", "a": "Alarms are the backstop that saves you when everything else fails — this check is what keeps them silent. Ontario's alarm law sets the floor, not the ceiling: prevention is the annual servicing plus this test, especially in the year you air-seal." },
+        { "q": "What's an 'orphaned' water heater?", "a": "When a furnace gets replaced with a high-efficiency unit that vents out the wall, the old natural-draft water heater is left alone in a chimney sized for two appliances. The oversized, cool flue drafts poorly — it's the single most common spillage finding, and a liner is the usual fix." },
+        { "q": "Who actually performs the check and the fixes?", "a": "The check: your energy advisor during the assessment (it's part of the protocol when combustion appliances are present). The fixes: a licensed gas technician — TSSA-registered contractors in Ontario — or a WETT-certified professional for wood-burning equipment." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations (combustion safety in the protocol)" },
+        { "href": "https://get.on.ca/uploads/userfiles/files/ontario-coalarm-law_guide.pdf", "label": "OAFC — Ontario's CO alarm law (the backstop requirement)" }
+      ],
+      "related": ["blower-door", "ventilation-assessment"],
+      "gear": ["co-alarms"],
+      "leadHeading": "Air-sealing plans? Sequence the safety check",
+      "leadSub": "We'll match you with a registered advisor who runs combustion safety as part of the assessment — before and after the house gets tighter."
+    },
+    {
+      "slug": "ventilation-assessment",
+      "name": "Ventilation & humidity assessment",
+      "heroTitle": "The ventilation assessment: is it a moisture problem or an air problem?",
+      "lede": "Condensation on windows, musty rooms, stale air — these get blamed on windows and cured with expensive glass, when the real question is whether the house exhausts the moisture its occupants make. This assessment measures what your fans actually move, where that air actually goes, and whether your air exchange matches your household — the diagnosis that decides between a $400 fan fix and a $20,000 mistake.",
+      "glance": [
+        { "k": "Cost", "v": "Included in assessment" },
+        { "k": "Measures", "v": "Real fan CFM, RH, exchange" },
+        { "k": "Winter target", "v": "~30–50% RH" },
+        { "k": "Fixes", "v": "$200 re-duct → HRV" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Measure what the fans really move", "p": "A flow box over each bath fan and the range hood reads delivered airflow. The routine finding: fans moving a fraction of their label — grille clogged, duct crushed, run too long, or termination flapper stuck." },
+        { "t": "Verify where the air goes", "p": "Into the attic is the classic failure — a bath fan that empties into insulation is a mould machine for the roof deck. Terminations must reach outside, damped, and actually open." },
+        { "t": "Profile humidity through the house", "p": "Readings by floor and season against the winter target band (roughly 30–50% RH). Which rooms run wet, when, and whether the pattern tracks showers, cooking, a crowd, or a damp foundation." },
+        { "t": "Do the occupancy math", "p": "People, showers, cooking, plants, and laundry all add moisture; the house's air exchange (from your blower door number plus mechanical ventilation) either keeps up or doesn't. Tight house + full household + label-only fans = the math that grows mould." },
+        { "t": "Deliver the verdict", "p": "Under-ventilation (fix: exhaust and air exchange) versus cold-surface condensation (fix: insulation and air sealing at that assembly). The two get confused constantly, cost very different money, and this is the measurement that tells them apart." }
+      ],
+      "getIt": "The observations come with an EnerGuide assessment; ask the advisor to put numbers on the fans rather than eyeballing grilles. HRV sizing and installation is HVAC-contractor work (HRAI-trained contractors in Canada) — but sized from measurements, not from a catalogue default.",
+      "remediation": {
+        "intro": "The fixes ladder from an afternoon to a system — and the diagnosis decides which rung:",
+        "options": [
+          { "name": "Re-duct and terminate properly", "band": "$200–$600", "note": "Fans that vent into attics or through crushed duct get smooth, insulated runs to a real exterior termination. The single most common fix, and it protects the roof as much as the air." },
+          { "name": "Upgrade the fans and control them", "band": "$300–$800 installed", "note": "Quiet, capable fans (measured, not just rated) on timers or humidistats — running 20–30 minutes past every shower without anyone remembering to bother." },
+          { "name": "Install an HRV/ERV", "band": "$3,000–$5,500 typical", "note": "For tight homes — including homes you just made tight — a heat-recovery ventilator exchanges stale humid air for fresh, keeping most of the heat. This is the proper companion to serious air sealing, and sizing comes from the assessment's numbers." },
+          { "name": "Dry the summer basement", "band": "See gear guide", "note": "Seasonal basement humidity is a dehumidifier's job, not a ventilation system's — summer air brought in is wetter than the air below grade. Hygrometer first, then size the unit." }
+        ],
+        "footer": "If the verdict was cold-surface condensation instead, the money goes to insulation and air sealing at the offending assembly — and the mold guide covers what to do about any growth that already happened."
+      },
+      "faqs": [
+        { "q": "HRV or ERV?", "a": "Both recover heat; an ERV also exchanges some moisture, which can help homes that run too dry in deep winter and eases humidity load in shoulder seasons. The right answer depends on your climate zone, household size, and measured humidity pattern — it's a sizing decision from your assessment, not a brand preference." },
+        { "q": "Why did mould appear after we got new windows?", "a": "The old leaky windows were accidental ventilation, and their cold glass was also condensing and signalling moisture. New tight windows removed the leakage and the warning sign — same household moisture, less air exchange. The house didn't get worse; it got tighter than its ventilation. That's the HRV conversation." },
+        { "q": "Can't I just crack a window?", "a": "It works — that's what it's replacing — but you pay full price to heat the replacement air, it's unfiltered, and nobody does it reliably in February. Mechanical ventilation with heat recovery is the version of window-cracking that shows up every day and keeps most of the heat." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations" },
+        { "href": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/addressing-moisture-mould-your-home.html", "label": "Health Canada — Addressing moisture and mould (ventilation's role)" }
+      ],
+      "related": ["blower-door", "attic-inspection"],
+      "gear": ["dehumidifiers-hygrometers", "air-quality-monitors"],
+      "leadHeading": "Musty air, foggy windows? Diagnose first",
+      "leadSub": "Tell us the symptoms — we'll match you with an advisor whose measurements settle the ventilation-vs-insulation question before you spend."
+    },
+    {
+      "slug": "attic-inspection",
+      "name": "Attic inspection & insulation depth check",
+      "heroTitle": "The attic inspection: the cheapest big win, scoped properly",
+      "lede": "The attic is where older homes lose heat fastest and where the fix is cheapest — but also where the order of operations matters most and where two hazards can change the whole plan. A proper inspection reads depth and coverage, hunts the air bypasses that no amount of insulation fixes, checks the ventilation path, and flags vermiculite or old wiring before anyone disturbs anything.",
+      "glance": [
+        { "k": "Cost", "v": "Included in EnerGuide" },
+        { "k": "Common finding", "v": "R-10–20 vs ~R-50–60 target" },
+        { "k": "Hazard flags", "v": "Vermiculite, knob-and-tube" },
+        { "k": "Sequence", "v": "Seal first, then top up" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Read depth and coverage", "p": "A ruler at multiple spots, not one glance from the hatch: settling, wind-washed edges above the soffits, and gaps around obstructions all cut the real R-value below the nominal one. Older Ontario homes commonly measure a third of today's commonly recommended levels." },
+        { "t": "Hunt the bypasses", "p": "Pot lights, plumbing stacks, chimney and duct chases, dropped ceilings, the attic hatch itself — the holes where warm moist house air pours into the attic. These, not thin insulation, are usually what feeds ice dams and frosted sheathing." },
+        { "t": "Check the ventilation path", "p": "Baffles holding the soffit intakes open, insulation not blocking them, roof exhaust doing its share. Winter frost on nail tips and stained sheathing are the tell that moist air is arriving faster than ventilation removes it." },
+        { "t": "Flag the hazards before anyone works", "p": "Pebbly gold-brown vermiculite means stop and sample — treat it as asbestos-containing until a lab says otherwise. Knob-and-tube or early wiring must not be buried in insulation and needs an electrician's clearance first. Bath fans dumping into the attic get fixed as part of any plan." },
+        { "t": "Scope the job in writing", "p": "The output is a sequence: seal these bypasses, fix these terminations and baffles, then top up to the target — with photos, so quotes compete on the same scope and the after-photos prove the work." }
+      ],
+      "getIt": "Included in every EnerGuide assessment. If you're getting insulation quotes without an audit, insist the quote name air sealing line-by-line and state the hazard check — a top-up quote that mentions neither is a quote to bury your problems under new insulation.",
+      "remediation": {
+        "intro": "The fixes, in the order they must happen:",
+        "options": [
+          { "name": "Air-seal the ceiling plane first", "band": "$500–$2,500 pro", "note": "Top plates, pot lights (covered with rated boxes), stacks, chases, and a gasketed hatch — done before top-up, because insulation over leaks just hides them while the moisture keeps flowing." },
+          { "name": "Blow the top-up", "band": "$1,500–$3,500 typical", "note": "Loose-fill to the target depth with depth markers installed. This is the headline item rebate programs love — and the one that underperforms forever if step one was skipped." },
+          { "name": "DIY the small stuff", "band": "$30–$150", "note": "Hatch gasket and insulation cap, weatherstripped pull-down stairs, baffles at accessible soffits — legitimate weekend work after the sealing plan is set." },
+          { "name": "Hazard paths", "band": "Quoted after lab/inspection", "note": "Vermiculite: sample first, then manage-in-place or licensed abatement — the asbestos & vermiculite guide covers it. Knob-and-tube: electrician evaluation and remediation before insulation touches it." }
+        ],
+        "footer": "Ice dams deserve one myth correction: they're usually caused by the bypasses (warm air melting the roof from below), not by 'not enough insulation' alone — which is why sealing leads the sequence and why another foot of insulation over open chases disappoints."
+      },
+      "faqs": [
+        { "q": "How much insulation should be up there?", "a": "Common current practice for our climate targets roughly R-50 to R-60 loose-fill. Many older Ontario attics measure R-10 to R-20 in practice once settling and gaps are counted — which is why the attic so often tops the audit's priority list: big delta, modest cost." },
+        { "q": "Can I do the top-up myself?", "a": "Blowing loose-fill with a rented machine is genuinely DIY-able — after the sealing, hazard check, and baffles are handled, which is the skilled part. Most homes get the best result from a pro seal-and-blow package; the DIY sweet spot is the hatch, baffles, and small sealing jobs." },
+        { "q": "Will more insulation stop my ice dams?", "a": "Only if the air leaks are sealed too. Ice dams form when house heat reaches the roof deck and melts snow that refreezes at the cold eave — and warm air through bypasses delivers far more heat than conduction through thin insulation. Seal, insulate, ventilate, in that order." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations" },
+        { "href": "https://www.homerenovationsavings.ca/with-assessment", "label": "Home Renovation Savings — insulation rebates" },
+        { "href": "https://www.canada.ca/en/employment-social-development/services/health-safety/prevention/vermiculite.html", "label": "Government of Canada — vermiculite insulation caution" }
+      ],
+      "related": ["blower-door", "thermal-imaging"],
+      "gear": [],
+      "leadHeading": "Attic on your list? Scope it right",
+      "leadSub": "We'll match you with a registered advisor whose inspection sets the seal-first sequence — and catches vermiculite before a contractor disturbs it."
+    },
+    {
+      "slug": "bill-analysis",
+      "name": "12-month utility bill analysis",
+      "heroTitle": "Bill analysis: the ground truth every projection should start from",
+      "lede": "Your last twelve months of gas and hydro bills are a measurement instrument you already paid for. Split into baseload versus heating, normalized for weather, and benchmarked against similar homes, they tell you where the money actually goes — and they're the yardstick that later proves whether your upgrades delivered. Our planner does the rough cut in your browser; your advisor's model refines it.",
+      "glance": [
+        { "k": "Cost", "v": "Free — bring the bills" },
+        { "k": "Splits", "v": "Baseload vs heating" },
+        { "k": "Method", "v": "Weather-normalized" },
+        { "k": "Role", "v": "The savings yardstick" }
+      ],
+      "stepsHeading": "What's involved",
+      "steps": [
+        { "t": "Pull 12 months of both fuels", "p": "Utility web portals export usage history in a click — kWh by month, m³ of gas by month. Twelve months minimum so both seasons are in the data; twenty-four is better because it averages a mild winter against a hard one." },
+        { "t": "Find your baseload", "p": "July gas use is your water heater and stove — that's gas baseload. The overnight-summer floor on hourly hydro data (Ontario smart meters expose it in your utility portal) is your always-on electrical load: fridges, freezers, pumps, standby electronics." },
+        { "t": "Isolate the heating share", "p": "Winter usage minus baseload is what you pay to fight the weather. For most older Ontario homes this is the dominant slice — which is why envelope and heating upgrades headline the plan." },
+        { "t": "Normalize for weather", "p": "Dividing heating energy by the winter's heating degree-days makes years comparable — so a mild February doesn't masquerade as savings, and a brutal one doesn't hide them. This is the step that separates analysis from anecdote." },
+        { "t": "Benchmark and set the yardstick", "p": "Your per-degree-day, per-square-metre numbers land somewhere against similar homes — the planner's rough benchmark or your advisor's database. Whatever you upgrade next, this baseline is how you'll know it worked: same math, next winter." }
+      ],
+      "getIt": "Do the rough version yourself in the planner (it seeds typical figures for your home's size and era, and your real bills sharpen it). Then bring the actual bills to your EnerGuide assessment — the advisor's model ties them to the blower door number and envelope data, which is where projections stop being brochure numbers.",
+      "remediation": {
+        "intro": "The analysis points at one of two problems, each with its own moves:",
+        "options": [
+          { "name": "High baseload: go hunting", "band": "Often $100s/yr found", "note": "The 25-year-old basement beer fridge, the chest freezer serving six items, a dehumidifier running 24/7, pool and well pumps, electric water heating on the wrong schedule. A $30 plug meter convicts suspects one at a time." },
+          { "name": "High heating share: run the sequence", "band": "The planner's job", "note": "Air sealing, insulation, then right-sized equipment — the whole retrofit path this site maps, with the rebates that currently apply. The bill analysis is what proves the sequence worked, winter over winter." },
+          { "name": "Rate-plan optimization", "band": "Free to try", "note": "Ontario's time-of-use and ultra-low-overnight plans reward shiftable loads — EV charging, water heating, laundry. The right plan depends on your pattern, which the hourly data reveals." },
+          { "name": "Water heating, the forgotten slice", "band": "At replacement", "note": "If summer gas or a big electric baseload traces to hot water, a heat-pump water heater or a better schedule is a real line item — sized and sequenced at your next replacement, not as a panic purchase." }
+        ],
+        "footer": "One discipline: change one thing at a time where you can, and re-read the normalized numbers after. The houses that actually get cheaper to run are the ones where somebody kept score."
+      },
+      "faqs": [
+        { "q": "My neighbour's bills are lower. Is my house worse?", "a": "Maybe — or they're two people to your five, keep it at 19°C, cook less, and sit on a different rate plan. Occupancy and behaviour swamp house differences until you normalize; that's why the analysis compares per-degree-day intensity against similar homes rather than raw bills over the fence." },
+        { "q": "How accurate is the planner's version?", "a": "Deliberately rough: it seeds typical figures for your era and size, and your real bills tighten it into a fair estimate of your split and likely savings ranges. The advisor's model — fed by your blower door number and envelope data — is the version to make purchase decisions on." },
+        { "q": "Can I see my baseload without any math?", "a": "Mostly, yes: Ontario utility portals expose hourly smart-meter data — look at 2–5 a.m. on a mild summer night and you're staring at your always-on load. If that floor is high, the hunt (old fridge, pumps, dehumidifier) almost always finds the culprit within an afternoon." }
+      ],
+      "sources": [
+        { "href": "https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/energuide-energy-efficiency-home-evaluations", "label": "NRCan — EnerGuide home evaluations (the model your bills feed)" }
+      ],
+      "related": ["heat-loss-calc", "blower-door"],
+      "gear": [],
+      "leadHeading": "Bring the bills, sharpen everything",
+      "leadSub": "Run the planner with your bills, then let us match you with an advisor whose model turns them into a plan with numbers you can hold it to."
+    }
+  ]
+}
