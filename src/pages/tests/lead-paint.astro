@@ -1,0 +1,159 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Lead paint testing — pre-1960 homes, $15 swabs, and lead-safe renovation | AuditYourHome';
+const description =
+  'Health Canada: homes built before 1960 probably contain lead-based paint; 1960–1990, possibly. Intact paint is low-risk — sanding it is not. How swab tests work ($15–$40), when to get lab confirmation, and the lead-safe practices that make window and trim work safe.';
+
+const faqs = [
+  {
+    q: 'My house is from the 1970s. Do I really need to test?',
+    a: 'Health Canada\'s framing: before 1960, lead paint is probable; from 1960 to 1990, possible — exteriors especially, interiors in smaller amounts. Canadian consumer paint was virtually lead-free by 1990. So for a 1970s house the honest answer is "test the surfaces you\'re about to disturb" — a $15–$40 swab kit before a window or trim project is cheap certainty either way.',
+  },
+  {
+    q: 'Is intact lead paint dangerous?',
+    a: 'Intact, well-adhered paint out of children\'s reach is low-risk, and Health Canada\'s first recommendation is often to leave it alone or cover it — paint over it, or cap it with wallboard. The exposure problem is dust: sanding, scraping, heat guns, deteriorating and chalking surfaces, and friction edges like painted window sashes that grind dust every time they slide.',
+  },
+  {
+    q: 'How do swab tests work, and can I trust them?',
+    a: 'Rhodizonate or sulfide swabs change colour on contact with lead — rub the swab on a notched edge that exposes every paint layer, since lead often hides under newer coats. They\'re a good screen: a positive is worth believing; a negative on a high-stakes job (big renovation, kids in the house) is worth confirming with a lab chip test or an XRF scan by an environmental testing firm.',
+  },
+  {
+    q: 'What does lead-safe renovation actually look like?',
+    a: 'Wet methods and containment: mist surfaces before disturbing, hand-scrape or use chemical strippers rather than dry-sanding, never use heat guns or blowlamps on old paint, seal the work area with plastic, keep children and anyone pregnant away, and clean with a HEPA vacuum and wet wipes — a shop vac just redistributes the dust. For big jobs, hire a contractor who works lead-safe and says so in the quote.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Lead paint', path: '/tests/lead-paint/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Lead paint</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
+      <h1>Lead paint: a $15 swab before the sander</h1>
+      <p class="lede measure">
+        Lead paint doesn't poison houses — renovations do. The paint sat harmlessly under newer
+        coats for decades; then someone dry-sands a window frame and the dust settles everywhere a
+        toddler's hands go. Health Canada's era guidance is clear — pre-1960 homes probably have
+        it, 1960–1990 possibly — and the response is cheap: swab-test any surface you're about to
+        disturb, and work wet if it lights up.
+      </p>
+    </div>
+
+    <div class="glance">
+      <div class="g"><p class="k">Pre-1960</p><p class="v">Probably present</p></div>
+      <div class="g"><p class="k">1960–1990</p><p class="v">Possibly present</p></div>
+      <div class="g"><p class="k">Swab kits</p><p class="v">$15–$40</p></div>
+      <div class="g"><p class="k">Most at risk</p><p class="v">Kids under 6, pregnancy</p></div>
+    </div>
+
+    <div class="measure prose">
+      <h2>Test-and-work sequence</h2>
+    </div>
+
+    <ol class="steps measure">
+      <li>
+        <h3>List what the project will disturb</h3>
+        <p>Window sashes and trim, baseboards, doors and jambs, stair parts, walls being opened —
+        in energy retrofits, window replacement and trim removal are exactly where lead work
+        hides.</p>
+      </li>
+      <li>
+        <h3>Swab every layer, not just the top coat</h3>
+        <p>Score a small notch through all paint layers and swab the exposed edge — lead is
+        usually buried under decades of repainting. Test each distinct surface type; a clean wall
+        says nothing about the window beside it.</p>
+      </li>
+      <li>
+        <h3>Confirm when stakes are high</h3>
+        <p>Kids under 6 or a pregnancy in the house, or a whole-floor renovation? Confirm swab
+        results with lab chip analysis or an XRF survey from an environmental testing firm
+        before committing to a work method.</p>
+      </li>
+      <li>
+        <h3>Positive? Choose: leave, cover, or remove lead-safe</h3>
+        <p>Intact and out of reach: leave it or encapsulate (paint over, cap with wallboard).
+        Must remove: wet methods and chemical strippers — never dry sanding, heat guns, or
+        blowlamps — with plastic containment, and children and anyone pregnant out of the
+        work area.</p>
+      </li>
+      <li>
+        <h3>Clean like it counts</h3>
+        <p>HEPA vacuum, then wet-wipe every horizontal surface, then HEPA again. Bag waste.
+        Wash work clothes separately. The cleanup is half the job — lead dust you can't see is
+        the entire hazard.</p>
+      </li>
+    </ol>
+
+    <div class="card card-pad callout measure">
+      <h3>Lead and your retrofit</h3>
+      <p class="mb-0">
+        The upgrades that trigger lead precautions are the ones our <a href="/plan/">planner</a>
+        recommends for older homes anyway: window and door replacement, air-sealing around trim,
+        opening walls for insulation. None of them become forbidden — they become
+        <em>wet-method, contained</em> jobs. Budget a few hundred dollars of extra labour and
+        materials for lead-safe practice on a pre-1960 window job, not thousands; the swab tells
+        you whether you need to.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://www.canada.ca/en/health-canada/services/home-garden-safety/reduce-your-exposure-lead.html" rel="noopener">Health Canada — Reduce your exposure to lead (era guidance, no sanders/heat guns, vulnerable groups) (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.canada.ca/en/health-canada/services/home-garden-safety/pollutants-furniture-building-materials.html" rel="noopener">Health Canada — Pollutants from building materials (lead dust from renovation) (verified {SITE.dataReviewDate})</a></li>
+      </ul>
+    </div>
+
+    <div class="related">
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/asbestos-vermiculite/">Related guide: asbestos &amp; vermiculite</a>
+    </div>
+
+    <LeadForm
+      heading="Renovating an older home?"
+      sub="Tell us the era and the project — we'll match you with an advisor who sequences the hazard checks before the retrofit work."
+      context="guide-lead"
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 26px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 6px; display: grid; gap: 12px; }
+  .steps li { position: relative; padding: 14px 16px 14px 58px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 14px; }
+  .steps h3 { margin: 0 0 4px; font-size: 16.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .callout { border-left: 4px solid var(--heat); margin: 26px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

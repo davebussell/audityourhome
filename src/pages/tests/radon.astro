@@ -1,0 +1,170 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Radon testing guide — how to test, the 200 Bq/m³ rule, and fixing high levels | AuditYourHome';
+const description =
+  'Radon is the second-leading cause of lung cancer in Canada and Health Canada recommends every home test. How to run a proper 3-month winter test for $30–$60, what 200 Bq/m³ means, when to hire a C-NRPP pro, and what mitigation actually costs.';
+
+const faqs = [
+  {
+    q: 'My neighbour tested low. Is my house fine?',
+    a: 'No — radon varies house to house, even between semis sharing a wall. Levels depend on the soil gas under your specific footing, the cracks and openings in your specific foundation, and your home\'s specific pressure balance. Health Canada found about 1 in 5 Canadian homes above the guideline, and the only way to know which fifth you\'re in is to test your own house.',
+  },
+  {
+    q: 'Short-term or long-term test?',
+    a: 'Long-term — at least 3 months, ideally over fall or winter when the house is closed up. Radon swings day to day with weather and pressure, so a 48-hour test can badly mislead in either direction. Health Canada\'s guidance and the C-NRPP protocol are both built around the 3-month average. Digital monitors are a fine supplement (and satisfying to watch), but base decisions on a long-term result.',
+  },
+  {
+    q: 'Do new homes need testing too?',
+    a: 'Yes. Age doesn\'t predict radon — new homes are often tighter, which can concentrate soil gas, and many are built with a passive radon rough-in that does nothing until tested and, if needed, activated with a fan. Test any home you live in, whatever the year on the permit.',
+  },
+  {
+    q: 'Can\'t I just open windows or run an HRV?',
+    a: 'Ventilation dilutes radon a little, but it doesn\'t address the source and the effect disappears the moment windows close. Sub-slab (active soil) depressurization — a sealed pipe and fan that vents soil gas above the roofline — is the standard fix because it stops radon entering at all, typically cutting levels by more than 80%.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Radon', path: '/tests/radon/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Radon</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
+      <h1>Radon: the one test every Canadian home needs</h1>
+      <p class="lede measure">
+        An invisible, odourless radioactive gas that seeps from the soil into basements, radon is
+        the second-leading cause of lung cancer in Canada — behind roughly 16% of lung cancer
+        deaths, more than 3,000 a year. About 1 in 5 homes sits above the guideline, and nothing
+        about your house's age, price, or postal code tells you whether yours is one of them.
+        A $30–$60 kit does.
+      </p>
+    </div>
+
+    <div class="glance">
+      <div class="g"><p class="k">Guideline</p><p class="v">200 Bq/m³</p></div>
+      <div class="g"><p class="k">Test length</p><p class="v">3+ months, fall–winter</p></div>
+      <div class="g"><p class="k">DIY cost</p><p class="v">$30–$60</p></div>
+      <div class="g"><p class="k">Fix if high</p><p class="v">$2,000–$4,000</p></div>
+    </div>
+
+    <div class="measure prose">
+      <h2>How to test properly</h2>
+    </div>
+
+    <ol class="steps measure">
+      <li>
+        <h3>Get a long-term detector</h3>
+        <p>An alpha-track or electret kit from a hardware store or online — $30–$60 including lab
+        analysis. Prefer devices listed under the C-NRPP program. Continuous digital monitors work
+        too; treat their 3-month average, not the daily readout, as your number.</p>
+      </li>
+      <li>
+        <h3>Place it where you actually live</h3>
+        <p>Lowest lived-in level — a finished basement counts, a crawlspace doesn't. Roughly
+        breathing height, away from exterior walls, windows, drafts, and heat sources. Then leave
+        it alone.</p>
+      </li>
+      <li>
+        <h3>Run it at least 3 months over the heating season</h3>
+        <p>Fall through winter, with the house closed up, is when radon concentrates and when the
+        average is most honest. Short tests swing wildly with weather — don't base a decision on
+        one.</p>
+      </li>
+      <li>
+        <h3>Send it to the lab and read the average</h3>
+        <p>Your report gives a long-term average in Bq/m³. Under 200: you're within the guideline —
+        retest after any major renovation, air-sealing work, or foundation change. Over 200: plan
+        the fix — sooner the higher the number.</p>
+      </li>
+      <li>
+        <h3>If it's high, get a C-NRPP mitigation quote</h3>
+        <p>Sub-slab (active soil) depressurization — a sealed pipe through the slab with a quiet
+        inline fan venting above the roof — typically runs $2,000–$4,000 and cuts levels by more
+        than 80%. Retest afterward to confirm.</p>
+      </li>
+    </ol>
+
+    <div class="card card-pad callout measure">
+      <h3>Radon and your retrofit — the order matters</h3>
+      <p class="mb-0">
+        Air sealing is the highest-return energy upgrade there is — and it changes your home's
+        pressure balance and air exchange, which can move radon in either direction.
+        <strong>Air-sealing a basement without knowing your radon number is doing it blind.</strong>
+        Start the kit before or alongside your <a href="/plan/">retrofit plan</a>, and retest after
+        major envelope work. If mitigation is needed, the fan system works regardless of how tight
+        the house gets — tight house + mitigation is the healthy end state.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>DIY kit or professional measurement?</h2>
+      <p>
+        For a first screen, the DIY long-term kit is exactly what Health Canada recommends and all
+        most homes ever need. Hire a <strong>C-NRPP-certified measurement professional</strong> when
+        a real-estate deal needs a defensible short-window protocol, when a mitigation system needs
+        verification, or when you want placement and interpretation handled for you. Mitigation
+        itself is its own C-NRPP certification — ask for it by name when getting quotes.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://www.canada.ca/en/health-canada/services/environmental-workplace-health/reports-publications/radon-what-you-need-to-know.html" rel="noopener">Health Canada — Radon: what you need to know (guideline, 16% / 3,000+ deaths, 1-in-5 homes, testing &amp; mitigation) (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://c-nrpp.ca/" rel="noopener">C-NRPP — Canadian National Radon Proficiency Program (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://c-nrpp.ca/find-a-professional/" rel="noopener">C-NRPP — Find a certified measurement or mitigation professional</a></li>
+      </ul>
+    </div>
+
+    <div class="related">
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/carbon-monoxide/">Next guide: carbon monoxide</a>
+    </div>
+
+    <LeadForm
+      heading="Fold radon into a real plan"
+      sub="The planner flags radon and every other test your specific home calls for, then matches you with a registered advisor — with the test list already in your request."
+      context="guide-radon"
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 26px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 6px; display: grid; gap: 12px; }
+  .steps li { position: relative; padding: 14px 16px 14px 58px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 14px; }
+  .steps h3 { margin: 0 0 4px; font-size: 16.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .callout { border-left: 4px solid var(--heat); margin: 26px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

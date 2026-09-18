@@ -110,6 +110,14 @@ const schema = [
               <label class="radio-pill"><input type="radio" name="size" value="xlarge" /><span>Over 3,000</span></label>
             </div>
           </div>
+          <div class="field">
+            <span class="lbl">Water source <span class="hint-inline">(flags well-water testing)</span></span>
+            <div class="radio-row" role="radiogroup" aria-label="Water source">
+              <label class="radio-pill"><input type="radio" name="water" value="municipal" checked /><span>Municipal</span></label>
+              <label class="radio-pill"><input type="radio" name="water" value="well" /><span>Private well</span></label>
+              <label class="radio-pill"><input type="radio" name="water" value="unsure" /><span>Not sure</span></label>
+            </div>
+          </div>
         </fieldset>
 
         <!-- STEP 3 -->
@@ -147,6 +155,7 @@ const schema = [
             <label class="radio-pill"><input type="checkbox" name="goal" value="heatpump" /><span>Get a heat pump</span></label>
             <label class="radio-pill"><input type="checkbox" name="goal" value="solar" /><span>Add solar</span></label>
             <label class="radio-pill"><input type="checkbox" name="goal" value="buying" /><span>Buying / just bought</span></label>
+            <label class="radio-pill"><input type="checkbox" name="goal" value="reno" /><span>Renovating (opening walls/trim)</span></label>
             <label class="radio-pill"><input type="checkbox" name="goal" value="emissions" /><span>Cut emissions</span></label>
           </div>
         </fieldset>
@@ -155,17 +164,20 @@ const schema = [
         <fieldset class="step" data-step="6">
           <legend><h2>Add your bills for dollar estimates <span class="hint-inline">(optional)</span></h2></legend>
           <p class="small">
-            Averages are fine — winter and summer bills differ, so think "typical month across the
-            year." Skip this and we'll show savings as percentages instead.
+            We've pre-set these to a typical home of your size and era — drag to match your actual
+            bills (a typical month across the year). Leave them as-is and we'll estimate from the
+            typical figures.
           </p>
-          <div class="grid-2">
-            <div class="field" id="gasField">
-              <label for="gasBill">Average monthly natural gas bill ($)</label>
-              <input id="gasBill" name="gasBill" type="text" inputmode="decimal" placeholder="e.g. 145" />
+          <div class="sliders">
+            <div class="field slider-field" id="gasField">
+              <label for="gasBill">Average monthly natural gas bill <output id="gasOut" for="gasBill">$0</output></label>
+              <input id="gasBill" name="gasBill" type="range" min="0" max="400" step="5" value="0" />
+              <p class="meta slider-hint" id="gasHint">$0 = no gas service</p>
             </div>
-            <div class="field">
-              <label for="elecBill">Average monthly hydro bill ($)</label>
-              <input id="elecBill" name="elecBill" type="text" inputmode="decimal" placeholder="e.g. 160" />
+            <div class="field slider-field">
+              <label for="elecBill">Average monthly hydro bill <output id="elecOut" for="elecBill">$0</output></label>
+              <input id="elecBill" name="elecBill" type="range" min="0" max="500" step="5" value="0" />
+              <p class="meta slider-hint">Drag to match a recent bill</p>
             </div>
           </div>
         </fieldset>
@@ -329,6 +341,17 @@ const schema = [
   .test-card .tw { margin: 0 0 6px; font-size: 14px; }
   .test-card .test-est { margin: 0 0 4px; font-size: 13px; color: var(--muted); }
   .test-card .test-est b { color: var(--pine); }
+  .spec-h { margin-top: 26px !important; }
+  .test-card .tguide { margin: 8px 0 0; font-size: 14px; }
+  .test-card .tguide a { text-decoration: none; color: var(--heat-deep); }
+  .sliders { max-width: 560px; display: grid; gap: 22px; }
+  .slider-field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; }
+  .slider-field output { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--heat-deep); font-variant-numeric: tabular-nums; }
+  .slider-hint { margin: 6px 0 0; }
+  input[type='range'] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: var(--line-strong); border-radius: 999px; outline: none; margin-top: 10px; }
+  input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--heat); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(26,36,48,0.3); cursor: pointer; }
+  input[type='range']::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--heat); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(26,36,48,0.3); cursor: pointer; }
+  input[type='range']:focus-visible { outline: 2.5px solid var(--heat); outline-offset: 4px; }
   .mini-provider .rev { color: var(--faint); font-size: 12.5px; margin: 6px 0 0; }
   .res-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
   .res-list li { font-size: 15px; padding-left: 22px; position: relative; }
@@ -336,6 +359,8 @@ const schema = [
 </style>
 
 <script>
+  import { screenSpecialtyTests } from '../../lib/screener';
+
   const D = JSON.parse(document.getElementById('planner-data')!.textContent!);
 
   const form = document.getElementById('plannerForm') as HTMLFormElement;
@@ -378,6 +403,7 @@ const schema = [
     });
     backBtn.hidden = n === 1;
     nextBtn.textContent = n === TOTAL ? 'See my plan' : 'Next';
+    if (n === 6) initBillSliders();
     $('.field-error')?.remove();
     const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input`);
     first?.focus({ preventScroll: true });
@@ -412,6 +438,50 @@ const schema = [
   });
   backBtn.addEventListener('click', () => show(Math.max(1, step - 1)));
   form.addEventListener('submit', (e) => e.preventDefault());
+
+  // ---------- bill sliders (size/era-seeded guesses) ----------
+  const gasEl = document.getElementById('gasBill') as HTMLInputElement;
+  const elecEl = document.getElementById('elecBill') as HTMLInputElement;
+  const touched = { gas: false, elec: false };
+  function fmtOut(el: HTMLInputElement, out: HTMLElement) {
+    out.textContent = el.value === '0' ? '$0' : '$' + el.value + '/mo';
+  }
+  function wireSlider(el: HTMLInputElement, outId: string, key: 'gas' | 'elec') {
+    const out = document.getElementById(outId)!;
+    el.addEventListener('input', () => { touched[key] = true; fmtOut(el, out); });
+    fmtOut(el, out);
+  }
+  wireSlider(gasEl, 'gasOut', 'gas');
+  wireSlider(elecEl, 'elecOut', 'elec');
+  function billGuesses() {
+    const R = D.rates.ontario, B = R.benchmarks;
+    const age = fieldVal('age') || '1966-1980';
+    const size = fieldVal('size') || 'medium';
+    const heat = fieldVal('heat') || 'gas';
+    const m = (B.eraMultiplier[age] ?? 1) * (B.sizeMultiplier[size] ?? 1);
+    let gas = 0, elec = 0;
+    if (heat === 'gas') {
+      gas = (B.gasHeatedGasM3 * m * R.gasPerM3) / 12;
+      elec = (B.gasHeatedElecKwh * (B.sizeMultiplier[size] ?? 1) * R.elecPerKwh) / 12;
+    } else if (heat === 'electric') {
+      elec = (B.electricHeatedElecKwh * m * R.elecPerKwh) / 12;
+    } else if (heat === 'heatpump') {
+      elec = (B.electricHeatedElecKwh * m * R.elecPerKwh * 0.55) / 12;
+    } else {
+      elec = (B.gasHeatedElecKwh * (B.sizeMultiplier[size] ?? 1) * R.elecPerKwh) / 12;
+    }
+    const r5 = (v: number) => String(Math.max(0, Math.round(v / 5) * 5));
+    return { gas: r5(gas), elec: r5(elec) };
+  }
+  function initBillSliders() {
+    const g = billGuesses();
+    if (!touched.gas) { gasEl.value = g.gas; fmtOut(gasEl, document.getElementById('gasOut')!); }
+    if (!touched.elec) { elecEl.value = g.elec; fmtOut(elecEl, document.getElementById('elecOut')!); }
+    const hint = document.getElementById('gasHint');
+    if (hint) hint.textContent = fieldVal('heat') === 'gas'
+      ? 'Pre-set to a typical similar home — drag to match your bill'
+      : '$0 = no gas service';
+  }
 
   // ---------- interpretation helpers ----------
   function parsePostal(raw: string) {
@@ -482,8 +552,10 @@ const schema = [
     const htype = fieldVal('htype') || 'detached';
     const size = fieldVal('size') || 'medium';
     const heat = fieldVal('heat') || 'gas';
+    const water = fieldVal('water') || 'municipal';
     const syms = multiVal('sym');
     const goals = multiVal('goal');
+    const billsReal = touched.gas || touched.elec;
     const gasBill = parseFloat(fieldVal('gasBill').replace(/[^0-9.]/g, '')) || 0;
     const elecBill = parseFloat(fieldVal('elecBill').replace(/[^0-9.]/g, '')) || 0;
 
@@ -502,10 +574,10 @@ const schema = [
       regionName ?? (loc.kind === 'ca' ? (loc.province ?? 'Canada') : loc.kind === 'us' ? 'United States' : 'Ontario (assumed)'),
     ].join(' · ');
 
-    renderBenchmark(heat, size, age, gasBill, elecBill, isON, htype);
+    renderBenchmark(heat, size, age, gasBill, elecBill, isON, htype, billsReal);
     renderProfile(arch);
     renderSequence(arch, heat, syms, goals, age, gasBill, elecBill, isON, isToronto, htype);
-    const testsList = renderTests(age, heat, syms, goals, htype);
+    const testsList = renderTests(age, heat, syms, goals, htype, water);
     renderPrograms(loc, goals, isON, isToronto);
     renderIssues(syms);
     renderProviders(loc);
@@ -515,7 +587,7 @@ const schema = [
     plannerEl.hidden = true;
     resultsEl.hidden = false;
     const url = new URL(location.href);
-    const params: Record<string, string> = { postal, age, htype, size, heat, sym: syms.join(','), goal: goals.join(','), gas: gasBill ? String(gasBill) : '', elec: elecBill ? String(elecBill) : '', done: '1' };
+    const params: Record<string, string> = { postal, age, htype, size, heat, water, sym: syms.join(','), goal: goals.join(','), gas: touched.gas && gasBill ? String(gasBill) : '', elec: touched.elec && elecBill ? String(elecBill) : '', done: '1' };
     Object.entries(params).forEach(([k, v]) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k)));
     history.replaceState(null, '', url);
     const t = $('#rTitle');
@@ -523,11 +595,11 @@ const schema = [
     t.focus({ preventScroll: false });
   }
 
-  function renderBenchmark(heat: string, size: string, age: string, gasBill: number, elecBill: number, isON: boolean, htype: string) {
+  function renderBenchmark(heat: string, size: string, age: string, gasBill: number, elecBill: number, isON: boolean, htype: string, billsReal: boolean) {
     const el = $('#rBenchmark');
     el.innerHTML = '';
     const userAnnual = (gasBill + elecBill) * 12;
-    if (!userAnnual || !isON || htype === 'condo') return;
+    if (!billsReal || !userAnnual || !isON || htype === 'condo') return;
     const R = D.rates.ontario;
     const B = R.benchmarks;
     const m = (B.eraMultiplier[age] ?? 1) * (B.sizeMultiplier[size] ?? 1);
@@ -679,9 +751,13 @@ const schema = [
     chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V4M4 20h16"/><path d="m7 15 3.5-4 3 2.5L18 8"/></svg>',
     radon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="2"/><path d="M12 4v4M5.5 20a7.5 7.5 0 0 1 13 0"/><path d="M3.8 15.5 7 17M20.2 15.5 17 17"/></svg>',
     co: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="6" width="16" height="12" rx="2"/><circle cx="9" cy="12" r="2.2"/><path d="M14 10h3M14 14h3"/></svg>',
+    mold: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="4.5"/><circle cx="16.5" cy="15.5" r="2.8"/><circle cx="8" cy="17.5" r="1.8"/></svg>',
+    hazard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 3.5 19h17L12 4Z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r="0.4" fill="currentColor"/></svg>',
+    paint: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11v5H5zM16 6h3v4h-6"/><path d="M11 13v-3M9.5 14h3v6h-3z"/></svg>',
+    water: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20v-8a5 5 0 0 1 10 0"/><path d="M4 20h16M12 3v2M12 8.5s2.2 2.6 2.2 4a2.2 2.2 0 1 1-4.4 0c0-1.4 2.2-4 2.2-4Z"/></svg>',
   };
 
-  function renderTests(age: string, heat: string, syms: string[], goals: string[], htype: string) {
+  function renderTests(age: string, heat: string, syms: string[], goals: string[], htype: string, water: string) {
     const el = $('#rTests');
     if (htype === 'condo') { el.innerHTML = ''; return []; }
     const E = Object.fromEntries(D.tests.energy.map((t: any) => [t.id, t]));
@@ -699,29 +775,49 @@ const schema = [
     if ((syms.includes('cold-second-floor') || syms.includes('summer-overheating')) && heat !== 'electric') picks.push({ t: E['duct-leakage'], why: 'Your hot/cold floor problem usually lives in the ducts — measure before buying bigger equipment.' });
     if (syms.includes('condensation-mould') || newer) picks.push({ t: E['ventilation-assessment'], why: syms.includes('condensation-mould') ? 'Your condensation symptom is usually ventilation, not windows — this proves which, before you spend $20k on glass.' : 'Tighter eras need verified ventilation — humidity problems sneak up.' });
     picks.push({ t: E['bill-analysis'], why: 'Bring 12 months of bills to the assessment — it anchors every projection to your reality.' });
-    picks.push({ t: H['radon'], why: 'Health Canada recommends every home test — and any basement air-sealing plan should know your radon number first.', health: true });
-    if (fuel) picks.push({ t: H['carbon-monoxide'], why: 'Fuel-burning home — Ontario requires CO alarms near sleeping areas; check yours haven’t expired.', health: true });
-
-    const cards = picks.map(({ t, why, health }) => `
-      <div class="test-card${health ? ' health' : ''}">
+    const cards = picks.map(({ t, why }) => `
+      <div class="test-card">
         <span class="ticon">${ICONS[t.icon] ?? ''}</span>
         <div>
-          <h4>${esc(t.name)} ${health ? '<span class="chip chip-limited">health &amp; safety</span>' : ''}</h4>
+          <h4>${esc(t.name)}</h4>
           <p class="tw">${esc(why)}</p>
           <p class="test-est"><b>Establishes:</b> ${esc(t.establishes)}</p>
           <p class="meta">${esc(t.cost)}</p>
         </div>
       </div>`).join('');
 
+    const flags = screenSpecialtyTests({ era: age, heat, water, symptoms: syms, goals, htype });
+    const LEVEL_CHIP: Record<string, string> = {
+      'strongly-flagged': '<span class="chip chip-info">flagged for your home</span>',
+      'flagged': '<span class="chip chip-limited">flagged</span>',
+      'recommended': '<span class="chip chip-neutral">recommended</span>',
+    };
+    const flagCards = flags.map((f) => {
+      const t = H[f.id] ?? {};
+      return `
+      <div class="test-card health">
+        <span class="ticon">${ICONS[t.icon] ?? ''}</span>
+        <div>
+          <h4>${esc(f.name)} ${LEVEL_CHIP[f.level]}</h4>
+          <p class="tw">${esc(f.why)}</p>
+          ${t.cost ? `<p class="meta">${esc(t.cost)}</p>` : ''}
+          <p class="tguide"><a href="${f.guide}"><strong>Full guide: how to test &amp; what to do →</strong></a></p>
+        </div>
+      </div>`;
+    }).join('');
+
     el.innerHTML = `
       <div class="rsec">
         <h3>Tests that establish your requirements</h3>
         <p class="sub">Ask your advisor for these by name — they turn "probably" into measurements. <a href="/tests/">Full testing guide →</a></p>
         <div class="test-grid">${cards}</div>
+        <h3 class="spec-h">Specialty tests flagged for your home</h3>
+        <p class="sub">Screened from your intake — era, heating, water source, and symptoms. Each links to its full guide.</p>
+        <div class="test-grid">${flagCards}</div>
         <button type="button" class="btn btn-ghost btn-sm" id="copyTests">Copy my test checklist</button>
       </div>`;
 
-    const names = picks.map((p) => p.t.name);
+    const names = [...picks.map((p) => p.t.name), ...flags.map((f) => f.name)];
     document.getElementById('copyTests')?.addEventListener('click', async (e) => {
       const btn = e.currentTarget as HTMLButtonElement;
       try {
@@ -832,8 +928,11 @@ const schema = [
     set('htype', q.get('htype'));
     set('size', q.get('size'));
     set('heat', q.get('heat'));
+    set('water', q.get('water'));
     set('gasBill', q.get('gas'));
     set('elecBill', q.get('elec'));
+    if (q.get('gas')) touched.gas = true;
+    if (q.get('elec')) touched.elec = true;
     (q.get('sym') ?? '').split(',').filter(Boolean).forEach((v) => set('sym', v));
     (q.get('goal') ?? '').split(',').filter(Boolean).forEach((v) => set('goal', v));
     if (q.get('done') === '1' && q.get('age')) finish();

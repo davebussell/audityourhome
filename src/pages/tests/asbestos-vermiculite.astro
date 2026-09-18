@@ -1,0 +1,161 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Asbestos & vermiculite in pre-1990 homes — sample first, always | AuditYourHome';
+const description =
+  'Homes built before ~1990 may hold asbestos in vermiculite attic insulation, duct wrap, floor tiles, and plaster. Why you never disturb suspect material, how professional sampling works ($50–$150 per lab sample), and how a positive result reorders your whole renovation.';
+
+const faqs = [
+  {
+    q: 'Is all vermiculite insulation asbestos?',
+    a: 'No — vermiculite itself is a harmless mineral. The problem is that most vermiculite insulation sold in Canada (much of it as Zonolite) came from a mine in Libby, Montana that was contaminated with amphibole asbestos. You cannot tell contaminated from clean by looking, which is why the federal guidance is blunt: treat vermiculite insulation as if it contains asbestos unless lab analysis says otherwise — and don\'t disturb it either way.',
+  },
+  {
+    q: 'Can I take the sample myself?',
+    a: 'Sampling is the one moment the material gets deliberately disturbed, so it\'s the wrong moment to improvise. A licensed professional wets the material, takes bulk samples to an accredited lab, and knows how many samples a space needs for a defensible answer. At $50–$150 per sample it\'s among the cheapest professional services in this whole process — and a DIY sample done dry from an attic hatch is exactly how fibres end up in your living space.',
+  },
+  {
+    q: 'If it tests positive, does it have to come out?',
+    a: 'Not always. Asbestos materials in good condition, sealed and left undisturbed, pose little risk — managing in place (sealing the attic hatch, documenting, and not renovating into it) is a legitimate strategy. It has to come out when you need the space it occupies: attic insulation top-ups, pot lights, wiring, air-sealing from the attic side, or any renovation that would disturb it. Removal is licensed-contractor work, typically costing thousands, quoted after the lab results.',
+  },
+  {
+    q: 'Where else does asbestos hide besides the attic?',
+    a: 'In pre-1990 construction: pipe and duct insulation wrap (the white "paper" on old ducts), 9×9-inch vinyl floor tiles and their mastic, plaster and drywall compound, ceiling textures, cement board, and some roofing and siding. The era check in our planner flags the likelihood; a pre-renovation hazmat survey checks the specific materials your project will touch.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Asbestos & vermiculite', path: '/tests/asbestos-vermiculite/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Asbestos &amp; vermiculite</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
+      <h1>Asbestos &amp; vermiculite: the test that reorders the renovation</h1>
+      <p class="lede measure">
+        Undisturbed, asbestos-containing materials mostly just sit there. Disturbed — cut, drilled,
+        swept, stuffed with new insulation — they release fibres linked to asbestosis,
+        mesothelioma, and lung cancer, sometimes decades later. If your home predates about 1990,
+        one rule protects you: <strong>sample before anything disturbs suspect material.</strong>
+        It's a $50–$150 lab answer that decides whether your attic top-up is a Tuesday job or an
+        abatement project.
+      </p>
+    </div>
+
+    <div class="glance">
+      <div class="g"><p class="k">Applies to</p><p class="v">Pre-~1990 homes</p></div>
+      <div class="g"><p class="k">Golden rule</p><p class="v">Never disturb — sample</p></div>
+      <div class="g"><p class="k">Lab sampling</p><p class="v">$50–$150 / sample</p></div>
+      <div class="g"><p class="k">If positive</p><p class="v">Seal &amp; manage, or abate</p></div>
+    </div>
+
+    <div class="measure prose">
+      <h2>How to handle a suspect home</h2>
+    </div>
+
+    <ol class="steps measure">
+      <li>
+        <h3>Date your home and your materials</h3>
+        <p>Built before ~1990 puts you in the window; before 1980, squarely in it. Renovation
+        layers count too — a 1970s rec-room ceiling in a 1940s house is its own suspect.</p>
+      </li>
+      <li>
+        <h3>Look without touching</h3>
+        <p>From the attic hatch, vermiculite reads as loose, pebbly, silver-gold or brown granules
+        that glitter slightly — nothing like fluffy fibreglass or grey cellulose. Note duct wrap,
+        old pipe insulation, and 9×9 floor tiles elsewhere. Photograph; don't poke, sweep,
+        or vacuum.</p>
+      </li>
+      <li>
+        <h3>Hire a licensed professional to sample</h3>
+        <p>Bulk samples, taken wet, analyzed by an accredited lab. For renovations, ask for a
+        pre-renovation designated-substances survey of every material the project will touch —
+        in Ontario, contractors will ask you for it anyway.</p>
+      </li>
+      <li>
+        <h3>Negative: proceed. Positive: choose manage or abate</h3>
+        <p>Clean results unlock the normal retrofit sequence. Positive results mean either
+        managing in place — seal, document, leave alone — or licensed abatement before the work
+        that would disturb it. Get the lab report into your house file either way; it matters
+        at resale.</p>
+      </li>
+      <li>
+        <h3>Only then insulate, air-seal, or renovate</h3>
+        <p>Post-abatement (or post-clearance), the attic is just an attic again — top it up,
+        air-seal the ceiling plane, run the wiring. The audit's attic inspection is designed to
+        flag vermiculite <em>before</em> any of this starts.</p>
+      </li>
+    </ol>
+
+    <div class="card card-pad callout measure">
+      <h3>Why this test changes the whole plan</h3>
+      <p class="mb-0">
+        Attic insulation is usually the first big-win upgrade in an older home — and vermiculite
+        sits exactly where that work happens. Discovering it mid-job shuts the site down;
+        discovering it first just reorders the budget. That's why the
+        <a href="/plan/">planner</a> flags this test for every pre-1990 era and why insulation
+        rebate programs expect suspect material dealt with before top-ups. Sequence:
+        sample → clear or abate → air-seal → insulate.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://www.canada.ca/en/employment-social-development/services/health-safety/prevention/vermiculite.html" rel="noopener">Government of Canada — Vermiculite insulation containing asbestos (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.ccohs.ca/oshanswers/diseases/vermiculite.html" rel="noopener">CCOHS — Vermiculite insulation and asbestos fact sheet (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.canada.ca/en/health-canada/services/home-garden-safety/pollutants-furniture-building-materials.html" rel="noopener">Health Canada — Pollutants from building materials (asbestos health risks; hire a professional) (verified {SITE.dataReviewDate})</a></li>
+      </ul>
+    </div>
+
+    <div class="related">
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/lead-paint/">Next guide: lead paint</a>
+    </div>
+
+    <LeadForm
+      heading="Planning attic or renovation work in an older home?"
+      sub="We'll match you with a registered advisor whose attic inspection flags vermiculite before the work starts — with sampling contacts if you need them."
+      context="guide-asbestos"
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 26px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 6px; display: grid; gap: 12px; }
+  .steps li { position: relative; padding: 14px 16px 14px 58px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 14px; }
+  .steps h3 { margin: 0 0 4px; font-size: 16.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .callout { border-left: 4px solid var(--heat); margin: 26px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

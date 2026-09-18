@@ -1,0 +1,197 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema } from '../../../lib/schema';
+
+const title = 'Specialty test screener — does your home need radon, asbestos, or lead testing? | AuditYourHome';
+const description =
+  'Answer five questions — era, heating, water source, symptoms, plans — and get the specialty tests your home actually calls for: radon, CO, mold, asbestos & vermiculite, lead paint, well water. Each flag links to its full guide.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Specialty test screener', path: '/tests/screener/' },
+  ]),
+];
+
+const eras = [
+  { id: 'pre-1946', label: 'Pre-1946' },
+  { id: '1946-1965', label: '1946–1965' },
+  { id: '1966-1980', label: '1966–1980' },
+  { id: '1981-1995', label: '1981–1995' },
+  { id: '1996-2010', label: '1996–2010' },
+  { id: '2011-plus', label: '2011 or newer' },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Specialty test screener</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Free tool · 30 seconds</p>
+      <h1>Which specialty tests does your home need?</h1>
+      <p class="lede measure">
+        Radon, carbon monoxide, mold, asbestos, lead, well water — none of them are covered by a
+        standard energy audit, and none of them apply equally to every home. Five questions sort
+        out which ones your house actually calls for.
+      </p>
+    </div>
+
+    <div class="screener-grid">
+      <form class="card card-pad sform" id="screenerForm">
+        <div class="q">
+          <p class="qlabel">When was your home built?</p>
+          <div class="pills">
+            {eras.map((e, i) => (
+              <label class="radio-pill">
+                <input type="radio" name="s-era" value={e.id} checked={i === 2} />
+                <span>{e.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="q">
+          <p class="qlabel">Main heating</p>
+          <div class="pills">
+            <label class="radio-pill"><input type="radio" name="s-heat" value="gas" checked /><span>Natural gas</span></label>
+            <label class="radio-pill"><input type="radio" name="s-heat" value="electric" /><span>Electric</span></label>
+            <label class="radio-pill"><input type="radio" name="s-heat" value="oil" /><span>Oil / propane</span></label>
+            <label class="radio-pill"><input type="radio" name="s-heat" value="heatpump" /><span>Heat pump</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <p class="qlabel">Water source</p>
+          <div class="pills">
+            <label class="radio-pill"><input type="radio" name="s-water" value="municipal" checked /><span>Municipal</span></label>
+            <label class="radio-pill"><input type="radio" name="s-water" value="well" /><span>Private well</span></label>
+            <label class="radio-pill"><input type="radio" name="s-water" value="unsure" /><span>Not sure</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <p class="qlabel">Any of these true? <span class="optional">(check all that apply)</span></p>
+          <div class="pills">
+            <label class="radio-pill"><input type="checkbox" name="s-symptom" value="condensation-mould" /><span>Condensation or musty air</span></label>
+            <label class="radio-pill"><input type="checkbox" name="s-goal" value="reno" /><span>Renovating soon</span></label>
+            <label class="radio-pill"><input type="checkbox" name="s-goal" value="buying" /><span>Buying this home</span></label>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Screen my home</button>
+        <p class="meta">Runs entirely in your browser — nothing is sent anywhere.</p>
+      </form>
+
+      <div class="sresults" id="screenerResults" aria-live="polite">
+        <div class="card card-pad placeholder" id="screenerPlaceholder">
+          <p class="mb-0 small">
+            Your flags will appear here — each with why it applies to your home, what it costs,
+            and a link to its full guide.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-pad next-cta">
+      <div>
+        <h3>Want the whole picture, not just the tests?</h3>
+        <p class="mb-0 small">
+          The full planner adds your energy profile: what to fix first, which rebates apply, your
+          estimated savings — and it folds these same specialty flags into your audit request
+          automatically.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/plan/">Build my full plan →</a>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { screenSpecialtyTests } from '../../../lib/screener';
+  import testsData from '../../../data/tests.json';
+
+  const H: Record<string, { cost?: string }> = {};
+  for (const t of testsData.health) H[t.id] = t;
+
+  const LEVEL_CHIP: Record<string, string> = {
+    'strongly-flagged': '<span class="chip chip-info">flagged for your home</span>',
+    'flagged': '<span class="chip chip-limited">flagged</span>',
+    'recommended': '<span class="chip chip-neutral">recommended</span>',
+  };
+  const LEVEL_NOTE: Record<string, string> = {
+    'strongly-flagged': 'Do these — your answers put them squarely on your list.',
+    'flagged': 'Worth doing — conditions in your home make them relevant.',
+    'recommended': 'Baseline good practice for any home like yours.',
+  };
+
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c);
+
+  function vals(name: string): string[] {
+    return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)).map((i) => i.value);
+  }
+
+  document.getElementById('screenerForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const era = vals('s-era')[0] ?? '1966-1980';
+    const heat = vals('s-heat')[0] ?? 'gas';
+    const water = vals('s-water')[0] ?? 'municipal';
+    const symptoms = vals('s-symptom');
+    const goals = vals('s-goal');
+
+    const flags = screenSpecialtyTests({ era, heat, water, symptoms, goals, htype: 'detached' });
+
+    const groups: Record<string, typeof flags> = {};
+    for (const f of flags) (groups[f.level] ??= []).push(f);
+
+    const section = (level: string) => {
+      const list = groups[level];
+      if (!list?.length) return '';
+      return `
+        <p class="lvl-note">${LEVEL_NOTE[level]}</p>
+        ${list.map((f) => `
+          <div class="card flag-card lvl-${f.level}">
+            <h4>${esc(f.name)} ${LEVEL_CHIP[f.level]}</h4>
+            <p class="why">${esc(f.why)}</p>
+            <p class="meta">${H[f.id]?.cost ? esc(H[f.id].cost!) + ' · ' : ''}<a href="${f.guide}"><strong>Full guide →</strong></a></p>
+          </div>`).join('')}`;
+    };
+
+    const el = document.getElementById('screenerResults')!;
+    el.innerHTML = `
+      <div class="rhead">
+        <h3>${flags.length} test${flags.length === 1 ? '' : 's'} flagged for your home</h3>
+        <p class="small rsub">Sorted by how strongly your answers call for them.</p>
+      </div>
+      ${section('strongly-flagged')}${section('flagged')}${section('recommended')}
+      <p class="meta rfoot">Take this list with you — the <a href="/plan/">planner</a> puts it straight into your audit request.</p>`;
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+
+<style is:global>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .screener-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 22px; align-items: start; margin-bottom: 28px; }
+  @media (max-width: 900px) { .screener-grid { grid-template-columns: 1fr; } }
+  .sform .q { margin-bottom: 20px; }
+  .sform .qlabel { font-weight: 600; margin-bottom: 8px; font-size: 15px; }
+  .sform .optional { font-weight: 400; color: var(--faint); font-size: 13px; }
+  .sform .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sform .meta { margin-top: 10px; }
+  .sresults .placeholder { border-style: dashed; color: var(--muted); }
+  .sresults .rhead h3 { margin-bottom: 2px; }
+  .sresults .rsub { margin-bottom: 6px; }
+  .sresults .lvl-note { margin: 14px 0 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); }
+  .flag-card { padding: 16px 18px; margin-bottom: 10px; }
+  .flag-card.lvl-strongly-flagged { border-left: 4px solid var(--heat); }
+  .flag-card.lvl-flagged { border-left: 4px solid var(--warn); }
+  .flag-card.lvl-recommended { border-left: 4px solid var(--line-strong); }
+  .flag-card h4 { margin: 0 0 6px; font-size: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .flag-card .why { margin: 0 0 6px; font-size: 14.5px; }
+  .flag-card .meta a { color: var(--heat-deep); text-decoration: none; }
+  .rfoot { margin: 4px 0 0; }
+  .next-cta { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin-bottom: 34px; }
+  .next-cta h3 { margin-bottom: 4px; }
+</style>
