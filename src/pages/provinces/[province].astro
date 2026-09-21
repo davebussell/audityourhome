@@ -1,0 +1,153 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import data from '../../data/provinces.json';
+
+export function getStaticPaths() {
+  return data.provinces.map((p) => ({ params: { province: p.slug } }));
+}
+
+const { province } = Astro.params;
+const p = data.provinces.find((x) => x.slug === province)!;
+const others = data.provinces.filter((x) => x.slug !== p.slug);
+
+const title = `Home energy audits in ${p.name} — live programs, honest status | AuditYourHome`;
+const description = p.intro.length > 158 ? p.intro.slice(0, 155).trimEnd() + '…' : p.intro;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Provinces', path: '/provinces/' },
+    { name: p.name, path: `/provinces/${p.slug}/` },
+  ]),
+];
+
+const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
+  active: { cls: 'chip-active', label: 'live' },
+  income: { cls: 'chip-info', label: 'income-qualified' },
+  closed: { cls: 'chip-closed', label: 'closed' },
+};
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/provinces/">Provinces</a> <span aria-hidden="true">/</span> <span>{p.name}</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Provincial guide · program status verified per item</p>
+      <h1>Home energy audits in {p.name}</h1>
+      <p class="lede measure">{p.intro}</p>
+    </div>
+
+    <div class="measure prose">
+      <h2>The housing stock, read like an auditor</h2>
+      <p>{p.housing}</p>
+    </div>
+
+    <h2 class="sec">Programs in {p.name}: what's actually live</h2>
+    <div class="prog-grid">
+      {p.programs.map((pr) => (
+        <article class={`card card-pad pcard s-${pr.status}`}>
+          <div class="phead">
+            <span class={`chip ${STATUS_CHIP[pr.status]?.cls ?? 'chip-neutral'}`}>{STATUS_CHIP[pr.status]?.label}</span>
+            <p class="phl">{pr.headline}</p>
+          </div>
+          <h3>{pr.name}</h3>
+          <p class="pnote">{pr.note}</p>
+          <p class="meta">
+            {'internal' in pr && (pr as any).internal
+              ? <a href={pr.url}>Details on our tracker →</a>
+              : <a href={pr.url} rel="noopener">Official page ↗</a>}
+            {' · verified '}{pr.verified}
+          </p>
+        </article>
+      ))}
+    </div>
+
+    <div class="card card-pad fed">
+      <h3>{data.federal.heading}</h3>
+      <div class="fed-rows">
+        {data.federal.items.map((f) => (
+          <p class="fed-line">
+            <span class={`chip ${STATUS_CHIP[f.status]?.cls ?? 'chip-neutral'}`}>{STATUS_CHIP[f.status]?.label}</span>
+            <strong>{f.name}:</strong> {f.note} <a href={f.url} rel="noopener">↗</a>
+          </p>
+        ))}
+      </div>
+    </div>
+
+    <h2 class="sec">Monitor &amp; test in {p.name}</h2>
+    <p class="small measure">
+      Local geology, water sources, and climate set the home-health checklist. Each item links to
+      its full guide; the <a href="/tests/screener/">30-second screener</a> personalizes it to
+      your exact house.
+    </p>
+    <div class="hh-grid">
+      {p.homeHealth.map((h) => (
+        <article class="card card-pad hh">
+          <h3><a href={h.link}>{h.name}</a></h3>
+          <p class="mb-0">{h.note}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="card card-pad next-cta">
+      <div>
+        <h3>Run your {p.name} home through the planner</h3>
+        <p class="mb-0 small">
+          Postal code in, plan out: your era's likely story, the tests to ask for by name, and the
+          {' '}{p.name} programs above matched to your situation.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/plan/">Check my home →</a>
+    </div>
+
+    <p class="also">
+      Other provinces:
+      {others.map((o, i) => (
+        <span>{i > 0 && ' · '}<a href={`/provinces/${o.slug}/`}>{o.name}</a></span>
+      ))}
+    </p>
+
+    <LeadForm
+      heading={`Find a registered advisor in ${p.name}`}
+      sub="NRCan-registered service organizations work in every province. Tell us where you are and what you're planning — we'll point you at the right door, with your province's programs flagged."
+      context={`province-${p.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 8px 0 10px; }
+  .sec { margin: 32px 0 10px; font-size: 23px; }
+  .prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 14px 0 18px; }
+  .pcard { display: grid; gap: 6px; align-content: start; }
+  .pcard.s-active { border-left: 4px solid var(--pine); }
+  .pcard.s-income { border-left: 4px solid var(--steel); }
+  .pcard.s-closed { border-left: 4px solid var(--dead); }
+  .phead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .phl { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink); margin: 0; }
+  .pcard h3 { font-size: 17.5px; margin: 0; }
+  .pnote { font-size: 14px; color: var(--muted); margin: 0; }
+  .pcard .meta a { color: var(--heat-deep); text-decoration: none; }
+  .fed { border-left: 4px solid var(--steel); margin: 6px 0 10px; }
+  .fed h3 { margin-bottom: 10px; }
+  .fed-rows { display: grid; gap: 10px; }
+  .fed-line { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .fed-line .chip { margin-right: 6px; }
+  .fed-line strong { color: var(--ink); }
+  .fed-line a { color: var(--heat-deep); text-decoration: none; }
+  .hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  @media (max-width: 780px) { .hh-grid { grid-template-columns: 1fr; } }
+  .hh { border-left: 4px solid var(--steel); }
+  .hh h3 { font-size: 16.5px; margin-bottom: 6px; }
+  .hh h3 a { color: var(--ink); text-decoration: none; }
+  .hh h3 a:hover { color: var(--heat-deep); }
+  .hh p { font-size: 14.5px; }
+  .next-cta { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin: 26px 0 14px; }
+  .next-cta h3 { margin-bottom: 4px; }
+  .also { font-size: 13.5px; color: var(--muted); margin-bottom: 26px; }
+</style>

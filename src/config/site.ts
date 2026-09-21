@@ -8,7 +8,7 @@ export const SITE = {
   url: 'https://audityourhome.com',
   tagline: 'Find a certified home energy auditor. Verified credentials, real prices, live rebates.',
   description:
-    'AuditYourHome helps Ontario homeowners find NRCan-registered energy advisors, compare real prices, and see which rebates — like the $600 Home Renovation Savings assessment rebate — are actually live right now.',
+    'AuditYourHome helps Canadian homeowners find NRCan-registered energy advisors, compare real prices, and see which rebates are actually live right now — province by province, from Ontario\'s Home Renovation Savings to BC\'s Improvement Bonus and Efficiency Manitoba.',
   contactEmail: 'hello@audityourhome.com',
 
   /**

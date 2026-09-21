@@ -85,37 +85,47 @@ export const NAV: NavItem[] = [
     id: 'guides',
     label: 'Guides',
     lead: {
-      title: 'Your city, read like an auditor',
-      desc: 'Housing stock, what audits find, the rebate angle, and what to monitor locally.',
-      href: '/guides/',
-      cta: 'All city guides →',
+      title: 'Your province, your city — read like an auditor',
+      desc: 'Live programs by province, housing stock, and what to monitor where you live.',
+      href: '/provinces/',
+      cta: 'All provinces →',
     },
     columns: [
       {
-        title: 'GTA & Golden Horseshoe',
+        title: 'Across Canada',
+        links: [
+          { href: '/provinces/bc/', label: 'British Columbia' },
+          { href: '/provinces/alberta/', label: 'Alberta' },
+          { href: '/provinces/saskatchewan/', label: 'Saskatchewan' },
+          { href: '/provinces/manitoba/', label: 'Manitoba' },
+          { href: '/provinces/quebec/', label: 'Quebec' },
+          { href: '/provinces/new-brunswick/', label: 'New Brunswick' },
+          { href: '/provinces/nova-scotia/', label: 'Nova Scotia' },
+          { href: '/provinces/pei/', label: 'Prince Edward Island' },
+          { href: '/provinces/newfoundland-labrador/', label: 'Newfoundland & Labrador' },
+          { href: '/provinces/north/', label: 'The North (YT · NT · NU)' },
+        ],
+      },
+      {
+        title: 'Ontario cities',
         links: [
           { href: '/guides/toronto/', label: 'Toronto' },
           { href: '/guides/mississauga/', label: 'Mississauga' },
           { href: '/guides/brampton/', label: 'Brampton' },
           { href: '/guides/york-region/', label: 'York Region' },
-        ],
-      },
-      {
-        title: 'Southwest & Niagara',
-        links: [
           { href: '/guides/hamilton/', label: 'Hamilton' },
-          { href: '/guides/kitchener-waterloo/', label: 'Kitchener–Waterloo' },
-          { href: '/guides/london/', label: 'London' },
           { href: '/guides/niagara/', label: 'Niagara' },
         ],
       },
       {
-        title: 'East & Central',
+        title: 'More Ontario',
         links: [
           { href: '/guides/ottawa/', label: 'Ottawa' },
           { href: '/guides/kingston/', label: 'Kingston' },
           { href: '/guides/peterborough/', label: 'Peterborough' },
           { href: '/guides/barrie-simcoe/', label: 'Barrie & Simcoe' },
+          { href: '/guides/kitchener-waterloo/', label: 'Kitchener–Waterloo' },
+          { href: '/guides/london/', label: 'London' },
         ],
       },
       {
@@ -129,6 +139,7 @@ export const NAV: NavItem[] = [
         ],
       },
     ],
+    panelFoot: { href: '/guides/', label: 'All Ontario city guides →' },
   },
   {
     id: 'gear',

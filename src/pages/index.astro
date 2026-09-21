@@ -6,7 +6,7 @@ import { SITE } from '../config/site';
 import { organizationSchema, faqSchema } from '../lib/schema';
 import { programs, providers, regions } from '../lib/data';
 
-const title = 'AuditYourHome — find a certified home energy auditor in Ontario';
+const title = 'AuditYourHome — find a certified home energy auditor in Canada';
 const description = SITE.description;
 
 const featured = programs.filter((p) => ['hrsp-assessment', 'hrsp-no-assessment', 'toronto-help'].includes(p.id));
@@ -39,12 +39,13 @@ const schema = [organizationSchema(), faqSchema(faqs)];
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Ontario · audit-first home energy upgrades</p>
+        <p class="eyebrow">Canada-wide · audit-first home energy upgrades</p>
         <h1>Know your home before you spend on it.</h1>
         <p class="lede">
           Find an <strong>NRCan-registered</strong> energy auditor, see <strong>real prices</strong>,
-          and get the rebates that are <strong>actually live</strong> — starting with Ontario's $600
-          assessment rebate and up to $12,000 for heat pumps.
+          and get the rebates that are <strong>actually live</strong> in
+          <a href="/provinces/">your province</a> — from Ontario's $600 assessment rebate and
+          $12,000 heat pump money to BC's Improvement Bonus and Efficiency Manitoba.
         </p>
         <ul class="trust-list">
           <li>Every provider is a licensed service organization — no sales-pitch "free audits"</li>

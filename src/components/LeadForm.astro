@@ -51,7 +51,17 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
               <option value={r.slug} selected={r.slug === region}>{r.name}</option>
             ))}
             <option value="other-ontario">Elsewhere in Ontario</option>
-            <option value="outside-ontario">Outside Ontario</option>
+            <option value="bc">British Columbia</option>
+            <option value="alberta">Alberta</option>
+            <option value="saskatchewan">Saskatchewan</option>
+            <option value="manitoba">Manitoba</option>
+            <option value="quebec">Quebec</option>
+            <option value="new-brunswick">New Brunswick</option>
+            <option value="nova-scotia">Nova Scotia</option>
+            <option value="pei">Prince Edward Island</option>
+            <option value="newfoundland-labrador">Newfoundland &amp; Labrador</option>
+            <option value="north">Yukon / NWT / Nunavut</option>
+            <option value="outside-canada">Outside Canada</option>
           </select>
         </div>
       </div>

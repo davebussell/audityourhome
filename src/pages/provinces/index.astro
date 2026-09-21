@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import data from '../../data/provinces.json';
+
+const title = 'Home energy audits across Canada — programs and guides by province | AuditYourHome';
+const description =
+  'Every province and territory, honestly: which audit-linked rebates are live (BC\'s Improvement Bonus, Efficiency Manitoba, Rénoclimat, the Atlantic programs), which have ended, and what to monitor and test where you live.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Provinces', path: '/provinces/' },
+  ]),
+];
+
+const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
+  active: { cls: 'chip-active', label: 'live' },
+  income: { cls: 'chip-info', label: 'income-qualified' },
+  closed: { cls: 'chip-closed', label: 'closed' },
+};
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Provinces</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Canada-wide · verified program status</p>
+      <h1>Home energy audits, province by province</h1>
+      <p class="lede measure">
+        Rebate programs are provincial creatures — generous in one province, ended in the next,
+        income-gated in a third. These guides give every province and territory the same honest
+        treatment: what's actually live (with verification dates), what the housing stock is like,
+        and what to monitor and test where you live.
+      </p>
+    </div>
+
+    <div class="prov-grid">
+      {data.provinces.map((p) => (
+        <a class="card card-pad prov" href={`/provinces/${p.slug}/`}>
+          <h2>{p.name}</h2>
+          <div class="chips">
+            {p.programs.slice(0, 3).map((pr) => (
+              <span class={`chip ${STATUS_CHIP[pr.status]?.cls ?? 'chip-neutral'}`}>{pr.name.split('—')[0].split('(')[0].trim().slice(0, 30)}{' · '}{STATUS_CHIP[pr.status]?.label}</span>
+            ))}
+          </div>
+          <p class="short">{(() => { const s = p.intro.split('. ')[0]; return s.endsWith('.') ? s : s + '.'; })()}</p>
+          <p class="go">{p.name.startsWith('The ') ? `${p.name} guide` : `The ${p.name} guide`} →</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="card card-pad fed">
+      <h2>{data.federal.heading}</h2>
+      <p class="small">{data.federal.intro}</p>
+      <div class="fed-rows">
+        {data.federal.items.map((f) => (
+          <div class="fed-row">
+            <span class={`chip ${STATUS_CHIP[f.status]?.cls ?? 'chip-neutral'}`}>{STATUS_CHIP[f.status]?.label}</span>
+            <div>
+              <p class="fname"><a href={f.url} rel="noopener">{f.name} ↗</a></p>
+              <p class="fnote">{f.note} <em>(verified {f.verified})</em></p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="card card-pad next-cta">
+      <div>
+        <h3>Wherever you are, start the same way</h3>
+        <p class="mb-0 small">
+          The planner reads your postal code, era, and heating — and shows your province's programs
+          alongside the tests and upgrades your house actually calls for.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/plan/">Check my home →</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .prov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .prov { text-decoration: none; display: grid; gap: 8px; align-content: start; }
+  .prov:hover { border-color: var(--heat); }
+  .prov h2 { font-size: 21px; margin: 0; color: var(--ink); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips .chip { font-size: 10.5px; white-space: normal; text-align: left; line-height: 1.5; }
+  .prov .short { color: var(--muted); font-size: 14px; margin: 0; }
+  .prov .go { color: var(--heat-deep); font-weight: 600; font-size: 14px; margin: 2px 0 0; }
+  .fed { border-left: 4px solid var(--steel); margin-bottom: 22px; }
+  .fed h2 { font-size: 21px; margin-bottom: 4px; }
+  .fed-rows { display: grid; gap: 14px; margin-top: 14px; }
+  .fed-row { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+  .fname { font-weight: 700; margin: 0 0 2px; font-size: 15px; }
+  .fname a { color: var(--ink); text-decoration: none; }
+  .fname a:hover { color: var(--heat-deep); }
+  .fnote { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .fnote em { color: var(--faint); font-style: normal; }
+  .next-cta { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin-bottom: 34px; }
+  .next-cta h3 { margin-bottom: 4px; }
+</style>
