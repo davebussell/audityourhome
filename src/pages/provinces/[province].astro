@@ -56,6 +56,9 @@ const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
           <h3>{pr.name}</h3>
           <p class="pnote">{pr.note}</p>
           <p class="meta">
+            {'programSlug' in pr && (pr as any).programSlug && (
+              <><a href={`/programs/${(pr as any).programSlug}/`}><strong>Full program guide →</strong></a>{' · '}</>
+            )}
             {'internal' in pr && (pr as any).internal
               ? <a href={pr.url}>Details on our tracker →</a>
               : <a href={pr.url} rel="noopener">Official page ↗</a>}

@@ -41,7 +41,8 @@
           "headline": "$20 per %-point improvement · $750–$2,000",
           "note": "Went province-wide May 15, 2026: complete 3+ eligible upgrades with pre- and post-retrofit EnerGuide evaluations and get paid for the measured improvement. This is the audit-first model done right — the evaluations are the program.",
           "url": "https://www.betterhomesbc.ca/",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "bc-home-energy-improvement-bonus"
         },
         {
           "name": "CleanBC Energy Savings Program",
@@ -49,7 +50,8 @@
           "headline": "Free upgrades, income-qualified",
           "note": "Income-qualified households get free upgrades (insulation, heat pumps and more) — and BC is also a Greener Homes Affordability Program delivery province.",
           "url": "https://www.betterhomesbc.ca/",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "cleanbc-energy-savings-program"
         },
         {
           "name": "BC Hydro & FortisBC rebates",
@@ -57,14 +59,31 @@
           "headline": "Equipment rebates via utilities",
           "note": "Heat pump and equipment offers run through the utilities and change seasonally — check current offers before quoting a project.",
           "url": "https://www.betterhomesbc.ca/rebates/",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "bc-home-energy-improvement-bonus"
         }
       ],
       "homeHealth": [
-        { "name": "Smoke-season air", "link": "/products/air-purifiers/", "note": "Wildfire smoke is now an annual season in much of BC. A PM2.5 monitor plus sized HEPA purifiers — with spare filters bought before summer — is the standing playbook." },
-        { "name": "Coastal moisture & mould", "link": "/tests/mold-iaq/", "note": "Mild, wet winters make ventilation the coast's defining home-health question. Diagnose ventilation vs. cold-surface before spending — the audit's assessment settles it." },
-        { "name": "Radon — Interior & North", "link": "/tests/radon/", "note": "Parts of the Interior test well above the coast in cross-Canada surveys, and every home tests individually. One 3-month winter kit answers it." },
-        { "name": "Rural wells", "link": "/tests/well-water/", "note": "Testing regimes differ from Ontario's free-lab model — BC well owners typically test through private accredited labs; your health authority lists them. The routine (bacteria often, chemistry periodically) is the same." }
+        {
+          "name": "Smoke-season air",
+          "link": "/products/air-purifiers/",
+          "note": "Wildfire smoke is now an annual season in much of BC. A PM2.5 monitor plus sized HEPA purifiers — with spare filters bought before summer — is the standing playbook."
+        },
+        {
+          "name": "Coastal moisture & mould",
+          "link": "/tests/mold-iaq/",
+          "note": "Mild, wet winters make ventilation the coast's defining home-health question. Diagnose ventilation vs. cold-surface before spending — the audit's assessment settles it."
+        },
+        {
+          "name": "Radon — Interior & North",
+          "link": "/tests/radon/",
+          "note": "Parts of the Interior test well above the coast in cross-Canada surveys, and every home tests individually. One 3-month winter kit answers it."
+        },
+        {
+          "name": "Rural wells",
+          "link": "/tests/well-water/",
+          "note": "Testing regimes differ from Ontario's free-lab model — BC well owners typically test through private accredited labs; your health authority lists them. The routine (bacteria often, chemistry periodically) is the same."
+        }
       ]
     },
     {
@@ -81,7 +100,8 @@
           "headline": "Property-tax financing, select municipalities",
           "note": "PACE-style financing repaid via property taxes, running in participating municipalities — check whether yours is one. Edmonton's separate HERA rebate is fully subscribed.",
           "url": "https://fundyourfuture.ca/",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "alberta-clean-energy-improvement-program"
         },
         {
           "name": "Provincial audit-linked rebates",
@@ -93,10 +113,26 @@
         }
       ],
       "homeHealth": [
-        { "name": "Radon — take it seriously here", "link": "/tests/radon/", "note": "Prairie geology shows up in cross-Canada radon surveys with above-average shares of homes over the guideline. The $60 winter kit is the answer, new builds included." },
-        { "name": "Deep-cold CO discipline", "link": "/tests/carbon-monoxide/", "note": "Long furnace seasons and attached garages: alarms adjacent to sleeping areas, checked for expiry, plus annual servicing — and the spillage check before any air-sealing." },
-        { "name": "Smoke-season air", "link": "/products/air-purifiers/", "note": "Fire smoke reaches Alberta summers most years now. Monitor PM2.5 indoors and size HEPA units to bedrooms." },
-        { "name": "Rural wells", "link": "/tests/well-water/", "note": "Alberta well owners can access provincial lab bacteriological testing through health services — ask your local public health office for the current route, and add periodic chemistry panels." }
+        {
+          "name": "Radon — take it seriously here",
+          "link": "/tests/radon/",
+          "note": "Prairie geology shows up in cross-Canada radon surveys with above-average shares of homes over the guideline. The $60 winter kit is the answer, new builds included."
+        },
+        {
+          "name": "Deep-cold CO discipline",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Long furnace seasons and attached garages: alarms adjacent to sleeping areas, checked for expiry, plus annual servicing — and the spillage check before any air-sealing."
+        },
+        {
+          "name": "Smoke-season air",
+          "link": "/products/air-purifiers/",
+          "note": "Fire smoke reaches Alberta summers most years now. Monitor PM2.5 indoors and size HEPA units to bedrooms."
+        },
+        {
+          "name": "Rural wells",
+          "link": "/tests/well-water/",
+          "note": "Alberta well owners can access provincial lab bacteriological testing through health services — ask your local public health office for the current route, and add periodic chemistry panels."
+        }
       ]
     },
     {
@@ -113,7 +149,8 @@
           "headline": "Ended April 2026",
           "note": "The provincial program closed in April 2026. We list it because half the internet still advertises it — don't budget around it.",
           "url": "https://www.saskatchewan.ca/residents/environment-public-health-and-safety/saskenergy-rebates",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "saskatchewan-home-efficiency-retrofit-rebate"
         },
         {
           "name": "Utility offers (SaskEnergy / SaskPower)",
@@ -121,14 +158,31 @@
           "headline": "Check current equipment offers",
           "note": "Utility rebates rotate — check both utilities' current residential offers before pricing equipment. And the audit still earns its fee in a climate this cold.",
           "url": "https://www.saskenergy.com/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "saskatchewan-home-efficiency-retrofit-rebate"
         }
       ],
       "homeHealth": [
-        { "name": "Radon — the Prairies' quiet issue", "link": "/tests/radon/", "note": "Saskatchewan consistently ranks among the higher radon regions in national surveying. Every basement bedroom is a reason to run the winter kit." },
-        { "name": "Farm and rural wells", "link": "/tests/well-water/", "note": "Bacteria plus nitrates near cropland — test on the seasonal rhythm and add chemistry panels; your provincial lab or health office lists the route." },
-        { "name": "Deep-cold humidity swings", "link": "/products/dehumidifiers-hygrometers/", "note": "Winter air this cold drives indoor humidity to extremes — a hygrometer per level tells you whether you're too dry (January) or too damp (July basement)." },
-        { "name": "Wood and dual heat CO", "link": "/tests/carbon-monoxide/", "note": "Dual-fuel and wood-assisted heating is common — in-date alarms by every sleeping area and annual servicing are the baseline." }
+        {
+          "name": "Radon — the Prairies' quiet issue",
+          "link": "/tests/radon/",
+          "note": "Saskatchewan consistently ranks among the higher radon regions in national surveying. Every basement bedroom is a reason to run the winter kit."
+        },
+        {
+          "name": "Farm and rural wells",
+          "link": "/tests/well-water/",
+          "note": "Bacteria plus nitrates near cropland — test on the seasonal rhythm and add chemistry panels; your provincial lab or health office lists the route."
+        },
+        {
+          "name": "Deep-cold humidity swings",
+          "link": "/products/dehumidifiers-hygrometers/",
+          "note": "Winter air this cold drives indoor humidity to extremes — a hygrometer per level tells you whether you're too dry (January) or too damp (July basement)."
+        },
+        {
+          "name": "Wood and dual heat CO",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Dual-fuel and wood-assisted heating is common — in-date alarms by every sleeping area and annual servicing are the baseline."
+        }
       ]
     },
     {
@@ -145,7 +199,8 @@
           "headline": "$400 back on the evaluation",
           "note": "Complete a pre-retrofit EnerGuide evaluation through an approved service organization, plan at least one upgrade within 12 months, and apply within 90 days with your reports — $400 back. The audit-first model, subsidized.",
           "url": "https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "efficiency-manitoba-rebates"
         },
         {
           "name": "Efficiency Manitoba — insulation & heating",
@@ -153,14 +208,31 @@
           "headline": "Insulation rebates + heat pump offers",
           "note": "Home insulation rebates and heat pump programs run alongside the evaluation rebate — current amounts on their site. Income-qualified households have a free Energy Efficiency Assistance stream, and Manitoba is a Greener Homes Affordability delivery province.",
           "url": "https://efficiencymb.ca/my-home/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "efficiency-manitoba-rebates"
         }
       ],
       "homeHealth": [
-        { "name": "Radon — top of the national charts", "link": "/tests/radon/", "note": "Manitoba regularly posts among the highest shares of homes above the radon guideline in cross-Canada surveys. If you do one thing from this page, start the winter kit." },
-        { "name": "Deep-winter CO", "link": "/tests/carbon-monoxide/", "note": "Months of continuous furnace time: check alarm expiry dates each fall and keep the spillage check in any air-sealing plan." },
-        { "name": "Rural and cottage wells", "link": "/tests/well-water/", "note": "Test on the seasonal rhythm — bacteria often, chemistry periodically — through the provincial route your health office lists." },
-        { "name": "Spring-melt moisture", "link": "/tests/mold-iaq/", "note": "Red River spring moisture finds basements. Hygrometer first, cause before cleanup, and never insulate over a damp assembly." }
+        {
+          "name": "Radon — top of the national charts",
+          "link": "/tests/radon/",
+          "note": "Manitoba regularly posts among the highest shares of homes above the radon guideline in cross-Canada surveys. If you do one thing from this page, start the winter kit."
+        },
+        {
+          "name": "Deep-winter CO",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Months of continuous furnace time: check alarm expiry dates each fall and keep the spillage check in any air-sealing plan."
+        },
+        {
+          "name": "Rural and cottage wells",
+          "link": "/tests/well-water/",
+          "note": "Test on the seasonal rhythm — bacteria often, chemistry periodically — through the provincial route your health office lists."
+        },
+        {
+          "name": "Spring-melt moisture",
+          "link": "/tests/mold-iaq/",
+          "note": "Red River spring moisture finds basements. Hygrometer first, cause before cleanup, and never insulate over a damp assembly."
+        }
       ]
     },
     {
@@ -177,7 +249,8 @@
           "headline": "$600 assessment rebate · insulation to $7,700 · heat pumps to $12,000",
           "note": "The audit-linked path: pre- and post-retrofit EnerGuide evaluations unlock the stack. Full details in our program tracker.",
           "url": "https://www.homerenovationsavings.ca/",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "home-renovation-savings-assessment"
         },
         {
           "name": "Toronto HELP + CMHC Eco refunds",
@@ -190,10 +263,26 @@
         }
       ],
       "homeHealth": [
-        { "name": "City-by-city detail", "link": "/guides/", "note": "Ontario gets the full treatment: twelve city guides with local housing eras, program angles, and monitor-and-test sections from Ottawa's radon belt to London's humidity." },
-        { "name": "Radon", "link": "/tests/radon/", "note": "Varies house to house across every Ontario geology — the winter kit is the answer everywhere, and Ottawa-area homes especially shouldn't skip it." },
-        { "name": "Free well-water testing", "link": "/tests/well-water/", "note": "Ontario's standout: Public Health Ontario tests private well samples for bacteria free of charge. Rural homeowners — use it seasonally." },
-        { "name": "CO alarms are law", "link": "/tests/carbon-monoxide/", "note": "The Hawkins-Gignac Act requires alarms near sleeping areas in homes with fuel appliances, fireplaces, or attached garages — Ontario is the province where this is settled law, not just best practice." }
+        {
+          "name": "City-by-city detail",
+          "link": "/guides/",
+          "note": "Ontario gets the full treatment: twelve city guides with local housing eras, program angles, and monitor-and-test sections from Ottawa's radon belt to London's humidity."
+        },
+        {
+          "name": "Radon",
+          "link": "/tests/radon/",
+          "note": "Varies house to house across every Ontario geology — the winter kit is the answer everywhere, and Ottawa-area homes especially shouldn't skip it."
+        },
+        {
+          "name": "Free well-water testing",
+          "link": "/tests/well-water/",
+          "note": "Ontario's standout: Public Health Ontario tests private well samples for bacteria free of charge. Rural homeowners — use it seasonally."
+        },
+        {
+          "name": "CO alarms are law",
+          "link": "/tests/carbon-monoxide/",
+          "note": "The Hawkins-Gignac Act requires alarms near sleeping areas in homes with fuel appliances, fireplaces, or attached garages — Ontario is the province where this is settled law, not just best practice."
+        }
       ]
     },
     {
@@ -210,7 +299,8 @@
           "headline": "Audit-linked envelope rebates",
           "note": "The provincial audit path: an assigned evaluator (about $150 + tax to you), then rebates for insulation, air-sealing, and door/window work. A flooding-adaptation component is being added October 1, 2026. Note: the government assigns the advisor — there's no shopping around.",
           "url": "https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "renoclimat"
         },
         {
           "name": "Hydro-Québec LogisVert",
@@ -218,7 +308,8 @@
           "headline": "Heat pumps $50–$120 per 1,000 BTU/h · no audit needed",
           "note": "Active and generous: heat pump grants scaled to capacity (ENERGY STAR models required since November 2025), plus appliances and solar ($1,000/kW). The roof-insulation measure ended August 2025 — envelope money lives in Rénoclimat now.",
           "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "logisvert"
         },
         {
           "name": "Greener Homes Affordability (QC delivery)",
@@ -226,14 +317,31 @@
           "headline": "Free retrofits, income-qualified",
           "note": "Quebec is one of the federal Affordability Program's delivery provinces — free direct-install retrofits for low-to-median-income households, applied for through the provincial channel.",
           "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "canada-greener-homes-affordability-program"
         }
       ],
       "homeHealth": [
-        { "name": "Radon", "link": "/tests/radon/", "note": "The Appalachian belt and pockets across the province test high; Montreal Island varies block to block. Every home: one winter kit, especially with a basement bedroom or office." },
-        { "name": "Wells in the regions", "link": "/tests/well-water/", "note": "Quebec well owners test through accredited private labs — bacteria seasonally, chemistry periodically. Keep the reports; notaries ask." },
-        { "name": "Plex ventilation", "link": "/tests/ventilation-assessment/", "note": "Stacked flats with one leaky envelope and no mechanical ventilation are Quebec's signature moisture case — measure the fans, then fix causes." },
-        { "name": "Heating-oil legacies", "link": "/tests/carbon-monoxide/", "note": "Oil furnaces and their tanks linger in the regions: annual servicing, in-date CO alarms, and — at replacement — LogisVert makes the heat pump the obvious quote to get." }
+        {
+          "name": "Radon",
+          "link": "/tests/radon/",
+          "note": "The Appalachian belt and pockets across the province test high; Montreal Island varies block to block. Every home: one winter kit, especially with a basement bedroom or office."
+        },
+        {
+          "name": "Wells in the regions",
+          "link": "/tests/well-water/",
+          "note": "Quebec well owners test through accredited private labs — bacteria seasonally, chemistry periodically. Keep the reports; notaries ask."
+        },
+        {
+          "name": "Plex ventilation",
+          "link": "/tests/ventilation-assessment/",
+          "note": "Stacked flats with one leaky envelope and no mechanical ventilation are Quebec's signature moisture case — measure the fans, then fix causes."
+        },
+        {
+          "name": "Heating-oil legacies",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Oil furnaces and their tanks linger in the regions: annual servicing, in-date CO alarms, and — at replacement — LogisVert makes the heat pump the obvious quote to get."
+        }
       ]
     },
     {
@@ -250,7 +358,8 @@
           "headline": "Evaluation-first · incentives on recommended upgrades",
           "note": "Register with NB Power's SaveEnergyNB, get the Home Energy Evaluation, then complete any recommended upgrades within 9 months for incentives — 'up to thousands of dollars' across insulation, heating, doors and windows. (The oil-to-heat-pump advance-funding stream closed June 30, 2026.)",
           "url": "https://www.saveenergynb.ca/en/for-home/total-home/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "nb-total-home-energy-savings"
         },
         {
           "name": "Enhanced Energy Savings (income-qualified)",
@@ -258,14 +367,31 @@
           "headline": "Free upgrades for eligible households",
           "note": "NB Power's income-qualified streams install free efficiency upgrades — check SaveEnergyNB for current eligibility.",
           "url": "https://www.saveenergynb.ca/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "nb-total-home-energy-savings"
         }
       ],
       "homeHealth": [
-        { "name": "Radon — Atlantic hotspot", "link": "/tests/radon/", "note": "New Brunswick posts some of Atlantic Canada's highest radon numbers in national surveying. The winter kit belongs on every homeowner's list here." },
-        { "name": "Wells everywhere", "link": "/tests/well-water/", "note": "A huge share of NB homes run on private wells — test bacteria seasonally and chemistry (including arsenic and uranium, real concerns in NB geology) every few years through the provincial route." },
-        { "name": "Oil-heat CO and tanks", "link": "/tests/carbon-monoxide/", "note": "Remaining oil systems need annual servicing, in-date CO alarms, and honest tank inspections — insurers increasingly force the issue." },
-        { "name": "Wind-driven rain", "link": "/tests/mold-iaq/", "note": "Coastal storms push water into walls that prairie homes never see — moisture diagnosis before insulation is the rule for older envelopes." }
+        {
+          "name": "Radon — Atlantic hotspot",
+          "link": "/tests/radon/",
+          "note": "New Brunswick posts some of Atlantic Canada's highest radon numbers in national surveying. The winter kit belongs on every homeowner's list here."
+        },
+        {
+          "name": "Wells everywhere",
+          "link": "/tests/well-water/",
+          "note": "A huge share of NB homes run on private wells — test bacteria seasonally and chemistry (including arsenic and uranium, real concerns in NB geology) every few years through the provincial route."
+        },
+        {
+          "name": "Oil-heat CO and tanks",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Remaining oil systems need annual servicing, in-date CO alarms, and honest tank inspections — insurers increasingly force the issue."
+        },
+        {
+          "name": "Wind-driven rain",
+          "link": "/tests/mold-iaq/",
+          "note": "Coastal storms push water into walls that prairie homes never see — moisture diagnosis before insulation is the rule for older envelopes."
+        }
       ]
     },
     {
@@ -282,7 +408,8 @@
           "headline": "Assessment-based rebates (up to ~$5,000)",
           "note": "Efficiency Nova Scotia's assessment opens rebates across insulation, air sealing, and equipment — their published figures run to about $5,000 for the standard stream. Book through their accredited partners.",
           "url": "https://www.efficiencyns.ca/programs-rebates/home-energy-assessments",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "efficiency-nova-scotia-rebates"
         },
         {
           "name": "Moderate Income Rebates + HomeWarming",
@@ -290,7 +417,8 @@
           "headline": "Up to ~$15,000 moderate-income · free income-qualified",
           "note": "A moderate-income tier deepens the rebates substantially, and HomeWarming installs free upgrades (heat pumps included) for income-qualified households. NS is also a Greener Homes Affordability delivery province.",
           "url": "https://www.efficiencyns.ca/programs-rebates/homewarming",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "efficiency-nova-scotia-rebates"
         },
         {
           "name": "Oil to Heat Pump Affordability (NS)",
@@ -298,14 +426,31 @@
           "headline": "Funding fully committed",
           "note": "The federal OHPA's Nova Scotia allocation was fully committed ahead of other provinces, and the national program closed to new applications July 31, 2026. If a contractor is still selling it, walk.",
           "url": "https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "oil-to-heat-pump-affordability"
         }
       ],
       "homeHealth": [
-        { "name": "Radon", "link": "/tests/radon/", "note": "Nova Scotia's granite and slate geologies produce real radon variation — community results have run high in parts of the mainland. Test over winter, whatever your neighbour's number was." },
-        { "name": "Wells and coastal water", "link": "/tests/well-water/", "note": "Bacteria seasonally, chemistry periodically — with arsenic and uranium on the panel; both show up in NS bedrock wells often enough to test for by default." },
-        { "name": "Wind-driven moisture", "link": "/tests/mold-iaq/", "note": "Two-century-old envelopes plus Atlantic storms: diagnose moisture paths before any insulation project, and treat musty basements as a cause hunt, not a cleaning job." },
-        { "name": "Oil-heat CO", "link": "/tests/carbon-monoxide/", "note": "The remaining oil fleet needs annual servicing and in-date alarms — and every conversion quote should start from a real heat-loss calculation." }
+        {
+          "name": "Radon",
+          "link": "/tests/radon/",
+          "note": "Nova Scotia's granite and slate geologies produce real radon variation — community results have run high in parts of the mainland. Test over winter, whatever your neighbour's number was."
+        },
+        {
+          "name": "Wells and coastal water",
+          "link": "/tests/well-water/",
+          "note": "Bacteria seasonally, chemistry periodically — with arsenic and uranium on the panel; both show up in NS bedrock wells often enough to test for by default."
+        },
+        {
+          "name": "Wind-driven moisture",
+          "link": "/tests/mold-iaq/",
+          "note": "Two-century-old envelopes plus Atlantic storms: diagnose moisture paths before any insulation project, and treat musty basements as a cause hunt, not a cleaning job."
+        },
+        {
+          "name": "Oil-heat CO",
+          "link": "/tests/carbon-monoxide/",
+          "note": "The remaining oil fleet needs annual servicing and in-date alarms — and every conversion quote should start from a real heat-loss calculation."
+        }
       ]
     },
     {
@@ -322,7 +467,8 @@
           "headline": "Subsidized audit via 5 partners",
           "note": "The entry point: a subsidized EnerGuide-based assessment booked directly with efficiencyPEI's partner firms, producing the report that unlocks the rebate streams.",
           "url": "https://www.princeedwardisland.ca/en/information/environment-energy-and-climate-action/home-energy-assessments",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "efficiency-pei-rebates"
         },
         {
           "name": "Home Insulation Rebates + income streams",
@@ -330,14 +476,31 @@
           "headline": "Insulation rebates · free income-qualified upgrades",
           "note": "Assessment recommendations feed the insulation rebate program; income-qualified Islanders have free-upgrade streams, and PEI is a Greener Homes Affordability delivery province.",
           "url": "https://www.princeedwardisland.ca/en/topic/efficiency-pei",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "efficiency-pei-rebates"
         }
       ],
       "homeHealth": [
-        { "name": "Wells and nitrates", "link": "/tests/well-water/", "note": "PEI is Canada's most groundwater-dependent province — everyone's water is well water. Nitrates from the Island's agriculture belong on your testing panel as a standing item." },
-        { "name": "Radon", "link": "/tests/radon/", "note": "Island sediments vary; homes above the guideline turn up here as everywhere. One winter kit settles your house." },
-        { "name": "Wind-driven rain", "link": "/tests/mold-iaq/", "note": "Exposed island weather works older envelopes hard — check moisture paths before insulating, and keep bath fans terminating outside, not in attics." },
-        { "name": "Heat pump reality check", "link": "/tests/heat-loss-calc/", "note": "With heat pumps near-universal in new installs, sizing discipline matters: the F280 calculation keeps PEI's favourite upgrade actually performing." }
+        {
+          "name": "Wells and nitrates",
+          "link": "/tests/well-water/",
+          "note": "PEI is Canada's most groundwater-dependent province — everyone's water is well water. Nitrates from the Island's agriculture belong on your testing panel as a standing item."
+        },
+        {
+          "name": "Radon",
+          "link": "/tests/radon/",
+          "note": "Island sediments vary; homes above the guideline turn up here as everywhere. One winter kit settles your house."
+        },
+        {
+          "name": "Wind-driven rain",
+          "link": "/tests/mold-iaq/",
+          "note": "Exposed island weather works older envelopes hard — check moisture paths before insulating, and keep bath fans terminating outside, not in attics."
+        },
+        {
+          "name": "Heat pump reality check",
+          "link": "/tests/heat-loss-calc/",
+          "note": "With heat pumps near-universal in new installs, sizing discipline matters: the F280 calculation keeps PEI's favourite upgrade actually performing."
+        }
       ]
     },
     {
@@ -354,7 +517,8 @@
           "headline": "Utility rebates on selected equipment",
           "note": "Thermostat, insulation and equipment offers rotate through the joint utility program — check current offers. No EnerGuide-linked retrofit stream is running.",
           "url": "https://takechargenl.ca/",
-          "verified": "September 18, 2026"
+          "verified": "September 18, 2026",
+          "programSlug": "takecharge-nl"
         },
         {
           "name": "Oil-heated homes funding",
@@ -362,14 +526,31 @@
           "headline": "Earlier programs lapsed",
           "note": "The 2018–2022 federal-funded oil-heated homes program has run its course, and national OHPA closed July 31, 2026. Budget conversions on bill savings, not rebates.",
           "url": "https://www.gov.nl.ca/mpa/low-carbon-economy-programs/oilheatedhomes/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "takecharge-nl"
         }
       ],
       "homeHealth": [
-        { "name": "Wind-driven everything", "link": "/tests/mold-iaq/", "note": "Horizontal rain and fog work envelopes like nowhere else in Canada. Moisture diagnosis precedes every insulation decision in older stock." },
-        { "name": "Radon", "link": "/tests/radon/", "note": "Variable geology, including higher-testing zones — the winter kit answers your house, and finished basements raise the stakes." },
-        { "name": "Outport wells", "link": "/tests/well-water/", "note": "Test bacteria seasonally and chemistry periodically through the provincial route; keep the paper — it matters at resale." },
-        { "name": "Oil and wood CO", "link": "/tests/carbon-monoxide/", "note": "Oil furnaces and wood stoves both demand annual servicing and in-date alarms adjacent to every sleeping area." }
+        {
+          "name": "Wind-driven everything",
+          "link": "/tests/mold-iaq/",
+          "note": "Horizontal rain and fog work envelopes like nowhere else in Canada. Moisture diagnosis precedes every insulation decision in older stock."
+        },
+        {
+          "name": "Radon",
+          "link": "/tests/radon/",
+          "note": "Variable geology, including higher-testing zones — the winter kit answers your house, and finished basements raise the stakes."
+        },
+        {
+          "name": "Outport wells",
+          "link": "/tests/well-water/",
+          "note": "Test bacteria seasonally and chemistry periodically through the provincial route; keep the paper — it matters at resale."
+        },
+        {
+          "name": "Oil and wood CO",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Oil furnaces and wood stoves both demand annual servicing and in-date alarms adjacent to every sleeping area."
+        }
       ]
     },
     {
@@ -386,7 +567,8 @@
           "headline": "Retrofit, renewables & transport rebates",
           "note": "Yukon's rebate umbrella covers home retrofits, renewable systems, and clean transport — current residential program details through the Energy Branch.",
           "url": "https://yukon.ca/en/good-energy-rebates",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "territories-energy-programs"
         },
         {
           "name": "NWT — Arctic Energy Alliance",
@@ -394,7 +576,8 @@
           "headline": "Rebates + advice via AEA",
           "note": "The AEA delivers the territory's efficiency and renewable rebates and energy advice — the first call for any NWT home project.",
           "url": "https://aea.nt.ca/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "territories-energy-programs"
         },
         {
           "name": "Nunavut — Housing Corporation programs",
@@ -402,14 +585,31 @@
           "headline": "Homeowner repair & efficiency support",
           "note": "Nunavut's homeowner support (repair and efficiency programs) runs through the Nunavut Housing Corporation; note that federal OHPA excluded Nunavut's grid context entirely.",
           "url": "https://www.nunavuthousing.ca/",
-          "verified": "September 21, 2026"
+          "verified": "September 21, 2026",
+          "programSlug": "territories-energy-programs"
         }
       ],
       "homeHealth": [
-        { "name": "Radon — Yukon especially", "link": "/tests/radon/", "note": "Yukon communities have posted some of Canada's highest radon shares in national surveys. Northern basements and crawlspaces deserve the kit as a default." },
-        { "name": "Extreme-cold ventilation", "link": "/tests/ventilation-assessment/", "note": "At −40, envelope tightness is survival — which makes measured mechanical ventilation non-negotiable. HRVs are standard equipment here for a reason." },
-        { "name": "Fuel systems and CO", "link": "/tests/carbon-monoxide/", "note": "Oil and propane dominate; alarms, annual servicing, and spillage checks matter more with every degree below zero." },
-        { "name": "Trucked and well water", "link": "/tests/well-water/", "note": "Water systems vary from municipal trucked service to private wells — your territorial health authority sets the testing route; the discipline is the same." }
+        {
+          "name": "Radon — Yukon especially",
+          "link": "/tests/radon/",
+          "note": "Yukon communities have posted some of Canada's highest radon shares in national surveys. Northern basements and crawlspaces deserve the kit as a default."
+        },
+        {
+          "name": "Extreme-cold ventilation",
+          "link": "/tests/ventilation-assessment/",
+          "note": "At −40, envelope tightness is survival — which makes measured mechanical ventilation non-negotiable. HRVs are standard equipment here for a reason."
+        },
+        {
+          "name": "Fuel systems and CO",
+          "link": "/tests/carbon-monoxide/",
+          "note": "Oil and propane dominate; alarms, annual servicing, and spillage checks matter more with every degree below zero."
+        },
+        {
+          "name": "Trucked and well water",
+          "link": "/tests/well-water/",
+          "note": "Water systems vary from municipal trucked service to private wells — your territorial health authority sets the testing route; the discipline is the same."
+        }
       ]
     }
   ]

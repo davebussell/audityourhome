@@ -5,13 +5,19 @@ import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
 import { programs } from '../../lib/data';
 
-const title = 'Ontario energy rebate tracker — what’s actually live | AuditYourHome';
+const title = 'Canadian energy rebate tracker — what’s actually live, province by province | AuditYourHome';
 const description =
-  'Every home energy rebate and financing program relevant to Ontario homeowners, verified against official pages: Home Renovation Savings, Toronto HELP, CMHC Eco — and the closed programs other sites still advertise.';
+  'Every major home energy rebate in Canada, verified against official pages with dates: Home Renovation Savings, BC’s Improvement Bonus, Efficiency Manitoba, Rénoclimat, LogisVert, the Atlantic programs — and the closed ones other sites still advertise.';
 
-const live = programs.filter((p) => p.status === 'active');
-const limited = programs.filter((p) => p.status === 'active-limited');
-const closed = programs.filter((p) => p.status === 'closed');
+const isOntario = (p: any) => ['ontario', 'toronto'].includes(p.jurisdiction);
+const isFederal = (p: any) => p.jurisdiction === 'canada';
+const onfed = programs.filter((p) => isOntario(p) || isFederal(p));
+const provincial = programs.filter((p) => !isOntario(p) && !isFederal(p));
+const live = onfed.filter((p) => p.status === 'active');
+const limited = onfed.filter((p) => p.status === 'active-limited');
+const closed = onfed.filter((p) => p.status === 'closed');
+const provLive = provincial.filter((p) => p.status !== 'closed');
+const provClosed = provincial.filter((p) => p.status === 'closed');
 
 const schema = [
   breadcrumbSchema([
@@ -33,7 +39,7 @@ const schema = [
       </p>
     </div>
 
-    <h2 class="grp"><span class="chip chip-active">Active</span> Live programs</h2>
+    <h2 class="grp"><span class="chip chip-active">Active</span> Ontario &amp; federal — live</h2>
     <div class="grid-3">
       {live.map((p) => <ProgramCard program={p} />)}
     </div>
@@ -47,23 +53,32 @@ const schema = [
       </>
     )}
 
+    <h2 class="grp"><span class="chip chip-active">Across Canada</span> Provincial programs, coast to coast</h2>
+    <p class="small measure">
+      Every province and territory now has full program pages — amounts, eligibility, how to apply,
+      and the gotchas — each linked to its <a href="/provinces/">provincial guide</a>.
+    </p>
+    <div class="grid-3">
+      {provLive.map((p) => <ProgramCard program={p} />)}
+    </div>
+
     <h2 class="grp"><span class="chip chip-closed">Closed</span> Gone — but still advertised elsewhere</h2>
     <p class="small measure">
       We list closed programs on purpose: if a website or salesperson promises you one of these,
       their information is stale — a useful trust test.
     </p>
     <div class="grid-3">
-      {closed.map((p) => <ProgramCard program={p} />)}
+      {[...closed, ...provClosed].map((p) => <ProgramCard program={p} />)}
     </div>
 
     <div class="card card-pad note">
-      <h3>Outside Ontario?</h3>
+      <h3>How this tracker works</h3>
       <p class="mb-0">
-        Manitoba pays a $400 evaluation rebate, New Brunswick's evaluations are free, PEI's cost
-        $99, Nova Scotia runs assessment-based rebates, Quebec's Rénoclimat charges a fixed $150
-        (with government-assigned advisors), and BC's programs were cut in 2025–26. The
-        <a href="/plan/"> planner</a> gives a province-specific readout from your postal code —
-        full provincial pages are on the roadmap.
+        Every entry is verified against its official page and stamped with the date — including the
+        closed programs, because stale promises are how homeowners get burned. Your province's full
+        picture (housing stock, what to monitor, every program) lives in the
+        <a href="/provinces/">province guides</a>, and the <a href="/plan/">planner</a> matches
+        programs to your specific home from your postal code.
       </p>
     </div>
   </div>

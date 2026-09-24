@@ -23,6 +23,13 @@ export interface Program {
   officialUrl: string;
   lastVerified: string;
   notes: string;
+  /** Optional authority-page fields (provincial + enriched entries) */
+  provinceSlug?: string;
+  howToApply?: string[];
+  gotchas?: string[];
+  faq?: { q: string; a: string }[];
+  related?: string[];
+  sources?: { href: string; label: string }[];
 }
 
 export interface ProviderPricing {
