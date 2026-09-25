@@ -5,6 +5,10 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://audityourhome.com',
   integrations: [sitemap()],
+  // Short, say-it-on-the-phone address for the advisor lead offer.
+  redirects: {
+    '/advisors': '/for-professionals/',
+  },
   build: {
     format: 'directory',
   },

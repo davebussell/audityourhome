@@ -13,7 +13,7 @@
     ],
     "serviceNote": "Greater Toronto Area, with 20+ years delivering EnerGuide evaluations",
     "registration": "NRCan-licensed service organization",
-    "registrationSource": "Green Communities Canada member list",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": {
       "preRetrofit": "$500 + HST",
@@ -26,9 +26,10 @@
     "profile": "A non-profit ecology centre and one of the longest-standing licensed service organizations in the GTA. Windfall is also one of the very few providers anywhere in Ontario that publishes its evaluation prices — the kind of transparency this directory exists to reward.",
     "sources": [
       "https://www.windfallcentre.ca/energy/booking/",
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "Windfall Ecology Centre Aurora"
   },
   {
@@ -47,33 +48,43 @@
     "scaleClaim": null,
     "pricing": null,
     "booking": "Web form or phone",
-    "profile": "Hamilton's community environmental organization and the Green Communities Canada member for the Hamilton–Halton–Niagara territory, delivering EnerGuide home evaluations alongside local climate programs.",
+    "profile": "Hamilton's community environmental organization and the Green Communities Canada member for the Hamilton–Halton–Niagara territory, which previously delivered EnerGuide home evaluations alongside its local climate programs.",
     "sources": [
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://www.greenventure.ca/homeenergyevaluations"
     ],
-    "checkedOn": "2026-08-23",
-    "reviewQuery": "Green Venture Hamilton"
+    "checkedOn": "2026-09-25",
+    "reviewQuery": "Green Venture Hamilton",
+    "status": "inactive",
+    "statusNote": "Green Venture no longer offers EnerGuide home energy evaluations — its own site says so, and it no longer appears on NRCan's list of licensed service organizations (both checked 25 September 2026). It refers Hamilton-area homeowners to Reep Green Solutions and Windfall Ecology Centre.",
+    "alternatives": [
+      "reep-green-solutions",
+      "windfall-ecology-centre"
+    ]
   },
   {
     "slug": "reep-green-solutions",
     "name": "Reep Green Solutions",
     "type": "non-profit",
     "website": "https://reepgreen.ca/",
-    "phone": null,
+    "phone": "519-744-9799",
     "serves": [
-      "kitchener-waterloo"
+      "kitchener-waterloo",
+      "hamilton",
+      "niagara"
     ],
-    "serviceNote": "Waterloo Region — Kitchener, Waterloo, Cambridge and townships",
+    "serviceNote": "Waterloo Region and Wellington, plus Hamilton and Niagara",
     "registration": "NRCan-licensed service organization",
-    "registrationSource": "Green Communities Canada member list",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Web form or phone",
     "profile": "One of Ontario's longest-running environmental non-profits, serving Waterloo Region with EnerGuide evaluations and practical retrofit advice since the 1990s.",
     "sources": [
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "Reep Green Solutions Kitchener"
   },
   {
@@ -81,43 +92,45 @@
     "name": "GreenUP",
     "type": "non-profit",
     "website": "https://www.greenup.on.ca/",
-    "phone": null,
+    "phone": "705-745-3238",
     "serves": [
       "peterborough"
     ],
     "serviceNote": "Peterborough and the Kawarthas",
     "registration": "NRCan-licensed service organization",
-    "registrationSource": "Green Communities Canada member list",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Web form or phone",
     "profile": "Peterborough's environmental charity and the community service organization for EnerGuide evaluations in the Kawarthas.",
     "sources": [
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "GreenUP Peterborough"
   },
   {
     "slug": "environment-network",
     "name": "Environment Network",
     "type": "non-profit",
-    "website": null,
-    "phone": null,
+    "website": "https://www.environmentnetwork.org/",
+    "phone": "705-446-0551",
     "serves": [
       "barrie-simcoe"
     ],
     "serviceNote": "Barrie and Simcoe County, including Collingwood and Wasaga Beach",
     "registration": "NRCan-licensed service organization",
-    "registrationSource": "Green Communities Canada member list",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Via Green Communities Canada listing",
     "profile": "The Green Communities Canada member organization covering Simcoe County, delivering EnerGuide home evaluations across Barrie, Collingwood, and surrounding communities.",
     "sources": [
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "Environment Network Collingwood"
   },
   {
@@ -136,41 +149,48 @@
     "scaleClaim": null,
     "pricing": null,
     "booking": "Via Green Communities Canada listing",
-    "profile": "A volunteer-driven environmental league serving Eastern Ontario's Rideau corridor with EnerGuide evaluations through the Green Communities Canada network.",
+    "profile": "A volunteer-driven environmental league serving Eastern Ontario's Rideau corridor, which delivered EnerGuide evaluations through the Green Communities Canada network until April 2026.",
     "sources": [
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://www.realaction.ca/energy/home-energy-assessment/"
     ],
-    "checkedOn": "2026-08-23",
-    "reviewQuery": "REAL Rideau Environmental Action League Smiths Falls"
+    "checkedOn": "2026-09-25",
+    "reviewQuery": "REAL Rideau Environmental Action League Smiths Falls",
+    "status": "inactive",
+    "statusNote": "REAL stopped offering home energy assessments at the end of April 2026, when its long-time energy advisor retired (per REAL's own site, checked 25 September 2026). It refers the Rideau corridor to Nadeau Energy Solutions, the Green Communities Canada advisor based in Kingston.",
+    "alternatives": [
+      "nadeau-home-inspections"
+    ]
   },
   {
     "slug": "nadeau-home-inspections",
-    "name": "Nadeau Home Inspections",
+    "name": "Nadeau Energy Solutions",
     "type": "company",
-    "website": null,
-    "phone": null,
+    "website": "https://www.nadeauenergysolutions.com/",
+    "phone": "343-262-1783",
     "serves": [
       "kingston"
     ],
-    "serviceNote": "Kingston and Prince Edward County",
-    "registration": "NRCan-licensed service organization",
-    "registrationSource": "Green Communities Canada member list",
+    "serviceNote": "Kingston, Napanee, Gananoque, Prince Edward County, Brockville and the Rideau corridor (Perth and area)",
+    "registration": "NRCan-licensed service organization (Green Communities Canada network)",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Via Green Communities Canada listing",
-    "profile": "The Green Communities Canada listed provider for Kingston and Prince Edward County, combining home inspection experience with EnerGuide evaluations.",
+    "profile": "Kingston-based energy advisor Gabriel Nadeau delivers EnerGuide evaluations through the Green Communities Canada network — and since REAL's advisor retired in April 2026, he's the referral for the Rideau corridor too.",
     "sources": [
-      "https://greencommunitiescanada.org/program/energuide/"
+      "https://greencommunitiescanada.org/program/energuide/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
-    "reviewQuery": "Nadeau Home Inspections Kingston"
+    "checkedOn": "2026-09-25",
+    "reviewQuery": "Nadeau Energy Solutions Kingston"
   },
   {
     "slug": "the-energuy",
     "name": "The Energuy",
     "type": "company",
     "website": "https://www.energuy.com/canada/",
-    "phone": null,
+    "phone": "1-888-442-9577",
     "serves": [
       "toronto",
       "ottawa",
@@ -187,15 +207,16 @@
     ],
     "serviceNote": "Province-wide Ontario coverage; also active in BC, AB, SK, MB and several US states",
     "registration": "NRCan-registered service organization",
-    "registrationSource": "Company website",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": "Reports 400,000+ home energy assessments since 2003 (company claim)",
     "pricing": null,
     "booking": "Web form, call/text line, free 2-minute rebate check",
     "profile": "Likely the highest-volume energy assessment company in Canada, operating across five provinces and into the US. Broad coverage and fast intake make it the default comparison point for any Ontario quote.",
     "sources": [
-      "https://www.energuy.com/canada/"
+      "https://www.energuy.com/canada/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "The Energuy"
   },
   {
@@ -203,7 +224,7 @@
     "name": "Canada Energy Audits",
     "type": "company",
     "website": "https://www.canadaenergyaudit.ca/",
-    "phone": null,
+    "phone": "1-888-298-9458",
     "serves": [
       "toronto",
       "york-region",
@@ -212,15 +233,16 @@
     ],
     "serviceNote": "GTA-centred (Richmond Hill head office), with BC operations",
     "registration": "NRCan-registered service organization",
-    "registrationSource": "Company website",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": "Reports 100,000+ home energy evaluations (company claim); Home Renovation Savings / Enbridge program partner",
     "pricing": null,
     "booking": "Quote request form",
     "profile": "A high-volume GTA service organization and program partner for Home Renovation Savings, with a track record across Ontario's major rebate programs.",
     "sources": [
-      "https://www.canadaenergyaudit.ca/"
+      "https://www.canadaenergyaudit.ca/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "Canada Energy Audits Richmond Hill"
   },
   {
@@ -228,26 +250,29 @@
     "name": "AmeriSpec Canada",
     "type": "franchise",
     "website": "https://www.amerispec.ca/",
-    "phone": null,
+    "phone": "1-866-284-6010",
     "serves": [
       "toronto",
       "ottawa",
       "hamilton",
       "mississauga",
       "london",
-      "kitchener-waterloo"
+      "kitchener-waterloo",
+      "niagara",
+      "kingston"
     ],
     "serviceNote": "National home-inspection franchise; EnerGuide services vary by local franchise",
     "registration": "NRCan-licensed for EnerGuide since 2001",
-    "registrationSource": "Company website",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Postal-code lookup with online scheduling — the only large incumbent offering it",
     "profile": "A national inspection franchise whose locations deliver EnerGuide evaluations alongside home inspections. Notably the only large player with online scheduling, though service depth varies by franchise.",
     "sources": [
-      "https://www.amerispec.ca/service/energy-audit"
+      "https://www.amerispec.ca/service/energy-audit",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "AmeriSpec Canada"
   },
   {
@@ -255,22 +280,23 @@
     "name": "Green Canada Home Advisors",
     "type": "company",
     "website": "https://greencanadaenergy.com/",
-    "phone": null,
+    "phone": "1-866-243-3334",
     "serves": [
       "york-region",
       "toronto"
     ],
     "serviceNote": "Richmond Hill head office; Ontario and BC",
     "registration": "NRCan-registered service organization; CHBA Net Zero qualified",
-    "registrationSource": "Company website",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Qualification form",
     "profile": "A service organization covering residential EnerGuide and ENERGY STAR work plus commercial ASHRAE audits, with Net Zero builder credentials.",
     "sources": [
-      "https://greencanadaenergy.com/"
+      "https://greencanadaenergy.com/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "Green Canada Home Advisors Richmond Hill"
   },
   {
@@ -278,7 +304,7 @@
     "name": "All Season Inspection",
     "type": "company",
     "website": "https://allseasoninspection.com/energuide-evaluation-report/",
-    "phone": null,
+    "phone": "416-276-1346",
     "serves": [
       "york-region",
       "toronto",
@@ -286,15 +312,16 @@
     ],
     "serviceNote": "Vaughan head office; claims coverage in ON, BC, AB and SK",
     "registration": "NRCan-licensed service organization",
-    "registrationSource": "Company website",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Online booking portal",
     "profile": "A Vaughan-based inspection company pairing EnerGuide evaluations with home inspection, mold, and air-quality services across multiple provinces.",
     "sources": [
-      "https://allseasoninspection.com/energuide-evaluation-report/"
+      "https://allseasoninspection.com/energuide-evaluation-report/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "All Season Inspection Vaughan"
   },
   {
@@ -302,22 +329,23 @@
     "name": "EnerSolution",
     "type": "company",
     "website": "https://enersolution.ca/",
-    "phone": null,
+    "phone": "1-800-203-4395",
     "serves": [
       "toronto",
       "york-region"
     ],
     "serviceNote": "Multi-province provider (ON, MB, AB, BC) — confirm coverage for your area",
     "registration": "NRCan-registered service organization",
-    "registrationSource": "Company website",
+    "registrationSource": "NRCan list of service organizations for existing homes",
     "scaleClaim": null,
     "pricing": null,
     "booking": "Web form",
     "profile": "A multi-province service organization with program-specific expertise across several provincial rebate systems.",
     "sources": [
-      "https://enersolution.ca/"
+      "https://enersolution.ca/",
+      "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes"
     ],
-    "checkedOn": "2026-08-23",
+    "checkedOn": "2026-09-25",
     "reviewQuery": "EnerSolution"
   }
 ]

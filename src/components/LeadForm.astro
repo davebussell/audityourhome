@@ -70,7 +70,7 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
         <textarea id="lf-message" name="message" rows="3" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
       </div>
       <button class="btn btn-primary" type="submit">Request my match</button>
-      <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. See our <a href="/privacy/">privacy note</a>.</p>
+      <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory. See our <a href="/privacy/">privacy note</a>.</p>
     </form>
   ) : (
     <div class="fallback">
@@ -79,7 +79,7 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
         organizations for your area and which rebates apply.
       </p>
       <a class="btn btn-primary" href={mailtoFallback}>Email {SITE.contactEmail}</a>
-      <p class="meta">Direct booking is coming — this inbox is answered by a person.</p>
+      <p class="meta">This inbox is answered by a person. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory.</p>
     </div>
   )}
 </div>

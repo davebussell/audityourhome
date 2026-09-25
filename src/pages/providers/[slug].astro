@@ -3,18 +3,25 @@ import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, providerSchema } from '../../lib/schema';
-import { providers, providerBySlug, regionBySlug, reviewLinks } from '../../lib/data';
+import { allProviders, providerBySlug, regionBySlug, reviewLinks } from '../../lib/data';
 
 export function getStaticPaths() {
-  return providers.map((p) => ({ params: { slug: p.slug } }));
+  return allProviders.map((p) => ({ params: { slug: p.slug } }));
 }
 
 const { slug } = Astro.params;
 const p = providerBySlug(slug!)!;
 const servedRegions = p.serves.map((s) => regionBySlug(s)).filter(Boolean);
 
-const title = `${p.name} — EnerGuide energy assessments | AuditYourHome`;
-const description = `${p.name}: ${p.registration}. Serving ${p.serviceNote}. Profile, service area, and how to book — on AuditYourHome, Ontario's audit-first directory.`;
+const inactive = p.status === 'inactive';
+const alternatives = (p.alternatives ?? []).map((s) => providerBySlug(s)).filter((x) => x && x.status !== 'inactive');
+
+const title = inactive
+  ? `${p.name} — no longer offering EnerGuide evaluations | AuditYourHome`
+  : `${p.name} — EnerGuide energy assessments | AuditYourHome`;
+const description = inactive
+  ? `${p.name} no longer offers EnerGuide home energy evaluations. Who serves ${p.serviceNote} now — checked against NRCan's list of licensed service organizations.`
+  : `${p.name}: ${p.registration}. Serving ${p.serviceNote}. Profile, service area, and how to book — on AuditYourHome, the audit-first directory.`;
 
 const typeLabel = p.type === 'non-profit' ? 'Non-profit organization' : p.type === 'franchise' ? 'Franchise network' : 'Company';
 const rv = reviewLinks(p);
@@ -25,7 +32,7 @@ const schema = [
     { name: 'Find an auditor', path: '/find/' },
     { name: p.name, path: `/providers/${p.slug}/` },
   ]),
-  providerSchema(p),
+  ...(inactive ? [] : [providerSchema(p)]),
 ];
 ---
 
@@ -39,7 +46,22 @@ const schema = [
       <div class="headrow">
         <h1>{p.name}</h1>
         <span class="chip chip-neutral">{typeLabel}</span>
+        {inactive && <span class="chip chip-closed">No longer offering evaluations</span>}
       </div>
+      {inactive ? (
+        <div class="card card-pad inactive-note">
+          <h3>This organization no longer offers EnerGuide evaluations</h3>
+          <p>{p.statusNote}</p>
+          {alternatives.length > 0 && (
+            <p class="mb-0">
+              <strong>Serving this area now:</strong>{' '}
+              {alternatives.map((a, i) => (
+                <span>{i > 0 && ' · '}<a href={`/providers/${a!.slug}/`}>{a!.name}</a></span>
+              ))}
+            </p>
+          )}
+        </div>
+      ) : (
       <p class="badge-verify big">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M8 1.5 2.5 4v4c0 3.2 2.3 5.6 5.5 6.5 3.2-.9 5.5-3.3 5.5-6.5V4L8 1.5Z" fill="currentColor" opacity="0.18"/>
@@ -48,6 +70,7 @@ const schema = [
         {p.registration}
         <span class="meta">source: {p.registrationSource} · checked {p.checkedOn}</span>
       </p>
+      )}
       <p class="lede measure">{p.profile}</p>
     </div>
 
@@ -66,7 +89,7 @@ const schema = [
         {p.scaleClaim && <p class="small mb-0">{p.scaleClaim}</p>}
       </div>
 
-      <div class="card card-pad">
+      {!inactive && <div class="card card-pad">
         <h3>Pricing &amp; booking</h3>
         {p.pricing ? (
           <>
@@ -89,10 +112,10 @@ const schema = [
           {p.website && <a class="btn btn-primary btn-sm" href={p.website} rel="noopener nofollow" target="_blank">Visit website</a>}
           {p.phone && <a class="btn btn-ghost btn-sm" href={`tel:${p.phone.replace(/[^0-9+]/g, '')}`}>{p.phone}</a>}
         </div>
-      </div>
+      </div>}
     </div>
 
-    <div class="card card-pad reputation">
+    {!inactive && <div class="card card-pad reputation">
       <h3>Check their reputation</h3>
       <p class="small">
         Read what real customers say before you book — we link you straight to the independent
@@ -104,7 +127,7 @@ const schema = [
         <a class="btn btn-ghost btn-sm" href={rv.bbb} rel="noopener nofollow" target="_blank">Better Business Bureau ↗</a>
       </div>
       <p class="meta mb-0">Search links — if a profile doesn't exist on a platform, that's worth knowing too.</p>
-    </div>
+    </div>}
 
     <div class="card card-pad listing-note">
       <h4>About this listing</h4>
@@ -119,7 +142,7 @@ const schema = [
     </div>
 
     <LeadForm
-      heading={`Planning an audit with ${p.name}?`}
+      heading={inactive ? `Find an active advisor near ${p.serviceNote}` : `Planning an audit with ${p.name}?`}
       sub="We can also suggest comparison quotes from other registered organizations serving your area."
       region={servedRegions[0]?.slug ?? ''}
       context={`provider-${p.slug}`}
@@ -140,4 +163,6 @@ const schema = [
   .rep-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 12px; }
   .listing-note { border-left: 4px solid var(--steel); margin-bottom: 18px; }
   .listing-note h4 { margin-bottom: 6px; }
+  .inactive-note { border-left: 4px solid var(--dead); margin: 14px 0 18px; }
+  .inactive-note h3 { margin-bottom: 6px; }
 </style>

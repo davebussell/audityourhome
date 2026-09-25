@@ -9,7 +9,12 @@ export const SITE = {
   tagline: 'Find a certified home energy auditor. Verified credentials, real prices, live rebates.',
   description:
     'AuditYourHome helps Canadian homeowners find NRCan-registered energy advisors, compare real prices, and see which rebates are actually live right now — province by province, from Ontario\'s Home Renovation Savings to BC\'s Improvement Bonus and Efficiency Manitoba.',
-  contactEmail: 'hello@audityourhome.com',
+  /**
+   * audityourhome.com has NO MX records (checked 25 Sep 2026), so any
+   * @audityourhome.com address silently fails. Leads and advisor applications
+   * route to Dave's working Google Workspace inbox until domain email exists.
+   */
+  contactEmail: 'dave@clickshift.ca',
 
   /**
    * Lead form endpoint (Formspree, Basin, Netlify Forms action URL, or your own API).

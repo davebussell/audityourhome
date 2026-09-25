@@ -57,6 +57,11 @@ export interface Provider {
   sources: string[];
   checkedOn: string;
   reviewQuery: string;
+  /** 'inactive' = no longer delivers EnerGuide evaluations; page stays up with a notice, excluded from all lists */
+  status?: 'active' | 'inactive';
+  statusNote?: string;
+  /** provider slugs to point visitors to when inactive */
+  alternatives?: string[];
 }
 
 /** Independent review-site links for a provider (search links — no scraped ratings). */
@@ -77,7 +82,10 @@ export interface Region {
 }
 
 export const programs = programsJson as Program[];
-export const providers = providersJson as Provider[];
+/** Every provider record, including inactive ones (their pages stay up with a notice). */
+export const allProviders = providersJson as Provider[];
+/** Active providers only — use this for every directory list. */
+export const providers = allProviders.filter((p) => p.status !== 'inactive');
 export const regions = regionsJson as Region[];
 
 export const activePrograms = programs.filter((p) => p.status === 'active');
@@ -97,7 +105,7 @@ export function regionBySlug(slug: string): Region | undefined {
 }
 
 export function providerBySlug(slug: string): Provider | undefined {
-  return providers.find((p) => p.slug === slug);
+  return allProviders.find((p) => p.slug === slug);
 }
 
 export function programBySlug(slug: string): Program | undefined {
