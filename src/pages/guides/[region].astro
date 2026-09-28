@@ -121,6 +121,7 @@ const schema = [
               <h3>Home energy audits in {n.name}</h3>
               <p class="meta">{n.era} housing stock</p>
               <p class="mb-0">{n.profile}</p>
+              {n.article && <p class="mb-0 hood-link"><a href={n.article}>Full {n.name} audit guide →</a></p>}
             </article>
           ))}
         </div>
@@ -169,6 +170,7 @@ const schema = [
   .progrow { margin: 22px 0 8px; }
   .sec { margin: 36px 0 10px; font-size: 24px; }
   .hood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  .hood-link { margin-top: 10px; font-weight: 600; font-size: 14.5px; }
   @media (max-width: 780px) { .hood-grid { grid-template-columns: 1fr; } }
   .hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
   @media (max-width: 780px) { .hh-grid { grid-template-columns: 1fr; } }

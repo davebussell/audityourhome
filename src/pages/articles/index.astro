@@ -2,12 +2,13 @@
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
+import articlesJson from '../../data/articles.json';
 
 const title = 'Articles — cited, current, local | AuditYourHome';
 const description =
   'Deep-dive articles on home energy audits: definitions, requirements and standards, Toronto services and financing, and regional specials — every claim cited to official sources and dated.';
 
-const articles = [
+const handWritten = [
   {
     href: '/articles/what-is-a-home-energy-audit/',
     kicker: 'The foundation',
@@ -40,6 +41,27 @@ const articles = [
   },
 ];
 
+type Card = { href: string; kicker: string; title: string; blurb: string };
+const fromData = (articlesJson as any[]).map((x) => ({ href: `/articles/${x.slug}/`, kicker: x.kicker, title: x.h1, blurb: x.blurb, slug: x.slug }));
+const bySlug = (s: string) => fromData.find((x) => x.slug === s)!;
+const byHref = (h: string) => handWritten.find((x) => x.href === h)!;
+const articles: Card[] = [
+  byHref('/articles/what-is-a-home-energy-audit/'),
+  bySlug('home-energy-audit-ontario'),
+  bySlug('home-energy-audit-cost'),
+  bySlug('energy-audit-companies-ontario'),
+  byHref('/articles/energy-audit-requirements-ontario/'),
+  byHref('/articles/energy-audit-services-toronto/'),
+  bySlug('commercial-energy-audits-ontario'),
+  bySlug('heat-pump-rebates-toronto-ontario'),
+  byHref('/articles/home-renovation-loans-toronto/'),
+  bySlug('vermiculite-insulation'),
+  bySlug('home-energy-assessment-winnipeg'),
+  bySlug('bc-home-energy-testing-faq'),
+  byHref('/articles/energy-audits-northern-bc/'),
+];
+const london = fromData.filter((x) => x.slug.endsWith('-london'));
+
 const schema = [
   breadcrumbSchema([
     { name: 'Home', path: '/' },
@@ -71,6 +93,18 @@ const schema = [
       ))}
     </div>
 
+    <h2 class="grp">London, Ontario — neighbourhood by neighbourhood</h2>
+    <div class="article-list">
+      {london.map((a) => (
+        <a class="card art" href={a.href}>
+          <p class="eyebrow">{a.kicker}</p>
+          <h2>{a.title}</h2>
+          <p class="small">{a.blurb}</p>
+          <span class="go">Read →</span>
+        </a>
+      ))}
+    </div>
+
     <div class="card card-pad more">
       <h3>Looking for your city?</h3>
       <p class="mb-0">
@@ -83,6 +117,7 @@ const schema = [
 </Base>
 
 <style>
+  .grp { margin: 36px 0 14px; font-size: 22px; }
   .article-list { display: grid; gap: 16px; max-width: 800px; }
   .art { padding: 26px 30px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s ease; }
   .art:hover { border-color: var(--heat); }

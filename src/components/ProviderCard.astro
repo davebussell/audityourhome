@@ -28,6 +28,12 @@ const typeLabel =
     {p.registration}
   </p>
 
+  {p.hrsApproved && (
+    <p class="hrs">
+      <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven service organizations approved for Ontario's Home Renovation Savings assessment rebates">Approved for Home Renovation Savings</a>
+    </p>
+  )}
+
   <p class="serves">{p.serviceNote}</p>
 
   {p.pricing && (
@@ -66,6 +72,8 @@ const typeLabel =
   .name a { color: var(--ink); text-decoration: none; }
   .name a:hover { color: var(--heat-deep); }
   .serves { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .hrs { margin: 0; }
+  .hrs a { text-decoration: none; }
   .pricing { margin: 0; font-size: 15px; }
   .pricing .meta { margin-left: 6px; }
   .pricing.none { font-size: 13.5px; color: var(--faint); }

@@ -1,0 +1,132 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import { SITE } from '../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { providersForRegion, regionBySlug } from '../../lib/data';
+import articlesJson from '../../data/articles.json';
+
+interface Article {
+  slug: string;
+  kicker: string;
+  crumb: string;
+  title: string;
+  h1: string;
+  description: string;
+  blurb: string;
+  lede: string;
+  verified: string;
+  verifiedISO: string;
+  sections: { h2: string; html: string }[];
+  faq: { q: string; a: string }[];
+  sources: { href: string; label: string }[];
+  related: { href: string; label: string }[];
+  lead: { heading: string; context: string } | null;
+  region: string | null;
+}
+
+export function getStaticPaths() {
+  return (articlesJson as Article[]).map((x) => ({ params: { slug: x.slug }, props: { x } }));
+}
+
+const { x } = Astro.props as { x: Article };
+const path = `/articles/${x.slug}/`;
+const region = x.region ? regionBySlug(x.region) : undefined;
+const advisors = x.region ? providersForRegion(x.region) : [];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: x.crumb, path },
+  ]),
+  faqSchema(x.faq),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: x.h1,
+    description: x.description,
+    dateModified: x.verifiedISO,
+    mainEntityOfPage: `${SITE.url}${path}`,
+    author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  },
+];
+---
+
+<Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>{x.crumb}</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">{x.kicker} · verified {x.verified}</p>
+      <h1>{x.h1}</h1>
+      <p class="lede measure" set:html={x.lede} />
+    </div>
+
+    <div class="measure prose">
+      {x.sections.map((s) => (
+        <>
+          <h2>{s.h2}</h2>
+          <Fragment set:html={s.html} />
+        </>
+      ))}
+    </div>
+
+    {advisors.length > 0 && region && (
+      <section class="advisors">
+        <h2>Registered advisors serving {region.name}</h2>
+        <p class="small">
+          NRCan-licensed service organizations, with review links. Those tagged “Approved for Home
+          Renovation Savings” can deliver the assessments that qualify for Ontario's rebates.
+          <a href={`/find/${region.slug}/`}>Full {region.name} directory →</a>
+        </p>
+        <div class="provider-grid">
+          {advisors.map((p) => <ProviderCard provider={p} compact />)}
+        </div>
+      </section>
+    )}
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {x.faq.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {x.sources.map((s) => (
+          <li><a href={s.href} rel="noopener">{s.label}</a></li>
+        ))}
+      </ul>
+      <p class="small mb-0">Program facts checked against these pages on {x.verified}. Programs change — confirm on the official page before you spend.</p>
+    </div>
+
+    {x.related.length > 0 && (
+      <div class="related">
+        {x.related.map((r) => <a class="btn btn-ghost" href={r.href}>{r.label}</a>)}
+        <a class="btn btn-ghost" href="/articles/">All articles</a>
+      </div>
+    )}
+
+    {x.lead && <LeadForm heading={x.lead.heading} context={x.lead.context} region={x.region ?? ''} />}
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose :global(h2) { font-size: 23px; margin: 26px 0 10px; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 22px; display: grid; gap: 8px; margin: 0 0 16px; }
+  .prose :global(.tablewrap) { margin: 8px 0 14px; }
+  .prose :global(table) { font-size: 14.5px; }
+  .prose :global(.tel) { white-space: nowrap; }
+  .advisors { margin: 30px 0 10px; }
+  .advisors h2 { font-size: 23px; margin: 0 0 6px; }
+  .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 14px; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 26px; }
+</style>

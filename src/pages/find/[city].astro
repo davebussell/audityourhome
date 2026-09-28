@@ -13,6 +13,7 @@ export function getStaticPaths() {
 const { city } = Astro.params;
 const region = regionBySlug(city!)!;
 const list = providersForRegion(region.slug);
+const hrsCount = list.filter((p) => p.hrsApproved).length;
 
 const title = `Home energy auditors in ${region.name} (${list.length} registered providers) | AuditYourHome`;
 const description = `Compare ${list.length} NRCan-licensed service organizations delivering EnerGuide home energy assessments in ${region.name}. Registration shown, prices where published, rebate guidance included.`;
@@ -20,11 +21,11 @@ const description = `Compare ${list.length} NRCan-licensed service organizations
 const faqs = [
   {
     q: `What does an energy audit cost in ${region.name}?`,
-    a: 'Typical Ontario pricing is $400–$700 for the initial EnerGuide assessment and $200–$400 for the follow-up. The Home Renovation Savings Program rebates $600 of that on the assessment path. Few providers publish prices — the ones here that do are marked.',
+    a: 'Typical Ontario pricing is $400–$700 for the initial EnerGuide assessment and $200–$400 for the follow-up. The Home Renovation Savings Program rebates $600 of that on the assessment path, if you book through one of its seven approved service organizations (tagged below) and finish by December 31, 2026. Few providers publish prices — the ones here that do are marked.',
   },
   {
     q: `Which rebates apply in ${region.name}?`,
-    a: 'Home Renovation Savings (province-wide): $600 for assessments, up to $7,700 insulation, up to $12,000 heat pumps, up to $10,000 solar + battery. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.' + (region.slug === 'toronto' ? ' Toronto homeowners can also finance through the City’s HELP loans at posted rates up to $125,000.' : ''),
+    a: 'Home Renovation Savings (province-wide): $600 toward assessments, up to $7,700 insulation and $100 per window on the assessment path; without an assessment, heat pumps up to $7,500 ($2,000 if gas-heated) and up to $10,000 for solar with a battery. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.' + (region.slug === 'toronto' ? ' Toronto homeowners can also finance through the City’s HELP loans at posted rates up to $125,000.' : ''),
   },
   {
     q: 'Are these providers vetted?',
@@ -59,6 +60,18 @@ const schema = [
       </p>
     </div>
 
+    <p class="card card-pad hrs-callout small">
+      <strong>Claiming Ontario's Home Renovation Savings rebates?</strong> The EnerGuide assessments
+      have to come from one of the program's seven approved service organizations, with the
+      follow-up done by December 31, 2026.
+      {hrsCount > 0
+        ? ` ${hrsCount} of the providers below ${hrsCount === 1 ? 'is' : 'are'} tagged “Approved for Home Renovation Savings.”`
+        : ' None of the providers listed for this area is on that list yet.'}
+      Every provider here delivers official EnerGuide assessments for everything else, from
+      financing to heat pump sizing.
+      <a href="/programs/home-renovation-savings-assessment/">See the seven and the deadlines</a>
+    </p>
+
     <div class="provider-grid">
       {list.map((p) => <ProviderCard provider={p} />)}
     </div>
@@ -85,5 +98,6 @@ const schema = [
 <style>
   .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
   .crumbs a { color: var(--muted); }
+  .hrs-callout { border-left: 4px solid var(--pine); margin: 0 0 16px; }
   .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 24px; }
 </style>

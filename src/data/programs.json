@@ -6,36 +6,115 @@
     "shortName": "HRSP (with assessment)",
     "jurisdiction": "ontario",
     "runBy": "Enbridge Gas + Save on Energy (IESO), with Ontario government support",
-    "status": "active",
+    "status": "active-limited",
     "auditRequired": true,
-    "auditRequirementNote": "Requires an initial and a follow-up EnerGuide home energy assessment by an NRCan-registered energy advisor, plus at least two eligible upgrades.",
-    "headline": "Get $600 back on your energy assessments — then up to $7,700 for insulation",
+    "auditRequirementNote": "Requires an initial and a follow-up EnerGuide assessment through one of the program's seven approved service organizations: AmeriSpec, Canada Energy Audit, Greenbrain, Energuy, Energy Werx, NRGwise or The Home Inspectors Group. Their advisors are NRCan-registered, but registration alone isn't enough — an assessment from any other company doesn't qualify.",
+    "headline": "Up to $10,000 per home for insulation, windows and air sealing, plus $600 back on your assessments — if the follow-up assessment is done by December 31, 2026",
     "amounts": [
       {
-        "label": "Home energy assessments (initial + follow-up)",
-        "value": "$600 rebate"
+        "label": "Home energy assessments (paid after 2+ upgrades)",
+        "value": "up to $600"
       },
       {
-        "label": "Insulation (attic, wall, basement)",
+        "label": "Insulation: attic $1,500 · walls $3,600 · foundation $2,300 · exposed floor $300",
         "value": "up to $7,700"
       },
       {
-        "label": "Windows & doors",
+        "label": "Windows & doors (at least 3 windows, or 1 door or skylight)",
         "value": "$100 per opening"
       },
       {
-        "label": "Air sealing",
-        "value": "up to $250"
+        "label": "Air sealing (meet or beat the target)",
+        "value": "$200–$250"
       },
       {
         "label": "Heat pump water heater",
         "value": "$500"
+      },
+      {
+        "label": "Bonus for 3 or more upgrades",
+        "value": "$500"
+      },
+      {
+        "label": "Maximum per home if gas-heated (includes the $600)",
+        "value": "$5,000"
+      },
+      {
+        "label": "Maximum per home if heated by electricity, oil, propane or wood (includes the $600)",
+        "value": "$10,000"
       }
     ],
-    "whoQualifies": "Ontario homeowners completing two or more eligible upgrades. The program sends you a list of service organizations only after you submit a contact form — or you can compare providers openly here.",
+    "whoQualifies": "Ontario homeowners — not tenants — of detached, semi-detached, row or town homes, or mobile homes on a permanent foundation, who either heat mainly with Enbridge natural gas or are on Ontario's grid and heat with electricity, oil, propane or wood. Duplexes, triplexes, stacked townhouses, multi-unit buildings and homes occupied for less than 6 months don't qualify.",
     "officialUrl": "https://www.homerenovationsavings.ca/with-assessment",
-    "lastVerified": "2026-09-18",
-    "notes": "The assessment typically costs $500–$900 + HST across both visits, so the $600 rebate covers most of it. The same registered advisor must do the initial and follow-up visits."
+    "lastVerified": "2026-09-28",
+    "notes": "Funding is only approved through 2026. The follow-up assessment must be booked by November 30, 2026 and completed by December 31, 2026 — or within 180 days of the first assessment, if that comes sooner. Starting now means booking the initial assessment within weeks and lining up contractors quickly. The program doesn't publish assessment prices: you pay the service organization up front and the $600 comes back at the end.",
+    "provinceSlug": "ontario",
+    "howToApply": [
+      "Fill in the eligibility form on homerenovationsavings.ca. The program emails you its list of approved service organizations — you have to use one of these seven.",
+      "Book the initial assessment (about 2 hours) and pay the service organization. You get an EnerGuide rating and a report listing your recommended upgrades.",
+      "Hire contractors of your choice for at least two recommended upgrades. Nothing done before the initial assessment counts, and leave the ENERGY STAR labels on new windows and doors.",
+      "Book the follow-up assessment (about 1 hour) with the same service organization by November 30, 2026, for a visit no later than December 31, 2026 and within 180 days of the first.",
+      "Your advisor submits the file; you provide invoices and a property tax bill. Rebates arrive by e-Transfer within about 30 days, or by cheque within about 60."
+    ],
+    "gotchas": [
+      "Only the seven approved service organizations can deliver this path. An EnerGuide assessment from any other company won't unlock these rebates.",
+      "The $600 assessment rebate is paid only after you finish two or more upgrades, and only once per home.",
+      "Gas-heated homes are capped at $5,000 in total, including the $600, so they can't reach the full $7,700 insulation amount.",
+      "Two windows earn nothing: the minimum is three windows, or one door, skylight or patio door.",
+      "An electrically heated home that switches to oil, propane or wood before the follow-up assessment loses eligibility.",
+      "You can't claim the same upgrade from another Enbridge, Save on Energy or Ontario program, and rebates can't exceed what you actually paid.",
+      "Enbridge and Save on Energy don't sell by phone or door to door. Treat unsolicited \"program\" calls as sales pitches."
+    ],
+    "faq": [
+      {
+        "q": "Is the Home Renovation Savings assessment rebate still available?",
+        "a": "Yes, as of September 28, 2026, but only for homes that can finish in time. The follow-up assessment must be booked by November 30, 2026 and completed by December 31, 2026, and funding is only approved through the end of 2026."
+      },
+      {
+        "q": "Can I use any energy advisor for the $600 rebate?",
+        "a": "No. You have to book through one of seven approved service organizations: AmeriSpec, Canada Energy Audit, Greenbrain, Energuy, Energy Werx, NRGwise or The Home Inspectors Group. Their advisors are NRCan-registered, but being registered on its own isn't enough."
+      },
+      {
+        "q": "How much can I get in total?",
+        "a": "Up to $5,000 per home if you heat with Enbridge natural gas, or up to $10,000 if you heat with electricity, oil, propane or wood — both including the $600 assessment rebate. Finishing three or more upgrades also earns a $500 bonus."
+      },
+      {
+        "q": "When is the $600 assessment rebate paid?",
+        "a": "After the follow-up assessment, once at least two recommended upgrades are done. You pay for both assessments up front."
+      },
+      {
+        "q": "Can tenants apply?",
+        "a": "No. Only the owner can participate, though an owner can apply for each eligible home they own."
+      }
+    ],
+    "related": [
+      "home-renovation-savings-direct",
+      "toronto-home-energy-loan-program",
+      "home-efficiency-rebate-plus",
+      "cmhc-eco-improvement"
+    ],
+    "sources": [
+      {
+        "href": "https://www.homerenovationsavings.ca/with-assessment",
+        "label": "Home Renovation Savings — assessment path: rebates, eligibility, steps, payment timing"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/help-and-support",
+        "label": "Home Renovation Savings — help & support: the seven approved service organizations, $600 conditions, $500 bonus"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Terms-and-Conditions.pdf",
+        "label": "Assessment path terms (Nov 2025): 180-day window, Nov 30 / Dec 31, 2026 deadlines, $5,000 / $10,000 caps"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+        "label": "Assessment path requirements: upgrade rules and eligible home types"
+      },
+      {
+        "href": "https://www.ieso.ca/Sector-Participants/IESO-News/2025/02/Home-Renovation-Savings-Program-Now-Available-for-Eligible-Homes-Across-Ontario",
+        "label": "IESO — program launched January 28, 2025"
+      }
+    ]
   },
   {
     "id": "hrsp-no-assessment",
@@ -46,30 +125,115 @@
     "runBy": "Enbridge Gas + Save on Energy (IESO)",
     "status": "active",
     "auditRequired": false,
-    "auditRequirementNote": "No EnerGuide assessment needed for this stream.",
-    "headline": "Heat pump and single-upgrade rebates without an assessment",
+    "auditRequirementNote": "No EnerGuide assessment needed. Heat pumps and solar need written pre-approval before you buy, and heat pumps and attic insulation have to be installed by participating contractors.",
+    "headline": "Heat pumps up to $7,500 ($12,000 ground-source), solar with battery up to $10,000, plus attic, thermostat and appliance rebates — no assessment needed",
     "amounts": [
       {
-        "label": "Cold-climate heat pump",
-        "value": "up to $12,000 (varies by current heating type)"
+        "label": "Cold-climate air-source heat pump ($1,250/ton; electric, oil, propane or wood heat)",
+        "value": "up to $7,500"
       },
       {
-        "label": "Rooftop solar + battery storage",
-        "value": "up to $10,000"
+        "label": "Ground-source heat pump ($2,000/ton; electric, oil, propane or wood heat)",
+        "value": "up to $12,000"
       },
       {
-        "label": "Attic insulation",
+        "label": "Air-source heat pump in an Enbridge gas-heated home ($3,000 for ground-source)",
+        "value": "up to $2,000"
+      },
+      {
+        "label": "Rooftop solar ($1,000/kW, at most 50% of cost)",
+        "value": "up to $5,000"
+      },
+      {
+        "label": "Battery storage with new solar ($300/kWh, at most 50% of cost)",
+        "value": "up to $5,000"
+      },
+      {
+        "label": "Attic insulation (50% of cost; installed by Nov 30, 2026)",
         "value": "up to $1,250"
       },
       {
-        "label": "Smart thermostat",
-        "value": "$75–$100"
+        "label": "Smart thermostat (bought by Dec 31, 2026)",
+        "value": "$100–$125"
+      },
+      {
+        "label": "ENERGY STAR Most Efficient appliances replacing electric ones",
+        "value": "$25–$200 each"
       }
     ],
-    "whoQualifies": "Ontario homeowners doing a single eligible upgrade through a participating contractor.",
+    "whoQualifies": "Ontario homeowners. Heat pump amounts depend on how you heat today; gas-heated homes qualify at lower amounts and can keep the furnace as backup. Replacing an existing heat pump doesn't qualify, homes occupied for less than 6 months are excluded, and solar has to power the home itself (no net metering).",
     "officialUrl": "https://www.homerenovationsavings.ca/",
-    "lastVerified": "2026-09-18",
-    "notes": "Even where no assessment is required, an audit-first approach usually changes what you buy — right-sized heat pumps and insulation-first sequencing typically save more than equipment alone."
+    "lastVerified": "2026-09-28",
+    "notes": "Even without a required assessment, audit-first usually changes what you buy: a proper heat-loss calculation right-sizes the heat pump, and insulating first can shrink it. Smart thermostat amounts differ between official pages ($100 in the terms, $125 on the program page), so confirm at checkout.",
+    "provinceSlug": "ontario",
+    "howToApply": [
+      "Fill in the eligibility form for the upgrade you want on homerenovationsavings.ca.",
+      "Heat pumps: choose a participating HVAC contractor, who submits the pre-installation application. Solar and batteries: any licensed electrical contractor can apply for you. Wait for written approval before buying anything.",
+      "Have the work installed. The contractor files the completion paperwork within 30 days.",
+      "Heat pump rebates arrive by cheque within about 60 days of approval.",
+      "Smart thermostats and appliances are simpler: buy, then upload your receipt within 60 days — or get a thermostat discount code before you buy."
+    ],
+    "gotchas": [
+      "The $12,000 headline is for ground-source systems. A cold-climate air-source heat pump tops out at $7,500 — or $2,000 if you heat with Enbridge gas.",
+      "Anything installed before written pre-approval gets no heat pump or solar rebate.",
+      "A battery on its own doesn't qualify, and solar systems can't be net-metered.",
+      "Oil-heated homes have to size the heat pump to cover the full heating load.",
+      "Attic insulation must be installed by November 30, 2026, and the contractor list is closed to new companies.",
+      "You can't claim the same upgrade from another Enbridge, Save on Energy or Ontario program, and total funding can't exceed your cost."
+    ],
+    "faq": [
+      {
+        "q": "Does a gas-heated home get a heat pump rebate?",
+        "a": "Yes: up to $2,000 for an air-source heat pump or $3,000 for ground-source, and you can keep the furnace as backup."
+      },
+      {
+        "q": "Is the Ontario heat pump rebate really $12,000?",
+        "a": "Only for ground-source (geothermal) systems in homes heated by electricity, oil, propane or wood. Cold-climate air-source heat pumps get $1,250 per ton, up to $7,500."
+      },
+      {
+        "q": "Do I need an energy audit for these rebates?",
+        "a": "No, but heat pumps and solar need written pre-approval before installation — and an audit's heat-loss calculation is still the best way to size a heat pump."
+      },
+      {
+        "q": "Is there a rebate for a home battery on its own?",
+        "a": "No. Storage only qualifies when it's installed with new rooftop solar, and the system can't be net-metered."
+      }
+    ],
+    "related": [
+      "home-renovation-savings-assessment",
+      "toronto-home-energy-loan-program",
+      "oil-to-heat-pump-affordability"
+    ],
+    "sources": [
+      {
+        "href": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+        "label": "Home Renovation Savings — heat pump rebates, steps and payment"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Heat-Pump-Program-Stream-Requirements.pdf",
+        "label": "Heat pump stream requirements (May 2025)"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/without-assessment/solar",
+        "label": "Home Renovation Savings — solar and battery storage"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Solar-and-Storage-Program-Stream-Requirements.pdf",
+        "label": "Solar and storage requirements (Oct 2025): pre-approval, no net metering"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/without-assessment/attic",
+        "label": "Home Renovation Savings — attic insulation tiers"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/without-assessment/smart-thermostat",
+        "label": "Home Renovation Savings — smart thermostats"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/without-assessment/appliances",
+        "label": "Home Renovation Savings — appliance rebates"
+      }
+    ]
   },
   {
     "id": "toronto-help",
@@ -80,26 +244,91 @@
     "runBy": "City of Toronto",
     "status": "active",
     "auditRequired": true,
-    "auditRequirementNote": "A home energy assessment with an NRCan-registered energy advisor is required for most projects. Exception: heat-pump-only and rooftop-solar-only projects.",
-    "headline": "Low-interest City loans up to $125,000 for home energy retrofits",
+    "auditRequirementNote": "An EnerGuide assessment before and after the work, by an NRCan-registered energy advisor, is required for most projects. Heat-pump-only and rooftop-solar-only projects are exempt — the installer signs an attestation instead.",
+    "headline": "City loans up to $125,000 (or 10% of your home's assessed value) for energy retrofits, repaid on your property tax bill",
     "amounts": [
       {
-        "label": "Loan amount",
+        "label": "Loan amount — or 10% of assessed value if less, including interest and fees",
         "value": "up to $125,000"
       },
       {
-        "label": "Fixed rates (posted to Sept 30, 2026)",
-        "value": "3.34% (5 yr) – 4.75% (20 yr)"
+        "label": "5-year fixed rate (applications to Sept 30, 2026)",
+        "value": "3.34%"
+      },
+      {
+        "label": "10-, 15- and 20-year fixed rates (4.01%, 4.46%, 4.75%)",
+        "value": "4.01%–4.75%"
       },
       {
         "label": "Administrative charge",
         "value": "2%"
+      },
+      {
+        "label": "Advance once your agreement is signed",
+        "value": "up to 30%"
       }
     ],
-    "whoQualifies": "Toronto homeowners. 20-year terms are limited to solar, geothermal, window, or heat pump projects.",
+    "whoQualifies": "Owners of detached, semi-detached and row houses, duplexes, triplexes and low-rise buildings (up to 3 storeys and 6 units) in Toronto. Every owner on title must agree, your mortgage lender has to consent in writing, and you can't have repeated overdue tax or utility accounts. 20-year terms are only for projects that include solar, geothermal, windows or heat pumps.",
     "officialUrl": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/",
-    "lastVerified": "2026-09-18",
-    "notes": "Stacks with Home Renovation Savings rebates — a common path is HELP financing + HRSP rebates + the $600 assessment rebate."
+    "lastVerified": "2026-09-28",
+    "notes": "HELP is financing, not a rebate, and the City says it can be combined with provincial, federal and utility rebates. A common Toronto path is HELP to pay for the work, then Home Renovation Savings rebates on top. Posted rates apply to applications through September 30, 2026 — check the City page for rates after that.",
+    "provinceSlug": "ontario",
+    "howToApply": [
+      "Apply online with the City. Expect a reply in about 5–7 business days; if you have a mortgage, the City sends a lender-consent form.",
+      "Once the City has your lender's consent, it sends a funding offer (about 5–7 business days).",
+      "Book the \"before\" EnerGuide assessment, get contractor quotes, and submit your funding request. Heat-pump-only and solar-only projects just need quotes.",
+      "Sign the Property Owner Agreement the City drafts (up to 15 business days). You can then ask for up to 30% of the loan in advance.",
+      "Do the work and the \"after\" assessment, then send the completion report, invoices and your new EnerGuide label. Final payment follows in about 10 business days, and repayment on your tax bill starts 60 days after the file closes."
+    ],
+    "gotchas": [
+      "The 10%-of-assessed-value cap often bites first: a home assessed at $900,000 can borrow at most $90,000, and that includes the interest and the 2% fee.",
+      "You pay contractors and receive most of the money after the work is verified, so plan cash flow for about 70% of the project.",
+      "The loan stays with the house. If you sell, pay it off or the buyer takes over the balance — disclose it.",
+      "Your mortgage lender has to consent in writing, so start that paperwork early.",
+      "The City's separate HELP rebates were fully subscribed and closed in January 2025; only the loans remain."
+    ],
+    "faq": [
+      {
+        "q": "Do I need an energy audit for a Toronto HELP loan?",
+        "a": "Yes, before and after the work, unless the project is only a heat pump or only rooftop solar."
+      },
+      {
+        "q": "What are the Toronto HELP interest rates?",
+        "a": "Fixed: 3.34% for 5 years, 4.01% for 10, 4.46% for 15 and 4.75% for 20, for applications through September 30, 2026, plus a 2% administrative charge. Check the City page for rates after that date."
+      },
+      {
+        "q": "What happens to a HELP loan if I sell my house?",
+        "a": "It stays with the property as a charge on the tax bill. You can pay it off at any time, or the buyer takes over the remaining balance."
+      },
+      {
+        "q": "Is the money paid up front?",
+        "a": "Up to 30% can be advanced once your agreement is signed; the rest is paid after the work is completed and verified."
+      },
+      {
+        "q": "Can condo owners apply?",
+        "a": "Condos aren't among the eligible property types. The program covers houses, duplexes, triplexes and small low-rise buildings."
+      }
+    ],
+    "related": [
+      "home-renovation-savings-assessment",
+      "home-renovation-savings-direct",
+      "cmhc-eco-improvement",
+      "canada-greener-homes-loan"
+    ],
+    "sources": [
+      {
+        "href": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/",
+        "label": "City of Toronto — HELP: rates, eligibility, steps, processing times, eligible measures"
+      },
+      {
+        "href": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/special-charges/",
+        "label": "City of Toronto — HELP special charges on the property tax bill"
+      },
+      {
+        "href": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/help-terms-and-conditions/",
+        "label": "City of Toronto — HELP terms (City rebates fully subscribed)"
+      }
+    ]
   },
   {
     "id": "cmhc-eco-improvement",
@@ -110,22 +339,84 @@
     "runBy": "Canada Mortgage and Housing Corporation",
     "status": "active",
     "auditRequired": false,
-    "auditRequirementNote": "An EnerGuide evaluation isn't mandatory, but submitting an EnerGuide Renovation Upgrade Report or label strengthens your claim.",
-    "headline": "25% back on your CMHC mortgage insurance premium after energy renovations",
+    "auditRequirementNote": "No EnerGuide evaluation is required — the test is money spent on eligible work. Include an EnerGuide report or label if you have one.",
+    "headline": "25% back on your CMHC mortgage insurance premium after $20,000 of energy renovations",
     "amounts": [
       {
-        "label": "Premium refund",
-        "value": "25% of your CMHC premium"
+        "label": "Refund of your CMHC mortgage insurance premium",
+        "value": "25%"
       },
       {
-        "label": "Minimum qualifying renovation",
-        "value": "$20,000 in eligible upgrades"
+        "label": "Minimum eligible work after purchase",
+        "value": "$20,000"
+      },
+      {
+        "label": "Time to apply, counted from your mortgage closing",
+        "value": "24 months"
       }
     ],
-    "whoQualifies": "Buyers with CMHC-insured mortgages who complete eligible envelope, mechanical, or renewable upgrades after purchase.",
+    "whoQualifies": "Buyers of existing homes, including low-rise condo units, with a CMHC-insured mortgage who spend at least $20,000 after purchase on eligible insulation, windows, doors, air sealing, roof or attic, foundation, heating, ventilation, cooling, heat pump, or solar, wind or geothermal work. Covers owner-occupied loans (1–4 units) and small rental loans (2–4 units).",
     "officialUrl": "https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products/cmhc-eco-improvement",
-    "lastVerified": "2026-09-18",
-    "notes": "Often missed by recent buyers — applications must be submitted within 2 years of your mortgage closing date (processing runs ~8–10 weeks). Sagen and Canada Guaranty offer comparable programs — ask your broker."
+    "lastVerified": "2026-09-28",
+    "notes": "Often missed by recent buyers: the 24-month clock starts at your mortgage closing, not when the work is done. Mortgages insured by Sagen or Canada Guaranty don't qualify — their energy-efficiency refunds only cover newly built homes.",
+    "howToApply": [
+      "Close on your home with a CMHC-insured mortgage — your lender or broker can confirm which insurer you have.",
+      "Complete at least $20,000 of eligible energy renovations after you buy.",
+      "Fill in CMHC's Eco Improvement form. Every borrower signs it, and it needs your CMHC loan number.",
+      "Send it with all paid invoices and a void cheque (plus any EnerGuide report or label) by email, fax or mail within 24 months of closing.",
+      "Allow roughly 6–10 weeks. The refund arrives by direct deposit."
+    ],
+    "gotchas": [
+      "The deadline is 24 months from your mortgage closing, not from the end of the renovation.",
+      "Only CMHC-insured mortgages qualify. Sagen and Canada Guaranty refunds cover new builds only, with no renovation equivalent.",
+      "Keep every paid invoice — the $20,000 test is proven with receipts.",
+      "Ported mortgages only earn the refund on the increase in the loan."
+    ],
+    "faq": [
+      {
+        "q": "Do I need an EnerGuide evaluation for CMHC Eco Improvement?",
+        "a": "No. The test is $20,000 of eligible work after purchase; submit an EnerGuide report or label if you have one."
+      },
+      {
+        "q": "What's the deadline for CMHC Eco Improvement?",
+        "a": "Apply within 24 months of your mortgage closing date."
+      },
+      {
+        "q": "How much will I get back?",
+        "a": "25% of the CMHC mortgage insurance premium you paid, by direct deposit."
+      },
+      {
+        "q": "My mortgage is insured by Sagen or Canada Guaranty — is there an equivalent?",
+        "a": "Not for renovations. Both insurers' energy-efficiency refunds apply to newly built homes only."
+      }
+    ],
+    "related": [
+      "toronto-home-energy-loan-program",
+      "home-renovation-savings-assessment",
+      "canada-greener-homes-loan"
+    ],
+    "sources": [
+      {
+        "href": "https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products/cmhc-eco-improvement",
+        "label": "CMHC — Eco Improvement: criteria, documents, where to apply, processing time"
+      },
+      {
+        "href": "https://assets.cmhc-schl.gc.ca/sites/cmhc/consumers/home-buying/eco-programs/eco-improvement-fact-sheet-en.pdf",
+        "label": "CMHC — Eco Improvement fact sheet: eligible properties and loans"
+      },
+      {
+        "href": "https://assets.cmhc-schl.gc.ca/sites/cmhc/consumers/home-buying/eco-programs/cmhc-eco-improvement-application-en.pdf",
+        "label": "CMHC — Eco Improvement application form (24-month deadline)"
+      },
+      {
+        "href": "https://www.sagen.ca/products-and-services/energy-efficient-housing/",
+        "label": "Sagen — Energy-Efficient Housing Program (new construction only)"
+      },
+      {
+        "href": "https://www.canadaguaranty.ca/energy-efficient-advantage-program/",
+        "label": "Canada Guaranty — Energy-Efficient Advantage Program (new construction only)"
+      }
+    ]
   },
   {
     "id": "cghap",
@@ -133,21 +424,90 @@
     "name": "Canada Greener Homes Affordability Program",
     "shortName": "Greener Homes Affordability",
     "jurisdiction": "canada",
-    "runBy": "Natural Resources Canada with provincial delivery partners",
+    "runBy": "Natural Resources Canada (moving to Environment and Climate Change Canada), delivered by provincial partners",
     "status": "active-limited",
     "auditRequired": false,
-    "auditRequirementNote": "The program arranges its own assessments and retrofits — you don't choose the advisor.",
-    "headline": "No-cost retrofits for income-qualified households — not yet delivering in Ontario",
+    "auditRequirementNote": "No EnerGuide evaluation is needed to apply. Where an assessment or home visit is part of the program, the provincial partner arranges it.",
+    "headline": "Free retrofits for low-to-median-income households in BC, Manitoba, Nova Scotia, PEI and Quebec — not available in Ontario",
     "amounts": [
       {
-        "label": "Direct-install retrofits (insulation, heat pumps)",
-        "value": "no cost to qualifying households"
+        "label": "Insulation, air sealing and heat pumps, installed for qualifying households",
+        "value": "Free"
       }
     ],
-    "whoQualifies": "Low-to-median-income homeowners and tenants in participating provinces: BC, Manitoba, Nova Scotia, PEI, and Quebec as of July 2026. Ontario delivery has not been announced.",
+    "whoQualifies": "Low-to-median-income homeowners and, in some provinces, tenants. Each provincial partner sets its own income limits and home types. Participating as of September 2026: BC (BC Hydro, FortisBC), Manitoba (Efficiency Manitoba), Nova Scotia (Efficiency Nova Scotia), PEI (provincial insulation program) and Quebec (Hydro-Québec, whose 2026–27 intake has closed). Ontario, New Brunswick, Newfoundland and Labrador, Alberta, Saskatchewan and the territories have no partner yet.",
     "officialUrl": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
-    "lastVerified": "2026-08-23",
-    "notes": "We'll update this the day Ontario delivery is announced."
+    "lastVerified": "2026-09-28",
+    "notes": "The program is moving from NRCan to Environment and Climate Change Canada; questions go to enviroinfo@ec.gc.ca. We'll update this page when another province signs on.",
+    "howToApply": [
+      "Find your province's delivery partner on NRCan's program page — you apply to them, not to Ottawa.",
+      "Check their income limits. BC Hydro's run from $51,100 for one person to $135,100 for seven or more; Efficiency Manitoba's from $46,264 to $122,432; PEI's insulation program requires household income under $55,000.",
+      "Apply with proof of income for the adults in your household, plus landlord consent if you rent where tenants are eligible.",
+      "The partner arranges the assessment or home visit, then its contractors install the upgrades at no cost to you."
+    ],
+    "gotchas": [
+      "Rules differ a lot by province: who qualifies, which home types, and whether renters can apply.",
+      "Quebec's modest-income LogisVert intake is closed for 2026–27.",
+      "This isn't the old Greener Homes Grant coming back — it's income-tested and only runs through provincial partners.",
+      "Ontario households can't apply yet.",
+      "Be wary of door-to-door or phone offers claiming to be the program; apply directly with your provincial partner."
+    ],
+    "faq": [
+      {
+        "q": "Is the Greener Homes Affordability Program available in Ontario?",
+        "a": "Not as of September 28, 2026. Ontario has no delivery partner; the program runs in BC, Manitoba, Nova Scotia, PEI and Quebec."
+      },
+      {
+        "q": "Can renters qualify?",
+        "a": "In BC, Manitoba and Quebec, yes — landlord consent may be needed. PEI's program is for owner-occupied homes."
+      },
+      {
+        "q": "How do I apply?",
+        "a": "Through your provincial partner, not NRCan. The partner checks your income and arranges the work."
+      },
+      {
+        "q": "Do I need an EnerGuide evaluation first?",
+        "a": "No. Where an assessment is part of the program, the partner arranges it for you."
+      }
+    ],
+    "related": [
+      "efficiency-manitoba-rebates",
+      "cleanbc-energy-savings-program",
+      "efficiency-nova-scotia-rebates",
+      "efficiency-pei-rebates",
+      "logisvert",
+      "canada-greener-homes-grant"
+    ],
+    "sources": [
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
+        "label": "NRCan — Affordability Program: partners, eligibility, how to apply, move to ECCC"
+      },
+      {
+        "href": "https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income/free-product-install-and-advice.html",
+        "label": "BC Hydro — Energy Conservation Assistance Program (income limits, home types)"
+      },
+      {
+        "href": "https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades",
+        "label": "FortisBC — free home energy evaluation and upgrades"
+      },
+      {
+        "href": "https://efficiencymb.ca/my-home/energy-efficiency-assistance-program/",
+        "label": "Efficiency Manitoba — Energy Efficiency Assistance Program (income limits)"
+      },
+      {
+        "href": "https://www.efficiencyns.ca/programs-rebates/homewarming",
+        "label": "Efficiency Nova Scotia — HomeWarming"
+      },
+      {
+        "href": "https://www.princeedwardisland.ca/en/information/transportation-infrastructure-and-energy/home-insulation-programs",
+        "label": "Government of PEI — free home insulation (under $55,000 income)"
+      },
+      {
+        "href": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/modest-income-households/",
+        "label": "Hydro-Québec — LogisVert for modest-income households (2026–27 intake closed)"
+      }
+    ]
   },
   {
     "id": "greener-homes-grant",
@@ -155,21 +515,84 @@
     "name": "Canada Greener Homes Grant",
     "shortName": "Greener Homes Grant",
     "jurisdiction": "canada",
-    "runBy": "Natural Resources Canada",
+    "runBy": "Natural Resources Canada (now moving to Environment and Climate Change Canada)",
     "status": "closed",
     "auditRequired": true,
-    "auditRequirementNote": "Required EnerGuide evaluations while it ran.",
-    "headline": "Closed — stopped accepting new applications in February 2024",
+    "auditRequirementNote": "Required pre- and post-retrofit EnerGuide evaluations while it ran.",
+    "headline": "Closed — new applications ended in February 2024 and the last payment requests were due December 31, 2025",
     "amounts": [
       {
         "label": "Retrofit grants (while open)",
-        "value": "up to $5,000 + $600 for evaluations"
+        "value": "up to $5,000"
+      },
+      {
+        "label": "EnerGuide evaluations (while open)",
+        "value": "up to $600"
       }
     ],
-    "whoQualifies": "Closed to new applicants. Over 409,000 households completed it.",
+    "whoQualifies": "Closed to everyone. More than 409,000 households received grants — an average of about $4,430 each — and a June 2026 federal release puts the total at 414,000 homes.",
     "officialUrl": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/closed-canada-greener-homes-grant-0",
-    "lastVerified": "2026-08-23",
-    "notes": "Many sites still advertise this program. It is closed — don't let anyone sell you an audit on the promise of this grant."
+    "lastVerified": "2026-09-28",
+    "notes": "Many websites still advertise this grant. It's closed — don't let anyone sell you an audit or a retrofit on the promise of it.",
+    "howToApply": [
+      "In Ontario, use Home Renovation Savings: the assessment path pays up to $600 toward your EnerGuide assessments plus insulation, window and air-sealing rebates, if you can finish by December 31, 2026.",
+      "Elsewhere, check your province's current programs — several now subsidize the EnerGuide evaluation or the upgrades directly.",
+      "Lower or median household income? Check the Canada Greener Homes Affordability Program through your provincial partner (BC, Manitoba, Nova Scotia, PEI and Quebec).",
+      "Bought with a CMHC-insured mortgage in the last two years? CMHC Eco Improvement refunds 25% of your premium after $20,000 of energy work.",
+      "Still waiting on a grant payment requested before the deadline? Email enviroinfo@ec.gc.ca, and keep your documents until March 31, 2028."
+    ],
+    "gotchas": [
+      "Websites, installers' blogs and ads dated 2026 still headline the grant. No relaunch has been announced.",
+      "NRCan never approved any third party to phone or visit homeowners about the grant.",
+      "The income-tested Affordability Program is a different program, not the grant reopened.",
+      "The final deadline for payment requests was December 31, 2025 (earlier in Quebec, Ontario and Nova Scotia). Late requests aren't processed."
+    ],
+    "faq": [
+      {
+        "q": "Is the Canada Greener Homes Grant still available in 2026?",
+        "a": "No. It stopped taking new applications in February 2024, and the last day for existing participants to request payment was December 31, 2025."
+      },
+      {
+        "q": "Will the Greener Homes Grant come back?",
+        "a": "No relaunch has been announced. Federal support now goes to low-to-median-income households through the Affordability Program, alongside provincial programs."
+      },
+      {
+        "q": "I finished my retrofit but never got paid. What can I do?",
+        "a": "Email enviroinfo@ec.gc.ca — the program is moving to Environment and Climate Change Canada. Payment requests submitted after December 31, 2025 aren't processed."
+      },
+      {
+        "q": "What replaced the grant in Ontario?",
+        "a": "Home Renovation Savings, run by Enbridge Gas and Save on Energy since January 2025."
+      }
+    ],
+    "related": [
+      "canada-greener-homes-affordability-program",
+      "home-renovation-savings-assessment",
+      "home-efficiency-rebate-plus",
+      "canada-greener-homes-loan"
+    ],
+    "sources": [
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/closed-canada-greener-homes-grant-0",
+        "label": "NRCan — Greener Homes Grant (closed): status, results, alternatives"
+      },
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/important-notice-deadline-request-your-canada-greener-homes-grant",
+        "label": "NRCan — final deadline to request your grant: December 31, 2025"
+      },
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-grant-glance-0",
+        "label": "NRCan — the grant at a glance (March 2026 figures)"
+      },
+      {
+        "href": "https://www.canada.ca/en/natural-resources-canada/news/2024/02/government-of-canada-to-establish-next-phase-of-canada-greener-homes-initiative-to-help-more-canadians-save-on-their-energy-bills.html",
+        "label": "Government of Canada — February 2024 release ending new intake"
+      },
+      {
+        "href": "https://www.canada.ca/en/natural-resources-canada/news/2026/06/canada-drives-lower-bills-and-cleaner-energy-in-quebec-british-columbia-nova-scotia-and-prince-edward-island.html",
+        "label": "Government of Canada — June 2026 release (414,000 homes; move to ECCC)"
+      }
+    ]
   },
   {
     "id": "greener-homes-loan",
@@ -177,21 +600,67 @@
     "name": "Canada Greener Homes Loan",
     "shortName": "Greener Homes Loan",
     "jurisdiction": "canada",
-    "runBy": "Natural Resources Canada",
+    "runBy": "Natural Resources Canada, with loans administered by CMHC",
     "status": "closed",
     "auditRequired": true,
-    "auditRequirementNote": "Required EnerGuide evaluations while it ran.",
-    "headline": "Closed — new applications ended October 1, 2025 (funding fully committed)",
+    "auditRequirementNote": "Required pre- and post-retrofit EnerGuide evaluations while it ran.",
+    "headline": "Closed — October 1, 2025 was the last day to apply; loans already approved are unaffected",
     "amounts": [
       {
-        "label": "Interest-free loans (while open)",
-        "value": "$5,000–$40,000 over 10 years"
+        "label": "Interest-free loans over 10 years (while open)",
+        "value": "$5,000–$40,000"
       }
     ],
-    "whoQualifies": "Closed to new applicants. Already-approved loans are unaffected.",
+    "whoQualifies": "Closed to new applicants because funding is fully committed. Loans approved before the cutoff continue on their original terms.",
     "officialUrl": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-loan",
-    "lastVerified": "2026-08-23",
-    "notes": "Closed with roughly two weeks' notice — a reminder to act while programs are open."
+    "lastVerified": "2026-09-28",
+    "notes": "It closed with little warning — a reminder to act while a program is open. There is no replacement federal retrofit loan as of September 2026.",
+    "howToApply": [
+      "In Toronto, the City's HELP program lends up to $125,000 (or 10% of assessed value) at fixed rates, repaid on your property tax bill.",
+      "Elsewhere, ask your municipality: many local retrofit loan programs set up with federal support are still lending.",
+      "Pair financing with rebates — Home Renovation Savings in Ontario, or your province's program.",
+      "Bought with a CMHC-insured mortgage in the last two years? CMHC Eco Improvement refunds 25% of your premium after $20,000 of energy work.",
+      "Already approved? Your loan isn't affected — keep managing it through the portal where you applied."
+    ],
+    "gotchas": [
+      "Lender and contractor guides dated 2026 still invite readers to apply. You can't.",
+      "CMHC says it never asks loan applicants for a deposit — treat anyone who does as a scam.",
+      "There's no replacement federal loan as of September 2026."
+    ],
+    "faq": [
+      {
+        "q": "Can I still apply for the Canada Greener Homes Loan?",
+        "a": "No. October 1, 2025 was the last day to apply, and the funding is fully committed."
+      },
+      {
+        "q": "I was approved before the cutoff — is my loan affected?",
+        "a": "No. Approved loans continue on their original terms."
+      },
+      {
+        "q": "Is there a replacement federal retrofit loan?",
+        "a": "Not as of September 2026. Look at municipal programs such as Toronto's HELP, and pair them with provincial rebates."
+      }
+    ],
+    "related": [
+      "toronto-home-energy-loan-program",
+      "cmhc-eco-improvement",
+      "canada-greener-homes-grant",
+      "canada-greener-homes-affordability-program"
+    ],
+    "sources": [
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-loan",
+        "label": "NRCan — Greener Homes Loan: closed, approved loans unaffected"
+      },
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/eligible-retrofits-grant-amounts",
+        "label": "NRCan — October 1, 2025 was the last day to apply"
+      },
+      {
+        "href": "https://www.cmhc-schl.gc.ca/professionals/project-funding-and-mortgage-financing/funding-programs/all-funding-programs/canada-greener-homes",
+        "label": "CMHC — closed to new applications; deposit-scam warning"
+      }
+    ]
   },
   {
     "id": "ohpa",
@@ -202,18 +671,90 @@
     "runBy": "Natural Resources Canada",
     "status": "closed",
     "auditRequired": false,
-    "auditRequirementNote": "EnerGuide evaluation was not always required.",
-    "headline": "Closed to new applications July 31, 2026",
+    "auditRequirementNote": "The federal program didn't require an EnerGuide evaluation; some provincial versions, such as New Brunswick's, did.",
+    "headline": "Closed to new federal applications July 31, 2026 — some provincial versions differ",
     "amounts": [
       {
-        "label": "Oil-to-heat-pump switch (while open)",
-        "value": "up to $10,000 federal (to $15,000 with top-ups)"
+        "label": "Federal grant where NRCan delivered it (AB, MB, NWT, QC, SK)",
+        "value": "up to $10,000"
+      },
+      {
+        "label": "Federal share in joint-delivery provinces (BC, NB, NL, NS, ON, PEI, YT), plus provincial money",
+        "value": "up to $15,000"
+      },
+      {
+        "label": "One-time payment in joint-delivery provinces",
+        "value": "$250"
       }
     ],
-    "whoQualifies": "Closed. Existing participants have until January 31, 2027 to submit documents.",
+    "whoQualifies": "Closed to new federal applicants. Existing participants must finish the work and upload receipts and the contractor's signed attestation by January 31, 2027; the program closes March 31, 2027.",
     "officialUrl": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
-    "lastVerified": "2026-08-23",
-    "notes": ""
+    "lastVerified": "2026-09-28",
+    "notes": "Some provincial versions were still open in September 2026: Newfoundland and Labrador's Oil to Electric program was accepting applications, and Ontario's Save on Energy still lists no-cost heat pumps for eligible oil-heated homes.",
+    "howToApply": [
+      "Already in the program: finish the installation, then upload paid receipts and the contractor's signed attestation by January 31, 2027. Keep your documents until March 31, 2028.",
+      "In a joint-delivery province, check your provincial program — Newfoundland and Labrador's Oil to Electric program was still open in September 2026, and Ontario's Save on Energy still lists no-cost heat pumps for eligible oil-heated homes.",
+      "In Ontario without income qualification, Home Renovation Savings pays $1,250 per ton, up to $7,500, for a cold-climate heat pump replacing oil — with written pre-approval before you buy.",
+      "Lower or median income elsewhere? The Canada Greener Homes Affordability Program installs heat pumps at no cost in BC, Manitoba, Nova Scotia and PEI (Quebec's intake is closed for 2026–27).",
+      "Size the heat pump from a proper heat-loss calculation — undersizing is the most common way oil-to-heat-pump switches disappoint."
+    ],
+    "gotchas": [
+      "The \"$15,000\" was the federal share in joint-delivery provinces, not a top-up. Provincial money came on top — Ontario's version reached up to $25,000 in total.",
+      "Where NRCan paid the grant before installation, the heat pump should be in within six months of payment, and receipts are due by January 31, 2027.",
+      "New Brunswick participants who miss the March 31, 2027 completion deadline must repay their advance.",
+      "NRCan warns about unsolicited calls and door-to-door visits claiming to be the program."
+    ],
+    "faq": [
+      {
+        "q": "Can I still apply for the Oil to Heat Pump Affordability Program?",
+        "a": "Not through the federal program — it closed to new applications on July 31, 2026. Check your province: a few provincial versions are still open."
+      },
+      {
+        "q": "I got my cheque but haven't installed yet. What now?",
+        "a": "Finish the installation and upload your receipts and the contractor's attestation by January 31, 2027."
+      },
+      {
+        "q": "Did the program require an energy audit?",
+        "a": "The federal program didn't require an EnerGuide evaluation, though some provincial versions did."
+      },
+      {
+        "q": "I heat with oil and missed the deadline. What are my options?",
+        "a": "In Ontario, Home Renovation Savings pays up to $7,500 for a cold-climate heat pump replacing oil. Elsewhere, check your provincial program and the income-tested Affordability Program."
+      }
+    ],
+    "related": [
+      "home-renovation-savings-direct",
+      "canada-greener-homes-affordability-program",
+      "takecharge-nl",
+      "efficiency-nova-scotia-rebates",
+      "nb-total-home-energy-savings"
+    ],
+    "sources": [
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
+        "label": "NRCan — OHPA: dates, amounts, payment, contacts"
+      },
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/process-works",
+        "label": "NRCan — OHPA deadlines for existing participants"
+      },
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/applicants-participating-provinces-territories",
+        "label": "NRCan — OHPA in joint-delivery provinces and territories"
+      },
+      {
+        "href": "https://www.canada.ca/en/natural-resources-canada/news/2025/02/the-oil-to-heat-pump-affordability-program.html",
+        "label": "Government of Canada — February 2025 release ($15,000 federal share, $250 payment)"
+      },
+      {
+        "href": "https://takechargenl.ca/oiltoelectric",
+        "label": "takeCHARGE NL — Oil to Electric program"
+      },
+      {
+        "href": "https://saveonenergy.ca/en/For-Your-Home/Energy-Affordability-Program",
+        "label": "Save on Energy — Energy Affordability Program (Ontario)"
+      }
+    ]
   },
   {
     "id": "her-plus",
@@ -221,21 +762,70 @@
     "name": "Home Efficiency Rebate Plus (HER+)",
     "shortName": "Enbridge HER+",
     "jurisdiction": "ontario",
-    "runBy": "Enbridge Gas (with NRCan)",
+    "runBy": "Enbridge Gas, as Ontario's delivery of the federal Greener Homes Grant",
     "status": "closed",
     "auditRequired": true,
-    "auditRequirementNote": "Required EnerGuide evaluations while it ran.",
-    "headline": "Ended — replaced by Home Renovation Savings in January 2025",
+    "auditRequirementNote": "Required pre- and post-retrofit EnerGuide assessments while it ran.",
+    "headline": "Closed — stopped taking new applicants February 5, 2024; the final deadlines passed in December 2025",
     "amounts": [
       {
-        "label": "Successor program",
+        "label": "Successor program (since January 28, 2025)",
         "value": "Home Renovation Savings"
       }
     ],
-    "whoQualifies": "Closed. If a site is advertising HER+, its information is out of date.",
-    "officialUrl": "https://www.enbridgegas.com/ontario/rebates-energy-conservation",
-    "lastVerified": "2026-08-23",
-    "notes": ""
+    "whoQualifies": "Closed, with every deadline passed: follow-up assessments were due December 1, 2025 and advisor submissions December 31, 2025. Late payment requests aren't processed.",
+    "officialUrl": "https://www.enbridgegas.com/en/ontario/rebates-energy-conservation/home-efficiency-rebate-plus",
+    "lastVerified": "2026-09-28",
+    "notes": "If a site is still advertising HER+, its information is out of date. Enbridge's own HER+ page is still online with the old deadlines and a pointer to Home Renovation Savings.",
+    "provinceSlug": "ontario",
+    "howToApply": [
+      "Start fresh with Home Renovation Savings: book a new initial assessment through one of its seven approved service organizations.",
+      "Plan new upgrades. Work done before the new assessment, or already rebated under HER+, can't be claimed again.",
+      "Move quickly: the Home Renovation Savings follow-up assessment must be booked by November 30, 2026 and done by December 31, 2026.",
+      "Waiting on a HER+ payment for a file submitted before the deadline? Contact your energy advisor or service organization first."
+    ],
+    "gotchas": [
+      "There are no exceptions to the December 2025 deadlines.",
+      "Upgrades rebated under HER+ can't be claimed again under Home Renovation Savings.",
+      "Enbridge's HER+ page has no \"ended\" banner — go by the dates."
+    ],
+    "faq": [
+      {
+        "q": "Can I still apply for Enbridge HER+?",
+        "a": "No. It stopped taking new applicants on February 5, 2024, and its final deadlines passed in December 2025."
+      },
+      {
+        "q": "I missed the December 2025 deadline. Is there an exception?",
+        "a": "No. Late payment requests aren't processed."
+      },
+      {
+        "q": "What replaced HER+?",
+        "a": "Home Renovation Savings, launched January 28, 2025 by Enbridge Gas and Save on Energy."
+      },
+      {
+        "q": "Can I use Home Renovation Savings after HER+?",
+        "a": "Yes, for new upgrades that weren't rebated before."
+      }
+    ],
+    "related": [
+      "home-renovation-savings-assessment",
+      "home-renovation-savings-direct",
+      "canada-greener-homes-grant"
+    ],
+    "sources": [
+      {
+        "href": "https://www.enbridgegas.com/en/ontario/rebates-energy-conservation/home-efficiency-rebate-plus",
+        "label": "Enbridge Gas — HER+ deadlines and pointer to Home Renovation Savings"
+      },
+      {
+        "href": "https://www.enbridgegas.com/ontario/rebates-energy-conservation/home-efficiency-rebate-plus/terms-and-conditions",
+        "label": "Enbridge Gas — HER+ terms: date windows, no late payments"
+      },
+      {
+        "href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/closed-greener-homes-grant-ontario",
+        "label": "NRCan — Greener Homes Grant in Ontario (closed): the same deadlines"
+      }
+    ]
   },
   {
     "id": "bc-improvement-bonus",
@@ -403,27 +993,27 @@
         "value": "Free upgrades (Energy Efficiency Assistance)"
       }
     ],
-    "whoQualifies": "Manitoba homeowners. For the evaluation rebate: complete a pre-retrofit EnerGuide evaluation via an approved service organization, plan at least one efficiency upgrade within the next 12 months, and apply within 90 days of receiving your reports.",
+    "whoQualifies": "Manitoba homeowners — including owners of rentals and cottages — with active Manitoba Hydro residential service, in a home at least two years old and heated from September through May. For the evaluation rebate: complete a pre-retrofit EnerGuide evaluation through an approved service organization, plan at least one efficiency upgrade within the next 12 months, and apply within 90 days of your evaluation.",
     "officialUrl": "https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/",
-    "lastVerified": "2026-09-21",
+    "lastVerified": "2026-09-28",
     "notes": "Manitoba is one of the few provinces subsidizing the audit itself — the $400 covers most of a typical evaluation fee. With Manitoba Hydro's clean, cheap electricity, the evaluation's heat-pump math is friendlier here than almost anywhere.",
     "provinceSlug": "manitoba",
     "howToApply": [
       "Book a pre-retrofit EnerGuide evaluation through one of Efficiency Manitoba's approved service organizations.",
       "Receive your evaluation reports (typically 2–3 weeks after the visit).",
-      "Apply for the $400 rebate within 90 days, attaching the reports — and note your planned upgrade (at least one within 12 months).",
+      "Apply for the $400 rebate within 90 days of your evaluation, attaching the reports — and note your planned upgrade (at least one within 12 months).",
       "Use the report to claim the insulation and heating rebates on the upgrades themselves as you complete them.",
       "Income-qualified? Ask about the Energy Efficiency Assistance Program first — it can include a free evaluation and free upgrades."
     ],
     "gotchas": [
-      "The 90-day application window after receiving reports is real — calendar it the day the evaluation happens.",
+      "The 90-day application window runs from the evaluation date, not from when the reports arrive — calendar it the day the advisor visits.",
       "The rebate expects at least one upgrade planned within 12 months; a pure curiosity audit doesn't qualify.",
       "Indigenous households: the First Nations and Métis streams have their own enhanced offers — check them before the general stream."
     ],
     "faq": [
       {
         "q": "Is the Efficiency Manitoba $400 evaluation rebate still available?",
-        "a": "Yes — active and verified against the official page on September 21, 2026 (page current as of June 2026). Complete a pre-retrofit EnerGuide evaluation via an approved service organization, plan one upgrade within 12 months, and apply within 90 days with your reports."
+        "a": "Yes — active and verified against the official page on September 28, 2026. Complete a pre-retrofit EnerGuide evaluation through an approved service organization, plan one upgrade within 12 months, and apply within 90 days of the evaluation."
       },
       {
         "q": "What does an EnerGuide evaluation cost in Manitoba after the rebate?",

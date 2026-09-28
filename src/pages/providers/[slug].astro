@@ -47,6 +47,7 @@ const schema = [
         <h1>{p.name}</h1>
         <span class="chip chip-neutral">{typeLabel}</span>
         {inactive && <span class="chip chip-closed">No longer offering evaluations</span>}
+        {p.hrsApproved && !inactive && <a class="chip chip-active hrs-chip" href="/programs/home-renovation-savings-assessment/">Approved for Home Renovation Savings</a>}
       </div>
       {inactive ? (
         <div class="card card-pad inactive-note">
@@ -70,6 +71,14 @@ const schema = [
         {p.registration}
         <span class="meta">source: {p.registrationSource} · checked {p.checkedOn}</span>
       </p>
+      )}
+      {p.hrsApproved && !inactive && (
+        <p class="small hrs-note measure">
+          One of the seven service organizations approved for Ontario's
+          <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>,
+          so its EnerGuide assessments qualify for the $600 assessment rebate and the insulation, window
+          and air-sealing rebates — if the follow-up is done by December 31, 2026.
+        </p>
       )}
       <p class="lede measure">{p.profile}</p>
     </div>
@@ -151,6 +160,8 @@ const schema = [
 </Base>
 
 <style>
+  .hrs-chip { text-decoration: none; }
+  .hrs-note { margin: -6px 0 14px; }
   .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
   .crumbs a { color: var(--muted); }
   .headrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
