@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
@@ -23,10 +25,11 @@ const ELEMENT_LABEL: Record<string, string> = {
 };
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('radon-testing')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><span>Gear guides</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Gear guides · updated {SITE.dataReviewDate}</p>
       <h1>Monitor it before you fix it</h1>
       <p class="lede measure">
@@ -36,6 +39,8 @@ const ELEMENT_LABEL: Record<string, string> = {
         the <a href="/tests/screener/">screener</a> tells you which categories your home
         actually needs.
       </p>
+      </div>
+      <Photo name={'radon-testing'} eager />
     </div>
 
     <div class="cat-grid">

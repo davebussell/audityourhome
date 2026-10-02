@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { ogFor } from '../lib/photos';
 import LeadForm from '../components/LeadForm.astro';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
 
@@ -32,9 +34,10 @@ const steps = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">How it works</p>
       <h1>What actually happens in an energy audit</h1>
       <p class="lede measure">
@@ -42,6 +45,8 @@ const steps = [
         tests your house with real instruments and hands you a prioritized plan. Here's the whole
         arc, from booking to rebate cheque.
       </p>
+      </div>
+      <Photo name={'blower-door-test'} eager />
     </div>
 
     <div class="timeline">

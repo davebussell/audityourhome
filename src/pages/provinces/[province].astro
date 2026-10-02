@@ -1,5 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor, PROV_SLUG_PHOTO } from '../../lib/photos';
+import EraBar from '../../components/EraBar.astro';
+import { localCities } from '../../lib/local';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
@@ -29,15 +33,19 @@ const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
   income: { cls: 'chip-info', label: 'income-qualified' },
   closed: { cls: 'chip-closed', label: 'closed' },
 };
+const provCities = localCities.filter((c) => c.provSlug === p.slug).sort((a, b) => b.population - a.population);
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(PROV_SLUG_PHOTO[p.slug] ?? 'home-hero')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/provinces/">Provinces</a> <span aria-hidden="true">/</span> <span>{p.name}</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Provincial guide · program status verified per item</p>
       <h1>Home energy audits in {p.name}</h1>
       <p class="lede measure">{p.intro}</p>
+      </div>
+      <Photo name={PROV_SLUG_PHOTO[p.slug] ?? 'home-hero'} eager />
     </div>
 
     <div class="measure prose">
@@ -79,6 +87,25 @@ const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
         ))}
       </div>
     </div>
+
+    {provCities.length > 0 && (
+      <>
+        <h2 class="sec">Local guides for {provCities.length} {provCities.length === 1 ? 'city' : 'cities'} in {p.name}</h2>
+        <p class="small measure">
+          Each city page covers 16 audit and testing services with that city's own climate, housing
+          age and service organizations. The bar shows its houses by construction era, oldest first.
+        </p>
+        <div class="pc-grid">
+          {provCities.map((c) => (
+            <a class="pc" href={`/cities/${c.slug}/`}>
+              <span class="pcn">{c.name}</span>
+              <EraBar era={c.facts.era} name={c.name} />
+              <span class="pcf">{c.facts.hdd.toLocaleString('en-CA')} HDD · {Math.round(c.facts.housesPre1961 ?? 0)}% pre-1961</span>
+            </a>
+          ))}
+        </div>
+      </>
+    )}
 
     <h2 class="sec">Monitor &amp; test in {p.name}</h2>
     <p class="small measure">
@@ -126,6 +153,11 @@ const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
   .crumbs a { color: var(--muted); }
   .prose h2 { font-size: 23px; margin: 8px 0 10px; }
   .sec { margin: 32px 0 10px; font-size: 23px; }
+  .pc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 14px 0 8px; }
+  .pc { display: grid; gap: 6px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .pc:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .pcn { font-family: var(--display); font-weight: 700; font-size: 16px; }
+  .pcf { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
   .prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 14px 0 18px; }
   .pcard { display: grid; gap: 6px; align-content: start; }
   .pcard.s-active { border-left: 4px solid var(--pine); }

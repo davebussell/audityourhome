@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import ProgramCard from '../../components/ProgramCard.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
@@ -27,9 +29,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('attic-insulation-inspection')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Program tracker</p>
       <h1>What's actually live right now</h1>
       <p class="lede measure">
@@ -37,6 +40,8 @@ const schema = [
         with two weeks' notice. Every entry below is verified against its official page and stamped
         with the date. Last full review: <strong>{SITE.dataReviewDate}</strong>.
       </p>
+      </div>
+      <Photo name={'attic-insulation-inspection'} eager />
     </div>
 
     <h2 class="grp"><span class="chip chip-active">Active</span> Ontario &amp; federal — live</h2>

@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import ProviderCard from '../../components/ProviderCard.astro';
 import { SITE } from '../../config/site';
@@ -53,15 +55,33 @@ const schema = [
     publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
   },
 ];
+const ART_PHOTO: Record<string, string> = {
+  'home-energy-audit-ontario': 'region-ontario',
+  'home-energy-audit-cost': 'energy-bill-analysis',
+  'commercial-energy-audits-ontario': 'commercial-energy-audit',
+  'heat-pump-rebates-toronto-ontario': 'heat-loss-calculation',
+  'energy-audit-companies-ontario': 'home-energy-audit',
+  'vermiculite-insulation': 'asbestos-testing',
+  'home-energy-assessment-winnipeg': 'region-prairies',
+  'bc-home-energy-testing-faq': 'region-bc',
+  'home-energy-audit-oakridge-london': 'home-hero',
+  'home-energy-audit-masonville-london': 'blower-door-test',
+  'home-energy-audit-sunningdale-london': 'ventilation-assessment',
+  'home-energy-audit-westmount-london': 'attic-insulation-inspection',
+};
+const heroPhoto = ART_PHOTO[x.slug] ?? 'home-energy-audit';
 ---
 
-<Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema}>
+<Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>{x.crumb}</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">{x.kicker} · verified {x.verified}</p>
       <h1>{x.h1}</h1>
       <p class="lede measure" set:html={x.lede} />
+      </div>
+      <Photo name={heroPhoto} eager />
     </div>
 
     <div class="measure prose">

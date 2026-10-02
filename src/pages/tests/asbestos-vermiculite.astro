@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
@@ -37,10 +39,11 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('asbestos-testing')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Asbestos &amp; vermiculite</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
       <h1>Asbestos &amp; vermiculite: the test that reorders the renovation</h1>
       <p class="lede measure">
@@ -51,6 +54,8 @@ const schema = [
         It's a $50–$150 lab answer that decides whether your attic top-up is a Tuesday job or an
         abatement project.
       </p>
+      </div>
+      <Photo name={'asbestos-testing'} eager />
     </div>
 
     <div class="glance">

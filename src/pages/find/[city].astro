@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import ProviderCard from '../../components/ProviderCard.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
@@ -44,12 +46,13 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/find/">Find an auditor</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
     </nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <h1>Home energy auditors in {region.name}</h1>
       <p class="lede">{region.intro}</p>
       <p class="small">
@@ -58,6 +61,8 @@ const schema = [
         <a href={`/guides/${region.slug}/`}>read the full {region.name} guide</a> ·
         <a href="/plan/">or start with the planner</a>
       </p>
+      </div>
+      <Photo name={'home-energy-audit'} eager />
     </div>
 
     <p class="card card-pad hrs-callout small">

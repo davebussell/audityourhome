@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import GearStrip from '../../components/GearStrip.astro';
 import { SITE } from '../../config/site';
@@ -38,10 +40,11 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('mold-testing')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Mold &amp; indoor air quality</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
       <h1>Mold &amp; indoor air: test the cause, not just the air</h1>
       <p class="lede measure">
@@ -52,6 +55,8 @@ const schema = [
         diagnose&nbsp;→&nbsp;fix&nbsp;→&nbsp;clean — and the diagnosis is what a good energy
         audit does best.
       </p>
+      </div>
+      <Photo name={'mold-testing'} eager />
     </div>
 
     <div class="glance">

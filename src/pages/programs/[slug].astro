@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor, PROV_SLUG_PHOTO } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
@@ -38,9 +40,21 @@ const schema = [
   ]),
   faqSchema(faqs),
 ];
+const PROGRAM_PHOTO: Record<string, string> = {
+  'home-renovation-savings-assessment': 'attic-insulation-inspection',
+  'home-renovation-savings-direct': 'heat-loss-calculation',
+  'toronto-home-energy-loan-program': 'region-ontario',
+  'home-efficiency-rebate-plus': 'region-ontario',
+  'cmhc-eco-improvement': 'home-hero',
+  'canada-greener-homes-affordability-program': 'attic-insulation-inspection',
+  'canada-greener-homes-grant': 'home-energy-audit',
+  'canada-greener-homes-loan': 'home-energy-audit',
+  'oil-to-heat-pump-affordability': 'heat-loss-calculation',
+};
+const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.provinceSlug] : undefined) ?? 'home-hero';
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
@@ -48,13 +62,16 @@ const schema = [
       <span>{p.shortName}</span>
     </nav>
 
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <div class="headrow">
         <h1>{p.name}</h1>
         <span class={`chip ${statusCls}`}>{statusLabel}</span>
       </div>
       <p class="lede measure">{p.headline}</p>
       <p class="meta">Run by {p.runBy} · verified against the official page {p.lastVerified}</p>
+      </div>
+      <Photo name={heroPhoto} eager />
     </div>
 
     <div class="grid-2">

@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LocalSwitcher from '../../components/LocalSwitcher.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
@@ -38,10 +40,11 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>What is a home energy audit?</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
       <h1>What is a home energy audit?</h1>
       <p class="lede measure">
@@ -50,6 +53,8 @@ const schema = [
         difference between renovating on evidence and renovating on vibes. Here's the whole thing,
         properly defined.
       </p>
+      </div>
+      <Photo name={'home-energy-audit'} eager />
     </div>
 
     <div class="measure prose">

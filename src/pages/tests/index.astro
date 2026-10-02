@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor, TEST_PHOTO } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import GearStrip from '../../components/GearStrip.astro';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
@@ -37,9 +39,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">The testing guide</p>
       <h1>Every test your home might need</h1>
       <p class="lede measure">
@@ -55,6 +58,8 @@ const schema = [
         The 30-second screener flags the specialty tests your home calls for; the planner folds
         them into your audit request automatically.
       </p>
+      </div>
+      <Photo name={'home-energy-audit'} eager />
     </div>
 
     <h2 class="cat"><span class="chip chip-active">Energy performance</span> The audit toolkit</h2>
@@ -65,12 +70,15 @@ const schema = [
     </p>
     <div class="test-list">
       {tests.energy.map((t) => (
-        <article class="card card-pad trow" id={t.id}>
+        <article class="card trow" id={t.id}>
+          {TEST_PHOTO[t.id] && <a class="tthumb" href={`/tests/${t.id}/`} tabindex="-1" aria-hidden="true"><Photo name={TEST_PHOTO[t.id]} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 240px" /></a>}
+          <div class="tbody">
           <h3>{t.name}</h3>
           <p>{t.what}</p>
           <p class="est"><strong>What it establishes:</strong> {t.establishes}</p>
           <p class="meta">Performed by: {t.who} · {t.cost}</p>
           <p class="gl"><a href={`/tests/${t.id}/`}><strong>Full guide: what's involved, how to get it done, the fixes →</strong></a></p>
+          </div>
         </article>
       ))}
     </div>
@@ -83,12 +91,15 @@ const schema = [
     </p>
     <div class="test-list">
       {tests.health.map((t) => (
-        <article class="card card-pad trow health" id={t.id}>
+        <article class="card trow health" id={t.id}>
+          {TEST_PHOTO[t.id] && <a class="tthumb" href={`/tests/${t.id}/`} tabindex="-1" aria-hidden="true"><Photo name={TEST_PHOTO[t.id]} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 240px" /></a>}
+          <div class="tbody">
           <h3>{t.name}</h3>
           <p>{t.what}</p>
           <p class="est"><strong>What it establishes:</strong> {t.establishes}</p>
           <p class="meta">Performed by: {t.who} · {t.cost}</p>
           <p class="gl"><a href={`/tests/${t.id}/`}><strong>Full guide: how to test, thresholds, and fixes →</strong></a></p>
+          </div>
         </article>
       ))}
     </div>
@@ -129,6 +140,16 @@ const schema = [
   .cat { display: flex; align-items: center; gap: 12px; margin: 36px 0 8px; font-size: 23px; }
   .catnote { margin-bottom: 18px; }
   .test-list { display: grid; gap: 14px; margin-bottom: 16px; }
+  .trow { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 0; overflow: hidden; }
+  .tthumb { display: block; }
+  .tthumb :global(.photo), .tthumb :global(.frame) { height: 100%; }
+  .tthumb :global(.frame) { border-radius: 0; box-shadow: none; }
+  .tbody { padding: 22px 24px; min-width: 0; }
+  @media (max-width: 700px) {
+    .trow { grid-template-columns: 1fr; }
+    .tthumb :global(.photo) { --ratio: 16 / 9; }
+    .tbody { padding: 18px 18px 20px; }
+  }
   .trow h3 { margin-bottom: 6px; font-size: 19px; }
   .trow p { font-size: 15px; margin-bottom: 8px; max-width: 90ch; }
   .trow .est { color: var(--muted); }

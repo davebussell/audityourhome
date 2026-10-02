@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { ogFor } from '../lib/photos';
 import { SITE } from '../config/site';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
 
@@ -54,9 +56,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('duct-leakage-testing')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">For energy advisors &amp; service organizations</p>
       <h1>Exclusive homeowner leads for the people doing real audits</h1>
       <p class="lede measure">
@@ -65,6 +68,8 @@ const schema = [
         <strong>one</strong> licensed service organization, and the homeowner arrives already knowing
         their home's era profile, likely upgrade path, and rebate eligibility.
       </p>
+      </div>
+      <Photo name={'duct-leakage-testing'} eager />
     </div>
 
     <div class="tiers">

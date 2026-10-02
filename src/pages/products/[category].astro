@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
@@ -32,12 +34,21 @@ const schema = [
 
 const testHref = `/tests/${c.relatedTests[0]}/`;
 const others = productsData.categories.filter((x) => x.slug !== c.slug).slice(0, 3);
+const PRODUCT_PHOTO: Record<string, string> = {
+  'radon-monitors': 'radon-testing',
+  'co-alarms': 'carbon-monoxide-testing',
+  'dehumidifiers-hygrometers': 'mold-testing',
+  'water-testing': 'well-water-testing',
+  'air-quality-monitors': 'ventilation-assessment',
+};
+const heroPhoto: string | undefined = PRODUCT_PHOTO[category ?? ''];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/products/">Gear guides</a> <span aria-hidden="true">/</span> <span>{c.name}</span></nav>
-    <div class="page-hero">
+    <div class:list={['page-hero', { 'has-photo': heroPhoto }]}>
+      <div class="hero-text">
       <p class="eyebrow">Gear guide · {ELEMENT_LABEL[c.element] ?? c.element} · updated {SITE.dataReviewDate}</p>
       <h1>{c.name}</h1>
       <p class="lede measure">{c.why}</p>
@@ -45,6 +56,8 @@ const others = productsData.categories.filter((x) => x.slug !== c.slug).slice(0,
         Not sure this category applies to your home? The <a href="/tests/screener/">30-second screener</a>
         flags it if so, and <a href={testHref}>{c.relatedTestName}</a> covers the testing side.
       </p>
+      </div>
+      {heroPhoto && <Photo name={heroPhoto} eager />}
     </div>
 
     <div class="pick-list">

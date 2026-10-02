@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { ogFor } from '../lib/photos';
 import LeadForm from '../components/LeadForm.astro';
 import { SITE } from '../config/site';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
@@ -36,9 +38,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Cost guide · updated {SITE.dataReviewDate}</p>
       <h1>What a home energy audit costs in Ontario</h1>
       <p class="lede measure">
@@ -47,6 +50,8 @@ const schema = [
         covers most of it if you complete Ontario's Home Renovation Savings assessment path through one
         of its seven approved service organizations, with the follow-up done by December 31, 2026.
       </p>
+      </div>
+      <Photo name={'energy-bill-analysis'} eager />
     </div>
 
     <div class="tablewrap card">

@@ -1,0 +1,112 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import EraBar from '../../../components/EraBar.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { services, citiesByProvince, localIndex, CAT_LABEL } from '../../../lib/local';
+import type { LocalService } from '../../../lib/local';
+import { ogFor } from '../../../lib/photos';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { service: s.slug }, props: { service: s } }));
+}
+
+interface Props { service: LocalService }
+const { service } = Astro.props;
+const groups = citiesByProvince();
+const n = localIndex.cities.length;
+
+const title = `${service.h1} in ${n} Canadian cities: local costs, rules and providers | AuditYourHome`;
+const description = `${service.blurb} Local guides for ${n} cities from Victoria to St. John's, with climate, housing-age and program details for each.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+    { name: service.h1, path: `/services/${service.slug}/` },
+  ]),
+];
+const others = services.filter((s) => s.slug !== service.slug);
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(service.slug)}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/services/">Services</a> <span aria-hidden="true">/</span> <span>{service.h1}</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{CAT_LABEL[service.cat] ?? 'Service'} · {n} cities · checked {localIndex.checked}</p>
+        <h1>{service.h1} across Canada</h1>
+        <p class="lede">{service.blurb}</p>
+        <p class="small cost"><strong>Typical cost:</strong> {service.cost}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#cities">Pick your city ↓</a>
+          <a class="btn btn-ghost" href={service.guide}>{service.guideLabel}</a>
+        </div>
+      </div>
+      <Photo name={service.slug} eager />
+    </div>
+
+    <section id="cities" class="cities">
+      <h2>Choose your city</h2>
+      <p class="small intro">Each city page covers local prices and rules, the climate and housing stock that shape the job, and who does the work there. The bar under each city shows its houses by construction era, oldest first.</p>
+      {groups.map((g) => (
+        <div class="prov">
+          <h3><a href={`/provinces/${g.provSlug}/`}>{g.provName}</a></h3>
+          <ul class="clist">
+            {g.cities.map((c) => (
+              <li>
+                <a href={`/services/${service.slug}/${c.slug}/`}>
+                  <span class="cn">{c.name}</span>
+                  <span class="cm">{c.metrics[service.slug]}</span>
+                  <EraBar era={c.facts.era} name={c.name} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <p class="legend small">
+        <span class="li"><span class="sw" style="--c:#F4A53F"></span>before 1961</span>
+        <span class="li"><span class="sw" style="--c:#E8622A"></span>1961–1990</span>
+        <span class="li"><span class="sw" style="--c:#C04A86"></span>1991–2000</span>
+        <span class="li"><span class="sw" style="--c:#7A63E0"></span>2001 or later</span>
+        <span class="src">· Statistics Canada, 2021 Census</span>
+      </p>
+    </section>
+
+    <section class="others">
+      <h2>Other services</h2>
+      <div class="olist">
+        {others.map((s) => <a href={`/services/${s.slug}/`}>{s.h1}</a>)}
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .cost { margin: 10px 0 0; }
+  .cities { padding: 20px 0 10px; }
+  .intro { max-width: 70ch; margin-bottom: 18px; }
+  .prov { margin: 22px 0 8px; }
+  .prov h3 { font-size: 15px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 10px; }
+  .prov h3 a { color: var(--muted); text-decoration: none; }
+  .prov h3 a:hover { color: var(--heat-deep); }
+  .clist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+  .clist a {
+    display: grid; gap: 5px; padding: 12px 14px 13px; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); text-decoration: none; color: var(--ink); height: 100%;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .clist a:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .cn { font-family: var(--display); font-weight: 700; font-size: 16px; }
+  .cm { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 18px; }
+  .legend .li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; background: var(--c); }
+  .legend .src { color: var(--faint); }
+  .others { padding: 30px 0 20px; }
+  .others h2 { font-size: 22px; }
+  .olist { display: flex; flex-wrap: wrap; gap: 8px; }
+  .olist a { border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 7px 15px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink); background: var(--card); }
+  .olist a:hover { border-color: var(--ink); }
+</style>

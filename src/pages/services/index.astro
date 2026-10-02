@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { services, localIndex, citiesByProvince } from '../../lib/local';
+import { ogFor } from '../../lib/photos';
+
+const n = localIndex.cities.length;
+const title = `Home energy audit and home testing services in ${n} Canadian cities | AuditYourHome`;
+const description = `Sixteen home energy and home health services, from EnerGuide evaluations and blower door tests to radon, asbestos and well water testing, with local guides for ${n} cities across Canada.`;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }])];
+
+const GROUPS = [
+  { cat: 'energy', title: 'Energy: find where the heat and money go', note: 'Usually done during an EnerGuide evaluation by an NRCan-registered energy advisor.' },
+  { cat: 'health', title: 'Home health: test the air, water and materials', note: 'Specialty tests by certified professionals and accredited labs, and some you can do yourself.' },
+  { cat: 'commercial', title: 'Commercial buildings', note: 'Engineering-grade audits for businesses, institutions and multi-unit buildings.' },
+];
+const groups = citiesByProvince();
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">16 services · {n} cities · checked {localIndex.checked}</p>
+        <h1>Every home audit and test, city by city</h1>
+        <p class="lede">
+          Pick the service, then your city. Each local page pulls together the numbers that change
+          the job where you live: the climate, how old the houses are, what the province requires,
+          what it costs, and who does the work.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/cities/">Start with your city</a>
+          <a class="btn btn-ghost" href="/tests/screener/">Which tests do I need?</a>
+        </div>
+      </div>
+      <Photo name="home-energy-audit" eager />
+    </div>
+
+    {GROUPS.map((g) => (
+      <section class="grp">
+        <h2>{g.title}</h2>
+        <p class="small note">{g.note}</p>
+        <div class="pcards">
+          {services.filter((s) => s.cat === g.cat).map((s) => (
+            <a class="pcard-link" href={`/services/${s.slug}/`}>
+              <Photo name={s.slug} sizes="(max-width: 560px) calc(100vw - 44px), 280px" hud={false} plain />
+              <div class="pcard-body">
+                <h3>{s.h1}</h3>
+                <p>{s.blurb}</p>
+                <span class="meta">{s.cost}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="grp">
+      <h2>Or start with your city</h2>
+      <div class="plist">
+        {groups.map((g) => (
+          <p><strong>{g.provName}:</strong> {g.cities.map((c, i) => (<>{i > 0 && ', '}<a href={`/cities/${c.slug}/`}>{c.name}</a></>))}</p>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .grp { padding: 26px 0 10px; }
+  .grp h2 { font-size: 26px; margin-bottom: 6px; }
+  .note { margin-bottom: 18px; max-width: 70ch; }
+  .plist p { margin: 0 0 8px; font-size: 15px; line-height: 1.7; }
+</style>

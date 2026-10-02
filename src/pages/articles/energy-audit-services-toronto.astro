@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
@@ -37,10 +39,11 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-ontario')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audit services in Toronto</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
       <h1>Energy audit services in Toronto: homes, buildings, and who does what</h1>
       <p class="lede measure">
@@ -49,6 +52,8 @@ const schema = [
         months. Here's the whole map — residential, commercial, and the reporting the province
         already requires.
       </p>
+      </div>
+      <Photo name={'region-ontario'} eager />
     </div>
 
     <div class="measure prose">

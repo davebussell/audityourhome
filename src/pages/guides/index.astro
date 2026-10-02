@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import { breadcrumbSchema } from '../../lib/schema';
 import guides from '../../data/guides.json';
 import { regionBySlug, providersForRegion } from '../../lib/data';
@@ -16,9 +18,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-ontario')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Guides</p>
       <h1>Your city's housing has a story</h1>
       <p class="lede measure">
@@ -26,6 +29,8 @@ const schema = [
         limestone. These guides read your region's housing stock like an auditor would — what's
         behind the walls, what the local climate punishes, which rebates apply, and who can measure it.
       </p>
+      </div>
+      <Photo name={'region-ontario'} eager />
     </div>
 
     <div class="featured-row">

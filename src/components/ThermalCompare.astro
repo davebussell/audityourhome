@@ -1,0 +1,215 @@
+---
+/**
+ * Drag-to-compare: the winter bungalow in visible light vs. the infrared view.
+ * Works without JS (split at 50%). Pointer drag anywhere on the image, or
+ * keyboard via the (visually hidden) range input. Vertical page scrolling is
+ * left alone on touch screens (touch-action: pan-y).
+ */
+import { Picture } from 'astro:assets';
+import { PHOTOS } from '../lib/photos';
+
+interface Props {
+  eager?: boolean;
+  sizes?: string;
+  caption?: string;
+  /** Hot-spot labels revealed on the infrared side */
+  labels?: boolean;
+}
+
+const {
+  eager = false,
+  sizes = '(max-width: 880px) calc(100vw - 44px), 520px',
+  caption = 'Illustration: a 1950s bungalow in visible light and as an infrared camera would show it on a cold night. Heat escapes where air leaks and insulation is thin.',
+  labels = true,
+} = Astro.props;
+
+const vis = PHOTOS['home-hero'];
+const ir = PHOTOS['home-hero-thermal'];
+const widths = [480, 768, vis.src.width];
+const common = {
+  widths,
+  sizes,
+  formats: ['avif', 'webp'] as const,
+  fallbackFormat: 'jpg' as const,
+  quality: 68,
+  loading: eager ? ('eager' as const) : ('lazy' as const),
+  decoding: 'async' as const,
+};
+---
+
+<figure class="tc" data-tc>
+  <div class="tc-frame" style="--pos: 50%">
+    <Picture src={vis.src} alt={vis.alt} {...common} class="tc-img" />
+    <div class="tc-ir">
+      <Picture src={ir.src} alt={ir.alt} {...common} class="tc-img" />
+      {labels && (
+        <ul class="tc-spots" aria-hidden="true">
+          <li style="left: 80%; top: 31%">eaves</li>
+          <li style="left: 38%; top: 45%">door edges</li>
+          <li style="left: 62%; top: 49%">window frames</li>
+          <li style="left: 71%; top: 61%">rim joist</li>
+        </ul>
+      )}
+    </div>
+    <div class="tc-handle" aria-hidden="true"><span>‹ ›</span></div>
+    <span class="tc-tag tc-l" aria-hidden="true">Visible light</span>
+    <span class="tc-tag tc-r" aria-hidden="true"><i></i>Infrared</span>
+    <input class="tc-range" type="range" min="0" max="100" value="50" step="1" aria-label="Compare the photo with the infrared view: move left to reveal more infrared" />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tc]').forEach((fig) => {
+    const frame = fig.querySelector<HTMLElement>('.tc-frame');
+    const range = fig.querySelector<HTMLInputElement>('.tc-range');
+    if (!frame || !range) return;
+    const set = (pct: number) => {
+      const v = Math.max(0, Math.min(100, pct));
+      frame.style.setProperty('--pos', v + '%');
+      range.value = String(Math.round(v));
+    };
+    const fromX = (x: number) => {
+      const r = frame.getBoundingClientRect();
+      return ((x - r.left) / r.width) * 100;
+    };
+    let dragging = false;
+    frame.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      dragging = true;
+      frame.setPointerCapture(e.pointerId);
+      frame.classList.add('is-dragging');
+      set(fromX(e.clientX));
+    });
+    frame.addEventListener('pointermove', (e) => { if (dragging) set(fromX(e.clientX)); });
+    const stop = () => { dragging = false; frame.classList.remove('is-dragging'); };
+    frame.addEventListener('pointerup', stop);
+    frame.addEventListener('pointercancel', stop);
+    range.addEventListener('input', () => set(Number(range.value)));
+
+    // One gentle nudge the first time it scrolls into view, so people know it moves.
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((en) => en.isIntersecting)) return;
+      io.disconnect();
+      const frames = [50, 44, 36, 32, 36, 46, 58, 66, 62, 56, 50];
+      let i = 0;
+      const tick = () => {
+        if (dragging || i >= frames.length) return;
+        set(frames[i++]);
+        window.setTimeout(tick, 70);
+      };
+      window.setTimeout(tick, 500);
+    }, { threshold: 0.6 });
+    io.observe(frame);
+  });
+</script>
+
+<style>
+  .tc { margin: 0; min-width: 0; }
+  .tc-frame {
+    container-type: inline-size;
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 1168 / 880;
+    background: #0e1620;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 12px 32px rgba(0, 0, 0, 0.28);
+    touch-action: pan-y;
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .tc-frame :global(picture) { display: block; height: 100%; }
+  .tc-frame :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+  .tc-ir {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 0 var(--pos));
+  }
+  .tc-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 2px;
+    margin-left: -1px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 12px rgba(242, 160, 61, 0.55);
+    pointer-events: none;
+  }
+  .tc-handle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--navy);
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    transition: transform 0.15s ease;
+  }
+  .tc-frame.is-dragging .tc-handle span { transform: translate(-50%, -50%) scale(1.08); }
+  .tc-range {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    bottom: 0;
+    left: 0;
+  }
+  .tc-range:focus-visible ~ .tc-handle span,
+  .tc-frame:has(.tc-range:focus-visible) .tc-handle span { outline: 3px solid var(--heat); outline-offset: 3px; }
+  .tc-tag {
+    position: absolute;
+    top: 14px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #fff;
+    background: rgba(20, 32, 44, 0.66);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    padding: 5px 10px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    pointer-events: none;
+  }
+  .tc-l { left: 14px; }
+  .tc-r { right: 14px; }
+  .tc-r i { width: 7px; height: 7px; border-radius: 50%; background: #f2a03d; box-shadow: 0 0 0 3px rgba(242, 160, 61, 0.3); }
+  .tc-spots { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; pointer-events: none; }
+  .tc-spots li {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(14, 22, 32, 0.72);
+    border: 1px solid rgba(242, 160, 61, 0.7);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  @container (max-width: 479px) {
+    .tc-spots { display: none; }
+  }
+  @media (max-width: 520px) {
+    .tc-handle span { width: 36px; height: 36px; font-size: 13px; }
+  }
+  figcaption { font-size: 13px; color: var(--navy-muted, #8da1b2); margin-top: 10px; line-height: 1.45; }
+</style>

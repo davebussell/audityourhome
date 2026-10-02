@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 import issuesData from '../../data/issues.json';
@@ -29,17 +31,33 @@ const schema = [
   ]),
   faqSchema(faqs),
 ];
+const ISSUE_PHOTO: Record<string, string> = {
+  'drafty-rooms': 'thermal-imaging',
+  'high-heating-bills': 'energy-bill-analysis',
+  'ice-dams': 'attic-insulation-inspection',
+  'cold-second-floor': 'duct-leakage-testing',
+  'condensation-mould': 'mold-testing',
+  'cold-basement': 'ventilation-assessment',
+  'summer-overheating': 'attic-insulation-inspection',
+  'switching-to-heat-pump': 'heat-loss-calculation',
+  'planning-solar': 'energy-bill-analysis',
+  'buying-a-home': 'home-hero',
+};
+const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/issues/">Fix an issue</a> <span aria-hidden="true">/</span> <span>{issue.name}</span>
     </nav>
 
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <h1>{issue.name}</h1>
       <p class="lede measure">{issue.symptom}</p>
+      </div>
+      <Photo name={heroPhoto} eager />
     </div>
 
     <div class="grid-2">

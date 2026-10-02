@@ -1,0 +1,389 @@
+{
+  "checked": "2026-09-28",
+  "notes": [
+    "Every item below was read in the cited source on 2026-09-28. Where a field is null, no official source confirming it was found; see that entry's 'note'.",
+    "'existingHomes' answers: is a CO alarm legally required, province-wide, in an existing house (not only new construction)? 'appliesTo' gives the exact scope where it is partial.",
+    "Asbestos rules in every jurisdiction are workplace (OHS) rules. They bind contractors and building owners when workers are on site. None of the sources reviewed impose a pre-renovation asbestos survey on a homeowner doing their own work, and Ontario explicitly exempts owner-occupied private residences (O. Reg. 278/05 s. 2(4))."
+  ],
+  "provinces": {
+    "ON": {
+      "coAlarms": {
+        "existingHomes": true,
+        "appliesTo": "Every building with a residential occupancy that contains a fuel-burning appliance, a fireplace or a storage (attached) garage. Since 2026-01-01 this also covers homes served by a forced-air fuel-burning appliance located outside the building.",
+        "summary": "The Ontario Fire Code requires CO alarms in existing homes, not just new builds. The rule came into force 2014-10-15 (O. Reg. 194/14), with compliance required by 2015-04-15 for buildings with six or fewer suites and by 2015-10-15 for larger buildings. At that point alarms were required next to each sleeping area. O. Reg. 87/25 (filed 2025-06-04) replaced Section 2.16 effective 2026-01-01. Alarms are now required next to each sleeping area AND on every storey without a sleeping area. Hardwired, battery or plug-in alarms are all allowed. The homeowner is responsible in an owner-occupied home and the landlord in a rental. The section does not apply to a building whose CO alarms were installed under the Building Code as it read on or after 2025-01-01.",
+        "law": "Ontario Fire Code (O. Reg. 213/07), Div. B Section 2.16, as replaced by O. Reg. 87/25 (in force 2026-01-01). Originally added by O. Reg. 194/14 (in force 2014-10-15) under the Hawkins Gignac Act (Carbon Monoxide Safety), 2013, S.O. 2013, c. 14, whose sections 2, 4 and 5 were proclaimed in force 2014-10-15.",
+        "effective": "2014-10-15 (original); 2026-01-01 (current expanded rules)",
+        "source": "https://www.ontario.ca/laws/regulation/r25087",
+        "additionalSources": [
+          "https://www.ontario.ca/page/carbon-monoxide-safety",
+          "https://www.ontario.ca/files/2025-12/solgen-co-alarm-requirements-homes-en-2025-12-17.pdf",
+          "https://www.ontario.ca/laws/regulation/r14194",
+          "https://www.ontario.ca/laws/statute/s13014",
+          "https://www.ontario.ca/document/ontario-gazette-volume-147-issue-39-september-27-2014"
+        ]
+      },
+      "asbestos": {
+        "summary": "O. Reg. 278/05 governs contractors: asbestos-containing material means 0.5%+ asbestos by dry weight, and work is classed as Type 1, 2 or 3, each with required procedures and training. An owner must have materials examined and a report prepared before tendering or arranging demolition, alteration or repair, but that duty does not apply to an owner of a private residence occupied by the owner or their family, or to an owner-occupied residential building of four units or fewer.",
+        "keyPoints": [
+          "O. Reg. 278/05 s. 10: owner examination and report before requesting tenders or arranging demolition, alteration or repair.",
+          "O. Reg. 278/05 s. 2(4): exempts an owner of a private residence occupied by the owner or family, and an owner-occupied residential building of 4 or fewer units.",
+          "O. Reg. 278/05 s. 11: advance notice required for Type 3 operations and certain Type 2 operations. Consolidated to 2026-07-01; O. Reg. 115/26 only updated respirator certifications.",
+          "OHSA s. 3(1): the Act does not apply to work done by the owner or occupant in or about a private residence.",
+          "OHSA s. 30: before beginning a project, the owner must determine which designated substances are present and give the list to bidders and contractors.",
+          "Waste: R.R.O. 1990, Reg. 347, s. 17. No person may manage asbestos waste except as prescribed. It may leave the site only for a waste disposal site whose operator has agreed to accept it and been told when it will arrive. It must be in rigid, sealed, impermeable containers (a cardboard box needs a sealed 6-mil polyethylene bag inside), and containers and vehicles must be marked."
+        ],
+        "law": "Occupational Health and Safety Act, O. Reg. 278/05; Environmental Protection Act, R.R.O. 1990, Reg. 347, s. 17",
+        "source": "https://www.ontario.ca/laws/regulation/050278",
+        "additionalSources": [
+          "https://www.ontario.ca/laws/statute/90o01",
+          "https://www.ontario.ca/laws/regulation/900347"
+        ]
+      }
+    },
+    "QC": {
+      "coAlarms": {
+        "existingHomes": false,
+        "appliesTo": "Provincially, only existing buildings covered by the Safety Code's Building chapter: multi-unit or co-owned residential buildings of more than 2 storeys and more than 8 units, rooming houses with 10+ rooms, hotels/motels, and seniors' and supervised residences. Single-family houses are excluded and fall under municipal by-laws.",
+        "summary": "Quebec has no province-wide CO alarm requirement for existing houses. The Safety Code's Building chapter (in force 2013-03-18) covers larger multi-unit and co-owned residential buildings, rooming houses, hotels/motels and seniors' residences. In those buildings, art. 359 requires a CO alarm in a dwelling unit, seniors' residence or supervised residence that contains a combustion appliance or has direct access to an indoor parking garage. LégisQuébec shows this version of art. 359 in force from 2014-03-18. The RBQ says single-family dwellings fall under municipal regulations, and Québec.ca tells residents to ask their municipal fire service about local CO alarm rules. So whether a house needs an alarm depends on the municipality.",
+        "law": "Code de sécurité (CQLR c. B-1.1, r. 3), chapitre VIII – Bâtiment, art. 359 (D. 1263-2012); municipal by-laws for houses",
+        "effective": "Safety Code Building chapter in force 2013-03-18; art. 359 version in force 2014-03-18",
+        "source": "https://www.legisquebec.gouv.qc.ca/fr/version/rc/B-1.1,%20r.%203?code=se%3A359",
+        "additionalSources": [
+          "https://www.rbq.gouv.qc.ca/en/you-are/owner-or-operator/quality-and-safety-requirements/building-chapter-from-the-safety-code/residential-occupancies/",
+          "https://www.rbq.gouv.qc.ca/en/areas-of-intervention/building/regulation/buildings-chapter-of-the-safety-code/description-of-the-buildings-chapter-of-the-safety-code/",
+          "https://www.rbq.gouv.qc.ca/en/frequently-asked-questions-faq/areas-of-intervention/building/building-chapter-from-the-safety-code/",
+          "https://www.quebec.ca/securite-situations-urgence/securite-incendie/equipements-securite-incendie-maison/avertisseurs-de-monoxyde-de-carbone"
+        ]
+      },
+      "asbestos": {
+        "summary": "CNESST rules require employers to check for the presence and type of asbestos before any work likely to release asbestos dust (RSST s. 69.11; Construction Safety Code s. 3.23.3). Employers must also inspect buildings built before 1990-02-15 for sprayed asbestos (flocages) and before 1999-05-20 for asbestos thermal insulation (calorifuges) (RSST s. 69.3). Québec.ca tells homeowners to have suspect materials checked by a qualified contractor or an IRSST-recognized lab and to never do asbestos work themselves.",
+        "keyPoints": [
+          "The condition of asbestos flocking and insulation must be checked at the initial inspection and every 2 years after that (RSST s. 69.8).",
+          "Quebec's regulatory threshold is 0.1% asbestos in a material (RSST art. 62 and section IX.I; CSTC section 3.23). Per the IRSST, this differs from other provinces.",
+          "Québec.ca (updated 2021-01-12) says to hire an RBQ-licensed contractor (subcategory 2.7, 7, 1.2 or 1.3) and get a written commitment to follow the Construction Safety Code. It adds that Quebec has no official accreditation or certification program for asbestos professionals.",
+          "No asbestos waste or landfill rule was checked for Quebec."
+        ],
+        "law": "Règlement sur la santé et la sécurité du travail (RSST) ss. 69.3, 69.8, 69.11; Code de sécurité pour les travaux de construction (CSTC) section 3.23",
+        "source": "https://www.cnesst.gouv.qc.ca/fr/prevention-securite/identifier-corriger-risques/liste-informations-prevention/amiante",
+        "additionalSources": [
+          "https://www.quebec.ca/sante/conseils-et-prevention/sante-et-environnement/prevenir-les-effets-amiante-sur-la-sante",
+          "https://www.irsst.qc.ca/laboratoires/programmes-reconnaissance/cq-vrac"
+        ]
+      }
+    },
+    "BC": {
+      "coAlarms": {
+        "existingHomes": false,
+        "appliesTo": "No provincial retrofit requirement. New construction is covered by the BC Building Code. The City of Vancouver requires alarms in existing homes under its Fire By-law.",
+        "summary": "B.C.'s fire-safety bulletin says: 'While carbon monoxide alarms are not mandatory in B.C., it is recommended that alarms be installed if a home has a fuel-burning appliance, fireplace or attached garage.' For new construction, BC Building Code Article 9.32.4.2 requires CO alarms in buildings with a residential occupancy that are served by or contain a fuel-burning appliance, or contain a storage garage. The 2024 BCBC keeps this requirement and applies to building permits applied for on or after 2024-03-08. Locally, the City of Vancouver's Fire By-law requires CO alarms in every dwelling unit, new or older, that has an attached garage or a fuel-fired appliance, or shares a wall or floor with a parking garage or a service room containing a fuel-fired appliance.",
+        "law": "BC Fire Code: no CO retrofit requirement. BC Building Code 2024, Div. B Art. 9.32.4.2 (new construction). City of Vancouver Fire By-law (local).",
+        "effective": "BCBC 2024: permits applied for on or after 2024-03-08",
+        "source": "https://www2.gov.bc.ca/gov/content/safety/public-safety/fire-safety/legislation-regulations-codes/codes-bulletins",
+        "additionalSources": [
+          "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/construction-industry/building-codes-and-standards/bulletins/2024-code/b24-05_2024_edition_of_the_bc_codes.pdf",
+          "https://free.bcpublications.ca/civix/document/id/public/bcbc2018/bcbc_2018dbp9s932r2",
+          "https://vancouver.ca/home-property-development/carbon-monoxide-alarms.aspx"
+        ]
+      },
+      "asbestos": {
+        "summary": "Before demolition, salvage or renovation of a building, the employers doing the work and the owner must have a qualified person inspect it, sample it and identify hazardous materials such as asbestos and lead, with a written report kept at the worksite (OHS Regulation s. 20.112). Since 2024-01-01, asbestos abatement contractors must be licensed by WorkSafeBC to operate in B.C., and anyone doing abatement work must complete mandatory training and hold a certificate.",
+        "keyPoints": [
+          "Licensing and certification come from Workers Compensation Act amendments made in spring 2022. WorkSafeBC began accepting licence applications in September 2023 and published its online registry of licensed asbestos abatement contractors on 2023-11-20. B.C. was the first Canadian jurisdiction to license this work.",
+          "Identified hazardous materials must be safely contained or removed (s. 20.112(5)).",
+          "WorkSafeBC runs a residential demolition/renovation asbestos enforcement initiative that checks, among other things, that the hazardous materials inspection report is on site.",
+          "No asbestos waste or landfill rule was checked for B.C."
+        ],
+        "law": "Workers Compensation Act (licensing/certification, 2022 amendments); OHS Regulation Part 6 and s. 20.112",
+        "effective": "Licensing and certification mandatory from 2024-01-01",
+        "source": "https://www.worksafebc.com/en/health-safety/education-training-certification/asbestos-training-certification-licensing",
+        "additionalSources": [
+          "https://www.worksafebc.com/about-us/news-events/announcements/2023/June/new-requirements-to-protect-asbestos-workers-become-mandatory-january1-2024",
+          "https://www.worksafebc.com/en/law-policy/occupational-health-safety/searchable-ohs-regulation/ohs-regulation/part-20-construction-excavation-and-demolition",
+          "https://www.worksafebc.com/en/about-us/what-we-do/worksafebc-planned-inspectional-initiatives/asbestos-residential-enforcement"
+        ]
+      }
+    },
+    "AB": {
+      "coAlarms": {
+        "existingHomes": false,
+        "appliesTo": "New buildings only: those containing a residential occupancy plus a fuel-burning appliance and/or an attached storage garage.",
+        "summary": "Alberta's building code requires certified CO alarms in every new building that contains a residential occupancy and a fuel-burning appliance and/or an attached storage garage. For existing homes, the province only says CO alarms are 'highly recommended'. The National Fire Code – 2023 Alberta Edition (2nd printing effective 2026-08-17 per alberta.ca) requires only that CO alarms be inspected, tested and maintained per the manufacturer's instructions (Div. B Section 6.7). It adds no requirement to install them in existing homes.",
+        "law": "National Building Code – Alberta Edition (new construction); National Fire Code – 2023 Alberta Edition, Div. B s. 6.7 (maintenance only)",
+        "source": "https://ebs.safetycodes.ab.ca/documents/webdocs/PI/safety-tips_carbon-monoxide_jan2020.pdf",
+        "additionalSources": [
+          "https://open.alberta.ca/dataset/20963a24-8c4a-4cce-8f88-43d798512729/resource/0b0a1096-c3c6-4863-bf39-f0870ab4af19/download/carbon-monoxide-alarm-home-installation.pdf",
+          "https://www.alberta.ca/fire-codes-and-standards",
+          "https://www.edmonton.ca/sites/default/files/public-files/NationalFireCode-2023AlbertaEdition.pdf"
+        ]
+      },
+      "asbestos": {
+        "summary": "Alberta's OHS Code (Part 4, chemical hazards) requires employers to minimize asbestos release and to seal and label asbestos waste. Workers entering an asbestos restricted area need government-approved training and a valid asbestos worker certificate. Anyone planning asbestos removal, or demolition or renovation of a building containing asbestos, must notify Alberta OHS at least 72 hours before starting.",
+        "keyPoints": [
+          "Asbestos worker certificates expire 3 years from the date of issue.",
+          "Per the Alberta Asbestos Abatement Manual, asbestos-containing material may be left in place during demolition only with an acceptance under OHS Code s. 34.",
+          "Waste must go in sealed containers impervious to asbestos and be labelled 'Carcinogenic – Do not inhale dust'. The manual also says the landfill must be informed in writing that the waste contains asbestos.",
+          "The manual PDF reviewed is the August 2019 edition (ASB001)."
+        ],
+        "law": "Occupational Health and Safety Code (Part 4 and related parts); Alberta Asbestos Abatement Manual",
+        "source": "https://www.alberta.ca/asbestos-worker-training",
+        "additionalSources": [
+          "https://www.alberta.ca/submit-asbestos-project-notification",
+          "https://www.alberta.ca/alberta-asbestos-abatement-manual"
+        ]
+      }
+    },
+    "SK": {
+      "coAlarms": {
+        "existingHomes": true,
+        "appliesTo": "All buildings with a residential occupancy that contain a fuel-burning appliance, an attached vehicle parking garage and/or multiple residential suites, regardless of construction date. From 2026-11-01, every residential suite.",
+        "summary": "Saskatchewan's Building Code Regulations require CO alarms and smoke alarms (or combination units) in all residential buildings, regardless of when they were built. Enforcement began 2022-07-01. In homes, CO alarms go inside each sleeping room or within 5 m outside each sleeping-room door, plus in any room with a solid-fuel-burning appliance. 'Henry's Law', The Building Code (Henry Losco) Amendment Regulations, 2026, was introduced 2026-05-05 and comes into force 2026-11-01. It requires a CO alarm in every residential suite, including apartments, condos and houses with secondary suites, regardless of when the building was built or last renovated. It replaces the earlier practice of requiring alarms only in suites sharing a wall, floor or ceiling with a garage or service room.",
+        "law": "The Construction Codes Act; The Building Code Regulations (retroactive CO/smoke alarm rule, enforced from 2022-07-01); The Building Code (Henry Losco) Amendment Regulations, 2026 (in force 2026-11-01)",
+        "effective": "2022-07-01 (existing homes); 2026-11-01 (Henry's Law expansion)",
+        "source": "https://www.saskatchewan.ca/business/housing-development-construction-and-property-management/building-and-technical-standards/carbon-monoxide-alarms-and-smoke-alarms",
+        "additionalSources": [
+          "https://publications.saskatchewan.ca/api/v1/products/114974/formats/129992/download",
+          "https://www.saskatchewan.ca/government/news-and-media/2026/may/05/saskatchewan-introduces-henrys-law-strengthening-carbon-monoxide-detection-standards-in-the-province"
+        ]
+      },
+      "asbestos": {
+        "summary": "Under The Saskatchewan Employment Act and The Occupational Health and Safety Regulations, 2020, building owners, contractors and employers must have a competent person inventory all asbestos-containing materials in a workplace building, inspect them regularly, and put safe work procedures and training in place. They must also notify Occupational Health and Safety at least 14 days before a high-risk asbestos process.",
+        "keyPoints": [
+          "Any material likely to contain asbestos is treated as asbestos-containing until it is shown to be asbestos-free.",
+          "The Public Health Act, 1994 requires the provincial government, Crown corporations, health regions and public school facilities to provide and post asbestos information (Asbestos Registry of Public Buildings).",
+          "No homeowner-specific or landfill rule was checked for Saskatchewan."
+        ],
+        "law": "The Saskatchewan Employment Act; The Occupational Health and Safety Regulations, 2020; The Public Health Act, 1994 (public building registry)",
+        "source": "https://www.saskatchewan.ca/business/safety-in-the-workplace/hazards-and-prevention/asbestos-in-saskatchewan/understanding-identifying-and-handling-asbestos",
+        "additionalSources": [
+          "https://www.saskatchewan.ca/business/safety-in-the-workplace/hazards-and-prevention/asbestos-in-saskatchewan"
+        ]
+      }
+    },
+    "MB": {
+      "coAlarms": {
+        "existingHomes": false,
+        "appliesTo": "Only buildings that must receive regular fire safety inspections under M.R. 208/2014, where a CO exposure risk exists: elderly persons' housing, personal care homes, home-type care occupancies, licensed child care centres, hospitals, schools, recreation centres, hotels/motels, licensed premises, and restaurants in buildings with dwelling units. Private houses are not on the list.",
+        "summary": "The Manitoba Fire Code (M.R. 82/2023, in force 2024-01-01), Article 2.1.3.8, requires CO detection equipment only in buildings that must be inspected under the Fire Safety Inspections (2014) Regulation, where a CO exposure risk exists. Battery-operated alarms are allowed, and the equipment must be installed per the Manitoba Building Code. Ordinary private homes are not among the inspected building types, so there is no provincial retrofit requirement for them. The Manitoba Building Code's CO requirements for new homes were not verified.",
+        "law": "Manitoba Fire Code, M.R. 82/2023, Div. B Art. 2.1.3.8; Fire Safety Inspections (2014) Regulation, M.R. 208/2014, s. 1",
+        "effective": "2024-01-01 (current Fire Code)",
+        "source": "https://web2.gov.mb.ca/laws/regs/current/082-2023.php?lang=en",
+        "additionalSources": [
+          "https://web2.gov.mb.ca/laws/regs/current/208-2014.php?lang=en"
+        ]
+      },
+      "asbestos": {
+        "summary": "Part 37 of the Workplace Safety and Health Regulation applies to every workplace where asbestos is present. The employer and owner must keep an inventory of asbestos-containing material prepared by a qualified person, prevent asbestos release before alterations or renovations, remove releasable asbestos before demolition, and notify the branch 5 to 10 days before work that may release asbestos. M.R. 108/2025 (registered 2025-12-04) added WCB-approved training, asbestos certificates and a registry of asbestos businesses. From 2027-06-01, asbestos abatement and asbestos inventory (sampling) work will require a valid certificate, and employers will need to register.",
+        "keyPoints": [
+          "Any material likely to contain asbestos is deemed asbestos-containing until a qualified person determines otherwise (s. 37.2(2)).",
+          "Provisions in force 2027-06-01: s. 37.10 (certificate required), s. 37.15(1) (registration), s. 37.19, s. 37.23(1)(a) (employers and owners may not permit uncertified asbestos work), plus related clauses.",
+          "No landfill rule was checked for Manitoba."
+        ],
+        "law": "Workplace Safety and Health Regulation, M.R. 217/2006, Part 37, as amended by M.R. 108/2025",
+        "effective": "Certification and registration requirements in force 2027-06-01",
+        "source": "https://web2.gov.mb.ca/laws/regs/current/217-2006.php?lang=en",
+        "additionalSources": [
+          "https://web2.gov.mb.ca/laws/regs/annual/2025/108.php?lang=en"
+        ]
+      }
+    },
+    "NS": {
+      "coAlarms": {
+        "existingHomes": false,
+        "appliesTo": "New construction under the Building Code: residential or care occupancy buildings with a fuel-burning appliance or storage garage. Existing buildings don't have to be retrofitted unless an official orders it.",
+        "summary": "A Nova Scotia government CO document (December 2024) says the Building Code Regulations (which reference the National Building Code) require a CO alarm in a residential or care occupancy building that has a fuel-burning appliance or storage garage. It also says 'older buildings do not need to be retrofitted' when a new Code is adopted unless a Building Official or Fire Inspector requires more equipment because of unsafe conditions. The Fire Safety Regulations require CO alarms to be inspected, tested and maintained per the manufacturer's instructions. The same document says building owners 'should' install CO monitors in all buildings with fuel-burning equipment, which is a recommendation, not a requirement. Nova Scotia adopted the National Fire Code 2020 effective 2025-04-01.",
+        "law": "Nova Scotia Building Code Regulations (new construction); Fire Safety Regulations, N.S. Reg. 48/2003 (maintenance)",
+        "source": "https://novascotia.ca/lae/healthandsafety/docs/Carbon_Monoxide-Safety.pdf",
+        "additionalSources": [
+          "https://novascotia.ca/just/regulations/regs/fsfiresf.htm",
+          "https://news.novascotia.ca/en/2025/03/24/province-adopt-2020-national-fire-code"
+        ]
+      },
+      "asbestos": {
+        "summary": "The Asbestos Waste Management Regulations apply to any person, not just employers. Friable waste with more than 1% asbestos is 'waste dangerous goods'. Removal from a building must follow the Occupational Health and Safety Act codes of practice. The waste must be wetted, double-bagged in 6-mil bags (or bagged and put in a drum), shipped with a shipping document, and buried only at an approved site after the site has confirmed it will accept the waste.",
+        "keyPoints": [
+          "Approved disposal: an active municipal solid-waste site approved to accept asbestos, an industrial site whose approval covers asbestos, or an approved waste disposal site (s. 19).",
+          "No homeowner pre-renovation survey requirement was found."
+        ],
+        "law": "Asbestos Waste Management Regulations, N.S. Reg. 53/95 (Environment Act), amended to N.S. Reg. 121/2017",
+        "source": "https://novascotia.ca/just/regulations/regs/envasbestos.htm"
+      }
+    },
+    "NB": {
+      "coAlarms": {
+        "existingHomes": null,
+        "appliesTo": "New construction and alterations under the NBC 2020, adopted through the Building Code Administration Act. No existing-home rule was found.",
+        "summary": "No provincial requirement to install CO alarms in existing homes was found. NB's Fire Prevention Act and its Fire Prevention and Inspection Regulation 82-20 (consolidated to 2025-05-01) contain no CO alarm provision; Regulation 82-20 incorporates the National Fire Code 2020 and National Building Code 2020 as standards. New Brunswick applies the NBC 2020 to construction, alteration and demolition under the Building Code Administration Act.",
+        "note": "No official NB statement was found that explicitly confirms or rules out a CO alarm requirement for existing homes, so this is left null. The 2015 announcement that NB would require CO alarms could not be verified from an official source.",
+        "law": "Building Code Administration Act (NBC 2020) for new work; Fire Prevention Act / NB Reg. 82-20 (no CO provision found)",
+        "source": "https://www.gnb.ca/en/topic/laws-safety/licensing-inspections/technical-inspections/building-code.html",
+        "additionalSources": [
+          "https://laws.gnb.ca/en/document/cr/82-20",
+          "https://laws.gnb.ca/en/showdoc/cs/F-13"
+        ]
+      },
+      "asbestos": {
+        "summary": "Under General Regulation 91-191 (OHS Act), Part III.1 (added 2022), owners of a place of employment, employers and contractors must adopt and follow WorkSafeNB's 'A Code of Practice for Working with Materials Containing Asbestos in New Brunswick' for employees who work with, near, or disturb asbestos-containing material. Employees must follow it too.",
+        "keyPoints": [
+          "Regulation consolidated to 2026-06-30.",
+          "No waste, landfill or homeowner rule was checked for New Brunswick."
+        ],
+        "law": "NB Regulation 91-191 (General), Part III.1, ss. 25.3–25.5",
+        "source": "https://laws.gnb.ca/en/document/cr/91-191"
+      }
+    },
+    "PE": {
+      "coAlarms": {
+        "existingHomes": null,
+        "appliesTo": "No provincial dwelling requirement found.",
+        "summary": "No provincial requirement to install CO alarms in existing homes was found. PEI's Fire Safety Act (consolidated to 2026-05-29) lists CO alarms under 'fire detection system' but does not itself require them in dwellings. The Fire Marshal's prevention page advises, without making it mandatory, that 'CO alarms should be installed outside each sleeping area and on every level of the home'. The older Fire Prevention Act (current to 2023-03-04) has no CO provision.",
+        "note": "Regulations adopting fire or building codes under the Fire Safety Act could not be located (princeedwardisland.ca blocks automated access to some legislation files). Left null.",
+        "law": "Fire Safety Act (PEI), consolidated to 2026-05-29 (no dwelling CO requirement found)",
+        "source": "https://www.princeedwardisland.ca/en/information/justice-and-public-safety/fire-prevention-resources",
+        "additionalSources": [
+          "https://www.princeedwardisland.ca/sites/default/files/f121/F-11-01-%20Fire%20Safety%20Act.pdf",
+          "https://www.princeedwardisland.ca/sites/default/files/legislation/f-11-fire_prevention_act.pdf"
+        ]
+      },
+      "asbestos": {
+        "summary": "PEI's OHS General Regulations, Part 49, require that suspect material be treated as asbestos until a competent person shows otherwise, that only a competent person take samples, and that bulk samples go to a CALA- or AIHA-accredited lab. Workplaces with asbestos need an inventory (inspected yearly) and a management plan, all asbestos work must be done by a holder of an asbestos contractor's certificate (s. 49.9, valid 5 years), and releasable asbestos must be removed before demolition (s. 49.23).",
+        "keyPoints": [
+          "Workers who handle, disturb or remove asbestos-containing material must complete an asbestos abatement course (s. 49.7(4)).",
+          "WCB PEI publishes an 'Asbestos Notification Permit' form.",
+          "No landfill rule was checked for PEI."
+        ],
+        "law": "Occupational Health and Safety Act General Regulations, Part 49 (ss. 49.1–49.24)",
+        "source": "https://ohsguide.wcb.pe.ca/topic/asbestos.html",
+        "additionalSources": [
+          "https://www.wcb.pe.ca/Workplace/Asbestos"
+        ]
+      }
+    },
+    "NL": {
+      "coAlarms": {
+        "existingHomes": null,
+        "appliesTo": "No provincial CO provision found. Smoke alarms, by contrast, are required in new and existing dwellings.",
+        "summary": "No provincial requirement to install CO alarms in existing homes was found. The Fire Protection Services Regulations (NLR 45/12, amended to 23/26) require smoke alarms in new and existing dwelling units, including existing one- and two-family homes unless a municipal by-law governs, and in seasonal cottages. They contain no CO alarm provision. They adopt the National Building Code except Part 9 as it relates to one- and two-family dwellings, so building rules for new houses are left to municipal by-laws.",
+        "note": "No official NL statement was found that explicitly confirms or rules out a CO alarm requirement for existing homes. Left null.",
+        "law": "Fire Protection Services Regulations, NLR 45/12 (Fire Protection Services Act) — no CO provision",
+        "source": "https://www.assembly.nl.ca/legislation/sr/regulations/rc120045.htm",
+        "additionalSources": [
+          "https://www.gov.nl.ca/jps/files/forms-smoke-alarm-info-sheet.pdf"
+        ]
+      },
+      "asbestos": {
+        "summary": "The Asbestos Abatement Regulations, 1998 cover workplaces and the repair, alteration or maintenance of a building containing asbestos, including its owner. Only holders of a valid asbestos abatement contractor's certificate may carry on the business of asbestos removal. The owner or contractor must notify the OHS Division in writing before starting and must obtain a disposal permit from the minister.",
+        "keyPoints": [
+          "Suspect materials are handled as asbestos until a competent lab (polarized-light microscopy) shows otherwise (s. 9).",
+          "The owner or contractor must have a qualified person prepare a written exposure assessment (s. 10).",
+          "The House of Assembly page reviewed carries a 2006 copyright notice; later amendments, if any, were not checked."
+        ],
+        "law": "Asbestos Abatement Regulations, 1998, NLR 111/98 (Occupational Health and Safety Act)",
+        "source": "https://www.assembly.nl.ca/legislation/sr/regulations/rc980111.htm"
+      }
+    },
+    "YT": {
+      "coAlarms": {
+        "existingHomes": true,
+        "appliesTo": "Every Yukon residence with a fuel-burning appliance or an attached garage.",
+        "summary": "The Yukon government states: 'Every Yukon residence with a fuel burning appliance or an attached garage must have CO detectors installed' (yukon.ca, modified 2026-01-02). The Oil-fired Appliance Safety Statutory Amendment Act (S.Y. 2013, c. 3) amended the Fire Prevention Act and Building Standards Act to allow regulations requiring owners or occupants to install and maintain CO detectors. A 2019-05-28 Yukon release says homes with gas-burning devices require CO and smoke detectors, and ties this to gas-fitting permits.",
+        "note": "The implementing regulation's name and in-force date were not located (laws.yukon.ca blocks automated access).",
+        "law": "Oil-fired Appliance Safety Statutory Amendment Act, S.Y. 2013, c. 3 (enabling amendments to the Fire Prevention Act and Building Standards Act); implementing regulation not verified",
+        "source": "https://yukon.ca/en/emergencies-and-safety/home-fire-safety/prevent-carbon-monoxide-poisoning",
+        "additionalSources": [
+          "https://yukon.ca/en/emergencies-and-safety/home-fire-safety/install-and-maintain-smoke-and-carbon-monoxide-detectors",
+          "https://laws.yukon.ca/cms/images/LEGISLATION/acts/ofassaa.pdf",
+          "https://open.yukon.ca/information/b1cbb21a-1e7d-4bd5-b4ee-01b04901749c/resource/feb78eac-98ac-40d7-9c49-beee1d1ccc59/download/19-109.html"
+        ]
+      },
+      "asbestos": {
+        "summary": "Before demolition or salvage of a building, a competent person must inspect and identify asbestos, lead and other hazardous materials, keep the results at the workplace, and have them contained or removed (OHS Regulations Part 10, s. 10.56). The Occupational Health Regulations' asbestos-control sections set restricted-area, waste-container, protective-equipment and medical-exam rules, and assign removal steps to an 'asbestos control contractor', defined as an employer certified by an accredited agency.",
+        "keyPoints": [
+          "The asbestos control contractor must take bagged asbestos waste to a pre-arranged sanitary landfill site and make sure it is covered immediately.",
+          "s. 10.56 covers demolition and salvage; no Yukon renovation survey rule was found."
+        ],
+        "law": "Occupational Health Regulations (Asbestos Control, ss. 33+); Occupational Health and Safety Regulations Part 10, s. 10.56",
+        "source": "https://www.wcb.yk.ca/regulations/occupational-health-regulations",
+        "additionalSources": [
+          "https://www.wcb.yk.ca/regulations/part-10-construction-and-building-safety"
+        ]
+      }
+    },
+    "NT": {
+      "coAlarms": {
+        "existingHomes": null,
+        "appliesTo": "New construction through the adopted NBC 2020. No existing-home rule found.",
+        "summary": "No territorial requirement to install CO alarms in existing homes was found. The Fire Prevention Regulations (amended by R-087-2024, in force 2024-10-01) adopt the National Building Code 2020 and National Fire Code 2020. Neither the Fire Prevention Act (latest amendments in force 2026-07-02) nor the Regulations contain a CO alarm provision.",
+        "note": "No official NWT statement was found that explicitly confirms or rules out a CO alarm requirement for existing homes. Left null.",
+        "law": "Fire Prevention Act (RSNWT 1988, c. F-6); Fire Prevention Regulations (RRNWT 1990, c. F-12), as amended by R-087-2024",
+        "source": "https://www.justice.gov.nt.ca/en/files/legislation/fire-prevention/fire-prevention.r1.pdf",
+        "additionalSources": [
+          "https://www.justice.gov.nt.ca/en/files/legislation/fire-prevention/fire-prevention.a.pdf"
+        ]
+      },
+      "asbestos": {
+        "summary": "WSCC's Asbestos Abatement Code of Practice (NWT and Nunavut, in effect 2018-09-28, adapted from Alberta's manual) gives the practical requirements for workplaces under the Safety Act and OHS Regulations. It calls a building survey an important step before renovating or demolishing pre-1980 buildings, and says waste asbestos is a contaminant under the NWT Environmental Protection Act that must be managed as hazardous waste, in sealed, impervious containers.",
+        "keyPoints": [
+          "The GNWT 'Guideline for the Management of Waste Asbestos' (2004), quoted in the Code, defines asbestos waste as material with more than 1% asbestos by weight."
+        ],
+        "law": "Safety Act and Occupational Health and Safety Regulations (NWT); WSCC Asbestos Abatement Code of Practice (2018)",
+        "source": "https://www.wscc.nt.ca/sites/default/files/documents/Asbestos%20Abatement%20Code%20of%20Practice%20NT%20and%20NU%20English.pdf",
+        "additionalSources": [
+          "https://www.wscc.nt.ca/health-safety/ohs-information/codes-practice"
+        ]
+      }
+    }
+  },
+  "national": {
+    "vermiculite": {
+      "summary": "Health Canada says vermiculite-based insulation may contain asbestos. If it is in your attic or walls: don't use the attic for storage, keep children out, and don't disturb it or try to remove it yourself. Seal gaps around the attic hatch, baseboards, light fixtures, electrical outlets and window/door frames, and repair cracks or holes in walls and ceilings. If you plan to renovate, hire professionals trained to handle asbestos. (Page modified 2023-02-10.)",
+      "provincialNotes": {
+        "QC": "Québec.ca says some vermiculite insulation sold between 1920 and 1990 may contain asbestos. It advises limiting attic access, leaving removal and attic renovation to a qualified professional, never trying to remove it yourself, and sealing and caulking openings. https://www.quebec.ca/sante/conseils-et-prevention/sante-et-environnement/prevenir-les-effets-amiante-sur-la-sante",
+        "AB": "For workplaces, the Alberta Asbestos Abatement Manual says vermiculite often contains asbestos below 1% but can still release hazardous fibre levels when disturbed. Without data showing it is uncontaminated, it is assumed contaminated, and known or suspected contaminated vermiculite must be treated as asbestos-containing material. https://www.alberta.ca/alberta-asbestos-abatement-manual"
+      },
+      "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/health-risks-asbestos.html"
+    },
+    "leadPaint": {
+      "summary": "Health Canada (page modified 2025-09-09) says a home built before 1960 probably contains lead-based paint. If it was built between 1960 and 1990, the exterior paint may contain lead, and its 'Reduce your exposure to lead' page adds that interior paint may contain smaller but still harmful amounts. Homes built after 1990 should not contain lead paint, because consumer paints in Canada and the U.S. were virtually lead-free by then. To test, send paint chip samples to a lab or hire a contractor with the proper X-ray equipment. Do not use sanders, heat guns or blowlamps to remove it; keep children and pregnant women away from the work area.",
+      "provincialNotes": "No provincial lead-paint rule aimed at homeowners was found. Workplace rules touch it indirectly: B.C. OHS Regulation s. 20.112 includes lead in the hazardous-materials inspection required before demolition or renovation, and Yukon OHS Regulations s. 10.56 includes lead in the pre-demolition inspection.",
+      "source": "https://www.canada.ca/en/health-canada/services/home-safety/lead-based-paint.html",
+      "additionalSources": [
+        "https://www.canada.ca/en/health-canada/services/home-garden-safety/reduce-your-exposure-lead.html"
+      ]
+    },
+    "mould": {
+      "summary": "Health Canada's Residential Indoor Air Quality Guideline: Moulds (2007) sets no numerical exposure limit. It recommends controlling humidity, promptly repairing water damage, and thoroughly cleaning any visible or concealed mould. Health Canada's consumer page (modified 2023-02-13) says there is no 'safe' limit and recommends 30–50% relative humidity. It classifies mould as small (1–3 patches, each under 1 m²), medium (more than 3 patches, or patches between 1 and 3 m²) or extensive (over 3 m², where you should consider a professional), and says testing mould concentrations or species is usually unnecessary.",
+      "provincialNotes": "No province was found with a mandatory residential mould standard; this was not exhaustively checked for every province (for example, tenancy and property-standards rules). Quebec has a voluntary standard, BNQ 3009-600 'Contamination des habitations par les moisissures — Investigation et réhabilitation du bâtiment', published 2020-04-28. It applies to houses and multi-unit dwellings, new or old, owner-occupied or rented, and the BNQ describes it as a 'document d'application volontaire'. https://www.quebec.ca/nouvelles/actualites/details/bnq-3009-600-la-premiere-norme-quebecoise-sur-les-moisissures-dans-les-habitations",
+      "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-moulds.html",
+      "additionalSources": [
+        "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+      ]
+    },
+    "labs": {
+      "asbestos": "Bulk building-material samples are analysed by polarized light microscopy (PLM). Options: (1) NVLAP (U.S. NIST) Asbestos Fiber Analysis program, which covers bulk PLM (NIST Handbook 150-3) and airborne TEM, with a searchable directory of accredited labs. (2) AIHA-LAP's Industrial Hygiene program (IHLAP), which accredits PLM, PCM and TEM methods, searchable in the AIHA-LAP directory. (3) The Standards Council of Canada's accredited-organizations search (ISO/IEC 17025 labs, filterable by province and field). (4) The CALA Directory of Accredited Laboratories (ISO/IEC 17025 environmental labs, searchable by parameter and method). In Quebec, the IRSST 'CQ Vrac' program lists labs recognized for asbestos in bulk materials (IRSST method 244 PLM; TEM for non-friable materials), and Quebec's regulatory threshold is 0.1%, versus 0.5% in Ontario, so reports must be able to show that level. PEI's OHS rules require bulk asbestos samples to go to a CALA- or AIHA-accredited lab.",
+      "mould": "AIHA-LAP's Environmental Microbiology program (EMLAP) accredits labs for fungal direct examination (e.g., spore-trap air samples, tape lifts) and culturable analysis. Search the AIHA-LAP directory and filter by EMLAP. Health Canada notes that measuring mould concentrations or identifying species is usually not needed.",
+      "lead": "AIHA-LAP's Environmental Lead program (ELLAP) accredits labs for lead in paint, soil, settled dust and air. All ELLAP labs are also recognized under the U.S. EPA National Lead Laboratory Accreditation Program. Health Canada says you can send paint chips to a lab or hire a contractor with X-ray equipment. The SCC and CALA directories list ISO/IEC 17025 labs; check each lab's scope for lead in paint.",
+      "sources": [
+        "https://www.nist.gov/nvlap/asbestos-fiber-analysis-lap",
+        "https://www-s.nist.gov/niws/index.cfm?event=directory.search",
+        "https://www.aihaaccreditedlabs.org/lab-accreditation-programs/find-an-accredited-lab",
+        "https://online.aihaaccreditedlabs.org/lapssa/f?p=AIHASSA:117800",
+        "https://www.aihaaccreditedlabs.org/lab-accreditation-programs/environmental-lead",
+        "https://www.aihaaccreditedlabs.org/lab-accreditation-programs/environmental-microbiology",
+        "https://www.aihaaccreditedlabs.org/lab-accreditation-programs/industrial-hygiene",
+        "https://scc-ccn.ca/search/accredited-organizations",
+        "https://directory.cala.ca/",
+        "https://www.irsst.qc.ca/laboratoires/programmes-reconnaissance/cq-vrac/laboratoires-reconnus",
+        "https://ohsguide.wcb.pe.ca/topic/asbestos.html"
+      ]
+    }
+  },
+  "unconfirmed": [
+    "CO alarms in existing homes for NB, PE, NL and NT: no requirement was found in the fire legislation checked, but no official source explicitly confirms either way, so existingHomes is null.",
+    "QC: whether a single-family house needs a CO alarm depends on municipal by-laws, which were not surveyed.",
+    "YT: the implementing regulation for the CO detector requirement (name and in-force date) was not located.",
+    "MB: Manitoba Building Code CO alarm requirements for new homes were not verified.",
+    "Asbestos waste or landfill rules were not checked for QC, BC, SK, MB, NB or PE.",
+    "NL Asbestos Abatement Regulations, 1998: the page reviewed carries a 2006 copyright notice; later amendments, if any, were not checked.",
+    "Residential mould standards were not exhaustively checked province by province; only Quebec's voluntary BNQ 3009-600 was found."
+  ]
+}

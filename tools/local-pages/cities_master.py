@@ -1,0 +1,91 @@
+"""Master list of cities for the service pages.
+
+Population and DGUID: Statistics Canada table 98-10-0002-01 (2021 Census, census subdivisions).
+Selection: every municipality with 2021 population >= 95,000, plus the provincial/territorial
+capitals below that line (Victoria, Fredericton, Charlottetown, Whitehorse, Yellowknife),
+Moncton and Saint John (so New Brunswick's main cities are covered), and Peterborough
+(an existing AuditYourHome Ontario market).
+
+fsa: explicit forward sortation areas (urban FSAs from GeoNames place names), used to match
+NRCan-licensed service organizations and to describe coverage.
+"""
+
+CITIES = [
+    # slug, display name, province code, DGUID, extra label, FSAs
+    ('toronto', 'Toronto', 'ON', '2021A00053520005', None, 'M*'),
+    ('montreal', 'Montréal', 'QC', '2021A00052466023', None, 'H1*,H2*,H3*,H4*,H8*,H9*'),
+    ('calgary', 'Calgary', 'AB', '2021A00054806016', None, 'name:Calgary'),
+    ('ottawa', 'Ottawa', 'ON', '2021A00053506008', None, 'K1B,K1C,K1E,K1G,K1H,K1J,K1K,K1L,K1M,K1N,K1P,K1R,K1S,K1T,K1V,K1W,K1X,K1Y,K1Z,K2*,K4A,K4B,K4C,K4M,K4P'),
+    ('edmonton', 'Edmonton', 'AB', '2021A00054811061', None, 'T5*,T6*'),
+    ('winnipeg', 'Winnipeg', 'MB', '2021A00054611040', None, 'name:Winnipeg'),
+    ('mississauga', 'Mississauga', 'ON', '2021A00053521005', None, 'name:Mississauga'),
+    ('vancouver', 'Vancouver', 'BC', '2021A00055915022', None, 'start:Vancouver'),
+    ('brampton', 'Brampton', 'ON', '2021A00053521010', None, 'name:Brampton'),
+    ('hamilton', 'Hamilton', 'ON', '2021A00053525005', None, 'name:Hamilton,L8B,L9G,L9H,L9K'),
+    ('surrey', 'Surrey', 'BC', '2021A00055915004', None, 'start:Surrey'),
+    ('quebec-city', 'Québec City', 'QC', '2021A00052423027', None, 'G1B,G1C,G1E,G1G,G1H,G1J,G1K,G1L,G1M,G1N,G1P,G1R,G1S,G1T,G1V,G1W,G1X,G1Y,G2A,G2B,G2C,G2J,G2K,G2L,G2M,G2N,G3E,G3G,G3J,G3K'),
+    ('halifax', 'Halifax', 'NS', '2021A00051209034', None, 'B3H,B3J,B3K,B3L,B3M,B3N,B3P,B3R,B3S,B2V,B2W,B2X,B2Y,B2Z,B3A,B3B,B4A,B4B,B4C,B4E,B4G,B3G,B3E,B3T,B3V,B3Z,B2R'),
+    ('laval', 'Laval', 'QC', '2021A00052465005', None, 'H7*'),
+    ('london', 'London', 'ON', '2021A00053539036', None, 'name:London'),
+    ('markham', 'Markham', 'ON', '2021A00053519036', None, 'L3P,L3R,L3S,L6B,L6C,L6E,L6G,L3T'),
+    ('vaughan', 'Vaughan', 'ON', '2021A00053519028', None, 'L4H,L4L,L4K,L4J,L6A'),
+    ('gatineau', 'Gatineau', 'QC', '2021A00052481017', None, 'J8L,J8M,J8P,J8R,J8T,J8V,J8X,J8Y,J8Z,J9A,J9H,J9J'),
+    ('saskatoon', 'Saskatoon', 'SK', '2021A00054711066', None, 'name:Saskatoon'),
+    ('kitchener', 'Kitchener', 'ON', '2021A00053530013', None, 'name:Kitchener'),
+    ('longueuil', 'Longueuil', 'QC', '2021A00052458227', None, 'J4G,J4H,J4J,J4K,J4L,J4M,J4N,J3Y,J3Z,J4T,J4V'),
+    ('burnaby', 'Burnaby', 'BC', '2021A00055915025', None, 'name:Burnaby'),
+    ('windsor', 'Windsor', 'ON', '2021A00053537039', None, 'start:Windsor'),
+    ('regina', 'Regina', 'SK', '2021A00054706027', None, 'start:Regina'),
+    ('oakville', 'Oakville', 'ON', '2021A00053524001', None, 'L6H,L6J,L6K,L6L,L6M'),
+    ('richmond-bc', 'Richmond', 'BC', '2021A00055915015', 'Richmond, BC', 'V6V,V6W,V6X,V6Y,V7A,V7B,V7C,V7E'),
+    ('richmond-hill', 'Richmond Hill', 'ON', '2021A00053519038', None, 'L4B,L4C,L4E,L4S'),
+    ('burlington', 'Burlington', 'ON', '2021A00053524002', None, 'L7L,L7M,L7N,L7P,L7R,L7S,L7T'),
+    ('oshawa', 'Oshawa', 'ON', '2021A00053518013', None, 'L1G,L1H,L1J,L1K,L1L'),
+    ('sherbrooke', 'Sherbrooke', 'QC', '2021A00052443027', None, 'J1C,J1E,J1G,J1H,J1J,J1K,J1L,J1M,J1N,J1R'),
+    ('sudbury', 'Greater Sudbury', 'ON', '2021A00053553005', 'Sudbury', 'P3A,P3B,P3C,P3E,P3G,P3L,P3N,P3P,P3Y'),
+    ('abbotsford', 'Abbotsford', 'BC', '2021A00055909052', None, 'V2S,V2T,V3G,V4X'),
+    ('levis', 'Lévis', 'QC', '2021A00052425213', None, 'G6C,G6J,G6K,G6V,G6W,G6X,G6Y,G6Z,G7A'),
+    ('coquitlam', 'Coquitlam', 'BC', '2021A00055915034', None, 'V3J,V3K'),
+    ('barrie', 'Barrie', 'ON', '2021A00053543042', None, 'L4M,L4N,L9J'),
+    ('saguenay', 'Saguenay', 'QC', '2021A00052494068', None, 'G7B,G7G,G7H,G7J,G7K,G7N,G7S,G7T,G7X,G7Y,G7Z,G8A'),
+    ('kelowna', 'Kelowna', 'BC', '2021A00055935010', None, 'V1P,V1V,V1W,V1X,V1Y,V1Z'),
+    ('guelph', 'Guelph', 'ON', '2021A00053523008', None, 'N1C,N1E,N1G,N1H,N1K,N1L'),
+    ('trois-rivieres', 'Trois-Rivières', 'QC', '2021A00052437067', None, 'G8T,G8V,G8W,G8Y,G8Z,G9A,G9B,G9C'),
+    ('whitby', 'Whitby', 'ON', '2021A00053518009', None, 'L1M,L1N,L1P,L1R'),
+    ('cambridge', 'Cambridge', 'ON', '2021A00053530010', None, 'N1P,N1R,N1S,N1T,N3C,N3E,N3H'),
+    ('st-catharines', 'St. Catharines', 'ON', '2021A00053526053', None, 'L2M,L2N,L2P,L2R,L2S,L2T,L2V,L2W'),
+    ('milton', 'Milton', 'ON', '2021A00053524009', None, 'L9T,L9E'),
+    ('langley', 'Langley', 'BC', '2021A00055915001', 'Township of Langley', 'V1M,V2Y,V2Z,V4W,V3A'),
+    ('kingston', 'Kingston', 'ON', '2021A00053510010', None, 'K7K,K7L,K7M,K7P'),
+    ('ajax', 'Ajax', 'ON', '2021A00053518005', None, 'L1S,L1T,L1Z'),
+    ('waterloo', 'Waterloo', 'ON', '2021A00053530016', None, 'N2J,N2L,N2T,N2V'),
+    ('terrebonne', 'Terrebonne', 'QC', '2021A00052464008', None, 'J6V,J6W,J6X,J6Y,J7M'),
+    ('saanich', 'Saanich', 'BC', '2021A00055917021', None, 'V8N,V8P,V8X,V8Y,V8Z,V9E'),
+    ('st-johns', "St. John's", 'NL', '2021A00051001519', None, 'A1A,A1B,A1C,A1E,A1G,A1H,A1S'),
+    ('thunder-bay', 'Thunder Bay', 'ON', '2021A00053558004', None, 'P7A,P7B,P7C,P7E,P7G,P7J,P7K'),
+    ('delta', 'Delta', 'BC', '2021A00055915011', None, 'V4C,V4E,V4G,V4K,V4L,V4M'),
+    ('brantford', 'Brantford', 'ON', '2021A00053529006', None, 'N3P,N3R,N3S,N3T,N3V'),
+    ('chatham-kent', 'Chatham-Kent', 'ON', '2021A00053536020', None, 'N7L,N7M,N8A'),
+    ('clarington', 'Clarington', 'ON', '2021A00053518017', None, 'L1B,L1C,L1E'),
+    ('red-deer', 'Red Deer', 'AB', '2021A00054808011', None, 'T4N,T4P,T4R'),
+    ('nanaimo', 'Nanaimo', 'BC', '2021A00055921007', None, 'V9R,V9S,V9T,V9V'),
+    ('sherwood-park', 'Sherwood Park', 'AB', '2021A00054811052', 'Strathcona County', 'T8A,T8B,T8C,T8E,T8G,T8H'),
+    ('pickering', 'Pickering', 'ON', '2021A00053518001', None, 'L1V,L1W,L1X,L1Y'),
+    ('lethbridge', 'Lethbridge', 'AB', '2021A00054802012', None, 'T1H,T1J,T1K'),
+    ('kamloops', 'Kamloops', 'BC', '2021A00055933042', None, 'V1S,V2B,V2C,V2E,V2H'),
+    ('saint-jean-sur-richelieu', 'Saint-Jean-sur-Richelieu', 'QC', '2021A00052456083', None, 'J2W,J2X,J2Y,J3A,J3B'),
+    ('victoria', 'Victoria', 'BC', '2021A00055917034', None, 'V8T,V8V,V8W'),
+    ('peterborough', 'Peterborough', 'ON', '2021A00053515014', None, 'K9H,K9J,K9K,K9L'),
+    ('moncton', 'Moncton', 'NB', '2021A00051307022', None, 'E1A,E1C,E1E,E1G'),
+    ('saint-john', 'Saint John', 'NB', '2021A00051301006', None, 'E2H,E2J,E2K,E2L,E2M,E2N,E2P,E2R,E2S'),
+    ('fredericton', 'Fredericton', 'NB', '2021A00051310032', None, 'E3A,E3B,E3C,E3G'),
+    ('charlottetown', 'Charlottetown', 'PE', '2021A00051102075', None, 'C1A,C1C,C1E'),
+    ('whitehorse', 'Whitehorse', 'YT', '2021A00056001009', None, 'Y1A'),
+    ('yellowknife', 'Yellowknife', 'NT', '2021A00056106023', None, 'X1A'),
+]
+
+PROVINCES = {
+    'ON': 'Ontario', 'QC': 'Quebec', 'BC': 'British Columbia', 'AB': 'Alberta', 'SK': 'Saskatchewan',
+    'MB': 'Manitoba', 'NS': 'Nova Scotia', 'NB': 'New Brunswick', 'PE': 'Prince Edward Island',
+    'NL': 'Newfoundland and Labrador', 'YT': 'Yukon', 'NT': 'Northwest Territories',
+}

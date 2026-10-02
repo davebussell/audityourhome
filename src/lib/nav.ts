@@ -85,10 +85,10 @@ export const NAV: NavItem[] = [
     id: 'guides',
     label: 'Guides',
     lead: {
-      title: 'Your province, your city — read like an auditor',
-      desc: 'Live programs by province, housing stock, and what to monitor where you live.',
-      href: '/provinces/',
-      cta: 'All provinces →',
+      title: 'Your city, read like an auditor',
+      desc: '70 Canadian cities, each with its climate, housing age and 16 local audit and testing services.',
+      href: '/cities/',
+      cta: 'All 70 cities →',
     },
     columns: [
       {
@@ -107,7 +107,20 @@ export const NAV: NavItem[] = [
         ],
       },
       {
-        title: 'Ontario cities',
+        title: 'Big cities',
+        links: [
+          { href: '/cities/toronto/', label: 'Toronto' },
+          { href: '/cities/montreal/', label: 'Montréal' },
+          { href: '/cities/calgary/', label: 'Calgary' },
+          { href: '/cities/ottawa/', label: 'Ottawa' },
+          { href: '/cities/edmonton/', label: 'Edmonton' },
+          { href: '/cities/winnipeg/', label: 'Winnipeg' },
+          { href: '/cities/vancouver/', label: 'Vancouver' },
+          { href: '/services/', label: '16 services by city →' },
+        ],
+      },
+      {
+        title: 'Ontario region guides',
         links: [
           { href: '/guides/toronto/', label: 'Toronto' },
           { href: '/guides/mississauga/', label: 'Mississauga' },
@@ -115,11 +128,6 @@ export const NAV: NavItem[] = [
           { href: '/guides/york-region/', label: 'York Region' },
           { href: '/guides/hamilton/', label: 'Hamilton' },
           { href: '/guides/niagara/', label: 'Niagara' },
-        ],
-      },
-      {
-        title: 'More Ontario',
-        links: [
           { href: '/guides/ottawa/', label: 'Ottawa' },
           { href: '/guides/kingston/', label: 'Kingston' },
           { href: '/guides/peterborough/', label: 'Peterborough' },
@@ -140,7 +148,7 @@ export const NAV: NavItem[] = [
         ],
       },
     ],
-    panelFoot: { href: '/guides/', label: 'All Ontario city guides →' },
+    panelFoot: { href: '/provinces/', label: 'Programs and rebates, province by province →' },
   },
   {
     id: 'gear',

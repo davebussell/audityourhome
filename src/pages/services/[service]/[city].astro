@@ -1,0 +1,277 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LeadForm from '../../../components/LeadForm.astro';
+import Photo from '../../../components/Photo.astro';
+import HousingPortrait from '../../../components/HousingPortrait.astro';
+import ThermalCompare from '../../../components/ThermalCompare.astro';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { localIndex, loadCity, services, CAT_LABEL } from '../../../lib/local';
+import type { LocalPage, LocalService, LocalCity } from '../../../lib/local';
+import { ogFor } from '../../../lib/photos';
+
+export function getStaticPaths() {
+  const out = [];
+  for (const ic of localIndex.cities) {
+    const full = loadCity(ic.slug);
+    const { pages, ...city } = full;
+    for (const s of services) {
+      out.push({ params: { service: s.slug, city: ic.slug }, props: { page: pages[s.slug], city, service: s } });
+    }
+  }
+  return out;
+}
+
+interface Props {
+  page: LocalPage;
+  city: Omit<LocalCity, 'pages'>;
+  service: LocalService;
+}
+const { page: pg, city, service } = Astro.props;
+
+/** LeadForm area values for places outside Ontario's region list */
+const PROV_AREA: Record<string, string> = {
+  BC: 'bc', AB: 'alberta', SK: 'saskatchewan', MB: 'manitoba', QC: 'quebec', NB: 'new-brunswick',
+  NS: 'nova-scotia', PE: 'pei', NL: 'newfoundland-labrador', YT: 'north', NT: 'north',
+};
+const area = city.prov === 'ON' ? city.onRegion ?? 'other-ontario' : PROV_AREA[city.prov] ?? '';
+
+const path = `/services/${service.slug}/${city.slug}/`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+    { name: service.h1, path: `/services/${service.slug}/` },
+    { name: city.name, path },
+  ]),
+  faqSchema(pg.faq),
+];
+
+const leadHeading = service.cat === 'energy'
+  ? `Get matched with a registered advisor in ${city.name}`
+  : service.cat === 'commercial'
+    ? `Tell us about your building in ${city.name}`
+    : `Ask about ${service.name.toLowerCase()} in ${city.name}`;
+const leadSub = service.cat === 'energy'
+  ? 'Tell us your postal code and what you’re planning. We’ll connect you with one licensed service organization serving your area. No spam, no shared lead lists.'
+  : 'Tell us your postal code and what you’re dealing with. We’ll reply with the right kind of certified professional or lab for your area, and which programs apply.';
+
+const statusChip: Record<string, [string, string]> = {
+  active: ['chip-active', 'Open'],
+  'active-limited': ['chip-limited', 'Open · deadline'],
+  closed: ['chip-closed', 'Closed'],
+};
+---
+
+<Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(service.slug)}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/services/">Services</a> <span aria-hidden="true">/</span>
+      <a href={`/services/${service.slug}/`}>{service.h1}</a> <span aria-hidden="true">/</span>
+      <span>{city.name}</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{pg.kicker} · checked {localIndex.checked}</p>
+        <h1>{pg.h1}</h1>
+        <p class="lede">{pg.lede}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#lead-form">{service.cat === 'energy' ? `Get matched in ${city.name}` : 'Ask a question'} →</a>
+          <a class="btn btn-ghost" href={service.guide}>{service.guideLabel}</a>
+        </div>
+      </div>
+      <Photo name={service.slug} eager sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+    </div>
+
+    <div class="glance">
+      {pg.glance.map((x) => (
+        <div class="g"><p class="k">{x.k}</p><p class="v">{x.v}</p>{x.sub && <p class="s">{x.sub}</p>}</div>
+      ))}
+    </div>
+
+    <div class="layout">
+      <article class="main">
+        <HousingPortrait
+          slug={city.slug}
+          name={city.name}
+          era={city.facts.era}
+          houses={city.facts.houses}
+          hdd={city.facts.hdd}
+          designHeat={city.facts.designHeat}
+          heading={`How ${city.name} is built`}
+        />
+
+        {pg.sections.map((s, i) => (
+          <>
+            <section class="sec">
+              <h2>{s.h2}</h2>
+              <div class="prose" set:html={s.html} />
+            </section>
+            {i === 0 && service.slug === 'thermal-imaging' && (
+              <div class="tc-wrap">
+                <ThermalCompare caption="Illustration: the same house in visible light and in infrared. A winter scan shows where heat escapes: door and window edges, the eaves, and the rim joist above the foundation." />
+              </div>
+            )}
+          </>
+        ))}
+
+        {pg.providers && (
+          <section class="sec providers" id="providers">
+            <h2>{pg.providers.heading}</h2>
+            {pg.providers.special && <div class="card card-pad callout"><p class="mb-0">{pg.providers.special}</p></div>}
+            {pg.providers.items.length > 0 && (
+              <>
+                <p class="small">{pg.providers.note}</p>
+                <ul class="plist">
+                  {pg.providers.items.map((p) => (
+                    <li class="prow">
+                      <div class="pname">
+                        {p.profile ? <a href={p.profile}><strong>{p.name}</strong></a> : <strong>{p.name}</strong>}
+                        <span class="chips">
+                          {p.hrs && <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="Approved for Ontario's Home Renovation Savings assessment path">HRS-approved</a>}
+                          {p.gcc && <span class="chip chip-neutral" title="Member of the Green Communities Canada non-profit network">Non-profit network</span>}
+                          {p.profile && <span class="chip chip-info">Profile</span>}
+                        </span>
+                      </div>
+                      <div class="pmeta">
+                        {p.phone && <a class="tel" href={`tel:${p.phone.replace(/[^0-9+]/g, '')}`}>{p.phone}</a>}
+                        <span class="cov" title="Share of this city's urban postal areas the organization lists with NRCan">
+                          <span class="covbar"><span style={`width:${Math.max(4, p.coverage)}%`}></span></span>
+                          {p.coverage}% of {city.name}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <p class="meta">Source: NRCan list of licensed service organizations, checked {localIndex.checked}. Call to confirm your street is covered and ask about wait times.</p>
+              </>
+            )}
+          </section>
+        )}
+
+        {pg.programs && pg.programs.items.length > 0 && (
+          <section class="sec" id="programs">
+            <h2>{pg.programs.heading}</h2>
+            <div class="progs">
+              {pg.programs.items.map((p) => (
+                <a class="card prog" href={p.href}>
+                  <span class="pk">{p.kind}{p.audit ? ' · needs an evaluation' : ''}</span>
+                  <strong>{p.name}</strong>
+                  <span class="ps">{p.summary}</span>
+                  {statusChip[p.status] && <span class={`chip ${statusChip[p.status][0]}`}>{statusChip[p.status][1]}</span>}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="sec">
+          <h2>{service.name} in {city.name}: common questions</h2>
+          {pg.faq.map((f) => (
+            <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+          ))}
+        </section>
+      </article>
+
+      <aside class="side">
+        <div class="card card-pad snap">
+          <p class="eyebrow">Local snapshot · {city.name}</p>
+          <dl>
+            {pg.snapshot.map((x) => (<><dt>{x.k}</dt><dd>{x.v}</dd></>))}
+          </dl>
+          <a class="more" href={`/cities/${city.slug}/`}>All 16 services in {city.name} →</a>
+        </div>
+        <nav class="card card-pad rel" aria-label={`Other services in ${city.name}`}>
+          <p class="eyebrow">More in {city.name}</p>
+          <ul>
+            {pg.related.map((r) => <li><a href={r.href}>{r.label.replace(` in ${city.name}`, '')}</a></li>)}
+          </ul>
+        </nav>
+      </aside>
+    </div>
+
+    {pg.nearby.length > 0 && (
+      <section class="nearby">
+        <h2>{service.name} near {city.name}</h2>
+        <div class="nb">
+          {pg.nearby.map((n) => (
+            <a href={n.href}><span>{n.label}</span>{typeof n.km === 'number' && <span class="km">{n.km} km</span>}</a>
+          ))}
+          <a class="all" href={`/services/${service.slug}/`}>All {localIndex.cities.length} cities →</a>
+        </div>
+      </section>
+    )}
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {pg.sources.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <p class="meta">Checked {localIndex.checked}. Census figures are for the municipality ({city.provName}); climate data is NRCan's HOT2000 station {city.facts.station} ({city.facts.stationKm} km away).</p>
+    </div>
+
+    <LeadForm heading={leadHeading} sub={leadSub} region={area} context={`svc-${service.slug}-${city.slug}`} />
+  </div>
+</Base>
+
+<style>
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 6px 0 30px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+  .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--ink); margin: 0; overflow-wrap: anywhere; }
+  .glance .s { font-size: 12.5px; color: var(--muted); margin: 2px 0 0; line-height: 1.35; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start; }
+  @media (max-width: 960px) { .layout { grid-template-columns: 1fr; gap: 28px; } }
+  .main { min-width: 0; }
+  .sec { margin-top: 34px; padding: 0; }
+  .sec h2 { font-size: 24px; margin-bottom: 12px; }
+  .prose { max-width: 70ch; }
+  .prose :global(p) { margin: 0 0 1em; }
+  .prose :global(ul) { padding-left: 20px; margin: 0 0 1em; display: grid; gap: 6px; }
+  .prose :global(a) { overflow-wrap: anywhere; }
+  .tc-wrap { margin: 26px 0 6px; padding: 18px; background: var(--navy); border-radius: var(--radius-lg); }
+
+  .callout { border-left: 4px solid var(--heat); margin: 0 0 14px; }
+  .callout p { font-size: 15px; }
+  .plist { list-style: none; margin: 12px 0 10px; padding: 0; border-top: 1px solid var(--line); }
+  .prow { display: flex; justify-content: space-between; align-items: center; gap: 10px 20px; flex-wrap: wrap; padding: 12px 2px; border-bottom: 1px solid var(--line); }
+  .pname { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; min-width: 0; }
+  .pname a { text-decoration: none; }
+  .chips { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .chips a { text-decoration: none; }
+  .pmeta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+  .tel { font-family: var(--mono); font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+  .cov { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; white-space: nowrap; }
+  .covbar { width: 56px; height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; display: inline-block; }
+  .covbar span { display: block; height: 100%; background: var(--pine); }
+
+  .progs { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .prog { display: grid; gap: 6px; align-content: start; padding: 16px 18px; text-decoration: none; color: var(--ink); border-left: 4px solid var(--pine); }
+  .prog:hover { border-color: var(--pine); box-shadow: var(--shadow-md); color: var(--ink); }
+  .prog .pk { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--pine); text-transform: uppercase; }
+  .prog .ps { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .prog .chip { justify-self: start; }
+
+  .side { display: grid; gap: 16px; position: sticky; top: 84px; }
+  @media (max-width: 960px) { .side { position: static; } }
+  .snap dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-size: 14px; }
+  .snap dt { color: var(--muted); }
+  .snap dd { margin: 0; font-family: var(--mono); font-weight: 600; font-size: 13.5px; text-align: right; }
+  .snap .more { display: inline-block; margin-top: 14px; font-weight: 600; font-size: 14px; }
+  .rel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; font-size: 14px; }
+  .side .eyebrow { margin-bottom: 10px; }
+
+  .nearby { padding: 36px 0 8px; }
+  .nearby h2 { font-size: 22px; }
+  .nb { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nb a { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--ink); background: var(--card); }
+  .nb a:hover { border-color: var(--ink); }
+  .nb .km { font-family: var(--mono); font-size: 12px; color: var(--faint); font-weight: 500; }
+  .nb a.all { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 26px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
+</style>

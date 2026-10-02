@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
 import { regions, providers, providersForRegion } from '../../lib/data';
@@ -16,9 +18,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-ontario')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">The directory</p>
       <h1>Find a registered energy auditor</h1>
       <p class="lede">
@@ -27,6 +30,8 @@ const schema = [
         across {regions.length} areas, compiled from public registries and provider sites, checked
         {SITE.dataReviewDate}.
       </p>
+      </div>
+      <Photo name={'region-ontario'} eager />
     </div>
 
     <div class="region-grid">

@@ -1,0 +1,24 @@
+---
+/** Compact stacked bar of a city's houses by construction era (same palette as HousingPortrait). */
+interface Props {
+  era: { pre1961: number | null; y1961to1990: number | null; y1991to2000: number | null; since2001: number | null };
+  name: string;
+}
+const { era, name } = Astro.props;
+const segs = [
+  { v: era.pre1961 ?? 0, c: '#F4A53F', l: 'before 1961' },
+  { v: era.y1961to1990 ?? 0, c: '#E8622A', l: '1961–1990' },
+  { v: era.y1991to2000 ?? 0, c: '#C04A86', l: '1991–2000' },
+  { v: era.since2001 ?? 0, c: '#7A63E0', l: '2001 or later' },
+];
+const label = `${name} houses: ` + segs.map((s) => `${Math.round(s.v)}% ${s.l}`).join(', ');
+---
+
+<span class="erabar" role="img" aria-label={label} title={label}>
+  {segs.map((s) => s.v > 0 && <span style={`flex-grow:${s.v};background:${s.c}`}></span>)}
+</span>
+
+<style>
+  .erabar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; gap: 1.5px; background: var(--line); }
+  .erabar span { display: block; min-width: 2px; }
+</style>

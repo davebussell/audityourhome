@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { ogFor } from '../lib/photos';
 import { SITE } from '../config/site';
 import { breadcrumbSchema } from '../lib/schema';
 
@@ -15,9 +17,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-hero')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">About</p>
       <h1>Why this site exists</h1>
       <p class="lede measure">
@@ -26,6 +29,8 @@ const schema = [
         lead-gen platforms sell "energy audit" leads to solar and HVAC reps. Homeowners deserved a
         better front door — so we built one.
       </p>
+      </div>
+      <Photo name={'home-hero'} eager />
     </div>
 
     <div class="measure prose">

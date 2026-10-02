@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
 import articlesJson from '../../data/articles.json';
@@ -70,9 +72,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('heat-loss-calculation')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Articles · last verification pass {SITE.dataReviewDate}</p>
       <h1>Cited, current, local</h1>
       <p class="lede measure">
@@ -80,6 +83,8 @@ const schema = [
         carries the date we checked it. Where a topic isn't inherently local, a region switcher
         makes it local — programs, requirements, and standards for where you actually live.
       </p>
+      </div>
+      <Photo name={'heat-loss-calculation'} eager />
     </div>
 
     <div class="article-list">

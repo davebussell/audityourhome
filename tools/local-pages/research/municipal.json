@@ -1,0 +1,926 @@
+{
+ "checked": "2026-09-28",
+ "cities": {
+  "toronto": [
+   {
+    "name": "Home Energy Loan Program (HELP)",
+    "type": "loan",
+    "summary": "City loan repaid on the property tax bill for energy upgrades (heat pumps, insulation, windows, air sealing, solar PV, batteries, etc.). Up to $125,000 or 10% of the property's current value assessment, whichever is less; fixed rates of 3.34% (5 yr) to 4.75% (20 yr) valid until Sept 30, 2026, plus a 2% administrative charge. Pre- and post-retrofit EnerGuide evaluations required, except heat-pump-only or rooftop-solar-only projects. Detached, semi, row and low-rise buildings up to 6 units with an M postal code.",
+    "status": "open",
+    "url": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/"
+   },
+   {
+    "name": "Eco-Roof Incentive Program",
+    "type": "other",
+    "summary": "City grants for green roofs ($100/m2, max $100,000, plus up to $1,000 for a structural assessment) and cool roofs ($5/m2 with a new membrane or $2/m2 for a coating, max $50,000). Existing residential buildings are eligible; apply before work starts.",
+    "status": "open",
+    "url": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/green-your-roof/"
+   }
+  ],
+  "montreal": [
+   {
+    "name": "RénoPlex (subsidies to renovate 1- to 5-unit buildings)",
+    "type": "other",
+    "summary": "City of Montréal renovation subsidy that includes energy work. Examples: replacing oil or gas heating with a central heat pump $1,350 per unit (central electric heating $1,000 per unit), oil water heater to electric $550, exterior foundation insulation $9 per linear m per R5, and for Bloc 2 buildings (2 to 5 units, low assessed value) wall insulation $4/m2 per R4, attic insulation $3/m2 per R20, windows $410 each, doors $550, white-membrane flat roof $70/m2. Maximum $26,000 for a single-family house and $52,000 for 2 to 5 units. Building value must be at or below $3,860/m2 (Blocs 1 and 3); minimum request $3,000 ($500 for Bloc 3). Approval is needed before work starts (allow 3 to 4 months).",
+    "status": "open",
+    "url": "https://montreal.ca/programmes/renoplex-subventions-la-renovation-des-immeubles-de-1-5-logements"
+   }
+  ],
+  "calgary": [
+   {
+    "name": "Residential Clean Energy Improvement Program (CEIP)",
+    "type": "loan",
+    "summary": "City of Calgary PACE-style financing (administered by Alberta Municipalities), repaid on the property tax bill: up to 100% of project costs to a maximum of $50,000, up to 20 years; the City estimates a fixed rate of about 6.00%-6.10%, set when you sign. Uses CEIP-qualified contractors. Intake is closed until winter 2026/2027.",
+    "status": "closed",
+    "url": "https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html"
+   },
+   {
+    "name": "Home Energy Performance Map (Home Energy Label Program)",
+    "type": "other",
+    "summary": "Free City map showing the modelled energy efficiency of Calgary low-density homes (single-family, duplex, townhome, rowhome), useful before booking an EnerGuide evaluation. The program's builder labelling incentives stopped in December 2025.",
+    "status": "open",
+    "url": "https://www.calgary.ca/environment/programs/residential-energy-labelling.html"
+   }
+  ],
+  "ottawa": [
+   {
+    "name": "Better Homes Ottawa Loan Program",
+    "type": "loan",
+    "summary": "City of Ottawa low-interest loan repaid on the property tax bill: 20-year term at 4.33% fixed, minimum $10,000, maximum $125,000 or 10% of the tax-assessed value (whichever is less), 4% administrative charge. Covers insulation, air sealing, windows, heat pumps, water heaters, solar PV, batteries, Level 2 EV chargers and more. Pre- and post-retrofit EnerGuide assessments required. Detached, semi, townhouse and multi-unit buildings of 3 storeys or less. Delivered with EnviroCentre (page updated July 2026, 'Enroll today').",
+    "status": "open",
+    "url": "https://betterhomesottawa.ca/rebate-and-incentive-programs/better-homes-loan-program/"
+   },
+   {
+    "name": "Better Homes Ottawa Heat Pump Incentive",
+    "type": "rebate-topup",
+    "summary": "City incentive for loan-program participants only: $700/ton for cold-climate air-source heat pumps (central or mini/multi-split; NRCan cold-climate list, 80%+ capacity maintenance, at least 12,000 BTU, 55 dB or less); ground-source $1,000/ton plus $5/m of vertical well depth or horizontal loop.",
+    "status": "open",
+    "url": "https://betterhomesottawa.ca/rebate-and-incentive-programs/better-homes-loan-program/"
+   },
+   {
+    "name": "Better Homes Ottawa EnerGuide assessment reduction",
+    "type": "evaluation-subsidy",
+    "summary": "For a limited time, loan-program participants can receive a $600 reduction on their approved loan after completing the program, toward the required EnerGuide assessment. Not available to applicants who get the $600 assessment rebate from the Home Renovation Savings Program.",
+    "status": "open",
+    "url": "https://betterhomesottawa.ca/rebate-and-incentive-programs/better-homes-loan-program/"
+   },
+   {
+    "name": "Better Homes Ottawa services (hotline, Energy Coaches, Home Retrofit Planner)",
+    "type": "other",
+    "summary": "City-funded services delivered by EnviroCentre: a home energy hotline (1-877-580-2582) that helps book EnerGuide assessments, one-on-one or group sessions with Energy Coaches (Registered Energy Advisors), and a Home Retrofit Planner service costing about $1,000 to $1,500 per home for loan participants (free for eligible low-income participants). The site says an initial assessment typically costs $500 to $700 and a follow-up $200 to $300.",
+    "status": "open",
+    "url": "https://betterhomesottawa.ca/better-homes-ottawa-services/"
+   }
+  ],
+  "edmonton": [
+   {
+    "name": "Clean Energy Improvement Program (CEIP)",
+    "type": "loan",
+    "summary": "City of Edmonton PACE-style financing (administered by Alberta Municipalities), repaid on the property tax bill: $3,000 to $50,000 at a 6.00% fixed rate for up to 20 years (or the upgrades' useful life). At least three upgrades are required; pre- and post-project EnerGuide evaluations are required. Air conditioners, gas furnaces (unless paired with a heat pump) and high-efficiency storage water heaters are not eligible. The City says it has no residential rebates at the moment.",
+    "status": "waitlist",
+    "url": "https://www.edmonton.ca/city_government/environmental_stewardship/clean-energy-improvement-program"
+   },
+   {
+    "name": "Home Energy Retrofit Accelerator (HERA)",
+    "type": "rebate-topup",
+    "summary": "City rebate program for upgrades made after an EnerGuide evaluation. Fully subscribed; no longer accepting new homeowner enrolments or rebate applications.",
+    "status": "closed",
+    "url": "https://homes.changeforclimate.ca/hera/"
+   }
+  ],
+  "winnipeg": [],
+  "mississauga": [
+   {
+    "name": "CCET Home Energy Coaching",
+    "type": "other",
+    "summary": "Free one-on-one coaching (a 45-minute call, with follow-ups) from the Centre for Community Energy Transformation, a municipally funded nonprofit supported by the City of Brampton. It helps homeowners and renters prioritize upgrades, understand costs and find rebates. Open only to residents of Brampton, Mississauga and Caledon.",
+    "status": "open",
+    "url": "https://energytransform.ca/home-energy-retrofits"
+   },
+   {
+    "name": "CCET Energy Retrofit Assistance (pilot)",
+    "type": "other",
+    "summary": "Free pilot for qualifying Peel Region homeowners with high energy bills (for example, households that recently received government income support): a full EnerGuide home energy audit plus selected upgrades such as an air-source heat pump, heat pump water heater or insulation (averaging about $11,500 per household), at no cost and with no loan.",
+    "status": "open",
+    "url": "https://energytransform.ca/era"
+   },
+   {
+    "name": "Peel Energy Grant Program (TRCA Climate Ready Homes / Building Up, supported by Peel Region)",
+    "type": "evaluation-subsidy",
+    "summary": "New Peel Region-supported program for owners of detached, semi-detached and townhouse homes in Peel: free home energy assessments, free personalized energy case management and rebates for heat pump installations (amounts not yet published). TRCA's page says the application form and participant guide are 'coming soon', so it is not yet taking applications.",
+    "status": "unclear",
+    "url": "https://trca.ca/conservation/sustainable-neighbourhoods/climate-ready-homes/"
+   },
+   {
+    "name": "TRCA Climate Ready Homes consultation",
+    "type": "other",
+    "summary": "Free roughly 60-minute home consultation on energy and water use, climate resilience and available rebates, for owners of detached, semi-detached and townhomes; all Peel Region residents are eligible. Participants choose one free incentive (for example, a DIY air-sealing kit) while supplies last; consultations are limited per neighbourhood.",
+    "status": "open",
+    "url": "https://trca.ca/conservation/sustainable-neighbourhoods/climate-ready-homes/"
+   }
+  ],
+  "vancouver": [
+   {
+    "name": "Heritage Energy Retrofit Grant (Vancouver Heritage Foundation)",
+    "type": "rebate-topup",
+    "summary": "Former City-supported grant for energy retrofits of Vancouver heritage homes, which subsidized pre- and post-retrofit evaluations. The program is now closed. The City's detached-home energy page (updated Feb 2026) lists no City-funded rebate, top-up or loan, only provincial and utility programs.",
+    "status": "closed",
+    "url": "https://www.vancouverheritagefoundation.org/grants/heritage-energy-retrofit-grant/"
+   },
+   {
+    "name": "Water heater replacement requirement (By-law 14578)",
+    "type": "other",
+    "summary": "City rule set to start January 1, 2027: a water heater being replaced must be replaced with a model that is at least 100% efficient. On May 21, 2026 Council directed staff to report on repealing the by-law, so whether it takes effect is uncertain.",
+    "status": "unclear",
+    "url": "https://vancouver.ca/green-vancouver/green-home-retrofits.aspx"
+   }
+  ],
+  "brampton": [
+   {
+    "name": "CCET Home Energy Coaching",
+    "type": "other",
+    "summary": "Free one-on-one coaching (a 45-minute call, with follow-ups) from the Centre for Community Energy Transformation, a municipally funded nonprofit supported by the City of Brampton. It helps homeowners and renters prioritize upgrades, understand costs and find rebates. Open only to residents of Brampton, Mississauga and Caledon.",
+    "status": "open",
+    "url": "https://energytransform.ca/home-energy-retrofits"
+   },
+   {
+    "name": "CCET Energy Retrofit Assistance (pilot)",
+    "type": "other",
+    "summary": "Free pilot for qualifying Peel Region homeowners with high energy bills (for example, households that recently received government income support): a full EnerGuide home energy audit plus selected upgrades such as an air-source heat pump, heat pump water heater or insulation (averaging about $11,500 per household), at no cost and with no loan.",
+    "status": "open",
+    "url": "https://energytransform.ca/era"
+   },
+   {
+    "name": "Peel Energy Grant Program (TRCA Climate Ready Homes / Building Up, supported by Peel Region)",
+    "type": "evaluation-subsidy",
+    "summary": "New Peel Region-supported program for owners of detached, semi-detached and townhouse homes in Peel: free home energy assessments, free personalized energy case management and rebates for heat pump installations (amounts not yet published). TRCA's page says the application form and participant guide are 'coming soon', so it is not yet taking applications.",
+    "status": "unclear",
+    "url": "https://trca.ca/conservation/sustainable-neighbourhoods/climate-ready-homes/"
+   },
+   {
+    "name": "TRCA Climate Ready Homes consultation",
+    "type": "other",
+    "summary": "Free roughly 60-minute home consultation on energy and water use, climate resilience and available rebates, for owners of detached, semi-detached and townhomes; all Peel Region residents are eligible. Participants choose one free incentive (for example, a DIY air-sealing kit) while supplies last; consultations are limited per neighbourhood.",
+    "status": "open",
+    "url": "https://trca.ca/conservation/sustainable-neighbourhoods/climate-ready-homes/"
+   }
+  ],
+  "hamilton": [
+   {
+    "name": "Better Homes Hamilton (pilot loan program)",
+    "type": "loan",
+    "summary": "City pilot of 0% interest loans repaid on the property tax bill (local improvement charge) over 10 or 15 years, up to $20,000 per home for fuel-switching energy retrofits, for about 50 homes. The pilot closed to applications on Feb 1, 2024 and no new intake is posted; in 2026 the City is passing charge by-laws for existing participants.",
+    "status": "closed",
+    "url": "https://www.hamilton.ca/home-neighbourhood/environmental-stewardship/environmental-plans-strategies/hamiltons-climate-2"
+   }
+  ],
+  "surrey": [],
+  "quebec-city": [
+   {
+    "name": "Rénovation résidentielle (Programme Rénovation Québec)",
+    "type": "other",
+    "summary": "City, SHQ and CMHC renovation subsidy for residential buildings at least 25 years old with major defects. The 'remise en état' stream inside the revitalization zone can also cover upgrades such as better insulation. Suspended: the SHQ has suspended Rénovation Québec until further notice and the City is not accepting new applications (there is a form to be notified when it reopens). No other City energy-retrofit subsidy for homes was found on the City's programs list.",
+    "status": "paused",
+    "url": "https://www.ville.quebec.qc.ca/apropos/programmes-subventions/habitation/renovation-quebec-interieur-zone.aspx"
+   }
+  ],
+  "halifax": [
+   {
+    "name": "Solar City (municipal solar financing)",
+    "type": "loan",
+    "summary": "Halifax Regional Municipality financing for solar photovoltaic, solar hot air and solar hot water systems. It is repaid as a voluntary Local Improvement Charge billed separately from property tax, over 10 years at a 4.75% fixed rate, and can be repaid early without penalty. Residential owners and non-profits in good standing can register; any qualified contractor can be used (contractor and design reviewed by HRM). No municipal financing for other energy-efficiency upgrades was found.",
+    "status": "open",
+    "url": "https://www.halifax.ca/home-property/solar-projects/about-solar-city"
+   }
+  ],
+  "laval": [
+   {
+    "name": "Subvention pour le remplacement d'un système de chauffage au mazout",
+    "type": "rebate-topup",
+    "summary": "City of Laval subsidy for replacing oil heating with a system powered only by electricity or renewables (geothermal, wind, solar, air-source heat pumps; propane and natural gas are excluded). Oil-only systems: $2,000 for a single-family home, $1,400 for a semi-detached or row house, $1,400 for a condo, $1,700 for a mobile home, $1,400 per eligible unit in a duplex or triplex, and $900 per unit (up to 20 units) in buildings of 30 units or fewer. Dual-energy (oil plus electric) systems get half those amounts. Apply through Mon dossier after the work is done (work completed since Sept 5, 2017), with proof the old system was decommissioned by a licensed contractor. Page updated Jan 30, 2026; no end date stated.",
+    "status": "open",
+    "url": "https://www.laval.ca/aides-subventions/programmes-subventions/remplacement-systeme-chauffage-mazout/"
+   }
+  ],
+  "london": [
+   {
+    "name": "BetterHomes London loan",
+    "type": "loan",
+    "summary": "City of London program (FCM Green Municipal Fund-supported) with a free retrofit coach: loans up to $40,000 at a 2.5% fixed rate, terms up to 20 years, repaid through property taxes, with up to 50% of approved costs paid up front. The project must cut energy use by at least 25% (typically a $20,000-$30,000 investment); at least 80% of costs must be energy efficiency. For detached, semi, townhomes, duplexes and triplexes used as a full-time primary residence. Participants usually pay for the initial energy assessment ($500-$700) before financing approval; EnerGuide assessment costs are eligible for financing. Site updated Sept 2026.",
+    "status": "open",
+    "url": "https://betterhomeslondon.ca/"
+   },
+   {
+    "name": "BetterHomes London income-qualified incentives",
+    "type": "rebate-topup",
+    "summary": "Grants that do not have to be repaid, deducted from the loan balance after renovations. Paid on a sliding scale by energy savings: $2,500 at 25%, $3,000 at 30%, $4,000 at 40%, $5,000 at 50%, $6,000 at 60%, $7,500 at 75%, up to $10,000 at 100%. Household income must be under $95,000 for one person or under $115,000 for two to five people. Rental properties are not eligible.",
+    "status": "open",
+    "url": "https://betterhomeslondon.ca/incentives/"
+   }
+  ],
+  "markham": [
+   {
+    "name": "MyHEAT Thermal Map (Enbridge Gas)",
+    "type": "other",
+    "summary": "Free aerial rooftop heat-loss map and rating for residential homes. Burlington's City page says Enbridge Gas and MyHEAT mapped Burlington, Vaughan, Richmond Hill and Markham. Markham itself has no City rebate or loan; Markham and Richmond Hill are studying a future home energy retrofit program.",
+    "status": "open",
+    "url": "https://www.burlington.ca/en/home-property-and-environment/energy-and-buildings.aspx"
+   }
+  ],
+  "vaughan": [
+   {
+    "name": "MyHEAT Thermal Map (Enbridge Gas)",
+    "type": "other",
+    "summary": "Free aerial rooftop heat-loss map and rating for residential homes. Burlington's City page says Enbridge Gas and MyHEAT mapped Burlington, Vaughan, Richmond Hill and Markham. No City of Vaughan home energy loan, rebate or evaluation subsidy was found.",
+    "status": "open",
+    "url": "https://www.burlington.ca/en/home-property-and-environment/energy-and-buildings.aspx"
+   }
+  ],
+  "gatineau": [
+   {
+    "name": "Programme de remplacement de systèmes de chauffage au mazout",
+    "type": "rebate-topup",
+    "summary": "City of Gatineau subsidy of 75% of the cost of replacing an oil heating system (forced air or hot water, not dual-energy) with an all-electric system, up to $3,500 per building. Residential buildings up to 20 units; an RBQ-licensed general contractor must remove the system and tank. The work must not have received a subsidy from another program for the same work. Registration accepted any time until funds run out (By-law 876-2020).",
+    "status": "open",
+    "url": "https://www.gatineau.ca/portail/default.aspx?p=guichet_municipal/subventions_commandites/programme_remplacement_systemes_chauffage_mazout"
+   },
+   {
+    "name": "Programme Rénovation résidentielle de la Ville de Gatineau (PRRG)",
+    "type": "other",
+    "summary": "City-funded renovation subsidy (By-law 985-2025) for residential buildings built before 1985 (single-family homes assessed at $210,000 or less) in eligible sectors. Covers repair, restoration or replacement work approved by an inspector. The City's energy-efficiency page says it can add complementary aid for certain work. Owner pays 50% of eligible costs; maximum from $6,250 (studio) to $15,000 (3-bedroom) per unit and $25,960 to $30,960 per building. About a two-year waitlist and a $500 + tax file-opening fee. Rénovation Québec (PRQ) in Gatineau was suspended by Québec in spring 2025.",
+    "status": "waitlist",
+    "url": "https://www.gatineau.ca/portail/default.aspx?p=guichet_municipal/subventions_commandites/programme_renovation_residentielle"
+   }
+  ],
+  "saskatoon": [
+   {
+    "name": "Home Energy Loan Program (HELP)",
+    "type": "loan",
+    "summary": "City of Saskatoon low-interest loan repaid through property taxes: $1,000 to $40,000 (up to $60,000 with proof of a 50%+ energy reduction), 2026 rates of 3.24% (5 yr), 4.03% (10 yr), 4.68% (15 yr) and 4.83% (20 yr), $750 admin fee (waived with proof of low income). Covers cold-climate heat pumps, high-efficiency furnaces, windows and doors, insulation, air sealing, HRV/ERV, solar PV, geothermal, batteries and more for single-family, semi, row and non-apartment condo homes. Do not start work before signing the Deferral Agreement. The page says it is accepting applications (Jan 2026).",
+    "status": "open",
+    "url": "https://www.saskatoon.ca/environmental-initiatives/better-buildings/home-energy-and-water-efficiency/home-energy-loan-program-help"
+   },
+   {
+    "name": "HELP energy audit rebate",
+    "type": "evaluation-subsidy",
+    "summary": "HELP participants get a $1,000 rebate to cover the cost of their EnerGuide energy audits. You must take part in the loan portion of the program to get it.",
+    "status": "open",
+    "url": "https://www.saskatoon.ca/environmental-initiatives/better-buildings/home-energy-and-water-efficiency/home-energy-loan-program-help"
+   },
+   {
+    "name": "Home Energy Map (Home Energy Planner)",
+    "type": "other",
+    "summary": "Free City tool for owners of existing single-family and eligible low-rise homes to benchmark their home's energy performance, track energy use and emissions, and find improvement opportunities. The rest of the Home Energy Planner, including a Home Energy Decarbonization Plan, is still under development.",
+    "status": "open",
+    "url": "https://www.saskatoon.ca/environmental-initiatives/better-buildings/home-energy-and-water-efficiency/home-energy-planner"
+   },
+   {
+    "name": "SaskPower Energy Assistance Program (City of Saskatoon partner)",
+    "type": "other",
+    "summary": "Free home visit by a Home Energy Coach and free basic upgrades (LEDs, low-flow showerheads and aerators, pipe wrap, block heater timer, drying rack, and a smart thermostat if eligible) for income-qualified households. It is open to Saskatoon Light & Power customers through the City's partnership with SaskPower; waits range from 3 weeks to 3 months.",
+    "status": "open",
+    "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/energy-assistance-program"
+   }
+  ],
+  "kitchener": [
+   {
+    "name": "Kitchener Utilities EnerGuide evaluation subsidy (via Reep Green Solutions)",
+    "type": "evaluation-subsidy",
+    "summary": "Kitchener Utilities (the City of Kitchener's natural gas utility) gives its natural gas customers a $50 subsidy on Reep Green Solutions' initial EnerGuide evaluation, which lowers it from $540 to $490 (no HST; Reep is a registered charity). This is published on Reep's pricing page; Kitchener Utilities' own offers page only suggests a Reep evaluation. (Reep's price page is undated.)",
+    "status": "open",
+    "url": "https://reepgreen.ca/energyevaluation/"
+   },
+   {
+    "name": "Kitchener Utilities smart thermostat and condensing water heater offers",
+    "type": "other",
+    "summary": "Kitchener Utilities (City-owned) offers a $75 on-bill credit for replacing a manual or programmable thermostat with a smart thermostat, and a $500 bill credit for moving to a condensing rental water heater (0.86 UEF or higher) rented from Kitchener Utilities. Both are for Kitchener residential properties with an active Kitchener Utilities account.",
+    "status": "open",
+    "url": "https://www.kitchenerutilities.ca/offers-rebates/current-offers/"
+   }
+  ],
+  "longueuil": [],
+  "burnaby": [],
+  "windsor": [],
+  "regina": [],
+  "oakville": [],
+  "richmond-bc": [
+   {
+    "name": "City of Richmond residential heat pump rebate and electrical upgrade top-up",
+    "type": "rebate-topup",
+    "summary": "City page: owners of single-family homes, duplexes and townhomes get a $350 City rebate on top of CleanBC rebates when switching from oil, natural gas or propane to an electric heat pump, plus up to $500 more for a needed electrical system upgrade. The page was last published Sept 2024; the City's heat pump story map (updated Aug 2026) still says incentives and electrical-upgrade top-ups are available but gives no amounts. Treat 2026 availability and amounts as unconfirmed.",
+    "status": "unclear",
+    "url": "https://www.richmond.ca/services/climate/energysrvs/existingbuildings/heatpumps.htm"
+   }
+  ],
+  "richmond-hill": [
+   {
+    "name": "Home Energy Tool Kit (library loan)",
+    "type": "other",
+    "summary": "Residents can borrow a free Home Energy Tool Kit from the Central Branch Library: infrared thermometer, energy meter, air quality detector, light meter and a workbook for a DIY check of home energy use before an audit. There is also a DIY workbook version.",
+    "status": "open",
+    "url": "https://www.richmondhill.ca/en/learn-more/sustainable-energy.aspx"
+   },
+   {
+    "name": "MyHEAT thermal map (City of Richmond Hill with Enbridge Gas)",
+    "type": "other",
+    "summary": "Free online rooftop thermal-imaging heat-loss map and rating for Richmond Hill homes. Enter your address to see where heat is escaping and download a home report.",
+    "status": "open",
+    "url": "https://www.richmondhill.ca/en/learn-more/sustainable-energy.aspx"
+   },
+   {
+    "name": "Free Climate Ready Home consultation (City with TRCA)",
+    "type": "other",
+    "summary": "The City partners with Toronto and Region Conservation Authority to offer free one-on-one Climate Ready Home consultations on comfort, energy costs and protecting the home. Richmond Hill has no City rebate or loan; it is studying a future home energy retrofit program with Markham.",
+    "status": "open",
+    "url": "https://www.richmondhill.ca/en/learn-more/sustainable-energy.aspx"
+   }
+  ],
+  "burlington": [
+   {
+    "name": "MyHEAT Thermal Map (Enbridge Gas, promoted by the City)",
+    "type": "other",
+    "summary": "Free online aerial rooftop heat-loss map with a heat-loss rating and report for each Burlington home, from Enbridge Gas and MyHEAT and listed on the City's Energy and Buildings page. The City lists no City-funded rebate or loan for home energy retrofits, only provincial and utility programs.",
+    "status": "open",
+    "url": "https://www.burlington.ca/en/home-property-and-environment/energy-and-buildings.aspx"
+   }
+  ],
+  "oshawa": [
+   {
+    "name": "Durham Greener Homes Loan",
+    "type": "loan",
+    "summary": "Durham Region local improvement charge loan (Durham Greener Homes): up to $125,000 at 2% interest, fixed 15-year repayment on the property tax bill, with up to 50% of eligible funds available up front. At least 80% must go to energy-efficiency upgrades (insulation, windows, air sealing, heat pumps, heat pump water heaters, solar, batteries); up to 20% can go to other eligible items (flood/weather resilience, electrical, EV charging, EnerGuide evaluation and permit costs). Pre- and post-retrofit EnerGuide evaluations are required (pre-retrofit on or after April 28, 2022). Start by booking a free Greener Homes Coach consultation.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/financial/loans/durham-region/"
+   },
+   {
+    "name": "Durham Greener Homes coaching, Weather-ready Home Assessment and vHEAT",
+    "type": "other",
+    "summary": "Free services for Durham Region residents: a Greener Homes Coach (unbiased advice on retrofits, rebates and financing), a free Weather-ready Home Assessment (extreme heat and cold, flooding and wind vulnerabilities), and vHEAT, an online virtual home energy assessment tool. Delivered by Windfall Ecology Centre for the Region.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/"
+   }
+  ],
+  "sherbrooke": [
+   {
+    "name": "Hydro-Sherbrooke customers can use Hydro-Québec's LogisVert",
+    "type": "other",
+    "summary": "Sherbrooke's municipal utility says Hydro-Sherbrooke customers can use Hydro-Québec's LogisVert program (financial aid for heat pumps, some appliances and draft-proofing). This matters because Sherbrooke is not served by Hydro-Québec. Notice posted April 2, 2026. The City has no energy-specific renovation subsidy of its own; its Rénovation Québec program is suspended by the SHQ.",
+    "status": "open",
+    "url": "https://www.sherbrooke.ca/fr/vie-municipale/actualites/1030/le-programme-logisvert-d-hydro-quebec-une-aide-financiere-pour-mieux-consommer"
+   }
+  ],
+  "sudbury": [
+   {
+    "name": "CHIRP Home Retrofit Support (Community Home Improvement and Resiliency Program)",
+    "type": "other",
+    "summary": "Free one-on-one Home Improvement Navigator service from the City of Greater Sudbury: discovery consultation, review of an EnerGuide report or repair list, an incentive roadmap before work starts, and a final check-in. Guidance only; no City rebates. Because of high demand the City is not taking on new participants yet but is collecting applications on a waitlist.",
+    "status": "waitlist",
+    "url": "https://www.greatersudbury.ca/do-business/planning-and-development/chirp-home-retrofit-support/"
+   }
+  ],
+  "abbotsford": [],
+  "levis": [],
+  "coquitlam": [],
+  "barrie": [],
+  "saguenay": [],
+  "kelowna": [
+   {
+    "name": "Kelowna EnerGuide Subsidy Offer (Home Energy Navigator)",
+    "type": "evaluation-subsidy",
+    "summary": "Limited-time City of Kelowna offer through the Home Energy Navigator: free pre- and post-retrofit EnerGuide evaluations plus free extras (heat pump sizing, duct flow measurement, electrical panel assessment). Eligibility: a Kelowna single-family home, townhouse, duplex or mobile home with fossil-fuel primary heating, planning a ducted central or dual-fuel heat pump, upgrades done after registering, and the post-retrofit evaluation done within 12 months. The offer page says 'Accepting Requests'.",
+    "status": "open",
+    "url": "https://homeenergynav.ca/community/kelowna/special-offers/"
+   },
+   {
+    "name": "Home Energy Navigator (City of Kelowna)",
+    "type": "other",
+    "summary": "Free Energy Concierge appointment and ongoing retrofit support for Kelowna residents, offered through the City's partnership with City Green Solutions.",
+    "status": "open",
+    "url": "https://www.kelowna.ca/our-community/environment/energy"
+   },
+   {
+    "name": "See the Heat thermal imaging camera loan",
+    "type": "other",
+    "summary": "Kelowna library cardholders can borrow a free smartphone thermal imaging camera kit (with a Kill-A-Watt meter) for up to 7 days to find drafts and heat loss. Run with FortisBC and the Okanagan Regional Library.",
+    "status": "open",
+    "url": "https://www.kelowna.ca/our-community/environment/energy"
+   }
+  ],
+  "guelph": [
+   {
+    "name": "Guelph Greener Homes loan",
+    "type": "loan",
+    "summary": "City of Guelph 0% interest loan (FCM Green Municipal Fund-supported), up to $50,000, repaid over 10 years with property taxes; no admin fee and no income threshold. Covers insulation, air sealing, windows and doors, air-source and cold-climate heat pumps, heat pump water heaters, solar PV and solar hot water. Pre- and post-retrofit energy audit reports are required. Loan funding is almost fully committed: the City is no longer taking loan applications, only waitlist sign-ups.",
+    "status": "waitlist",
+    "url": "https://guelph.ca/living/environment/energy/guelph-greener-homes/how-the-guelph-greener-homes-program-works/"
+   },
+   {
+    "name": "Guelph Greener Homes low-income heat pump grant",
+    "type": "rebate-topup",
+    "summary": "Grants of up to $15,000 (no repayment) for air-source heat pumps for eligible low-income owner-occupied households: property value assessment of $350,000 or less and household income under the City's limits (for example $47,090 for one person, $94,179 for four). A 50% deposit of project cost is required and grants are limited; the City says grant funding is still available.",
+    "status": "open",
+    "url": "https://guelph.ca/living/environment/energy/guelph-greener-homes/how-the-guelph-greener-homes-program-works/"
+   }
+  ],
+  "trois-rivieres": [],
+  "whitby": [
+   {
+    "name": "Durham Greener Homes Loan",
+    "type": "loan",
+    "summary": "Durham Region local improvement charge loan (Durham Greener Homes): up to $125,000 at 2% interest, fixed 15-year repayment on the property tax bill, with up to 50% of eligible funds available up front. At least 80% must go to energy-efficiency upgrades (insulation, windows, air sealing, heat pumps, heat pump water heaters, solar, batteries); up to 20% can go to other eligible items (flood/weather resilience, electrical, EV charging, EnerGuide evaluation and permit costs). Pre- and post-retrofit EnerGuide evaluations are required (pre-retrofit on or after April 28, 2022). Start by booking a free Greener Homes Coach consultation.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/financial/loans/durham-region/"
+   },
+   {
+    "name": "Durham Greener Homes coaching, Weather-ready Home Assessment and vHEAT",
+    "type": "other",
+    "summary": "Free services for Durham Region residents: a Greener Homes Coach (unbiased advice on retrofits, rebates and financing), a free Weather-ready Home Assessment (extreme heat and cold, flooding and wind vulnerabilities), and vHEAT, an online virtual home energy assessment tool. Delivered by Windfall Ecology Centre for the Region.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/"
+   },
+   {
+    "name": "Deep Retrofit Rebate (Whitby)",
+    "type": "rebate-topup",
+    "summary": "For Whitby residents only, administered by Durham Greener Homes: $2,500 for cutting modelled energy use by at least 50% between pre- and post-retrofit EnerGuide evaluations, plus $50 per extra percentage point, up to $5,000 at 100%. Minimum project cost $30,000 before tax; stacks with other rebates, including Home Renovation Savings; enrol before the work (pre-retrofit evaluation on or after April 28, 2022). Whitby's separate Weather-ready rebate is fully subscribed.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/financial/rebates/whitby/"
+   }
+  ],
+  "cambridge": [],
+  "st-catharines": [],
+  "milton": [],
+  "langley": [
+   {
+    "name": "Township of Langley Green Building Rebate Program (GBRP)",
+    "type": "evaluation-subsidy",
+    "summary": "Township rebate program tied to building permits. Its home-renovation workflow (2024 PDF) pays $15 per GJ/yr of energy saved between pre- and post-retrofit EnerGuide evaluations (at least 10 GJ/yr saved, max $750 and not more than the permit fee) plus a $300 energy evaluation rebate. The Township's rebates page now says only 'Program updates coming soon' and asks applicants to email greenbuildings@tol.ca, so current amounts and availability are unconfirmed.",
+    "status": "unclear",
+    "url": "https://www.tol.ca/en/building-development/green-homes-rebates-and-financing.aspx"
+   }
+  ],
+  "kingston": [
+   {
+    "name": "Better Homes Kingston",
+    "type": "loan",
+    "summary": "City of Kingston local improvement charge loan: up to $50,000 or 20% of home value (whichever is less), fixed rates of 3.25% (5 yr) to 4.75% (20 yr), $450 admin fee, 50% available up front. It came with Utilities Kingston rebates for the utility's natural gas customers. The program is no longer accepting applications; residents can sign up for updates on future offerings.",
+    "status": "closed",
+    "url": "https://www.cityofkingston.ca/building-and-renovating/better-homes-kingston/"
+   }
+  ],
+  "ajax": [
+   {
+    "name": "Durham Greener Homes Loan",
+    "type": "loan",
+    "summary": "Durham Region local improvement charge loan (Durham Greener Homes): up to $125,000 at 2% interest, fixed 15-year repayment on the property tax bill, with up to 50% of eligible funds available up front. At least 80% must go to energy-efficiency upgrades (insulation, windows, air sealing, heat pumps, heat pump water heaters, solar, batteries); up to 20% can go to other eligible items (flood/weather resilience, electrical, EV charging, EnerGuide evaluation and permit costs). Pre- and post-retrofit EnerGuide evaluations are required (pre-retrofit on or after April 28, 2022). Start by booking a free Greener Homes Coach consultation.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/financial/loans/durham-region/"
+   },
+   {
+    "name": "Durham Greener Homes coaching, Weather-ready Home Assessment and vHEAT",
+    "type": "other",
+    "summary": "Free services for Durham Region residents: a Greener Homes Coach (unbiased advice on retrofits, rebates and financing), a free Weather-ready Home Assessment (extreme heat and cold, flooding and wind vulnerabilities), and vHEAT, an online virtual home energy assessment tool. Delivered by Windfall Ecology Centre for the Region.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/"
+   }
+  ],
+  "waterloo": [],
+  "terrebonne": [],
+  "saanich": [
+   {
+    "name": "Saanich Heat Pump Financing Program",
+    "type": "loan",
+    "summary": "District of Saanich 0% interest financing of up to $12,000 to replace an oil, natural gas or propane furnace or boiler with a heat pump, repaid over 10 years through a property tax levy. Detached, duplex and qualified townhouse or mobile homes; half of spaces are reserved for income-qualified households; a program-eligible contractor is required. Next intake deadline is Oct 13, 2026 (Council adopts bylaws Nov 23, 2026). Administered by City Green Solutions.",
+    "status": "open",
+    "url": "https://www.saanich.ca/EN/main/community/sustainable-saanich/climate-change/programs-rebates/heat-pump-financing.html"
+   },
+   {
+    "name": "Saanich Energy Evaluation Grant (limited offer)",
+    "type": "evaluation-subsidy",
+    "summary": "For approved Heat Pump Financing participants: reduces the cost of a pre-retrofit EnerGuide evaluation with a program-partnered Energy Advisor by $350 (standard stream) or $550 (income-qualified stream), plus $75 toward an inaccessible-suite fee where applicable, and a free one-hour results consultation. The grant is paid directly to the advisor; the evaluation must be done within three months.",
+    "status": "open",
+    "url": "https://www.saanich.ca/assets/Community/Documents/Planning/sustainability/Energy%20Evaluation%20Grant%20TC%20FINAL.pdf"
+   },
+   {
+    "name": "Home Energy Navigator (Capital Regional District)",
+    "type": "other",
+    "summary": "Free Energy Concierge service (virtual consultation and support through the whole retrofit) for Greater Victoria residents, run by City Green Solutions for the CRD. There is also a limited free 'Neighbourhood Energy Navigator' offer in select communities: an Energy Advisor prepares a Retrofit Roadmap, F280 heat-loss calculation, electrical panel assessment and duct sizing for homes heated by fossil-fuel furnaces or electric baseboards or furnaces. Saanich's incentives page lists no municipal heat pump top-up in 2026, only this financing plus provincial rebates.",
+    "status": "open",
+    "url": "https://homeenergynav.ca/community/crd/"
+   }
+  ],
+  "st-johns": [
+   {
+    "name": "Make the Shift (Shift Program) - Home Energy Navigators",
+    "type": "other",
+    "summary": "Free Home Energy Navigator guidance for homeowners in the City of St. John's, from econext with support from the City (FCM Green Municipal Fund). It covers planning upgrades, finding grants and rebates, and access to lower-interest energy-retrofit loans through program partner Newfoundland and Labrador Credit Union (rates not published), plus optional financial-advisor help. Launched September 2025; site updated June 2026.",
+    "status": "open",
+    "url": "https://maketheshiftnl.ca/get-started/"
+   },
+   {
+    "name": "Make the Shift subsidized initial energy audit",
+    "type": "evaluation-subsidy",
+    "summary": "For a limited time, Shift Program participants in St. John's can get an initial energy audit (EnerGuide) subsidized to $99, which the City describes as 80% off the regular cost. Book at maketheshiftnl.ca, 709-979-0362 or hello@maketheshiftnl.ca.",
+    "status": "open",
+    "url": "https://www.stjohns.ca/your-government/environment-and-sustainability/climate-plans-and-actions/"
+   }
+  ],
+  "thunder-bay": [],
+  "delta": [],
+  "brantford": [],
+  "chatham-kent": [],
+  "clarington": [
+   {
+    "name": "Durham Greener Homes Loan",
+    "type": "loan",
+    "summary": "Durham Region local improvement charge loan (Durham Greener Homes): up to $125,000 at 2% interest, fixed 15-year repayment on the property tax bill, with up to 50% of eligible funds available up front. At least 80% must go to energy-efficiency upgrades (insulation, windows, air sealing, heat pumps, heat pump water heaters, solar, batteries); up to 20% can go to other eligible items (flood/weather resilience, electrical, EV charging, EnerGuide evaluation and permit costs). Pre- and post-retrofit EnerGuide evaluations are required (pre-retrofit on or after April 28, 2022). Start by booking a free Greener Homes Coach consultation.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/financial/loans/durham-region/"
+   },
+   {
+    "name": "Durham Greener Homes coaching, Weather-ready Home Assessment and vHEAT",
+    "type": "other",
+    "summary": "Free services for Durham Region residents: a Greener Homes Coach (unbiased advice on retrofits, rebates and financing), a free Weather-ready Home Assessment (extreme heat and cold, flooding and wind vulnerabilities), and vHEAT, an online virtual home energy assessment tool. Delivered by Windfall Ecology Centre for the Region.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/"
+   }
+  ],
+  "red-deer": [
+   {
+    "name": "Smart Thermostat Rebate",
+    "type": "other",
+    "summary": "$50 City rebate for buying and installing a qualifying ENERGY STAR smart thermostat in 2026. Red Deer residents with a City utility account; one per account; apply by Dec 31, 2026 or until funds run out. Red Deer is not on Alberta Municipalities' list of residential CEIP municipalities.",
+    "status": "open",
+    "url": "https://www.reddeer.ca/city-services/environment-and-conservation/your-home/energy-efficiency/smart-thermostat-rebate/"
+   }
+  ],
+  "nanaimo": [
+   {
+    "name": "Home Energy Assessment Rebate",
+    "type": "evaluation-subsidy",
+    "summary": "City of Nanaimo pays $150 toward an initial EnerGuide home energy assessment by a certified energy advisor (apply within 24 months of the receipt), and up to $200 for a follow-up assessment at $10 per 5 GJ/yr reduction in the EnerGuide rating (at least 5 GJ reduction). The advisor must hold a City business licence. The program page was last updated Nov 2024, is still listed on the City's rebates page, and may end without notice.",
+    "status": "open",
+    "url": "https://www.nanaimo.ca/property-development/rebates/home-energy-efficiency-rebate/how-to-receive-your-home-energy-assessment-rebate"
+   },
+   {
+    "name": "Home Energy Navigator (City of Nanaimo / Regional District of Nanaimo)",
+    "type": "other",
+    "summary": "Free Energy Concierge service for Nanaimo residents, launched by the City and the RDN and delivered by City Green Solutions, to help plan retrofits and find rebates. The City page (updated Jan 2026) promotes it.",
+    "status": "open",
+    "url": "https://www.nanaimo.ca/property-development/rebates/home-energy-efficiency-rebate"
+   }
+  ],
+  "sherwood-park": [
+   {
+    "name": "Strathcona County Clean Energy Improvement Program (CEIP)",
+    "type": "loan",
+    "summary": "County PACE-style financing (administered by Alberta Municipalities): up to 100% of eligible costs at 2% interest, terms up to 20 years, repaid on the property tax bill; a 5% incentive is applied to completed projects during the program's first four years. At capacity and closed to new pre-qualification submissions since April 30, 2026; people already on the waitlist are processed as space opens.",
+    "status": "closed",
+    "url": "https://www.strathcona.ca/your-property-utilities/residential-permits/residential-improvement/home-efficiency/clean-energy-improvement-program/"
+   }
+  ],
+  "pickering": [
+   {
+    "name": "Durham Greener Homes Loan",
+    "type": "loan",
+    "summary": "Durham Region local improvement charge loan (up to $125,000 at 2%, 15-year term), but the program says it 'is currently not available for properties located in the City of Pickering'. Pickering residents can subscribe for updates.",
+    "status": "closed",
+    "url": "https://durhamgreenerhomes.ca/financial/loans/durham-region/"
+   },
+   {
+    "name": "Durham Greener Homes coaching, Weather-ready Home Assessment and vHEAT",
+    "type": "other",
+    "summary": "Free services for Durham Region residents: a Greener Homes Coach (unbiased advice on retrofits, rebates and financing), a free Weather-ready Home Assessment (extreme heat and cold, flooding and wind vulnerabilities), and vHEAT, an online virtual home energy assessment tool. Delivered by Windfall Ecology Centre for the Region.",
+    "status": "open",
+    "url": "https://durhamgreenerhomes.ca/"
+   }
+  ],
+  "lethbridge": [
+   {
+    "name": "Clean Energy Improvement Program (CEIP)",
+    "type": "loan",
+    "summary": "City of Lethbridge PACE-style financing (administered by Alberta Municipalities): up to 100% of project costs at a 2.83% fixed rate, terms up to 25 years, repaid on the property tax bill; a $1,350 rebate is applied to completed CEIP projects. At capacity and closed to new pre-qualification submissions; people already on the waitlist are processed first come, first served.",
+    "status": "closed",
+    "url": "https://www.lethbridge.ca/ceip"
+   }
+  ],
+  "kamloops": [
+   {
+    "name": "Retrofit Assist (City of Kamloops with Community Energy Association)",
+    "type": "other",
+    "summary": "Free City-sponsored retrofit concierge: personalized guidance, help maximizing rebates, connections to energy advisors and trained contractors, and financing options.",
+    "status": "open",
+    "url": "https://www.kamloops.ca/our-community/environment-sustainability/energy-efficient-homes-buildings/retrofit-assist"
+   },
+   {
+    "name": "Retrofit Assist discounted EnerGuide evaluation",
+    "type": "evaluation-subsidy",
+    "summary": "For a limited time, Retrofit Assist participants in Kamloops can book an EnerGuide evaluation for $99 + tax ('a savings of $500 or more'), while subsidies last. Kamloops page updated Jan 2026.",
+    "status": "open",
+    "url": "https://retrofitassist.ca/communities/kamloops/"
+   },
+   {
+    "name": "City of Kamloops heat pump rebate top-up",
+    "type": "rebate-topup",
+    "summary": "The Retrofit Assist Kamloops page says the City 'presently offers rebate top-ups for Kamloops households that install a heat pump' (also EV chargers and fireplace upgrades). The City's own Rebates & Incentives page lists no top-up amount or terms, so the amount (null) and current availability are unconfirmed.",
+    "status": "unclear",
+    "url": "https://retrofitassist.ca/communities/kamloops/"
+   }
+  ],
+  "saint-jean-sur-richelieu": [],
+  "victoria": [
+   {
+    "name": "Home Energy Navigator (Capital Regional District)",
+    "type": "other",
+    "summary": "Free local Energy Concierge (virtual home energy consultation, help finding rebates and reviewing quotes, personalized retrofit guide), promoted by the City of Victoria and delivered by City Green Solutions for the CRD. The City's rebates page lists no municipal heat pump top-up; it points to CleanBC Better Homes and BC Hydro rebates.",
+    "status": "open",
+    "url": "https://www.victoria.ca/community-culture/climate-action/rebates-resources"
+   },
+   {
+    "name": "Strata Energy Advisor Program",
+    "type": "other",
+    "summary": "City of Victoria and Saanich program with the Zero Emissions Innovation Centre: strata (condo) councils get an energy advisor who visits the building and prepares a personalized decarbonization plan (heat pumps, fuel switching). Condo buildings only; the City says applications are being accepted.",
+    "status": "open",
+    "url": "https://www.victoria.ca/community-culture/climate-action/rebates-resources"
+   }
+  ],
+  "peterborough": [
+   {
+    "name": "Better Homes Peterborough loan",
+    "type": "loan",
+    "summary": "City of Peterborough program (delivered with EnviroCentre) with two financing streams: a local improvement charge loan of $10,000 to $50,000 at 4.50% fixed over 15 years, or a Kawartha Credit Union loan up to $50,000 at 4.95% variable over 5 years; $450 application fee either way. For detached, semi, townhouse and low-rise (3 storeys or fewer) buildings. A pre-retrofit EnerGuide assessment is required, and projects must include air sealing plus a whole-home cold-climate heat pump, solar, or upgrades cutting energy use or emissions by at least 25%. Page updated May 2026.",
+    "status": "open",
+    "url": "https://betterhomesptbo.ca/loan-program/"
+   },
+   {
+    "name": "Better Homes Peterborough EnerGuide assessment rebate",
+    "type": "evaluation-subsidy",
+    "summary": "$600 rebate toward an EnerGuide Home Energy Assessment, plus free energy coaching with a Registered Energy Advisor and a free electrical panel load assessment. The rebate is for participants who complete a retrofit project through the program and are not receiving a similar rebate elsewhere.",
+    "status": "open",
+    "url": "https://betterhomesptbo.ca/loan-program/"
+   },
+   {
+    "name": "Better Homes Peterborough performance incentives",
+    "type": "rebate-topup",
+    "summary": "Up to $3,600 in incentives for homes that achieve sizable energy and GHG reductions after the retrofit, plus a $250 air-sealing rebate, for program participants who complete a retrofit and are not getting a similar rebate. Stacking with other energy renovation programs is allowed.",
+    "status": "open",
+    "url": "https://www.peterborough.ca/council-city-hall/climate-change-and-environment/better-homes-peterborough/"
+   }
+  ],
+  "moncton": [],
+  "saint-john": [],
+  "fredericton": [
+   {
+    "name": "Home Energy Kits (library loan)",
+    "type": "other",
+    "summary": "The City provides Home Energy Kits that anyone can borrow at the Fredericton Public Library, with tools and tips to understand home energy use and find savings before an audit. No City-funded rebate, loan or evaluation subsidy was found; the City points to Save Energy NB for provincial programs.",
+    "status": "open",
+    "url": "https://www.fredericton.ca/about-fredericton/environmental-initiatives/energy-emissions-plans/energy-savings"
+   }
+  ],
+  "charlottetown": [],
+  "whitehorse": [],
+  "yellowknife": []
+ },
+ "evaluationPrices": {
+  "BC": [
+   {
+    "who": "City of Nanaimo (reference range, not a set price)",
+    "price": "Typically $400-$500 for an existing home; $475-$700 for a new home, depending on size",
+    "note": "From the City of Nanaimo's Home Energy Assessment Rebate page (last updated Nov 2024), which also offers a $150 municipal rebate on the initial assessment. Some BC municipal programs subsidize evaluations for participants, e.g. Kelowna (free pre and post), Kamloops Retrofit Assist ($99 + tax), Saanich ($350 or $550 grant). No stand-alone provincial EnerGuide evaluation rebate was found on Better Homes BC.",
+    "url": "https://www.nanaimo.ca/property-development/rebates/home-energy-efficiency-rebate/how-to-receive-your-home-energy-assessment-rebate"
+   }
+  ],
+  "AB": [
+   {
+    "who": "City of Edmonton Home Energy Retrofit Accelerator page (guidance only; program closed)",
+    "price": "'Expect more than $400'; get quotes from 2-3 companies",
+    "note": "No Alberta provincial evaluation rebate and no service-organization price list were found. Alberta CEIP municipalities require an EnerGuide evaluation but publish no price.",
+    "url": "https://homes.changeforclimate.ca/hera/"
+   }
+  ],
+  "SK": [
+   {
+    "who": "City of Saskatoon 'What is an Energy Audit' fact sheet (reference range, not a set price)",
+    "price": "Typically $500-$600 for the pre-project EnerGuide audit and $300-$400 for the post-project audit (can be higher for large homes)",
+    "note": "From a City of Saskatoon HELP fact sheet dated March 13, 2025. Saskatoon HELP loan participants get a $1,000 audit rebate. No provincial evaluation rebate was found; SaskPower's Home Efficiency Retrofit Rebate (HERR) ended in April 2026.",
+    "url": "https://www.saskatoon.ca/sites/default/files/media/documents/What%20is%20an%20Energy%20Audit-Mar13.pdf"
+   }
+  ],
+  "MB": [
+   {
+    "who": "Efficiency Manitoba EnerGuide Home Evaluation Rebate ($400 provincial rebate)",
+    "price": null,
+    "note": "Efficiency Manitoba gives a $400 rebate for a pre-retrofit EnerGuide evaluation (apply within 90 days). You must own the home, have Manitoba Hydro residential service, the home must be at least 2 years old, and you must plan at least one upgrade within 12 months; one rebate per address; post-retrofit evaluations are not eligible. Free evaluations through income-based and Indigenous offers. No service-organization price was found on Efficiency Manitoba's pages. Page modified June 4, 2026.",
+    "url": "https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/"
+   }
+  ],
+  "ON": [
+   {
+    "who": "Windfall Ecology Centre (Windfall Home Energy), York/Durham area",
+    "price": "$500 + HST initial (pre-upgrade); $250 + HST follow-up (post-upgrade)",
+    "note": "Price already on file, URL confirmed. Large-home surcharges start at $50 for 2,500-3,000 sq ft above grade.",
+    "url": "https://windfallcentre.ca/energy/evaluation/"
+   },
+   {
+    "who": "Reep Green Solutions (Waterloo Region, Guelph area)",
+    "price": "$540 initial; $406 follow-up ($440 if the initial was done by a different service organization); no HST (registered charity)",
+    "note": "Kitchener Utilities natural gas customers pay $490 for the initial evaluation ($50 Kitchener Utilities subsidy). Tiered surcharges for homes over 3,000 sq ft ($50-$275); $40 mileage fee outside the core service area.",
+    "url": "https://reepgreen.ca/energyevaluation/"
+   },
+   {
+    "who": "Better Homes Ottawa (City of Ottawa-funded, delivered by EnviroCentre), reference range",
+    "price": "Initial audit typically $500-$700; follow-up $200-$300",
+    "note": "Typical-cost guidance on the City-funded program site, not a fixed price.",
+    "url": "https://betterhomesottawa.ca/energy-audits/energy-assessment/"
+   },
+   {
+    "who": "Town of Oakville, reference range",
+    "price": "Typically $400-$600",
+    "note": "From the Town's Home Energy Retrofits 101 page, which also lists some outdated federal programs (e.g., the Greener Homes Grant), so treat it as a rough guide.",
+    "url": "https://www.oakville.ca/home-environment/building-renovations/home-energy-retrofits-101/"
+   },
+   {
+    "who": "Home Renovation Savings program (Enbridge Gas and Save on Energy): $600 provincial assessment rebate",
+    "price": null,
+    "note": "$600 rebate to offset the initial and follow-up home energy assessments, paid after completing the energy-assessment-required path (at least two eligible upgrades).",
+    "url": "https://www.homerenovationsavings.ca/with-assessment"
+   },
+   {
+    "who": "BetterHomes London (City of London), reference range",
+    "price": "Initial energy assessment typically $500-$700",
+    "note": "From the BetterHomes London FAQ: most participants pay the initial assessment up front before financing approval; EnerGuide assessment costs are eligible for the loan.",
+    "url": "https://betterhomeslondon.ca/"
+   }
+  ],
+  "QC": [
+   {
+    "who": "Rénoclimat (Ministère de l'Économie, de l'Innovation et de l'Énergie / Transition énergétique Québec)",
+    "price": null,
+    "note": "Not verified. On 2026-09-28 the official Rénoclimat site (transitionenergetique.gouv.qc.ca) served a TLS certificate for a different hostname and could not be read safely, and no other official page stated the evaluation cost. Re-check before publishing a price. Hydro-Sherbrooke customers can use LogisVert.",
+    "url": "https://www.transitionenergetique.gouv.qc.ca/residentiel/programmes/renoclimat"
+   }
+  ],
+  "NB": [
+   {
+    "who": "NB Power / SaveEnergyNB Total Home Energy Savings Program (Certified Energy Advisors)",
+    "price": "$99 + HST, covering both the initial and final Home Energy Evaluations",
+    "note": "Paid to the Certified Energy Advisor at the initial evaluation. Upgrades must be completed within 9 months, then the advisor returns to verify them and set incentives. Available province-wide, including Saint John Energy customers.",
+    "url": "https://www.saveenergynb.ca/en/for-home/total-home/frequently-asked-questions/"
+   }
+  ],
+  "NS": [
+   {
+    "who": "Efficiency Nova Scotia Home Energy Assessment program (Delivery Agent Partners)",
+    "price": "$199 program fee (waived for moderate-income households under the income threshold)",
+    "note": "Book the initial assessment with a Delivery Agent Partner, finish upgrades within 12 months, then book one final assessment; provincial rebates are paid within 90 days of the final assessment. Re-enrolment is allowed six months after a final assessment, but the $199 is not waived. The page does not say whether HST applies.",
+    "url": "https://www.efficiencyns.ca/programs-rebates/home-energy-assessments"
+   }
+  ],
+  "PE": [
+   {
+    "who": "efficiencyPEI (Province of PEI), through its efficiency partners (Clean Foundation, Homesol Building Solutions, RUGreen Energy Solutions, Sensible Home Inspections, Trinity Energy Group)",
+    "price": "$99 + HST",
+    "note": "Subsidized home energy assessment, booked directly with a partner, then efficiencyPEI rebates on eligible upgrades. The page does not list a follow-up assessment price. Page published June 30, 2026.",
+    "url": "https://www.princeedwardisland.ca/en/information/energy/home-energy-assessments"
+   }
+  ],
+  "NL": [
+   {
+    "who": "Make the Shift (econext with the City of St. John's), St. John's homeowners only",
+    "price": "$99 initial energy audit (limited time)",
+    "note": "The City says this is '80% off the regular cost'. No province-wide published price or provincial evaluation rebate was found; takeCHARGE lists NL service organizations (AmeriSpec, Homesol, R-U Green, ThermalWise) without prices.",
+    "url": "https://www.stjohns.ca/your-government/environment-and-sustainability/climate-plans-and-actions/"
+   }
+  ],
+  "YT": [
+   {
+    "who": "Government of Yukon (Good Energy), with partnered NRCan-registered energy advisors",
+    "price": "Existing homes: $50 for a pre-renovation assessment plus $50 for the return visit required for the insulation and air sealing rebate. New homes: $50 for a plan assessment and about $200 for the final assessment, blower door test and label.",
+    "note": "Reduced-cost assessments arranged through the Yukon government's partnership with local energy advisors; the page does not state the subsidy amount. High demand, so appointments can take several weeks. Page modified 2024-12-02.",
+    "url": "https://yukon.ca/en/energy-assessment"
+   }
+  ],
+  "NT": [
+   {
+    "who": "Arctic Energy Alliance (GNWT-subsidized)",
+    "price": "$200 + GST (single-family existing home); $300 + GST with one secondary suite; $400 + GST with two",
+    "note": "Subsidized EnerGuide evaluations of existing homes, in effect since May 1, 2025 (up from $150). AEA also gives free advice. New-home evaluations are fee-based per the application form; the City of Yellowknife requires EnerGuide evaluations for new homes started after June 25, 2018.",
+    "url": "https://aea.nt.ca/program/home-energy-evaluations/"
+   }
+  ]
+ },
+ "cityNotes": {
+  "winnipeg": {
+   "note": "No City of Winnipeg home energy loan (PACE), rebate or evaluation subsidy found; the City's climate action pages cover plans and a large-building energy disclosure project only.",
+   "url": "https://www.winnipeg.ca/services-programs/trees-environment/climate-action"
+  },
+  "surrey": {
+   "note": "No municipal top-up or loan. The City's Incentives & Rebates page lists only CleanBC Better Homes, BC Hydro and FortisBC programs; its retrofit-support page lists the BC Home Energy Planner and ECAP.",
+   "url": "https://www.surrey.ca/renovating-building-development/green-buildings/incentives-rebates"
+  },
+  "longueuil": {
+   "note": "Not verified: longueuil.quebec reset every connection (and WebFetch timed out) on 2026-09-28. Re-check the City's subsidy list manually.",
+   "url": "https://www.longueuil.quebec/fr"
+  },
+  "burnaby": {
+   "note": "No City rebate or loan. The City's page lists CleanBC, BC Hydro and the free Strata Energy Advisor; the 'Heat Pump Bonus Rebates Aug-Oct 2026' it mentions is a BC Hydro offer, not a City one.",
+   "url": "https://www.burnaby.ca/our-city/strategies-and-plans/climate-action/zero-emission-buildings-retrofits/climate-friendly-home-upgrades"
+  },
+  "windsor": {
+   "note": "No resident home-energy program. The City's climate mitigation page lists only its 2017 Community Energy Plan and Corporate Climate Action Plan.",
+   "url": "https://www.citywindsor.ca/residents/environment/climate-change-mitigation"
+  },
+  "regina": {
+   "note": "No home energy program. Renewable Regina's current initiatives are corporate projects (geothermal aquatic facility, e-buses, landfill gas).",
+   "url": "https://www.regina.ca/about-regina/renewable-regina/current-initiatives/index.html"
+  },
+  "oakville": {
+   "note": "No Town-funded rebate or loan; the Town's page points to Enbridge and Save on Energy programs and gives a typical EnerGuide cost of $400-$600. The betterhomesoakville.ca and oakvillegreenerhomes.ca domains redirect to CCET, whose coaching is limited to Brampton, Mississauga and Caledon.",
+   "url": "https://www.oakville.ca/home-environment/building-renovations/home-energy-retrofits-101/"
+  },
+  "abbotsford": {
+   "note": "No City program; the climate page only links ZEIC's Cooler Condos guide and the Strata Energy Advisor.",
+   "url": "https://www.abbotsford.ca/people-community/environment/climate-change"
+  },
+  "levis": {
+   "note": "No energy-related City subsidy. The environmental aid covers rain barrels, compost, diapers, bidets, trees and similar; the housing subsidies are adaptation (PAD) and RénoRégion.",
+   "url": "https://levis.ca/fr/ville/environnement/aides-financieres-environnementales"
+  },
+  "coquitlam": {
+   "note": "No City top-up in 2026; the page refers residents to CleanBC, BC Hydro and FortisBC and the free Energy Coach.",
+   "url": "https://www.coquitlam.ca/1136/Energy-Efficient-Upgrades"
+  },
+  "barrie": {
+   "note": "No resident home-energy program; the City's energy page covers corporate energy management and EV (Electrify Barrie) initiatives.",
+   "url": "https://www.barrie.ca/community-recreation-environment/environment/conservation-monitoring-protection/energy-efficiency-ghg-reduction"
+  },
+  "saguenay": {
+   "note": "No energy-specific program. Rénovation Québec and RénoRégion have been suspended since April 1, 2025; the City's renovation aid is for urgent major defects and first-time owners.",
+   "url": "https://ville.saguenay.ca/services-aux-citoyens/construire-et-rénover/programmes-de-subvention"
+  },
+  "trois-rivieres": {
+   "note": "No energy-specific program; the City's subsidies cover home ownership in Bas-du-Cap (2026 budget exhausted), old-quarter revitalization, pyrrhotite and RénoRégion.",
+   "url": "https://www.v3r.net/services-a-la-population/subventions-a-la-population"
+  },
+  "cambridge": {
+   "note": "No City home-energy program; community emissions are handled regionally under TransformWR. Reep Green Solutions (Waterloo Region service organization) prices are under evaluationPrices ON.",
+   "url": "https://www.cambridge.ca/resident-services/environment-sustainability/"
+  },
+  "st-catharines": {
+   "note": "No City home-energy program; the climate page lists corporate actions and energy tips.",
+   "url": "https://www.stcatharines.ca/home-property-and-environment/environmental-stewardship/climate-change/"
+  },
+  "milton": {
+   "note": "No Town program for residents; the energy page covers Town facility upgrades.",
+   "url": "https://www.milton.ca/en/living-in-milton/energy.aspx"
+  },
+  "waterloo": {
+   "note": "No City home-energy rebate or loan; the page suggests residents get a Home Energy Evaluation (Reep prices under evaluationPrices ON).",
+   "url": "https://www.waterloo.ca/council-and-city-administration/sustainability-and-climate-change/"
+  },
+  "terrebonne": {
+   "note": "No energy-related homeowner program; the owner-support programs are first-time buyer, intergenerational units, heritage restoration and cracked-foundation subsidies.",
+   "url": "https://terrebonne.ca/soutien-aux-proprietaires/"
+  },
+  "thunder-bay": {
+   "note": "No home-energy program found; City incentives found are drainage and water related.",
+   "url": "https://www.thunderbay.ca/sitemap-xml/"
+  },
+  "delta": {
+   "note": "No municipal top-up; the Green Building page lists only provincial, federal and utility programs (and some of that list is out of date).",
+   "url": "https://www.delta.ca/Green-Building"
+  },
+  "brantford": {
+   "note": "No City energy program; the grant list covers flooding, lead pipes and sewer laterals, and the climate-at-home page points to provincial and utility programs.",
+   "url": "https://www.brantford.ca/living-here/grant-loan-and-incentive-programs/"
+  },
+  "chatham-kent": {
+   "note": "No home-energy program found on the municipal site (only tile drainage loans).",
+   "url": "https://www.chatham-kent.ca/sitemap.xml"
+  },
+  "saint-jean-sur-richelieu": {
+   "note": "No energy-related program; the residential aid covers heritage, septic systems and plumbing, and the environmental incentives cover trees and reusable products.",
+   "url": "https://sjsr.ca/permis-urbanisme/aide-financiere/"
+  },
+  "moncton": {
+   "note": "No City home-energy program; the energy and GHG page gives tips only. See NB Power Total Home (evaluationPrices NB).",
+   "url": "https://www.moncton.ca/en/guides-moncton-environment/energy-greenhouse-gas-reduction"
+  },
+  "saint-john": {
+   "note": "No City energy grant found in the municipal grants program. Saint John Energy (the City-owned utility) could not be reached (connection errors), so any utility offers are unverified; its customers use NB Power's Total Home program.",
+   "url": "https://saintjohn.ca/en/city-hall/awards-grants-incentives-and-donations"
+  },
+  "charlottetown": {
+   "note": "No home-energy program; Climate Action Microgrants (up to $2,500) fund community projects, not home retrofits, and 2026 intake is closed.",
+   "url": "https://www.charlottetown.ca/environment___sustainability/sustainability/climate_action_microgrants"
+  },
+  "whitehorse": {
+   "note": "No City rebate or loan; home energy help is territorial (Yukon Good Energy, see evaluationPrices YT).",
+   "url": "https://www.whitehorse.ca/our-government/sustainable-whitehorse/energy/"
+  },
+  "yellowknife": {
+   "note": "No City program for existing homes; the City refers residents to the Arctic Energy Alliance (evaluationPrices NT). The City requires EnerGuide evaluations for new homes.",
+   "url": "https://www.yellowknife.ca/climate-change/energy-use-and-emissions"
+  }
+ }
+}

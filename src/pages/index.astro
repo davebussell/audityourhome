@@ -2,6 +2,10 @@
 import Base from '../layouts/Base.astro';
 import ProgramCard from '../components/ProgramCard.astro';
 import ProviderCard from '../components/ProviderCard.astro';
+import Photo from '../components/Photo.astro';
+import ThermalCompare from '../components/ThermalCompare.astro';
+import EraBar from '../components/EraBar.astro';
+import { localIndex, citiesByProvince } from '../lib/local';
 import { SITE } from '../config/site';
 import { organizationSchema, faqSchema } from '../lib/schema';
 import { programs, providers, regions } from '../lib/data';
@@ -32,6 +36,24 @@ const faqs = [
 ];
 
 const schema = [organizationSchema(), faqSchema(faqs)];
+const upClose = [
+  { slug: 'blower-door-test', name: 'Blower door test', note: 'Your airtightness number' },
+  { slug: 'thermal-imaging', name: 'Infrared scan', note: 'Finds the empty walls' },
+  { slug: 'attic-insulation-inspection', name: 'Attic inspection', note: 'Depth, gaps and frost' },
+  { slug: 'radon-testing', name: 'Radon test', note: 'The one every home needs' },
+  { slug: 'combustion-safety-test', name: 'Combustion safety', note: 'Before tightening the house' },
+  { slug: 'well-water-testing', name: 'Well water', note: 'Bacteria, then chemistry' },
+];
+const regionsStrip = [
+  { photo: 'region-bc', label: 'British Columbia', href: '/cities/#bc' },
+  { photo: 'region-alberta', label: 'Alberta', href: '/cities/#ab' },
+  { photo: 'region-prairies', label: 'Saskatchewan & Manitoba', href: '/cities/#sk' },
+  { photo: 'region-ontario', label: 'Ontario', href: '/cities/#on' },
+  { photo: 'region-quebec', label: 'Quebec', href: '/cities/#qc' },
+  { photo: 'region-atlantic', label: 'Atlantic Canada', href: '/cities/#nb' },
+  { photo: 'region-north', label: 'The North', href: '/cities/#yt' },
+];
+const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.population).slice(0, 12);
 ---
 
 <Base title={title} description={description} schema={schema}>
@@ -83,19 +105,28 @@ const schema = [organizationSchema(), faqSchema(faqs)];
     <div class="container">
       <div class="grid-3 steps">
         <div class="step-card">
-          <span class="step-no">1</span>
-          <h3>Profile your home</h3>
-          <p>The planner reads your home's era, heating, and symptoms — and tells you what's likely behind the walls and what it's costing you.</p>
+          <Photo name="attic-insulation-inspection" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">1</span>
+            <h3>Profile your home</h3>
+            <p>The planner reads your home's era, heating, and symptoms — and tells you what's likely behind the walls and what it's costing you.</p>
+          </div>
         </div>
         <div class="step-card">
-          <span class="step-no">2</span>
-          <h3>See the real money</h3>
-          <p>Estimated savings per upgrade, typical costs, and the rebates that apply — verified against official program pages, not last year's blog posts.</p>
+          <Photo name="energy-bill-analysis" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">2</span>
+            <h3>See the real money</h3>
+            <p>Estimated savings per upgrade, typical costs, and the rebates that apply — verified against official program pages, not last year's blog posts.</p>
+          </div>
         </div>
         <div class="step-card">
-          <span class="step-no">3</span>
-          <h3>Book a registered advisor</h3>
-          <p>Compare licensed service organizations serving your area — credentials shown, prices where published, no shared lead lists.</p>
+          <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">3</span>
+            <h3>Book a registered advisor</h3>
+            <p>Compare licensed service organizations serving your area — credentials shown, prices where published, no shared lead lists.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -111,7 +142,8 @@ const schema = [organizationSchema(), faqSchema(faqs)];
           Through an infrared camera, every house glows where it's failing — attic bypasses,
           empty wall cavities, rim joists, bare foundation walls. The planner predicts your
           home's pattern from its era; the audit's <strong>blower door</strong> and
-          <strong> thermal scan</strong> measure it exactly.
+          <strong> thermal scan</strong> measure it exactly. Drag across the photo to see what the
+          camera sees.
         </p>
         <div class="test-chips">
           <a href="/tests/#blower-door">Blower door test</a>
@@ -121,46 +153,30 @@ const schema = [organizationSchema(), faqSchema(faqs)];
           <a href="/tests/" class="all">All tests →</a>
         </div>
       </div>
-      <div class="thermal-art" aria-hidden="true">
-        <svg viewBox="0 0 420 340" fill="none">
-          <defs>
-            <radialGradient id="hot1"><stop offset="0%" stop-color="#F2A03D" stop-opacity="0.95"/><stop offset="45%" stop-color="#E05C1F" stop-opacity="0.55"/><stop offset="100%" stop-color="#E05C1F" stop-opacity="0"/></radialGradient>
-            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B2A3A"/><stop offset="100%" stop-color="#14202C"/></linearGradient>
-          </defs>
-          <rect x="0" y="0" width="420" height="340" rx="16" fill="url(#sky)"/>
-          <!-- ground -->
-          <rect x="0" y="252" width="420" height="88" fill="#0F1822" rx="0"/>
-          <line x1="24" y1="252" x2="396" y2="252" stroke="#2A3B4A" stroke-width="1.5" stroke-dasharray="5 5"/>
-          <!-- house body -->
-          <path d="M96 132 210 58l114 74v120H96V132Z" fill="#1E2F41" stroke="#3C5570" stroke-width="2"/>
-          <!-- roof -->
-          <path d="M82 141 210 56l128 85" stroke="#7FAAC7" stroke-width="5" stroke-linecap="round" fill="none"/>
-          <!-- attic floor -->
-          <line x1="96" y1="150" x2="324" y2="150" stroke="#3C5570" stroke-width="2"/>
-          <!-- floor -->
-          <line x1="96" y1="204" x2="324" y2="204" stroke="#3C5570" stroke-width="2"/>
-          <!-- basement -->
-          <rect x="96" y="252" width="228" height="52" fill="#182636" stroke="#3C5570" stroke-width="2"/>
-          <!-- windows -->
-          <rect x="130" y="166" width="30" height="26" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
-          <rect x="260" y="166" width="30" height="26" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
-          <rect x="130" y="216" width="30" height="26" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
-          <!-- door -->
-          <rect x="196" y="212" width="30" height="40" rx="3" fill="#22374C" stroke="#7FAAC7" stroke-width="2"/>
-          <!-- heat spots -->
-          <circle class="hot" cx="210" cy="148" r="42" fill="url(#hot1)"/>
-          <circle class="hot d2" cx="162" cy="180" r="26" fill="url(#hot1)"/>
-          <circle class="hot d3" cx="322" cy="204" r="30" fill="url(#hot1)"/>
-          <circle class="hot d4" cx="100" cy="252" r="30" fill="url(#hot1)"/>
-          <!-- labels -->
-          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#DCE5EC">
-            <text x="230" y="120">attic bypasses</text>
-            <text x="30" y="196">window drafts →</text>
-            <text x="332" y="230">← rim joist</text>
-            <text x="36" y="290">foundation wall ↑</text>
-          </g>
-        </svg>
+      <div class="thermal-art">
+        <ThermalCompare />
       </div>
+    </div>
+  </section>
+
+  <!-- TESTS, UP CLOSE -->
+  <section class="upclose">
+    <div class="container">
+      <p class="eyebrow">The tests, up close</p>
+      <h2>What an auditor actually does in your house</h2>
+      <p class="lede measure">Every test has a plain-language guide and a local page for each of our 70 cities: what it measures, what it costs where you live, and who does it.</p>
+      <div class="uc-row">
+        {upClose.map((t) => (
+          <a class="pcard-link uc" href={`/services/${t.slug}/`}>
+            <Photo name={t.slug} sizes="(max-width: 700px) 70vw, 300px" />
+            <div class="pcard-body">
+              <h3>{t.name}</h3>
+              <p>{t.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="uc-more"><a class="btn btn-ghost" href="/services/">All 16 services →</a></p>
     </div>
   </section>
 
@@ -202,6 +218,32 @@ const schema = [organizationSchema(), faqSchema(faqs)];
         Or go deeper: <a href="/guides/"><strong>city-by-city home energy guides</strong></a> —
         your region's housing stock, read like an auditor.
       </p>
+    </div>
+  </section>
+
+  <!-- COAST TO COAST -->
+  <section class="c2c">
+    <div class="container">
+      <p class="eyebrow">Coast to coast</p>
+      <h2>{localIndex.cities.length} cities, each read like an auditor would</h2>
+      <p class="lede measure">
+        A 1912 Montréal plex, a 1962 Regina bungalow and a 2015 Calgary two-storey leak in different
+        places. Every city guide starts from its own Census housing data and climate.
+      </p>
+      <div class="rg-row">
+        {regionsStrip.map((r) => (
+          <a class="rg" href={r.href}>
+            <Photo name={r.photo} hud={false} sizes="(max-width: 700px) 60vw, 220px" ratio="3 / 4" />
+            <span>{r.label}</span>
+          </a>
+        ))}
+      </div>
+      <div class="bigcities">
+        {bigCities.map((c) => (
+          <a href={`/cities/${c.slug}/`}><span class="bn">{c.name}</span><EraBar era={c.facts.era} name={c.name} /></a>
+        ))}
+        <a class="allc" href="/cities/">All {localIndex.cities.length} cities →</a>
+      </div>
     </div>
   </section>
 
@@ -247,11 +289,14 @@ const schema = [organizationSchema(), faqSchema(faqs)];
   .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
   .hero-form .meta { margin-top: 10px; }
   .steps { align-items: stretch; }
-  .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px; }
+  .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .step-card :global(.frame) { border-radius: 0; box-shadow: none; }
+  .step-body { position: relative; padding: 26px 26px 24px; }
   .step-no {
-    display: inline-flex; width: 32px; height: 32px; border-radius: 50%;
+    position: absolute; top: -18px; left: 24px;
+    display: inline-flex; width: 36px; height: 36px; border-radius: 50%;
     background: var(--heat); color: #fff; font-family: var(--display); font-weight: 800;
-    align-items: center; justify-content: center; margin-bottom: 12px;
+    align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--card);
   }
   .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
   section.alt { background: #F3EFE7; }
@@ -260,12 +305,41 @@ const schema = [organizationSchema(), faqSchema(faqs)];
   .thermal-band p { color: var(--navy-muted); }
   .thermal-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
   @media (max-width: 880px) { .thermal-grid { grid-template-columns: 1fr; } }
-  .thermal-art svg { width: 100%; height: auto; display: block; }
-  .hot { animation: hotpulse 3.2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
-  .hot.d2 { animation-delay: 0.8s; }
-  .hot.d3 { animation-delay: 1.6s; }
-  .hot.d4 { animation-delay: 2.4s; }
-  @keyframes hotpulse { 0%, 100% { opacity: 0.75; transform: scale(1); } 50% { opacity: 1; transform: scale(1.12); } }
+  .thermal-art { min-width: 0; }
+  .upclose { padding: 60px 0 40px; }
+  .uc-row {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 24px;
+  }
+  .uc .pcard-body h3 { font-size: 15.5px; }
+  .uc .pcard-body p { font-size: 13.5px; }
+  .uc :global(.hud) { display: none; }
+  @media (max-width: 1100px) { .uc-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 700px) {
+    .uc-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .uc-row .uc { flex: 0 0 68%; scroll-snap-align: start; }
+  }
+  .uc-more { margin-top: 20px; }
+  .c2c { padding: 56px 0 30px; background: #F3EFE7; }
+  .rg-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+  .rg { position: relative; display: block; text-decoration: none; }
+  .rg span {
+    position: absolute; left: 10px; right: 10px; bottom: 10px; color: #fff; font-family: var(--display);
+    font-weight: 700; font-size: 14px; line-height: 1.2; text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+  .rg :global(.frame) { box-shadow: var(--shadow-sm); }
+  .rg :global(.frame)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(14,22,32,0.7)); }
+  .rg:hover :global(img) { transform: scale(1.04); }
+  .rg :global(img) { transition: transform 0.4s ease; }
+  @media (max-width: 1000px) {
+    .rg-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .rg { flex: 0 0 42%; scroll-snap-align: start; }
+  }
+  @media (max-width: 560px) { .rg { flex-basis: 58%; } }
+  .bigcities { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 22px; }
+  .bigcities a { display: grid; gap: 6px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .bigcities a:hover { border-color: var(--heat); }
+  .bn { font-weight: 700; font-size: 14.5px; }
+  .bigcities a.allc { background: var(--ink); color: #fff; border-color: var(--ink); align-content: center; font-weight: 700; font-size: 14.5px; }
   .test-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
   .test-chips a {
     display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none;

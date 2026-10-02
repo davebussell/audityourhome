@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import ProviderCard from '../../components/ProviderCard.astro';
 import ProgramCard from '../../components/ProgramCard.astro';
 import LeadForm from '../../components/LeadForm.astro';
@@ -38,18 +40,28 @@ const schema = [
   ]),
   faqSchema(g.faq),
 ];
+const GUIDE_PHOTO: Record<string, string> = {
+  toronto: 'region-ontario', hamilton: 'region-ontario', kingston: 'region-ontario',
+  peterborough: 'region-ontario', london: 'region-ontario', niagara: 'region-ontario',
+  mississauga: 'home-hero', brampton: 'home-hero', 'york-region': 'home-hero',
+  ottawa: 'home-hero', 'barrie-simcoe': 'home-hero', 'kitchener-waterloo': 'home-hero',
+};
+const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/guides/">Guides</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
     </nav>
 
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Regional guide · updated {SITE.dataReviewDate}</p>
       <h1>{g.title}</h1>
       <p class="lede measure">{g.intro}</p>
+      </div>
+      <Photo name={heroPhoto} eager />
     </div>
 
     <div class="measure prose">

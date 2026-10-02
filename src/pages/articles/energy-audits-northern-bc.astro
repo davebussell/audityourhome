@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
@@ -33,10 +35,11 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-north')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audits in Northern BC</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
       <h1>Energy audits in Prince George, Dawson Creek &amp; Northern BC</h1>
       <p class="lede measure">
@@ -44,6 +47,8 @@ const schema = [
         -30° design temperatures, long shoulder seasons, wood-and-propane rural stock. That
         climate is precisely why the audit math works harder here than almost anywhere in Canada.
       </p>
+      </div>
+      <Photo name={'region-north'} eager />
     </div>
 
     <div class="measure prose">

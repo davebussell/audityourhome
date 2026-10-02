@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import { breadcrumbSchema } from '../../lib/schema';
 import issues from '../../data/issues.json';
 
@@ -15,9 +17,10 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('thermal-imaging')}>
   <div class="container">
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Fix an issue</p>
       <h1>Start from what's bugging you</h1>
       <p class="lede measure">
@@ -26,6 +29,8 @@ const schema = [
         salesperson says), then forward to the cheapest fix that works and the rebates that pay for
         it.
       </p>
+      </div>
+      <Photo name={'thermal-imaging'} eager />
     </div>
 
     <div class="issue-grid">

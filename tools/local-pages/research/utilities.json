@@ -1,0 +1,1041 @@
+{
+  "checked": "2026-09-28",
+  "cities": {
+    "toronto": {
+      "electricity": "Toronto Hydro",
+      "electricityNote": "Toronto Hydro-Electric System Ltd. serves the whole city (~100% of Toronto postal codes, from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.torontohydro.com/for-home/green-button"
+      ],
+      "confidence": "high"
+    },
+    "montreal": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": "Hydro-Québec serves the City of Montréal. Hydro Westmount is a separate municipal utility, but only for the City of Westmount.",
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "calgary": {
+      "electricity": "ENMAX Power",
+      "electricityNote": "ENMAX Power Corporation owns the wires and meters. Alberta is a retail market: homes buy electricity from a competitive retailer or the default Rate of Last Resort provider, which in Calgary is ENMAX Energy (UCA).",
+      "naturalGas": "ATCO Gas",
+      "gasNote": "ATCO Gas (South) is the distributor; gas is bought from a competitive retailer or the default regulated provider, Direct Energy Regulated Services (UCA).",
+      "sources": [
+        "https://ucahelps.alberta.ca/utility-choices/retailers-and-distributors/?city-town=Calgary"
+      ],
+      "confidence": "high"
+    },
+    "ottawa": {
+      "electricity": "Hydro Ottawa / Hydro One",
+      "electricityNote": "Split: Hydro Ottawa covers ~91% of Ottawa postal codes; Hydro One covers ~9%: rural Ottawa plus parts of Orléans, Greely, Manotick and Navan (from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://hydroottawa.com/en/residential/rates-billing/track-your-usage",
+        "https://www.hydroone.com/saving-money-and-energy/green-button"
+      ],
+      "confidence": "high"
+    },
+    "edmonton": {
+      "electricity": "EPCOR",
+      "electricityNote": "EPCOR Distribution & Transmission owns the wires and meters (the UCA lists 'EPCOR' as Edmonton's distributor). Retail market: buy from a competitive retailer or the default Rate of Last Resort provider, EPCOR Energy Alberta.",
+      "naturalGas": "ATCO Gas",
+      "gasNote": "ATCO Gas (North) is the distributor; gas is bought from a competitive retailer or the default regulated provider, Direct Energy Regulated Services.",
+      "sources": [
+        "https://ucahelps.alberta.ca/utility-choices/retailers-and-distributors/?city-town=Edmonton",
+        "https://www.epcor.com/ca/en/ab/edmonton/account/meters/advanced-meters/power-meters.html"
+      ],
+      "confidence": "high"
+    },
+    "winnipeg": {
+      "electricity": "Manitoba Hydro",
+      "electricityNote": null,
+      "naturalGas": "Manitoba Hydro",
+      "gasNote": "Gas is distributed by Centra Gas, a Manitoba Hydro subsidiary operating under the Manitoba Hydro name, so Winnipeg homes deal with one utility for both.",
+      "sources": [
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-manitoba.html",
+        "https://www.hydro.mb.ca/account/your-online-account/"
+      ],
+      "confidence": "high"
+    },
+    "mississauga": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "vancouver": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "brampton": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "hamilton": {
+      "electricity": "Alectra Utilities / Hydro One",
+      "electricityNote": "Split: Alectra covers ~94% of Hamilton postal codes; Hydro One ~6%, mostly rural/edge parts of Ancaster, Dundas and Flamborough (Waterdown, Millgrove, Freelton, Carlisle) (from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button",
+        "https://www.hydroone.com/saving-money-and-energy/green-button"
+      ],
+      "confidence": "high"
+    },
+    "surrey": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "quebec-city": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "halifax": {
+      "electricity": "Nova Scotia Power",
+      "electricityNote": null,
+      "naturalGas": "Eastward Energy",
+      "gasNote": "Eastward Energy (formerly Heritage Gas) distributes gas in Halifax and Dartmouth, but only on streets its network reaches. Many homes have no gas service; check its availability map.",
+      "sources": [
+        "https://www.nspower.ca/your-home/my-energy-insights",
+        "https://eastwardenergy.com/availability-map/",
+        "https://eastwardenergy.com/about/"
+      ],
+      "confidence": "high"
+    },
+    "laval": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "london": {
+      "electricity": "London Hydro",
+      "electricityNote": "London Hydro serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.londonhydro.com/greenbutton"
+      ],
+      "confidence": "high"
+    },
+    "markham": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "vaughan": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "gatineau": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Enbridge Gaz Québec",
+      "gasNote": "Not Énergir: Gatineau is served by Enbridge Gaz Québec, renamed from Gazifère in November 2024 (an Enbridge subsidiary holding the Outaouais franchise; ~45,000 customers in Gatineau and Chelsea).",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://enbridgegaz.com/wp-content/uploads/2024/11/Communique-de-presse-gazifere-18-novembre-2024.pdf",
+        "https://www.info-ex.com/gazifere-devient-enbridge-gaz-quebec/",
+        "https://www.regie-energie.qc.ca/fr/participants/audiences-en-cours/enbridge",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "saskatoon": {
+      "electricity": "SaskPower / Saskatoon Light & Power",
+      "electricityNote": "City-owned SL&P serves the area inside the 1958 city boundary (about 117,200 residents, under half of the city's 266,141 in the 2021 Census); SaskPower serves the newer areas outside it, so most homes are SaskPower. Both serve parts of Airport Business Area, Arbor Creek, College Park East, CN Industrial, Erindale, Evergreen, North Industrial and Westview; the University of Saskatchewan is served jointly.",
+      "naturalGas": "SaskEnergy",
+      "gasNote": null,
+      "sources": [
+        "https://www.saskatoon.ca/services-residents/power-water-sewer/saskatoon-light-power/about-us",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-saskatchewan.html"
+      ],
+      "confidence": "high"
+    },
+    "kitchener": {
+      "electricity": "Enova Power",
+      "electricityNote": "Enova Power Corp. serves Kitchener, Waterloo, Wellesley, Wilmot and Woolwich.",
+      "naturalGas": "Kitchener Utilities",
+      "gasNote": "Kitchener Utilities (a division of the City of Kitchener, one of Ontario's two municipally owned gas utilities) holds the gas certificate for ~99% of Kitchener postal codes; Enbridge Gas covers small fringes. Not Enbridge, unlike most of Ontario.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://enovapower.com/corporate-information/about-us/",
+        "https://www.kitchenerutilities.ca/about/"
+      ],
+      "confidence": "high"
+    },
+    "longueuil": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "burnaby": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "windsor": {
+      "electricity": "ENWIN Utilities",
+      "electricityNote": "ENWIN serves the whole city (~99.7% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://enwin.com/rates-and-payments/billing-and-payments/green-button"
+      ],
+      "confidence": "high"
+    },
+    "regina": {
+      "electricity": "SaskPower",
+      "electricityNote": "SaskPower is Saskatchewan's transmission and distribution utility; Regina has no municipal electric utility.",
+      "naturalGas": "SaskEnergy",
+      "gasNote": null,
+      "sources": [
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-saskatchewan.html",
+        "https://www.saskpower.com/"
+      ],
+      "confidence": "high"
+    },
+    "oakville": {
+      "electricity": "Oakville Hydro",
+      "electricityNote": "Oakville Hydro Electricity Distribution Inc. serves the town (~99.7% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.oakvillehydro.com/green-button-platform"
+      ],
+      "confidence": "high"
+    },
+    "richmond-bc": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "richmond-hill": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "burlington": {
+      "electricity": "Burlington Hydro",
+      "electricityNote": "Burlington Hydro serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.burlingtonhydro.com/save-energy-money/green-button"
+      ],
+      "confidence": "high"
+    },
+    "oshawa": {
+      "electricity": "Oshawa Power",
+      "electricityNote": "Oshawa Power is the operating name of Oshawa PUC Networks Inc. (the OEB licensee); it serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://en.wikipedia.org/wiki/Oshawa_Power"
+      ],
+      "confidence": "high"
+    },
+    "sherbrooke": {
+      "electricity": "Hydro-Sherbrooke",
+      "electricityNote": "Hydro-Sherbrooke is the city's municipal electric utility (92,638 customers in 2023), one of Québec's 10 municipal/co-op networks (AREQ). That is more than the city's ~86,000 private dwellings (2021 Census), so it covers essentially the whole city.",
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://moncomptehydro.sherbrooke.ca/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "sudbury": {
+      "electricity": "Greater Sudbury Hydro / Hydro One",
+      "electricityNote": "Split: Greater Sudbury Hydro covers ~85% of the city's postal codes (the Sudbury urban core); Hydro One serves Valley East (Hanmer, Val Caron), Garson, Lively, Chelmsford and rural areas (~15%) (from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://sudburyhydro.com/green-button/"
+      ],
+      "confidence": "high"
+    },
+    "abbotsford": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "levis": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "coquitlam": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "barrie": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra covers ~97% of Barrie postal codes; InnPower (~3%) serves south-end lands that were formerly part of Innisfil (from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "saguenay": {
+      "electricity": "Hydro-Québec / Hydro-Jonquière",
+      "electricityNote": "Split: Hydro-Québec serves most of Saguenay; the city's municipal utility Hydro-Jonquière serves part of the Jonquière borough (it offers service only in the Jonquière borough).",
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://ville.saguenay.ca/services-aux-citoyens/hydro-jonquiere/mission-et-mandat",
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "kelowna": {
+      "electricity": "FortisBC",
+      "electricityNote": "FortisBC's electric utility (FortisBC Inc.) serves virtually all of the City of Kelowna; the city's electrical-utility-boundary open data shows BC Hydro serving only a small pocket at the north end (near the Lake Country boundary).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://opendata.kelowna.ca/datasets/electrical-utility-boundary",
+        "https://callmepower.ca/en/provinces/british-columbia/energy-guides/who-is-my-energy-provider-in-bc",
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "guelph": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "trois-rivieres": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "whitby": {
+      "electricity": "Elexicon Energy",
+      "electricityNote": "Elexicon Energy serves the town (~99.9% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://elexiconenergy.com/for-home/save-energy-money/green-button-data"
+      ],
+      "confidence": "high"
+    },
+    "cambridge": {
+      "electricity": "GrandBridge Energy",
+      "electricityNote": "GrandBridge Energy (the OEB licence area formerly Energy+ Inc.) serves the whole city (~100% of postal codes).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://grandbridgeenergy.com/accounts-billing/green-button-energy-usage-grandbridge-energy/"
+      ],
+      "confidence": "high"
+    },
+    "st-catharines": {
+      "electricity": "Alectra Utilities",
+      "electricityNote": "Alectra serves the whole city (~100% of postal codes within city limits; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://alectrautilities.com/green-button"
+      ],
+      "confidence": "high"
+    },
+    "milton": {
+      "electricity": "Milton Hydro",
+      "electricityNote": "Milton Hydro Distribution Inc. serves the town (~99.9% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.miltonhydro.com/Energy-Conservation/Tips-and-Tools/Green-Button-(1)"
+      ],
+      "confidence": "high"
+    },
+    "langley": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "kingston": {
+      "electricity": "Kingston Hydro / Hydro One",
+      "electricityNote": "Split: Kingston Hydro (operated by Utilities Kingston) covers ~61% of Kingston postal codes (central Kingston); Hydro One covers ~39% (west and east ends). Utilities Kingston says three providers serve Kingston; the third (Canadian Niagara Power) is a negligible sliver in the OEB data.",
+      "naturalGas": "Utilities Kingston / Enbridge Gas",
+      "gasNote": "Split: Utilities Kingston (municipally owned) supplies gas in central Kingston (~57% of postal codes); residents in the west and east ends are served by Enbridge Gas (~43%).",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://utilitieskingston.com/Corporate/AboutUs/ServiceAreas",
+        "https://utilitieskingston.com/Accounts/GreenButton"
+      ],
+      "confidence": "high"
+    },
+    "ajax": {
+      "electricity": "Elexicon Energy",
+      "electricityNote": "Elexicon Energy serves the whole town (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://elexiconenergy.com/for-home/save-energy-money/green-button-data"
+      ],
+      "confidence": "high"
+    },
+    "waterloo": {
+      "electricity": "Enova Power",
+      "electricityNote": "Enova Power Corp. serves Kitchener, Waterloo, Wellesley, Wilmot and Woolwich.",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas is the distributor in Waterloo (Kitchener Utilities serves neighbouring Kitchener, not Waterloo); supply can be bought from Enbridge or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://enovapower.com/corporate-information/about-us/"
+      ],
+      "confidence": "high"
+    },
+    "terrebonne": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "saanich": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "st-johns": {
+      "electricity": "Newfoundland Power",
+      "electricityNote": "Newfoundland Power (a Fortis subsidiary) serves more than 87% of NL customers, including St. John's; NL Hydro serves rural customers elsewhere.",
+      "naturalGas": null,
+      "gasNote": "No natural gas distribution to homes; the CER profile lists no gas distributor and notes none of NL's offshore gas is sold.",
+      "sources": [
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-newfoundland-labrador.html",
+        "https://www.newfoundlandpower.com/en/My-Account/Billing/Understanding-My-Electricity-Usage"
+      ],
+      "confidence": "high"
+    },
+    "thunder-bay": {
+      "electricity": "Synergy North",
+      "electricityNote": "Synergy North Corporation serves the whole city (~100% of postal codes within city limits; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://synergynorth.ca/myenergy/"
+      ],
+      "confidence": "high"
+    },
+    "delta": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "brantford": {
+      "electricity": "GrandBridge Energy",
+      "electricityNote": "GrandBridge Energy serves the whole city: ~99% in its former Brantford Power licence area and the rest in its former Energy+ area (from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://grandbridgeenergy.com/accounts-billing/green-button-energy-usage-grandbridge-energy/"
+      ],
+      "confidence": "high"
+    },
+    "chatham-kent": {
+      "electricity": "Entegrus Powerlines / Hydro One",
+      "electricityNote": "Split: Entegrus serves Chatham, Wallaceburg and the other urban centres (~95% of postal codes); Hydro One serves rural Chatham-Kent. Rural postal codes cover many homes each, so Hydro One's share of homes is larger than its share of postal codes.",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.entegrus.com/greenbutton"
+      ],
+      "confidence": "high"
+    },
+    "clarington": {
+      "electricity": "Elexicon Energy / Hydro One",
+      "electricityNote": "Split: Elexicon covers ~56% of Clarington postal codes (Bowmanville and Newcastle); Hydro One ~44% (Courtice, parts of Bowmanville and the rural area) (from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://elexiconenergy.com/for-home/save-energy-money/green-button-data",
+        "https://www.hydroone.com/saving-money-and-energy/green-button"
+      ],
+      "confidence": "high"
+    },
+    "red-deer": {
+      "electricity": "City of Red Deer Electric Light & Power",
+      "electricityNote": "Municipal distributor (about 45,000 meters, read manually until residential smart meters go in from spring 2026). Retail market: the Rate of Last Resort provider in its service area is ENMAX Energy.",
+      "naturalGas": "ATCO Gas",
+      "gasNote": "ATCO Gas (North) is the distributor; default regulated gas provider is Direct Energy Regulated Services.",
+      "sources": [
+        "https://ucahelps.alberta.ca/utility-choices/retailers-and-distributors/?city-town=Red%20Deer",
+        "https://www.reddeer.ca/city-services/electric-light-and-power/getting-electricity/choosing-an-electricity-retail-supplier/",
+        "https://www.reddeer.ca/city-services/electric-light-and-power/advanced-metering-infrastructure/"
+      ],
+      "confidence": "high"
+    },
+    "nanaimo": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "sherwood-park": {
+      "electricity": "FortisAlberta",
+      "electricityNote": "FortisAlberta owns the wires across Sherwood Park and Strathcona County. Retail market: buy from a competitive retailer or the default Rate of Last Resort provider, EPCOR Energy Alberta.",
+      "naturalGas": "ATCO Gas",
+      "gasNote": "ATCO Gas (North) is the distributor for Sherwood Park (UCA; default regulated gas provider Direct Energy Regulated Services). The UCA lookup for 'Strathcona County' as a whole lists no gas distributor, so rural addresses may differ. Check by address.",
+      "sources": [
+        "https://ucahelps.alberta.ca/utility-choices/retailers-and-distributors/?city-town=Sherwood%20Park",
+        "https://ucahelps.alberta.ca/utility-choices/retailers-and-distributors/?city-town=Strathcona%20County",
+        "https://www.fortisalberta.com/my-account-help"
+      ],
+      "confidence": "high"
+    },
+    "pickering": {
+      "electricity": "Elexicon Energy",
+      "electricityNote": "Elexicon Energy serves the whole city (~100% of postal codes; from OEB service-area polygons (Aug 2026) overlaid on postal-code points).",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://elexiconenergy.com/for-home/save-energy-money/green-button-data"
+      ],
+      "confidence": "high"
+    },
+    "lethbridge": {
+      "electricity": "City of Lethbridge Electric Utility",
+      "electricityNote": "Municipal distributor. Retail market: homes buy from a competitive retailer or the default Rate of Last Resort provider, which in Lethbridge is the City of Lethbridge itself (UCA).",
+      "naturalGas": "ATCO Gas",
+      "gasNote": "ATCO Gas (South) is the distributor; default regulated gas provider is Direct Energy Regulated Services.",
+      "sources": [
+        "https://ucahelps.alberta.ca/utility-choices/retailers-and-distributors/?city-town=Lethbridge",
+        "https://www.lethbridge.ca/utilities/electric/"
+      ],
+      "confidence": "high"
+    },
+    "kamloops": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves Kamloops; FortisBC's electric utility covers Kelowna, the South Okanagan, Boundary and Kootenays, not Kamloops. Exception: the Sun Rivers development has its own small community utility (Sun Rivers Electric).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://callmepower.ca/en/provinces/british-columbia/distributors",
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "saint-jean-sur-richelieu": {
+      "electricity": "Hydro-Québec",
+      "electricityNote": null,
+      "naturalGas": "Énergir",
+      "gasNote": "Énergir is Québec's main gas distributor (present in 340+ municipalities); gas is only available where its network runs, and many Québec homes heat with electricity.",
+      "sources": [
+        "https://www.hydroquebec.com/residential/customer-space/",
+        "https://contenu.maruche.ca/Fichiers/3337a882-4a53-e611-80ea-00155d09650f/Sites/333dd3d3-915d-e611-80ea-00155d09650f/Documents/Bilans%20et%20rapports/2023/HS_Rapport_annuel%202023.pdf",
+        "https://energir.com/fr/municipalites"
+      ],
+      "confidence": "high"
+    },
+    "victoria": {
+      "electricity": "BC Hydro",
+      "electricityNote": "BC Hydro serves this municipality; FortisBC's electric utility is confined to the Southern Interior and only five BC municipalities run their own electric utilities (Nelson, New Westminster, Grand Forks, Penticton, Summerland).",
+      "naturalGas": "FortisBC",
+      "gasNote": "FortisBC Energy Inc. (gas) is a separate utility and bill from the electricity provider.",
+      "sources": [
+        "https://www2.gov.bc.ca/gov/content/industry/electricity-alternative-energy/electricity/residential-electricity",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-british-columbia.html",
+        "https://www.fortisbc.com/about-us/corporate-information/our-service-areas"
+      ],
+      "confidence": "high"
+    },
+    "peterborough": {
+      "electricity": "Hydro One",
+      "electricityNote": "Hydro One Networks serves the city (100% of postal codes in OEB data) under a separate 'Peterborough' delivery-rate zone, the former Peterborough Distribution service area.",
+      "naturalGas": "Enbridge Gas",
+      "gasNote": "Enbridge Gas Inc. is the distributor (pipes and meters); gas supply can be bought from Enbridge (regulated system gas) or a licensed gas marketer.",
+      "sources": [
+        "https://www.oeb.ca/ontarios-energy-sector/ontario-electricity-and-natural-gas-utilities-service-area-map",
+        "https://www.oeb.ca/open-data/electricity-and-natural-gas-distributors-service-areas",
+        "https://www.hydroone.com/rates-and-billing/rates-and-charges/peterborough"
+      ],
+      "confidence": "high"
+    },
+    "moncton": {
+      "electricity": "NB Power",
+      "electricityNote": null,
+      "naturalGas": "Liberty Utilities (Gas New Brunswick)",
+      "gasNote": "Liberty Utilities (Gas New Brunswick) LP, formerly Enbridge Gas New Brunswick, holds NB's gas distribution franchise. It has ~12,000 customers in 12 southern NB communities, so gas is available in parts of the city only.",
+      "sources": [
+        "https://www.nbpower.com/en/accounts-billing/knowledge-is-power/smart-meter-insights/",
+        "https://nbeub.ca/natural-gas",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-new-brunswick.html"
+      ],
+      "confidence": "high"
+    },
+    "saint-john": {
+      "electricity": "Saint John Energy",
+      "electricityNote": "City-owned Saint John Energy serves the city and buys its power from NB Power; surrounding suburbs are NB Power customers. We couldn't confirm whether any fringe areas inside city limits are NB Power (the Saint John Energy site failed TLS from our fetcher).",
+      "naturalGas": "Liberty Utilities (Gas New Brunswick)",
+      "gasNote": "Liberty Utilities (Gas New Brunswick) LP holds NB's gas franchise; gas is available in parts of the city only.",
+      "sources": [
+        "https://www.cbc.ca/news/canada/new-brunswick/saint-john-energy-heat-pumps-1.4346401",
+        "https://callmepower.ca/en/provinces/new-brunswick/distributors",
+        "https://nbeub.ca/natural-gas",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-new-brunswick.html"
+      ],
+      "confidence": "medium"
+    },
+    "fredericton": {
+      "electricity": "NB Power",
+      "electricityNote": null,
+      "naturalGas": "Liberty Utilities (Gas New Brunswick)",
+      "gasNote": "Liberty Utilities (Gas New Brunswick) LP holds NB's gas franchise; gas is available in parts of the city only.",
+      "sources": [
+        "https://www.nbpower.com/en/accounts-billing/knowledge-is-power/smart-meter-insights/",
+        "https://nbeub.ca/natural-gas",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-new-brunswick.html"
+      ],
+      "confidence": "high"
+    },
+    "charlottetown": {
+      "electricity": "Maritime Electric",
+      "electricityNote": "Maritime Electric (a Fortis subsidiary) provides most of PEI's distribution; Summerside has its own municipal utility.",
+      "naturalGas": null,
+      "gasNote": "No residential natural gas: PEI isn't connected to any gas pipeline (only small amounts of CNG are trucked in).",
+      "sources": [
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-prince-edward-island.html",
+        "https://www.maritimeelectric.com/accounts-billing/mypower/sign-up-for-mypower/"
+      ],
+      "confidence": "high"
+    },
+    "whitehorse": {
+      "electricity": "ATCO Electric Yukon",
+      "electricityNote": "ATCO Electric Yukon buys wholesale power from Yukon Energy and distributes it to Whitehorse homes (18,000+ customers in 19 communities). Yukon Energy directly serves only about 2,700 customers, mostly around Dawson City, Mayo and Faro.",
+      "naturalGas": null,
+      "gasNote": "No piped natural gas for homes; LNG is used only at Yukon Energy's Whitehorse power plant.",
+      "sources": [
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-yukon.html",
+        "https://yukonenergy.ca/about-us/who-we-are/",
+        "https://www.atcoelectricyukon.com/en-ca/my-account/my-account-portal.html"
+      ],
+      "confidence": "high"
+    },
+    "yellowknife": {
+      "electricity": "Naka Power Utilities (formerly Northland Utilities)",
+      "electricityNote": "The distributor was Northland Utilities (Yellowknife) Ltd., operating as Naka Power Utilities (Yellowknife). The NWT PUB approved merging it into Naka Power Utilities (NWT) Ltd., expected by Jan 1, 2026 (Denendeh Investments 51%, ATCO 49%). It buys power from the NWT Power Corporation and serves Yellowknife and N'Dilo; a new 10-year city distribution agreement was approved in April 2026.",
+      "naturalGas": null,
+      "gasNote": "No piped natural gas distribution in Yellowknife (the CER territorial profile lists none).",
+      "sources": [
+        "https://www.nakapower.com/en-ca/customer-billing-rates/rates-regulations/yellowknife-gra.html",
+        "https://cabinradio.ca/271313/news/economy/infrastructure/energy/amalgamation-of-naka-power-companies-approved-by-regulator/",
+        "https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/provincial-territorial-energy-profiles/provincial-territorial-energy-profiles-northwest-territories.html"
+      ],
+      "confidence": "high"
+    }
+  },
+  "utilities": {
+    "Toronto Hydro": {
+      "usageDownload": "Log in to My Account (self-serve portal), then Green Button Download My Data: consumption, billing and customer info as Green Button XML. Register online if you have no account.",
+      "greenButton": true,
+      "url": "https://www.torontohydro.com/for-home/green-button"
+    },
+    "Hydro Ottawa": {
+      "usageDownload": "MyAccount: view and download up to 24 months of hourly usage as Excel, PDF or Green Button (XML).",
+      "greenButton": true,
+      "url": "https://hydroottawa.com/en/residential/rates-billing/track-your-usage"
+    },
+    "Hydro One": {
+      "usageDownload": "myAccount, then Green Button Download My Data: up to 24 months of billing, consumption and transaction data (XML).",
+      "greenButton": true,
+      "url": "https://www.hydroone.com/saving-money-and-energy/green-button"
+    },
+    "Alectra Utilities": {
+      "usageDownload": "My Alectra account, then Green Button: download or connect electricity usage, billing and account data (XML). Interval-metered businesses also get a CSV energy-usage portal with 24 months of data.",
+      "greenButton": true,
+      "url": "https://alectrautilities.com/green-button"
+    },
+    "London Hydro": {
+      "usageDownload": "MyLondonHydro portal, then Green Button Download My Data (XML) of historical and current usage.",
+      "greenButton": true,
+      "url": "https://www.londonhydro.com/greenbutton"
+    },
+    "Enova Power": {
+      "usageDownload": "My Account or the Green Button page: Download My Data in XML (you need your account number and meter number).",
+      "greenButton": true,
+      "url": "https://enovapower.com/my-account/green-button/"
+    },
+    "ENWIN Utilities": {
+      "usageDownload": "myENWIN portal, then 'Green Button' in the left sidebar, then Download my Data (consumption and/or billing). Live since Dec 5, 2022.",
+      "greenButton": true,
+      "url": "https://enwin.com/rates-and-payments/billing-and-payments/green-button"
+    },
+    "Oakville Hydro": {
+      "usageDownload": "MyOakvilleHydro account plus the Green Button platform: Download My Data (XML).",
+      "greenButton": true,
+      "url": "https://www.oakvillehydro.com/green-button-platform"
+    },
+    "Burlington Hydro": {
+      "usageDownload": "MyBurlingtonHydro account, then Green Button Download My Data (historical and current usage in a standard format).",
+      "greenButton": true,
+      "url": "https://www.burlingtonhydro.com/save-energy-money/green-button"
+    },
+    "Oshawa Power": {
+      "usageDownload": "MyOshawaPower portal (billing and usage tracking). Green Button is required of every Ontario rate-regulated distributor since Nov 1, 2023 (OEB), but oshawapower.ca blocked our fetch (HTTP 403), so the exact Green Button path is unverified.",
+      "greenButton": true,
+      "url": "https://www.oshawapower.ca/"
+    },
+    "Greater Sudbury Hydro": {
+      "usageDownload": "MyAccount (myaccount.gsuinc.ca), then Green Button Download My Data.",
+      "greenButton": true,
+      "url": "https://sudburyhydro.com/green-button/"
+    },
+    "Elexicon Energy": {
+      "usageDownload": "my.elexicon, then the Green Button logo, then Download My Data (XML). Or use the Green Button portal with a recent bill. Up to 2 years of historical usage.",
+      "greenButton": true,
+      "url": "https://elexiconenergy.com/for-home/save-energy-money/green-button-data"
+    },
+    "GrandBridge Energy": {
+      "usageDownload": "Green Button Download My Data (XML) via the My Account portal or a direct link on the GrandBridge site.",
+      "greenButton": true,
+      "url": "https://grandbridgeenergy.com/accounts-billing/green-button-energy-usage-grandbridge-energy/"
+    },
+    "Milton Hydro": {
+      "usageDownload": "MyAccount, then the Smart Meter tab, then Downloads, then Green Button (hourly data).",
+      "greenButton": true,
+      "url": "https://www.miltonhydro.com/Energy-Conservation/Tips-and-Tools/Green-Button-(1)"
+    },
+    "Kingston Hydro": {
+      "usageDownload": "Utilities Kingston Green Button portal (validate with a recent bill), then Download My Data: up to 2 years of electricity, gas, water and wastewater usage (XML). The MyUtilities account has a combined bill.",
+      "greenButton": true,
+      "url": "https://utilitieskingston.com/Accounts/GreenButton"
+    },
+    "Synergy North": {
+      "usageDownload": "MyENERGY portal: hourly, daily and monthly usage graphs plus Green Button Download My Data / Connect My Data.",
+      "greenButton": true,
+      "url": "https://synergynorth.ca/myenergy/"
+    },
+    "Entegrus Powerlines": {
+      "usageDownload": "Entegrus MyAccount, then Green Button Download My Data.",
+      "greenButton": true,
+      "url": "https://www.entegrus.com/greenbutton"
+    },
+    "Hydro-Québec": {
+      "usageDownload": "Customer Space (Espace client), then My electricity use / Detailed consumption: hour-to-hour, daily, monthly and bill-to-bill history with year-over-year comparison. No Green Button offering found, and a file-export option wasn't confirmed.",
+      "greenButton": null,
+      "url": "https://www.hydroquebec.com/residential/customer-space/electricity-use/performance-indicator.html"
+    },
+    "Hydro-Sherbrooke": {
+      "usageDownload": "Mon compte Hydro portal: e-bill, balance and 'Consulter votre consommation' (view consumption). History depth and export not stated.",
+      "greenButton": null,
+      "url": "https://moncomptehydro.sherbrooke.ca/"
+    },
+    "Hydro-Jonquière": {
+      "usageDownload": "Hydro-Jonquière's online billing service: view annual consumption and all account transactions. No data download or history depth is mentioned.",
+      "greenButton": null,
+      "url": "https://ville.saguenay.ca/services-aux-citoyens/hydro-jonquiere/service-de-facturation-en-ligne"
+    },
+    "ENMAX Power": {
+      "usageDownload": "ENMAX Power (the wires company) doesn't bill homes, so usage history comes from your retailer's bills or online account, e.g. ENMAX Energy MyAccount for ENMAX retail and Rate of Last Resort customers. No distributor usage portal or Green Button found; the ENMAX MyAccount page only confirms bills and payments.",
+      "greenButton": null,
+      "url": "https://myaccount.enmax.com/"
+    },
+    "EPCOR": {
+      "usageDownload": "EPCOR's advanced meters send daily reads to your retailer; use your retailer's bills or portal. EPCOR Energy (RoLR) and Encor customers see bills in EPCOR MyAccount, which stores bills for up to two years. No usage download or Green Button confirmed.",
+      "greenButton": null,
+      "url": "https://www.epcor.com/ca/en/ab/edmonton/account/billing/online-billing.html"
+    },
+    "FortisAlberta": {
+      "usageDownload": "FortisAlberta My Account (a distributor portal, separate from your retailer): up to two years of daily consumption in daily or monthly views, downloadable to Excel for a chosen date range. No Green Button mentioned.",
+      "greenButton": null,
+      "url": "https://www.fortisalberta.com/my-account-help"
+    },
+    "City of Red Deer Electric Light & Power": {
+      "usageDownload": "No customer usage portal found. Meters are read manually monthly until the AMI rollout (residential installs from spring 2026), so use your retailer's bills or online account (default RoLR: ENMAX Energy).",
+      "greenButton": null,
+      "url": "https://www.reddeer.ca/city-services/electric-light-and-power/advanced-metering-infrastructure/"
+    },
+    "City of Lethbridge Electric Utility": {
+      "usageDownload": "No distributor usage portal found. Usage history comes from your retailer's bills or account; the City of Lethbridge is itself the default Rate of Last Resort retailer.",
+      "greenButton": null,
+      "url": "https://www.lethbridge.ca/utilities/electric/"
+    },
+    "SaskPower": {
+      "usageDownload": "MySaskPower, then My Reports: Compare Bills, Power Consumption (smart-meter power reports) and a 'Download Data' report. Smart-meter accounts also get Power Use Alerts. Export format not stated.",
+      "greenButton": null,
+      "url": "https://www.saskpower.com/profile/my-dashboard/my-reports"
+    },
+    "Saskatoon Light & Power": {
+      "usageDownload": "City of Saskatoon 'My Utility Account': Utility Consumption Summary and detailed consumption and charges. SmartUTIL (opened from My Utility Account) shows electricity and water use by month, day or hour.",
+      "greenButton": null,
+      "url": "https://www.saskatoon.ca/services-residents/power-water-sewer/smartutil"
+    },
+    "Manitoba Hydro": {
+      "usageDownload": "Online account (web or app): current and past bills for up to two years plus energy-use tracking. Manitoba Hydro also supplies Winnipeg's natural gas.",
+      "greenButton": null,
+      "url": "https://www.hydro.mb.ca/account/your-online-account/"
+    },
+    "BC Hydro": {
+      "usageDownload": "MyHydro account: hourly, daily and weekly consumption, comparisons with the same period last year and with similar homes. Export and Green Button not confirmed (the page content is script-rendered).",
+      "greenButton": null,
+      "url": "https://app.bchydro.com/accounts-billing/bill-payment/rates-energy-use.html"
+    },
+    "FortisBC": {
+      "usageDownload": "Account Online: review billing information and energy usage (same login for FortisBC electricity in Kelowna and FortisBC gas). Its 'My energy use' tool adds an appliance-level breakdown. Export and Green Button not confirmed.",
+      "greenButton": null,
+      "url": "https://www.fortisbc.com/accounts/open-close-or-move-your-account/my-energy-use"
+    },
+    "Nova Scotia Power": {
+      "usageDownload": "MyAccount, then MyEnergy Insights (smart-meter customers): usage by hour, day, month and year, plus an appliance breakdown and alerts. As of Sept 2026 the page says MyEnergy Insights is still being restored after NS Power's cyber incident.",
+      "greenButton": null,
+      "url": "https://www.nspower.ca/your-home/my-energy-insights"
+    },
+    "NB Power": {
+      "usageDownload": "Online NB Power account: Consumption History graph. Smart-meter customers see usage by day, hour or 15 minutes with temperature overlay and alerts. The site notes a systems upgrade may leave gaps or estimates in the online usage graph.",
+      "greenButton": null,
+      "url": "https://www.nbpower.com/en/accounts-billing/knowledge-is-power/smart-meter-insights/"
+    },
+    "Saint John Energy": {
+      "usageDownload": "Not verified: the sjenergy.ca site failed TLS verification from our fetcher. Ask the utility about an online account or 12-month history.",
+      "greenButton": null,
+      "url": "https://sjenergy.ca/"
+    },
+    "Maritime Electric": {
+      "usageDownload": "MyPower account: consumption history and bill/payment history for the past five years. A new AMI customer portal with interval data is being rolled out (island-wide AMI by 2027).",
+      "greenButton": null,
+      "url": "https://www.maritimeelectric.com/accounts-billing/mypower/sign-up-for-mypower/"
+    },
+    "Newfoundland Power": {
+      "usageDownload": "My Account: Usage / Energy Usage (compare with the same month last year), Billing History and a 'Download Account History' option, plus an Annual Electricity Statement.",
+      "greenButton": null,
+      "url": "https://www.newfoundlandpower.com/en/My-Account/Billing/Understanding-My-Electricity-Usage"
+    },
+    "ATCO Electric Yukon": {
+      "usageDownload": "My Account Portal: statements on any device and monitoring of energy consumption. History depth and download not stated.",
+      "greenButton": null,
+      "url": "https://www.atcoelectricyukon.com/en-ca/my-account/my-account-portal.html"
+    },
+    "Naka Power Utilities (formerly Northland Utilities)": {
+      "usageDownload": "My Account Portal: statements, e-bills and energy consumption on the account. AMI smart-meter installs expected to start Q3/Q4 2026. History depth and download not stated.",
+      "greenButton": null,
+      "url": "https://www.nakapower.com/en-ca/customer-billing-rates/account-portal.html"
+    },
+    "Enbridge Gas": {
+      "usageDownload": "Gas utility (most of Ontario): My Account, then Share My Data, then Download your Data: up to 24 months of billing and usage data as Green Button XML.",
+      "greenButton": true,
+      "url": "https://www.enbridgegas.com/greenbutton"
+    }
+  }
+}

@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import GearStrip from '../../components/GearStrip.astro';
 import { SITE } from '../../config/site';
@@ -38,10 +40,11 @@ const schema = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('lead-paint-testing')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Lead paint</span></nav>
-    <div class="page-hero">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
       <h1>Lead paint: a $15 swab before the sander</h1>
       <p class="lede measure">
@@ -51,6 +54,8 @@ const schema = [
         it, 1960–1990 possibly — and the response is cheap: swab-test any surface you're about to
         disturb, and work wet if it lights up.
       </p>
+      </div>
+      <Photo name={'lead-paint-testing'} eager />
     </div>
 
     <div class="glance">

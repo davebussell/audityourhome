@@ -1,0 +1,94 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import EraBar from '../../components/EraBar.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { localIndex, citiesByProvince } from '../../lib/local';
+import { PROV_PHOTO, ogFor } from '../../lib/photos';
+
+const n = localIndex.cities.length;
+const groups = citiesByProvince();
+const title = `Home energy audits and home testing in ${n} Canadian cities | AuditYourHome`;
+const description = `Local guides to 16 home energy and home health services in ${n} Canadian cities, each with its climate, housing age, provincial rules and who does the work.`;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cities', path: '/cities/' }])];
+const fmt = (v: number) => v.toLocaleString('en-CA');
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-atlantic')}>
+  <div class="container">
+    <div class="page-hero intro">
+      <p class="eyebrow">{n} cities · 16 services each · checked {localIndex.checked}</p>
+      <h1>From Victoria to St. John's, your city's houses have a story</h1>
+      <p class="lede measure">
+        Every city below has its own guide to 16 home energy and home health services, built from
+        its climate, the age of its houses, its province's rules and the organizations that serve it.
+        The bar on each card shows the city's houses by the era they were built, oldest first.
+      </p>
+      <div class="mosaic" aria-hidden="false">
+        <Photo name="region-bc" eager hud sizes="(max-width: 700px) 50vw, 280px" ratio="4 / 5" />
+        <Photo name="region-prairies" eager hud sizes="(max-width: 700px) 50vw, 280px" ratio="4 / 5" />
+        <Photo name="region-quebec" hud sizes="(max-width: 700px) 50vw, 280px" ratio="4 / 5" />
+        <Photo name="region-atlantic" hud sizes="(max-width: 700px) 50vw, 280px" ratio="4 / 5" />
+      </div>
+    </div>
+
+    <p class="legend small">
+      <span class="li"><span class="sw" style="--c:#F4A53F"></span>before 1961</span>
+      <span class="li"><span class="sw" style="--c:#E8622A"></span>1961–1990</span>
+      <span class="li"><span class="sw" style="--c:#C04A86"></span>1991–2000</span>
+      <span class="li"><span class="sw" style="--c:#7A63E0"></span>2001 or later</span>
+      <span class="src">· houses by construction period, Statistics Canada 2021 Census</span>
+    </p>
+
+    {groups.map((g) => (
+      <section class="prov" id={g.prov.toLowerCase()}>
+        <div class="phead">
+          <div class="pthumb"><Photo name={PROV_PHOTO[g.prov]} hud={false} plain sizes="96px" ratio="1 / 1" /></div>
+          <div>
+            <h2>{g.provName}</h2>
+            <a class="small" href={`/provinces/${g.provSlug}/`}>Programs and rebates in {g.provName} →</a>
+          </div>
+        </div>
+        <ul class="clist">
+          {g.cities.map((c) => (
+            <li>
+              <a href={`/cities/${c.slug}/`}>
+                <span class="cn">{c.name}</span>
+                <EraBar era={c.facts.era} name={c.name} />
+                <span class="cf">
+                  <span>{fmt(c.facts.hdd)} HDD</span>
+                  <span>{Math.round(c.facts.housesPre1961 ?? 0)}% pre-1961</span>
+                  <span>{c.facts.providers === 0 ? (c.prov === 'NS' ? 'via Efficiency NS' : 'no listed orgs') : `${c.facts.providers} advisor org${c.facts.providers === 1 ? '' : 's'}`}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .intro { padding-bottom: 18px; }
+  .mosaic { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; }
+  @media (max-width: 700px) { .mosaic { grid-template-columns: 1fr 1fr; } }
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 6px 0 4px; }
+  .legend .li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; background: var(--c); }
+  .legend .src { color: var(--faint); }
+  .prov { padding: 26px 0 6px; }
+  .phead { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .pthumb { width: 60px; flex-shrink: 0; }
+  .pthumb :global(.frame) { border-radius: 12px; box-shadow: none; }
+  .phead h2 { font-size: 24px; margin: 0 0 2px; }
+  .clist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+  .clist a {
+    display: grid; gap: 7px; padding: 12px 14px 13px; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); text-decoration: none; color: var(--ink); height: 100%;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .clist a:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .cn { font-family: var(--display); font-weight: 700; font-size: 16.5px; }
+  .cf { display: flex; flex-wrap: wrap; gap: 4px 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+</style>
