@@ -47,7 +47,9 @@ const schema = [
         <h1>{p.name}</h1>
         <span class="chip chip-neutral">{typeLabel}</span>
         {inactive && <span class="chip chip-closed">No longer offering evaluations</span>}
-        {p.hrsApproved && !inactive && <a class="chip chip-active hrs-chip" href="/programs/home-renovation-savings-assessment/">Approved for Home Renovation Savings</a>}
+        {!inactive && (p.hrsApproved
+          ? <a class="chip chip-active hrs-chip" href="/programs/home-renovation-savings-assessment/">HRSP-approved: Yes</a>
+          : <a class="chip chip-neutral hrs-chip" href="/programs/home-renovation-savings-assessment/">HRSP-approved: No</a>)}
       </div>
       {inactive ? (
         <div class="card card-pad inactive-note">
@@ -76,8 +78,19 @@ const schema = [
         <p class="small hrs-note measure">
           One of the seven service organizations approved for Ontario's
           <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>,
-          so its EnerGuide assessments qualify for the $600 assessment rebate and the insulation, window
-          and air-sealing rebates — if the follow-up is done by December 31, 2026.
+          so its EnerGuide assessments can qualify for the $600 assessment rebate (paid once you install at
+          least two recommended upgrades) and the insulation, window and air-sealing rebates. The same
+          organization has to do both visits, and the follow-up must be booked by November 30, 2026 and
+          done within 180 days of the first assessment or by December 31, 2026, whichever comes first.
+        </p>
+      )}
+      {!p.hrsApproved && !inactive && (
+        <p class="small hrs-note measure">
+          Not one of the seven organizations approved for Ontario's
+          <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>.
+          Its EnerGuide evaluations are official and still count for planning, financing and other
+          programs, but only assessments from the seven HRSP-approved organizations qualify for the $600
+          rebate and the assessment-path upgrade rebates.
         </p>
       )}
       <p class="lede measure">{p.profile}</p>
@@ -111,9 +124,12 @@ const schema = [
           </>
         ) : (
           <p class="small">
-            Prices not published. Ontario typical: $400–$700 initial, $200–$400 follow-up — the $600
-            HRSP rebate covers most of it. Ask for a written quote; transparent providers get
-            featured here.
+            Prices not published. Typical Ontario prices are about $500–$700 for the initial
+            evaluation and $200–$450 for the follow-up, plus HST where it applies.
+            {p.hrsApproved
+              ? ' As an HRSP-approved organization, its assessments can earn the $600 Home Renovation Savings rebate once you install two or more recommended upgrades.'
+              : ''}
+            Ask for a written quote; transparent providers get featured here.
           </p>
         )}
         <p class="mb-0"><strong>Booking:</strong> {p.booking}</p>

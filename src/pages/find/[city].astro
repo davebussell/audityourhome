@@ -23,7 +23,7 @@ const description = `Compare ${list.length} NRCan-licensed service organizations
 const faqs = [
   {
     q: `What does an energy audit cost in ${region.name}?`,
-    a: 'Typical Ontario pricing is $400–$700 for the initial EnerGuide assessment and $200–$400 for the follow-up. The Home Renovation Savings Program rebates $600 of that on the assessment path, if you book through one of its seven approved service organizations (tagged below) and finish by December 31, 2026. Few providers publish prices — the ones here that do are marked.',
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies (Windfall Ecology Centre: $500 and $250 plus HST; Reep Green Solutions: $540 and $406, no HST). The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify (marked “HRSP-approved: Yes” below), and the follow-up has to be done by December 31, 2026. Few providers publish prices; the ones here that do show them on their card.',
   },
   {
     q: `Which rebates apply in ${region.name}?`,
@@ -66,13 +66,16 @@ const schema = [
     </div>
 
     <p class="card card-pad hrs-callout small">
-      <strong>Claiming Ontario's Home Renovation Savings rebates?</strong> The EnerGuide assessments
-      have to come from one of the program's seven approved service organizations, with the
-      follow-up done by December 31, 2026.
-      {hrsCount > 0
-        ? ` ${hrsCount} of the providers below ${hrsCount === 1 ? 'is' : 'are'} tagged “Approved for Home Renovation Savings.”`
-        : ' None of the providers listed for this area is on that list yet.'}
-      Every provider here delivers official EnerGuide assessments for everything else, from
+      <strong>Claiming Ontario's Home Renovation Savings rebates?</strong> Only assessments from the
+      seven HRSP-approved organizations qualify for the $600 rebate and the assessment-path upgrade
+      rebates. Book the follow-up by November 30, 2026; it has to be done within 180 days of the
+      first assessment or by December 31, 2026, whichever comes first.
+      {hrsCount === 0
+        ? ' None of the providers listed for this area is on that list.'
+        : hrsCount === list.length
+          ? ` All ${list.length} providers below are marked “HRSP-approved: Yes.”`
+          : ` ${hrsCount} of the ${list.length} providers below ${hrsCount === 1 ? 'is' : 'are'} marked “HRSP-approved: Yes.”`}
+      Every provider here delivers official EnerGuide evaluations for everything else, from
       financing to heat pump sizing.
       <a href="/programs/home-renovation-savings-assessment/">See the seven and the deadlines</a>
     </p>

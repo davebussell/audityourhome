@@ -66,6 +66,16 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
         </div>
       </div>
       <div class="field">
+        <label for="lf-building">Type of building</label>
+        <select id="lf-building" name="building">
+          <option value="house">House (detached, semi, row or town)</option>
+          <option value="duplex-triplex">Duplex or triplex</option>
+          <option value="multi-unit">Multi-unit building (4 or more units)</option>
+          <option value="condo-unit">Condo unit</option>
+          <option value="commercial">Commercial building</option>
+        </select>
+      </div>
+      <div class="field">
         <label for="lf-message">What are you planning? <span class="optional">(optional)</span></label>
         <textarea id="lf-message" name="message" rows="3" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
       </div>
@@ -75,7 +85,8 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
   ) : (
     <div class="fallback">
       <p>
-        Email us what you’re planning and your postal code — we’ll reply with registered service
+        Email us what you’re planning, your postal code and the type of building (a house, a duplex
+        or triplex, or a larger multi-unit building) — we’ll reply with registered service
         organizations for your area and which rebates apply.
       </p>
       <a class="btn btn-primary" href={mailtoFallback}>Email {SITE.contactEmail}</a>

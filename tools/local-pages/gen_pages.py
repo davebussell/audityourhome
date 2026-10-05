@@ -22,6 +22,28 @@ NAT = D['national']
 INCENT = D['incentives']
 UTIL = D['utilities']
 PROGRAMS = json.load(open(f'{REPO}/src/data/programs.json'))
+
+# Provider-list adjustments from the October 2026 fact-check (applied here so build_data.py needn't re-run):
+# - Reep Green Solutions' own service-area page (reepgreen.ca/energyevaluation/, checked 2026-10-02) lists Waterloo
+#   Region, Guelph and area, parts of Oxford County, and Brantford/Stratford/Woodstock for a mileage fee, but not
+#   Hamilton, Burlington or Niagara, although NRCan's registry lists those postal codes. Don't send homeowners there.
+# - Link the four HRSP-approved organizations that now have directory profiles; use the approved list's spelling.
+PROVIDER_EXCLUDE = {('Reep Green Solutions', 'hamilton'), ('Reep Green Solutions', 'burlington'),
+                    ('Reep Green Solutions', 'st-catharines')}
+PROFILE_BY_NAME = {'NRGwise (A1 NRGwise Consulting)': 'nrgwise', 'Greenbrain': 'greenbrain', 'Energy Werx': 'energy-werx',
+                   'The Home Inspectors Group': 'the-home-inspectors-group'}
+PROVIDER_RENAME = {'Canada Energy Audits': 'Canada Energy Audit'}
+for _c in CITIES:
+    _keep = []
+    for _x in _c['providers']:
+        if (_x['name'], _c['slug']) in PROVIDER_EXCLUDE:
+            continue
+        _x['name'] = PROVIDER_RENAME.get(_x['name'], _x['name'])
+        if not _x.get('profile') and _x['name'] in PROFILE_BY_NAME:
+            _x['profile'] = PROFILE_BY_NAME[_x['name']]
+        _keep.append(_x)
+    _c['providers'] = _keep
+
 CHECKED = 'September 28, 2026'
 CHECKED_ISO = '2026-09-28'
 MINUS = '−'
@@ -148,8 +170,15 @@ PT = {
         wells=("Free bacteria testing through Public Health Ontario labs: pick up a kit at a PHO lab or your public health unit and drop it back off. Chemistry (nitrate, sodium, metals) goes to a licensed private lab for a fee. Local health units recommend testing at least three times a year: spring, summer and fall.",
                'https://www.ontario.ca/page/testing-and-treating-private-water-wells'),
         wellCost='Bacteria free (Public Health Ontario)',
-        evalPrice=("Windfall Ecology Centre, one of the few Ontario providers that publishes prices, charges $500 + HST for the initial evaluation and $250 + HST for the follow-up; Reep Green Solutions lists $540. City-backed programs in Ottawa and London quote $500–$700 as typical.",
-                   'https://windfallcentre.ca/energy/evaluation/'),
+        evalPrice=("Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies. "
+                   "Windfall Ecology Centre charges $500 + HST for the initial evaluation and $250 + HST for the follow-up, Reep Green Solutions charges $540 and $406 with no HST, "
+                   "and City-backed programs in Ottawa and London quote $500–$700 as typical for the first visit. "
+                   "Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate, and none of the seven publishes a price.",
+                   [('Windfall Ecology Centre — EnerGuide evaluation prices', 'https://windfallcentre.ca/energy/evaluation/'),
+                    ('Reep Green Solutions — EnerGuide evaluation prices', 'https://reepgreen.ca/energyevaluation/'),
+                    ('Better Homes Ottawa — typical energy assessment cost', 'https://betterhomesottawa.ca/energy-audits/energy-assessment/'),
+                    ('BetterHomes London — typical energy assessment cost', 'https://betterhomeslondon.ca/'),
+                    ('Home Renovation Savings — the seven approved service organizations', 'https://www.homerenovationsavings.ca/help-and-support')]),
         evalShort='About $500–$700',
     ),
     'QC': dict(
@@ -251,8 +280,10 @@ PT = {
         wells=("Owners pay: Nova Scotia Health charges $34.50 for a bacteria test and $37.63 to $138.77 for chemical packages, with bottles at NSH locations. The province recommends testing for bacteria every year and for chemicals every five years.",
                'https://novascotia.ca/well-water-testing/'),
         wellCost='$34.50 bacteria (Nova Scotia Health)',
-        evalPrice=("Efficiency Nova Scotia's Home Energy Assessment program charges a $199 program fee (waived for moderate-income households) and covers the initial and final assessments.",
-                   'https://www.efficiencyns.ca/programs-rebates/home-energy-assessments'),
+        evalPrice=("Efficiency Nova Scotia's Home Energy Assessment program charges a $199 program fee, waived for households under its income threshold, and covers the initial and final assessments. "
+                   "Moderate Income Rebate participants who paid up front get the $199 back when their rebates are issued.",
+                   [('Efficiency Nova Scotia — Home Energy Assessments ($199, income waiver)', 'https://www.efficiencyns.ca/programs-rebates/home-energy-assessments'),
+                    ('Efficiency Nova Scotia — rebate guide, August 2026 (Moderate Income Rebate, $199 reimbursement)', 'https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf')]),
         evalShort='$199 program fee',
     ),
     'NB': dict(
@@ -736,7 +767,11 @@ def page_base(c, svc):
 
 def eval_price(c, src):
     t, u = PT[c['prov']]['evalPrice']
-    src.add(f"{c['provName']} — EnerGuide evaluation price or rebate", u)
+    if isinstance(u, list):
+        for lab, url in u:
+            src.add(lab, url)
+    else:
+        src.add(f"{c['provName']} — EnerGuide evaluation price or rebate", u)
     return t, PT[c['prov']]['evalShort']
 
 
@@ -748,6 +783,7 @@ def municipal_eval_subsidies(c):
 def gen_home_energy_audit(c, src):
     pg = page_base(c, 'home-energy-audit')
     k = len(c['providers'])
+    hrs_k = sum(1 for x in c['providers'] if x.get('hrs'))
     h = c['housing']
     ev_text, ev_short = eval_price(c, src)
     subs = municipal_eval_subsidies(c)
@@ -800,7 +836,8 @@ def gen_home_energy_audit(c, src):
     faq = [
         {'q': f'How much does a home energy audit cost in {c["name"]}?', 'a': strip(ev_text) + (' ' + f"{c['name']} also has a municipal evaluation subsidy for eligible homeowners." if subs else '')},
         {'q': f'How many companies do EnerGuide evaluations in {c["name"]}?',
-         'a': (f"NRCan's list of service organizations shows {k} licensed organization{'s' if k != 1 else ''} with {c['name']} postal codes (checked September 25, 2026)."
+         'a': ((f"NRCan's list of service organizations shows {k} licensed organization{'s' if k != 1 else ''} with {c['name']} postal codes (checked September 25, 2026)."
+                + (hrs_sentence(hrs_k) if c['prov'] == 'ON' else ''))
                if k else "NRCan's list shows no separate service organizations for Nova Scotia; assessments are booked through Efficiency Nova Scotia's Home Energy Assessment program.")},
         {'q': 'How long does an EnerGuide evaluation take?', 'a': 'The initial visit usually takes two to three hours, including the blower door test. The follow-up visit after upgrades is shorter.'},
     ]
@@ -810,6 +847,18 @@ def gen_home_energy_audit(c, src):
                     'a': 'Currently: ' + '; '.join(f"{x['name']} ({x['summary']})" for x in progs[:3]) + '. Check the program page for current terms before you book.'})
     pg['faq'] = faq
     return pg
+
+
+def hrs_sentence(k):
+    """How many of the seven HRSP-approved organizations list this city (Ontario only)."""
+    words = {1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six'}
+    if k >= 7:
+        return (" All seven organizations approved for Home Renovation Savings assessments are among them, "
+                "and only their assessments qualify for its $600 rebate.")
+    if k == 0:
+        return " None of the seven organizations approved for Home Renovation Savings assessments lists this city."
+    return (f" {words[k].capitalize()} of the seven organizations approved for Home Renovation Savings assessments "
+            f"{'is' if k == 1 else 'are'} among them, and only those seven qualify for its $600 rebate.")
 
 
 def strip(t):

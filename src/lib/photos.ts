@@ -30,6 +30,7 @@ import well from '../assets/photos/well-water-testing.jpg';
 import commercial from '../assets/photos/commercial-energy-audit.jpg';
 import rOntario from '../assets/photos/region-ontario.jpg';
 import rQuebec from '../assets/photos/region-quebec.jpg';
+import multiUnit from '../assets/photos/multi-unit.jpg';
 import rPrairies from '../assets/photos/region-prairies.jpg';
 import rBC from '../assets/photos/region-bc.jpg';
 import rAlberta from '../assets/photos/region-alberta.jpg';
@@ -143,6 +144,11 @@ export const PHOTOS = {
     src: rQuebec,
     alt: 'A brick Montréal plex with exterior spiral staircases in winter',
     hud: 'Quebec',
+  },
+  'multi-unit': {
+    src: multiUnit,
+    alt: 'A brick Montréal plex with exterior spiral staircases in winter',
+    hud: 'MURB · 2–100 units',
   },
   'region-prairies': {
     src: rPrairies,

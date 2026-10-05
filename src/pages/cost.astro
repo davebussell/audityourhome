@@ -8,16 +8,20 @@ import { breadcrumbSchema, faqSchema } from '../lib/schema';
 
 const title = 'Home energy audit cost in Ontario (2026) — real numbers | AuditYourHome';
 const description =
-  'What an EnerGuide home energy assessment actually costs in Ontario in 2026: $400–$700 initial, $200–$400 follow-up, minus the $600 Home Renovation Savings rebate. Published prices, no bait.';
+  'What an EnerGuide home energy assessment costs in Ontario in 2026: about $500–$700 for the first visit and $200–$450 for the follow-up, the providers that publish prices, and who qualifies for the $600 Home Renovation Savings rebate.';
 
 const faqs = [
   {
     q: 'How much is a home energy audit in Ontario in 2026?',
-    a: 'Typical market pricing is $400–$700 for the initial EnerGuide assessment and $200–$400 for the follow-up visit; NRCan cites a $600–$1,000 typical combined range. Larger homes add $50–$150. The Home Renovation Savings Program rebates $600 after you complete the assessment path through one of its seven approved service organizations (follow-up by December 31, 2026), bringing typical net cost to roughly $0–$400.',
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies: Windfall Ecology Centre charges $500 and $250 plus HST, Reep Green Solutions $540 and $406 with no HST, and the City-backed programs in Ottawa and London quote $500–$700 as typical for the first visit. NRCan puts the two visits together at $600–$1,000 on average. Larger homes cost more. The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. If an approved organization charges in the typical range, that leaves roughly $100–$550 plus HST; with any other provider you pay the full price.',
+  },
+  {
+    q: 'Which providers qualify for the $600 assessment rebate?',
+    a: 'Only the seven organizations approved for the Home Renovation Savings assessment path: AmeriSpec, Canada Energy Audit, Energy Werx, Greenbrain, NRGwise, The Energuy and The Home Inspectors Group. The same organization has to do both assessments. Book the follow-up by November 30, 2026; it must be done within 180 days of the first visit or by December 31, 2026, whichever comes first. None of the seven publishes a price, so ask for a written quote.',
   },
   {
     q: 'Why do so few providers publish prices?',
-    a: 'Habit, mostly — the industry runs on phone quotes. NRCan itself tells homeowners to expect a wide range. We mark the providers who publish prices and feature them first; transparency is the sort we reward.',
+    a: 'Habit, mostly. The industry runs on phone quotes, and NRCan itself tells homeowners prices vary by location and home size. We show published prices on each provider’s card and list those providers first; transparency is the sort we reward.',
   },
   {
     q: 'Is a "free energy audit" real?',
@@ -45,10 +49,10 @@ const schema = [
       <p class="eyebrow">Cost guide · updated {SITE.dataReviewDate}</p>
       <h1>What a home energy audit costs in Ontario</h1>
       <p class="lede measure">
-        Short version: expect <strong>$400–$700</strong> for the initial EnerGuide assessment,
-        <strong> $200–$400</strong> for the follow-up — and a <strong>$600 rebate</strong> that
-        covers most of it if you complete Ontario's Home Renovation Savings assessment path through one
-        of its seven approved service organizations, with the follow-up done by December 31, 2026.
+        Short version: expect about <strong>$500–$700</strong> for the initial EnerGuide
+        evaluation and <strong>$200–$450</strong> for the follow-up, plus HST where it applies. Ontario's Home Renovation Savings program pays a <strong>$600
+        rebate</strong> toward the two visits, but only assessments from the seven HRSP-approved
+        organizations qualify, and only once you install at least two recommended upgrades.
       </p>
       </div>
       <Photo name={'energy-bill-analysis'} eager />
@@ -61,11 +65,12 @@ const schema = [
           <tr><th>Item</th><th>Typical price</th><th>Notes</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Initial EnerGuide assessment</strong></td><td><span class="money">$400–$700</span> + HST</td><td>Blower door, measurements, rating, upgrade report</td></tr>
-          <tr><td><strong>Follow-up assessment</strong></td><td><span class="money">$200–$400</span> + HST</td><td>Re-test after upgrades; unlocks HRSP rebates</td></tr>
-          <tr><td>Large home surcharge</td><td><span class="money">$50–$150</span></td><td>Common above ~2,500 sq ft</td></tr>
-          <tr><td>HRSP assessment rebate</td><td><span class="money">−$600</span></td><td>Paid after 2+ upgrades; approved service organizations only; follow-up by Dec 31, 2026</td></tr>
-          <tr><td><strong>Typical net cost</strong></td><td><span class="money">$0–$400</span></td><td>When you follow through on the rebate path</td></tr>
+          <tr><td><strong>Initial EnerGuide evaluation</strong></td><td><span class="money">$500–$700</span> + HST where it applies</td><td>Blower door, measurements, rating, upgrade report. Published: Windfall $500 + HST; Reep $540, no HST. Ottawa and London city programs: $500–$700 typical</td></tr>
+          <tr><td><strong>Follow-up evaluation</strong></td><td><span class="money">$200–$450</span> + HST where it applies</td><td>Re-test after upgrades. Published: Windfall $250 + HST; Reep $406 ($440 if another organization did the first visit)</td></tr>
+          <tr><td>Large-home surcharge</td><td><span class="money">$50–$275</span></td><td>Windfall adds $50–$150 above 2,500 sq ft; Reep adds $50–$275 above 3,000 sq ft</td></tr>
+          <tr><td>HRSP assessment rebate</td><td><span class="money">−$600</span></td><td>HRSP-approved organizations only, the same one for both visits; paid after 2+ recommended upgrades; follow-up within 180 days or by Dec 31, 2026</td></tr>
+          <tr><td><strong>Net cost, HRSP-approved organization</strong></td><td><span class="money">About $100–$550</span> + HST</td><td>If its prices fall in the typical range and you finish the rebate path</td></tr>
+          <tr><td><strong>Net cost, any other provider</strong></td><td><span class="money">Full price</span></td><td>No Home Renovation Savings assessment rebate</td></tr>
         </tbody>
       </table>
     </div>
@@ -73,10 +78,21 @@ const schema = [
     <div class="measure prose">
       <h2>The honest context</h2>
       <p>
-        NRCan's own guidance pegs a typical evaluation at $600–$1,000 all-in, and prices are almost
-        never published — of the providers in our directory, only a couple post rates openly (for
-        example, Windfall Ecology Centre at $500 + HST initial / $250 follow-up). That opacity is an
+        NRCan says the pre- and post-retrofit evaluations together cost
+        <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" rel="noopener" target="_blank">$600 to $1,000 on average</a>,
+        and most providers don't publish prices. Two in our directory do: Windfall Ecology Centre
+        ($500 initial and $250 follow-up, plus HST) and Reep Green Solutions ($540 and $406, with no
+        HST because it's a registered charity; Kitchener Utilities gas customers pay $490 for the
+        first visit). Neither is one of the seven HRSP-approved organizations, so their evaluations
+        don't earn the $600 rebate, and none of the seven publishes a price. That opacity is an
         industry habit, not a law of nature, and it's why we surface published prices first.
+      </p>
+      <p>
+        Some cities add their own help. For a limited time, <a href="https://betterhomesottawa.ca/rebate-and-incentive-programs/better-homes-loan-program/" rel="noopener" target="_blank">Better Homes Ottawa</a>
+        takes $600 off its retrofit loans for participants who aren't getting the Home Renovation
+        Savings assessment rebate, and <a href="https://betterhomesptbo.ca/loan-program/" rel="noopener" target="_blank">Better Homes Peterborough</a>
+        pays $600 toward an EnerGuide assessment for loan participants who finish their retrofit and
+        aren't getting a similar rebate elsewhere.
       </p>
       <p>
         Two warnings worth their weight: first, the federal <strong>Greener Homes Grant and Loan are

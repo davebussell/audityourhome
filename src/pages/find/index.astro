@@ -25,10 +25,11 @@ const schema = [
       <p class="eyebrow">The directory</p>
       <h1>Find a registered energy auditor</h1>
       <p class="lede">
-        Every listing is an NRCan-licensed service organization — the only kind of provider whose
-        EnerGuide assessments qualify for Ontario's rebate programs. {providers.length} providers
-        across {regions.length} areas, compiled from public registries and provider sites, checked
-        {SITE.dataReviewDate}.
+        Every listing is an NRCan-licensed service organization. NRCan licensing is required for
+        EnerGuide rebates, and Ontario's Home Renovation Savings program further limits its $600
+        assessment rebate to seven approved organizations, marked “HRSP-approved: Yes” on each card.
+        {providers.length} providers across {regions.length} areas, compiled from public registries
+        and provider sites, checked {SITE.dataReviewDate}.
       </p>
       </div>
       <Photo name={'region-ontario'} eager />
@@ -50,7 +51,8 @@ const schema = [
     <div class="card card-pad elsewhere">
       <h3>Elsewhere in Ontario?</h3>
       <p class="mb-0">
-        Province-wide providers like The Energuy cover most of Ontario, and
+        Province-wide providers such as The Energuy, Greenbrain and The Home Inspectors Group cover
+        most of Ontario, and
         <a href="/plan/"> the planner</a> matches programs to any Ontario postal code. If your area
         isn't listed yet, <a href={`mailto:${SITE.contactEmail}`}>tell us where you are</a> — we
         prioritize new areas by request.

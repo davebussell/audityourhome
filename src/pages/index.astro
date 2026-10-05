@@ -19,7 +19,7 @@ const featuredProviders = providers.filter((p) => ['windfall-ecology-centre', 't
 const faqs = [
   {
     q: 'What does a home energy audit cost in Ontario?',
-    a: 'Most EnerGuide evaluations run $400–$700 for the initial visit and $200–$400 for the follow-up, and NRCan cites a $600–$1,000 typical total. Ontario’s Home Renovation Savings Program rebates $600 of that when you complete the assessment path through one of its seven approved service organizations (follow-up by December 31, 2026) — so a typical audit ends up costing a few hundred dollars net, or less.',
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies, and NRCan puts the two visits together at $600–$1,000 on average. Ontario’s Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. With one of those, the rebate covers most of a typical two-visit bill; with any other provider, you pay the full price. The follow-up has to be done by December 31, 2026.',
   },
   {
     q: 'Is the audit actually required to get rebates?',
@@ -207,7 +207,12 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
         area, their registration, their published prices where they exist — and rewards the
         providers transparent enough to post them.
       </p>
-      <div class="grid-3" style="margin-top: 28px;">
+      <p class="small hrs-line">
+        Only assessments from the seven HRSP-approved organizations qualify for Ontario's $600
+        assessment rebate. Every card says whether the provider is one of them.
+        <a href="/programs/home-renovation-savings-assessment/">See the seven</a>
+      </p>
+      <div class="grid-3">
         {featuredProviders.map((p) => <ProviderCard provider={p} />)}
       </div>
       <div class="city-links">
@@ -300,6 +305,7 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
   }
   .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
   section.alt { background: #F3EFE7; }
+  .hrs-line { margin: 18px 0 18px; max-width: 70ch; }
   .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }
   .thermal-band h2 { color: #fff; }
   .thermal-band p { color: var(--navy-muted); }

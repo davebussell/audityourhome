@@ -15,7 +15,7 @@ const LOCAL = [
     label: 'Ontario',
     default: true,
     programs:
-      'The Home Renovation Savings Program is the live rebate engine: a $600 rebate toward your initial + follow-up EnerGuide assessments (paid once you finish two upgrades, with the follow-up done by December 31, 2026), insulation up to $7,700, windows at $100 per opening on the assessment path, and heat pumps up to $7,500 ($12,000 ground-source) on the no-assessment stream.',
+      'The Home Renovation Savings Program is the live rebate engine: a $600 rebate toward your initial + follow-up EnerGuide assessments (paid once you finish two upgrades; only assessments from the seven HRSP-approved organizations qualify, with the follow-up done within 180 days or by December 31, 2026, whichever comes first), insulation up to $7,700, windows at $100 per opening on the assessment path, and heat pumps up to $7,500 ($12,000 ground-source) on the no-assessment stream.',
     programsLink: { label: 'HomeRenovationSavings.ca', url: 'https://www.homerenovationsavings.ca/with-assessment' },
     requirements:
       'Audits are required for: the HRSP assessment path (pre + post EnerGuide through one of the program\'s seven approved service organizations), and large buildings over 50,000 sq ft must report energy and water use annually under Ontario\'s EWRB regulation. New homes are built to the Building Code\'s SB-12 energy efficiency rules.',
@@ -26,7 +26,7 @@ const LOCAL = [
     id: 'toronto',
     label: 'Toronto',
     programs:
-      'Toronto stacks three layers: Home Renovation Savings rebates, the City\'s HELP loans up to $125,000 or 10% of assessed value (posted rates 3.34%–4.75% to Sept 30, 2026), and the $600 assessment rebate. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.',
+      'Toronto stacks three layers: Home Renovation Savings rebates, the City\'s HELP loans up to $125,000 or 10% of assessed value (fixed rates the City resets every quarter), and the $600 assessment rebate through one of the seven HRSP-approved organizations. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.',
     programsLink: { label: 'Toronto HELP (toronto.ca)', url: 'https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/' },
     requirements:
       'HELP requires an EnerGuide assessment for most projects (heat-pump-only and solar-only are exempt). New construction follows the Toronto Green Standard on top of the Building Code, and 50,000+ sq ft buildings fall under provincial EWRB reporting.',
@@ -37,7 +37,7 @@ const LOCAL = [
     id: 'bc',
     label: 'British Columbia',
     programs:
-      'The utility Home Renovation Rebate program (BC Hydro/FortisBC) runs equipment and envelope rebates, and the Home Energy Improvement Bonus — now province-wide as of May 2026 — pays $20 per percentage-point EnerGuide improvement ($750–$2,000) when you complete 3+ eligible upgrades with pre and post evaluations. Income-qualified households can access the CleanBC Energy Savings Program.',
+      'The utility Home Renovation Rebate program (BC Hydro/FortisBC) runs equipment and envelope rebates, and the Home Energy Improvement Bonus pays $20 per percentage-point EnerGuide improvement ($750–$2,000) when you complete 3+ eligible upgrades with pre and post evaluations within 18 months; a separate $300 Two Upgrade Bonus needs no evaluation (one bonus per home). Income-qualified households can access the CleanBC Energy Savings Program.',
     programsLink: { label: 'Better Homes BC requirements', url: 'https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/' },
     requirements:
       'The Improvement Bonus requires pre + post EnerGuide evaluations by a program-qualified advisor. Heat pump rebates require a CSA F280 heat-load calculation. New construction is governed by the BC Energy Step Code\'s tiered performance targets.',
@@ -48,7 +48,7 @@ const LOCAL = [
     id: 'quebec',
     label: 'Quebec',
     programs:
-      'Rénoclimat delivers evaluations at a fixed $150 + tax with government-assigned advisors, feeding insulation and air-sealing subsidies; Hydro-Québec\'s LogisVert covers heat pumps and efficient equipment with no audit required.',
+      'Rénoclimat delivers evaluations at $150 + tax (the $150 is refunded when you receive Rénoclimat assistance, and the first post-retrofit evaluation is free) with government-assigned advisors, feeding insulation and air-sealing subsidies; Hydro-Québec\'s LogisVert covers heat pumps and efficient equipment with no audit required.',
     programsLink: { label: 'Rénoclimat (quebec.ca)', url: 'https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat' },
     requirements:
       'Rénoclimat subsidies require its evaluation (booked through the program, not a chosen advisor). Novoclimat certifies high-efficiency new construction.',
@@ -70,7 +70,7 @@ const LOCAL = [
     id: 'atlantic',
     label: 'Atlantic Canada',
     programs:
-      'New Brunswick\'s Total Home Energy Savings Program includes a free home energy evaluation; efficiencyPEI subsidizes assessments to $99 + HST via contracted partners; Efficiency Nova Scotia runs assessment-based rebates plus free income-qualified streams.',
+      'New Brunswick\'s Total Home Energy Savings Program charges $99 + HST for both evaluations; efficiencyPEI subsidizes assessments to $99 + HST via contracted partners; Efficiency Nova Scotia runs assessment-based rebates (up to $5,000, plus up to $5,000 more for moderate-income homes not heated by electricity) and free upgrades for income-qualified homeowners.',
     programsLink: { label: 'Save Energy NB', url: 'https://www.saveenergynb.ca/en/save-energy/residential/total-home-energy-savings-program/' },
     requirements:
       'PEI\'s insulation rebates require the subsidized assessment first; NB and NS rebate streams are built around their evaluations. Oil-heated homes throughout the region see the fastest conversion paybacks in Canada.',
@@ -102,7 +102,7 @@ const LOCAL = [
       <p class="ls-find"><a href={r.findLink.url}><strong>{r.findLink.label} →</strong></a></p>
     </div>
   ))}
-  <p class="meta">Program facts re-verified against official pages Sept 18, 2026 — <a href="/programs/">tracker</a>.</p>
+  <p class="meta">Program facts re-verified against official pages Oct 2, 2026 — <a href="/programs/">tracker</a>.</p>
 </div>
 
 <style>

@@ -122,13 +122,22 @@ const statusChip: Record<string, [string, string]> = {
             {pg.providers.items.length > 0 && (
               <>
                 <p class="small">{pg.providers.note}</p>
+                {city.prov === 'ON' && (
+                  <p class="small hrs-line">
+                    Only assessments from the seven HRSP-approved organizations qualify for the $600
+                    <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebate
+                    and its assessment-path upgrade rebates; each listing below says whether it's one of them.
+                  </p>
+                )}
                 <ul class="plist">
                   {pg.providers.items.map((p) => (
                     <li class="prow">
                       <div class="pname">
                         {p.profile ? <a href={p.profile}><strong>{p.name}</strong></a> : <strong>{p.name}</strong>}
                         <span class="chips">
-                          {p.hrs && <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="Approved for Ontario's Home Renovation Savings assessment path">HRS-approved</a>}
+                          {city.prov === 'ON' && (p.hrs
+                            ? <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
+                            : <span class="chip chip-neutral" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments don't qualify for the $600 rebate">HRSP-approved: No</span>)}
                           {p.gcc && <span class="chip chip-neutral" title="Member of the Green Communities Canada non-profit network">Non-profit network</span>}
                           {p.profile && <span class="chip chip-info">Profile</span>}
                         </span>

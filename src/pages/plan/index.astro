@@ -30,6 +30,7 @@ const payload = {
     website: p.website,
     pricing: p.pricing ? `${p.pricing.preRetrofit} initial · ${p.pricing.postRetrofit} follow-up` : null,
     registration: p.registration,
+    hrsApproved: p.hrsApproved,
     reviews: reviewLinks(p),
   })),
   programs: programs
@@ -43,6 +44,29 @@ const schema = [
     { name: 'Home Energy Planner', path: '/plan/' },
   ]),
 ];
+
+// ---- visible assumptions table (same data the estimator reads)
+const bm = rates.ontario.benchmarks;
+const fmtN = (n: number) => n.toLocaleString('en-CA');
+const pctN = (x: number) => `${Math.round(x * 100)}%`;
+const ERA_LABEL: Record<string, string> = {
+  'pre-1946': 'before 1946', '1946-1965': '1946–1965', '1966-1980': '1966–1980',
+  '1981-1995': '1981–1995', '1996-2010': '1996–2010', '2011-plus': '2011 or later',
+};
+const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', large: 'large', xlarge: 'very large' };
+const HEAT_LABEL: Record<string, string> = { electric: 'electric heat', gas: 'gas heat', oil: 'oil or propane heat' };
+const eraAdj = 'Use is scaled by build era: ' + Object.entries(bm.eraMultiplier)
+  .map(([k, v]) => `${ERA_LABEL[k] ?? k} ×${v}`).join(', ') + '.';
+const sizeAdj = 'And by size: ' + Object.entries(bm.sizeMultiplier)
+  .map(([k, v]) => `${SIZE_LABEL[k] ?? k} ×${v}`).join(', ') + ' (medium is about 1,500–2,000 sq ft).';
+const appliesTo = (m: { eras: string[]; heatingTypes: string[] }) => {
+  const parts: string[] = [];
+  if (m.eras.length) parts.push('homes built ' + m.eras.map((e) => ERA_LABEL[e] ?? e).join(', '));
+  if (m.heatingTypes.length) parts.push(m.heatingTypes.map((h) => HEAT_LABEL[h] ?? h).join(', '));
+  return parts.length ? parts.join('; ') : 'any home';
+};
+const savedRange = (r: number[]) => (r[0] === 0 && r[1] === 0 ? 'not counted' : `${Math.round(r[0] * 100)}–${Math.round(r[1] * 100)}%`);
+const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 
 <Base title={title} description={description} schema={schema}>
@@ -215,8 +239,9 @@ const schema = [
           Everything above is based on how homes like yours typically perform — not a model of your
           actual house. An EnerGuide evaluation (blower door test, thermal imaging, room-by-room
           heat-loss model) turns these ranges into numbers for <em>your</em> address, and it's the
-          required first step for the biggest rebates. In Ontario, the $600 HRSP rebate covers most
-          of its cost.
+          required first step for the biggest rebates. In Ontario, the $600 Home Renovation Savings
+          rebate covers most of its cost if you book one of the seven HRSP-approved organizations and
+          install at least two recommended upgrades.
         </p>
       </div>
 
@@ -228,7 +253,7 @@ const schema = [
 
       <p class="small disclaimer">
         Estimates are ranges based on typical performance of similar Ontario homes and the
-        assumptions in our published data files ({SITE.dataReviewDate}). They are not a guarantee of
+        assumptions <a href="#assumptions">listed below</a> ({SITE.dataReviewDate}). They are not a guarantee of
         savings. Program details change — confirm on official pages before spending. Nothing you
         enter here is stored or transmitted; the planner runs entirely in your browser.
       </p>
@@ -237,6 +262,45 @@ const schema = [
         <button type="button" class="btn btn-ghost" id="copyLink">Copy link to this plan</button>
       </div>
     </div>
+
+    <section class="assumptions" id="assumptions">
+      <h2>The assumptions behind the estimates</h2>
+      <p class="small measure">
+        The planner works mostly from the monthly bills you enter, so these figures matter for
+        converting dollars to energy and for the benchmark, not as a model of your house. They are
+        deliberately rough, and an EnerGuide evaluation replaces all of them. Rates as of {ratesAsOf}.
+      </p>
+      <div class="tablewrap card">
+        <table>
+          <caption>Energy prices and typical use</caption>
+          <tbody>
+            <tr><th scope="row">Natural gas</th><td>${rates.ontario.gasPerM3.toFixed(2)} per m³, all-in</td><td>{rates.ontario.gasPerM3Note}</td></tr>
+            <tr><th scope="row">Electricity</th><td>${rates.ontario.elecPerKwh.toFixed(3)} per kWh, blended</td><td>{rates.ontario.elecPerKwhNote}</td></tr>
+            <tr><th scope="row">Gas-heated home</th><td>{fmtN(bm.gasHeatedGasM3)} m³ gas + {fmtN(bm.gasHeatedElecKwh)} kWh a year</td><td>{pctN(bm.heatShareOfGas)} of the gas goes to space heating. {bm._note}</td></tr>
+            <tr><th scope="row">Electrically heated home</th><td>{fmtN(bm.electricHeatedElecKwh)} kWh a year</td><td>{pctN(bm.heatShareOfElectricHeatedElec)} of the electricity goes to space heating</td></tr>
+            <tr><th scope="row">Age of the house</th><td colspan="2">{eraAdj}</td></tr>
+            <tr><th scope="row">Size of the house</th><td colspan="2">{sizeAdj}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tablewrap card">
+        <table>
+          <caption>Upgrades: share of heating spend saved, and typical installed cost</caption>
+          <thead><tr><th>Upgrade</th><th>Applies to</th><th>Heating saved</th><th>Typical cost</th></tr></thead>
+          <tbody>
+            {savings.measures.map((m) => (
+              <tr>
+                <td><strong>{m.label}</strong><br /><span class="small">{m.note}</span></td>
+                <td>{appliesTo(m)}</td>
+                <td>{savedRange(m.pctHeating)}</td>
+                <td>{m.typicalCost}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small measure">{savings.wholeHouseNote}</p>
+    </section>
   </div>
 
   <script type="application/json" id="planner-data" set:html={JSON.stringify(payload)} />
@@ -273,6 +337,12 @@ const schema = [
   .profile-grid { margin: 18px 0; }
   .audit-cta { border-left: 4px solid var(--heat); margin: 26px 0; }
   .disclaimer { max-width: 80ch; margin: 18px 0; color: var(--faint); }
+  .assumptions { margin: 40px 0 10px; }
+  .assumptions h2 { font-size: 24px; }
+  .assumptions .tablewrap { margin: 16px 0; }
+  .assumptions caption { text-align: left; font-weight: 700; padding: 14px 14px 4px; font-family: var(--display); }
+  .assumptions th[scope="row"] { text-align: left; }
+  .assumptions td .small { color: var(--muted); }
   #results > .card + .card { margin-top: 18px; }
 </style>
 
@@ -381,13 +451,13 @@ const schema = [
   const PROVINCES: Record<string, string> = { A: 'NL', B: 'NS', C: 'PE', E: 'NB', G: 'QC', H: 'QC', J: 'QC', K: 'ON', L: 'ON', M: 'ON', N: 'ON', P: 'ON', R: 'MB', S: 'SK', T: 'AB', V: 'BC', X: 'NT', Y: 'YT' };
 
   const PROVINCE_NOTES: Record<string, string> = {
-    QC: 'In Quebec, evaluations run through <b>Rénoclimat</b> (about $150 + tax, government-assigned advisor), with <b>Hydro-Québec LogisVert</b> paying for heat pumps and equipment with no audit needed. <a href="/provinces/quebec/">Full Quebec guide →</a>',
+    QC: 'In Quebec, evaluations run through <b>Rénoclimat</b> ($150 + tax, refunded except the tax when you receive its assistance; government-assigned advisor), with <b>Hydro-Québec LogisVert</b> paying for heat pumps and equipment with no audit needed. <a href="/provinces/quebec/">Full Quebec guide →</a>',
     MB: 'Manitoba is one of Canada’s better markets: <b>Efficiency Manitoba pays a $400 EnerGuide evaluation rebate</b> and runs insulation and heating programs on top. <a href="/provinces/manitoba/">Full Manitoba guide →</a>',
-    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> starts with the Home Energy Evaluation and pays incentives on the upgrades it recommends. <a href="/provinces/new-brunswick/">Full New Brunswick guide →</a>',
-    NS: 'Efficiency Nova Scotia runs assessment-based rebates plus moderate-income and free income-qualified streams (federal oil-to-heat-pump money is spent out here). <a href="/provinces/nova-scotia/">Full Nova Scotia guide →</a>',
+    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> starts with the Home Energy Evaluation ($99 + HST for both visits) and pays incentives on the upgrades it recommends. <a href="/provinces/new-brunswick/">Full New Brunswick guide →</a>',
+    NS: 'Efficiency Nova Scotia runs a $199 assessment with rebates up to $5,000, up to $5,000 more for moderate-income homes not heated by electricity, and free upgrades for income-qualified homeowners (federal oil-to-heat-pump money is spent out here). <a href="/provinces/nova-scotia/">Full Nova Scotia guide →</a>',
     PE: 'efficiencyPEI offers <b>$99 + HST</b> home energy assessments through five contracted partners — required for insulation rebates. <a href="/provinces/pei/">Full PEI guide →</a>',
-    BC: 'BC\'s EnerGuide-linked <b>Home Energy Improvement Bonus is province-wide</b>: $20 per percentage-point improvement ($750–$2,000) with 3+ upgrades and pre/post evaluations, plus utility rebates and income-qualified streams. <a href="/provinces/bc/">Full BC guide →</a>',
-    AB: 'Alberta has no provincial audit-linked rebate right now; Clean Energy Improvement (PACE) financing exists in some municipalities — audits here are about lower bills and right-sized equipment. <a href="/provinces/alberta/">Full Alberta guide →</a>',
+    BC: 'BC\'s EnerGuide-linked <b>Home Energy Improvement Bonus</b> pays $20 per percentage-point improvement ($750–$2,000) with 3+ upgrades and pre/post evaluations (or $300 for any two upgrades, no evaluation), plus utility rebates and income-qualified streams. <a href="/provinces/bc/">Full BC guide →</a>',
+    AB: 'Alberta has no provincial audit-linked rebate right now; Clean Energy Improvement (PACE) financing exists in some municipalities (check your municipality’s current intake; Calgary’s is closed until winter 2026/27) — audits here are about lower bills and right-sized equipment. <a href="/provinces/alberta/">Full Alberta guide →</a>',
     SK: 'Saskatchewan’s Home Efficiency Retrofit Rebate ended in April 2026 — no active audit-linked program, but the audit still pays through bill savings in this climate. <a href="/provinces/saskatchewan/">Full Saskatchewan guide →</a>',
     NL: 'Newfoundland & Labrador has no broad audit-linked rebate (takeCHARGE covers selected equipment). <a href="/provinces/newfoundland-labrador/">Full NL guide →</a>',
     NT: 'The <b>Arctic Energy Alliance</b> delivers NWT rebates and advice. <a href="/provinces/north/">Full territories guide →</a>',
@@ -669,7 +739,7 @@ const schema = [
         'heat-pump': 'HRSP up to $7,500 ($2,000 if gas-heated)',
         'solar': 'HRSP up to $10,000',
         'water-heating': 'HRSP $500',
-        'controls': 'HRSP $100–$125',
+        'controls': 'HRSP $125',
       };
       const label = map[cat];
       const help = isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : '';
@@ -844,6 +914,7 @@ const schema = [
       <div class="mini-provider">
         <a href="/providers/${p.slug}/">${esc(p.name)}</a>
         <p class="reg">✓ ${esc(p.registration)}</p>
+        <p class="pr">${p.hrsApproved ? '<span class="chip chip-active">HRSP-approved: Yes</span>' : '<span class="chip chip-neutral">HRSP-approved: No</span>'}</p>
         ${p.pricing ? `<p class="pr">${esc(p.pricing)}</p>` : ''}
         ${p.phone ? `<p class="pr"><a href="tel:${p.phone.replace(/[^0-9+]/g, '')}">${esc(p.phone)}</a></p>` : ''}
         <p class="rev">Reviews:
@@ -855,7 +926,7 @@ const schema = [
     el.innerHTML = `
       <div class="rsec">
         <h3>All ${all.length} registered advisors serving ${esc(region.name)}</h3>
-        <p class="sub">Every listing is a licensed service organization. <a href="/find/${region.slug}/">Full ${esc(region.name)} directory →</a></p>
+        <p class="sub">Every listing is a licensed service organization. Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate. <a href="/find/${region.slug}/">Full ${esc(region.name)} directory →</a></p>
         <div class="mini-providers">${cards}</div>
       </div>`;
   }

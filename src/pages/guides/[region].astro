@@ -143,7 +143,9 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
     <h2 class="sec">Registered advisors serving {region.name}</h2>
     <p class="small">
       All {list.length} are NRCan-licensed service organizations — with direct links to their
-      Google, HomeStars, and BBB reviews. <a href={`/find/${slug}/`}>Full directory view →</a>
+      Google, HomeStars, and BBB reviews. Only assessments from the seven HRSP-approved
+      organizations qualify for the $600 Home Renovation Savings rebate; each card says whether the
+      provider is one of them. <a href={`/find/${slug}/`}>Full directory view →</a>
     </p>
     <div class="provider-grid">
       {list.map((p) => <ProviderCard provider={p} compact />)}

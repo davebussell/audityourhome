@@ -160,7 +160,8 @@ PROFILE_PREFIX = {
     'Reep Green Solutions': 'reep-green-solutions', 'Peterborough Green Up': 'greenup',
     'Environment Network': 'environment-network', 'Nadeau Energy Solutions': 'nadeau-home-inspections',
     'All Season Inspection': 'all-season-inspection', 'Green Canada Home Advisors': 'green-canada-home-advisors',
-    'EnerSolution': 'enersolution',
+    'EnerSolution': 'enersolution', 'A1 NRGwise Consulting': 'nrgwise', 'Greenbrain': 'greenbrain',
+    'Energy Werx Corp': 'energy-werx', 'The Home Inspectors Group': 'the-home-inspectors-group',
 }
 HRS_PREFIX = ['AmeriSpec of Canada', 'Canada Energy Audit', 'Energuy Holdings', 'Energy Werx Corp', 'Greenbrain',
               'A1 NRGwise Consulting', 'The Home Inspectors Group']
@@ -197,7 +198,7 @@ def display_name(n):
     b = base_name(n)
     b = re.sub(r',?\s+(Inc\.?|Ltd\.?|Ltée|Corp\.?|Corporation|Limited)$', '', b).strip()
     fix = {'Energuy Holdings': 'The Energuy', 'A1 NRGwise Consulting': 'NRGwise (A1 NRGwise Consulting)',
-           'Peterborough Green Up': 'GreenUP', 'Canada Energy Audit': 'Canada Energy Audits',
+           'Peterborough Green Up': 'GreenUP', 'Canada Energy Audit': 'Canada Energy Audit',
            'Energy Werx Corp': 'Energy Werx', 'AmeriSpec of Canada': 'AmeriSpec'}
     for k, v in fix.items():
         if b.startswith(k):

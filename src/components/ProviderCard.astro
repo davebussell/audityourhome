@@ -28,11 +28,13 @@ const typeLabel =
     {p.registration}
   </p>
 
-  {p.hrsApproved && (
-    <p class="hrs">
-      <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven service organizations approved for Ontario's Home Renovation Savings assessment rebates">Approved for Home Renovation Savings</a>
-    </p>
-  )}
+  <p class="hrs">
+    {p.hrsApproved ? (
+      <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
+    ) : (
+      <a class="chip chip-neutral" href="/programs/home-renovation-savings-assessment/" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments don't qualify for the $600 rebate">HRSP-approved: No</a>
+    )}
+  </p>
 
   <p class="serves">{p.serviceNote}</p>
 

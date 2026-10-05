@@ -46,7 +46,7 @@
     ],
     "whoQualifies": "Ontario homeowners — not tenants — of detached, semi-detached, row or town homes, or mobile homes on a permanent foundation, who either heat mainly with Enbridge natural gas or are on Ontario's grid and heat with electricity, oil, propane or wood. Duplexes, triplexes, stacked townhouses, multi-unit buildings and homes occupied for less than 6 months don't qualify.",
     "officialUrl": "https://www.homerenovationsavings.ca/with-assessment",
-    "lastVerified": "2026-09-28",
+    "lastVerified": "2026-10-02",
     "notes": "Funding is only approved through 2026. The follow-up assessment must be booked by November 30, 2026 and completed by December 31, 2026 — or within 180 days of the first assessment, if that comes sooner. Starting now means booking the initial assessment within weeks and lining up contractors quickly. The program doesn't publish assessment prices: you pay the service organization up front and the $600 comes back at the end.",
     "provinceSlug": "ontario",
     "howToApply": [
@@ -63,16 +63,21 @@
       "Two windows earn nothing: the minimum is three windows, or one door, skylight or patio door.",
       "An electrically heated home that switches to oil, propane or wood before the follow-up assessment loses eligibility.",
       "You can't claim the same upgrade from another Enbridge, Save on Energy or Ontario program, and rebates can't exceed what you actually paid.",
-      "Enbridge and Save on Energy don't sell by phone or door to door. Treat unsolicited \"program\" calls as sales pitches."
+      "Enbridge and Save on Energy don't sell by phone or door to door. Treat unsolicited \"program\" calls as sales pitches.",
+      "Sarnia-area homes: the program's online form still mentions Enbridge's Sarnia Saves pilot (up to $15,000) for N7S, N7T, N7V, N7W and N7X postal codes and Brights Grove, but Sarnia Saves closed to new applications in April 2026, and Enbridge now points those homeowners to Home Renovation Savings."
     ],
     "faq": [
       {
         "q": "Is the Home Renovation Savings assessment rebate still available?",
-        "a": "Yes, as of September 28, 2026, but only for homes that can finish in time. The follow-up assessment must be booked by November 30, 2026 and completed by December 31, 2026, and funding is only approved through the end of 2026."
+        "a": "Yes, as of October 2, 2026, but only for homes that can finish in time. The follow-up assessment must be booked by November 30, 2026 and completed within 180 days of the first assessment or by December 31, 2026, whichever comes first, and funding is only approved through the end of 2026."
       },
       {
         "q": "Can I use any energy advisor for the $600 rebate?",
         "a": "No. You have to book through one of seven approved service organizations: AmeriSpec, Canada Energy Audit, Greenbrain, Energuy, Energy Werx, NRGwise or The Home Inspectors Group. Their advisors are NRCan-registered, but being registered on its own isn't enough."
+      },
+      {
+        "q": "Do community non-profits like Windfall or Reep qualify?",
+        "a": "Not for this program. Windfall Ecology Centre, Reep Green Solutions and other NRCan-licensed organizations deliver official EnerGuide evaluations, often at published prices, but they aren't among the seven approved organizations, so their assessments don't qualify for the $600 rebate or the assessment-path upgrade rebates."
       },
       {
         "q": "How much can I get in total?",
@@ -113,6 +118,10 @@
       {
         "href": "https://www.ieso.ca/Sector-Participants/IESO-News/2025/02/Home-Renovation-Savings-Program-Now-Available-for-Eligible-Homes-Across-Ontario",
         "label": "IESO — program launched January 28, 2025"
+      },
+      {
+        "href": "https://www.enbridgegas.com/ontario/sarnia-saves",
+        "label": "Enbridge Gas — Sarnia Saves (residential intake closed; homeowners pointed to Home Renovation Savings)"
       }
     ]
   },
@@ -141,6 +150,10 @@
         "value": "up to $2,000"
       },
       {
+        "label": "Rented heat pump, any heating fuel ($500/ton air-source; $3,000 flat ground-source)",
+        "value": "up to $2,000"
+      },
+      {
         "label": "Rooftop solar ($1,000/kW, at most 50% of cost)",
         "value": "up to $5,000"
       },
@@ -149,12 +162,24 @@
         "value": "up to $5,000"
       },
       {
-        "label": "Attic insulation (50% of cost; installed by Nov 30, 2026)",
+        "label": "Attic insulation to R-50, from R-12 or less (50% of after-tax cost; participating contractors; installed by Nov 30, 2026)",
         "value": "up to $1,250"
       },
       {
-        "label": "Smart thermostat (bought by Dec 31, 2026)",
-        "value": "$100–$125"
+        "label": "Attic insulation to R-50, from above R-12 to R-25",
+        "value": "up to $1,000"
+      },
+      {
+        "label": "Attic insulation to R-50, from above R-25 to R-35",
+        "value": "up to $800"
+      },
+      {
+        "label": "Cathedral ceiling or flat roof (to R-20 or R-28)",
+        "value": "$650–$750"
+      },
+      {
+        "label": "Smart thermostat (one per household; buy, install and activate by Dec 31, 2026)",
+        "value": "$125"
       },
       {
         "label": "ENERGY STAR Most Efficient appliances replacing electric ones",
@@ -163,8 +188,8 @@
     ],
     "whoQualifies": "Ontario homeowners. Heat pump amounts depend on how you heat today; gas-heated homes qualify at lower amounts and can keep the furnace as backup. Replacing an existing heat pump doesn't qualify, homes occupied for less than 6 months are excluded, and solar has to power the home itself (no net metering).",
     "officialUrl": "https://www.homerenovationsavings.ca/",
-    "lastVerified": "2026-09-28",
-    "notes": "Even without a required assessment, audit-first usually changes what you buy: a proper heat-loss calculation right-sizes the heat pump, and insulating first can shrink it. Smart thermostat amounts differ between official pages ($100 in the terms, $125 on the program page), so confirm at checkout.",
+    "lastVerified": "2026-10-02",
+    "notes": "Even without a required assessment, audit-first usually changes what you buy: a proper heat-loss calculation right-sizes the heat pump, and insulating first can shrink it. The smart thermostat rebate is $125 on the program's current pages, as an instant code (The Home Depot in-store; Best Buy, Copeland Sensi, ecobee or Mysa online) or by uploading your receipt within 60 days; some older program documents still say $100.",
     "provinceSlug": "ontario",
     "howToApply": [
       "Fill in the eligibility form for the upgrade you want on homerenovationsavings.ca.",
@@ -178,8 +203,9 @@
       "Anything installed before written pre-approval gets no heat pump or solar rebate.",
       "A battery on its own doesn't qualify, and solar systems can't be net-metered.",
       "Oil-heated homes have to size the heat pump to cover the full heating load.",
-      "Attic insulation must be installed by November 30, 2026, and the contractor list is closed to new companies.",
-      "You can't claim the same upgrade from another Enbridge, Save on Energy or Ontario program, and total funding can't exceed your cost."
+      "Attic rebates are 50% of the after-tax cost, up to the tier maximum ($1,250 only if your attic is R-12 or less today), and have to go through one of the program's participating contractors. That list is closed to new companies, so confirm one serves your area before you plan around it. The work must cover 100% of the roof assembly, be installed by November 30, 2026, and be submitted by the contractor by December 31, 2026.",
+      "You can't claim the same upgrade from another Enbridge, Save on Energy or Ontario program, and total funding can't exceed your cost.",
+      "Replacing an existing heat pump doesn't qualify; the rebates are for first-time installations."
     ],
     "faq": [
       {
@@ -197,6 +223,18 @@
       {
         "q": "Is there a rebate for a home battery on its own?",
         "a": "No. Storage only qualifies when it's installed with new rooftop solar, and the system can't be net-metered."
+      },
+      {
+        "q": "How much is the attic insulation rebate?",
+        "a": "It depends on what's there now, and you have to reach R-50: up to $1,250 if the attic is R-12 or less, $1,000 from above R-12 to R-25, and $800 from above R-25 to R-35. Cathedral ceilings and flat roofs get $650–$750. The rebate is 50% of your after-tax cost, up to those amounts, and the work has to be done by a participating contractor."
+      },
+      {
+        "q": "Do rented heat pumps qualify?",
+        "a": "Yes, whatever fuel you heat with: $500 per ton up to $2,000 for a cold-climate air-source heat pump, or $3,000 for a ground-source system. Pre-approval is still required before installation."
+      },
+      {
+        "q": "How much is the smart thermostat rebate?",
+        "a": "$125, one per household. Get an instant code before you buy (The Home Depot in-store, or Best Buy, Copeland Sensi, ecobee or Mysa online), or buy anywhere and upload your receipt within 60 days. The thermostat has to be bought, installed and activated by December 31, 2026."
       }
     ],
     "related": [
@@ -232,6 +270,10 @@
       {
         "href": "https://www.homerenovationsavings.ca/without-assessment/appliances",
         "label": "Home Renovation Savings — appliance rebates"
+      },
+      {
+        "href": "https://www.homerenovationsavings.ca/help-and-support",
+        "label": "Home Renovation Savings — help & support: attic 50% cap, participating contractors, thermostat payment"
       }
     ]
   },
@@ -252,12 +294,12 @@
         "value": "up to $125,000"
       },
       {
-        "label": "5-year fixed rate (applications to Sept 30, 2026)",
-        "value": "3.34%"
+        "label": "Fixed interest rates",
+        "value": "Reset quarterly"
       },
       {
-        "label": "10-, 15- and 20-year fixed rates (4.01%, 4.46%, 4.75%)",
-        "value": "4.01%–4.75%"
+        "label": "Last posted table (valid until Sept 30, 2026): 5, 10, 15 and 20 years",
+        "value": "3.34%–4.75%"
       },
       {
         "label": "Administrative charge",
@@ -270,8 +312,8 @@
     ],
     "whoQualifies": "Owners of detached, semi-detached and row houses, duplexes, triplexes and low-rise buildings (up to 3 storeys and 6 units) in Toronto. Every owner on title must agree, your mortgage lender has to consent in writing, and you can't have repeated overdue tax or utility accounts. 20-year terms are only for projects that include solar, geothermal, windows or heat pumps.",
     "officialUrl": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/",
-    "lastVerified": "2026-09-28",
-    "notes": "HELP is financing, not a rebate, and the City says it can be combined with provincial, federal and utility rebates. A common Toronto path is HELP to pay for the work, then Home Renovation Savings rebates on top. Posted rates apply to applications through September 30, 2026 — check the City page for rates after that.",
+    "lastVerified": "2026-10-02",
+    "notes": "HELP is financing, not a rebate, and the City says it can be combined with provincial, federal and utility rebates. A common Toronto path is HELP to pay for the work, then Home Renovation Savings rebates on top. The City sets HELP's fixed rates every quarter. The table on its page was valid until September 30, 2026 (3.34% for 5 years, 4.01% for 10, 4.46% for 15 and 4.75% for 20), and no newer table was posted when we checked on October 2, 2026, so check the City's current rate table before you apply.",
     "provinceSlug": "ontario",
     "howToApply": [
       "Apply online with the City. Expect a reply in about 5–7 business days; if you have a mortgage, the City sends a lender-consent form.",
@@ -294,7 +336,7 @@
       },
       {
         "q": "What are the Toronto HELP interest rates?",
-        "a": "Fixed: 3.34% for 5 years, 4.01% for 10, 4.46% for 15 and 4.75% for 20, for applications through September 30, 2026, plus a 2% administrative charge. Check the City page for rates after that date."
+        "a": "Rates are fixed for the loan's term but the City resets them every quarter. The last posted table, valid until September 30, 2026, was 3.34% for 5 years, 4.01% for 10, 4.46% for 15 and 4.75% for 20, plus a 2% administrative charge. Check the City's current rate table before you apply."
       },
       {
         "q": "What happens to a HELP loan if I sell my house?",
@@ -327,6 +369,10 @@
       {
         "href": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/help-terms-and-conditions/",
         "label": "City of Toronto — HELP terms (City rebates fully subscribed)"
+      },
+      {
+        "href": "https://www.toronto.ca/legdocs/mmis/2021/ie/bgrd/backgroundfile-173440.pdf",
+        "label": "City of Toronto — 2021 staff report adopted by Council: HELP rates set quarterly"
       }
     ]
   },
@@ -357,14 +403,14 @@
     ],
     "whoQualifies": "Buyers of existing homes, including low-rise condo units, with a CMHC-insured mortgage who spend at least $20,000 after purchase on eligible insulation, windows, doors, air sealing, roof or attic, foundation, heating, ventilation, cooling, heat pump, or solar, wind or geothermal work. Covers owner-occupied loans (1–4 units) and small rental loans (2–4 units).",
     "officialUrl": "https://www.cmhc-schl.gc.ca/consumers/home-buying/mortgage-loan-insurance-for-consumers/cmhc-eco-products/cmhc-eco-improvement",
-    "lastVerified": "2026-09-28",
+    "lastVerified": "2026-10-02",
     "notes": "Often missed by recent buyers: the 24-month clock starts at your mortgage closing, not when the work is done. Mortgages insured by Sagen or Canada Guaranty don't qualify — their energy-efficiency refunds only cover newly built homes.",
     "howToApply": [
       "Close on your home with a CMHC-insured mortgage — your lender or broker can confirm which insurer you have.",
       "Complete at least $20,000 of eligible energy renovations after you buy.",
       "Fill in CMHC's Eco Improvement form. Every borrower signs it, and it needs your CMHC loan number.",
       "Send it with all paid invoices and a void cheque (plus any EnerGuide report or label) by email, fax or mail within 24 months of closing.",
-      "Allow roughly 6–10 weeks. The refund arrives by direct deposit."
+      "CMHC says processing currently takes about 8–10 weeks. The refund arrives by direct deposit."
     ],
     "gotchas": [
       "The deadline is 24 months from your mortgage closing, not from the end of the renovation.",
@@ -689,7 +735,7 @@
     ],
     "whoQualifies": "Closed to new federal applicants. Existing participants must finish the work and upload receipts and the contractor's signed attestation by January 31, 2027; the program closes March 31, 2027.",
     "officialUrl": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
-    "lastVerified": "2026-09-28",
+    "lastVerified": "2026-10-02",
     "notes": "Some provincial versions were still open in September 2026: Newfoundland and Labrador's Oil to Electric program was accepting applications, and Ontario's Save on Energy still lists no-cost heat pumps for eligible oil-heated homes.",
     "howToApply": [
       "Already in the program: finish the installation, then upload paid receipts and the contractor's signed attestation by January 31, 2027. Keep your documents until March 31, 2028.",
@@ -702,7 +748,8 @@
       "The \"$15,000\" was the federal share in joint-delivery provinces, not a top-up. Provincial money came on top — Ontario's version reached up to $25,000 in total.",
       "Where NRCan paid the grant before installation, the heat pump should be in within six months of payment, and receipts are due by January 31, 2027.",
       "New Brunswick participants who miss the March 31, 2027 completion deadline must repay their advance.",
-      "NRCan warns about unsolicited calls and door-to-door visits claiming to be the program."
+      "NRCan warns about unsolicited calls and door-to-door visits claiming to be the program.",
+      "Homes in Nunavut and other remote areas off an integrated electricity grid were never eligible."
     ],
     "faq": [
       {
@@ -836,8 +883,8 @@
     "runBy": "CleanBC / Better Homes BC, with BC Hydro and FortisBC",
     "status": "active",
     "auditRequired": true,
-    "auditRequirementNote": "Built entirely around the audit: a pre-retrofit and a post-retrofit EnerGuide evaluation by an NRCan-registered energy advisor bracket the work, and the bonus pays on the measured improvement between the two.",
-    "headline": "$20 for every percentage-point your home improves — $750 minimum, $2,000 maximum, province-wide since May 2026",
+    "auditRequirementNote": "Built entirely around the audit: a pre-upgrade and a post-upgrade EnerGuide evaluation by a program-qualified energy advisor bracket the work, and the bonus pays on the measured improvement between the two. The $300 Two Upgrade Bonus is the exception: it needs no evaluation.",
+    "headline": "$20 for every percentage-point your home improves — $750 minimum, $2,000 maximum — or $300 for any two upgrades",
     "amounts": [
       {
         "label": "Per percentage-point of measured EnerGuide improvement",
@@ -853,31 +900,45 @@
       },
       {
         "label": "Requirement",
-        "value": "3+ eligible upgrades"
+        "value": "3 bonus-eligible upgrades"
+      },
+      {
+        "label": "Time to finish the upgrades and the post-upgrade evaluation",
+        "value": "18 months"
+      },
+      {
+        "label": "Apply within, after the post-upgrade evaluation",
+        "value": "6 months"
+      },
+      {
+        "label": "Two Upgrade Bonus (no evaluation; can't be combined with the above)",
+        "value": "$300"
       }
     ],
-    "whoQualifies": "BC homeowners who complete at least three eligible upgrades with a pre- and post-retrofit EnerGuide evaluation. It stacks on top of the individual utility rebates for the upgrades themselves — the bonus pays for the measured whole.",
+    "whoQualifies": "BC homeowners who complete three bonus-eligible upgrades between a pre- and a post-upgrade EnerGuide evaluation by a program-qualified energy advisor, within 18 months. It stacks on top of the individual utility rebates for the upgrades themselves — the bonus pays for the measured whole. One bonus per home.",
     "officialUrl": "https://www.betterhomesbc.ca/",
-    "lastVerified": "2026-09-18",
-    "notes": "This is the purest pay-for-performance design in Canada right now: the more your blower-door number and EnerGuide rating actually move, the more it pays. Sequence air sealing before insulation and you earn the same dollars twice — once in the bonus, once on your bills.",
+    "lastVerified": "2026-10-02",
+    "notes": "This is the purest pay-for-performance design in Canada right now: the more your blower-door number and EnerGuide rating actually move, the more it pays. Sequence air sealing before insulation and you earn the same dollars twice — once in the bonus, once on your bills. The current program requirements apply to invoices dated on or after May 15, 2026. Through October 31, 2026, BC Hydro also pays a limited-time bonus of up to $1,000 for replacing electric heating with an air-source heat pump, while funding lasts.",
     "provinceSlug": "bc",
     "howToApply": [
-      "Book a pre-retrofit EnerGuide evaluation with an NRCan-registered energy advisor before any work starts — this sets your baseline rating.",
-      "Plan at least three eligible upgrades from the evaluation report (air sealing, insulation, windows, heating — the report ranks them for your house).",
+      "Book a pre-upgrade EnerGuide evaluation with a program-qualified energy advisor before any work starts — this sets your baseline rating and starts an 18-month clock.",
+      "Plan three bonus-eligible upgrades from the evaluation report (air sealing, insulation, windows, heating — the report ranks them for your house).",
       "Complete the work, keeping invoices, and claim the individual utility rebates for each measure as you go.",
-      "Book the post-retrofit evaluation with the same advisor to measure the new rating.",
-      "Submit the bonus claim with both evaluation files — payment scales with the measured percentage-point improvement."
+      "Book the post-upgrade evaluation within 18 months of the first to measure the new rating.",
+      "Apply online within six months of the post-upgrade evaluation — payment scales with the measured percentage-point improvement."
     ],
     "gotchas": [
-      "No pre-retrofit evaluation, no bonus — work done before the baseline visit doesn't count, so book the audit first, not after the contractor.",
-      "Three upgrades is the floor for eligibility; below that the bonus pays nothing even if your rating improves.",
+      "No pre-upgrade evaluation, no bonus — work done before the baseline visit doesn't count, so book the audit first, not after the contractor.",
+      "Three upgrades is the floor for the Improvement Bonus. With only two, the $300 Two Upgrade Bonus is the one to claim: install any two bonus-eligible upgrades within 18 months of each other and apply within six months of the second invoice.",
+      "One bonus per home: the Improvement Bonus and the Two Upgrade Bonus can't be combined.",
+      "Miss the six-month application window after the post-upgrade evaluation and the bonus is gone.",
       "The $2,000 cap means very deep retrofits don't earn past 100 points of improvement — but the utility measure rebates still apply on top.",
       "Income-qualified households should check the CleanBC Energy Savings Program first — free installs beat rebates."
     ],
     "faq": [
       {
-        "q": "Is the BC Home Energy Improvement Bonus available everywhere in BC?",
-        "a": "Yes — it went province-wide on May 15, 2026 after starting as a regional offer. Any BC home that completes the pre/post evaluations and three or more eligible upgrades can claim it, verified against Better Homes BC on September 18, 2026."
+        "q": "Who can get the BC Home Energy Improvement Bonus?",
+        "a": "BC homeowners who complete three bonus-eligible upgrades with pre- and post-upgrade EnerGuide evaluations through BC Hydro and FortisBC's Home Renovation Rebate program. The current requirements apply to invoices dated on or after May 15, 2026; we found no regional limit in them. Verified October 2, 2026."
       },
       {
         "q": "How much is the bonus actually worth for a typical retrofit?",
@@ -886,6 +947,10 @@
       {
         "q": "Does it stack with BC Hydro and FortisBC rebates?",
         "a": "Yes — the per-measure utility rebates apply to the individual upgrades, and the bonus pays separately on the whole-home improvement the evaluations measure. Stack both; they're designed together under the Better Homes BC umbrella."
+      },
+      {
+        "q": "What if I only do two upgrades?",
+        "a": "Claim the $300 Two Upgrade Bonus instead. It needs no evaluation: install any two bonus-eligible upgrades within 18 months of each other and apply within six months of the second upgrade's invoice. It's one bonus per home, so you can't also claim the Improvement Bonus."
       }
     ],
     "related": [
@@ -893,8 +958,20 @@
     ],
     "sources": [
       {
+        "href": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/bonus-rebates.html",
+        "label": "BC Hydro — bonus rebates: Improvement Bonus ($750–$2,000), Two Upgrade Bonus ($300), deadlines"
+      },
+      {
+        "href": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+        "label": "Better Homes BC — program requirements (invoices on or after May 15, 2026)"
+      },
+      {
+        "href": "https://www.bchydro.com/news/conservation/2026/heat-pump-bonus-contest.html",
+        "label": "BC Hydro — limited-time heat pump bonus (to October 31, 2026)"
+      },
+      {
         "href": "https://www.betterhomesbc.ca/",
-        "label": "Better Homes BC — program hub (province-wide status, bonus mechanics)"
+        "label": "Better Homes BC — program hub"
       }
     ]
   },
@@ -1047,12 +1124,20 @@
     "runBy": "Gouvernement du Québec (Transition énergétique)",
     "status": "active",
     "auditRequired": true,
-    "auditRequirementNote": "Audit-first by design: a government-assigned evaluator performs the home evaluation (about $150 + tax to you), and the rebates flow from the work it documents. You don't choose the advisor — the program assigns one.",
-    "headline": "Quebec's audit-linked path: assigned evaluator for about $150 + tax, then rebates for insulation, air sealing, doors and windows",
+    "auditRequirementNote": "Audit-first by design: a government-assigned evaluator performs the home evaluation ($150 + tax, refunded except the tax when you receive assistance), and the rebates flow from the work it documents. You don't choose the advisor — the program assigns one.",
+    "headline": "Quebec's audit-linked path: an assigned evaluator for $150 + tax (refunded except the tax when you receive assistance), then rebates for insulation, air sealing, doors and windows",
     "amounts": [
       {
-        "label": "Home evaluation (your cost)",
-        "value": "~$150 + tax"
+        "label": "Pre-retrofit evaluation (paid within 30 days of the visit)",
+        "value": "$150 + tax"
+      },
+      {
+        "label": "Refunded when Rénoclimat assistance is granted (taxes excepted)",
+        "value": "$150"
+      },
+      {
+        "label": "First post-retrofit evaluation",
+        "value": "Free"
       },
       {
         "label": "Insulation & air-sealing work",
@@ -1069,14 +1154,14 @@
     ],
     "whoQualifies": "Quebec homeowners. Book through the Rénoclimat line; the program assigns an authorized evaluator to your file. Envelope measures (insulation, airtightness, doors/windows) are Rénoclimat's territory — equipment lives with Hydro-Québec's LogisVert.",
     "officialUrl": "https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat",
-    "lastVerified": "2026-09-21",
-    "notes": "Quebec splits the file in two: Rénoclimat = envelope (audit required), LogisVert = equipment (no audit). Plan both together — insulate and air-seal under Rénoclimat first, then size the LogisVert heat pump to the improved house. A flooding-adaptation component joins the program October 1, 2026.",
+    "lastVerified": "2026-10-02",
+    "notes": "Quebec splits the file in two: Rénoclimat = envelope (audit required), LogisVert = equipment (no audit). Plan both together — insulate and air-seal under Rénoclimat first, then size the LogisVert heat pump to the improved house. A flooding-adaptation component joined the program October 1, 2026. If you do the work and get assistance, the first evaluation ends up costing only the tax, about $22.46.",
     "provinceSlug": "quebec",
     "howToApply": [
-      "Register with Rénoclimat by phone or online — the program assigns an authorized evaluator to your home (about $150 + tax).",
+      "Register with Rénoclimat by phone or online — the program assigns an authorized evaluator to your home ($150 + tax, paid within 30 days of the visit).",
       "Get the evaluation and its report: your home's rating plus the ranked envelope measures.",
       "Complete eligible work (insulation, air sealing, doors/windows) with proper invoices.",
-      "Book the follow-up evaluation to document the improvement and trigger the rebates.",
+      "Book the follow-up evaluation — the first post-retrofit evaluation is free — to document the improvement and trigger the rebates, which also refund the $150.",
       "Pair the plan with LogisVert for heat pumps and equipment — no audit needed on that side."
     ],
     "gotchas": [
@@ -1087,15 +1172,15 @@
     "faq": [
       {
         "q": "Is Rénoclimat still active, and what does it cost to start?",
-        "a": "Active — verified against the Quebec government page on September 21, 2026. Your cost of entry is the evaluation at roughly $150 + tax, with an evaluator assigned by the program rather than chosen by you."
+        "a": "Active — verified against the Quebec government's pages on October 2, 2026. The pre-retrofit evaluation costs $150 plus tax, with an evaluator assigned by the program rather than chosen by you. The $150 is reimbursed when Rénoclimat assistance is granted for eligible work (the tax isn't), and the first post-retrofit evaluation is free, so participants who do the work pay about $22.46."
       },
       {
         "q": "What's the difference between Rénoclimat and LogisVert?",
         "a": "Rénoclimat is the province's audit-linked envelope program: insulation, air sealing, doors and windows, with pre/post evaluations. LogisVert is Hydro-Québec's equipment program — heat pumps, appliances, solar — with no audit required. A serious retrofit uses both, in that order."
       },
       {
-        "q": "What's changing on October 1, 2026?",
-        "a": "A flooding-adaptation component joins Rénoclimat — support for making homes more flood-resilient alongside the energy measures. Details are on the official page; if you're in a flood-mapped area, ask when you register."
+        "q": "What changed on October 1, 2026?",
+        "a": "A flooding-adaptation component joined Rénoclimat — support for making homes more flood-resilient alongside the energy measures. Details are on the official page; if you're in a flood-mapped area, ask when you register."
       }
     ],
     "related": [
@@ -1106,6 +1191,10 @@
       {
         "href": "https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat",
         "label": "Québec.ca — Rénoclimat (active status, flooding component Oct 1, 2026)"
+      },
+      {
+        "href": "https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat/energy-evaluations/energy-evaluation-fees",
+        "label": "Québec.ca — Rénoclimat energy evaluation fees ($150 + tax, reimbursement, free first post-retrofit evaluation)"
       }
     ]
   },
@@ -1259,18 +1348,22 @@
     "status": "active",
     "auditRequired": true,
     "auditRequirementNote": "The Home Energy Assessment is the entry to the main rebate path; the income-qualified HomeWarming stream runs its own assessment as part of free delivery.",
-    "headline": "Assessment-based rebates to roughly $5,000 — a moderate-income tier to roughly $15,000 — and HomeWarming's free upgrades for income-qualified households",
+    "headline": "Assessment-based rebates up to $5,000, a moderate-income top-up to about $10,000 in all, and HomeWarming's free upgrades for income-qualified homeowners",
     "amounts": [
       {
-        "label": "Home Energy Assessment path",
-        "value": "Rebates to ~$5,000"
+        "label": "Home Energy Assessment fee (free under the income threshold)",
+        "value": "$199"
       },
       {
-        "label": "Moderate Income Rebates tier",
-        "value": "To ~$15,000"
+        "label": "Home Energy Assessment rebates",
+        "value": "up to $5,000"
       },
       {
-        "label": "HomeWarming (income-qualified)",
+        "label": "Moderate Income Rebate top-up (not for electrically heated homes)",
+        "value": "up to $5,000 more (~$10,000 total)"
+      },
+      {
+        "label": "HomeWarming (income-qualified homeowners)",
         "value": "Free upgrades incl. heat pumps"
       },
       {
@@ -1278,10 +1371,10 @@
         "value": "Closed — funding fully committed"
       }
     ],
-    "whoQualifies": "All Nova Scotian homeowners via the assessment path; deeper tiers by household income. Book assessments through Efficiency Nova Scotia's accredited partners.",
+    "whoQualifies": "All Nova Scotian homeowners via the assessment path; the Moderate Income Rebate and HomeWarming add deeper support by household income. Book assessments through Efficiency Nova Scotia's accredited partners.",
     "officialUrl": "https://www.efficiencyns.ca/programs-rebates/home-energy-assessments",
-    "lastVerified": "2026-09-21",
-    "notes": "Nova Scotia burned through the federal oil-to-heat-pump money faster than any province — that stream is done here. What remains is one of Canada's most complete provincial sets, tiered by income so the deepest support lands where bills bite hardest. NS is also a Greener Homes Affordability delivery province.",
+    "lastVerified": "2026-10-02",
+    "notes": "The assessment costs $199 and is free for households under Efficiency Nova Scotia's income threshold; Moderate Income Rebate participants who paid up front get the $199 back when their other rebates are issued. Upgrades must be done within 12 months of the first assessment, and rebate cheques arrive within about 90 days of the final one. Nova Scotia burned through the federal oil-to-heat-pump money faster than any province, and the current rebate guide (August 2026) has dropped that section. NS is also a Greener Homes Affordability delivery province.",
     "provinceSlug": "nova-scotia",
     "howToApply": [
       "Book a Home Energy Assessment through Efficiency Nova Scotia's accredited partners.",
@@ -1293,20 +1386,24 @@
     "gotchas": [
       "Any contractor still selling the federal oil-to-heat-pump grant in NS is working from stale information — that funding is fully committed.",
       "Tier before you buy: discovering the moderate-income tier after paying standard-stream prices is the expensive order of operations.",
-      "Program figures move — treat the ~$5,000/~$15,000 framing as the shape, and confirm current amounts on the official pages when you book."
+      "The Moderate Income Rebate excludes homes heated mainly by electricity, and only its participants get the $199 assessment fee refunded."
     ],
     "faq": [
       {
         "q": "What replaced the oil-to-heat-pump money in Nova Scotia?",
-        "a": "Nothing federal — that program's NS allocation was fully committed and the national program closed July 31, 2026. The live path is provincial: the Home Energy Assessment rebates, the Moderate Income tier, and HomeWarming's free upgrades for income-qualified households, verified September 21, 2026."
+        "a": "Nothing federal — that program's NS allocation was fully committed and the national program closed July 31, 2026. The live path is provincial: the Home Energy Assessment rebates, the Moderate Income tier, and HomeWarming's free upgrades for income-qualified households, verified October 2, 2026."
       },
       {
         "q": "Is HomeWarming really free?",
-        "a": "Yes — for income-qualified households it delivers free upgrades, heat pumps included, through its own assessment and delivery. If you might qualify, check it before anything else."
+        "a": "Yes — for income-qualified homeowners it delivers free upgrades, heat pumps included, through its own assessment and delivery. Renters aren't eligible. If you might qualify, check it before anything else."
       },
       {
         "q": "Do I need the assessment before rebates?",
         "a": "Yes for the main path — the Home Energy Assessment defines your eligible scope and documents the home before and after. It's also simply the right first step in the oldest housing stock in Canada."
+      },
+      {
+        "q": "What does the Nova Scotia home energy assessment cost?",
+        "a": "$199, or nothing if your household is under Efficiency Nova Scotia's income threshold. If you qualify for the Moderate Income Rebate and paid up front, the $199 is reimbursed when your other rebates are issued; standard-stream participants don't get it back."
       }
     ],
     "related": [
@@ -1317,6 +1414,10 @@
       {
         "href": "https://www.efficiencyns.ca/programs-rebates/home-energy-assessments",
         "label": "Efficiency Nova Scotia — Home Energy Assessment program"
+      },
+      {
+        "href": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+        "label": "Efficiency Nova Scotia — Home Energy Assessment rebate guide (August 2026)"
       },
       {
         "href": "https://www.efficiencyns.ca/programs-rebates/homewarming",
@@ -1482,7 +1583,7 @@
     "status": "active-limited",
     "auditRequired": false,
     "auditRequirementNote": "No provincial audit requirement — CEIP is financing, not a rebate. An EnerGuide evaluation is still the right scoping step, and some municipal streams reference it.",
-    "headline": "Property-tax financing for efficiency and renewable upgrades — in participating Alberta municipalities only",
+    "headline": "Property-tax financing for efficiency and renewable upgrades in participating Alberta municipalities — check your municipality's current intake",
     "amounts": [
       {
         "label": "Structure",
@@ -1502,9 +1603,9 @@
       }
     ],
     "whoQualifies": "Homeowners in municipalities running an active CEIP intake. Each municipality sets its own measures, caps, and intake windows — and intakes fill.",
-    "officialUrl": "https://fundyourfuture.ca/",
-    "lastVerified": "2026-09-18",
-    "notes": "Alberta's story is candour: no provincial rebate, Edmonton's HERA fully subscribed, federal programs closed. CEIP's tax-bill financing is the live mechanism — and the audit's value is what it always was here: lower bills in a brutal climate, right-sized equipment, and pre-purchase clarity.",
+    "officialUrl": "https://ceip.abmunis.ca/residential/",
+    "lastVerified": "2026-10-02",
+    "notes": "Alberta's story is candour: no provincial rebate, Edmonton's HERA fully subscribed, federal programs closed. CEIP's tax-bill financing, run by Alberta Municipalities with participating municipalities, is the live mechanism where intake is open (Calgary's residential intake is closed until winter 2026/27) — and the audit's value is what it always was here: lower bills in a brutal climate, right-sized equipment, and pre-purchase clarity.",
     "provinceSlug": "alberta",
     "howToApply": [
       "Check whether your municipality runs CEIP and whether its residential intake is open (intakes are windowed and fill).",
@@ -1521,7 +1622,7 @@
     "faq": [
       {
         "q": "Does Alberta have any home energy rebates right now?",
-        "a": "No active provincial audit-linked rebate (verified September 18, 2026) — Edmonton's HERA is fully subscribed, and the federal loan and oil-to-heat-pump programs are closed. CEIP's property-tax financing in participating municipalities is the live mechanism."
+        "a": "No active provincial audit-linked rebate (verified October 2, 2026) — Edmonton's HERA is fully subscribed, and the federal loan and oil-to-heat-pump programs are closed. CEIP's property-tax financing in participating municipalities is the live mechanism."
       },
       {
         "q": "How does CEIP financing actually work?",
@@ -1530,6 +1631,10 @@
       {
         "q": "Is an audit worth paying for in Alberta with no rebate?",
         "a": "Alberta's climate makes the strongest pure-physics case in the country: deep design cold means envelope fixes found by the audit pay back on bills alone, and right-sizing a furnace or heat pump against a real heat-loss number avoids the oversizing habit that costs Albertans comfort and money."
+      },
+      {
+        "q": "Is Calgary's CEIP open?",
+        "a": "Not right now. The City of Calgary says residential CEIP is closed until winter 2026/2027 and will post its interest rates a week before the next application date. Check your own municipality's current intake on the CEIP site."
       }
     ],
     "related": [
@@ -1537,8 +1642,12 @@
     ],
     "sources": [
       {
-        "href": "https://fundyourfuture.ca/",
-        "label": "Alberta Municipalities — CEIP hub (participating municipalities)"
+        "href": "https://ceip.abmunis.ca/residential/",
+        "label": "Alberta Municipalities — Clean Energy Improvement Program (residential; participating municipalities)"
+      },
+      {
+        "href": "https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html",
+        "label": "City of Calgary — residential CEIP closed until winter 2026/2027"
       },
       {
         "href": "https://www.alberta.ca/energy-efficiency-programs",

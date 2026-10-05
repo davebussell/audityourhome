@@ -57,7 +57,7 @@ export const NAV: NavItem[] = [
         title: 'Air',
         links: [
           { href: '/tests/radon/', label: 'Radon', desc: 'The test every home needs' },
-          { href: '/tests/carbon-monoxide/', label: 'Carbon monoxide', desc: 'Required by Ontario law' },
+          { href: '/tests/carbon-monoxide/', label: 'Carbon monoxide', desc: 'Required by Ontario law in homes with fuel-burning appliances or attached garages' },
           { href: '/tests/mold-iaq/', label: 'Mold & indoor air', desc: 'Fix the cause, then clean' },
           { href: '/tests/ventilation-assessment/', label: 'Ventilation & humidity', desc: 'Musty-air diagnostics' },
         ],
@@ -144,6 +144,7 @@ export const NAV: NavItem[] = [
           { href: '/articles/home-energy-audit-cost/', label: 'What audits cost' },
           { href: '/articles/heat-pump-rebates-toronto-ontario/', label: 'Heat pump rebates' },
           { href: '/articles/energy-audit-services-toronto/', label: 'Toronto audit services' },
+          { href: '/articles/energy-audits-multi-unit-buildings/', label: 'Multi-unit buildings' },
           { href: '/articles/', label: 'All articles →' },
         ],
       },

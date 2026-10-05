@@ -8,7 +8,7 @@ import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
 const title = 'Energy audits in Prince George, Dawson Creek & Northern BC | AuditYourHome';
 const description =
-  'Home energy audits in Northern BC: what -30° winters do to the payback math, the Home Energy Improvement Bonus (now province-wide, $750–$2,000), CleanBC\'s income-qualified program, CSA F280 sizing for cold-climate heat pumps, and how to book an EnerGuide evaluation in Prince George or Dawson Creek.';
+  'Home energy audits in Northern BC: what -30° winters do to the payback math, the Home Energy Improvement Bonus ($750–$2,000, or $300 for two upgrades), CleanBC\'s income-qualified program, CSA F280 sizing for cold-climate heat pumps, and how to book an EnerGuide evaluation in Prince George or Dawson Creek.';
 
 const faqs = [
   {
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: 'What rebates apply in Northern BC right now?',
-    a: 'The utility Home Renovation Rebate program (BC Hydro/FortisBC) covers equipment and envelope measures, and the Home Energy Improvement Bonus — extended province-wide for invoices dated May 15, 2026 onward — pays $20 per percentage-point EnerGuide improvement ($750 minimum, $2,000 maximum) when you complete three or more eligible upgrades with pre and post evaluations. Income-qualified households can access no-cost upgrades through the CleanBC Energy Savings Program.',
+    a: 'The utility Home Renovation Rebate program (BC Hydro/FortisBC) covers equipment and envelope measures, and the Home Energy Improvement Bonus pays $20 per percentage-point EnerGuide improvement ($750 minimum, $2,000 maximum) when you complete three bonus-eligible upgrades with pre and post evaluations within 18 months, or $300 through the separate Two Upgrade Bonus if you do two (no evaluation needed; one bonus per home). Income-qualified households can access no-cost upgrades through the CleanBC Energy Savings Program.',
   },
   {
     q: 'Do heat pumps work in Prince George winters?',
@@ -66,13 +66,16 @@ const schema = [
 
       <h2>The money, as of {SITE.dataReviewDate}</h2>
       <p>
-        The headline change this year: the <strong>Home Energy Improvement Bonus</strong>, once a
-        northern-focused top-up, now applies <strong>province-wide</strong> for invoices dated
-        May 15, 2026 onward — <strong>$20 for every percentage-point improvement</strong> in your
-        EnerGuide rating, minimum $750, maximum $2,000, when you complete
-        <strong>three or more eligible upgrades</strong> with a pre- and post-upgrade evaluation by
-        a program-qualified advisor
+        The audit-linked money is the <strong>Home Energy Improvement Bonus</strong>, available
+        across BC under the current program requirements (for invoices dated May 15, 2026 onward):
+        <strong>$20 for every percentage-point improvement</strong> in your EnerGuide rating,
+        minimum $750, maximum $2,000, when you complete <strong>three bonus-eligible
+        upgrades</strong> with a pre- and post-upgrade evaluation by a program-qualified advisor
+        within 18 months, then apply within six months of the second evaluation
         (<a href="https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/" rel="noopener">Better Homes BC ↗</a>).
+        Doing only two upgrades? The separate <strong>$300 Two Upgrade Bonus</strong> needs no
+        evaluation, and it's one bonus per home
+        (<a href="https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/bonus-rebates.html" rel="noopener">BC Hydro ↗</a>).
         It stacks on the utility <strong>Home Renovation Rebate</strong> measures from BC Hydro and
         FortisBC, and heat pump rebates in BC require a <strong>CSA F280 heat-load
         calculation</strong> — the sizing document that matters most at northern design

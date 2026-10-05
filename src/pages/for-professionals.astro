@@ -17,6 +17,7 @@ const applyBody = [
   'Best phone:',
   'Where should leads go (email):',
   'Roughly how many new evaluations can you take per month:',
+  'Registered for EnerGuide for MURBs (multi-unit buildings)? Yes / No:',
 ].join('\n');
 const applyHref = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(applySubject)}&body=${encodeURIComponent(applyBody)}`;
 
@@ -39,7 +40,11 @@ const faqs = [
   },
   {
     q: 'Do I need to be NRCan-registered?',
-    a: 'Yes. Leads go only to NRCan-licensed service organizations, or advisors working under one, because only their EnerGuide evaluations qualify for rebate programs like Ontario’s Home Renovation Savings Program. Homeowners are told that up front.',
+    a: 'Yes. Leads go only to NRCan-licensed service organizations, or advisors working under one, because NRCan licensing is required for EnerGuide rebates. Ontario’s Home Renovation Savings Program goes further and accepts assessments only from its seven approved organizations, and every listing says whether it is one of them. Homeowners are told that up front.',
+  },
+  {
+    q: 'Do you send multi-unit (MURB) requests?',
+    a: 'Yes. Owners of duplexes, triplexes and low-rise apartment buildings ask too, and rating a multi-unit residential building needs an advisor who has passed NRCan’s separate MURB exam. Tell us if you’re registered for EnerGuide for MURBs and we’ll route those requests only to advisors who are. High-rise buildings fall outside the EnerGuide Rating System and get engineering audits instead.',
   },
   {
     q: 'How does billing work?',
@@ -153,6 +158,7 @@ const schema = [
         <li>Service areas (cities or postal prefixes)</li>
         <li>Assessment pricing if you publish it (we hope you will)</li>
         <li>Booking method — phone, form, or a scheduling link</li>
+        <li>Whether you rate multi-unit buildings (registered for <a href="/articles/energy-audits-multi-unit-buildings/">EnerGuide for MURBs</a>)</li>
       </ol>
       <p class="mb-0 small">
         We verify registration before listing, mark verified profiles, and correct or remove any

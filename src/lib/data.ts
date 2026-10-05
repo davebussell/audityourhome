@@ -62,8 +62,10 @@ export interface Provider {
   statusNote?: string;
   /** provider slugs to point visitors to when inactive */
   alternatives?: string[];
-  /** One of the seven service organizations approved for Ontario's Home Renovation Savings assessment path (homerenovationsavings.ca, checked 2026-09-28). */
-  hrsApproved?: boolean;
+  /** One of the seven service organizations approved for Ontario's Home Renovation Savings assessment path
+   *  (homerenovationsavings.ca/help-and-support, checked 2026-10-02). Set explicitly on every provider: the
+   *  directory shows "HRSP-approved: Yes/No" next to each one. */
+  hrsApproved: boolean;
 }
 
 /** Independent review-site links for a provider (search links — no scraped ratings). */

@@ -59,6 +59,7 @@ const ART_PHOTO: Record<string, string> = {
   'home-energy-audit-ontario': 'region-ontario',
   'home-energy-audit-cost': 'energy-bill-analysis',
   'commercial-energy-audits-ontario': 'commercial-energy-audit',
+  'energy-audits-multi-unit-buildings': 'multi-unit',
   'heat-pump-rebates-toronto-ontario': 'heat-loss-calculation',
   'energy-audit-companies-ontario': 'home-energy-audit',
   'vermiculite-insulation': 'asbestos-testing',
@@ -97,8 +98,9 @@ const heroPhoto = ART_PHOTO[x.slug] ?? 'home-energy-audit';
       <section class="advisors">
         <h2>Registered advisors serving {region.name}</h2>
         <p class="small">
-          NRCan-licensed service organizations, with review links. Those tagged “Approved for Home
-          Renovation Savings” can deliver the assessments that qualify for Ontario's rebates.
+          NRCan-licensed service organizations, with review links. Only assessments from the seven
+          HRSP-approved organizations (marked “HRSP-approved: Yes”) qualify for the $600 Home
+          Renovation Savings rebate and its assessment-path upgrade rebates.
           <a href={`/find/${region.slug}/`}>Full {region.name} directory →</a>
         </p>
         <div class="provider-grid">
