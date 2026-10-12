@@ -144,6 +144,7 @@ export const NAV: NavItem[] = [
           { href: '/articles/what-is-a-home-energy-audit/', label: 'What is an energy audit?' },
           { href: '/articles/home-energy-audit-ontario/', label: 'Ontario audit guide' },
           { href: '/articles/home-energy-audit-cost/', label: 'What audits cost' },
+          { href: '/programs/national-heat-pump-rebate/', label: 'New federal heat pump rebate' },
           { href: '/articles/heat-pump-rebates-canada/', label: 'Heat pump rebates by province' },
           { href: '/articles/energy-audit-services-toronto/', label: 'Toronto audit services' },
           { href: '/articles/energy-audits-multi-unit-buildings/', label: 'Multi-unit buildings' },

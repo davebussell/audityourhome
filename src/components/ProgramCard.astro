@@ -13,7 +13,9 @@ const statusChip =
     ? { cls: 'chip-active', label: 'Active' }
     : p.status === 'active-limited'
       ? { cls: 'chip-limited', label: 'Active · limits apply' }
-      : { cls: 'chip-closed', label: 'Closed' };
+      : p.status === 'announced'
+        ? { cls: 'chip-info', label: 'Not open yet' }
+        : { cls: 'chip-closed', label: 'Closed' };
 ---
 
 <article class="card card-pad prog">

@@ -15,8 +15,8 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 const p = programBySlug(slug!)!;
 
-const statusLabel = p.status === 'active' ? 'Active' : p.status === 'active-limited' ? 'Active — limits apply' : 'Closed';
-const statusCls = p.status === 'active' ? 'chip-active' : p.status === 'active-limited' ? 'chip-limited' : 'chip-closed';
+const statusLabel = p.status === 'active' ? 'Active' : p.status === 'active-limited' ? 'Active — limits apply' : p.status === 'announced' ? 'Announced — not open yet' : 'Closed';
+const statusCls = p.status === 'active' ? 'chip-active' : p.status === 'active-limited' ? 'chip-limited' : p.status === 'announced' ? 'chip-info' : 'chip-closed';
 
 const province = p.provinceSlug ? provincesData.provinces.find((x) => x.slug === p.provinceSlug) : null;
 const relatedProgs = (p.related ?? []).map((s) => programBySlug(s)).filter(Boolean);
@@ -105,7 +105,7 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
 
     {p.howToApply && p.howToApply.length > 0 && (
       <>
-        <h2 class="sec">{p.status === 'closed' ? 'What to do instead' : 'How to apply, step by step'}</h2>
+        <h2 class="sec">{p.status === 'closed' ? 'What to do instead' : p.status === 'announced' ? 'How it will work' : 'How to apply, step by step'}</h2>
         <ol class="steps measure">
           {p.howToApply.map((s) => <li><p>{s}</p></li>)}
         </ol>

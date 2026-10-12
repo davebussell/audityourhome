@@ -157,13 +157,14 @@ export function provinceRebates(prov: string): ProvReb {
 export function rebatesFull(city: CalcCity, measures: string[]): Record<string, RebFull[]> {
   const pr = provinceRebates(city.prov);
   const out: Record<string, RebFull[]> = {};
-  for (const m of measures) out[m] = (pr?.measures[m] ?? []).filter((e) => e.status !== 'notApplicable');
+  const fed = (rebatesJson as unknown as { federal?: { measures: Record<string, RebFull[]> } }).federal?.measures ?? {};
+  for (const m of measures) out[m] = [...(pr?.measures[m] ?? []), ...(fed[m] ?? [])].filter((e) => e.status !== 'notApplicable');
   return out;
 }
 /** Compact, computable rebate entries for the browser */
 export function rebatesCompact(city: CalcCity, measures: string[]): Record<string, RebateEntry[]> {
   const full = rebatesFull(city, measures);
-  const keep: (keyof RebateEntry)[] = ['id', 'program', 'status', 'kind', 'rate', 'cap', 'pct', 'pctCostCap', 'fuels', 'minRAdded', 'minRAddedByOption', 'minTargetR', 'maxExistingR', 'minSqft', 'minCount', 'requiresDoubling', 'defaultOff', 'perCount', 'scope', 'ductedAmount', 'ductedRate', 'coldClimateRate', 'ductlessCap', 'rented', 'windowReq'];
+  const keep: (keyof RebateEntry)[] = ['id', 'program', 'status', 'statusNote', 'kind', 'rate', 'cap', 'pct', 'pctCostCap', 'fuels', 'minRAdded', 'minRAddedByOption', 'minTargetR', 'maxExistingR', 'minSqft', 'minCount', 'requiresDoubling', 'defaultOff', 'perCount', 'scope', 'ductedAmount', 'ductedRate', 'coldClimateRate', 'ductlessCap', 'rented', 'windowReq'];
   const out: Record<string, RebateEntry[]> = {};
   for (const [m, arr] of Object.entries(full)) {
     out[m] = arr.filter((e) => !e.rented).map((e) => {

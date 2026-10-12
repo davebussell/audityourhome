@@ -9,12 +9,13 @@ import { programs } from '../../lib/data';
 
 const title = 'Canadian energy rebate tracker — what’s actually live, province by province | AuditYourHome';
 const description =
-  'Every major home energy rebate in Canada, verified against official pages with dates: Home Renovation Savings, BC’s Improvement Bonus, Efficiency Manitoba, Rénoclimat, LogisVert, the Atlantic programs — and the closed ones other sites still advertise.';
+  'Every major home energy rebate in Canada, verified against official pages with dates: Home Renovation Savings, BC’s Improvement Bonus, Efficiency Manitoba, Rénoclimat, LogisVert, the Atlantic programs, the new federal heat pump rebate — and the closed ones other sites still advertise.';
 
 const isOntario = (p: any) => ['ontario', 'toronto'].includes(p.jurisdiction);
 const isFederal = (p: any) => p.jurisdiction === 'canada';
 const onfed = programs.filter((p) => isOntario(p) || isFederal(p));
 const provincial = programs.filter((p) => !isOntario(p) && !isFederal(p));
+const announced = programs.filter((p) => p.status === 'announced');
 const live = onfed.filter((p) => p.status === 'active');
 const limited = onfed.filter((p) => p.status === 'active-limited');
 const closed = onfed.filter((p) => p.status === 'closed');
@@ -43,6 +44,15 @@ const schema = [
       </div>
       <Photo name={'attic-insulation-inspection'} eager />
     </div>
+
+    {announced.length > 0 && (
+      <>
+        <h2 class="grp"><span class="chip chip-info">Announced</span> Coming soon, not open yet</h2>
+        <div class="grid-3">
+          {announced.map((p) => <ProgramCard program={p} />)}
+        </div>
+      </>
+    )}
 
     <h2 class="grp"><span class="chip chip-active">Active</span> Ontario &amp; federal — live</h2>
     <div class="grid-3">

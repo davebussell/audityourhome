@@ -496,7 +496,7 @@ PROV_PROGRAMS = {
     'YT': ['territories-energy-programs'],
     'NT': ['territories-energy-programs'],
 }
-FEDERAL = ['cmhc-eco-improvement', 'canada-greener-homes-affordability-program']
+FEDERAL = ['national-heat-pump-rebate', 'cmhc-eco-improvement', 'canada-greener-homes-affordability-program']
 CGHAP_PROVS = {'BC', 'MB', 'NS', 'PE', 'QC'}
 PROG = {x['slug']: x for x in PROGRAMS}
 

@@ -31,6 +31,7 @@ const schema = [
 const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
   active: { cls: 'chip-active', label: 'live' },
   income: { cls: 'chip-info', label: 'income-qualified' },
+  announced: { cls: 'chip-info', label: 'announced' },
   closed: { cls: 'chip-closed', label: 'closed' },
 };
 const provCities = localCities.filter((c) => c.provSlug === p.slug).sort((a, b) => b.population - a.population);
@@ -85,7 +86,7 @@ const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
         {data.federal.items.map((f) => (
           <p class="fed-line">
             <span class={`chip ${STATUS_CHIP[f.status]?.cls ?? 'chip-neutral'}`}>{STATUS_CHIP[f.status]?.label}</span>
-            <strong>{f.name}:</strong> {fedNote(f)} <a href={f.url} rel="noopener">↗</a>
+            <strong>{f.name}:</strong> {fedNote(f)} {'programSlug' in f && (f as { programSlug?: string }).programSlug && <><a href={`/programs/${(f as { programSlug?: string }).programSlug}/`}>What we know →</a>{' '}</>}<a href={f.url} rel="noopener">↗</a>
           </p>
         ))}
       </div>

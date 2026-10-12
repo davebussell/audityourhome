@@ -166,6 +166,9 @@ test('rebates: per-unit defaults, caps, fuel rules', () => {
   const flat: RebateEntry = { id: 'a', program: 'x', status: 'open', kind: 'flat', rate: 900, cap: 1500 };
   assert.equal(rebateAmount(flat, {}).amount, 900);
   assert.equal(rebateAmount(flat, { cost: 500 }).amount, 500, 'never more than the cost');
+  const announced = { ...flat, status: 'announced', statusNote: 'Expected to open early 2027' } as RebateEntry;
+  assert.equal(rebateAmount(announced, {}).amount, null, 'announced programs never count');
+  assert.equal(rebateAmount(announced, {}).reason, 'Expected to open early 2027');
   const bc: RebateEntry = { id: 'b', program: 'x', status: 'open', kind: 'perSqftR', rate: 0.02, cap: 900, minRAdded: 12 };
   assert.equal(rebateAmount(bc, { sqft: 1000, rBefore: 12, rAfter: 50 }).amount, 760);
   assert.equal(rebateAmount(bc, { sqft: 3000, rBefore: 12, rAfter: 50 }).amount, 900);

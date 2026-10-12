@@ -58,6 +58,7 @@ const leadSub = service.cat === 'energy'
 const statusChip: Record<string, [string, string]> = {
   active: ['chip-active', 'Open'],
   'active-limited': ['chip-limited', 'Open · deadline'],
+  announced: ['chip-info', 'Announced · opens 2027'],
   closed: ['chip-closed', 'Closed'],
 };
 const provBlocks = [pg.providers, pg.providersSection].filter(Boolean) as AreaProviders[];

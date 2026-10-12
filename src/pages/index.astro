@@ -31,7 +31,7 @@ const faqs = [
   },
   {
     q: 'Is the Canada Greener Homes Grant still available?',
-    a: 'No — it closed to new applicants in February 2024, and the interest-free Greener Homes Loan closed October 1, 2025. Plenty of websites still advertise both. The live money in Ontario right now is Home Renovation Savings, Toronto HELP, and the CMHC Eco premium refunds — see our program tracker for what’s verified as of ' + SITE.dataReviewDate + '.',
+    a: 'No — it closed to new applicants in February 2024, and the interest-free Greener Homes Loan closed October 1, 2025. Plenty of websites still advertise both. A new federal National Heat Pump Rebate ($2,000, or up to $10,000 below the median income, for cold-climate heat pumps) was announced October 8, 2026 and is expected to open early in 2027. The live money in Ontario right now is Home Renovation Savings, Toronto HELP, and the CMHC Eco premium refunds — see our program tracker for what’s verified as of ' + SITE.dataReviewDate + '.',
   },
 ];
 
@@ -187,8 +187,10 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
       <h2>The rebates worth planning around</h2>
       <p class="lede measure">
         Rebate programs open and close with little warning — the federal Grant and Loan are both
-        gone, and half the internet hasn't noticed. We verify every program against its official
-        page and stamp the date.
+        gone, and half the internet hasn't noticed. The new federal
+        <a href="/programs/national-heat-pump-rebate/">heat pump rebate</a> was announced October 8,
+        2026 but won't open until early 2027. We verify every program against its official page and
+        stamp the date.
       </p>
       <div class="grid-3" style="margin-top: 28px;">
         {featured.map((p) => <ProgramCard program={p} />)}

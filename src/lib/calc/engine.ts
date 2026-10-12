@@ -459,6 +459,8 @@ export interface RebateEntry {
   id: string;
   program: string;
   status: string;
+  /** shown instead of an amount when the program is announced but not open */
+  statusNote?: string;
   kind: 'flat' | 'perSqft' | 'perSqftR' | 'per100SqftR' | 'perCount' | 'perTon' | 'perKBtu' | 'pctCost' | 'info';
   rate: number | null;
   cap: number | null;
@@ -505,6 +507,7 @@ export interface RebateResult { amount: number | null; eligible: boolean; reason
 
 /** Conservative rebate for one program: the per-unit default × quantity, within caps and rules. */
 export function rebateAmount(e: RebateEntry, q: RebateQty): RebateResult {
+  if (e.status === 'announced') return { amount: null, eligible: false, reason: e.statusNote ?? 'Announced, not open yet' };
   if (e.status !== 'open') return { amount: null, eligible: false, reason: 'Not open to new applicants' };
   if (e.rented) return { amount: null, eligible: false, reason: 'For rented equipment only' };
   if (e.fuels && e.fuels.length) {

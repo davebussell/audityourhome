@@ -7,9 +7,11 @@ const path = Astro.url.pathname;
 
 /** plain-link active state */
 const isActive = (href?: string) => !!href && path.startsWith(href);
+/** a plain top-level link (e.g. Rebates & programs) owns its pages, even when a menu also links to one */
+const ownedByPlain = NAV.some((i) => !i.columns && !!i.href && i.href !== '/' && path.startsWith(i.href));
 /** mega-trigger active state: any link inside starts the current path */
 const sectionActive = (item: (typeof NAV)[number]) =>
-  item.columns?.some((c) => c.links.some((l) => path.startsWith(l.href.split('#')[0]) && l.href !== '/')) ?? false;
+  !ownedByPlain && (item.columns?.some((c) => c.links.some((l) => path.startsWith(l.href.split('#')[0]) && l.href !== '/')) ?? false);
 ---
 
 <header class="site-header" id="siteHeader">

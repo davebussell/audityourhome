@@ -1136,6 +1136,7 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
             ${costTxt ? `<span class="cost">${costTxt}</span>` : ''}
             ${payTxt ? `<span class="cost">${payTxt}</span>` : ''}
             ${rebateChip(item.category)}
+            ${item.category === 'heat-pump' && a.loc.kind !== 'us' ? '<a class="chip chip-info" href="/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>' : ''}
           </div>
         </div>`;
     });
@@ -1229,6 +1230,7 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     );
   }
 
+  const FED_HP_NOTE = '<strong>Coming early 2027:</strong> the federal <a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a> will pay $2,000, or up to $10,000 below the median income, toward a cold-climate air-source heat pump. No EnerGuide evaluation is needed, and it can be combined with provincial rebates.';
   function renderPrograms(loc: any, goals: string[], isON: boolean, isToronto: boolean) {
     const el = $('#rPrograms');
     const byId = (id: string) => D.programs.find((p: any) => p.id === id);
@@ -1236,9 +1238,9 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     if (loc.kind === 'us') {
       html = `<div class="card province-note"><h3>US launch is coming</h3><p class="small">Our US directory (HOMES-rebate states and audit-ordinance cities first) is in the works. Meanwhile: your utility may offer a free or cheap assessment — check before paying for one.</p></div>`;
     } else if (loc.kind === 'ca' && loc.province && loc.province !== 'ON') {
-      html = `<div class="card province-note"><h3>Programs in ${esc(loc.province)}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary — check your utility.'}</p><p class="small"><a href="/programs/">See the full program tracker →</a></p></div>`;
+      html = `<div class="card province-note"><h3>Programs in ${esc(loc.province)}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary — check your utility.'}</p><p class="small">${FED_HP_NOTE}</p><p class="small"><a href="/programs/">See the full program tracker →</a></p></div>`;
     } else {
-      const ids = ['hrsp-assessment', 'hrsp-no-assessment'];
+      const ids = ['hrsp-assessment', 'hrsp-no-assessment', 'national-heat-pump-rebate'];
       if (isToronto) ids.push('toronto-help');
       if (goals.includes('buying')) ids.push('cmhc-eco-improvement');
       const rows = ids.map(byId).filter(Boolean).map((p: any) => `
