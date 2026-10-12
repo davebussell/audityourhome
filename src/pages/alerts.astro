@@ -1,0 +1,129 @@
+---
+/** Free alerts landing page: what each alert is, an example of each, and the sign-up. */
+import Base from '../layouts/Base.astro';
+import AccountSignup from '../components/AccountSignup.astro';
+import { SITE, ACCOUNTS, ACCOUNTS_ENABLED } from '../config/site';
+import { breadcrumbSchema, faqSchema } from '../lib/schema';
+import { ogFor } from '../lib/photos';
+import { ALERT_TYPES, provinceName } from '../lib/account/catalog';
+import updatesJson from '../data/program-updates.json';
+import checksJson from '../data/seasonal-checks.json';
+
+const updates = [...updatesJson.items].sort((a, b) => b.date.localeCompare(a.date));
+const latest = updates[0];
+const month = new Date().getMonth() + 1;
+const monthName = new Date().toLocaleDateString('en-CA', { month: 'long' });
+const checks = checksJson.items.filter((c) => c.months.includes(month)).slice(0, 3);
+const fmt = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const faqs = [
+  { q: 'Are the alerts really free?', a: 'Yes. Alerts and the My Home account are free. AuditYourHome is paid by the advisors and contractors we introduce people to, and only when someone asks to be matched.' },
+  { q: 'How many emails will I get?', a: 'Program changes: usually a few a year for your province. Deadline reminders: 30, 7 and 1 day before each date you add. Seasonal checks: one short email a month. Turn any of them off at any time.' },
+  { q: 'Who sends them?', a: `${ACCOUNTS.sender}. Every email says who it is from, how to reach us, and has a one-click unsubscribe link.` },
+  { q: 'Do I need a password?', a: 'No. We email you a 6-digit code and a link to sign in. Your email address is your account.' },
+  { q: 'What do you do with my information?', a: 'We use it to send the alerts you chose and to run your My Home account. It is stored in Canada. We never sell it, and we only share your details with a company if you ask to be matched. You can download or delete everything from My Home.' },
+];
+
+const title = 'Free home energy alerts: rebate changes, deadlines and checks | AuditYourHome';
+const description = 'Free email alerts for Canadian homeowners: rebate and program changes in your province, reminders before your EnerGuide and rebate deadlines, and a short monthly home checklist.';
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Free alerts', path: '/alerts/' }]),
+  faqSchema(faqs),
+];
+const examples: Record<string, { label: string; title: string; body: string; foot?: string }> = {
+  program_updates: latest
+    ? { label: `Example · ${provinceName(latest.provinces[0])}`, title: latest.title, body: latest.summary, foot: `Changed ${fmt(latest.date)}` }
+    : { label: 'Example', title: 'A rebate in your province changed', body: '' },
+  deadline_reminders: { label: 'Example', title: '7 days left: book your follow-up EnerGuide evaluation', body: 'You added this deadline to My Home. Most rebates pay out only after the follow-up evaluation, so book it now.' },
+  seasonal_checks: { label: `Example · ${monthName}`, title: checks[0]?.title ?? 'Check the furnace filter', body: checks[0]?.body ?? '' },
+};
+---
+
+<Base title={title} description={description} schema={schema} indexable={ACCOUNTS_ENABLED} ogImage={ogFor('energy-bill-analysis')}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Free · no password · unsubscribe any time</p>
+      <h1>Free alerts for your home</h1>
+      <p class="lede">
+        Rebates change with little warning: Quebec rewrote Rénoclimat on October 1, 2026, and PEI ended its
+        heat pump rebates in April. Get an email when a program in your province changes, a reminder before
+        your own deadlines, and a short monthly checklist for your house.
+      </p>
+    </div>
+
+    <div class="al-grid">
+      {ALERT_TYPES.map((a) => {
+        const ex = examples[a.key];
+        return (
+          <article class="card al-card">
+            <h2>{a.label}</h2>
+            <p class="small">{a.hint}</p>
+            <div class="al-ex">
+              <p class="meta">{ex.label}</p>
+              <p class="al-ex-t">{ex.title}</p>
+              {ex.body && <p class="small">{ex.body}</p>}
+              {ex.foot && <p class="meta">{ex.foot}</p>}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    {ACCOUNTS_ENABLED ? (
+      <AccountSignup mode="alerts" id="get-alerts" />
+    ) : (
+      <div class="card card-pad al-soon" id="get-alerts">
+        <h2>Opening soon</h2>
+        <p class="small">Alerts are almost ready. In the meantime, the <a href="/updates/">program changes page</a> lists every change we track.</p>
+      </div>
+    )}
+
+    <section class="al-more">
+      <h2>Also free: My Home</h2>
+      <p class="measure">
+        Signing up creates a My Home account where you can keep your EnerGuide results and test records,
+        save the <a href="/plan/">Home Energy Planner</a>’s upgrade sequence and tick things off, and ask to be
+        matched with an energy advisor or contractor when you’re ready. We introduce you to one company,
+        never a list. <a href="/account/">See what it looks like →</a>
+      </p>
+    </section>
+
+    <section class="al-recent">
+      <h2>Recent program changes</h2>
+      <ul>
+        {updates.slice(0, 4).map((u) => (
+          <li><span class="meta">{fmt(u.date)}</span> <a href={`/updates/#${u.slug}`}>{u.title}</a></li>
+        ))}
+      </ul>
+      <p class="small"><a href="/updates/">All program changes →</a></p>
+    </section>
+
+    <section class="al-faq">
+      <h2>Questions</h2>
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+      <p class="small">More in our <a href="/privacy/">privacy page</a>, or email <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.</p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .al-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .al-card { padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+  .al-card h2 { font-size: 19px; margin: 0; }
+  .al-card > .small { margin: 0; }
+  .al-ex { margin-top: 6px; background: var(--paper); border: 1px dashed var(--line-strong); border-radius: 10px; padding: 12px 14px; }
+  .al-ex .meta { margin: 0 0 4px; }
+  .al-ex-t { font-family: var(--display); font-weight: 700; font-size: 15.5px; line-height: 1.35; margin: 0 0 6px; }
+  .al-ex .small { margin: 0 0 4px; }
+  .al-soon { margin: 22px 0; border-top: 4px solid var(--pine); }
+  .al-more, .al-recent, .al-faq { padding: 26px 0 6px; }
+  .al-more h2, .al-recent h2, .al-faq h2 { font-size: clamp(22px, 2.6vw, 27px); }
+  .al-recent ul { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 8px; }
+  .al-faq { padding-bottom: 56px; }
+  @media (max-width: 900px) { .al-grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../../components/LeadForm.astro';
-import { SITE } from '../../config/site';
+import AccountSignup from '../../components/AccountSignup.astro';
+import { SITE, ACCOUNTS_ENABLED } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
 import archetypes from '../../data/archetypes.json';
 import issues from '../../data/issues.json';
@@ -118,7 +119,7 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
           <div class="field narrow">
             <label for="postal">Postal code (or US ZIP)</label>
             <input id="postal" name="postal" type="text" placeholder="e.g. M4E 2V5" autocomplete="postal-code" />
-            <p class="small hint">We use this to match programs and advisors for your area — it isn't stored or sent anywhere.</p>
+            <p class="small hint">We use this to match programs and advisors for your area. {ACCOUNTS_ENABLED ? 'It stays in your browser unless you save your plan or ask to be matched.' : 'It isn’t stored or sent anywhere.'}</p>
           </div>
         </fieldset>
 
@@ -344,6 +345,8 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         </p>
       </div>
 
+      {ACCOUNTS_ENABLED && <AccountSignup mode="plan" />}
+
       <LeadForm
         heading="Want this plan handled?"
         sub="Send us your plan summary and we'll connect you with a registered service organization for your area."
@@ -353,8 +356,10 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
       <p class="small disclaimer">
         Estimates are ranges based on how similar Canadian homes perform, your area's climate and
         energy prices, and the assumptions <a href="#assumptions">listed below</a>. They are deliberately
-        conservative and are not a guarantee of savings. Program details change — confirm on official pages before spending. Nothing you
-        enter here is stored or transmitted; the planner runs entirely in your browser.
+        conservative and are not a guarantee of savings. Program details change — confirm on official pages before spending.
+        {ACCOUNTS_ENABLED
+          ? 'The planner runs in your browser. Nothing you enter is stored unless you save your plan to My Home or ask to be matched.'
+          : 'Nothing you enter here is stored or transmitted; the planner runs entirely in your browser.'}
       </p>
       <div class="wizard-actions">
         <button type="button" class="btn btn-ghost" id="restartBtn">Start over</button>
@@ -581,6 +586,8 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   const plannerEl = document.getElementById('planner')!;
   const TOTAL = 6;
   let step = 1;
+  /** The upgrade sequence as shown, for saving to My Home. */
+  let lastItems: Record<string, unknown>[] = [];
 
   const $ = (sel: string, root: ParentNode = document) => root.querySelector(sel) as HTMLElement;
   const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
@@ -935,6 +942,17 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     };
     Object.entries(params).forEach(([k, v]) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k)));
     history.replaceState(null, '', url);
+    (window as unknown as { ayhPlan?: unknown }).ayhPlan = {
+      home: {
+        postal, province: loc.kind === 'ca' ? loc.province : null,
+        city_slug: m.R.slug, city_name: m.R.name, era: a.age, home_type: a.htype, size_band: a.size,
+        heating: a.heat, heating_age: a.hage, water_heater: a.wh, cooling: a.ac, windows: a.win,
+        water_supply: water, prev_audit: a.prev, secondary: a.sec,
+      },
+      items: lastItems,
+      planner_query: url.search,
+    };
+    document.dispatchEvent(new CustomEvent('ayh:plan'));
     const t = $('#rTitle');
     t.setAttribute('tabindex', '-1');
     t.focus({ preventScroll: false });
@@ -1052,15 +1070,14 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   function renderSequence(arch: any, a: Answers, syms: string[], goals: string[], m: ReturnType<typeof houseModel>, cal: any, isON: boolean, isToronto: boolean) {
     const el = $('#rSequence');
     if (a.htype === 'condo') {
+      lastItems = [];
       el.innerHTML = `
         <div class="rsec"><h3>Condos work differently</h3>
         <p class="sub">EnerGuide evaluations and most rebates target houses and townhomes — in a condo, the envelope and heating usually belong to the corporation. Your best levers: in-suite sealing, window coverings, a heat-pump conversation with your board, and pushing the corporation toward a building-level audit.</p></div>`;
       return;
     }
     const seq = buildSequence(arch, a.heat, syms, goals, a);
-    const rebateChip = (cat: string) => {
-      if (!isON) return '';
-      const map: Record<string, string> = {
+    const ON_REBATE: Record<string, string> = {
         'air-sealing': 'HRSP assessment path',
         'attic-insulation': 'HRSP insulation rebates',
         'wall-insulation': 'HRSP insulation rebates',
@@ -1070,8 +1087,10 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         'solar': 'HRSP solar + battery',
         'water-heating': 'HRSP $500',
         'controls': 'HRSP thermostat rebate',
-      };
-      const label = map[cat];
+    };
+    const rebateChip = (cat: string) => {
+      if (!isON) return '';
+      const label = ON_REBATE[cat];
       const help = isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : '';
       return label ? `<span class="chip chip-active">${label}</span>${help}` : help;
     };
@@ -1080,9 +1099,16 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
       if (a.heat === 'propane') out = out.replace('Oil-heated homes', 'Oil- and propane-heated homes');
       return out;
     };
+    lastItems = [];
     const rows = seq.map((item) => {
       const sm = findMeasure(item.category, a.age, m.hi.screen);
       const s = itemSaving(item.category, a, m, cal);
+      lastItems.push({
+        key: item.category, title: item.action, category: item.category,
+        cost_low: s.cost ? Math.round(s.cost[0]) : null, cost_high: s.cost ? Math.round(s.cost[1]) : null,
+        saving_year: s.dollars !== null && s.dollars !== undefined && s.dollars >= 15 ? Math.round(s.dollars) : null,
+        rebate: isON ? ON_REBATE[item.category] ?? null : null,
+      });
       let saveTxt = '';
       let payTxt = '';
       if (s.dollars !== null && s.dollars !== undefined) {

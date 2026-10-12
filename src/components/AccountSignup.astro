@@ -1,0 +1,229 @@
+---
+/**
+ * Email sign-up for My Home: saves the planner's plan ('plan') or turns on
+ * free alerts ('alerts'). Confirms the address with an emailed code first.
+ * Render only when ACCOUNTS_ENABLED.
+ */
+import { ALERT_TYPES } from '../lib/account/catalog';
+
+interface Props {
+  mode: 'plan' | 'alerts';
+  heading?: string;
+  sub?: string;
+  id?: string;
+}
+const { mode, id = `signup-${mode}` } = Astro.props;
+const heading = Astro.props.heading ?? (mode === 'plan' ? 'Save this plan to My Home (free)' : 'Get free home alerts');
+const sub = Astro.props.sub ?? (mode === 'plan'
+  ? 'Keep your plan, tick off upgrades as you go, add your EnerGuide results and get reminders before rebate deadlines.'
+  : 'Choose what you want to hear about. Free, no password, and every email has a one-click unsubscribe link.');
+const kinds = mode === 'plan' ? ALERT_TYPES.filter((a) => a.key !== 'deadline_reminders') : ALERT_TYPES;
+---
+
+<div class={`card acct-signup mode-${mode}`} id={id} data-mode={mode} data-clarity-mask="true">
+  <h3>{heading}</h3>
+  <p class="small">{sub}</p>
+
+  <div class="su-signedin" hidden>
+    <button class="btn btn-primary su-direct" type="button">{mode === 'plan' ? 'Save to My Home' : 'Turn these alerts on'}</button>
+    <p class="small">Signed in as <strong class="su-who"></strong>.</p>
+  </div>
+
+  <form class="su-form" novalidate>
+    {mode === 'alerts' && (
+      <div class="field">
+        <label for={`${id}-postal`}>Postal code</label>
+        <input id={`${id}-postal`} name="postal" type="text" autocomplete="postal-code" maxlength="7" placeholder="K1A 0B1" />
+        <p class="hint">So we only send changes for your province.</p>
+      </div>
+    )}
+    <fieldset class="su-kinds">
+      <legend>{mode === 'plan' ? 'Also email me (optional)' : 'Email me'}</legend>
+      {kinds.map((k) => (
+        <label class="su-check">
+          <input type="checkbox" name="kind" value={k.key} />
+          <span><strong>{k.label}</strong> <span class="small">{k.hint}</span></span>
+        </label>
+      ))}
+    </fieldset>
+    <div class="su-row">
+      <div class="field su-email">
+        <label for={`${id}-email`}>Email</label>
+        <input id={`${id}-email`} name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+      </div>
+      <button class="btn btn-primary" type="submit">{mode === 'plan' ? 'Email me a code to save it' : 'Email me a code'}</button>
+    </div>
+    <p class="su-consent meta" aria-live="polite"></p>
+    <p class="su-err" role="alert"></p>
+  </form>
+
+  <form class="su-code" hidden novalidate>
+    <p>We sent a 6-digit code to <strong class="su-addr"></strong>. Enter it here, or tap the link in the email on any device.</p>
+    <div class="su-row">
+      <div class="field">
+        <label for={`${id}-code`}>Code</label>
+        <input id={`${id}-code`} name="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="12" class="su-code-in" />
+      </div>
+      <button class="btn btn-primary" type="submit">Confirm</button>
+    </div>
+    <p class="su-err" role="alert"></p>
+    <p class="small"><button type="button" class="su-back linkish">Use a different email</button></p>
+  </form>
+
+  <div class="su-done" hidden role="status">
+    <p class="su-done-t">{mode === 'plan' ? 'Plan saved.' : 'You’re signed up.'}</p>
+    <p class="small su-done-s"></p>
+    <a class="btn btn-ghost" href={mode === 'plan' ? '/account/#plan' : '/account/#alerts'}>Open My Home</a>
+  </div>
+</div>
+
+<script>
+  const FSA: Record<string, string> = { A: 'NL', B: 'NS', C: 'PE', E: 'NB', G: 'QC', H: 'QC', J: 'QC', K: 'ON', L: 'ON', M: 'ON', N: 'ON', P: 'ON', R: 'MB', S: 'SK', T: 'AB', V: 'BC', X: 'NT', Y: 'YT' };
+  const provinceOf = (postal: string) => { const v = postal.toUpperCase().replace(/[^A-Z0-9]/g, ''); return /^[A-Z]\d[A-Z]/.test(v) ? FSA[v[0]] ?? '' : ''; };
+
+  document.querySelectorAll<HTMLElement>('.acct-signup').forEach(async (box) => {
+    const mode = box.dataset.mode as 'plan' | 'alerts';
+    const form = box.querySelector<HTMLFormElement>('.su-form')!;
+    const codeForm = box.querySelector<HTMLFormElement>('.su-code')!;
+    const done = box.querySelector<HTMLElement>('.su-done')!;
+    const signedIn = box.querySelector<HTMLElement>('.su-signedin')!;
+    const consentEl = box.querySelector<HTMLElement>('.su-consent')!;
+    const setErr = (f: HTMLElement, m: string) => { f.querySelector<HTMLElement>('.su-err')!.textContent = m; };
+    let email = '';
+    let key = '';
+
+    const kinds = () => [...form.querySelectorAll<HTMLInputElement>('input[name=kind]:checked')].map((i) => i.value);
+    const plan = () => (window as unknown as { ayhPlan?: { home?: { province?: string } } }).ayhPlan;
+    const province = () => mode === 'plan' ? plan()?.home?.province ?? '' : provinceOf(String(new FormData(form).get('postal') ?? ''));
+
+    async function consentText(ks: string[]) {
+      const { alertConsentText } = await import('../lib/account/catalog');
+      return alertConsentText(ks);
+    }
+    form.addEventListener('change', async () => {
+      const ks = kinds();
+      consentEl.textContent = ks.length ? `By continuing you agree: “${await consentText(ks)}”` : '';
+    });
+
+    async function pending() {
+      const out: { kind: 'plan' | 'alerts'; payload: Record<string, unknown> }[] = [];
+      if (mode === 'plan') {
+        const p = plan();
+        if (!p) throw new Error('Finish the planner first, then save your plan.');
+        out.push({ kind: 'plan', payload: p as Record<string, unknown> });
+      }
+      const ks = kinds();
+      if (ks.length) {
+        const prov = province();
+        if (ks.includes('program_updates') && !prov) throw new Error('Add a Canadian postal code so we know which province’s programs to send.');
+        out.push({ kind: 'alerts', payload: Object.fromEntries([
+          ...ks.map((k) => [k, 'true']), ['provinces', prov ? [prov] : []], ['consent_text', await consentText(ks)],
+        ]) });
+      }
+      if (!out.length) throw new Error('Choose at least one alert.');
+      return out;
+    }
+
+    function finished() {
+      form.hidden = true; codeForm.hidden = true; signedIn.hidden = true; done.hidden = false;
+      const ks = kinds();
+      done.querySelector<HTMLElement>('.su-done-s')!.textContent = ks.length
+        ? 'Your alerts are on. You can change them, or unsubscribe, any time in My Home.'
+        : mode === 'plan' ? 'You’ll find it under Upgrade plan in My Home.' : '';
+    }
+
+    // Already signed in? Offer a one-click save.
+    try {
+      const { signedInEmail } = await import('../lib/account/client');
+      const who = await signedInEmail();
+      if (who) {
+        email = who;
+        signedIn.hidden = false;
+        box.querySelector<HTMLElement>('.su-who')!.textContent = who;
+        box.querySelector<HTMLElement>('.su-email')!.hidden = true;
+        form.querySelector<HTMLButtonElement>('button[type=submit]')!.hidden = true;
+        signedIn.querySelector<HTMLButtonElement>('.su-direct')!.addEventListener('click', async (e) => {
+          const btn = e.currentTarget as HTMLButtonElement;
+          btn.disabled = true;
+          try {
+            const { queueAndClaim } = await import('../lib/account/client');
+            await queueAndClaim(email, await pending());
+            finished();
+          } catch (ex) {
+            const { friendlyError } = await import('../lib/account/client');
+            setErr(form, friendlyError(ex));
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+    } catch { /* stays as the email form */ }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      email = String(new FormData(form).get('email') ?? '').trim().toLowerCase();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return setErr(form, 'Please enter a valid email address.');
+      setErr(form, '');
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      const label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const { startSignIn } = await import('../lib/account/client');
+        key = await startSignIn(email, await pending(), mode === 'plan' ? 'plan' : 'alerts');
+        form.hidden = true;
+        codeForm.hidden = false;
+        codeForm.querySelector<HTMLElement>('.su-addr')!.textContent = email;
+        codeForm.querySelector<HTMLInputElement>('input[name=code]')!.focus();
+      } catch (ex) {
+        const { friendlyError } = await import('../lib/account/client');
+        setErr(form, friendlyError(ex));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = label;
+      }
+    });
+
+    codeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = String(new FormData(codeForm).get('code') ?? '').replace(/\D/g, '');
+      if (code.length < 6) return setErr(codeForm, 'Enter the code from the email.');
+      const btn = codeForm.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      btn.disabled = true;
+      try {
+        const { verifyCode, claim } = await import('../lib/account/client');
+        await verifyCode(email, code);
+        await claim(key);
+        finished();
+      } catch (ex) {
+        const { friendlyError } = await import('../lib/account/client');
+        setErr(codeForm, friendlyError(ex));
+      } finally {
+        btn.disabled = false;
+      }
+    });
+    codeForm.querySelector('.su-back')?.addEventListener('click', () => { codeForm.hidden = true; form.hidden = false; });
+  });
+</script>
+
+<style>
+  .acct-signup { padding: 24px 26px; border-top: 4px solid var(--pine); margin: 22px 0; }
+  .acct-signup h3 { margin: 0 0 4px; }
+  .su-kinds { border: 0; padding: 0; margin: 12px 0 6px; }
+  .su-kinds legend { font-weight: 700; font-size: 14px; margin-bottom: 6px; padding: 0; }
+  .su-check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 14.5px; line-height: 1.45; margin: 0 0 8px; }
+  .su-check input { margin-top: 3px; width: 17px; height: 17px; flex-shrink: 0; accent-color: var(--pine); }
+  .su-check .small { display: block; }
+  .su-row { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-end; }
+  .su-row .field { flex: 1 1 240px; margin-bottom: 0; }
+  .su-consent { margin: 10px 0 0; line-height: 1.5; }
+  .su-consent:empty { display: none; }
+  .su-err { color: var(--dead); font-weight: 600; font-size: 14px; margin: 10px 0 0; }
+  .su-err:empty { display: none; }
+  .su-code-in { font-family: var(--mono) !important; font-size: 22px !important; letter-spacing: 0.25em; max-width: 220px; }
+  .su-done { background: var(--pine-tint); border-radius: var(--radius); padding: 14px 16px; }
+  .su-done-t { font-family: var(--display); font-weight: 800; font-size: 19px; color: var(--pine-deep); margin: 0 0 4px; }
+  .su-signedin { margin: 12px 0; }
+  .hint { font-size: 13px; color: var(--faint); margin: 6px 0 0; }
+  .linkish { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-weight: 600; color: var(--heat-deep); text-decoration: underline; }
+</style>

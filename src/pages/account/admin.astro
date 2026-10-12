@@ -1,0 +1,34 @@
+---
+/** Admin console for match requests and alerts (client-rendered; noindex). */
+import Base from '../../layouts/Base.astro';
+import { ACCOUNTS_ENABLED } from '../../config/site';
+import '../../styles/account.css';
+
+type CityFile = { slug: string; name: string; prov: string; providers?: { name: string; phone?: string | null }[] };
+const files = import.meta.glob<CityFile>('../../data/local/cities/*.json', { eager: true, import: 'default' });
+const providers: Record<string, { n: string; p: string }[]> = {};
+const provinceProviders: Record<string, { n: string; p: string }[]> = {};
+const cityNames: Record<string, string> = {};
+for (const c of Object.values(files)) {
+  cityNames[c.slug] = c.name;
+  const list = (c.providers ?? []).map((p) => ({ n: p.name, p: p.phone ?? '' }));
+  providers[c.slug] = list;
+  const bucket = (provinceProviders[c.prov] ??= []);
+  for (const p of list) if (!bucket.some((x) => x.n === p.n)) bucket.push(p);
+}
+const boot = JSON.stringify({ enabled: ACCOUNTS_ENABLED, providers, provinceProviders, cityNames }).replace(/</g, '\\u003c');
+---
+
+<Base title="Admin console | AuditYourHome" description="Match requests and alerts." indexable={false}
+  analytics={false}>
+  <div class="container acct">
+    <div id="adm-app"><p class="acct-loading">Loading…</p></div>
+  </div>
+  <script is:inline type="application/json" id="adm-boot" set:html={boot} />
+</Base>
+
+<script>
+  import { initAdmin } from '../../lib/account/admin';
+  const boot = JSON.parse(document.getElementById('adm-boot')!.textContent || '{}');
+  initAdmin(document.getElementById('adm-app')!, boot);
+</script>

@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { NAV } from '../lib/nav';
+import { ACCOUNTS_ENABLED } from '../config/site';
 
 const path = Astro.url.pathname;
 
@@ -37,6 +38,14 @@ const sectionActive = (item: (typeof NAV)[number]) =>
               <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
             </li>
           )
+        )}
+        {ACCOUNTS_ENABLED && (
+          <li class="acct-li">
+            <a href="/account/" class="acct-link" data-acct-link aria-label="Sign in to My Home" title="Sign in to My Home" aria-current={isActive('/account/') ? 'page' : undefined}>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="6.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.2 17.2c.9-3.3 3.6-5.2 6.8-5.2s5.9 1.9 6.8 5.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <span class="acct-txt" data-acct-text>Sign in</span>
+            </a>
+          </li>
         )}
         <li class="cta"><a href="/plan/" class="btn btn-primary btn-sm">Check my home</a></li>
       </ul>
@@ -100,6 +109,7 @@ const sectionActive = (item: (typeof NAV)[number]) =>
         <a class="m-link" href={item.href}>{item.label}</a>
       )
     )}
+    {ACCOUNTS_ENABLED && <a class="m-link" href="/account/" data-acct-link><span data-acct-text>Sign in</span> <span class="m-sub">My Home: your plan, records and alerts</span></a>}
     <a href="/plan/" class="btn btn-primary m-cta">Check my home</a>
   </div>
 </header>
@@ -140,6 +150,12 @@ const sectionActive = (item: (typeof NAV)[number]) =>
   .chev { width: 10px; height: 6px; transition: transform 0.15s; }
   .trigger[aria-expanded='true'] .chev { transform: rotate(180deg); }
   .cta { margin-left: 8px; align-items: center !important; }
+  .acct-li .acct-link { gap: 7px; }
+  .acct-link svg { width: 19px; height: 19px; flex-shrink: 0; }
+  /* icon only: the full row has no room for a text label */
+  .acct-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .acct-link svg { width: 21px; height: 21px; }
+  .m-sub { display: block; font-weight: 500; font-size: 13px; color: var(--muted); margin-top: 2px; }
 
   /* Mega panel */
   .panel {
@@ -279,6 +295,14 @@ const sectionActive = (item: (typeof NAV)[number]) =>
   document.addEventListener('click', (e) => {
     if (openId && !header.contains(e.target as Node)) setOpen(null);
   });
+
+  // ----- Account link: "My Home" once this browser is signed in -----
+  try {
+    if (Object.keys(localStorage).some((k) => /^sb-.+-auth-token$/.test(k))) {
+      document.querySelectorAll<HTMLElement>('[data-acct-text]').forEach((el) => (el.textContent = 'My Home'));
+      document.querySelectorAll<HTMLElement>('a[data-acct-link]').forEach((el) => { el.setAttribute('aria-label', 'My Home'); if (el.title) el.title = 'My Home'; });
+    }
+  } catch { /* storage blocked */ }
 
   // ----- Mobile drawer -----
   const menuBtn = document.getElementById('menuBtn')!;

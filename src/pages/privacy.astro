@@ -1,27 +1,124 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../config/site';
+import { SITE, ACCOUNTS, ACCOUNTS_ENABLED } from '../config/site';
 
 const title = 'Privacy | AuditYourHome';
-const description = 'What AuditYourHome collects (very little), what the planner does with your inputs (nothing — it runs in your browser), and how match requests are handled.';
+const description = 'What AuditYourHome collects, why, where it is stored, who sees it, and how to download or delete it. Plain language, updated October 12, 2026.';
+const updated = 'October 12, 2026';
+const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
 ---
 
 <Base title={title} description={description}>
   <div class="container">
     <div class="page-hero">
+      <p class="eyebrow">Updated {updated}</p>
       <h1>Privacy, plainly</h1>
+      <p class="lede">What we collect, why, where it’s kept, who sees it, and how to get it back or delete it.</p>
     </div>
     <div class="measure prose">
-      <p><strong>The planner runs in your browser.</strong> Postal codes, bills, and answers you enter into the Home Energy Planner are processed entirely on your device. They are not transmitted to us or anyone else, and they disappear when you leave (they appear in the page's link only if you use "copy link", so you control sharing).</p>
-      <p><strong>Match requests are shared narrowly.</strong> If you submit the match form, we use your details to connect you with one registered service organization serving your area, and for no other purpose. Participating organizations pay us a referral fee for these introductions — you pay nothing. We don't sell contact lists, and we never share your request with more than one company.</p>
-      <p><strong>Email is email.</strong> If you email us, we have your email — we use it to reply.</p>
-      <p><strong>Analytics.</strong> If we add analytics, it will be privacy-respecting and cookieless, and this page will say exactly what it is.</p>
-      <p>Questions or removal requests: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.</p>
-      <p class="small">This page is a plain-language summary written for launch; a full PIPEDA-reviewed policy should replace it before significant lead volume. (Note to ourselves, in public.)</p>
+      <h2>Who we are</h2>
+      <p>
+        AuditYourHome is operated by Click Shift Marketing, {address}. The person in charge of protecting
+        personal information is Dave Bussell, owner: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        Write to him for any question, request or complaint about your information.
+      </p>
+
+      <h2>The planner and calculators</h2>
+      <p>
+        The Home Energy Planner and the calculators run in your browser. Postal codes, bills and answers you
+        enter are worked out on your device and aren’t sent to us{ACCOUNTS_ENABLED ? ', unless you choose to save your plan to a free account or ask to be matched' : ''}.
+        They appear in the page’s address only if you use “copy link”, so you control sharing.
+      </p>
+
+      {ACCOUNTS_ENABLED ? (
+        <Fragment>
+          <h2>Free accounts (My Home)</h2>
+          <p>
+            If you create an account we keep: your email address; your name and phone number if you add them;
+            the home details, audit and test records, upgrade plan and reminders you enter; your alert choices
+            with the wording and time of your consent; and any match requests. We use them only to run your
+            account, send the alerts you chose and handle the requests you make.
+          </p>
+          <p>
+            Signing in uses a code or link sent to your email: we never store a password. Your account data is
+            stored with Supabase in its Canada (Central) region, in Montréal. Database rules let only you read
+            and change your own records.
+          </p>
+          <p>
+            Our admins (Dave and anyone he designates to arrange matches) can see match requests and, for people
+            who ask to be matched, the home details and records needed to find the right company. They can’t see
+            the homes of people who never asked for a match.
+          </p>
+
+          <h2>Match requests</h2>
+          <p>
+            When you ask to be matched, and tick the box to agree, we share your request, contact details and
+            home details with one company that serves your area, so it can contact you about that request. We
+            never share it with more than one company per request and never sell contact lists. Participating
+            companies pay us a referral fee; you pay nothing, and it never affects the directory. We confirm your
+            email address with a code first; a request that isn’t confirmed within 7 days is deleted.
+          </p>
+
+          <h2>Email alerts</h2>
+          <p>
+            Alerts are off until you turn them on, and you choose which ones: rebate and program changes for your
+            provinces, reminders before dates you add, and a monthly home checklist. Every alert says who it’s from
+            and has a one-click unsubscribe link that works without signing in; you can also change alerts in My Home.
+            We also email you about requests you make, such as when you’ve been matched.
+          </p>
+          <p>
+            Emails, including sign-in codes, are sent through Resend, an email delivery service that processes
+            your email address and the message in the United States. We send it only what’s needed to deliver
+            each email.
+          </p>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <h2>Match requests</h2>
+          <p>
+            If you email us to be matched, we use your details to connect you with one registered service
+            organization serving your area, and for no other purpose. Participating organizations pay us a referral
+            fee for these introductions; you pay nothing. We don’t sell contact lists, and we never share your request
+            with more than one company.
+          </p>
+          <p>If you email us, we have your email address; we use it to reply.</p>
+        </Fragment>
+      )}
+
+      <h2>Analytics</h2>
+      <p>
+        On public pages we use Google Analytics and Microsoft Clarity to see which pages are useful and where
+        people get stuck. They set cookies and record how pages are used; Clarity can replay a visit, with what
+        you type in our forms hidden. Neither runs on account pages{ACCOUNTS_ENABLED ? ' (My Home, the admin console and the unsubscribe page)' : ''}.
+        You can block them with your browser’s privacy settings or an ad blocker; the site works the same.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        You can ask what we hold about you, correct it, get a copy in a common format, or have it deleted.
+        {ACCOUNTS_ENABLED && ' In My Home you can do most of this yourself: edit anything, download all your data as a file, or delete your account and everything attached to it at once.'}
+        You can withdraw consent at any time. If you’re not satisfied with our answer, you can complain to
+        Quebec’s <a href="https://www.cai.gouv.qc.ca/" rel="noopener">Commission d’accès à l’information</a> or the
+        <a href="https://www.priv.gc.ca/" rel="noopener">Office of the Privacy Commissioner of Canada</a>.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        {ACCOUNTS_ENABLED
+          ? 'Account information stays until you delete your account or ask us to. Deleting your account removes your home details, records, plan, reminders, alert settings and match requests. Unconfirmed requests are deleted after 7 days. Emails you send us are kept as long as needed to deal with them.'
+          : 'Emails you send us are kept as long as needed to deal with them.'}
+      </p>
+
+      <p class="small">
+        If we change how we handle personal information, we’ll update this page and the date at the top.
+        Questions: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
     </div>
   </div>
 </Base>
-
 <style>
   .prose p { margin-bottom: 16px; }
+  .prose h2 { font-size: 22px; margin: 28px 0 8px; }
+  .prose h2:first-child { margin-top: 0; }
+  .prose { padding-bottom: 56px; }
 </style>

@@ -1,0 +1,38 @@
+---
+/** My Home: sign-in and the homeowner dashboard (client-rendered; noindex). */
+import Base from '../../layouts/Base.astro';
+import { ACCOUNTS_ENABLED } from '../../config/site';
+import localIndex from '../../data/local/index.json';
+import updates from '../../data/program-updates.json';
+import '../../styles/account.css';
+
+const cities = (localIndex.cities as { slug: string; name: string; prov: string }[])
+  .map((c) => ({ slug: c.slug, name: c.name, prov: c.prov }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'en-CA'));
+const boot = JSON.stringify({ enabled: ACCOUNTS_ENABLED, cities, updates: updates.items }).replace(/</g, '\\u003c');
+---
+
+<Base
+  title="My Home: your home, records, plan and alerts | AuditYourHome"
+  description="A free account for your home: keep audit results and test records, track your upgrade plan and deadlines, get rebate alerts and ask to be matched with an advisor or contractor."
+  indexable={false}
+  analytics={false}
+>
+  <div class="container acct">
+    <div id="acct-app" class="acct-app">
+      <div class="acct-loading">
+        <p class="eyebrow">My Home</p>
+        <h1>Your home, in one place</h1>
+        <p class="small">Loading…</p>
+      </div>
+    </div>
+    <noscript><p class="card card-pad">My Home needs JavaScript turned on.</p></noscript>
+  </div>
+  <script is:inline type="application/json" id="acct-boot" set:html={boot} />
+</Base>
+
+<script>
+  import { initAccountApp } from '../../lib/account/app';
+  const boot = JSON.parse(document.getElementById('acct-boot')!.textContent || '{}');
+  initAccountApp(document.getElementById('acct-app')!, boot);
+</script>

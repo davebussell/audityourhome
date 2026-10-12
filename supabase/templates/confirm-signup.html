@@ -1,0 +1,9 @@
+<!-- Supabase → Authentication → Emails → Templates → "Confirm signup" (first sign-in). Subject: Your AuditYourHome sign-in code -->
+<div style="font-family:Arial,Helvetica,sans-serif;color:#1A2430;max-width:520px;margin:0 auto;padding:24px 18px">
+  <p style="font-weight:800;font-size:18px;margin:0 0 18px">Audit<span style="color:#EF3340">Your</span>Home</p>
+  <p style="font-size:15px;line-height:1.5;margin:0 0 6px">Welcome. To confirm your email and open your free My Home account, enter this code:</p>
+  <p style="font-family:'Courier New',monospace;font-size:32px;font-weight:700;letter-spacing:6px;margin:0 0 18px">{{ .Token }}</p>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 16px">Or <a href="{{ .ConfirmationURL }}" style="color:#B84713;font-weight:700">confirm with this link</a> on any device. Both work for one hour, once.</p>
+  <p style="font-size:13px;line-height:1.55;color:#5C6B78;margin:0 0 16px">Didn’t ask for this? Ignore this email: no account is opened and nothing you didn’t confirm is sent.</p>
+  <p style="font-size:12px;line-height:1.5;color:#8494A1;margin:0">AuditYourHome, operated by Click Shift Marketing · Wakefield, Quebec · dave@clickshift.ca · audityourhome.com</p>
+</div>

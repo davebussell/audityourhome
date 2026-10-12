@@ -1,3 +1,5 @@
+import accountsJson from './accounts.json';
+
 /**
  * Central site configuration.
  * Swap brand, contact, or form endpoint here — nothing else needs editing.
@@ -29,6 +31,21 @@ export const SITE = {
   /** v1 scope */
   launchRegion: 'Ontario',
 } as const;
+
+/**
+ * Free homeowner accounts (sign-in, My Home, alerts, matching) on Supabase.
+ * Values live in ./accounts.json (also read by astro.config.mjs). Local testing
+ * can override them with PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_KEY.
+ */
+export const ACCOUNTS = {
+  supabaseUrl: (import.meta.env.PUBLIC_SUPABASE_URL as string | undefined) || accountsJson.supabaseUrl || '',
+  supabaseKey: (import.meta.env.PUBLIC_SUPABASE_KEY as string | undefined) || accountsJson.supabaseKey || '',
+  /** CASL: every alert email and sign-up names the sender with a mailing address. */
+  sender: 'AuditYourHome, operated by Click Shift Marketing',
+  mailingAddress: accountsJson.mailingAddress || '',
+};
+
+export const ACCOUNTS_ENABLED = Boolean(ACCOUNTS.supabaseUrl && ACCOUNTS.supabaseKey);
 
 /**
  * Amazon Associates configuration.

@@ -1,0 +1,48 @@
+---
+/** One-click unsubscribe from the link in every alert email (no sign-in needed). */
+import Base from '../../layouts/Base.astro';
+import { ACCOUNTS_ENABLED, SITE } from '../../config/site';
+---
+
+<Base title="Unsubscribe from alerts | AuditYourHome" description="Stop AuditYourHome alert emails." indexable={false}
+  analytics={false}>
+  <div class="container unsub">
+    <div class="card card-pad" id="unsub" data-enabled={ACCOUNTS_ENABLED ? '1' : ''}>
+      <p class="eyebrow">Alerts</p>
+      <h1 id="unsub-h">Unsubscribing…</h1>
+      <p id="unsub-p" class="lede">One moment.</p>
+      <p class="small" id="unsub-more" hidden>
+        Changed your mind? <a href="/account/#alerts">Turn alerts back on in My Home</a>. Questions:
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const box = document.getElementById('unsub')!;
+  const H = document.getElementById('unsub-h')!;
+  const P = document.getElementById('unsub-p')!;
+  const more = document.getElementById('unsub-more')!;
+  const token = new URLSearchParams(location.search).get('t') ?? '';
+  const done = (h: string, p: string) => { H.textContent = h; P.textContent = p; more.hidden = false; };
+
+  (async () => {
+    if (!box.dataset.enabled) return done('Alerts aren’t running yet', 'There is nothing to unsubscribe from.');
+    if (!/^[0-9a-f-]{36}$/i.test(token)) return done('This link is incomplete', 'Use the full unsubscribe link from the email, or sign in to My Home to change your alerts.');
+    try {
+      const { rpc } = await import('../../lib/account/client');
+      const ok = await rpc<boolean>('unsubscribe_by_token', { p_token: token });
+      if (ok) done('You’re unsubscribed', 'We won’t send you any more alert emails. Requests you made, like a match, can still email you about that request.');
+      else done('We couldn’t find that subscription', 'It may already be cancelled. Sign in to My Home to check your alert settings.');
+    } catch {
+      done('Something went wrong', 'Please try the link again in a minute, or sign in to My Home to turn alerts off.');
+    }
+    history.replaceState(null, '', location.pathname);
+  })();
+</script>
+
+<style>
+  .unsub { padding: 56px 22px 80px; max-width: 720px; }
+  .unsub h1 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px; }
+</style>

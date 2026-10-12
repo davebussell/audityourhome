@@ -6,7 +6,7 @@ import Photo from '../components/Photo.astro';
 import ThermalCompare from '../components/ThermalCompare.astro';
 import EraBar from '../components/EraBar.astro';
 import { localIndex, citiesByProvince } from '../lib/local';
-import { SITE } from '../config/site';
+import { SITE, ACCOUNTS_ENABLED } from '../config/site';
 import { organizationSchema, faqSchema } from '../lib/schema';
 import { programs, providers, regions } from '../lib/data';
 
@@ -95,7 +95,7 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
           </div>
         </div>
         <button class="btn btn-primary" type="submit">Build my plan →</button>
-        <p class="meta">Runs in your browser — nothing you enter is stored.</p>
+        <p class="meta">{ACCOUNTS_ENABLED ? 'Runs in your browser. Nothing is stored unless you save your plan.' : 'Runs in your browser — nothing you enter is stored.'}</p>
       </form>
     </div>
   </section>

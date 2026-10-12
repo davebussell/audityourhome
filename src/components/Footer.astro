@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../config/site';
+import { SITE, ACCOUNTS_ENABLED } from '../config/site';
 import Logo from './Logo.astro';
 ---
 
@@ -22,6 +22,9 @@ import Logo from './Logo.astro';
           <li><a href="/learn/">Keeping the heat in</a></li>
           <li><a href="/find/">Find an auditor</a></li>
           <li><a href="/programs/">Rebates &amp; programs</a></li>
+          <li><a href="/updates/">Rebate &amp; program changes</a></li>
+          {ACCOUNTS_ENABLED && <li><a href="/alerts/">Free home alerts</a></li>}
+          {ACCOUNTS_ENABLED && <li><a href="/account/">My Home (sign in)</a></li>}
           <li><a href="/tests/">The complete testing guide</a></li>
           <li><a href="/tests/screener/">Specialty test screener</a></li>
           <li><a href="/products/">Monitoring &amp; testing gear</a></li>

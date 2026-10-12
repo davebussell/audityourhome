@@ -1,0 +1,46 @@
+name: Alerts and match notices
+
+# Every hour: tell admins about new match requests, tell homeowners when
+# they're matched, and send the alerts people asked for. Also keeps the free
+# Supabase project from pausing. Does nothing until the secrets are set.
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run: list the emails without sending them'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: alerts
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install the Supabase client
+        run: npm install --prefix tools/alerts --no-audit --no-fund
+      - name: Send alerts
+        run: node tools/alerts/run.mjs
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERTS_FROM: ${{ vars.ALERTS_FROM }}
+          ALERTS_REPLY_TO: ${{ vars.ALERTS_REPLY_TO }}
+          ADMIN_NOTIFY: ${{ vars.ADMIN_NOTIFY }}
+          MAILING_ADDRESS: ${{ vars.MAILING_ADDRESS }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}

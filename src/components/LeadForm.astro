@@ -1,6 +1,7 @@
 ---
-import { SITE } from '../config/site';
+import { SITE, ACCOUNTS_ENABLED } from '../config/site';
 import { regions } from '../lib/data';
+import { SERVICES, TIMELINES, BUILDINGS, MATCH_CONSENT } from '../lib/account/catalog';
 
 interface Props {
   heading?: string;
@@ -19,13 +20,128 @@ const {
 
 const hasEndpoint = SITE.formEndpoint.length > 0;
 const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20(${encodeURIComponent(context)})`;
+
+/** Pick the most likely service from the page the form sits on. */
+function serviceFor(ctx: string): string {
+  const c = ctx.toLowerCase();
+  const rules: [RegExp, string][] = [
+    [/radon/, 'radon'],
+    [/well/, 'well-water'],
+    [/mold|mould|iaq/, 'mould-air'],
+    [/wood-burning|wett/, 'wood-stove'],
+    [/asbestos|lead-paint|guide-lead/, 'asbestos-lead'],
+    [/windows-doors/, 'windows-doors'],
+    [/water-heater/, 'water-heater'],
+    [/hrv|ventilation|moisture/, 'ventilation'],
+    [/heating-systems|air-conditioning|hvac|thermostat|heat-pump/, 'heat-pump'],
+    [/walls|roofs-attics|foundations|air-sealing|insulation/, 'insulation'],
+  ];
+  return rules.find(([re]) => re.test(c))?.[1] ?? 'energy-audit';
+}
+const defaultService = serviceFor(context);
+const otherAreas: [string, string][] = [
+  ['other-ontario', 'Elsewhere in Ontario'],
+  ['bc', 'British Columbia'],
+  ['alberta', 'Alberta'],
+  ['saskatchewan', 'Saskatchewan'],
+  ['manitoba', 'Manitoba'],
+  ['quebec', 'Quebec'],
+  ['new-brunswick', 'New Brunswick'],
+  ['nova-scotia', 'Nova Scotia'],
+  ['pei', 'Prince Edward Island'],
+  ['newfoundland-labrador', 'Newfoundland & Labrador'],
+  ['north', 'Yukon / NWT / Nunavut'],
+  ['outside-canada', 'Outside Canada'],
+];
+const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="card leadform" id="lead-form">
+<div class="card leadform" id="lead-form" data-clarity-mask="true">
   <h3>{heading}</h3>
   <p class="small">{sub}</p>
 
-  {hasEndpoint ? (
+  {ACCOUNTS_ENABLED ? (
+    <div class="lf-acct-wrap">
+      <form class="lf-acct" data-context={context} novalidate>
+        <div class="grid-2">
+          <div class="field">
+            <label for={`${uid}-name`}>Name</label>
+            <input id={`${uid}-name`} name="name" type="text" autocomplete="name" maxlength="120" required />
+          </div>
+          <div class="field">
+            <label for={`${uid}-email`}>Email</label>
+            <input id={`${uid}-email`} name="email" type="email" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for={`${uid}-postal`}>Postal code</label>
+            <input id={`${uid}-postal`} name="postal" type="text" autocomplete="postal-code" maxlength="7" required />
+          </div>
+          <div class="field">
+            <label for={`${uid}-region`}>Area</label>
+            <select id={`${uid}-region`} name="region">
+              <option value="">Choose your area…</option>
+              {regions.map((r) => (
+                <option value={r.slug} selected={r.slug === region}>{r.name}</option>
+              ))}
+              {otherAreas.map(([v, l]) => <option value={v}>{l}</option>)}
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for={`${uid}-service`}>What do you need?</label>
+            <select id={`${uid}-service`} name="service">
+              {SERVICES.map((s) => <option value={s.value} selected={s.value === defaultService}>{s.label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for={`${uid}-timeline`}>When</label>
+            <select id={`${uid}-timeline`} name="timeline">
+              {TIMELINES.map((t) => <option value={t.value} selected={t.value === '1-3-months'}>{t.label}</option>)}
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for={`${uid}-building`}>Type of building</label>
+            <select id={`${uid}-building`} name="building">
+              {BUILDINGS.map((b) => <option value={b.value}>{b.label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for={`${uid}-phone`}>Phone <span class="optional">(optional)</span></label>
+            <input id={`${uid}-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
+          </div>
+        </div>
+        <div class="field">
+          <label for={`${uid}-message`}>What are you planning? <span class="optional">(optional)</span></label>
+          <textarea id={`${uid}-message`} name="message" rows="3" maxlength="2000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
+        </div>
+        <label class="lf-check"><input type="checkbox" name="consent" value="yes" /> <span>{MATCH_CONSENT}</span></label>
+        <label class="lf-check lf-alerts"><input type="checkbox" name="alerts" value="yes" /> <span>Also email me when rebates in my province change (free, a few emails a year, unsubscribe any time).</span></label>
+        <button class="btn btn-primary" type="submit">Request my match</button>
+        <p class="lf-err" role="alert"></p>
+        <p class="meta lf-meta">Next, we email you a 6-digit code to confirm your address. That also opens your free My Home account, where you can follow your request. <a href="/privacy/">Privacy</a></p>
+      </form>
+      <form class="lf-code" hidden novalidate>
+        <p class="lf-code-head"><strong>Check your email.</strong> We sent a code to <span class="lf-email"></span>. Enter it to confirm and send your request, or tap the link in the email.</p>
+        <div class="field">
+          <label for={`${uid}-code`}>6-digit code</label>
+          <input id={`${uid}-code`} name="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="12" class="lf-code-in" />
+        </div>
+        <button class="btn btn-primary" type="submit">Confirm and send</button>
+        <p class="lf-err" role="alert"></p>
+        <p class="small"><button type="button" class="lf-back linkish">Change my details</button></p>
+      </form>
+      <div class="lf-done" hidden role="status">
+        <p class="lf-done-t">Request sent.</p>
+        <p>We review every request and introduce you to one company that serves your area, usually within one business day. You can follow it, and add your home details, in My Home.</p>
+        <a class="btn btn-ghost" href="/account/#match">Open My Home</a>
+      </div>
+    </div>
+  ) : hasEndpoint ? (
     <form method="POST" action={SITE.formEndpoint}>
       <input type="hidden" name="context" value={context} />
       <div class="grid-2">
@@ -50,18 +166,7 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
             {regions.map((r) => (
               <option value={r.slug} selected={r.slug === region}>{r.name}</option>
             ))}
-            <option value="other-ontario">Elsewhere in Ontario</option>
-            <option value="bc">British Columbia</option>
-            <option value="alberta">Alberta</option>
-            <option value="saskatchewan">Saskatchewan</option>
-            <option value="manitoba">Manitoba</option>
-            <option value="quebec">Quebec</option>
-            <option value="new-brunswick">New Brunswick</option>
-            <option value="nova-scotia">Nova Scotia</option>
-            <option value="pei">Prince Edward Island</option>
-            <option value="newfoundland-labrador">Newfoundland &amp; Labrador</option>
-            <option value="north">Yukon / NWT / Nunavut</option>
-            <option value="outside-canada">Outside Canada</option>
+            {otherAreas.map(([v, l]) => <option value={v}>{l}</option>)}
           </select>
         </div>
       </div>
@@ -95,10 +200,126 @@ const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20($
   )}
 </div>
 
+<script>
+  // Account-backed lead form: hold the request, confirm the email with a code,
+  // then release it. The account code loads only when someone submits.
+  const AREA_PROVINCE: Record<string, string> = {
+    bc: 'BC', alberta: 'AB', saskatchewan: 'SK', manitoba: 'MB', quebec: 'QC', 'new-brunswick': 'NB',
+    'nova-scotia': 'NS', pei: 'PE', 'newfoundland-labrador': 'NL', north: 'YT', 'other-ontario': 'ON',
+  };
+  const FSA: Record<string, string> = { A: 'NL', B: 'NS', C: 'PE', E: 'NB', G: 'QC', H: 'QC', J: 'QC', K: 'ON', L: 'ON', M: 'ON', N: 'ON', P: 'ON', R: 'MB', S: 'SK', T: 'AB', V: 'BC', X: 'NT', Y: 'YT' };
+
+  document.querySelectorAll<HTMLElement>('.lf-acct-wrap').forEach((wrap) => {
+    const form = wrap.querySelector<HTMLFormElement>('form.lf-acct')!;
+    const codeForm = wrap.querySelector<HTMLFormElement>('form.lf-code')!;
+    const done = wrap.querySelector<HTMLElement>('.lf-done')!;
+    const err = (f: HTMLFormElement, m: string) => { f.querySelector<HTMLElement>('.lf-err')!.textContent = m; };
+    let email = '';
+    let key = '';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const v = (k: string) => String(fd.get(k) ?? '').trim();
+      email = v('email').toLowerCase();
+      const postal = v('postal').toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (!v('name')) return err(form, 'Please add your name.');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return err(form, 'Please enter a valid email address.');
+      if (!postal) return err(form, 'Please add your postal code.');
+      if (v('consent') !== 'yes') return err(form, 'Please tick the box so we can share your request with one company.');
+      err(form, '');
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      const province = (/^[A-Z]\d[A-Z]/.test(postal) ? FSA[postal[0]] : '') || AREA_PROVINCE[v('region')] || (v('region') ? 'ON' : '');
+      try {
+        const { startSignIn, queueAndClaim, signedInEmail } = await import('../lib/account/client');
+        const { alertConsentText, MATCH_CONSENT } = await import('../lib/account/catalog');
+        const pending: { kind: 'match' | 'alerts' | 'plan'; payload: Record<string, unknown> }[] = [];
+        // On the planner, save the plan too, so the match arrives with the home details.
+        const plan = (window as unknown as { ayhPlan?: Record<string, unknown> }).ayhPlan;
+        if (plan && form.dataset.context === 'planner') pending.push({ kind: 'plan', payload: plan });
+        pending.push({
+          kind: 'match',
+          payload: {
+            service: v('service'), timeline: v('timeline'), building: v('building'), details: v('message'),
+            name: v('name'), phone: v('phone'), contact_pref: v('phone') ? 'phone' : 'email',
+            postal, province, region: v('region'), source: form.dataset.context === 'planner' ? 'planner' : 'lead-form',
+            context: form.dataset.context, consent: 'true', consent_text: MATCH_CONSENT,
+          },
+        });
+        if (v('alerts') === 'yes' && province) {
+          pending.push({ kind: 'alerts', payload: { program_updates: 'true', provinces: [province], consent_text: alertConsentText(['program_updates']) } });
+        }
+        // Already signed in with this address: no code needed.
+        if ((await signedInEmail()) === email) {
+          await queueAndClaim(email, pending);
+          form.hidden = true;
+          done.hidden = false;
+          return;
+        }
+        key = await startSignIn(email, pending, 'match');
+        form.hidden = true;
+        codeForm.hidden = false;
+        codeForm.querySelector<HTMLElement>('.lf-email')!.textContent = email;
+        codeForm.querySelector<HTMLInputElement>('input[name=code]')!.focus();
+      } catch (ex) {
+        const { friendlyError } = await import('../lib/account/client');
+        err(form, friendlyError(ex));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Request my match';
+      }
+    });
+
+    codeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = String(new FormData(codeForm).get('code') ?? '').replace(/\D/g, '');
+      if (code.length < 6) return err(codeForm, 'Enter the code from the email.');
+      const btn = codeForm.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      btn.disabled = true;
+      btn.textContent = 'Checking…';
+      try {
+        const { verifyCode, claim } = await import('../lib/account/client');
+        await verifyCode(email, code);
+        await claim(key);
+        codeForm.hidden = true;
+        done.hidden = false;
+      } catch (ex) {
+        const { friendlyError } = await import('../lib/account/client');
+        err(codeForm, friendlyError(ex));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Confirm and send';
+      }
+    });
+
+    codeForm.querySelector('.lf-back')?.addEventListener('click', () => {
+      codeForm.hidden = true;
+      form.hidden = false;
+    });
+  });
+</script>
+
 <style>
   .leadform { padding: 28px 30px; border-top: 4px solid var(--heat); }
   .leadform h3 { margin-bottom: 4px; }
   .optional { font-weight: 400; color: var(--faint); }
   .consent { margin-top: 12px; }
   .fallback { display: grid; gap: 10px; justify-items: start; }
+  .leadform input[type='tel'] {
+    width: 100%; font-family: var(--body); font-size: 16px; color: var(--ink); background: #fff;
+    border: 1.5px solid var(--line-strong); border-radius: 8px; padding: 11px 14px;
+  }
+  .lf-check { display: flex; gap: 10px; align-items: flex-start; font-weight: 500; font-size: 13.5px; line-height: 1.5; margin: 0 0 12px; color: var(--ink); }
+  .lf-check input { margin-top: 3px; width: 17px; height: 17px; flex-shrink: 0; accent-color: var(--heat); }
+  .lf-alerts { color: var(--muted); }
+  .lf-err { color: var(--dead); font-weight: 600; font-size: 14px; margin: 10px 0 0; }
+  .lf-err:empty { display: none; }
+  .lf-meta { margin-top: 12px; }
+  .lf-code-head { font-size: 15px; }
+  .lf-code-in { font-family: var(--mono) !important; font-size: 22px !important; letter-spacing: 0.25em; max-width: 220px; }
+  .lf-done { background: var(--pine-tint); border-radius: var(--radius); padding: 16px 18px; }
+  .lf-done-t { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--pine-deep); margin: 0 0 6px; }
+  .linkish { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-weight: 600; color: var(--heat-deep); text-decoration: underline; }
 </style>

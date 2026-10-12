@@ -1,0 +1,206 @@
+{
+  "about": "Monthly home checks used by My Home and the seasonal alert email. 'months' are 1-12. 'when' narrows an item to matching homes: an item applies when ANY of its heating/cooling/water_supply lists matches the home (values from the Home Energy Planner; an unknown heating or cooling counts as a match, an unknown water supply does not). 'noAudit' skips homes with that test on record within 'years'. Every item names its source.",
+  "verified": "2026-10-12",
+  "items": [
+    {
+      "id": "fuel-appliance-service",
+      "months": [
+        9
+      ],
+      "title": "Book the yearly inspection of your fuel-burning heating",
+      "body": "Health Canada says to have fuel-burning appliances inspected by a professional every year. Book it before the first cold snap, when technicians fill up.",
+      "when": {
+        "heating": [
+          "gas",
+          "gasboiler",
+          "oil",
+          "propane",
+          "wood",
+          "outdoorwood",
+          "pellet"
+        ]
+      },
+      "link": "/learn/hvac-maintenance/",
+      "source": {
+        "name": "Health Canada",
+        "url": "https://www.canada.ca/en/health-canada/services/air-quality/pollutants/carbon-monoxide/preventing-exposure.html"
+      }
+    },
+    {
+      "id": "filter",
+      "months": [
+        1,
+        4,
+        7,
+        10
+      ],
+      "title": "Check the furnace filter",
+      "body": "NRCan suggests changing or cleaning the filter on a forced-air system about every 3 months, or sooner if it looks loaded.",
+      "when": {
+        "heating": [
+          "gas",
+          "elecfurnace",
+          "heatpump",
+          "geothermal",
+          "oil",
+          "propane"
+        ]
+      },
+      "link": "/learn/hvac-maintenance/",
+      "source": {
+        "name": "Natural Resources Canada",
+        "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+      }
+    },
+    {
+      "id": "hrv-filters",
+      "months": [
+        2,
+        5,
+        8,
+        11
+      ],
+      "title": "If you have an HRV or ERV, clean its filters",
+      "body": "NRCan's guidance is to clean HRV and ERV filters every 1 to 3 months so the unit keeps moving fresh air.",
+      "link": "/learn/hrv-erv/",
+      "source": {
+        "name": "Natural Resources Canada",
+        "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/products/list-certified-products/heat-energy-recovery-ventilators"
+      }
+    },
+    {
+      "id": "alarms",
+      "months": [
+        3,
+        11
+      ],
+      "title": "Test your smoke and carbon monoxide alarms",
+      "body": "When the clocks change, press the test button on every smoke and carbon monoxide alarm, and replace any unit past the date printed on it.",
+      "link": "/tests/carbon-monoxide/",
+      "source": {
+        "name": "Health Canada",
+        "url": "https://www.canada.ca/en/health-canada/services/air-quality/pollutants/carbon-monoxide/preventing-exposure.html"
+      }
+    },
+    {
+      "id": "radon-test",
+      "months": [
+        10,
+        11
+      ],
+      "title": "Start a long-term radon test",
+      "body": "Health Canada says to test for at least 3 months, mostly during the heating season, on the lowest level you spend time in. A lab kit costs about $30 to $80.",
+      "when": {
+        "noAudit": "radon-test",
+        "years": 5
+      },
+      "link": "/tests/radon/",
+      "source": {
+        "name": "Health Canada",
+        "url": "https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/testing-your-home.html"
+      }
+    },
+    {
+      "id": "well-spring",
+      "months": [
+        5
+      ],
+      "title": "Test your well water after the spring thaw",
+      "body": "Spring, after snowmelt, is when most provinces suggest testing a private well for bacteria. Your provincial guidance is below.",
+      "when": {
+        "water_supply": [
+          "well"
+        ]
+      },
+      "link": "/tests/well-water/",
+      "source": {
+        "name": "Provincial well-water guidance",
+        "url": "https://www.ontario.ca/page/testing-and-treating-private-water-wells"
+      }
+    },
+    {
+      "id": "well-fall",
+      "months": [
+        9
+      ],
+      "title": "Test your well water again this fall",
+      "body": "Fall rains can carry bacteria into wells. Ontario health units suggest testing in spring, summer and fall; Quebec and New Brunswick suggest spring and fall.",
+      "when": {
+        "water_supply": [
+          "well"
+        ]
+      },
+      "link": "/tests/well-water/",
+      "source": {
+        "name": "Provincial well-water guidance",
+        "url": "https://moneaumonpuits.ca/analyser-votre-eau/ou-quand-et-comment-faire-analyser-leau-de-votre-puits/"
+      }
+    },
+    {
+      "id": "air-sealing",
+      "months": [
+        9,
+        10
+      ],
+      "title": "Seal the easy air leaks before winter",
+      "body": "NRCan says about a quarter of a typical home's heat loss can be air leakage. Weatherstrip doors and attic hatches and caulk around trim before it gets cold.",
+      "link": "/learn/air-sealing/",
+      "source": {
+        "name": "Natural Resources Canada",
+        "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+      }
+    },
+    {
+      "id": "setback",
+      "months": [
+        11
+      ],
+      "title": "Set the thermostat back at night",
+      "body": "NRCan estimates about 2% of heating energy saved for each degree you turn it down for 8 hours. NRCan suggests 17 °C asleep or away and 20 °C when you're home.",
+      "link": "/learn/thermostats/",
+      "source": {
+        "name": "Natural Resources Canada",
+        "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+      }
+    },
+    {
+      "id": "winter-humidity",
+      "months": [
+        12,
+        1,
+        2
+      ],
+      "title": "Keep winter humidity low enough to keep windows dry",
+      "body": "CMHC says to keep indoor humidity near 30% when it's below −10 °C outside (as low as 25% in extreme cold). Health Canada's range for the rest of the year is 30% to 50%.",
+      "link": "/learn/moisture-control/",
+      "source": {
+        "name": "CMHC and Health Canada",
+        "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+      }
+    },
+    {
+      "id": "cooling-service",
+      "months": [
+        5
+      ],
+      "title": "Get the air conditioner or heat pump ready for summer",
+      "body": "Clean or replace the filter and clear leaves and debris from the outdoor unit. Hydro-Québec says a poorly maintained heat pump can use up to 25% more electricity.",
+      "when": {
+        "cooling": [
+          "central-new",
+          "central-old",
+          "heatpump"
+        ],
+        "heating": [
+          "heatpump",
+          "geothermal"
+        ]
+      },
+      "link": "/learn/air-conditioning/",
+      "source": {
+        "name": "Hydro-Québec",
+        "url": "https://www.hydroquebec.com/residential/energy-wise/tips/windows-heating-air-conditioning/heat-pumps/tips.html"
+      }
+    }
+  ]
+}
