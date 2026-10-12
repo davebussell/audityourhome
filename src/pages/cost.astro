@@ -6,14 +6,14 @@ import LeadForm from '../components/LeadForm.astro';
 import { SITE } from '../config/site';
 import { breadcrumbSchema, faqSchema } from '../lib/schema';
 
-const title = 'Home energy audit cost in Ontario (2026) — real numbers | AuditYourHome';
+const title = 'Home energy audit (assessment) cost in Ontario (2026): real prices and the $600 rebate | AuditYourHome';
 const description =
-  'What an EnerGuide home energy assessment costs in Ontario in 2026: about $500–$700 for the first visit and $200–$450 for the follow-up, the providers that publish prices, and who qualifies for the $600 Home Renovation Savings rebate.';
+  'What a home energy assessment (EnerGuide energy audit) costs in Ontario in 2026: about $500–$700 for the first visit and $200–$450 for the follow-up, the providers that publish prices, and who qualifies for the $600 Home Renovation Savings rebate.';
 
 const faqs = [
   {
-    q: 'How much is a home energy audit in Ontario in 2026?',
-    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies: Windfall Ecology Centre charges $500 and $250 plus HST, Reep Green Solutions $540 and $406 with no HST, and the City-backed programs in Ottawa and London quote $500–$700 as typical for the first visit. NRCan puts the two visits together at $600–$1,000 on average. Larger homes cost more. The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. If an approved organization charges in the typical range, that leaves roughly $100–$550 plus HST; with any other provider you pay the full price.',
+    q: 'How much does a home energy audit or assessment cost in Ontario in 2026?',
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies: Windfall Ecology Centre charges $500 and $250 plus HST, Reep Green Solutions $540 and $406 with no HST, and the City-backed programs in London and Waterloo Region quote $500–$700 as typical for the first visit. NRCan puts the two visits together at $600–$1,000 on average. Larger homes cost more. The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. If an approved organization charges in the typical range, that leaves roughly $100–$550 plus HST; with any other provider you pay the full price.',
   },
   {
     q: 'Which providers qualify for the $600 assessment rebate?',
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: 'What does the price include?',
-    a: 'The initial visit: 2–3 hours on site, blower door airtightness test, insulation measurements, window/door inventory, HVAC details, and afterwards your EnerGuide rating, label, and a renovation upgrade report. The follow-up visit re-tests after your upgrades and unlocks the rebates.',
+    a: 'The initial visit takes about two hours on site: a blower door airtightness test, insulation levels in the walls, ceilings and basement, an inventory of windows and exterior doors, and the size and efficiency of your heating, cooling and water heating equipment. Afterwards you get your EnerGuide rating, label and a renovation upgrade report. The follow-up visit takes about an hour, re-tests after your upgrades and unlocks the rebates.',
   },
 ];
 
@@ -47,7 +47,7 @@ const schema = [
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Cost guide · updated {SITE.dataReviewDate}</p>
-      <h1>What a home energy audit costs in Ontario</h1>
+      <h1>Home energy audit (assessment) cost in Ontario</h1>
       <p class="lede measure">
         Short version: expect about <strong>$500–$700</strong> for the initial EnerGuide
         evaluation and <strong>$200–$450</strong> for the follow-up, plus HST where it applies. Ontario's Home Renovation Savings program pays a <strong>$600
@@ -59,18 +59,18 @@ const schema = [
     </div>
 
     <div class="tablewrap card">
-      <table>
+      <table class="stack">
         <caption class="sr-only">Ontario home energy audit costs, 2026</caption>
         <thead>
           <tr><th>Item</th><th>Typical price</th><th>Notes</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Initial EnerGuide evaluation</strong></td><td><span class="money">$500–$700</span> + HST where it applies</td><td>Blower door, measurements, rating, upgrade report. Published: Windfall $500 + HST; Reep $540, no HST. Ottawa and London city programs: $500–$700 typical</td></tr>
-          <tr><td><strong>Follow-up evaluation</strong></td><td><span class="money">$200–$450</span> + HST where it applies</td><td>Re-test after upgrades. Published: Windfall $250 + HST; Reep $406 ($440 if another organization did the first visit)</td></tr>
-          <tr><td>Large-home surcharge</td><td><span class="money">$50–$275</span></td><td>Windfall adds $50–$150 above 2,500 sq ft; Reep adds $50–$275 above 3,000 sq ft</td></tr>
-          <tr><td>HRSP assessment rebate</td><td><span class="money">−$600</span></td><td>HRSP-approved organizations only, the same one for both visits; paid after 2+ recommended upgrades; follow-up within 180 days or by Dec 31, 2026</td></tr>
-          <tr><td><strong>Net cost, HRSP-approved organization</strong></td><td><span class="money">About $100–$550</span> + HST</td><td>If its prices fall in the typical range and you finish the rebate path</td></tr>
-          <tr><td><strong>Net cost, any other provider</strong></td><td><span class="money">Full price</span></td><td>No Home Renovation Savings assessment rebate</td></tr>
+          <tr><td data-label="Item"><strong>Initial EnerGuide evaluation</strong></td><td data-label="Typical price"><span class="money">$500–$700</span> + HST where it applies</td><td data-label="Notes">Blower door, measurements, rating, upgrade report. Published: Windfall $500 + HST; Reep $540, no HST. London and Waterloo Region city programs: $500–$700 typical</td></tr>
+          <tr><td data-label="Item"><strong>Follow-up evaluation</strong></td><td data-label="Typical price"><span class="money">$200–$450</span> + HST where it applies</td><td data-label="Notes">Re-test after upgrades. Published: Windfall $250 + HST; Reep $406 ($440 if another organization did the first visit)</td></tr>
+          <tr><td data-label="Item">Large-home surcharge</td><td data-label="Typical price"><span class="money">$50–$275</span></td><td data-label="Notes">Windfall adds $50–$150 above 2,500 sq ft; Reep adds $50–$275 above 3,000 sq ft</td></tr>
+          <tr><td data-label="Item">HRSP assessment rebate</td><td data-label="Typical price"><span class="money">−$600</span></td><td data-label="Notes">HRSP-approved organizations only, the same one for both visits; paid after 2+ recommended upgrades; follow-up booked by Nov 30 and done within 180 days or by Dec 31, 2026, whichever comes first</td></tr>
+          <tr><td data-label="Item"><strong>Net cost, HRSP-approved organization</strong></td><td data-label="Typical price"><span class="money">About $100–$550</span> + HST</td><td data-label="Notes">If its prices fall in the typical range and you finish the rebate path</td></tr>
+          <tr><td data-label="Item"><strong>Net cost, any other provider</strong></td><td data-label="Typical price"><span class="money">Full price</span></td><td data-label="Notes">No Home Renovation Savings assessment rebate</td></tr>
         </tbody>
       </table>
     </div>
@@ -104,9 +104,10 @@ const schema = [
       </p>
       <p>
         Whether the audit pays for itself depends on your home, which is exactly what it measures:
-        audit-guided retrofits of older Ontario homes typically cut total energy use 15–35%. On a
-        $3,000/year energy bill, that's $450–$1,050 a year — every year. Start with
-        <a href="/plan/"> the planner</a> to see your likely numbers before you book.
+        the renovation upgrade report lists the recommended upgrades with their estimated energy
+        savings and your EnerGuide rating before and after them
+        (<a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/after-your-energuide-home-evaluation" rel="noopener" target="_blank">NRCan ↗</a>).
+        Start with <a href="/plan/">the planner</a> to see your likely numbers before you book.
       </p>
     </div>
 

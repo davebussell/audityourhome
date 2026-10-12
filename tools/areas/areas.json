@@ -1,0 +1,1183 @@
+{
+  "note": "Hand-curated definitions for the /areas/ pages. Research scripts add census, places, climate and provider data in research/*.json; gen_areas.py turns both into src/data/areas/. CSD codes are Statistics Canada 2021 census subdivision codes (table 98-10-0002-01). FSA town names are GeoNames postal-code names (download.geonames.org/export/zip/CA.zip, fetched 2026-10-08). NBC town names are the location names in Table C-2 of the National Building Code of Canada 2020.",
+  "areas": [
+    {
+      "slug": "simcoe-county",
+      "name": "Simcoe County",
+      "inName": "Simcoe County",
+      "prov": "ON",
+      "kind": "County of Simcoe and the District of Muskoka",
+      "scope": "This page covers the 16 towns and townships of the County of Simcoe. Barrie and Orillia are separate cities that aren't part of the county government; Barrie has its own pages. The District of Muskoka, north of the county, has its own section below.",
+      "researchGroups": [
+        "simcoe-county"
+      ],
+      "csds": [
+        "3543003",
+        "3543014",
+        "3543005",
+        "3543031",
+        "3543021",
+        "3543017",
+        "3543074",
+        "3543007",
+        "3543023",
+        "3543072",
+        "3543019",
+        "3543015",
+        "3543009",
+        "3543071",
+        "3543068",
+        "3543064"
+      ],
+      "upperTierMatch": [
+        "SIMCOE"
+      ],
+      "section": {
+        "key": "muskoka",
+        "name": "District of Muskoka",
+        "csds": [
+          "3544018",
+          "3544002",
+          "3544042",
+          "3544065",
+          "3544027",
+          "3544053"
+        ],
+        "upperTierMatch": [
+          "MUSKOKA"
+        ],
+        "fsaTowns": {
+          "Huntsville": [
+            "P1H"
+          ],
+          "Bracebridge": [
+            "P1L"
+          ],
+          "Gravenhurst": [
+            "P1P"
+          ]
+        },
+        "nbcTowns": [
+          "Bracebridge",
+          "Gravenhurst",
+          "Huntsville"
+        ],
+        "climatePlace": "Bracebridge",
+        "researchNames": [
+          "District Municipality of Muskoka"
+        ],
+        "aliases": [
+          "Muskoka"
+        ]
+      },
+      "fsaTowns": {
+        "Collingwood": [
+          "L9Y"
+        ],
+        "Wasaga Beach": [
+          "L9Z"
+        ],
+        "Midland": [
+          "L4R"
+        ],
+        "Penetanguishene": [
+          "L9M"
+        ],
+        "Bradford": [
+          "L3Z"
+        ],
+        "Innisfil": [
+          "L9S"
+        ],
+        "Alliston": [
+          "L9R"
+        ]
+      },
+      "nbcTowns": [
+        "Alliston",
+        "Bradford",
+        "Collingwood",
+        "Elmvale",
+        "Midland",
+        "Penetanguishene",
+        "Borden (CFB)"
+      ],
+      "titleNames": [
+        "Innisfil",
+        "Bradford",
+        "Alliston",
+        "Collingwood",
+        "Wasaga Beach"
+      ],
+      "healthUnit": "smdhu",
+      "radon2012": {
+        "city": "barrie"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Tay Township Public Library"
+      ],
+      "coveredCities": [
+        {
+          "slug": "barrie",
+          "why": "Barrie is a separate city in the middle of the county."
+        }
+      ],
+      "nearbyCities": [
+        "barrie",
+        "richmond-hill"
+      ],
+      "leadRegion": "barrie-simcoe",
+      "sitePages": [
+        {
+          "href": "/find/barrie-simcoe/",
+          "label": "Barrie and Simcoe County advisor directory"
+        },
+        {
+          "href": "/guides/barrie-simcoe/",
+          "label": "Barrie and Simcoe County guide"
+        }
+      ],
+      "articles": [],
+      "photo": "region-ontario",
+      "titleName": "Simcoe County and Muskoka"
+    },
+    {
+      "slug": "york-region",
+      "name": "York Region",
+      "inName": "York Region",
+      "prov": "ON",
+      "kind": "Regional Municipality of York, outside Vaughan, Markham and Richmond Hill",
+      "scope": "This page covers the York Region towns and townships we don't have separate city pages for: King, East Gwillimbury, Georgina, Whitchurch-Stouffville, Newmarket and Aurora. Vaughan, Markham and Richmond Hill have their own pages, which also cover their hamlets.",
+      "researchGroups": [
+        "york-region"
+      ],
+      "csds": [
+        "3519049",
+        "3519054",
+        "3519070",
+        "3519044",
+        "3519048",
+        "3519046"
+      ],
+      "upperTierMatch": [
+        "YORK"
+      ],
+      "fsaTowns": {
+        "Newmarket": [
+          "L3X",
+          "L3Y"
+        ],
+        "Aurora": [
+          "L4G"
+        ],
+        "Stouffville": [
+          "L4A"
+        ],
+        "Keswick": [
+          "L4P"
+        ],
+        "Holland Landing": [
+          "L9N"
+        ],
+        "King City": [
+          "L7B"
+        ]
+      },
+      "nbcTowns": [
+        "Newmarket",
+        "Aurora",
+        "Richmond Hill",
+        "Markham",
+        "Vaughan"
+      ],
+      "titleNames": [
+        "Newmarket",
+        "Aurora",
+        "Stouffville",
+        "Georgina",
+        "King"
+      ],
+      "healthUnit": "york",
+      "radon2012": {
+        "city": "markham"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Vaughan Public Library"
+      ],
+      "coveredCities": [
+        {
+          "slug": "vaughan",
+          "why": "Vaughan's page covers Kleinburg, Maple, Concord and Woodbridge."
+        },
+        {
+          "slug": "markham",
+          "why": "Markham's page covers Unionville and Locust Hill."
+        },
+        {
+          "slug": "richmond-hill",
+          "why": "Richmond Hill has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "richmond-hill",
+        "markham",
+        "vaughan"
+      ],
+      "leadRegion": "york-region",
+      "sitePages": [
+        {
+          "href": "/find/york-region/",
+          "label": "York Region advisor directory"
+        },
+        {
+          "href": "/guides/york-region/",
+          "label": "York Region guide"
+        }
+      ],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "waterloo-region-townships",
+      "name": "Waterloo Region townships",
+      "inName": "the Waterloo Region townships",
+      "prov": "ON",
+      "kind": "Woolwich, Wellesley, Wilmot and North Dumfries",
+      "scope": "This page covers the four rural townships of the Region of Waterloo: Woolwich, Wellesley, Wilmot and North Dumfries. Kitchener, Waterloo and Cambridge have their own pages. Listowel and Poole in neighbouring Perth County are listed as nearby communities.",
+      "researchGroups": [
+        "waterloo-region-townships"
+      ],
+      "csds": [
+        "3530035",
+        "3530027",
+        "3530020",
+        "3530004"
+      ],
+      "upperTierMatch": [
+        "WATERLOO"
+      ],
+      "nearbyMunicipalities": {
+        "names": [
+          "Municipality of North Perth",
+          "Township of Perth East"
+        ],
+        "csds": [
+          "3531040",
+          "3531030"
+        ],
+        "label": "Nearby in Perth County",
+        "healthUnit": "hpph",
+        "radon2012": {
+          "hu": "3554"
+        },
+        "fsaTowns": {
+          "Listowel": [
+            "N4W"
+          ]
+        }
+      },
+      "fsaTowns": {
+        "Elmira": [
+          "N3B"
+        ],
+        "Baden": [
+          "N3A"
+        ]
+      },
+      "nbcTowns": [
+        "Kitchener",
+        "Waterloo",
+        "Cambridge",
+        "Listowel",
+        "Milverton"
+      ],
+      "titleNames": [
+        "Elmira",
+        "St. Jacobs",
+        "New Hamburg",
+        "Ayr"
+      ],
+      "healthUnit": "waterloo",
+      "radon2012": {
+        "city": "kitchener"
+      },
+      "radon2024": "city/metro area: Kitchener-Cambridge, ON (Kitchener-Cambridge-Waterloo CMA)",
+      "radonLending": [
+        "Waterloo Public Library",
+        "North Perth Public Library"
+      ],
+      "coveredCities": [
+        {
+          "slug": "kitchener",
+          "why": "Kitchener has its own pages."
+        },
+        {
+          "slug": "waterloo",
+          "why": "Waterloo has its own pages."
+        },
+        {
+          "slug": "cambridge",
+          "why": "Cambridge has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "waterloo",
+        "kitchener",
+        "cambridge"
+      ],
+      "leadRegion": "kitchener-waterloo",
+      "sitePages": [
+        {
+          "href": "/find/kitchener-waterloo/",
+          "label": "Kitchener-Waterloo and Cambridge advisor directory"
+        },
+        {
+          "href": "/guides/kitchener-waterloo/",
+          "label": "Kitchener-Waterloo guide"
+        }
+      ],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "niagara-region",
+      "name": "Niagara Region",
+      "inName": "Niagara Region",
+      "prov": "ON",
+      "kind": "Regional Municipality of Niagara, outside St. Catharines",
+      "scope": "This page covers the Niagara Region municipalities outside St. Catharines, which has its own pages: Niagara Falls, Welland, Fort Erie, Grimsby, Lincoln, Thorold, Port Colborne, Niagara-on-the-Lake, Pelham, West Lincoln and Wainfleet.",
+      "researchGroups": [
+        "niagara-region"
+      ],
+      "csds": [
+        "3526043",
+        "3526032",
+        "3526003",
+        "3526065",
+        "3526057",
+        "3526037",
+        "3526011",
+        "3526047",
+        "3526028",
+        "3526021",
+        "3526014"
+      ],
+      "upperTierMatch": [
+        "NIAGARA"
+      ],
+      "fsaTowns": {
+        "Niagara Falls": [
+          "L2E",
+          "L2G",
+          "L2H",
+          "L2J"
+        ],
+        "Welland": [
+          "L3B",
+          "L3C"
+        ],
+        "Fort Erie": [
+          "L2A"
+        ],
+        "Grimsby": [
+          "L3M"
+        ],
+        "Port Colborne": [
+          "L3K"
+        ]
+      },
+      "nbcTowns": [
+        "Niagara Falls",
+        "Welland",
+        "Fort Erie",
+        "Grimsby",
+        "Port Colborne",
+        "Pelham (Fonthill)",
+        "Smithville"
+      ],
+      "titleNames": [
+        "Niagara Falls",
+        "Welland",
+        "Fort Erie",
+        "Grimsby",
+        "Lincoln"
+      ],
+      "healthUnit": "niagara",
+      "radon2012": {
+        "city": "st-catharines"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Welland Public Library"
+      ],
+      "excludeProviders": [
+        "Reep Green Solutions"
+      ],
+      "coveredCities": [
+        {
+          "slug": "st-catharines",
+          "why": "St. Catharines has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "st-catharines",
+        "hamilton"
+      ],
+      "leadRegion": "niagara",
+      "sitePages": [
+        {
+          "href": "/find/niagara/",
+          "label": "Niagara advisor directory"
+        },
+        {
+          "href": "/guides/niagara/",
+          "label": "Niagara guide"
+        }
+      ],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "durham-region",
+      "name": "Durham Region",
+      "inName": "Durham Region",
+      "prov": "ON",
+      "kind": "North Durham: Scugog, Uxbridge and Brock",
+      "scope": "This page covers north Durham: the townships of Scugog (Port Perry), Uxbridge and Brock. Oshawa, Whitby, Ajax, Pickering and Clarington have their own pages, which also cover their hamlets.",
+      "researchGroups": [
+        "durham-region"
+      ],
+      "csds": [
+        "3518020",
+        "3518029",
+        "3518039"
+      ],
+      "upperTierMatch": [
+        "DURHAM"
+      ],
+      "fsaTowns": {
+        "Port Perry": [
+          "L9L"
+        ],
+        "Uxbridge": [
+          "L9P"
+        ]
+      },
+      "nbcTowns": [
+        "Port Perry",
+        "Uxbridge",
+        "Cannington",
+        "Whitby (Brooklin)"
+      ],
+      "titleNames": [
+        "Port Perry",
+        "Uxbridge",
+        "Brock"
+      ],
+      "healthUnit": "durham",
+      "radon2012": {
+        "city": "oshawa"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Scugog Memorial Public Library"
+      ],
+      "coveredCities": [
+        {
+          "slug": "pickering",
+          "why": "Pickering's page covers Brougham, Claremont, Greenwood and Whitevale."
+        },
+        {
+          "slug": "clarington",
+          "why": "Clarington's page covers Hampton, Newcastle, Newtonville and Orono."
+        },
+        {
+          "slug": "whitby",
+          "why": "Whitby's page covers Ashburn."
+        },
+        {
+          "slug": "oshawa",
+          "why": "Oshawa has its own pages."
+        },
+        {
+          "slug": "ajax",
+          "why": "Ajax has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "oshawa",
+        "whitby",
+        "pickering"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "norfolk-county",
+      "name": "Norfolk County",
+      "inName": "Norfolk County",
+      "prov": "ON",
+      "kind": "Norfolk County (single-tier)",
+      "scope": "This page covers Norfolk County, a single-tier municipality on Lake Erie. Note that \"Simcoe, Ont.\" usually means the town of Simcoe here, the county seat, not Simcoe County north of Toronto.",
+      "researchGroups": [
+        "norfolk-county"
+      ],
+      "csds": [
+        "3528052"
+      ],
+      "upperTierMatch": [],
+      "singleTierMatch": [
+        "NORFOLK COUNTY"
+      ],
+      "fsaTowns": {
+        "Simcoe": [
+          "N3Y"
+        ],
+        "Delhi": [
+          "N4B"
+        ]
+      },
+      "nbcTowns": [
+        "Simcoe",
+        "Vittoria"
+      ],
+      "titleNames": [
+        "Simcoe",
+        "Port Dover",
+        "Delhi",
+        "Waterford"
+      ],
+      "healthUnit": "grand-erie",
+      "radon2012": {
+        "hu": "3534"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [],
+      "coveredCities": [],
+      "nearbyCities": [
+        "brantford"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "haldimand-county",
+      "name": "Haldimand County",
+      "inName": "Haldimand County",
+      "prov": "ON",
+      "kind": "Haldimand County (single-tier)",
+      "scope": "This page covers Haldimand County, a single-tier municipality between Hamilton and Lake Erie.",
+      "researchGroups": [
+        "haldimand-county"
+      ],
+      "csds": [
+        "3528018"
+      ],
+      "upperTierMatch": [],
+      "singleTierMatch": [
+        "HALDIMAND COUNTY"
+      ],
+      "fsaTowns": {
+        "Caledonia": [
+          "N3W"
+        ],
+        "Dunnville": [
+          "N1A"
+        ]
+      },
+      "nbcTowns": [
+        "Haldimand",
+        "Dunnville",
+        "Nanticoke"
+      ],
+      "titleNames": [
+        "Caledonia",
+        "Dunnville",
+        "Hagersville"
+      ],
+      "healthUnit": "grand-erie",
+      "radon2012": {
+        "hu": "3534"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [],
+      "excludeProviders": [
+        "Reep Green Solutions"
+      ],
+      "coveredCities": [],
+      "nearbyCities": [
+        "hamilton",
+        "brantford"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "dufferin-county",
+      "name": "Dufferin County",
+      "inName": "Dufferin County",
+      "prov": "ON",
+      "kind": "County of Dufferin",
+      "scope": "This page covers the eight towns and townships of the County of Dufferin, from Orangeville and Mono north to Shelburne, Melancthon and Mulmur.",
+      "researchGroups": [
+        "dufferin-county"
+      ],
+      "csds": [
+        "3522014",
+        "3522012",
+        "3522021",
+        "3522008",
+        "3522010",
+        "3522016",
+        "3522019",
+        "3522001"
+      ],
+      "upperTierMatch": [
+        "DUFFERIN"
+      ],
+      "fsaTowns": {
+        "Orangeville": [
+          "L9V",
+          "L9W"
+        ]
+      },
+      "nbcTowns": [
+        "Orangeville",
+        "Shelburne"
+      ],
+      "titleNames": [
+        "Orangeville",
+        "Shelburne",
+        "Mono",
+        "Grand Valley"
+      ],
+      "healthUnit": "wdg",
+      "radon2012": {
+        "city": "guelph"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Orangeville Public Library",
+        "Grand Valley Public Library"
+      ],
+      "excludeProviders": [
+        "Reep Green Solutions"
+      ],
+      "coveredCities": [],
+      "nearbyCities": [
+        "guelph",
+        "brampton"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "wellington-county",
+      "name": "Wellington County",
+      "inName": "Wellington County",
+      "prov": "ON",
+      "kind": "County of Wellington",
+      "scope": "This page covers the seven towns and townships of the County of Wellington. Guelph is a separate city with its own pages.",
+      "researchGroups": [
+        "wellington-county"
+      ],
+      "csds": [
+        "3523025",
+        "3523009",
+        "3523050",
+        "3523017",
+        "3523033",
+        "3523043",
+        "3523001"
+      ],
+      "upperTierMatch": [
+        "WELLINGTON"
+      ],
+      "fsaTowns": {
+        "Fergus": [
+          "N1M"
+        ]
+      },
+      "nbcTowns": [
+        "Fergus",
+        "Mount Forest",
+        "Guelph"
+      ],
+      "titleNames": [
+        "Fergus",
+        "Elora",
+        "Mount Forest",
+        "Erin"
+      ],
+      "healthUnit": "wdg",
+      "radon2012": {
+        "city": "guelph"
+      },
+      "radon2024": "city/metro area: Guelph, ON (Guelph CMA)",
+      "radonLending": [
+        "Wellington County Public Library",
+        "Guelph Public Library"
+      ],
+      "coveredCities": [
+        {
+          "slug": "guelph",
+          "why": "Guelph has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "guelph",
+        "waterloo"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario",
+      "extraPlaces": [
+        "Elora",
+        "Hillsburgh"
+      ]
+    },
+    {
+      "slug": "county-of-brant",
+      "name": "County of Brant",
+      "inName": "the County of Brant",
+      "prov": "ON",
+      "kind": "County of Brant (single-tier)",
+      "scope": "This page covers the County of Brant, the single-tier municipality around Brantford that includes Paris, St. George and Burford. Brantford is a separate city with its own pages.",
+      "researchGroups": [
+        "county-of-brant"
+      ],
+      "csds": [
+        "3529005"
+      ],
+      "upperTierMatch": [],
+      "singleTierMatch": [
+        "COUNTY OF BRANT"
+      ],
+      "fsaTowns": {
+        "Paris": [
+          "N3L"
+        ]
+      },
+      "nbcTowns": [
+        "Paris",
+        "Brantford"
+      ],
+      "titleNames": [
+        "Paris",
+        "St. George",
+        "Burford"
+      ],
+      "healthUnit": "grand-erie",
+      "radon2012": {
+        "city": "brantford"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Brantford Public Library"
+      ],
+      "coveredCities": [
+        {
+          "slug": "brantford",
+          "why": "Brantford has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "brantford",
+        "cambridge"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario",
+      "extraPlaces": [
+        "Scotland"
+      ]
+    },
+    {
+      "slug": "grey-county",
+      "name": "Grey County",
+      "inName": "Grey County",
+      "prov": "ON",
+      "kind": "County of Grey",
+      "scope": "This page covers the nine member municipalities of the County of Grey, from Owen Sound and Meaford on Georgian Bay to Hanover, Durham and Dundalk inland.",
+      "researchGroups": [
+        "grey-county"
+      ],
+      "csds": [
+        "3542059",
+        "3542004",
+        "3542047",
+        "3542053",
+        "3542015",
+        "3542045",
+        "3542005",
+        "3542029",
+        "3542037"
+      ],
+      "upperTierMatch": [
+        "GREY"
+      ],
+      "fsaTowns": {
+        "Owen Sound": [
+          "N4K"
+        ],
+        "Meaford": [
+          "N4L"
+        ],
+        "Hanover": [
+          "N4N"
+        ]
+      },
+      "nbcTowns": [
+        "Owen Sound",
+        "Markdale",
+        "Durham",
+        "Dundalk",
+        "Hanover"
+      ],
+      "titleNames": [
+        "Owen Sound",
+        "Meaford",
+        "Hanover",
+        "Thornbury"
+      ],
+      "healthUnit": "grey-bruce",
+      "radon2012": {
+        "hu": "3533"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [],
+      "excludeProviders": [
+        "Reep Green Solutions"
+      ],
+      "coveredCities": [],
+      "nearbyCities": [
+        "barrie",
+        "waterloo"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "caledon",
+      "name": "Caledon",
+      "inName": "Caledon",
+      "prov": "ON",
+      "kind": "Town of Caledon (Region of Peel)",
+      "scope": "This page covers the Town of Caledon, the rural northern part of the Region of Peel, including Bolton, Caledon East, Caledon Village, Palgrave and the hamlets around them. Brampton and Mississauga have their own pages.",
+      "researchGroups": [
+        "caledon"
+      ],
+      "csds": [
+        "3521024"
+      ],
+      "upperTierMatch": [
+        "PEEL"
+      ],
+      "fsaTowns": {
+        "Bolton": [
+          "L7E"
+        ],
+        "Caledon": [
+          "L7C"
+        ],
+        "Caledon Village": [
+          "L7K"
+        ]
+      },
+      "nbcTowns": [
+        "Brampton",
+        "Orangeville"
+      ],
+      "nbcNote": "The code's climate table has no Caledon entry; Brampton and Orangeville are its nearest listed neighbours.",
+      "titleNames": [
+        "Bolton",
+        "Caledon East",
+        "Caledon Village",
+        "Palgrave"
+      ],
+      "healthUnit": "peel",
+      "radon2012": {
+        "city": "brampton"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Caledon Public Library"
+      ],
+      "excludeProviders": [
+        "Reep Green Solutions"
+      ],
+      "coveredCities": [
+        {
+          "slug": "brampton",
+          "why": "Brampton has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "brampton",
+        "vaughan"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [
+        {
+          "href": "/find/brampton/",
+          "label": "Brampton advisor directory"
+        }
+      ],
+      "articles": [],
+      "photo": "region-ontario"
+    },
+    {
+      "slug": "halton-hills",
+      "name": "Halton Hills",
+      "inName": "Halton Hills",
+      "prov": "ON",
+      "kind": "Town of Halton Hills (Region of Halton)",
+      "scope": "This page covers the Town of Halton Hills: Georgetown, Acton, Glen Williams, Norval, Hornby and the rural area around them. Rural Milton, including Campbellville, is covered on the Milton pages.",
+      "researchGroups": [
+        "halton-hills"
+      ],
+      "csds": [
+        "3524015"
+      ],
+      "upperTierMatch": [
+        "HALTON"
+      ],
+      "fsaTowns": {
+        "Georgetown": [
+          "L7G"
+        ],
+        "Acton": [
+          "L7J"
+        ]
+      },
+      "nbcTowns": [
+        "Halton Hills",
+        "Milton"
+      ],
+      "titleNames": [
+        "Georgetown",
+        "Acton",
+        "Glen Williams",
+        "Norval"
+      ],
+      "healthUnit": "halton",
+      "radon2012": {
+        "city": "milton"
+      },
+      "radon2024": "province: ON",
+      "radonLending": [
+        "Milton Public Library"
+      ],
+      "excludeProviders": [
+        "Reep Green Solutions"
+      ],
+      "coveredCities": [
+        {
+          "slug": "milton",
+          "why": "Milton's page covers Campbellville and the town's rural north."
+        }
+      ],
+      "nearbyCities": [
+        "milton",
+        "brampton"
+      ],
+      "leadRegion": "other-ontario",
+      "sitePages": [],
+      "articles": [],
+      "photo": "region-ontario",
+      "manualPlaces": [
+        {
+          "name": "Acton",
+          "municipality": "TOWN OF HALTON HILLS",
+          "pop2021": 9377,
+          "sources": [
+            "https://www.halton.ca/for-residents/water-and-wastewater-services/drinking-water/well-water/testing-your-well-water",
+            "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810001101"
+          ],
+          "note": "Not an official populated-place name in the CGNDB. Halton Region's well-water page lists Acton depots under Halton Hills, and Statistics Canada's 2021 population centre table lists Acton (9,377)."
+        }
+      ]
+    },
+    {
+      "slug": "northern-bc",
+      "name": "Northern BC",
+      "inName": "Northern BC",
+      "prov": "BC",
+      "kind": "Prince George, the Peace region and area",
+      "scope": "This page covers Prince George and the Regional District of Fraser-Fort George, and Dawson Creek, Fort St. John and the Peace River Regional District. No city we cover is within 390 km, so the energy advisors listed here come straight from NRCan's list for Prince George, Dawson Creek and Fort St. John postal codes.",
+      "researchGroups": [
+        "northern-bc"
+      ],
+      "csds": [
+        "5953023",
+        "5953033",
+        "5953012",
+        "5953007",
+        "5955014",
+        "5955034",
+        "5955010",
+        "5955030",
+        "5955003",
+        "5955005",
+        "5955025"
+      ],
+      "cdTotals": [
+        "5953",
+        "5955"
+      ],
+      "fsaTowns": {
+        "Prince George": [
+          "V2K",
+          "V2L",
+          "V2M",
+          "V2N"
+        ],
+        "Dawson Creek": [
+          "V1G"
+        ],
+        "Fort St. John": [
+          "V1J"
+        ]
+      },
+      "nbcTowns": [
+        "Prince George",
+        "Mackenzie",
+        "Dawson Creek",
+        "Fort St. John",
+        "Chetwynd",
+        "Taylor"
+      ],
+      "climatePlaces": [
+        "Prince George",
+        "Dawson Creek",
+        "Fort St. John"
+      ],
+      "titleNames": [
+        "Prince George",
+        "Dawson Creek",
+        "Fort St. John"
+      ],
+      "healthUnit": "bc-north",
+      "radon2012": {
+        "hus": [
+          "5952",
+          "5953"
+        ]
+      },
+      "radon2024": "province sub-region: BC Interior (northern and interior BC plus the eastern Fraser Valley from Chilliwack onwards)",
+      "radonLending": [],
+      "coveredCities": [],
+      "nearbyCities": [],
+      "leadRegion": "bc",
+      "sitePages": [],
+      "articles": [
+        {
+          "href": "/articles/energy-audits-northern-bc/",
+          "label": "Energy audits in Prince George, Dawson Creek and Northern BC"
+        }
+      ],
+      "photo": "region-north"
+    },
+    {
+      "slug": "okanagan",
+      "name": "Okanagan",
+      "inName": "the Okanagan",
+      "prov": "BC",
+      "kind": "Okanagan Valley, outside Kelowna",
+      "scope": "This page covers the Okanagan Valley outside Kelowna, which has its own pages: West Kelowna, Lake Country and Peachland in the Central Okanagan, Penticton, Summerland, Oliver and Osoyoos to the south, and Vernon, Coldstream, Armstrong, Spallumcheen, Enderby and Lumby to the north.",
+      "researchGroups": [
+        "okanagan"
+      ],
+      "csds": [
+        "5935029",
+        "5935016",
+        "5935018",
+        "5907041",
+        "5907035",
+        "5907014",
+        "5907005",
+        "5937014",
+        "5937010",
+        "5937028",
+        "5937024",
+        "5937033",
+        "5937005"
+      ],
+      "fsaTowns": {
+        "Penticton": [
+          "V2A"
+        ],
+        "Vernon": [
+          "V1B",
+          "V1H",
+          "V1T"
+        ],
+        "Westbank (West Kelowna)": [
+          "V4T"
+        ],
+        "Winfield (Lake Country)": [
+          "V4V"
+        ]
+      },
+      "nbcTowns": [
+        "Penticton",
+        "Kelowna",
+        "Vernon",
+        "Salmon Arm",
+        "Osoyoos"
+      ],
+      "climatePlaces": [
+        "Penticton",
+        "Vernon"
+      ],
+      "titleNames": [
+        "West Kelowna",
+        "Vernon",
+        "Penticton",
+        "Summerland"
+      ],
+      "healthUnit": "bc-interior",
+      "radon2012": {
+        "city": "kelowna"
+      },
+      "radon2024": "city/metro area: Kelowna, BC (Kelowna CMA)",
+      "radonLending": [
+        "Okanagan Region Libraries"
+      ],
+      "coveredCities": [
+        {
+          "slug": "kelowna",
+          "why": "Kelowna has its own pages."
+        }
+      ],
+      "nearbyCities": [
+        "kelowna",
+        "kamloops"
+      ],
+      "leadRegion": "bc",
+      "sitePages": [],
+      "articles": [
+        {
+          "href": "/articles/bc-home-energy-testing-faq/",
+          "label": "BC home energy testing FAQ"
+        }
+      ],
+      "photo": "region-bc",
+      "titleName": "the Okanagan Valley, BC"
+    }
+  ]
+}

@@ -199,6 +199,7 @@ export const TEST_PHOTO: Record<string, PhotoKey> = {
   'asbestos-vermiculite': 'asbestos-testing',
   'lead-paint': 'lead-paint-testing',
   'well-water': 'well-water-testing',
+  'wood-burning-inspection': 'home-hero',
 };
 
 /** Province/territory code → regional house-style photo */

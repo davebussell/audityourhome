@@ -1,0 +1,149 @@
+---
+import { MODEL, WINDOW_KEYS } from '../../lib/calc/engine';
+import { healthDefaults, renderRadon, renderHumidity, renderAlarms, renderMould, type HealthPayload } from './home-health';
+import { degC } from '../../lib/calc/format';
+
+interface Props { payload: HealthPayload; cityName: string; hubNote?: string }
+const { payload, cityName, hubNote } = Astro.props;
+const s = healthDefaults(payload);
+const L = s.layout;
+---
+
+<section class="calc" id="calculator" aria-labelledby="calc-h">
+  <div class="calc-top">
+    <h2 id="calc-h">Home health check{cityName ? ` for ${cityName}` : ''}</h2>
+    {hubNote && <p class="calc-hub-note">{hubNote}</p>}
+    <p class="small">Four quick checks, set up with {cityName}'s winter temperatures and {payload.city.provName}'s alarm rules. Change any value; nothing you enter leaves your browser.</p>
+  </div>
+  <form id="hh-form" class="calc-form" novalidate>
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Radon test result</legend>
+          <div class="grid-fields">
+            <div class="field">
+              <label for="hh-radon">Long-term result</label>
+              <span class="in-unit"><input id="hh-radon" name="radon" type="text" inputmode="decimal" value={String(payload.radonDefault.bq)} /></span>
+            </div>
+            <div class="field">
+              <label for="hh-ru">Unit</label>
+              <select id="hh-ru" name="radonUnit"><option value="bq" selected>Bq/m³ (Canada)</option><option value="pci">pCi/L (US kits)</option></select>
+            </div>
+          </div>
+          <p class="hint">{payload.radonDefault.label} Replace it with your own result from a test of at least 3 months.</p>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="hh-radon-out" aria-live="polite" set:html={renderRadon(s, payload)} />
+    </div>
+
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Winter humidity and window condensation</legend>
+          <div class="grid-fields">
+            <div class="field"><label for="hh-tin">Indoor temperature</label><span class="in-unit"><input id="hh-tin" name="tIn" type="text" inputmode="decimal" value="21" /><span>°C</span></span></div>
+            <div class="field"><label for="hh-rh">Indoor humidity</label><span class="in-unit"><input id="hh-rh" name="rh" type="text" inputmode="decimal" value="40" /><span>%</span></span></div>
+          </div>
+          <div class="field">
+            <label for="hh-win">Windows</label>
+            <select id="hh-win" name="window">
+              {WINDOW_KEYS.map((k) => <option value={k} selected={k === s.window}>{MODEL.envelope.windowU[k].label} (U {MODEL.envelope.windowU[k].u})</option>)}
+            </select>
+          </div>
+          <fieldset class="rg">
+            <legend class="lbl">Outdoor temperature</legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="outdoor" value="jan" checked /><span>January average ({degC(payload.city.janMean)})</span></label>
+              <label class="radio-pill"><input type="radio" name="outdoor" value="design" /><span>Cold snap ({degC(payload.city.designHeat)})</span></label>
+              <label class="radio-pill"><input type="radio" name="outdoor" value="custom" /><span>Other</span></label>
+            </div>
+            <div class="field inline" data-show="custom" hidden>
+              <label for="hh-tout">Outdoor temperature</label>
+              <span class="in-unit"><input id="hh-tout" name="tOut" type="text" inputmode="decimal" placeholder="e.g. −15" /><span>°C</span></span>
+            </div>
+          </fieldset>
+          <p class="hint">January average: ECCC 1981–2010 normals. Cold snap: NRCan's HOT2000 winter design temperature for {cityName}.</p>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="hh-hum-out" aria-live="polite" set:html={renderHumidity(s, payload)} />
+    </div>
+
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Smoke and carbon monoxide alarms</legend>
+          <div class="grid-fields">
+            <div class="field"><label for="hh-lv">Levels, including the basement</label><select id="hh-lv" name="levels">{[1, 2, 3, 4, 5].map((n) => <option value={n} selected={n === L.levels}>{n}</option>)}</select></div>
+            <div class="field"><label for="hh-bl">Levels with bedrooms</label><select id="hh-bl" name="bedroomLevels">{[1, 2, 3].map((n) => <option value={n} selected={n === L.bedroomLevels}>{n}</option>)}</select></div>
+            <div class="field"><label for="hh-br">Bedrooms</label><select id="hh-br" name="bedrooms">{[0, 1, 2, 3, 4, 5, 6].map((n) => <option value={n} selected={n === L.bedrooms}>{n}</option>)}</select></div>
+            <div class="field"><label for="hh-sa">Separate sleeping areas</label><select id="hh-sa" name="sleepingAreas">{[1, 2, 3].map((n) => <option value={n} selected={n === L.sleepingAreas}>{n}</option>)}</select></div>
+          </div>
+          <p class="hint">A sleeping area is a group of bedrooms off one hallway.</p>
+          <label class="inc"><input type="checkbox" name="fuelBurning" checked /> Furnace, water heater, fireplace or stove that burns fuel</label>
+          <label class="inc"><input type="checkbox" name="attachedGarage" /> Attached garage</label>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="hh-alarm-out" aria-live="polite" set:html={renderAlarms(s, payload)} />
+    </div>
+
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Mould: clean it yourself or call a pro?</legend>
+          <div class="grid-fields">
+            <div class="field"><label for="hh-mp">Number of patches</label><select id="hh-mp" name="patches">{[0, 1, 2, 3, 4, 5, 6].map((n) => <option value={n} selected={n === s.patches}>{n === 6 ? '6 or more' : n}</option>)}</select></div>
+            <div class="field"><label for="hh-ma">Largest patch</label><span class="in-unit"><input id="hh-ma" name="area" type="text" inputmode="decimal" value="0.5" /><select name="areaUnit" aria-label="Area unit" class="unit-sel"><option value="m2" selected>m²</option><option value="sqft">sq ft</option></select></span></div>
+          </div>
+          <p class="hint">Example values shown. 1 m² is about 10.8 sq ft.</p>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="hh-mould-out" aria-live="polite" set:html={renderMould(s)} />
+    </div>
+  </form>
+</section>
+
+<script type="application/json" id="calc-data" set:html={JSON.stringify(payload)} />
+
+<script>
+  import { renderRadon, renderHumidity, renderAlarms, renderMould, type HealthPayload, type HealthState } from './home-health';
+  import { readJSON, num, str, checked, show, onChange } from './ui';
+
+  const P = readJSON<HealthPayload>('calc-data');
+  const form = document.getElementById('hh-form') as HTMLFormElement;
+  function read(): HealthState {
+    return {
+      radon: num(form, 'radon'),
+      radonUnit: (str(form, 'radonUnit') || 'bq') as HealthState['radonUnit'],
+      tIn: num(form, 'tIn'),
+      rh: num(form, 'rh'),
+      window: str(form, 'window') as HealthState['window'],
+      outdoor: (str(form, 'outdoor') || 'jan') as HealthState['outdoor'],
+      tOut: num(form, 'tOut', true),
+      layout: {
+        levels: Number(str(form, 'levels')) || 1,
+        bedroomLevels: Number(str(form, 'bedroomLevels')) || 1,
+        bedrooms: Number(str(form, 'bedrooms')) || 0,
+        sleepingAreas: Number(str(form, 'sleepingAreas')) || 1,
+        fuelBurning: checked(form, 'fuelBurning'),
+        attachedGarage: checked(form, 'attachedGarage'),
+      },
+      patches: Number(str(form, 'patches')),
+      area: num(form, 'area'),
+      areaUnit: (str(form, 'areaUnit') || 'm2') as HealthState['areaUnit'],
+    };
+  }
+  function update() {
+    const s = read();
+    show(form.querySelector('[data-show="custom"]'), s.outdoor === 'custom');
+    document.getElementById('hh-radon-out')!.innerHTML = renderRadon(s, P);
+    document.getElementById('hh-hum-out')!.innerHTML = renderHumidity(s, P);
+    document.getElementById('hh-alarm-out')!.innerHTML = renderAlarms(s, P);
+    document.getElementById('hh-mould-out')!.innerHTML = renderMould(s);
+  }
+  onChange(form, update);
+  update();
+</script>
+
+<style>
+  .unit-sel { width: auto; padding: 8px 8px; font-size: 14px; }
+</style>

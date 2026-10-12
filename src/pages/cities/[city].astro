@@ -94,6 +94,13 @@ const statusChip: Record<string, [string, string]> = {
       </div>
     </section>
 
+    {hub.communities && (
+      <section class="comms" id="communities" data-communities={hub.communities.names.join('|')}>
+        <h2>{hub.communities.heading}</h2>
+        <div class="prose measure" set:html={hub.communities.html} />
+      </section>
+    )}
+
     <section id="services" class="svc">
       <h2>Local service guides for {city.name}</h2>
       {cats.map((c) => byCat(c.cat).length > 0 && (
@@ -183,8 +190,10 @@ const statusChip: Record<string, [string, string]> = {
 </Base>
 
 <style>
-  .facts, .svc, .who, .muni, .progsec { padding: 34px 0 0; }
-  .facts h2, .svc h2, .who h2, .muni h2, .progsec h2 { font-size: 26px; }
+  .facts, .svc, .who, .muni, .progsec, .comms { padding: 34px 0 0; }
+  .facts h2, .svc h2, .who h2, .muni h2, .progsec h2, .comms h2 { font-size: 26px; }
+  .comms .prose :global(p) { margin: 0 0 0.8em; }
+  .comms .prose :global(a) { overflow-wrap: anywhere; }
   .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 760px) { .fgrid { grid-template-columns: 1fr; } }
   .fgrid p:last-child { margin: 0; font-size: 15px; }

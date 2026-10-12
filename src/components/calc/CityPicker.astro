@@ -1,0 +1,67 @@
+---
+/**
+ * City select grouped by province. With `calc`, submitting opens that calculator's city page.
+ * Without it (the /calculators/ index), choosing a city rewrites every [data-calc-link] on the page.
+ */
+import { citiesByProvince, cityName, type CalcSlug } from '../../lib/calc/data';
+
+interface Props { id: string; label: string; calc?: CalcSlug; selected?: string; button?: string; placeholder?: string; hint?: string }
+const { id, label, calc, selected, button, placeholder, hint } = Astro.props;
+const groups = citiesByProvince().map((g) => ({ ...g, cities: [...g.cities].sort((a, b) => cityName(a).localeCompare(cityName(b), 'en-CA')) }));
+---
+
+<form class="picker city-picker" data-picker data-calc={calc ?? ''} action={calc ? `/calculators/${calc}/` : '/calculators/'} method="get">
+  <div class="field">
+    <label for={id}>{label}</label>
+    <select id={id} name="city" aria-describedby={hint ? `${id}-hint` : undefined}>
+      {placeholder && <option value="">{placeholder}</option>}
+      {groups.map((g) => (
+        <optgroup label={g.provName}>
+          {g.cities.map((c) => <option value={c.slug} selected={c.slug === selected}>{cityName(c)}</option>)}
+        </optgroup>
+      ))}
+    </select>
+  </div>
+  {button && <button type="submit" class="btn btn-primary btn-sm">{button}</button>}
+  {hint && <p class="hint picker-hint" id={`${id}-hint`} data-picker-status aria-live="polite">{hint}</p>}
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-picker]').forEach((form) => {
+    const sel = form.querySelector<HTMLSelectElement>('select[name="city"]');
+    const status = form.querySelector<HTMLElement>('[data-picker-status]');
+    const calc = form.dataset.calc;
+    const original = status?.textContent ?? '';
+    if (calc) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (sel?.value) window.location.href = `/calculators/${calc}/${sel.value}/`;
+      });
+      return;
+    }
+    // index page: point every calculator link at the chosen city
+    const links = document.querySelectorAll<HTMLAnchorElement>('a[data-calc-link]');
+    const apply = () => {
+      const slug = sel?.value ?? '';
+      const name = sel?.selectedOptions[0]?.textContent ?? '';
+      links.forEach((a) => {
+        const c = a.dataset.calcLink!;
+        a.href = slug ? `/calculators/${c}/${slug}/` : `/calculators/${c}/`;
+        const where = a.querySelector<HTMLElement>('[data-where]');
+        if (where) where.textContent = slug ? `Open for ${name} →` : 'Open the calculator →';
+      });
+      if (status) status.textContent = slug ? `The links below now open each calculator for ${name}.` : original;
+    };
+    sel?.addEventListener('change', apply);
+    form.addEventListener('submit', (e) => { e.preventDefault(); apply(); });
+    if (sel?.value) apply();
+  });
+</script>
+
+<style>
+  .city-picker { align-items: flex-end; }
+  .city-picker .field { margin: 0; }
+  .city-picker select { padding: 10px 12px; font-size: 16px; }
+  .city-picker .btn { white-space: nowrap; }
+  .picker-hint { flex: 1 1 100%; margin: 2px 0 0; font-size: 13.5px; color: var(--muted); }
+</style>

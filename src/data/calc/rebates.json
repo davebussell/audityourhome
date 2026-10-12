@@ -1,0 +1,2766 @@
+{
+ "asOf": "2026-10-08",
+ "provinces": {
+  "ON": {
+   "name": "Ontario",
+   "summary": "Home Renovation Savings (Enbridge Gas + Save on Energy) is the only province-wide rebate. The assessment path covers insulation, windows, doors, air sealing, heat pump water heaters and the assessment itself, but its follow-up assessment must be done by December 31, 2026. The no-assessment path covers heat pumps, attic insulation (participating contractors only) and smart thermostats.",
+   "measures": {
+    "attic": [
+     {
+      "id": "on-attic-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "flat",
+      "rate": 900,
+      "cap": 1500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Up to $1,500 (R-12 or less to at least R-50); $1,200 (above R-12 up to R-25, to at least R-50); $900 (above R-25 up to R-35, to at least R-50). Cathedral ceiling/flat roof $780.",
+      "basis": "Lowest tier at 100% coverage. Use $1,200 if today's attic is above R-12 up to R-25, $1,500 if R-12 or less.",
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/with-assessment",
+      "checked": "2026-10-08",
+      "minTargetR": 50
+     },
+     {
+      "id": "on-attic-1",
+      "program": "Home Renovation Savings Program — without assessment",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "flat",
+      "rate": 800,
+      "cap": 1250,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Less than or equal to R-12 → R-50: $1,250; Greater than R-12 to R-25 → R-50: $1,000; Greater than R-25 to R-35 → R-50: $800 (maximum rebate). Cathedral ceiling or flat roof: $750 (≤R-25 to R-28) or $650 (≤R-12 to R-20).",
+      "basis": "Lowest tier; also capped at 50% of after-tax cost.",
+      "conditions": "No assessment. Must use a participating contractor and \"Contractor registrations for the attic program stream are currently closed\", so check one serves your area. 100% of the roof assembly must be insulated. The help page says the rebate is 50% of the after-tax insulation cost up to the tier maximum and combined rebates from all sources can't exceed 50% of after-tax cost. Enbridge gas-heated homes, or Ontario-grid homes heated by electricity, propane, oil or wood (Cornwall…",
+      "deadline": "No end date on the current attic page. Our earlier 'installed by Nov 30, 2026 / submitted by Dec 31, 2026' could not be re-verified on today's official pages.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/attic",
+      "checked": "2026-10-08",
+      "pctCostCap": 0.5
+     }
+    ],
+    "walls": [
+     {
+      "id": "on-walls-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "flat",
+      "rate": 1200,
+      "cap": 3600,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Exterior wall: $3,600 (greater than R-20 added); $2,100 (greater than R-12 to R-20); $1,200 (R-7.5 to R-12).",
+      "basis": "Lowest tier (R-7.5 to R-12 added) on 100% of wall area; multiply by share of wall area insulated.",
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "basement": [
+     {
+      "id": "on-basement-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "flat",
+      "rate": 900,
+      "cap": 2300,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Foundation insulation up to $2,300: basement wall $1,500 (above R-22) or $900 (R-10 to R-22); basement slab $500 (at least 50% of slab, minimum R-3.5); foundation header $300 (at least 80%, minimum R-20, only with wall insulation). Crawl space walls $1,200/$600; crawl space ceiling $1,200 (greater than R-24).",
+      "basis": "Basement walls R-10 to R-22 added over 100% of wall area; add $300 for headers and $500 for slab if done.",
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "on-airSealing-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "flat",
+      "rate": 200,
+      "cap": 250,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "$200 (achieve the base target on your Renovation Upgrade Report); $250 (achieve 10% or more above the base target).",
+      "basis": null,
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "windows": [
+     {
+      "id": "on-windows-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 100,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "$100 per rough opening for each window, door, skylight or sliding door replaced with an ENERGY STAR certified model.",
+      "basis": "Per-unit amount; multiply by qualifying openings. No per-measure cap, but the home's $5,000/$10,000 package cap applies.",
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+      "checked": "2026-10-08",
+      "minCount": 3,
+      "windowReq": "energyStar"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "on-ashp-0",
+      "program": "Home Renovation Savings Program — without assessment",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "perTon",
+      "rate": 1250,
+      "cap": 7500,
+      "fuels": [
+       "electricity",
+       "oil",
+       "propane",
+       "wood"
+      ],
+      "fuelText": "electricity, oil, propane or wood",
+      "amount": "Cold climate air source: $1,250/ton, up to $7,500 back (electric, oil, propane, or wood heated homes).",
+      "basis": "e.g., a 3-ton system = $3,750.",
+      "conditions": "Pre-approval is mandatory: \"Installations done before approval are not eligible for rebates.\" A participating HVAC contractor submits the pre- and post-installation applications. Equipment on NRCan's qualified list. Homes with an existing heat pump used for space heating are not eligible (no replacements). Oil/propane homes sign a tank-removal attestation. One rebate per home. Cheque within about 60 days of post-installation approval.",
+      "deadline": "None stated.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "on-ashp-1",
+      "program": "Home Renovation Savings Program — without assessment",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "perTon",
+      "rate": 500,
+      "cap": 2000,
+      "fuels": [
+       "gas"
+      ],
+      "fuelText": "Enbridge natural gas",
+      "amount": "Enbridge Gas natural-gas heated homes — Cold climate air source: $500/ton, up to $2,000 back.",
+      "basis": "e.g., 3 tons = $1,500; capped at $2,000.",
+      "conditions": "Same pre-approval and contractor rules as above. Applies to Enbridge Gas customers; customers of other gas utilities are not covered by this wording.",
+      "deadline": "None stated.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "on-ashp-2",
+      "program": "Home Renovation Savings Program — without assessment",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 2000,
+      "fuels": null,
+      "fuelText": "any",
+      "amount": "Rented heat pumps (any heating fuel) — Cold climate air source: $500/ton, up to $2,000 back.",
+      "basis": null,
+      "conditions": "Rental agreements; pre-approval required.",
+      "deadline": "None stated.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+      "checked": "2026-10-08",
+      "rented": true
+     }
+    ],
+    "gshp": [
+     {
+      "id": "on-gshp-0",
+      "program": "Home Renovation Savings Program — without assessment",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "perTon",
+      "rate": 2000,
+      "cap": 12000,
+      "fuels": [
+       "electricity",
+       "oil",
+       "propane",
+       "wood"
+      ],
+      "fuelText": "electricity, oil, propane or wood",
+      "amount": "Ground source: $2,000/ton (based on closed loop capacity), up to $12,000 back (electric, oil, propane, or wood heated homes).",
+      "basis": null,
+      "conditions": "Pre-approval mandatory; participating contractor; no replacement of an existing heat pump; one rebate per home.",
+      "deadline": "None stated.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "on-gshp-1",
+      "program": "Home Renovation Savings Program — without assessment",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "flat",
+      "rate": 3000,
+      "cap": 3000,
+      "fuels": [
+       "gas"
+      ],
+      "fuelText": "Enbridge natural gas, or rented system",
+      "amount": "Ground source: $3,000 back (Enbridge natural-gas heated homes, and rented systems with any fuel).",
+      "basis": null,
+      "conditions": "Pre-approval mandatory; participating contractor.",
+      "deadline": "None stated.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+      "checked": "2026-10-08"
+     }
+    ],
+    "hpwh": [
+     {
+      "id": "on-hpwh-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "flat",
+      "rate": 500,
+      "cap": 500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "$500 for natural gas, electric, and propane/oil water heaters replaced with an ENERGY STAR certified heat pump model.",
+      "basis": null,
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Additional-Program-Eligibility-Requirements.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "thermostat": [
+     {
+      "id": "on-thermostat-0",
+      "program": "Home Renovation Savings Program — smart thermostat",
+      "slug": "home-renovation-savings-direct",
+      "status": "open",
+      "kind": "flat",
+      "rate": 100,
+      "cap": 125,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Get a $125 smart thermostat rebate (instant code, or upload your receipt).",
+      "basis": "$100 used because the program FAQ and Save on Energy's landing page still say $100; the dedicated thermostat page says $125.",
+      "conditions": "One per household — not if you've already had a smart thermostat rebate, discount or device from Enbridge Gas, Save on Energy or Home Renovation Savings. Enbridge gas-heated home, or a home on the Ontario grid that heats or cools electrically (Cornwall Electric excluded). Single/semi-detached, row/townhome or mobile home on a permanent foundation. Instant code at The Home Depot (in-store) or online at Best Buy, Copeland Sensi, ecobee or Mysa; or buy anywhere and upload the…",
+      "deadline": "Upload receipt within 60 days of purchase. No end date shown; our earlier 'buy, install and activate by Dec 31, 2026' was not found on today's pages.",
+      "source": "https://www.homerenovationsavings.ca/without-assessment/smart-thermostat",
+      "checked": "2026-10-08"
+     }
+    ],
+    "assessment": [
+     {
+      "id": "on-assessment-0",
+      "program": "Home Renovation Savings Program — with home energy assessment",
+      "slug": "home-renovation-savings-assessment",
+      "status": "open",
+      "kind": "flat",
+      "rate": 600,
+      "cap": 600,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "You will receive a $600 rebate after successful completion of the program (toward the initial and follow-up assessments).",
+      "basis": null,
+      "conditions": "Initial EnerGuide assessment before any work, at least two recommended upgrades, then a follow-up assessment with the same service organization. Only the program's seven approved service organizations qualify: AmeriSpec of Canada, Canada Energy Audit, Energuy, Energy Werx, Greenbrain, NRGwise and The Home Inspectors Group. Homeowners only (an owner with tenants applies); detached, semi-detached, row/townhome or mobile home on a permanent foundation (stacked townhomes…",
+      "deadline": "Follow-up assessment must be scheduled by November 30, 2026 and completed within 180 days of the initial assessment or by December 31, 2026, whichever comes first (Terms and Conditions, version Nov 2025).",
+      "source": "https://www.homerenovationsavings.ca/with-assessment",
+      "checked": "2026-10-08"
+     }
+    ]
+   },
+   "measureNotes": {
+    "walls": "No wall rebate on the no-assessment path.",
+    "basement": "No basement rebate on the no-assessment path.",
+    "airSealing": "Only via the assessment path; no stand-alone air sealing rebate.",
+    "doors": "Doors count with windows as one upgrade on the assessment path.",
+    "hpwh": "Assessment path only."
+   },
+   "bonuses": [
+    {
+     "program": "Home Renovation Savings Program — with home energy assessment",
+     "amount": "$500 Multi-Upgrade Bonus: \"Participants with a post-renovation assessment date on or after January 5, 2026 who install three (3) or more qualified upgrades under the Assessment program will receive a $500 bonus rebate.\" Windows, doors, skylights and sliding doors together count as one upgrade.",
+     "source": "https://www.homerenovationsavings.ca/help-and-support"
+    }
+   ],
+   "caps": [
+    {
+     "program": "Home Renovation Savings Program — with home energy assessment",
+     "amount": "Up to $5,000 per home for natural gas homes; up to $10,000 for electric, oil, propane or wood homes — \"inclusive of the $600\" assessment rebate. Rebates \"shall not exceed the total actual cost\".",
+     "source": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Assessment-Terms-and-Conditions.pdf"
+    }
+   ],
+   "assessment": {
+    "amount": null,
+    "note": "Home Renovation Savings does not publish assessment prices; the $600 comes back at the end if two or more upgrades are completed.",
+    "source": "https://www.homerenovationsavings.ca/with-assessment",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {
+    "kitchener": "Most Kitchener homes buy natural gas from Kitchener Utilities, not Enbridge. Home Renovation Savings' assessment-path terms define eligible gas homes as those heated with \"Enbridge-supplied natural gas\" and other homes as heated by oil, propane, wood or electricity, so a Kitchener Utilities gas-heated home fits neither group; confirm with the program before planning around it. Kitchener Utilities offers its own $75 smart thermostat bill credit. RetrofitWR loans are limited to GrandBridge Energy customers.",
+    "kingston": "Central Kingston gas customers buy from Utilities Kingston, not Enbridge, so the same Home Renovation Savings eligibility gap applies. Kingston filled it with Better Homes Kingston rebates for Utilities Kingston gas customers, but that program is no longer accepting applications (waitlist).",
+    "pickering": "Durham Greener Homes loans are \"currently not available for properties located in the City of Pickering\"; coaching and the Weather-ready Home Assessment are."
+   },
+   "financing": [
+    {
+     "name": "Toronto Home Energy Loan Program (HELP)",
+     "city": "toronto",
+     "amount": "Up to $125,000, or 10% of the property's current value assessment if less (including interest and fees)",
+     "interestRate": "Fixed rates \"valid until September 30, 2026\": 3.34% (5 yr), 4.01% (10 yr), 4.46% (15 yr), 4.75% (20 yr); 2% administrative charge. No newer table was posted on Oct 8, 2026.",
+     "status": "open",
+     "source": "https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/home-energy-loan-program-help/"
+    },
+    {
+     "name": "Better Homes Ottawa Loan Program",
+     "city": "ottawa",
+     "amount": "Minimum $15,000; maximum the lesser of $125,000 or 10% of the home's current value",
+     "interestRate": "4.33% fixed",
+     "status": "waitlist",
+     "source": "https://ottawa.ca/en/living-ottawa/environment-conservation-and-climate/climate-change-and-energy/better-homes-ottawa"
+    },
+    {
+     "name": "Durham Greener Homes Loan (Local Improvement Charge)",
+     "city": "oshawa, whitby, ajax, clarington (not pickering)",
+     "amount": "Up to $125,000",
+     "interestRate": "2%",
+     "status": "open",
+     "source": "https://www.durhamgreenerhomes.ca/financial/loans/durham-region/"
+    },
+    {
+     "name": "Better Homes Peterborough",
+     "city": "peterborough",
+     "amount": "LIC loan $10,000–$50,000; Kawartha Credit Union loan up to $50,000",
+     "interestRate": "LIC 4.50% fixed; credit union 4.95% variable",
+     "status": "open",
+     "source": "https://betterhomesptbo.ca/loan-program/"
+    },
+    {
+     "name": "BetterHomes London",
+     "city": "london",
+     "amount": "$5,000 minimum loan (minimum project $15,000) up to $40,000",
+     "interestRate": "2.5% fixed",
+     "status": "open",
+     "source": "https://betterhomeslondon.ca/"
+    },
+    {
+     "name": "RetrofitWR (Region of Waterloo)",
+     "city": "cambridge",
+     "amount": "Up to $40,000 (minimum project $10,000)",
+     "interestRate": "2.5% fixed",
+     "status": "open",
+     "source": "https://retrofitwr.ca/"
+    },
+    {
+     "name": "Guelph Greener Homes",
+     "city": "guelph",
+     "amount": "$50,000 maximum",
+     "interestRate": "0%",
+     "status": "waitlist",
+     "source": "https://guelph.ca/living/environment/energy/guelph-greener-homes/how-the-guelph-greener-homes-program-works/"
+    },
+    {
+     "name": "Better Homes Kingston",
+     "city": "kingston",
+     "amount": "Up to $50,000 or 20% of home value, whichever is less",
+     "interestRate": "3.25% (5 yr), 4.00% (10 yr), 4.50% (15 yr), 4.75% (20 yr)",
+     "status": "waitlist",
+     "source": "https://cityofkingston.ca/building-and-renovating/better-homes-kingston/apply-for-better-homes-kingston-program/"
+    },
+    {
+     "name": "Better Homes Hamilton (pilot)",
+     "city": "hamilton",
+     "amount": "Up to $20,000",
+     "interestRate": "0%",
+     "status": "closed",
+     "source": "https://www.hamilton.ca/home-neighbourhood/environmental-stewardship/environmental-plans-strategies/hamiltons-climate-2"
+    }
+   ]
+  },
+  "QC": {
+   "name": "Quebec",
+   "summary": "Rénoclimat changed on October 1, 2026: the evaluation is now optional, insulation is paid per square foot with house caps, windows must be ENERGY STAR Most Efficient ($300 each), and doors, air sealing and HRVs dropped out. Heat pumps are Hydro-Québec LogisVert's territory (no audit). Hydro-Québec's roof insulation + caulking grant ($1,500) is still listed for electrically heated houses.",
+   "measures": {
+    "attic": [
+     {
+      "id": "qc-attic-0",
+      "program": "Rénoclimat — volet Efficacité énergétique (en vigueur le 1er octobre 2026)",
+      "slug": "renoclimat",
+      "status": "open",
+      "kind": "perSqft",
+      "rate": 1.75,
+      "cap": 2000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Roof insulation: up to $2,000 per house at $1.75 per sq ft; add at least R-20 and reach R-60 (attic) or R-40 (cathedral/flat); at least 300 sq ft.",
+      "basis": "e.g., 1,000 sq ft attic = $1,750 (cap $2,000).",
+      "conditions": "Work done on or after October 1, 2026 by a contractor holding the matching RBQ licence, who fills in and signs the Formulaire d'attestation de conformité des travaux. Self-installation not eligible. The pre-work evaluation is optional. House must be in Québec, built and lived in for at least five years, on permanent foundations and connected to Hydro-Québec or a municipal/co-op grid. Aid is the lesser of pre-tax eligible spending or the table amount; total Rénoclimat…",
+      "deadline": "Claim within 12 months of finishing the work, and before the program's planned end date of March 31, 2029.",
+      "source": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-guide-participant.pdf",
+      "checked": "2026-10-08",
+      "minRAdded": 20,
+      "minTargetR": 60,
+      "minSqft": 300
+     },
+     {
+      "id": "qc-attic-1",
+      "program": "Hydro-Québec LogisVert — roof insulation and caulking work",
+      "slug": "logisvert",
+      "status": "open",
+      "kind": "flat",
+      "rate": 1500,
+      "cap": 1500,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity (main heating source)",
+      "amount": "Hydro‑Québec provides grants in the amount of $1,500 for roof insulation and caulking work when all Program requirements are met.",
+      "basis": null,
+      "conditions": "Houses (single-family, semi-detached, row, mobile, four-season cottage) that use electricity as the main heating source. Roof insulation must reach RSI 8.8 (R-50) over 100% of the roof, and caulking must cover windows, exterior doors, patio doors, attic hatches, range hoods, bathroom fans, electrical outlets and fireplaces. Both parts are required. RBQ-licensed contractors (subclass 7.0). Grant can't exceed 100% of pre-tax cost. Apply through the LogisVert portal within nine…",
+      "deadline": "Apply within 9 months of the work.",
+      "source": "https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-en.pdf?v=20260910",
+      "checked": "2026-10-08"
+     }
+    ],
+    "walls": [
+     {
+      "id": "qc-walls-0",
+      "program": "Rénoclimat — volet Efficacité énergétique (en vigueur le 1er octobre 2026)",
+      "slug": "renoclimat",
+      "status": "open",
+      "kind": "perSqft",
+      "rate": 3.5,
+      "cap": 7000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Exterior walls: $3.50 per sq ft, up to $7,000 per house; add at least R-9 over at least 300 sq ft.",
+      "basis": null,
+      "conditions": "Work done on or after October 1, 2026 by a contractor holding the matching RBQ licence, who fills in and signs the Formulaire d'attestation de conformité des travaux. Self-installation not eligible. The pre-work evaluation is optional. House must be in Québec, built and lived in for at least five years, on permanent foundations and connected to Hydro-Québec or a municipal/co-op grid. Aid is the lesser of pre-tax eligible spending or the table amount; total Rénoclimat…",
+      "deadline": "Claim within 12 months of finishing the work, and before the program's planned end date of March 31, 2029.",
+      "source": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-guide-participant.pdf",
+      "checked": "2026-10-08",
+      "minRAdded": 9,
+      "minSqft": 300
+     }
+    ],
+    "basement": [
+     {
+      "id": "qc-basement-0",
+      "program": "Rénoclimat — volet Efficacité énergétique (en vigueur le 1er octobre 2026)",
+      "slug": "renoclimat",
+      "status": "open",
+      "kind": "perSqft",
+      "rate": 2.5,
+      "cap": 2500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Foundations: up to $2,500 per house combined. Basement walls incl. rim joist $2.50/sq ft (add R-15); slab $0.50/sq ft (add R-3); crawlspace walls $3.50/sq ft (add R-23); floor over crawlspace $3.50/sq ft; exposed floor $3.50/sq ft (min 150 sq ft).",
+      "basis": null,
+      "conditions": "Work done on or after October 1, 2026 by a contractor holding the matching RBQ licence, who fills in and signs the Formulaire d'attestation de conformité des travaux. Self-installation not eligible. The pre-work evaluation is optional. House must be in Québec, built and lived in for at least five years, on permanent foundations and connected to Hydro-Québec or a municipal/co-op grid. Aid is the lesser of pre-tax eligible spending or the table amount; total Rénoclimat…",
+      "deadline": "Claim within 12 months of finishing the work, and before the program's planned end date of March 31, 2029.",
+      "source": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-guide-participant.pdf",
+      "checked": "2026-10-08",
+      "minRAdded": 15,
+      "minSqft": 300
+     }
+    ],
+    "airSealing": [],
+    "windows": [
+     {
+      "id": "qc-windows-0",
+      "program": "Rénoclimat — volet Efficacité énergétique (en vigueur le 1er octobre 2026)",
+      "slug": "renoclimat",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 300,
+      "cap": 4500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "ENERGY STAR Most Efficient windows: $300 per rough opening, up to $4,500 per house.",
+      "basis": null,
+      "conditions": "Work done on or after October 1, 2026 by a contractor holding the matching RBQ licence, who fills in and signs the Formulaire d'attestation de conformité des travaux. Self-installation not eligible. The pre-work evaluation is optional. House must be in Québec, built and lived in for at least five years, on permanent foundations and connected to Hydro-Québec or a municipal/co-op grid. Aid is the lesser of pre-tax eligible spending or the table amount; total Rénoclimat…",
+      "deadline": "Claim within 12 months of finishing the work, and before the program's planned end date of March 31, 2029.",
+      "source": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-guide-participant.pdf",
+      "checked": "2026-10-08",
+      "windowReq": "mostEfficient"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "qc-ashp-0",
+      "program": "Hydro-Québec LogisVert — heat pump",
+      "slug": "logisvert",
+      "status": "open",
+      "kind": "perKBtu",
+      "rate": 50,
+      "cap": 6700,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Grant of $50 per 1,000 BTU/h at -8°C for the purchase and installation of an ENERGY STAR certified heat pump, or $120 per 1,000 BTU/h at -8°C if the unit is classified \"cold climate.\" (Page heading: \"Receive up to $6,700\".)",
+      "basis": "Conservative standard ENERGY STAR rate; use $120 for cold-climate units. e.g., 24,000 BTU/h at −8°C = $1,200 (standard) or $2,880 (cold climate).",
+      "conditions": "No audit required. Homeowner of an eligible home on the Hydro-Québec grid or a municipal/co-op/off-grid system. New, complete ENERGY STAR system (mandatory for installs on or after November 26, 2025); outdoor unit at least 12,000 BTU/h cooling; bought from a Québec retailer; RBQ-licensed installer. Not eligible: replacing a single coil or unit, replacement after equipment failure, central heat pump in a home with geothermal. Grant can't exceed 100% of pre-tax cost. Apply…",
+      "deadline": "Apply within 9 months of installation.",
+      "source": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "checked": "2026-10-08",
+      "coldClimateRate": 120
+     },
+     {
+      "id": "qc-ashp-1",
+      "program": "Énergir + Hydro-Québec dual-energy (biénergie) grants",
+      "slug": null,
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 7300,
+      "fuels": [
+       "gas"
+      ],
+      "fuelText": "Énergir natural gas",
+      "amount": "Single-family home and condo — Warm air heating: Up to $7,300; Hot water heating: Up to $4,100 (grants starting June 18, 2024). Additional grants of up to $7,800 for an electrical upgrade leading to increased amperage.",
+      "basis": null,
+      "conditions": "Énergir natural gas customers adding electric heating (heat pump) to a gas system; joint grants with Hydro-Québec under the 2030 Plan for a Green Economy; eligibility checked in the Énergir customer space; current participant's guide applies to applications submitted after April 1, 2026.",
+      "deadline": "Not stated.",
+      "source": "https://energir.com/en/residential/dual-energy",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "qc-ashp-2",
+      "program": "Enbridge Gaz Québec — biénergie",
+      "slug": null,
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 20000,
+      "fuels": [
+       "gas"
+      ],
+      "fuelText": "Enbridge Gaz Québec natural gas",
+      "amount": "Up to 80% of eligible costs, to a maximum of $20,000 for a house or condo unit.",
+      "basis": null,
+      "conditions": "Enbridge Gaz Québec residential customers (Outaouais, including Gatineau) with central natural gas heating who add a heat pump or replace equipment for dual energy. Several components with their own amounts, including electrical upgrades.",
+      "deadline": "Not stated.",
+      "source": "https://enbridgegaz.com/residentiel/deja-client/bienergie/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "gshp": [
+     {
+      "id": "qc-gshp-0",
+      "program": "Hydro-Québec LogisVert — geothermal heat pump (new installation)",
+      "slug": "logisvert",
+      "status": "open",
+      "kind": "perKBtu",
+      "rate": 750,
+      "cap": 54000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Hydro‑Québec offers your customers a grant in the amount of $750 per 1,000 BTU/h for the purchase and installation of a geothermal heat pump... capped at $54,000 per address, which is equivalent to a total capacity of 72,000 BTU/h (6 t).",
+      "basis": "e.g., 36,000 BTU/h = $27,000.",
+      "conditions": "Installed by a participating installer, who deducts the grant on the invoice. Complete system with well(s) and collector; minimum 18,000 BTU/h for a single-family home; bought in Québec; once per home.",
+      "deadline": "Not stated.",
+      "source": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/installer.html",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "qc-gshp-1",
+      "program": "Hydro-Québec LogisVert — replacing a geothermal heat pump",
+      "slug": "logisvert",
+      "status": "open",
+      "kind": "perKBtu",
+      "rate": 250,
+      "cap": 18000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Receive a grant of $250 per 1,000 BTU/h; capped at $18,000 per address (72,000 BTU/h).",
+      "basis": null,
+      "conditions": "Replacing an end-of-life or out-of-warranty geothermal heat pump; homeowner applies.",
+      "deadline": "Apply within 9 months.",
+      "source": "https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-en.pdf?v=20260910",
+      "checked": "2026-10-08"
+     }
+    ],
+    "hpwh": [],
+    "thermostat": [
+     {
+      "id": "qc-thermostat-0",
+      "program": "Énergir smart thermostat grant",
+      "slug": null,
+      "status": "open",
+      "kind": "flat",
+      "rate": 100,
+      "cap": 100,
+      "fuels": [
+       "gas"
+      ],
+      "fuelText": "Énergir natural gas",
+      "amount": "Get $100 toward the purchase of a smart thermostat.",
+      "basis": null,
+      "conditions": "Énergir residential natural gas customers; ENERGY STAR model on Énergir's eligible list; self-install or use an Énergir partner. Extra help for low-income households.",
+      "deadline": "Not stated.",
+      "source": "https://energir.com/en/residential/customer-centre/reduce-my-consumption/energy-efficiency-grants/thermostat-intelligent",
+      "checked": "2026-10-08"
+     }
+    ],
+    "assessment": [
+     {
+      "id": "qc-assessment-0",
+      "program": "Rénoclimat — volet Efficacité énergétique (en vigueur le 1er octobre 2026)",
+      "slug": "renoclimat",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Energy evaluation (recommended but optional): up to $500.",
+      "basis": null,
+      "conditions": "EnerGuide evaluation by an energy advisor with a service organization registered with ECCC (you choose the organization); report required; paid only if you also claim at least one eligible energy-efficiency measure in the portal.",
+      "deadline": "Claim within 12 months of finishing the work, and before the program's planned end date of March 31, 2029.",
+      "source": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-guide-participant.pdf",
+      "checked": "2026-10-08"
+     }
+    ]
+   },
+   "measureNotes": {
+    "airSealing": "\"Amélioration de l'étanchéité\" is \"Non admissible\" under Rénoclimat from October 1, 2026 (it paid $400/$600/$800 before). Air sealing now earns money only inside Hydro-Québec's roof insulation + caulking bundle ($1,500, electrically heated houses) or for Rénoclimat transition participants.",
+    "doors": "\"Remplacement de portes: Non admissible\" from October 1, 2026 (was $150 per door). Glass patio doors count as windows ($300).",
+    "hpwh": "No HPWH grant found in LogisVert's current measure list (roof insulation and caulking, induction range, heat-pump dryer, heat pump, geothermal replacement, pool pump, solar) or in Rénoclimat.",
+    "thermostat": "Hydro-Québec offers no thermostat purchase grant we could find; its modest-income stream gave free smart thermostats but registration for 2026–2027 has ended."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": null,
+    "note": "Under the new Rénoclimat, evaluations are billed at the organization's own price and up to $500 is refunded with a measure claim. Under the old (transition) rules the fee was $150, refunded when aid was paid.",
+    "source": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-tableau-comparatif-avant-apres.pdf",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": []
+  },
+  "BC": {
+   "name": "British Columbia",
+   "summary": "Market-rate rebates come from the Home Renovation Rebate Program. Insulation, windows and doors are open to most heating fuels, but heat pump rebates for homes in our 13 BC cities are only for electrically heated homes; fossil-fuel-to-heat-pump rebates are now limited to northern BC (north of 100 Mile House) unless the household is income-qualified.",
+   "measures": {
+    "attic": [
+     {
+      "id": "bc-attic-0",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "perSqftR",
+      "rate": 0.02,
+      "cap": 900,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Attic—flat and cathedral ceiling: $0.02 x R-value added x sq ft; minimum R12 added; rebate maximum $900.",
+      "basis": "e.g., 1,000 sq ft topped up from R-12 to R-50 (R-38 added) = $760.",
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08",
+      "minRAdded": 12
+     }
+    ],
+    "walls": [
+     {
+      "id": "bc-walls-0",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "perSqftR",
+      "rate": 0.09,
+      "cap": 1200,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Exterior wall cavities: $0.09 x R-value added x sq ft (minimum R12 added), maximum $1,200. Exterior wall sheathing: $0.09 x R-value added x sq ft (minimum R3.8 added), maximum $1,200.",
+      "basis": "e.g., 1,000 sq ft of wall cavity filled with R-12 = $1,080.",
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08",
+      "minRAddedByOption": {
+       "dense": 12,
+       "exterior": 3.8
+      }
+     }
+    ],
+    "basement": [
+     {
+      "id": "bc-basement-0",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "perSqftR",
+      "rate": 0.09,
+      "cap": 1200,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Basement/crawlspace walls: $0.09 x R-value added x sq ft (minimum R10 added), maximum $1,200. Other (exposed floor, floor over crawlspace, basement header): $0.07 x R-value added x sq ft (minimum R20), maximum $1,000. One rebate for basement/crawlspace walls or floor over crawlspace.",
+      "basis": "e.g., 800 sq ft of basement wall with R-12 added = $864.",
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08",
+      "minRAdded": 10
+     }
+    ],
+    "airSealing": [],
+    "windows": [
+     {
+      "id": "bc-windows-0",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "perCount",
+      "rate": 100,
+      "cap": 2000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Tier 2 window/door: $100 each; U-Factor 1.22 W/m²-K or less; rebate maximum $2,000.",
+      "basis": null,
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08",
+      "windowReq": "energyStar"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "bc-ashp-0",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "flat",
+      "rate": 4000,
+      "cap": 4000,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "Air source heat pump, convert from electric — Whole home heating: $4,000 (FortisBC and BC Hydro).",
+      "basis": null,
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08",
+      "scope": "whole"
+     },
+     {
+      "id": "bc-ashp-1",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "flat",
+      "rate": 1500,
+      "cap": 1500,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "Air source heat pump, convert from electric — Partial home heating: $1,500 (FortisBC and BC Hydro).",
+      "basis": null,
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08",
+      "scope": "partial"
+     },
+     {
+      "id": "bc-ashp-2",
+      "program": "BC Hydro limited-time heat pump bonus",
+      "slug": null,
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 1000,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "For a limited time, you could get up to $1,000 in bonus rebates for completing and paying for an eligible air source heat pump upgrade.",
+      "basis": null,
+      "conditions": "BC Hydro customers replacing their electric heating system with a heat pump (also BC Hydro's condo/apartment heat pump rebates). Heat pumps installed and invoiced between August 1 and October 31, 2026; while funding lasts.",
+      "deadline": "Installed and invoiced by October 31, 2026.",
+      "source": "https://www.bchydro.com/news/conservation/2026/heat-pump-bonus-contest.html",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "bc-ashp-3",
+      "program": "CleanBC northern heat pump rebate (convert from fossil fuel)",
+      "slug": null,
+      "status": "notApplicable",
+      "kind": "info",
+      "rate": null,
+      "cap": 6000,
+      "fuels": [
+       "northernBC"
+      ],
+      "fuelText": "natural gas, propane or oil (northern BC only)",
+      "amount": "Ductless mini-split, ductless multi-split or central ducted (Tier 2) heat pump: $6,000 (CleanBC Rebate). Northern dual fuel heat pump: $4,500.",
+      "basis": null,
+      "conditions": "Only for homes north of and including the District of 100 Mile House (latitude 51.628°N) on BC Hydro service, heated by gas, propane or oil, with the fossil system removed. None of our 13 BC cities is in this area.",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "gshp": [],
+    "hpwh": [
+     {
+      "id": "bc-hpwh-0",
+      "program": "Home Renovation Rebate Program (BC Hydro / FortisBC / CleanBC Better Homes)",
+      "slug": null,
+      "status": "open",
+      "kind": "flat",
+      "rate": 1000,
+      "cap": 1000,
+      "fuels": [
+       "electricWaterHeater"
+      ],
+      "fuelText": "electric water heating",
+      "amount": "Electric heat pump water heater, convert from electric: $1,000.",
+      "basis": null,
+      "conditions": "Invoices dated on or after May 15, 2026. Year-round primary residence at least 12 months old (detached, secondary suite, mobile on foundation, individually metered duplex/triplex/row/townhome or small multiplex); condos and apartments excluded. Home primarily heated by BC Hydro, FortisBC or eligible municipal electricity, FortisBC/Pacific Northern Gas natural gas or pipe-propane, tank propane or oil (wood-heated homes only qualify for a heat pump water heater). Licensed…",
+      "deadline": "Apply within 6 months of invoice.",
+      "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "thermostat": [
+     {
+      "id": "bc-thermostat-0",
+      "program": "FortisBC connected thermostat rebate",
+      "slug": null,
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 150,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "FortisBC electricity",
+      "amount": "We've got rebates of up to $150 on select thermostats.",
+      "basis": null,
+      "conditions": "FortisBC residential electricity customers, select connected thermostats; income-qualified customers up to $200.",
+      "deadline": "Not stated.",
+      "source": "https://www.fortisbc.com/rebates/rebates-and-offers/rebates-and-offers-for-home",
+      "checked": "2026-10-08"
+     }
+    ],
+    "assessment": []
+   },
+   "measureNotes": {
+    "airSealing": "No air sealing rebate in the Home Renovation Rebate requirements for invoices on or after May 15, 2026.",
+    "ashp": "Gas-, propane- or oil-heated homes in our 13 BC cities (all south of 100 Mile House) have no market-rate provincial heat pump rebate; income-qualified households can use the Energy Savings Program.",
+    "gshp": "No ground-source rebate appears in the current Home Renovation Rebate or Energy Savings Program requirements.",
+    "hpwh": "Gas water heaters in southern BC: no market-rate HPWH rebate; Energy Savings Program pays up to $3,500 for income-qualified households.",
+    "thermostat": "BC Hydro's residential rebate list shows no thermostat rebate.",
+    "assessment": "No direct EnerGuide evaluation rebate. The Home Energy Improvement Bonus ($750–$2,000) requires paid pre- and post-upgrade evaluations plus three upgrades; see bonuses. Nanaimo and Saanich pay their own evaluation incentives (see municipal)."
+   },
+   "bonuses": [
+    {
+     "program": "Home Energy Improvement Bonus",
+     "amount": "$20 per percentage improvement in EnerGuide rating (GJ/year), minimum $750 up to $2,000. At least three bonus-eligible upgrades and a post-upgrade EnerGuide evaluation within 18 months of the pre-upgrade evaluation; apply within 6 months of the post-upgrade evaluation.",
+     "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/"
+    },
+    {
+     "program": "Two Upgrade Bonus",
+     "amount": "$300 for two bonus-eligible upgrades installed within 18 months of each other; one Two Upgrade Bonus or Home Energy Improvement Bonus per home. Insulation counts if a location earns at least $500; windows/doors if at least $250.",
+     "source": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/"
+    }
+   ],
+   "caps": [],
+   "assessment": {
+    "amount": null,
+    "note": "No provincial evaluation subsidy. Nanaimo's page cites typical EnerGuide costs of $400–$500 for an existing home.",
+    "source": "https://www.nanaimo.ca/property-development/rebates/home-energy-efficiency-rebate/how-to-receive-your-home-energy-assessment-rebate",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "FortisBC heat pump loan",
+     "city": null,
+     "amount": "Up to $6,500",
+     "interestRate": "1.9%",
+     "status": "open",
+     "source": "https://www.fortisbc.com/rebates/rebates-and-offers/rebates-and-offers-for-home"
+    },
+    {
+     "name": "Saanich Heat Pump Financing Program",
+     "city": "saanich",
+     "amount": "Up to $12,000",
+     "interestRate": "0%",
+     "status": "open",
+     "source": "https://saanich.ca/EN/main/community/sustainable-saanich/climate-change/programs-rebates/heat-pump-financing.html"
+    },
+    {
+     "name": "Nanaimo Home Energy Retrofit Financing Program (pilot)",
+     "city": "nanaimo",
+     "amount": "Up to $15,000",
+     "interestRate": "0%",
+     "status": "open",
+     "source": "https://www.nanaimo.ca/green-initiatives/climate-action/green-buildings/home-energy-retrofit-financing-program"
+    }
+   ]
+  },
+  "AB": {
+   "name": "Alberta",
+   "summary": "No provincial rebates. Help is property-tax financing through the Clean Energy Improvement Program (CEIP), and most of our Alberta cities' CEIP intakes are full or closed.",
+   "measures": {
+    "attic": [],
+    "walls": [],
+    "basement": [],
+    "airSealing": [],
+    "windows": [],
+    "ashp": [],
+    "gshp": [],
+    "hpwh": [],
+    "thermostat": [],
+    "assessment": []
+   },
+   "measureNotes": {
+    "all": "No provincial rebate program for these measures. The alberta.ca 'energy-efficiency-programs' page our data cited now returns 404. Edmonton's environmental incentives page lists only CEIP financing for homes (no cash rebates). The federal OHPA, which NRCan delivered directly in Alberta, closed July 31, 2026.",
+    "attic": "See measureNotes.all.",
+    "walls": "See measureNotes.all.",
+    "basement": "See measureNotes.all.",
+    "airSealing": "See measureNotes.all.",
+    "windows": "See measureNotes.all.",
+    "doors": "See measureNotes.all.",
+    "ashp": "See measureNotes.all.",
+    "gshp": "See measureNotes.all.",
+    "hpwh": "See measureNotes.all.",
+    "thermostat": "See measureNotes.all.",
+    "assessment": "See measureNotes.all."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": null,
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "Clean Energy Improvement Program — Calgary",
+     "city": "calgary",
+     "amount": "Up to 100% of project costs to a maximum of $50,000",
+     "interestRate": "Estimated 6.00%–6.10% fixed, set when you sign",
+     "status": "closed",
+     "source": "https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html"
+    },
+    {
+     "name": "Clean Energy Improvement Program — Edmonton",
+     "city": "edmonton",
+     "amount": "Up to 100% of eligible costs",
+     "interestRate": "6.00% fixed",
+     "status": "waitlist",
+     "source": "https://www.edmonton.ca/city_government/environmental_stewardship/clean-energy-improvement-program"
+    },
+    {
+     "name": "Clean Energy Improvement Program — Lethbridge",
+     "city": "lethbridge",
+     "amount": "Not stated",
+     "interestRate": "2.83% fixed",
+     "status": "waitlist",
+     "source": "https://www.lethbridge.ca/ceip"
+    },
+    {
+     "name": "Clean Energy Improvement Program — Strathcona County (Sherwood Park)",
+     "city": "sherwood-park",
+     "amount": "Up to 100% of eligible project costs",
+     "interestRate": "2%",
+     "status": "waitlist",
+     "source": "https://www.strathcona.ca/your-property-utilities/residential-permits/residential-improvement/home-efficiency/clean-energy-improvement-program/"
+    }
+   ]
+  },
+  "SK": {
+   "name": "Saskatchewan",
+   "summary": "No current rebates for these measures. The Home Efficiency Retrofit Rebate ended in April 2026 and SaskEnergy's Energy Efficiency Discounts Program ended July 27, 2026.",
+   "measures": {
+    "attic": [],
+    "walls": [],
+    "basement": [],
+    "airSealing": [],
+    "windows": [],
+    "ashp": [],
+    "gshp": [],
+    "hpwh": [],
+    "thermostat": [],
+    "assessment": []
+   },
+   "measureNotes": {
+    "all": "\"The Home Efficiency Retrofit Rebate (HERR) ended in April 2026.\" (SaskEnergy). SaskEnergy's remaining residential rebates are for high-efficiency gas furnaces, boilers and condensing or tankless gas water heaters (not heat pump water heaters). \"The Energy Efficiency Discounts Program ended July 27, 2026.\" The federal OHPA (NRCan-delivered here) closed July…",
+    "assessment": "Saskatoon's HELP loan comes with a $1,000 energy audit rebate for loan participants (see municipal.saskatoon).",
+    "attic": "See measureNotes.all.",
+    "walls": "See measureNotes.all.",
+    "basement": "See measureNotes.all.",
+    "airSealing": "See measureNotes.all.",
+    "windows": "See measureNotes.all.",
+    "doors": "See measureNotes.all.",
+    "ashp": "See measureNotes.all.",
+    "gshp": "See measureNotes.all.",
+    "hpwh": "See measureNotes.all.",
+    "thermostat": "See measureNotes.all."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": null,
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "Saskatoon Home Energy Loan Program (HELP)",
+     "city": "saskatoon",
+     "amount": "$1,000 to $40,000; up to $60,000 with proof of 50%+ energy reduction",
+     "interestRate": "2026 rates: 3.24% (5 yr), 4.03% (10 yr), 4.68% (15 yr), 4.83% (20 yr)",
+     "status": "open",
+     "source": "https://www.saskatoon.ca/environmental-initiatives/better-buildings/home-energy-and-water-efficiency/home-energy-loan-program-help"
+    }
+   ]
+  },
+  "MB": {
+   "name": "Manitoba",
+   "summary": "Efficiency Manitoba has rebates for every measure except heat pump water heaters, including a $100 rebate per triple-pane ENERGY STAR window or door and a $400 rebate on the pre-retrofit EnerGuide evaluation.",
+   "measures": {
+    "attic": [
+     {
+      "id": "mb-attic-0",
+      "program": "Efficiency Manitoba Home Insulation Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "perSqftR",
+      "rate": 0.03,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Attic (open), from R-34 or less to R-50–R-60: $0.03 x R-value added x square feet. Cathedral, sloped or flat roof (R-30 or less to R-28–R-60) and attic kneewall (R-12 or less to R-24): $0.03 x R-value added x square feet.",
+      "basis": "e.g., 1,000 sq ft from R-12 to R-50 = $1,140, but never more than the insulation material cost including taxes.",
+      "conditions": "Owner of a home, rental or cottage with active Manitoba Hydro residential service, heated September to May; detached, semi-detached or mobile/modular home on a permanent foundation. Your registered contractor or retailer starts the application and you need approval before buying materials or starting work; 12 months to install; at least 100 sq ft per area; rebate for each area can't exceed the insulation material cost including taxes; insulation added above the final R-value…",
+      "deadline": "Install within 12 months of approval.",
+      "source": "https://efficiencymb.ca/my-home/home-insulation-rebate/",
+      "checked": "2026-10-08",
+      "minTargetR": 50,
+      "maxExistingR": 34
+     }
+    ],
+    "walls": [
+     {
+      "id": "mb-walls-0",
+      "program": "Efficiency Manitoba Home Insulation Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "perSqftR",
+      "rate": 0.06,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Wall cavities (between studs), R-12 or less to R-12–R-24: $0.06 x R-value added x square feet. Wall exterior (when re-siding), R-0 to R-3.75–R-15: $0.15 x R-value added x square feet.",
+      "basis": null,
+      "conditions": "Owner of a home, rental or cottage with active Manitoba Hydro residential service, heated September to May; detached, semi-detached or mobile/modular home on a permanent foundation. Your registered contractor or retailer starts the application and you need approval before buying materials or starting work; 12 months to install; at least 100 sq ft per area; rebate for each area can't exceed the insulation material cost including taxes; insulation added above the final R-value…",
+      "deadline": "Install within 12 months of approval.",
+      "source": "https://efficiencymb.ca/my-home/home-insulation-rebate/",
+      "checked": "2026-10-08",
+      "maxExistingR": 12
+     }
+    ],
+    "basement": [
+     {
+      "id": "mb-basement-0",
+      "program": "Efficiency Manitoba Home Insulation Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "perSqftR",
+      "rate": 0.06,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Foundation walls/joist headers, R-12 or less to R-22–R-24: $0.06 x R-value added x square feet.",
+      "basis": "e.g., 800 sq ft from R-0 to R-22 = $1,056 before the material-cost cap.",
+      "conditions": "Owner of a home, rental or cottage with active Manitoba Hydro residential service, heated September to May; detached, semi-detached or mobile/modular home on a permanent foundation. Your registered contractor or retailer starts the application and you need approval before buying materials or starting work; 12 months to install; at least 100 sq ft per area; rebate for each area can't exceed the insulation material cost including taxes; insulation added above the final R-value…",
+      "deadline": "Install within 12 months of approval.",
+      "source": "https://efficiencymb.ca/my-home/home-insulation-rebate/",
+      "checked": "2026-10-08",
+      "minTargetR": 22,
+      "maxExistingR": 12
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "mb-airSealing-0",
+      "program": "Efficiency Manitoba air sealing bonus",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 500,
+      "cap": 1000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "10% improvement: $500; 20% improvement: $750; 30% improvement: $1,000 (added to your Home Insulation Rebate).",
+      "basis": null,
+      "conditions": "Owner of a home, rental or cottage with active Manitoba Hydro residential service, heated September to May; detached, semi-detached or mobile/modular home on a permanent foundation. Your registered contractor or retailer starts the application and you need approval before buying materials or starting work; 12 months to install; at least 100 sq ft per area; rebate for each area can't exceed the insulation material cost including taxes; insulation added above the final R-value…",
+      "deadline": "Complete within 12 months of approval.",
+      "source": "https://efficiencymb.ca/my-home/home-insulation-rebate/air-sealing-bonus/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "windows": [
+     {
+      "id": "mb-windows-0",
+      "program": "Efficiency Manitoba Windows and Doors Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 100,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Get a $100 rebate on each ENERGY STAR® certified triple pane window and door you install in your home.",
+      "basis": null,
+      "conditions": "ENERGY STAR certified with at least triple-pane glass; NRCan reference number (NR####-######-ES#) on the invoice; replaces an existing window between heated and unheated space; primary residence (yours or your tenant's); counted per rough opening; new openings, garages, sunrooms, seasonal homes and apartments excluded; homeowners and landlords.",
+      "deadline": "Apply within 90 days of installation and payment in full.",
+      "source": "https://efficiencymb.ca/my-home/windows-and-doors-rebate/",
+      "checked": "2026-10-08",
+      "windowReq": "triple"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "mb-ashp-0",
+      "program": "Efficiency Manitoba Air Source Heat Pump Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 1500,
+      "cap": 2000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "$2,000 REBATE for a centrally ducted cold climate air source heat pump or $1,500 REBATE for a ductless cold climate air source heat pump.",
+      "basis": "Conservative ductless amount; ducted systems get $2,000.",
+      "conditions": "Supplementing an electric resistance or natural gas heating system (propane and fuel oil conversions also eligible); primary residence; not a new home; registered contractor submits within 90 days of installation; not replacing an existing heat pump.",
+      "deadline": "Contractor applies within 90 days of installation.",
+      "source": "https://efficiencymb.ca/ashp-home/",
+      "checked": "2026-10-08",
+      "ductedAmount": 2000
+     }
+    ],
+    "gshp": [
+     {
+      "id": "mb-gshp-0",
+      "program": "Efficiency Manitoba Ground Source Heat Pump Program (Affordable Home Energy Program)",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Qualifying homeowners can install a ground source heat pump with no upfront cost* and an interest-free monthly payment of $75 for 15 years (total cost of $13,500).",
+      "basis": null,
+      "conditions": "Replacing electric furnace/boiler, baseboards or natural gas heating (fuel oil also eligible); primary residence; registered contractor (Manitoba Geothermal Energy Alliance member); approval before work; one year to install. Retrofit projects over $38,000 (replacements over $18,500) need an upfront contribution. The loan is due on sale and isn't transferable.",
+      "deadline": "Install within one year of approval.",
+      "source": "https://efficiencymb.ca/gshp-home/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "hpwh": [],
+    "thermostat": [
+     {
+      "id": "mb-thermostat-0",
+      "program": "Efficiency Manitoba Smart Thermostat Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 50,
+      "cap": 50,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Get a $50 rebate when you purchase and install an ENERGY STAR® certified smart thermostat.",
+      "basis": null,
+      "conditions": "ENERGY STAR model on the eligible list, new or certified refurbished, bought in Canada; primary residence or year-round cottage; line-voltage (baseboard) thermostats not eligible.",
+      "deadline": "Install and apply within 90 days of purchase.",
+      "source": "https://efficiencymb.ca/my-home/smart-thermostat-rebate/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "assessment": [
+     {
+      "id": "mb-assessment-0",
+      "program": "Efficiency Manitoba EnerGuide Home Evaluation Rebate",
+      "slug": "efficiency-manitoba-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 400,
+      "cap": 400,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "We’ll give you a $400 rebate when you complete a pre-retrofit EnerGuide evaluation.",
+      "basis": null,
+      "conditions": "Own the home, rental or cottage; active Manitoba Hydro residential service; heated September to May; home at least two years old; plan at least one upgrade within 12 months; post-retrofit evaluations not eligible.",
+      "deadline": "Apply within 90 days of the evaluation.",
+      "source": "https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/",
+      "checked": "2026-10-08"
+     }
+    ]
+   },
+   "measureNotes": {
+    "hpwh": "No heat pump water heater rebate listed on Efficiency Manitoba's home offers (checked Oct 8, 2026)."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": null,
+    "note": "Service organizations set prices; $400 comes back with the rebate.",
+    "source": "https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "Manitoba Hydro Home Energy Efficiency Loan",
+     "city": null,
+     "amount": "Minimum $500; maximum $12,500 for all loans per residence",
+     "interestRate": "6.20% (O.A.C.) for the first 5 years",
+     "status": "open",
+     "source": "https://www.hydro.mb.ca/account/loans/home-energy-efficiency-loan/"
+    },
+    {
+     "name": "Efficiency Manitoba ground source heat pump payment plan",
+     "city": null,
+     "amount": "No upfront cost on retrofits up to $38,000",
+     "interestRate": "0%",
+     "status": "open",
+     "source": "https://efficiencymb.ca/gshp-home/"
+    }
+   ]
+  },
+  "NS": {
+   "name": "Nova Scotia",
+   "summary": "Assessment-based rebates up to $5,000 for any homeowner, a Moderate Income Rebate top-up of up to $5,000 for homes not heated mainly by electricity, instant rebates on heat pump water heaters and electric-heat smart thermostats, and free HomeWarming upgrades for low-income homeowners.",
+   "measures": {
+    "attic": [
+     {
+      "id": "ns-attic-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 125,
+      "cap": 750,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Increase attic insulation to R-50 (must insulate at least 20% of area): R-12 or less $150–$750; R-13 to R-25 $75–$375; R-26 to R-35 $25–$125. Flat roof/cathedral to R-20 from R-0: $100–$500; to R-28: $150–$750 (R-12 or less) or $50–$250 (R-13 to R-25).",
+      "basis": "Lowest tier at 100% coverage; use $375 (R-13 to R-25 today) or $750 (R-12 or less).",
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08",
+      "minTargetR": 50
+     }
+    ],
+    "walls": [
+     {
+      "id": "ns-walls-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 900,
+      "cap": 1500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Above ground exterior walls (at least 20% of area): add between R-3.8 & R-7.4: $180–$900; add R-7.5 or more: $300–$1,500.",
+      "basis": "Lower tier at 100% coverage.",
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "basement": [
+     {
+      "id": "ns-basement-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 600,
+      "cap": 1200,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Basement walls (at least 20%): add R-10 to R-22: $120–$600; add R-22 or more: $240–$1,200. Basement wall header $120–$150. Crawlspace walls & header (100%): $480 or $960. Floor above crawlspace $240. Basement slab $100–$200. Exposed floor $200.",
+      "basis": "Basement walls R-10 to R-22 added over 100% of wall area.",
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "ns-airSealing-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 200,
+      "cap": 200,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Air Sealing: Achieve the air sealing target identified in your recommendation upgrade report — $200.",
+      "basis": null,
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "windows": [
+     {
+      "id": "ns-windows-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 30,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Replacing a Window or Door Including the Frame — Must be ENERGY STAR® rated in Canada — $30 per rough opening.",
+      "basis": null,
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08",
+      "windowReq": "energyStar"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "ns-ashp-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "perTon",
+      "rate": 300,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Ductless Mini-Split Heat Pump: $300 per ton. Centrally Ducted Heat Pump: $500 per ton (based on newly added capacity).",
+      "basis": "Ductless rate; ducted is $500/ton.",
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08",
+      "ductedRate": 500
+     }
+    ],
+    "gshp": [
+     {
+      "id": "ns-gshp-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "perTon",
+      "rate": 600,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Geothermal Heat Pump (closed or open loop, maximum 40 kW or 135k Btu/h): $600 per ton (based on newly added capacity).",
+      "basis": null,
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08"
+     }
+    ],
+    "hpwh": [
+     {
+      "id": "ns-hpwh-0",
+      "program": "Efficiency Nova Scotia Home Energy Assessment rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 800,
+      "cap": 800,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Heat Pump Water Heaters, ENERGY STAR®: $800.",
+      "basis": null,
+      "conditions": "Initial Home Energy Assessment with an Efficiency Nova Scotia partnered service organization ($199, or free for low-to-moderate income households who apply first), upgrades bought and installed between the initial and final assessments, final assessment within 12 months of the first. All homeowners regardless of income or heating type can receive up to $5,000 in rebates; rebates capped at 100% of costs; keep receipts five years; cheque within about 90 days of the final…",
+      "deadline": "Final assessment within 12 months of the initial assessment.",
+      "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "ns-hpwh-1",
+      "program": "Efficiency Nova Scotia Instant Rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 800,
+      "cap": 800,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "ENERGY STAR® Certified Heat Pump Water Heaters — Rebate Amount: $800 | Instant in‑store rebate applied at checkout at participating retailers.",
+      "basis": null,
+      "conditions": "Bought at a participating retailer; no assessment needed.",
+      "deadline": "Not stated.",
+      "source": "https://www.efficiencyns.ca/programs-rebates/instant-rebates",
+      "checked": "2026-10-08"
+     }
+    ],
+    "thermostat": [
+     {
+      "id": "ns-thermostat-0",
+      "program": "Efficiency Nova Scotia Instant Rebates",
+      "slug": "efficiency-nova-scotia-rebates",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 45,
+      "cap": 45,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electric baseboard/in-floor",
+      "amount": "Smart Thermostats for Electric Heating — Rebate Amount: $45 | Instant rebate applied at checkout for in‑store purchases at participating retailers or online at getmysa.com.",
+      "basis": null,
+      "conditions": "Smart thermostats for electric heating, at participating retailers or getmysa.com.",
+      "deadline": "Not stated.",
+      "source": "https://www.efficiencyns.ca/programs-rebates/instant-rebates",
+      "checked": "2026-10-08"
+     }
+    ],
+    "assessment": []
+   },
+   "measureNotes": {
+    "assessment": "Not a rebate: the Home Energy Assessment costs $199, free for low-to-moderate income households who apply first; Moderate Income Rebate participants who paid up front get the $199 back when other rebates are issued."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": 199,
+    "note": "Book your initial Home Energy Assessment for $199 or for free if you qualify.",
+    "source": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "HalifACT Home Energy Upgrade (HHEU) financing",
+     "city": "halifax",
+     "amount": "Not stated",
+     "interestRate": "4.75% fixed",
+     "status": "open",
+     "source": "https://www.halifax.ca/about-halifax/environment-climate-change/halifact-energy-upgrade"
+    }
+   ]
+  },
+  "NB": {
+   "name": "New Brunswick",
+   "summary": "Evaluation-first incentives through NB Power's Total Home Energy Savings Program, with published per-square-foot insulation rates and fixed equipment amounts; free upgrades for households under $70,000.",
+   "measures": {
+    "attic": [
+     {
+      "id": "nb-attic-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "perSqft",
+      "rate": 0.4,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Attic — Minimum to add R-15, Maximum post-upgrade R-60. Incentive (dollars per square foot): R-15 added $0.40; R-20 $0.45; R-40 $0.65; R-60 $0.85 (intermediate amounts paid between rows).",
+      "basis": "Rate at the minimum R-15 added. The published rows fit $0.25 + $0.01 × R-added per sq ft (our reading of the table, e.g., R-30 added ≈ $0.55).",
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation. Insulate at least 20% of the ceiling area; replace any…",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/insulation-rebates/",
+      "checked": "2026-10-08",
+      "minRAdded": 15
+     }
+    ],
+    "walls": [
+     {
+      "id": "nb-walls-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "perSqft",
+      "rate": 1.125,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Exterior/Main Walls — Minimum to add R-7.5, Maximum post-upgrade R-30: R-7.5 $1.125; R-10 $1.25; R-20 $1.75; R-30 $2.25 (dollars per square foot).",
+      "basis": null,
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation. Insulate at least 20% of the wall area.",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/insulation-rebates/",
+      "checked": "2026-10-08",
+      "minRAdded": 7.5
+     }
+    ],
+    "basement": [
+     {
+      "id": "nb-basement-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "perSqft",
+      "rate": 1.0,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Basement/Crawlspace Walls — Minimum to add R-10, Maximum post-upgrade R-30: R-10 $1.00; R-20 $1.50; R-30 $2.00 per sq ft. Basement header: R-20 $1.00; R-30 $2.00; R-40 $3.00. Basement slab: R-3.5 $0.55; R-10 $1.20; R-20 $2.20. Exposed floor: R-10 $1.00; R-20 $2.00; R-30 $3.00.",
+      "basis": "e.g., 900 sq ft of basement wall with R-20 added = $1,350.",
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation. Insulate at least 20% of the component area.",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/insulation-rebates/",
+      "checked": "2026-10-08",
+      "minRAdded": 10
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "nb-airSealing-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "flat",
+      "rate": 250,
+      "cap": 550,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Air leakage reduction 10%: $250; 15%: $350; 20%: $450; 25%: $550 (sliding scale between 10 and 25%).",
+      "basis": null,
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation. Homes at 3 ACH or less at the initial evaluation aren't…",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/additional-rebates/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "windows": [
+     {
+      "id": "nb-windows-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 50,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Windows, doors & skylights: $50 — ENERGY STAR (keep the stickers that come on your windows).",
+      "basis": null,
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation.",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/additional-rebates/",
+      "checked": "2026-10-08",
+      "windowReq": "energyStar"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "nb-ashp-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "flat",
+      "rate": 400,
+      "cap": 1500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Central ducted air source heat pump $1,500; Furnace heat pump add on $1,000; Mini split heat pump $400; Multizone heat pump $350 per indoor head.",
+      "basis": "Mini-split amount; central ducted is $1,500.",
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation. Must be on NB Power's qualifying air source heat pump list…",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/space-heating-equipment-rebates/",
+      "checked": "2026-10-08",
+      "ductedAmount": 1500
+     }
+    ],
+    "gshp": [
+     {
+      "id": "nb-gshp-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "flat",
+      "rate": 2000,
+      "cap": 2000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Geothermal heat pump $2,000.",
+      "basis": null,
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation. On the Greener Homes ground-source list or ENERGY STAR.",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/space-heating-equipment-rebates/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "hpwh": [
+     {
+      "id": "nb-hpwh-0",
+      "program": "NB Power Total Home Energy Savings Program",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "flat",
+      "rate": 550,
+      "cap": 550,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Heat pump water heater $550 — ENERGY STAR.",
+      "basis": null,
+      "conditions": "Register first and have the initial Home Energy Evaluation ($99 + HST, covering initial and final evaluations) before buying or installing anything; complete recommended upgrades within 9 months; final evaluation with the same Certified Energy Advisor; keep receipts. Legal property owner; house up to three storeys and under 600 m²; detached, side-by-side or row homes, or mini/mobile homes on a permanent foundation.",
+      "deadline": "Complete upgrades and final evaluation within 9 months of the initial evaluation.",
+      "source": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/water-heating-equipment-rebates/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "thermostat": [
+     {
+      "id": "nb-thermostat-0",
+      "program": "NB Power in-store rebates",
+      "slug": "nb-total-home-energy-savings",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 45,
+      "cap": 45,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electric baseboard/in-floor",
+      "amount": "Smart Thermostat for Electric Heat — Electric baseboards and in floor heating — $45 off per unit.",
+      "basis": null,
+      "conditions": "Instant discount at participating stores; maximum 5 items per transaction.",
+      "deadline": "Annual in-store rebates available until March 31, 2027.",
+      "source": "https://www.saveenergynb.ca/en/for-home/in-store-rebates/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "assessment": []
+   },
+   "measureNotes": {
+    "assessment": "Not a rebate: homeowners pay \"a $99 fee +HST\" that \"covers both the Initial and the Final Home Energy Evaluations.\""
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": 99,
+    "note": "$99 + HST, covering initial and final evaluations.",
+    "source": "https://www.saveenergynb.ca/en/for-home/total-home/frequently-asked-questions/",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": []
+  },
+  "PE": {
+   "name": "Prince Edward Island",
+   "summary": "Insulation, window/door and air sealing rebates continue through efficiencyPEI after a $99 assessment. Heat pump, heat pump water heater and other equipment rebates ended April 15, 2026, and the free heat pump program is closed.",
+   "measures": {
+    "attic": [
+     {
+      "id": "pe-attic-0",
+      "program": "efficiencyPEI Home Insulation Rebates",
+      "slug": "efficiency-pei-rebates",
+      "status": "open",
+      "kind": "per100SqftR",
+      "rate": 3.5,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Attic insulation: $3.50 per SQ per R-value increase (regular); $5.50 per SQ per R-value increase (low-income). Minimum: total R50 for flat ceilings, R28 for sloped ceilings.",
+      "basis": "e.g., 1,000 sq ft (10 SQ) from R-12 to R-50 = 10 × 38 × $3.50 = $1,330.",
+      "conditions": "Book the subsidized home energy assessment ($99 + HST) with one of five listed providers first; get approval before work (\"Upgrades done before approval will not be refunded\"). Homeowners and landlords of residential properties. SQ = 100 square feet. Rates \"as of June 2, 2025\"; page dated September 2, 2026.",
+      "deadline": "Not stated.",
+      "source": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs",
+      "checked": "2026-10-08",
+      "minTargetR": 50
+     }
+    ],
+    "walls": [
+     {
+      "id": "pe-walls-0",
+      "program": "efficiencyPEI Home Insulation Rebates",
+      "slug": "efficiency-pei-rebates",
+      "status": "open",
+      "kind": "per100SqftR",
+      "rate": 10,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Above-grade walls (new interior/exterior finish): $50 per SQ per R-value increase (R6 minimum increase). Above-grade walls (blown-in insulation): $10 per SQ per R-value increase (R10 minimum increase). Low-income: $80 / $16.",
+      "basis": "Blown-in rate (conservative); walls opened up with new finish earn $50 per SQ per R.",
+      "conditions": "Book the subsidized home energy assessment ($99 + HST) with one of five listed providers first; get approval before work (\"Upgrades done before approval will not be refunded\"). Homeowners and landlords of residential properties. SQ = 100 square feet. Rates \"as of June 2, 2025\"; page dated September 2, 2026.",
+      "deadline": "Not stated.",
+      "source": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs",
+      "checked": "2026-10-08",
+      "minRAddedByOption": {
+       "dense": 10,
+       "exterior": 6
+      }
+     }
+    ],
+    "basement": [
+     {
+      "id": "pe-basement-0",
+      "program": "efficiencyPEI Home Insulation Rebates",
+      "slug": "efficiency-pei-rebates",
+      "status": "open",
+      "kind": "per100SqftR",
+      "rate": 21,
+      "cap": null,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Below-grade: $21 per SQ per R-value increase (R12 increase for walls, R20 for headers); low-income $34. Exposed floors and headers: $21 per SQ per R-value increase (total R20).",
+      "basis": "Program's own example: 30 ft × 40 ft basement, 8 ft walls (11.2 SQ), R0 to R12 = $2,822.40.",
+      "conditions": "Book the subsidized home energy assessment ($99 + HST) with one of five listed providers first; get approval before work (\"Upgrades done before approval will not be refunded\"). Homeowners and landlords of residential properties. SQ = 100 square feet. Rates \"as of June 2, 2025\"; page dated September 2, 2026.",
+      "deadline": "Not stated.",
+      "source": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs",
+      "checked": "2026-10-08",
+      "minRAdded": 12
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "pe-airSealing-0",
+      "program": "efficiencyPEI Home Insulation Rebates",
+      "slug": "efficiency-pei-rebates",
+      "status": "open",
+      "kind": "flat",
+      "rate": 150,
+      "cap": 575,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Air sealing (improvement over initial ACH @ 50 Pa): 10% $150; 20% $375; 30% $575 (regular); low-income $250 / $650 / $1,000.",
+      "basis": null,
+      "conditions": "Book the subsidized home energy assessment ($99 + HST) with one of five listed providers first; get approval before work (\"Upgrades done before approval will not be refunded\"). Homeowners and landlords of residential properties. SQ = 100 square feet. Rates \"as of June 2, 2025\"; page dated September 2, 2026.",
+      "deadline": "Not stated.",
+      "source": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs",
+      "checked": "2026-10-08"
+     }
+    ],
+    "windows": [
+     {
+      "id": "pe-windows-0",
+      "program": "efficiencyPEI Home Insulation Rebates",
+      "slug": "efficiency-pei-rebates",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 125,
+      "cap": 1000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Windows, doors, skylights (ENERGY STAR v5, 2020 onward): $125 per opening, max $1,000 per property (low-income $245 per opening, max $2,000).",
+      "basis": null,
+      "conditions": "Book the subsidized home energy assessment ($99 + HST) with one of five listed providers first; get approval before work (\"Upgrades done before approval will not be refunded\"). Homeowners and landlords of residential properties. SQ = 100 square feet. Rates \"as of June 2, 2025\"; page dated September 2, 2026.",
+      "deadline": "Not stated.",
+      "source": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs",
+      "checked": "2026-10-08",
+      "windowReq": "energyStar"
+     }
+    ],
+    "ashp": [],
+    "gshp": [],
+    "hpwh": [],
+    "thermostat": [],
+    "assessment": []
+   },
+   "measureNotes": {
+    "ashp": "\"On April 15, 2026, heat pump rebates ended.\" Equipment bought April 15, 2025 to April 15, 2026 can still be claimed within one year of purchase. \"Applications for free heat pumps and the Oil to Heat Pump Affordability Program are closed.\"",
+    "gshp": "Ground source heat pump rebates ended April 15, 2026.",
+    "hpwh": "\"Hybrid water heaters\" (heat pump water heaters) rebates ended April 15, 2026.",
+    "thermostat": "No smart thermostat rebate found on efficiencyPEI's pages.",
+    "assessment": "Not a rebate: \"The home energy assessment is offered at a subsidized rate of $99 plus HST\" through Clean Foundation, Homesol Building Solutions, RUGreen Energy Solutions, Sensible Home Inspections or Trinity Energy Group; required for insulation rebates."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": 99,
+    "note": "$99 + HST.",
+    "source": "https://www.princeedwardisland.ca/en/information/energy/home-energy-assessments",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "PEI Energy Efficiency Loan (Finance PEI)",
+     "city": null,
+     "amount": null,
+     "interestRate": null,
+     "status": null,
+     "source": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs"
+    }
+   ]
+  },
+  "NL": {
+   "name": "Newfoundland and Labrador",
+   "summary": "takeCHARGE (Newfoundland Power and NL Hydro) pays for attic and basement insulation and air sealing in electrically heated homes, and its Oil to Electric Incentive Program is still open for oil- and propane-heated homes.",
+   "measures": {
+    "attic": [
+     {
+      "id": "nl-attic-0",
+      "program": "takeCHARGE Insulation Rebate",
+      "slug": "takecharge-nl",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 1500,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "Get a rebate for 75% of the cost of attic and basement insulation — up to $1,000 each, plus up to $500 in labour for each area. That’s up to $3,000 in rebates.",
+      "basis": null,
+      "conditions": "Primary heat must be electric (or the home uses at least 15,000 kWh a year if another source is used); built and connected before January 1, 2014; primary residence on a permanent foundation; homeowner with an active electricity account (landlords and contractors can also apply). Must meet minimum R-values; rebates only up to the maximum R-value; pre-tax insulation and labour costs; labour rebate only with a participating professional installer; spray foam must be…",
+      "deadline": "Not stated.",
+      "source": "https://takechargenl.ca/residential/rebate-programs/insulation-rebate/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "walls": [],
+    "basement": [
+     {
+      "id": "nl-basement-0",
+      "program": "takeCHARGE Insulation Rebate",
+      "slug": "takecharge-nl",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 1500,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "Get a rebate for 75% of the cost of attic and basement insulation — up to $1,000 each, plus up to $500 in labour for each area.",
+      "basis": null,
+      "conditions": "Same conditions as attic. Rebates for basement and crawl space walls, or basement and crawl space ceilings, but not both.",
+      "deadline": "Not stated.",
+      "source": "https://takechargenl.ca/residential/rebate-programs/insulation-rebate/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "nl-airSealing-0",
+      "program": "takeCHARGE Air Sealing Rebate (existing homes)",
+      "slug": "takecharge-nl",
+      "status": "open",
+      "kind": "flat",
+      "rate": 200,
+      "cap": 750,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "Rebates are based on achieved air leakage improvements and are pro-rated between $200 to $750: 10% improvement in ACH50 $200; 20% $475; 30%+ $750. Maximum rebate of $750 per home.",
+      "basis": null,
+      "conditions": "Electric primary heat (or 15,000 kWh/yr); homeowner with active electricity account; home must have an HRV or air exchanger; pre- and post-retrofit blower door tests by an approved professional; credit on the electricity bill.",
+      "deadline": "Not stated.",
+      "source": "https://takechargenl.ca/residential/rebate-programs/air-sealing-rebate/",
+      "checked": "2026-10-08"
+     },
+     {
+      "id": "nl-airSealing-1",
+      "program": "takeCHARGE Bundled Air Sealing with Attic Insulation",
+      "slug": "takecharge-nl",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 750,
+      "fuels": [
+       "electricity"
+      ],
+      "fuelText": "electricity",
+      "amount": "Rebate covers eligible air sealing materials at $0.50 per square foot of area sealed, up to $750 per home.",
+      "basis": null,
+      "conditions": "Homes built before 2014, done with an eligible attic insulation upgrade by a TakeCharge-approved installer; paid to the installer.",
+      "deadline": "Not stated.",
+      "source": "https://takechargenl.ca/residential/rebate-programs/air-sealing-rebate/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "windows": [],
+    "ashp": [
+     {
+      "id": "nl-ashp-0",
+      "program": "takeCHARGE Oil to Electric Incentive Program",
+      "slug": "takecharge-nl",
+      "status": "open",
+      "kind": "pctCost",
+      "rate": null,
+      "cap": 9000,
+      "fuels": [
+       "oil",
+       "propane"
+      ],
+      "fuelText": "oil or propane",
+      "amount": "General: Central Heat Pump save up to $9,000; Multiple Mini-Split or Multi-Split Heat Pump save up to $6,500; Electric Furnace/Boiler save up to $5,000. Income-Qualified: up to $22,000 / $18,000 / $10,000. \"Incentives can cover up to 100% of the cost of switching from oil to electricity.\"",
+      "basis": null,
+      "conditions": "Homes heated by oil (at least 500 L in a 12-month period) or propane (at least 1,000 L); owner; permanent foundation, primary residence, on the island or Labrador interconnected grid; new homes excluded. Whole-home heating with heat pumps on NRCan's OHPA list; backup heat required. Participating installer, paid directly; oil tank removed; pre-approval holds funds for 365 days; projects completed after April 1, 2023. Income-qualified heat pump participants also get NRCan's…",
+      "deadline": "\"The Oil to Electric Program is still accepting applications.\" No closure date set; install within 365 days of pre-approval.",
+      "source": "https://takechargenl.ca/oiltoelectric/",
+      "checked": "2026-10-08",
+      "pct": 1.0,
+      "ductlessCap": 6500
+     }
+    ],
+    "gshp": [],
+    "hpwh": [],
+    "thermostat": [],
+    "assessment": []
+   },
+   "measureNotes": {
+    "walls": "takeCHARGE's insulation rebate covers attics and basements only.",
+    "windows": "No window rebate.",
+    "doors": "No door rebate.",
+    "ashp": "Electrically heated homes adding a heat pump get on-bill financing, not a rebate.",
+    "gshp": "Oil to Electric covers air source heat pumps (and electric furnaces/boilers), not ground source.",
+    "hpwh": "None found.",
+    "thermostat": "The Mysa thermostat pilot (Newfoundland Power) is closed to enrolment; no purchase rebate.",
+    "assessment": "No evaluation subsidy; takeCHARGE lists four companies offering assessments."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": null,
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "Newfoundland Power / NL Hydro heat pump financing",
+     "city": null,
+     "amount": null,
+     "interestRate": null,
+     "status": "open",
+     "source": "https://takechargenl.ca/residential/tips-products/heat-pumps/"
+    }
+   ]
+  },
+  "YT": {
+   "name": "Yukon",
+   "summary": "Yukon's Energy Branch pays some of the largest per-home amounts in Canada: insulation up to $12,000 for walls, $5,000 for air sealing to a tight target, and 50% of heat pump costs up to $10,500 (100% up to $24,000 for low-to-median incomes).",
+   "measures": {
+    "attic": [
+     {
+      "id": "yt-attic-0",
+      "program": "Yukon home insulation and air sealing rebate",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "flat",
+      "rate": 2500,
+      "cap": 2500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "$2,500 for insulating your attic (proportional to the percentage of attic surface area insulated).",
+      "basis": "Full amount when 100% of the attic goes from R-40 or less to R-60+; scale by share of area.",
+      "conditions": "Existing residence (5 years or older). Energy assessment with an NRCan-registered advisor before applying and a follow-up assessment after the work ($50 each at the reduced fee), with a new assessment after each stage if done in stages. Receipts within 1 year of applying; rebate within 12 weeks. Attic must be R40 or less before and reach R60 or more.",
+      "deadline": "Receipts dated within 1 year of applying.",
+      "source": "https://yukon.ca/en/home-insulation-air-sealing-rebate",
+      "checked": "2026-10-08",
+      "minTargetR": 60,
+      "maxExistingR": 40
+     }
+    ],
+    "walls": [
+     {
+      "id": "yt-walls-0",
+      "program": "Yukon home insulation and air sealing rebate",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "flat",
+      "rate": 12000,
+      "cap": 12000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Up to $12,000 for insulating above-ground walls (based on the percentage of the total wall area insulated).",
+      "basis": "Full amount only if all above-ground walls are insulated and the R-value at least doubles; scale by share of wall area.",
+      "conditions": "Existing residence (5 years or older). Energy assessment with an NRCan-registered advisor before applying and a follow-up assessment after the work ($50 each at the reduced fee), with a new assessment after each stage if done in stages. Receipts within 1 year of applying; rebate within 12 weeks. Must at least double the existing R-value.",
+      "deadline": "Receipts dated within 1 year of applying.",
+      "source": "https://yukon.ca/en/home-insulation-air-sealing-rebate",
+      "checked": "2026-10-08",
+      "requiresDoubling": true
+     }
+    ],
+    "basement": [
+     {
+      "id": "yt-basement-0",
+      "program": "Yukon home insulation and air sealing rebate",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "flat",
+      "rate": 10000,
+      "cap": 10000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Up to $10,000 for insulating below-ground walls (proportional to the depth; maximum at 6 feet or more). $2,000 for insulating slabs or floor systems.",
+      "basis": "Full amount for below-grade walls 6 ft deep or more; the Energy Branch summary page says up to $12,000, the detailed page $10,000 (we used $10,000).",
+      "conditions": "Existing residence (5 years or older). Energy assessment with an NRCan-registered advisor before applying and a follow-up assessment after the work ($50 each at the reduced fee), with a new assessment after each stage if done in stages. Receipts within 1 year of applying; rebate within 12 weeks. Below-ground walls and slabs must be R20 or less before and gain at least R20.",
+      "deadline": "Receipts dated within 1 year of applying.",
+      "source": "https://yukon.ca/en/home-insulation-air-sealing-rebate",
+      "checked": "2026-10-08"
+     }
+    ],
+    "airSealing": [
+     {
+      "id": "yt-airSealing-0",
+      "program": "Yukon home insulation and air sealing rebate",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "flat",
+      "rate": 5000,
+      "cap": 5000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "The total air sealing rebate is $5,000 per building when the building meets or exceeds the air sealing target.",
+      "basis": "All-or-nothing: paid only when the 1.5 ACH target is met.",
+      "conditions": "Existing residence (5 years or older). Energy assessment with an NRCan-registered advisor before applying and a follow-up assessment after the work ($50 each at the reduced fee), with a new assessment after each stage if done in stages. Receipts within 1 year of applying; rebate within 12 weeks. At least 3 air changes per hour at the first assessment and 1.5 or fewer afterwards, with an HRV installed.",
+      "deadline": "Receipts dated within 1 year of applying.",
+      "source": "https://yukon.ca/en/home-insulation-air-sealing-rebate",
+      "checked": "2026-10-08",
+      "defaultOff": true
+     }
+    ],
+    "windows": [
+     {
+      "id": "yt-windows-0",
+      "program": "Yukon window energy rebate",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "perCount",
+      "rate": 100,
+      "cap": 1000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "$120 per window to a maximum rebate of $1,800 per home or building.",
+      "basis": "$100 used because the page's own summary still says $100 per window and $1,000 maximum, while the body says $120 and $1,800.",
+      "conditions": "Complete ENERGY STAR-certified window assemblies (sealed glass units alone don't qualify); heated building at least five years old; rebate within 12 weeks.",
+      "deadline": "Not stated.",
+      "source": "https://yukon.ca/en/window-energy-rebate",
+      "checked": "2026-10-08",
+      "windowReq": "energyStar"
+     }
+    ],
+    "ashp": [
+     {
+      "id": "yt-ashp-0",
+      "program": "Yukon heating system rebate (heat pumps)",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "pctCost",
+      "rate": null,
+      "cap": 10500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "You can claim 50 per cent of project costs up to a maximum of $10,500.",
+      "basis": null,
+      "conditions": "Cold-climate air-source units on NRCan's list for Manitoba and Yukon (or ENERGY STAR ground-source); home at least six months old; existing non-electric heat kept as backup; electric systems kept and enrolled in Yukon Energy's Peak Smart Home; final electrical inspection report.",
+      "deadline": "Not stated.",
+      "source": "https://yukon.ca/en/heating-system-rebate",
+      "checked": "2026-10-08",
+      "pct": 0.5
+     }
+    ],
+    "gshp": [
+     {
+      "id": "yt-gshp-0",
+      "program": "Yukon heating system rebate (heat pumps)",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "pctCost",
+      "rate": null,
+      "cap": 10500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "You can claim 50 per cent of project costs up to a maximum of $10,500.",
+      "basis": null,
+      "conditions": "ENERGY STAR certified ground-source units; same conditions as air source.",
+      "deadline": "Not stated.",
+      "source": "https://yukon.ca/en/heating-system-rebate",
+      "checked": "2026-10-08",
+      "pct": 0.5
+     }
+    ],
+    "hpwh": [],
+    "thermostat": [
+     {
+      "id": "yt-thermostat-0",
+      "program": "Yukon Peak Smart Home rebate",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "pctCost",
+      "rate": null,
+      "cap": 250,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "25 per cent of eligible costs up to $250 per home for applicants that are not enrolled in the Peak Smart Home program; 75 per cent up to $750 for enrolled applicants.",
+      "basis": null,
+      "conditions": "Device bought after December 4, 2024 and eligible for Peak Smart Home; enrolment proof needed for the 75% rate.",
+      "deadline": "Not stated.",
+      "source": "https://yukon.ca/en/apply-peak-smart-home-rebate-your-smart-thermostat-or-hot-water-tank-controller",
+      "checked": "2026-10-08",
+      "pct": 0.25
+     }
+    ],
+    "assessment": []
+   },
+   "measureNotes": {
+    "doors": "The window rebate page doesn't mention doors.",
+    "hpwh": "No HPWH rebate; Yukon's hot-water rebates cover solar hot water and drain-water heat recovery.",
+    "assessment": "Not a rebate: reduced-fee assessments cost \"$50 for a pre-renovation assessment and $50 for a return visit\"."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": 50,
+    "note": "$50 pre-renovation + $50 return visit.",
+    "source": "https://yukon.ca/en/energy-assessment",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": [
+    {
+     "name": "Yukon Better Buildings Program",
+     "city": null,
+     "amount": "25% of assessed value, up to $50,000 (residential)",
+     "interestRate": "Bank of Canada rate",
+     "status": "closed",
+     "source": "https://yukon.ca/en/housing-and-property/home-energy-rebates/get-funding-complete-residential-or-commercial-building"
+    }
+   ]
+  },
+  "NT": {
+   "name": "Northwest Territories",
+   "summary": "The Arctic Energy Alliance (AEA) pays insulation rebates and 50% of programmable thermostat costs, and subsidizes EnerGuide evaluations. No current residential heat pump, window or HPWH rebate is listed, and AEA no longer rebates fossil-fuel systems.",
+   "measures": {
+    "attic": [
+     {
+      "id": "nt-attic-0",
+      "program": "Arctic Energy Alliance Energy-Efficient Products rebates",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 1500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Ceiling insulation: Up to $1,500.",
+      "basis": null,
+      "conditions": "NWT residents; rules in AEA's Residential Insulation Rebate Application Form (not retrieved). Rebates are first-come, first-served within the April 1, 2026 – March 31, 2027 year.",
+      "deadline": "2026/27 program year ends March 31, 2027.",
+      "source": "https://aea.nt.ca/program/energy-efficient-products/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "walls": [
+     {
+      "id": "nt-walls-0",
+      "program": "Arctic Energy Alliance Energy-Efficient Products rebates",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 8000,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Exterior wall insulation: Up to $8,000.",
+      "basis": null,
+      "conditions": "As above.",
+      "deadline": "2026/27 program year.",
+      "source": "https://aea.nt.ca/program/energy-efficient-products/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "basement": [
+     {
+      "id": "nt-basement-0",
+      "program": "Arctic Energy Alliance Energy-Efficient Products rebates",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "info",
+      "rate": null,
+      "cap": 2500,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Basement insulation: Up to $2,500. Basement header insulation: $625. Crawlspace insulation: Up to $2,000. Exposed floor insulation: $500.",
+      "basis": null,
+      "conditions": "As above.",
+      "deadline": "2026/27 program year.",
+      "source": "https://aea.nt.ca/program/energy-efficient-products/",
+      "checked": "2026-10-08"
+     }
+    ],
+    "airSealing": [],
+    "windows": [],
+    "ashp": [],
+    "gshp": [],
+    "hpwh": [],
+    "thermostat": [
+     {
+      "id": "nt-thermostat-0",
+      "program": "Arctic Energy Alliance Energy-Efficient Products rebates",
+      "slug": "territories-energy-programs",
+      "status": "open",
+      "kind": "pctCost",
+      "rate": null,
+      "cap": 150,
+      "fuels": null,
+      "fuelText": null,
+      "amount": "Programmable thermostat: 50% of purchase cost, up to $150.",
+      "basis": null,
+      "conditions": "Up to 5 per year for individuals; apply within 3 months of purchase; installed in the NWT. Smart thermostats aren't named separately.",
+      "deadline": "Apply within 3 months of purchase.",
+      "source": "https://aea.nt.ca/program/energy-efficient-products/",
+      "checked": "2026-10-08",
+      "pct": 0.5,
+      "perCount": true
+     }
+    ],
+    "assessment": []
+   },
+   "measureNotes": {
+    "airSealing": "No air sealing rebate listed.",
+    "windows": "No window rebate listed.",
+    "doors": "No door rebate listed.",
+    "ashp": "No residential air source heat pump rebate on AEA's current product or renewable energy pages.",
+    "gshp": "AEA's renewable energy page mentions ground-source heat pumps in its introduction but not in its eligible technology list; ask AEA before counting on it.",
+    "hpwh": "None listed.",
+    "assessment": "Not a rebate: \"The subsidized cost of a home evaluation is ... Single family house: $200 + GST\" ($300 + GST with one secondary suite)."
+   },
+   "bonuses": [],
+   "caps": [],
+   "assessment": {
+    "amount": 200,
+    "note": "$200 + GST for a single family house.",
+    "source": "https://aea.nt.ca/program/home-energy-evaluations/",
+    "checked": "2026-10-08"
+   },
+   "cityCaveats": {},
+   "financing": []
+  }
+ },
+ "municipal": {
+  "kingston": [
+   {
+    "program": "Better Homes Kingston rebates (Utilities Kingston natural gas customers)",
+    "status": "waitlist",
+    "conditions": "Program relaunched May 4, 2026 with \"new rebates for Utilities Kingston natural gas customers\"; projects must cut GHG emissions or energy use by at least 20%; meet an energy coach and get written confirmation before work.",
+    "source": "https://cityofkingston.ca/building-and-renovating/better-homes-kingston/apply-for-better-homes-kingston-program/",
+    "checked": "2026-10-08"
+   }
+  ],
+  "guelph": [
+   {
+    "program": "Guelph Greener Homes low-income grant",
+    "status": "income-qualified",
+    "conditions": "Low-income households meeting the page's before-tax income table; current value assessment of $350,000 or less; owner-occupied primary residence; pre- and post-retrofit energy audit reports. \"The Guelph Greener Homes program low-income grants are limited and subject to availability.\"",
+    "source": "https://guelph.ca/living/environment/energy/guelph-greener-homes/how-the-guelph-greener-homes-program-works/",
+    "checked": "2026-10-08"
+   }
+  ],
+  "london": [
+   {
+    "program": "BetterHomes London incentives",
+    "status": "income-qualified",
+    "conditions": "Only for BetterHomes London loan participants who income-qualify: under $95,000 for one person, under $115,000 for two to five people (six or more: contact the program). Projects need at least 25% energy savings; rental properties aren't eligible for incentives.",
+    "source": "https://betterhomeslondon.ca/incentives/",
+    "checked": "2026-10-08"
+   }
+  ],
+  "cambridge": [
+   {
+    "program": "RetrofitWR heat pump incentives (Region of Waterloo)",
+    "status": "open",
+    "conditions": "Only for RetrofitWR loan participants: GrandBridge Energy customers in Waterloo Region, single-detached/townhome/duplex/row up to three storeys, primary residence, good credit, at least 25% energy reduction with pre- and post-retrofit assessments. Incentives up to $5,500 in all, including…",
+    "source": "https://retrofitwr.ca/incentives/",
+    "checked": "2026-10-08"
+   }
+  ],
+  "kitchener": [
+   {
+    "program": "Kitchener Utilities smart thermostat rebate",
+    "status": "open",
+    "conditions": "Kitchener Utilities natural gas customer with an active meter; single detached, semi-detached or row townhouse heated by a gas furnace or boiler; replacing a non-smart thermostat; one per address; \"Limited funding is available.\" If the thermostat costs less than $75, the credit equals the price.",
+    "source": "https://www.kitchenerutilities.ca/offers-rebates/current-offers/",
+    "checked": "2026-10-08"
+   }
+  ],
+  "gatineau": [
+   {
+    "program": "Ville de Gatineau — Programme de remplacement de systèmes de chauffage au mazout",
+    "status": "open",
+    "conditions": "Only in eligible sectors of the city (check your address first). Replaces a forced-air or hot-water oil system that heats at least one dwelling with a system using electricity only; oil system dismantled and tank removed; no other subsidy for the same work. Registration any time; paid in one…",
+    "source": "https://www.gatineau.ca/portail/default.aspx?c=fr-CA&p=guichet_municipal/subventions_commandites/programme_remplacement_systemes_chauffage_mazout",
+    "checked": "2026-10-08"
+   }
+  ],
+  "nanaimo": [
+   {
+    "program": "City of Nanaimo home energy assessment incentives",
+    "status": "open",
+    "conditions": "Initial assessment by a certified energy advisor; apply within 24 months of the receipt date; follow-up rebate only if the reduction is at least 5 GJ. Financing-program participants also get a $200 discount on the pre-upgrade evaluation.",
+    "source": "https://www.nanaimo.ca/property-development/rebates/home-energy-efficiency-rebate/how-to-receive-your-home-energy-assessment-rebate",
+    "checked": "2026-10-08"
+   }
+  ],
+  "saanich": [
+   {
+    "program": "Saanich Energy Evaluation Grant (limited offer)",
+    "status": "open",
+    "conditions": "Only for participants approved for the Saanich Heat Pump Financing Program who opt in; pre-retrofit EnerGuide evaluation with a program-partnered advisor within three months; limited to 40 participants (20 income-qualified); evaluations on or after May 12, 2025; while funds last.",
+    "source": "https://saanich.ca/assets/Community/Documents/Planning/sustainability/Energy%20Evaluation%20Grant%20TC%20FINAL.pdf",
+    "checked": "2026-10-08"
+   }
+  ],
+  "saskatoon": [
+   {
+    "program": "Saskatoon HELP energy audit rebate",
+    "status": "open",
+    "conditions": "\"Homeowner's must participate in the loan portion of the program to receive the energy audit rebate.\" EnerGuide evaluations through listed service organizations.",
+    "source": "https://www.saskatoon.ca/environmental-initiatives/better-buildings/home-energy-and-water-efficiency/home-energy-loan-program-help",
+    "checked": "2026-10-08"
+   }
+  ],
+  "lethbridge": [
+   {
+    "program": "City of Lethbridge CEIP rebate",
+    "status": "waitlist",
+    "conditions": "For CEIP participants; the City's CEIP \"is currently at capacity and has closed to pre-qualification submissions\" (waitlist).",
+    "source": "https://www.lethbridge.ca/ceip",
+    "checked": "2026-10-08"
+   }
+  ]
+ },
+ "cityCoverage": {
+  "toronto": {
+   "name": "Toronto",
+   "prov": "ON",
+   "result": "financing",
+   "note": "HELP loans open; City HELP rebates fully subscribed (window July 7, 2022 to January 24, 2025)."
+  },
+  "montreal": {
+   "name": "Montréal",
+   "prov": "QC",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "calgary": {
+   "name": "Calgary",
+   "prov": "AB",
+   "result": "financing (closed)",
+   "note": "CEIP closed until winter 2026/2027."
+  },
+  "ottawa": {
+   "name": "Ottawa",
+   "prov": "ON",
+   "result": "financing",
+   "note": "Better Homes Ottawa loans; new applications waitlisted; no City cash rebates listed."
+  },
+  "edmonton": {
+   "name": "Edmonton",
+   "prov": "AB",
+   "result": "financing (waitlist)",
+   "note": "CEIP pre-qualifications waitlisted; no City cash rebates listed."
+  },
+  "winnipeg": {
+   "name": "Winnipeg",
+   "prov": "MB",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "mississauga": {
+   "name": "Mississauga",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Sitemap scan found only stormwater/flood and tax rebates."
+  },
+  "vancouver": {
+   "name": "Vancouver",
+   "prov": "BC",
+   "result": "none found",
+   "note": "City heat pump top-ups were shown as fully subscribed; Better Homes BC's municipal top-up page now returns 404. City sitemap unreadable."
+  },
+  "brampton": {
+   "name": "Brampton",
+   "prov": "ON",
+   "result": "not checked",
+   "note": "City sitemap unreadable by our crawler; no web search budget left."
+  },
+  "hamilton": {
+   "name": "Hamilton",
+   "prov": "ON",
+   "result": "closed",
+   "note": "Better Homes Hamilton pilot closed February 1, 2024."
+  },
+  "surrey": {
+   "name": "Surrey",
+   "prov": "BC",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "quebec-city": {
+   "name": "Québec City",
+   "prov": "QC",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "halifax": {
+   "name": "Halifax",
+   "prov": "NS",
+   "result": "financing",
+   "note": "HalifACT Home Energy Upgrade financing for oil-heated pre-2000 homes."
+  },
+  "laval": {
+   "name": "Laval",
+   "prov": "QC",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "london": {
+   "name": "London",
+   "prov": "ON",
+   "result": "financing + income-qualified incentives",
+   "note": "BetterHomes London (2.5% loans; income-qualified grants up to $10,000)."
+  },
+  "markham": {
+   "name": "Markham",
+   "prov": "ON",
+   "result": "none found",
+   "note": "City page lists provincial/utility programs; a Markham–Richmond Hill retrofit program is still at feasibility stage."
+  },
+  "vaughan": {
+   "name": "Vaughan",
+   "prov": "ON",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "gatineau": {
+   "name": "Gatineau",
+   "prov": "QC",
+   "result": "municipal rebate",
+   "note": "Oil heating replacement subsidy (75%, max $3,500) in eligible sectors."
+  },
+  "saskatoon": {
+   "name": "Saskatoon",
+   "prov": "SK",
+   "result": "financing + audit rebate",
+   "note": "HELP open; $1,000 audit rebate for loan participants."
+  },
+  "kitchener": {
+   "name": "Kitchener",
+   "prov": "ON",
+   "result": "utility rebate",
+   "note": "Kitchener Utilities $75 smart thermostat credit; HRSP eligibility caveat for Kitchener Utilities gas homes; RetrofitWR loans limited to GrandBridge customers."
+  },
+  "longueuil": {
+   "name": "Longueuil",
+   "prov": "QC",
+   "result": "none found",
+   "note": "Sitemap scan (home adaptation and AccèsLogis only)."
+  },
+  "burnaby": {
+   "name": "Burnaby",
+   "prov": "BC",
+   "result": "none found",
+   "note": "City page points to BC Hydro's bonus and CleanBC programs."
+  },
+  "windsor": {
+   "name": "Windsor",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Sitemap scan found no residential retrofit pages; the earlier deep-retrofit engagement page now needs a login."
+  },
+  "regina": {
+   "name": "Regina",
+   "prov": "SK",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "oakville": {
+   "name": "Oakville",
+   "prov": "ON",
+   "result": "not checked",
+   "note": "Sitemap timed out."
+  },
+  "richmond-bc": {
+   "name": "Richmond",
+   "prov": "BC",
+   "result": "not checked",
+   "note": "City sitemap unreadable; Better Homes BC top-up pages for Richmond now 404."
+  },
+  "richmond-hill": {
+   "name": "Richmond Hill",
+   "prov": "ON",
+   "result": "none found",
+   "note": "City page lists provincial and Enbridge programs and Windfall Ecology Centre help."
+  },
+  "burlington": {
+   "name": "Burlington",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Better Homes Burlington page returns 404; sitemap shows no current program."
+  },
+  "oshawa": {
+   "name": "Oshawa",
+   "prov": "ON",
+   "result": "financing",
+   "note": "Durham Greener Homes LIC loan."
+  },
+  "sherbrooke": {
+   "name": "Sherbrooke",
+   "prov": "QC",
+   "result": "none found",
+   "note": "Hydro-Sherbrooke offers dual-energy rates, not rebates; LogisVert applies to Hydro-Sherbrooke customers."
+  },
+  "sudbury": {
+   "name": "Greater Sudbury",
+   "prov": "ON",
+   "result": "none found",
+   "note": "CHIRP is guidance only: \"The City of Greater Sudbury does not perform construction work or provide direct rebates.\""
+  },
+  "abbotsford": {
+   "name": "Abbotsford",
+   "prov": "BC",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "levis": {
+   "name": "Lévis",
+   "prov": "QC",
+   "result": "none found",
+   "note": "Sitemap scan (home adaptation and RénoRégion only)."
+  },
+  "coquitlam": {
+   "name": "Coquitlam",
+   "prov": "BC",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "barrie": {
+   "name": "Barrie",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Sitemap scan and energy-efficiency page show no homeowner rebates."
+  },
+  "saguenay": {
+   "name": "Saguenay",
+   "prov": "QC",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "kelowna": {
+   "name": "Kelowna",
+   "prov": "BC",
+   "result": "not checked",
+   "note": "City sitemap unreadable; earlier Better Homes BC listing showed Kelowna's top-up fully subscribed and that page is now removed."
+  },
+  "guelph": {
+   "name": "Guelph",
+   "prov": "ON",
+   "result": "financing (waitlist) + income-qualified grant",
+   "note": "Loans closed to new applications; low-income heat pump grants up to $15,000."
+  },
+  "trois-rivieres": {
+   "name": "Trois-Rivières",
+   "prov": "QC",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "whitby": {
+   "name": "Whitby",
+   "prov": "ON",
+   "result": "financing",
+   "note": "Durham Greener Homes LIC loan."
+  },
+  "cambridge": {
+   "name": "Cambridge",
+   "prov": "ON",
+   "result": "financing + incentives",
+   "note": "RetrofitWR for GrandBridge Energy customers."
+  },
+  "st-catharines": {
+   "name": "St. Catharines",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "milton": {
+   "name": "Milton",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Sitemap scan and energy-efficiency page."
+  },
+  "langley": {
+   "name": "Langley",
+   "prov": "BC",
+   "result": "unclear",
+   "note": "Township of Langley Green Building Rebate Program: \"Program updates coming soon.\" City of Langley sitemap: nothing found."
+  },
+  "kingston": {
+   "name": "Kingston",
+   "prov": "ON",
+   "result": "waitlist",
+   "note": "Better Homes Kingston rebates and loans no longer accepting applications."
+  },
+  "ajax": {
+   "name": "Ajax",
+   "prov": "ON",
+   "result": "financing",
+   "note": "Durham Greener Homes LIC loan."
+  },
+  "waterloo": {
+   "name": "Waterloo",
+   "prov": "ON",
+   "result": "none found",
+   "note": "RetrofitWR coaching for all Waterloo Region homeowners; loans only for GrandBridge Energy customers."
+  },
+  "terrebonne": {
+   "name": "Terrebonne",
+   "prov": "QC",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "saanich": {
+   "name": "Saanich",
+   "prov": "BC",
+   "result": "financing + evaluation grant",
+   "note": "0% Heat Pump Financing (intake deadline Oct 13, 2026); evaluation grant for participants."
+  },
+  "st-johns": {
+   "name": "St. John's",
+   "prov": "NL",
+   "result": "none found",
+   "note": "'Shift' free guidance with econext; no cash."
+  },
+  "thunder-bay": {
+   "name": "Thunder Bay",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Home energy loan program still at study stage."
+  },
+  "delta": {
+   "name": "Delta",
+   "prov": "BC",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "brantford": {
+   "name": "Brantford",
+   "prov": "ON",
+   "result": "none found",
+   "note": "City grant list covers lead pipes and sewer laterals only."
+  },
+  "chatham-kent": {
+   "name": "Chatham-Kent",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "clarington": {
+   "name": "Clarington",
+   "prov": "ON",
+   "result": "financing",
+   "note": "Durham Greener Homes LIC loan."
+  },
+  "red-deer": {
+   "name": "Red Deer",
+   "prov": "AB",
+   "result": "none found",
+   "note": "Not on the CEIP participant list; City sitemap unreadable."
+  },
+  "nanaimo": {
+   "name": "Nanaimo",
+   "prov": "BC",
+   "result": "financing + evaluation incentives",
+   "note": "0% financing until Oct 31, 2026; $150 + up to $200 EnerGuide incentives."
+  },
+  "sherwood-park": {
+   "name": "Sherwood Park",
+   "prov": "AB",
+   "result": "financing (waitlist)",
+   "note": "Strathcona County CEIP at capacity."
+  },
+  "pickering": {
+   "name": "Pickering",
+   "prov": "ON",
+   "result": "none found",
+   "note": "Durham loans not available in Pickering; coaching only."
+  },
+  "lethbridge": {
+   "name": "Lethbridge",
+   "prov": "AB",
+   "result": "financing (waitlist)",
+   "note": "CEIP at capacity; $1,350 participant rebate."
+  },
+  "kamloops": {
+   "name": "Kamloops",
+   "prov": "BC",
+   "result": "not checked",
+   "note": "City sitemap unreadable; Better Homes BC top-up page for Kamloops now 404."
+  },
+  "saint-jean-sur-richelieu": {
+   "name": "Saint-Jean-sur-Richelieu",
+   "prov": "QC",
+   "result": "none found",
+   "note": "Sitemap scan (water-saving kits only)."
+  },
+  "victoria": {
+   "name": "Victoria",
+   "prov": "BC",
+   "result": "none found",
+   "note": "City rebates page lists provincial/federal programs only."
+  },
+  "peterborough": {
+   "name": "Peterborough",
+   "prov": "ON",
+   "result": "financing",
+   "note": "Better Homes Peterborough loans; no City cash incentives."
+  },
+  "moncton": {
+   "name": "Moncton",
+   "prov": "NB",
+   "result": "not checked",
+   "note": "Sitemap unreadable."
+  },
+  "saint-john": {
+   "name": "Saint John",
+   "prov": "NB",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "fredericton": {
+   "name": "Fredericton",
+   "prov": "NB",
+   "result": "none found",
+   "note": "City energy page points to SaveEnergyNB."
+  },
+  "charlottetown": {
+   "name": "Charlottetown",
+   "prov": "PE",
+   "result": "none found",
+   "note": "Only flood-protection and stump rebates."
+  },
+  "whitehorse": {
+   "name": "Whitehorse",
+   "prov": "YT",
+   "result": "none found",
+   "note": "Sitemap scan."
+  },
+  "yellowknife": {
+   "name": "Yellowknife",
+   "prov": "NT",
+   "result": "none found",
+   "note": "Sitemap scan (development incentives only)."
+  }
+ }
+}

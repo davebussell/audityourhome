@@ -115,6 +115,13 @@ const statusChip: Record<string, [string, string]> = {
           </>
         ))}
 
+        {pg.communities && (
+          <section class="sec comms" id="communities" data-communities={pg.communities.names.join('|')}>
+            <h2>{pg.communities.heading}</h2>
+            <div class="prose" set:html={pg.communities.html} />
+          </section>
+        )}
+
         {pg.providers && (
           <section class="sec providers" id="providers">
             <h2>{pg.providers.heading}</h2>
@@ -240,6 +247,7 @@ const statusChip: Record<string, [string, string]> = {
   .prose :global(p) { margin: 0 0 1em; }
   .prose :global(ul) { padding-left: 20px; margin: 0 0 1em; display: grid; gap: 6px; }
   .prose :global(a) { overflow-wrap: anywhere; }
+  .prose :global(table) { margin: 0 0 1.2em; }
   .tc-wrap { margin: 26px 0 6px; padding: 18px; background: var(--navy); border-radius: var(--radius-lg); }
 
   .callout { border-left: 4px solid var(--heat); margin: 0 0 14px; }

@@ -1,0 +1,114 @@
+---
+/** "How we calculate this": formulas in plain English, assumptions and the conservative factors. */
+import { MODEL, VINTAGE_LABEL, VINTAGES, systemEfficiency, climateZone } from '../../lib/calc/engine';
+import type { CalcSlug } from '../../lib/calc/data';
+import { int } from '../../lib/calc/format';
+
+interface Props { calc: CalcSlug; cityName: string; hdd: number; annualMean?: number; prov?: string }
+const { calc, cityName, hdd, annualMean } = Astro.props;
+const D = MODEL.demand;
+const E = MODEL.envelope;
+const W = MODEL.water;
+const C = MODEL.cooling;
+const cop = (k: 'ashpCold' | 'ashpStandard') => systemEfficiency(k, hdd).toFixed(1);
+const zone = climateZone(hdd);
+---
+
+<section class="sec" id="how-we-calculate" aria-labelledby="how-h">
+  <h2 id="how-h">How we calculate this</h2>
+  <div class="card card-pad how">
+    {calc === 'energy-costs' && (
+      <>
+        <h3>1. The heat your house needs</h3>
+        <p>We start from NRCan's measured heating need per square metre for Ontario houses of each age and scale it to {cityName}'s climate:</p>
+        <code class="formula">heat needed (GJ/yr) = era intensity × floor area (m²) × ({int(hdd)} degree-days ÷ 4,200) × house-type factor</code>
+        <ul>
+          {VINTAGES.map((v) => <li>{VINTAGE_LABEL[v]}: {D.intensityGJperM2[v]} GJ per m²</li>)}
+          <li>Semi-detached ×0.9, row or townhouse ×0.8 (our assumption for shared walls).</li>
+        </ul>
+        <p>This reproduces NRCan's published typical loads (Heating with Gas, Table 4) within 10% for Ottawa and Toronto, and within 20% for every other city in that table. Degree-days come from NRCan's HOT2000 climate data, the same file EnerGuide evaluations use.</p>
+        <h3>2. Your bills, if you give them</h3>
+        <p>Your yearly use (or monthly bill ÷ average price × 12) is turned into heat delivered. For gas, oil or propane we count 80% of the fuel as space heating when the water heater uses the same fuel (NRCan: space heating is 63.6% and water heating 17.2% of an average home's energy) and 95% otherwise. For electric heat we take off your summer use × 12, or, without it, assume 54% of the electricity heats the house (Hydro-Québec's figure for electrically heated homes; 67.5% if your water heater isn't electric).</p>
+        <code class="formula">calibration = heat from your bills ÷ heat a typical house needs  (kept between 0.5 and 1.6)</code>
+        <p>Every result is then multiplied by the calibration, and labelled “calibrated to your bills” or “based on a typical house”.</p>
+        <h3>3. What each system costs</h3>
+        <code class="formula">cost = heat needed ÷ seasonal efficiency ÷ energy per unit × price per unit</code>
+        <ul>
+          <li>Energy per unit (NRCan): natural gas 37.5 MJ/m³, oil 38.2 MJ/L, propane 25.3 MJ/L, electricity 3.6 MJ/kWh, hardwood 30.6 GJ per full cord, wood pellets 19.8 GJ per tonne.</li>
+          <li>Efficiencies (NRCan): old gas furnace 60%, mid-efficiency 80%, condensing 95%; oil 60–86%; propane 82–93%; electric 100%; certified wood stove 75%, older stove 62%, pellet stove 68%, older outdoor wood boiler 40%.</li>
+          <li>Heat pumps at {int(hdd)} degree-days: standard {cop('ashpStandard')}, cold-climate {cop('ashpCold')}, ground-source 2.8 (seasonal COP, backup heat included). These are set a little below modelled results because field studies in BC and Yukon came in lower.</li>
+        </ul>
+        <h3>4. Two prices, on purpose</h3>
+        <p>“Cost a year” uses the average price, including fixed charges, because that is what your bill shows. Every saving, and the “change vs yours” column, uses the price of one more kWh, m³ or litre, which leaves fixed charges out. That makes savings smaller and is the conservative choice. Where the winter step price for electricity is higher than the average (Hydro-Québec, BC Hydro), we use the step price for heating.</p>
+        <h3>5. Hot water</h3>
+        <code class="formula">energy = litres a day × 4.186 kJ/L·°C × (55 °C − cold-water temperature) × 365</code>
+        <p>NRCan's 75 L per person a day; cold water at the annual mean air temperature + 3.3 °C{typeof annualMean === 'number' ? ` (${(annualMean + W.inletOffsetC).toFixed(1)} °C here before the 5 °C floor)` : ''}, the ANSI/RESNET shortcut. Then divide by the heater's efficiency: gas tank 0.58, condensing gas 0.81, gas tankless 0.87, electric tank 0.92, oil tank 0.55, heat pump 2.2 (a conservative field value). A heat pump water heater takes heat from the house in winter; we add (1 − 1/2.2) × ⅔ of its output as extra space heating.</p>
+        <h3>6. Air conditioning</h3>
+        <code class="formula">kWh = 24 × cooling degree-days ÷ (design temperature − 18) × capacity (Btu/h) ÷ SEER ÷ 1,000 × 0.8</code>
+        <p>The first part is NRCan's formula; the 0.8 reflects that most households don't run AC around the clock, and puts the result for our Ontario cities near NRCan's measured average of 1,321 kWh per central unit. Default size: NRCan's rule of thumb of 200 Btu/h per m², rounded to a half ton.</p>
+        <h3>What this leaves out</h3>
+        <p>Maintenance, equipment life, a gas meter's fixed charge if you leave gas entirely, and future price changes. Prices change (Ontario electricity on November 1, gas quarterly), so check your own bill. An EnerGuide evaluation replaces every assumption here with measurements of your house.</p>
+      </>
+    )}
+    {calc === 'upgrade-payback' && (
+      <>
+        <h3>1. Heat saved by insulation and windows</h3>
+        <code class="formula">heat saved (GJ/yr) = area × (1/RSI before − 1/RSI after) × {int(hdd)} degree-days × 86,400 s ÷ 10⁹ × F</code>
+        <p>F is a conservative factor: <strong>0.75 above grade</strong> (the sun, people and appliances supply some heat, and no installation is perfect) and <strong>0.4 for basement walls</strong> (most of the wall is below grade, where the ground stays far warmer than winter air). Windows use U-values instead of 1/RSI.</p>
+        <h3>2. Typical starting points</h3>
+        <ul>
+          <li>Attic: R-12 before 1966, R-20 (1966–80), R-28 (1981–95), R-40 (1996–2010), R-50 (2011+). Target: NRCan's retrofit recommendation for climate zone {zone}, capped at R-60.</li>
+          <li>Walls: RSI 0.7 (empty, before 1946), 1.4 (1946–65), 2.1 (1966–95), 3.0 (1996–2010), 3.4 (2011+). Dense-packing a 2×4 cavity gives about RSI 2.1 (cellulose is RSI 0.63 per 25.4 mm, NRCan Table 3-1); R-10 of exterior insulation adds RSI 1.76.</li>
+          <li>Basement walls: RSI 0.7 before 1981 (bare concrete plus the soil against it), 2.1 for 1981–2010, 3.5 since; target RSI 3.5 (R-20).</li>
+          <li>Windows: 12% of floor area (1.2 m² each), single with storm before 1966, double clear 1966–95, double low-e after.</li>
+        </ul>
+        <p>{E.vintageDefaultsNote}</p>
+        <h3>3. Air sealing</h3>
+        <p>Without a blower-door number we use NRCan's statement that typically about 25% of heat loss is air leakage: saving = 25% × reduction × heating need × 0.75. With your EnerGuide result (ACH50), everyday leakage is ACH50 ÷ 20, near the conservative end of the 10–25 range used in the field, and:</p>
+        <code class="formula">heat saved = drop in natural air changes × house volume × 1.21 kJ/m³·°C × degree-days × 24 ÷ 10⁶ × 0.75</code>
+        <p>We assume a 20% reduction (15% if the house is already under 4 ACH50); rebate programs pay for measured cuts of 10%, 20% and 30%.</p>
+        <h3>4. Thermostat setbacks</h3>
+        <p>NRCan: “A drop of 1°C (2°F) over an eight-hour period can save about 2 percent on your heating energy consumption.” Saving = 2% × degrees × hours ÷ 8. Heat pumps are limited to a 2 °C setback, NRCan's advice, because deep setbacks can bring on backup heat.</p>
+        <h3>5. Caps, overlap and your bills</h3>
+        <p>No single measure may save more than 35% of the heating need, and all of them together no more than 60%. Measures overlap (a better attic leaves less heat for new windows to save), so the combined saving is 1 − (1 − a)(1 − b)…, always less than the simple sum. If you enter bills, every saving is scaled by how your use compares with a typical house (between 0.5× and 1.6×).</p>
+        <h3>6. Dollars, rebates and payback</h3>
+        <code class="formula">payback (years) = (installed cost − rebate) ÷ yearly saving at the price of one more unit of energy</code>
+        <p>Rebates use each program's lowest published amount per unit (per home, per window, per sq ft or per sq ft × R-value added), only for programs open today and only where your heating fuel qualifies; you can switch each one off. The 20-year saving is the yearly saving × 20, with no price inflation or discounting. Where we could not verify a 2025–2026 installed cost (walls, basements, exterior insulation), the cost starts blank: enter your quote.</p>
+      </>
+    )}
+    {calc === 'home-health' && (
+      <>
+        <h3>Radon</h3>
+        <p>1 pCi/L = 37 Bq/m³ (Health Canada). The Canadian guideline is 200 Bq/m³; above it Health Canada recommends fixing your home within 1 year, sooner the higher the level. Only a long-term test (at least 3 months, ideally in the heating season) tells you your annual average.</p>
+        <h3>Window condensation</h3>
+        <code class="formula">glass temperature = indoor − U × (indoor − outdoor) ÷ 8.33</code>
+        <p>8.33 W/m²·°C is the indoor air film from the National Building Code (RSI 0.12). The dew point comes from the Magnus formula the US National Weather Service publishes; condensation forms when the glass is colder than the dew point. These are centre-of-glass figures: the bottom edge and metal frames run colder, which is why we show CMHC's simpler rule beside them (30% indoor humidity when it is below −10 °C outside, as low as 25% in extreme cold).</p>
+        <h3>Smoke and CO alarms</h3>
+        <p>“Required by law” applies your province's fire code to the layout you enter. “Recommended” is the new-home standard in the National Building Code (an alarm on every storey, in every bedroom and outside sleeping areas) and NRCan's CO advice (one near the furnace or other fuel-burning appliance and one in each bedroom area). Municipal by-laws can add to provincial rules.</p>
+        <h3>Well water and mould</h3>
+        <p>Testing frequencies and lab fees are the ones your province publishes. Mould size categories are Health Canada's and CMHC's: up to three patches each under 1 m² can be cleaned by a healthy homeowner; more than 3 m² needs a professional.</p>
+      </>
+    )}
+    {calc === 'appliance-energy' && (
+      <>
+        <h3>The formula</h3>
+        <code class="formula">cost a year = kWh a year × how many × price of one more kWh</code>
+        <p>We use the price of one more kWh (no fixed charges) because switching off or replacing an appliance doesn't change your fixed charges. Where the price rises in steps (Hydro-Québec, BC Hydro, Yukon), we start from the lower first-step price, the conservative choice for savings; enter the higher one if your home is usually above the step.</p>
+        <code class="formula">saving = (kWh of the older model or habit − kWh of the efficient option) × price</code>
+        <p>The example household (one older fridge, newer laundry and kitchen appliances, 10 LED bulbs, a set of devices on standby and, in cold cities, a block heater without a timer) is an assumption to edit, not an average.</p>
+        <h3>Where the kWh come from</h3>
+        <ul>
+          <li>Fridges and freezers: Hydro-Québec's appliance calculator data by model year (older = 2002–2008 or as labelled, new = 2017 and later).</li>
+          <li>Dishwashers, washers, dryers and ranges: NRCan's rated annual use for new units sold in 2008 and 2022 (machine only; the hot water is counted in the heating calculator).</li>
+          <li>TVs, computers and consoles: Hydro-Québec's wattages at 3 hours a day; dehumidifiers and heat pump dryers: ENERGY STAR medians for models sold in Canada.</li>
+          <li>Block heaters: 500 W; 12 hours a night without a timer, 4 hours on a timer (SaskPower). We pre-fill the number of nights with the yearly count of nights below −20 °C at your ECCC weather station, a conservative count of the nights SaskPower suggests plugging in (below −15 °C).</li>
+          <li>Hot tubs: Hydro-Québec's calculator figure, which reflects Quebec's climate; colder cities use more and coastal BC less.</li>
+          <li>Light bulbs: one 800-lumen bulb on 3 hours a day, 60 W incandescent or 10 W LED (Hydro-Québec). Microwave 1,200 W, space heater 1,500 W, pool pump 1,310 W at full speed or 310 W at low speed over a 120-day season: kWh = watts × hours ÷ 1,000.</li>
+          <li>Standby: 40 W around the clock for an example set of devices (Hydro-Québec wattages). Heat recovery ventilator: 22 L/s all year at the ENERGY STAR minimum fan efficacy, our arithmetic rather than a published figure.</li>
+          <li>Electric vehicles: the median of the 221 battery-electric listings in NRCan's 2026 Fuel Consumption Guide, 24.1 kWh/100 km, × the kilometres you enter (20,000 to start, NRCan's costing basis). Winter driving uses more.</li>
+        </ul>
+        <p>Rated figures come from standard tests; your own use depends on habits, room temperature and how full the fridge is. Your utility's online account shows your actual hourly or daily use.</p>
+      </>
+    )}
+  </div>
+</section>

@@ -9,10 +9,13 @@ import savings from '../../data/savings.json';
 import rates from '../../data/rates.json';
 import tests from '../../data/tests.json';
 import { regions, providers, programs, reviewLinks } from '../../lib/data';
+import { CALC_CITIES, PROVINCE_ORDER, resolvePrices, enginePrices } from '../../lib/calc/data';
+import { MODEL } from '../../lib/calc/engine';
+import localData from '../../../tools/local-pages/out/cities.json';
 
 const title = 'Home Energy Planner — what your home needs, what it saves | AuditYourHome';
 const description =
-  'Answer six quick questions about your home and bills. Get a personalized read on what’s behind your walls, your smartest upgrade sequence, estimated savings, live Ontario rebates, and registered advisors near you.';
+  'Answer six quick questions about your home and bills. Get a read on what’s behind your walls, your upgrade sequence with conservative savings for your area, live rebates, and registered advisors near you.';
 
 const payload = {
   archetypes,
@@ -38,6 +41,35 @@ const payload = {
     .map((p) => ({ id: p.id, slug: p.slug, shortName: p.shortName, headline: p.headline, auditRequired: p.auditRequired, jurisdiction: p.jurisdiction })),
 };
 
+// ---- region data for the estimator: climate + prices for each covered city, FSA → city, province → biggest city
+const calcCities: Record<string, unknown> = {};
+for (const c of CALC_CITIES) {
+  calcCities[c.slug] = {
+    n: c.label ?? c.name, p: c.prov, hdd: c.hot2000.hdd, cdd: c.eccc.cdd18,
+    dc: c.hot2000.designCool ?? 29, am: c.eccc.annualMean, pr: enginePrices(resolvePrices(c)),
+  };
+}
+const fsaCity: Record<string, string> = {};
+for (const c of (localData as { cities: { slug: string; fsas?: string[] }[] }).cities) {
+  for (const f of c.fsas ?? []) if (!fsaCity[f]) fsaCity[f] = c.slug;
+}
+const provRep: Record<string, string> = {};
+for (const prov of PROVINCE_ORDER) {
+  const list = CALC_CITIES.filter((c) => c.prov === prov).sort((a, b) => b.population - a.population);
+  if (list[0]) provRep[prov] = list[0].slug;
+}
+(payload as Record<string, unknown>).calc = { cities: calcCities, fsa: fsaCity, provRep, baseKwh: rates.ontario.benchmarks.gasHeatedElecKwh, sizeMult: rates.ontario.benchmarks.sizeMultiplier };
+
+// province price table for the assumptions section
+const PROV_NAME: Record<string, string> = { BC: 'British Columbia', AB: 'Alberta', SK: 'Saskatchewan', MB: 'Manitoba', ON: 'Ontario', QC: 'Quebec', NB: 'New Brunswick', NS: 'Nova Scotia', PE: 'Prince Edward Island', NL: 'Newfoundland and Labrador', YT: 'Yukon', NT: 'Northwest Territories' };
+const priceRows = PROVINCE_ORDER.filter((p) => provRep[p]).map((prov) => {
+  const city = CALC_CITIES.find((c) => c.slug === provRep[prov])!;
+  const rp = resolvePrices(city);
+  return { prov: PROV_NAME[prov] ?? prov, city: city.label ?? city.name, elecAvg: rp.elec.avg, elecVar: rp.elec.variable, gasNow: rp.gas?.now ?? null, gasVar: rp.gas?.variable ?? null, oil: rp.oil?.perL ?? null };
+});
+const intensityRows = Object.entries(MODEL.demand.intensityGJperM2 as Record<string, number>);
+const pricesAsOf = new Date(String(MODEL.asOf) + 'T12:00:00').toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
+
 const schema = [
   breadcrumbSchema([
     { name: 'Home', path: '/' },
@@ -54,19 +86,6 @@ const ERA_LABEL: Record<string, string> = {
   '1981-1995': '1981–1995', '1996-2010': '1996–2010', '2011-plus': '2011 or later',
 };
 const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', large: 'large', xlarge: 'very large' };
-const HEAT_LABEL: Record<string, string> = { electric: 'electric heat', gas: 'gas heat', oil: 'oil or propane heat' };
-const eraAdj = 'Use is scaled by build era: ' + Object.entries(bm.eraMultiplier)
-  .map(([k, v]) => `${ERA_LABEL[k] ?? k} ×${v}`).join(', ') + '.';
-const sizeAdj = 'And by size: ' + Object.entries(bm.sizeMultiplier)
-  .map(([k, v]) => `${SIZE_LABEL[k] ?? k} ×${v}`).join(', ') + ' (medium is about 1,500–2,000 sq ft).';
-const appliesTo = (m: { eras: string[]; heatingTypes: string[] }) => {
-  const parts: string[] = [];
-  if (m.eras.length) parts.push('homes built ' + m.eras.map((e) => ERA_LABEL[e] ?? e).join(', '));
-  if (m.heatingTypes.length) parts.push(m.heatingTypes.map((h) => HEAT_LABEL[h] ?? h).join(', '));
-  return parts.length ? parts.join('; ') : 'any home';
-};
-const savedRange = (r: number[]) => (r[0] === 0 && r[1] === 0 ? 'not counted' : `${Math.round(r[0] * 100)}–${Math.round(r[1] * 100)}%`);
-const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 
 <Base title={title} description={description} schema={schema}>
@@ -142,16 +161,85 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
               <label class="radio-pill"><input type="radio" name="water" value="unsure" /><span>Not sure</span></label>
             </div>
           </div>
+          <div class="field">
+            <span class="lbl">Most of the windows are… <span class="hint-inline">(window age changes the math)</span></span>
+            <div class="radio-row" role="radiogroup" aria-label="Windows">
+              <label class="radio-pill"><input type="radio" name="win" value="single" /><span>Single-pane</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="singlestorm" /><span>Single-pane + storms</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="double-old" /><span>Double-pane, before 2000</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="double-new" /><span>Double-pane, 2000 or later</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="triple" /><span>Triple-pane / recent ENERGY STAR</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Has the house had an EnerGuide evaluation (energy audit) before?</span>
+            <div class="radio-row" role="radiogroup" aria-label="Previous energy evaluation">
+              <label class="radio-pill"><input type="radio" name="prev" value="no" checked /><span>No</span></label>
+              <label class="radio-pill"><input type="radio" name="prev" value="recent" /><span>Yes, in the last 3 years</span></label>
+              <label class="radio-pill"><input type="radio" name="prev" value="older" /><span>Yes, longer ago</span></label>
+              <label class="radio-pill"><input type="radio" name="prev" value="unsure" /><span>Not sure</span></label>
+            </div>
+          </div>
         </fieldset>
 
         <!-- STEP 3 -->
         <fieldset class="step" data-step="3">
-          <legend><h2>How is it heated?</h2></legend>
-          <div class="radio-row big" role="radiogroup" aria-label="Heating type">
-            <label class="radio-pill"><input type="radio" name="heat" value="gas" checked /><span>Gas furnace / boiler</span></label>
-            <label class="radio-pill"><input type="radio" name="heat" value="electric" /><span>Electric baseboard</span></label>
-            <label class="radio-pill"><input type="radio" name="heat" value="heatpump" /><span>Heat pump already</span></label>
-            <label class="radio-pill"><input type="radio" name="heat" value="oil" /><span>Oil / propane</span></label>
+          <legend><h2>Heating, hot water and cooling</h2></legend>
+          <div class="field">
+            <span class="lbl">Main heating</span>
+            <div class="radio-row wrap" role="radiogroup" aria-label="Main heating">
+              <label class="radio-pill"><input type="radio" name="heat" value="gas" checked /><span>Gas furnace</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="gasboiler" /><span>Gas boiler (radiators / in-floor)</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="electric" /><span>Electric baseboard</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="elecfurnace" /><span>Electric furnace or boiler</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="heatpump" /><span>Air-source heat pump</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="geothermal" /><span>Geothermal heat pump</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="oil" /><span>Oil furnace or boiler</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="propane" /><span>Propane</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="wood" /><span>Wood stove or wood furnace</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="outdoorwood" /><span>Outdoor wood boiler</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="pellet" /><span>Pellet stove</span></label>
+            </div>
+          </div>
+          <div class="field" id="heatAgeField">
+            <span class="lbl">How old is it?</span>
+            <div class="radio-row" role="radiogroup" aria-label="Age of the heating system">
+              <label class="radio-pill"><input type="radio" name="hage" value="new" /><span>Under 15 years</span></label>
+              <label class="radio-pill"><input type="radio" name="hage" value="old" /><span>15 years or more</span></label>
+              <label class="radio-pill"><input type="radio" name="hage" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Also heated by… <span class="hint-inline">(optional)</span></span>
+            <div class="radio-row wrap">
+              <label class="radio-pill"><input type="checkbox" name="sec" value="woodstove" /><span>Wood stove or fireplace</span></label>
+              <label class="radio-pill"><input type="checkbox" name="sec" value="spaceheaters" /><span>Electric space heaters</span></label>
+              <label class="radio-pill"><input type="checkbox" name="sec" value="solar" /><span>Lots of sunny south windows</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Water heater</span>
+            <div class="radio-row wrap" role="radiogroup" aria-label="Water heater">
+              <label class="radio-pill"><input type="radio" name="wh" value="gastank" /><span>Gas tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="gastankless" /><span>Gas tankless (on-demand)</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="electric" /><span>Electric tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="heatpump" /><span>Heat pump water heater</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="oil" /><span>Oil-fired tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="boiler" /><span>From the boiler (combi)</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Cooling</span>
+            <div class="radio-row wrap" role="radiogroup" aria-label="Cooling">
+              <label class="radio-pill"><input type="radio" name="ac" value="none" /><span>No air conditioning</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="central-new" /><span>Central AC, under 10 years</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="central-old" /><span>Central AC, 10+ years</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="room" /><span>Window or portable units</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="heatpump" /><span>The heat pump cools</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="unsure" checked /><span>Not sure</span></label>
+            </div>
           </div>
         </fieldset>
 
@@ -199,11 +287,20 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
               <p class="meta slider-hint" id="gasHint">$0 = no gas service</p>
             </div>
             <div class="field slider-field">
-              <label for="elecBill">Average monthly hydro bill <output id="elecOut" for="elecBill">$0</output></label>
-              <input id="elecBill" name="elecBill" type="range" min="0" max="500" step="5" value="0" />
+              <label for="elecBill">Average monthly electricity bill <output id="elecOut" for="elecBill">$0</output></label>
+              <input id="elecBill" name="elecBill" type="range" min="0" max="600" step="5" value="0" />
               <p class="meta slider-hint">Drag to match a recent bill</p>
             </div>
+            <div class="field slider-field" id="otherField" hidden>
+              <label for="otherBill">Average monthly oil, propane or wood spend <output id="otherOut" for="otherBill">$0</output></label>
+              <input id="otherBill" name="otherBill" type="range" min="0" max="600" step="5" value="0" />
+              <p class="meta slider-hint">Your yearly fuel spend ÷ 12</p>
+            </div>
           </div>
+          <p class="small bill-note">
+            Why we ask: estimates based on a "typical" house can be far from your real bills. With
+            your bills, every saving below is scaled to how much energy your house actually uses.
+          </p>
         </fieldset>
 
         <div class="wizard-actions">
@@ -227,6 +324,8 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
         <div class="card card-pad" id="rWatch"></div>
       </div>
       <div id="rSequence"></div>
+      <div id="rSystems"></div>
+      <div id="rMethod"></div>
       <div id="rTests"></div>
       <div id="rPrograms"></div>
       <div id="rIssues"></div>
@@ -236,8 +335,8 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
       <div class="card card-pad audit-cta" id="rAuditCta">
         <h3>Estimates end where the audit begins</h3>
         <p>
-          Everything above is based on how homes like yours typically perform — not a model of your
-          actual house. An EnerGuide evaluation (blower door test, thermal imaging, room-by-room
+          Everything above is based on how homes like yours typically perform (scaled to your bills
+          if you entered them), not a model of your actual house. An EnerGuide evaluation (blower door test, thermal imaging, room-by-room
           heat-loss model) turns these ranges into numbers for <em>your</em> address, and it's the
           required first step for the biggest rebates. In Ontario, the $600 Home Renovation Savings
           rebate covers most of its cost if you book one of the seven HRSP-approved organizations and
@@ -252,9 +351,9 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
       />
 
       <p class="small disclaimer">
-        Estimates are ranges based on typical performance of similar Ontario homes and the
-        assumptions <a href="#assumptions">listed below</a> ({SITE.dataReviewDate}). They are not a guarantee of
-        savings. Program details change — confirm on official pages before spending. Nothing you
+        Estimates are ranges based on how similar Canadian homes perform, your area's climate and
+        energy prices, and the assumptions <a href="#assumptions">listed below</a>. They are deliberately
+        conservative and are not a guarantee of savings. Program details change — confirm on official pages before spending. Nothing you
         enter here is stored or transmitted; the planner runs entirely in your browser.
       </p>
       <div class="wizard-actions">
@@ -264,42 +363,63 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
     </div>
 
     <section class="assumptions" id="assumptions">
-      <h2>The assumptions behind the estimates</h2>
+      <h2>How the planner estimates, and the assumptions behind it</h2>
       <p class="small measure">
-        The planner works mostly from the monthly bills you enter, so these figures matter for
-        converting dollars to energy and for the benchmark, not as a model of your house. They are
-        deliberately rough, and an EnerGuide evaluation replaces all of them. Rates as of {ratesAsOf}.
+        Kept deliberately conservative. Your postal code picks the nearest of the 70 cities we cover
+        (or your province's largest city), which sets the climate (heating degree-days from NRCan's
+        HOT2000 weather data, the same data EnerGuide uses) and the energy prices. If you enter your
+        bills, the heating estimate is scaled to them (within 0.5× to 1.6× of a typical house) and
+        every saving is scaled the same way. An EnerGuide evaluation replaces all of this with
+        measurements. Prices as of {pricesAsOf}.
       </p>
       <div class="tablewrap card">
-        <table>
-          <caption>Energy prices and typical use</caption>
+        <table class="stack">
+          <caption>Heating need of a typical house, by era</caption>
+          <thead><tr><th>Built</th><th>Heat needed per m² of floor, at 4,200 degree-days</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Natural gas</th><td>${rates.ontario.gasPerM3.toFixed(2)} per m³, all-in</td><td>{rates.ontario.gasPerM3Note}</td></tr>
-            <tr><th scope="row">Electricity</th><td>${rates.ontario.elecPerKwh.toFixed(3)} per kWh, blended</td><td>{rates.ontario.elecPerKwhNote}</td></tr>
-            <tr><th scope="row">Gas-heated home</th><td>{fmtN(bm.gasHeatedGasM3)} m³ gas + {fmtN(bm.gasHeatedElecKwh)} kWh a year</td><td>{pctN(bm.heatShareOfGas)} of the gas goes to space heating. {bm._note}</td></tr>
-            <tr><th scope="row">Electrically heated home</th><td>{fmtN(bm.electricHeatedElecKwh)} kWh a year</td><td>{pctN(bm.heatShareOfElectricHeatedElec)} of the electricity goes to space heating</td></tr>
-            <tr><th scope="row">Age of the house</th><td colspan="2">{eraAdj}</td></tr>
-            <tr><th scope="row">Size of the house</th><td colspan="2">{sizeAdj}</td></tr>
+            {intensityRows.map(([k, v]) => (
+              <tr><td data-label="Built">{ERA_LABEL[k] ?? k}</td><td data-label="Heat needed">{v} GJ/m² a year</td></tr>
+            ))}
           </tbody>
         </table>
       </div>
+      <p class="small measure">
+        From NRCan's Comprehensive Energy Use Database (heating need per floor area by construction
+        period), scaled to your city's degree-days and checked against NRCan's typical heating loads
+        for Ottawa and Toronto houses. Semi-detached houses use 90% and row houses 80% of the detached
+        figure. Upgrade savings use the physics of each part of the house (insulation R-values, window
+        U-values, air leakage) with your local degree-days, then multiply by 0.75 above grade and 0.4
+        for basement walls to stay conservative. No single upgrade is credited with more than 35% of
+        your heating, and all of them together with no more than 60%. Savings are valued at the price
+        of one more unit of energy (excluding fixed monthly charges), which is lower than your average
+        price.
+      </p>
       <div class="tablewrap card">
-        <table>
-          <caption>Upgrades: share of heating spend saved, and typical installed cost</caption>
-          <thead><tr><th>Upgrade</th><th>Applies to</th><th>Heating saved</th><th>Typical cost</th></tr></thead>
+        <table class="stack">
+          <caption>Energy prices used (largest covered city in each province; taxes in)</caption>
+          <thead><tr><th>Province</th><th>Electricity, average</th><th>Electricity, next kWh</th><th>Natural gas, average</th><th>Natural gas, next m³</th><th>Heating oil</th></tr></thead>
           <tbody>
-            {savings.measures.map((m) => (
+            {priceRows.map((r) => (
               <tr>
-                <td><strong>{m.label}</strong><br /><span class="small">{m.note}</span></td>
-                <td>{appliesTo(m)}</td>
-                <td>{savedRange(m.pctHeating)}</td>
-                <td>{m.typicalCost}</td>
+                <td data-label="Province"><strong>{r.prov}</strong> <span class="small">({r.city})</span></td>
+                <td data-label="Electricity, average">${r.elecAvg.toFixed(3)}/kWh</td>
+                <td data-label="Electricity, next kWh">${r.elecVar.toFixed(3)}/kWh</td>
+                <td data-label="Gas, average">{r.gasNow !== null ? `$${r.gasNow.toFixed(3)}/m³` : 'no gas grid'}</td>
+                <td data-label="Gas, next m³">{r.gasVar !== null ? `$${r.gasVar.toFixed(3)}/m³` : '—'}</td>
+                <td data-label="Heating oil">{r.oil !== null ? `$${r.oil.toFixed(2)}/L` : '—'}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p class="small measure">{savings.wholeHouseNote}</p>
+      <p class="small measure">
+        Electricity for lights, appliances and electronics is assumed at {fmtN(bm.gasHeatedElecKwh)} kWh a year for a
+        medium house, scaled by size. Hot water uses 75 litres per person a day, heated from your
+        area's average cold-water temperature to 55 °C. Air conditioning uses NRCan's cooling-hours
+        method with your area's cooling degree-days, times 0.8. Every city's numbers, sources and
+        formulas are laid out in the <a href="/calculators/">calculators</a>, and
+        <a href="/learn/real-numbers/">worked examples</a> show the arithmetic step by step.
+      </p>
     </section>
   </div>
 
@@ -428,10 +548,28 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
   .res-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
   .res-list li { font-size: 15px; padding-left: 22px; position: relative; }
   .res-list li::before { content: "→"; position: absolute; left: 0; color: var(--heat); font-weight: 700; }
+  .sys-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+  .sys-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .sys-card h4 { margin: 0 0 6px; font-size: 16px; }
+  .sys-card p:last-child { margin-bottom: 0; }
+  .sys-card.prev { border-left: 4px solid var(--steel); }
+  .method { margin: 18px 0; }
+  .method summary { cursor: pointer; }
+  .method p { margin: 10px 0 0; }
+  .save-range { font-weight: 400; color: var(--muted); }
+  .save-neg { color: var(--heat-deep); font-weight: 600; }
+  .save-small { color: var(--muted); font-weight: 400; }
+  .bill-note { margin-top: 14px; max-width: 70ch; }
 </style>
 
 <script>
   import { screenSpecialtyTests } from '../../lib/screener';
+  import {
+    baselineDemandGJ, floorAreaM2, heatingCost, calibrate, geometry, atticMeasure, atticTargetR, wallMeasure,
+    basementMeasure, windowMeasure, airMeasure, setbackMeasure, savingValue, waterHeatingDemand, waterHeaterCost,
+    coolingKwh, defaultAcTons, MODEL,
+  } from '../../lib/calc/engine';
+  import type { SystemKey, Vintage, WindowKey, WaterHeaterKey, Prices } from '../../lib/calc/engine';
 
   const D = JSON.parse(document.getElementById('planner-data')!.textContent!);
 
@@ -451,19 +589,20 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
   const PROVINCES: Record<string, string> = { A: 'NL', B: 'NS', C: 'PE', E: 'NB', G: 'QC', H: 'QC', J: 'QC', K: 'ON', L: 'ON', M: 'ON', N: 'ON', P: 'ON', R: 'MB', S: 'SK', T: 'AB', V: 'BC', X: 'NT', Y: 'YT' };
 
   const PROVINCE_NOTES: Record<string, string> = {
-    QC: 'In Quebec, evaluations run through <b>Rénoclimat</b> ($150 + tax, refunded except the tax when you receive its assistance; government-assigned advisor), with <b>Hydro-Québec LogisVert</b> paying for heat pumps and equipment with no audit needed. <a href="/provinces/quebec/">Full Quebec guide →</a>',
-    MB: 'Manitoba is one of Canada’s better markets: <b>Efficiency Manitoba pays a $400 EnerGuide evaluation rebate</b> and runs insulation and heating programs on top. <a href="/provinces/manitoba/">Full Manitoba guide →</a>',
-    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> starts with the Home Energy Evaluation ($99 + HST for both visits) and pays incentives on the upgrades it recommends. <a href="/provinces/new-brunswick/">Full New Brunswick guide →</a>',
-    NS: 'Efficiency Nova Scotia runs a $199 assessment with rebates up to $5,000, up to $5,000 more for moderate-income homes not heated by electricity, and free upgrades for income-qualified homeowners (federal oil-to-heat-pump money is spent out here). <a href="/provinces/nova-scotia/">Full Nova Scotia guide →</a>',
-    PE: 'efficiencyPEI offers <b>$99 + HST</b> home energy assessments through five contracted partners — required for insulation rebates. <a href="/provinces/pei/">Full PEI guide →</a>',
-    BC: 'BC\'s EnerGuide-linked <b>Home Energy Improvement Bonus</b> pays $20 per percentage-point improvement ($750–$2,000) with 3+ upgrades and pre/post evaluations (or $300 for any two upgrades, no evaluation), plus utility rebates and income-qualified streams. <a href="/provinces/bc/">Full BC guide →</a>',
-    AB: 'Alberta has no provincial audit-linked rebate right now; Clean Energy Improvement (PACE) financing exists in some municipalities (check your municipality’s current intake; Calgary’s is closed until winter 2026/27) — audits here are about lower bills and right-sized equipment. <a href="/provinces/alberta/">Full Alberta guide →</a>',
-    SK: 'Saskatchewan’s Home Efficiency Retrofit Rebate ended in April 2026 — no active audit-linked program, but the audit still pays through bill savings in this climate. <a href="/provinces/saskatchewan/">Full Saskatchewan guide →</a>',
-    NL: 'Newfoundland & Labrador has no broad audit-linked rebate (takeCHARGE covers selected equipment). <a href="/provinces/newfoundland-labrador/">Full NL guide →</a>',
-    NT: 'The <b>Arctic Energy Alliance</b> delivers NWT rebates and advice. <a href="/provinces/north/">Full territories guide →</a>',
-    YT: 'Yukon’s <b>Good Energy</b> rebates cover retrofits and renewables. <a href="/provinces/north/">Full territories guide →</a>',
-    NU: 'Nunavut homeowner support runs through the <b>Nunavut Housing Corporation</b>. <a href="/provinces/north/">Full territories guide →</a>',
+    QC: 'Since October 1, 2026, Quebec’s <b>Rénoclimat</b> makes the EnerGuide evaluation optional (up to $500 back toward it) and pays for roof, wall and foundation insulation and ENERGY STAR Most Efficient windows; <b>Hydro-Québec LogisVert</b> pays for heat pumps. <a href="/programs/renoclimat/">Rénoclimat 2026 →</a> · <a href="/provinces/quebec/">Quebec guide →</a>',
+    MB: '<b>Efficiency Manitoba</b> pays a $400 EnerGuide evaluation rebate, insulation rebates by R-value, $100 per triple-pane ENERGY STAR window or door and up to $2,000 for a cold-climate heat pump. <a href="/programs/efficiency-manitoba-rebates/">Manitoba rebates →</a>',
+    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> starts with a Home Energy Evaluation ($99 + HST for both visits) and pays published amounts for insulation, air sealing, windows and heat pumps. <a href="/programs/nb-total-home-energy-savings/">NB program →</a>',
+    NS: '<b>Efficiency Nova Scotia</b> runs a $199 home energy assessment (waived under its income threshold) with rebates for insulation, air sealing and heat pumps; the federal oil-to-heat-pump intake closed July 2, 2026. <a href="/programs/efficiency-nova-scotia-rebates/">Nova Scotia rebates →</a>',
+    PE: 'efficiencyPEI offers <b>$99 + HST</b> home energy assessments and pays for insulation, air sealing and windows ($125 per opening). Its heat pump rebates ended April 15, 2026. <a href="/programs/efficiency-pei-rebates/">PEI rebates →</a>',
+    BC: 'BC’s <b>Home Renovation Rebate</b> pays for insulation, windows and heat pump water heaters, and heat pumps when they replace electric heat (more in the north); the income-tiered <b>CleanBC Energy Savings Program</b> pays more. <a href="/programs/cleanbc-energy-savings-program/">CleanBC rebates →</a> · <a href="/provinces/bc/">BC guide →</a>',
+    AB: 'Alberta has no provincial home rebate. <b>Clean Energy Improvement (CEIP)</b> financing runs in some municipalities and requires an EnerGuide evaluation (Calgary closed until winter 2026/27, Edmonton waitlisting). <a href="/articles/alberta-energy-efficiency-rebates/">Alberta rebates in 2026 →</a>',
+    SK: 'Saskatchewan’s Home Efficiency Retrofit Rebate ended in April 2026. The provincial <b>Home Renovation Tax Credit</b> (10.5% of eligible costs above $1,000, up to $420) still applies. <a href="/articles/saskatchewan-energy-efficiency-rebates/">Saskatchewan options in 2026 →</a>',
+    NL: '<b>takeCHARGE</b> pays insulation and air sealing rebates, and the Oil to Electric program pays up to $9,000 for a central heat pump ($22,000 if income-qualified). <a href="/programs/takecharge-nl/">takeCHARGE NL →</a>',
+    NT: 'The <b>Arctic Energy Alliance</b> runs EnerGuide evaluations ($200 + GST) and pays insulation and wood or pellet stove rebates. <a href="/provinces/north/">Territories guide →</a>',
+    YT: 'Yukon’s <b>Good Energy</b> rebates pay half of a heat pump (up to $10,500) plus insulation, air sealing and window rebates. <a href="/provinces/north/">Territories guide →</a>',
+    NU: 'Nunavut homeowner support runs through the <b>Nunavut Housing Corporation</b>. <a href="/provinces/north/">Territories guide →</a>',
   };
+
 
   // ---------- wizard navigation ----------
   function show(n: number) {
@@ -512,47 +651,182 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
   backBtn.addEventListener('click', () => show(Math.max(1, step - 1)));
   form.addEventListener('submit', (e) => e.preventDefault());
 
-  // ---------- bill sliders (size/era-seeded guesses) ----------
+  // ---------- region + house model (shared engine with the calculators) ----------
+  type Region = { slug: string; exact: boolean; name: string; prov: string; hdd: number; cdd: number; dc: number; am: number; prices: Prices };
+  function regionFor(loc: any): Region {
+    const C = D.calc;
+    let slug: string | null = null;
+    let exact = false;
+    if (loc.kind === 'ca') {
+      slug = C.fsa[loc.fsa] ?? null;
+      exact = Boolean(slug);
+      if (!slug) slug = nearestByFsa(loc.fsa) ?? (loc.province ? C.provRep[loc.province] ?? null : null);
+    }
+    if (!slug) slug = 'toronto';
+    const c = C.cities[slug];
+    return { slug, exact, name: c.n, prov: c.p, hdd: c.hdd, cdd: c.cdd, dc: c.dc, am: c.am, prices: c.pr };
+  }
+
+  /** Rural and uncovered postal areas: pick a covered city in the same part of the province. */
+  function nearestByFsa(fsa: string): string | null {
+    const a = fsa[0], b = fsa[1], ab = fsa.slice(0, 2);
+    const M: Record<string, string> = {
+      K: 'ottawa', N: 'london', P: 'sudbury', L: b === '0' ? 'barrie' : 'toronto', M: 'toronto',
+      G: ab === 'G7' ? 'saguenay' : 'quebec-city', H: 'montreal', J: ab === 'J8' || ab === 'J9' ? 'gatineau' : 'sherbrooke',
+      V: b === '0' ? 'kamloops' : 'vancouver',
+      T: b === '0' || b === '4' ? 'red-deer' : ['1', '2', '3'].includes(b) ? 'calgary' : 'edmonton',
+      S: ['7', '0'].includes(b) ? 'saskatoon' : 'regina',
+    };
+    if (ab === 'P7') return 'thunder-bay';
+    const slug = M[a];
+    return slug && D.calc.cities[slug] ? slug : null;
+  }
+
+  type HeatInfo = { sys: SystemKey; label: string; screen: string; combustion: boolean; slider: 'gas' | 'elec' | 'other' };
+  function heatInfo(heat: string, hage: string, age: string): HeatInfo {
+    const newer = hage === 'new' || (hage === 'unsure' && ['1996-2010', '2011-plus'].includes(age));
+    switch (heat) {
+      case 'gasboiler': return { sys: newer ? 'gasBoilerCondensing' : 'gasBoilerMid', label: 'a gas boiler', screen: 'gas', combustion: true, slider: 'gas' };
+      case 'electric': return { sys: 'electricResistance', label: 'electric baseboards', screen: 'electric', combustion: false, slider: 'elec' };
+      case 'elecfurnace': return { sys: 'electricResistance', label: 'an electric furnace or boiler', screen: 'electric', combustion: false, slider: 'elec' };
+      case 'heatpump': return { sys: hage === 'old' ? 'ashpStandard' : 'ashpCold', label: 'an air-source heat pump', screen: 'heatpump', combustion: false, slider: 'elec' };
+      case 'geothermal': return { sys: 'gshp', label: 'a geothermal heat pump', screen: 'heatpump', combustion: false, slider: 'elec' };
+      case 'oil': return { sys: hage === 'new' ? 'oilFurnaceNew' : hage === 'old' ? 'oilFurnaceOld' : 'oilFurnaceMid', label: 'oil', screen: 'oil', combustion: true, slider: 'other' };
+      case 'propane': return { sys: newer ? 'propaneFurnaceCond' : 'propaneFurnaceStd', label: 'propane', screen: 'oil', combustion: true, slider: 'other' };
+      case 'wood': return { sys: hage === 'new' ? 'woodCertified' : 'woodOld', label: 'wood', screen: 'oil', combustion: true, slider: 'other' };
+      case 'outdoorwood': return { sys: 'outdoorWoodBoiler', label: 'an outdoor wood boiler', screen: 'oil', combustion: true, slider: 'other' };
+      case 'pellet': return { sys: 'pellet', label: 'a pellet stove', screen: 'oil', combustion: true, slider: 'other' };
+      default: return { sys: newer ? 'gasFurnaceHigh' : 'gasFurnaceMid', label: 'a gas furnace', screen: 'gas', combustion: true, slider: 'gas' };
+    }
+  }
+  const HEAT_NAME: Record<string, string> = {
+    gas: 'gas furnace', gasboiler: 'gas boiler', electric: 'electric baseboard', elecfurnace: 'electric furnace/boiler',
+    heatpump: 'air-source heat pump', geothermal: 'geothermal heat pump', oil: 'oil', propane: 'propane', wood: 'wood',
+    outdoorwood: 'outdoor wood boiler', pellet: 'pellet stove',
+  };
+
+  type WhKey = WaterHeaterKey | 'boiler';
+  function whKey(wh: string, hi: HeatInfo): WhKey {
+    switch (wh) {
+      case 'gastank': return 'gasTank';
+      case 'gastankless': return 'gasTankless';
+      case 'electric': return 'electricTank';
+      case 'heatpump': return 'heatPump';
+      case 'oil': return 'oilTank';
+      case 'boiler': return 'boiler';
+    }
+    if (hi.slider === 'gas') return 'gasTank';
+    if (String(hi.sys).startsWith('oil')) return 'oilTank';
+    return 'electricTank';
+  }
+  const WH_NAME: Record<string, string> = { gasTank: 'gas tank', gasTankless: 'gas tankless', electricTank: 'electric tank', heatPump: 'heat pump water heater', oilTank: 'oil-fired tank', boiler: 'combi boiler', gasCondensing: 'condensing gas tank' };
+  function whFuel(k: WhKey, hi: HeatInfo): 'gas' | 'elec' | 'other' {
+    if (k === 'boiler') return hi.slider;
+    if (k === 'gasTank' || k === 'gasTankless' || k === 'gasCondensing') return 'gas';
+    if (k === 'oilTank') return 'other';
+    return 'elec';
+  }
+
+  function winKey(win: string, age: string): WindowKey {
+    const M: Record<string, WindowKey> = { single: 'single', singlestorm: 'singleStorm', 'double-old': 'doubleClear', 'double-new': 'doubleLowE', triple: 'energyStar' };
+    return M[win] ?? ((MODEL.envelope.windowByVintage as Record<string, WindowKey>)[age] ?? 'doubleClear');
+  }
+
+  type Answers = {
+    loc: any; age: Vintage; htype: string; size: string; heat: string; hage: string; wh: string; ac: string;
+    win: string; prev: string; sec: string[];
+  };
+  function readAnswers(): Answers {
+    return {
+      loc: parsePostal(fieldVal('postal')),
+      age: (fieldVal('age') || '1966-1980') as Vintage,
+      htype: fieldVal('htype') || 'detached',
+      size: fieldVal('size') || 'medium',
+      heat: fieldVal('heat') || 'gas',
+      hage: fieldVal('hage') || 'unsure',
+      wh: fieldVal('wh') || 'unsure',
+      ac: fieldVal('ac') || 'unsure',
+      win: fieldVal('win') || 'unsure',
+      prev: fieldVal('prev') || 'no',
+      sec: multiVal('sec'),
+    };
+  }
+
+  /** Typical-house model at local climate and prices ('now' = average prices, for bills). */
+  function houseModel(a: Answers) {
+    const R = regionFor(a.loc);
+    const hi = heatInfo(a.heat, a.hage, a.age);
+    const area = floorAreaM2({ sizeBand: a.size as any });
+    const type = a.htype === 'semi' ? 'semi' : 'detached';
+    const demand = baselineDemandGJ({ vintage: a.age, floorAreaM2: area, hdd: R.hdd, type: type as any });
+    const heatNow = heatingCost(demand, hi.sys, R.hdd, R.prices, 'now');
+    const wk = whKey(a.wh, hi);
+    const water = waterHeatingDemand(3, R.am);
+    let waterCost: number | null = null;
+    let waterUnits = 0;
+    if (wk === 'boiler') {
+      const c = heatingCost(water.gj, hi.sys, R.hdd, R.prices, 'now');
+      waterCost = c.cost; waterUnits = c.units;
+    } else {
+      const c = waterHeaterCost(wk, water.gj, R.prices, 'now', { sys: hi.sys, hdd: R.hdd });
+      waterCost = c.cost; waterUnits = c.units;
+    }
+    const baseKwh = D.calc.baseKwh * (D.calc.sizeMult[a.size] ?? 1);
+    const tons = defaultAcTons(area);
+    let acKwh = 0;
+    let acNote = '';
+    const S = MODEL.cooling.seerByAge as Record<string, number>;
+    if (a.ac === 'central-new') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: S['2006to2022'] }).kwh; acNote = 'SEER 13'; }
+    else if (a.ac === 'central-old') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: S['1995to2006'] }).kwh; acNote = 'SEER 10'; }
+    else if (a.ac === 'heatpump') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: MODEL.cooling.heatPumpSeer }).kwh; acNote = 'heat pump'; }
+    else if (a.ac === 'room') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: MODEL.cooling.room.capacityBtuh, room: true, units: 2 }).kwh; acNote = 'two window units'; }
+    const ep = R.prices.electricity.now;
+    const bills = { gas: 0, elec: baseKwh * ep + acKwh * ep, other: 0 };
+    const heatCost = heatNow.cost ?? 0;
+    bills[hi.slider] += heatCost;
+    if (waterCost !== null) bills[whFuel(wk, hi)] += waterCost;
+    if (hi.slider !== 'gas' && whFuel(wk, hi) !== 'gas') bills.gas = 0;
+    return { R, hi, area, type, demand, heatNow, wk, water, waterCost, waterUnits, baseKwh, acKwh, acNote, tons, bills };
+  }
+
+  // ---------- bill sliders (pre-set from the house model) ----------
   const gasEl = document.getElementById('gasBill') as HTMLInputElement;
   const elecEl = document.getElementById('elecBill') as HTMLInputElement;
-  const touched = { gas: false, elec: false };
+  const otherEl = document.getElementById('otherBill') as HTMLInputElement;
+  const touched = { gas: false, elec: false, other: false };
   function fmtOut(el: HTMLInputElement, out: HTMLElement) {
     out.textContent = el.value === '0' ? '$0' : '$' + el.value + '/mo';
   }
-  function wireSlider(el: HTMLInputElement, outId: string, key: 'gas' | 'elec') {
+  function wireSlider(el: HTMLInputElement, outId: string, key: 'gas' | 'elec' | 'other') {
     const out = document.getElementById(outId)!;
     el.addEventListener('input', () => { touched[key] = true; fmtOut(el, out); });
     fmtOut(el, out);
   }
   wireSlider(gasEl, 'gasOut', 'gas');
   wireSlider(elecEl, 'elecOut', 'elec');
+  wireSlider(otherEl, 'otherOut', 'other');
+  function syncHeatAge() {
+    const h = fieldVal('heat');
+    (document.getElementById('heatAgeField') as HTMLElement).hidden = ['electric', 'elecfurnace', 'outdoorwood', 'pellet', 'geothermal'].includes(h);
+  }
+  form.querySelectorAll('input[name="heat"]').forEach((el) => el.addEventListener('change', syncHeatAge));
+  syncHeatAge();
   function billGuesses() {
-    const R = D.rates.ontario, B = R.benchmarks;
-    const age = fieldVal('age') || '1966-1980';
-    const size = fieldVal('size') || 'medium';
-    const heat = fieldVal('heat') || 'gas';
-    const m = (B.eraMultiplier[age] ?? 1) * (B.sizeMultiplier[size] ?? 1);
-    let gas = 0, elec = 0;
-    if (heat === 'gas') {
-      gas = (B.gasHeatedGasM3 * m * R.gasPerM3) / 12;
-      elec = (B.gasHeatedElecKwh * (B.sizeMultiplier[size] ?? 1) * R.elecPerKwh) / 12;
-    } else if (heat === 'electric') {
-      elec = (B.electricHeatedElecKwh * m * R.elecPerKwh) / 12;
-    } else if (heat === 'heatpump') {
-      elec = (B.electricHeatedElecKwh * m * R.elecPerKwh * 0.55) / 12;
-    } else {
-      elec = (B.gasHeatedElecKwh * (B.sizeMultiplier[size] ?? 1) * R.elecPerKwh) / 12;
-    }
-    const r5 = (v: number) => String(Math.max(0, Math.round(v / 5) * 5));
-    return { gas: r5(gas), elec: r5(elec) };
+    const m = houseModel(readAnswers());
+    const r5 = (v: number) => String(Math.max(0, Math.round(v / 12 / 5) * 5));
+    return { gas: r5(m.bills.gas), elec: r5(m.bills.elec), other: r5(m.bills.other), m };
   }
   function initBillSliders() {
     const g = billGuesses();
     if (!touched.gas) { gasEl.value = g.gas; fmtOut(gasEl, document.getElementById('gasOut')!); }
     if (!touched.elec) { elecEl.value = g.elec; fmtOut(elecEl, document.getElementById('elecOut')!); }
+    if (!touched.other) { otherEl.value = g.other; fmtOut(otherEl, document.getElementById('otherOut')!); }
+    const usesOther = g.m.hi.slider === 'other' || whFuel(g.m.wk, g.m.hi) === 'other';
+    (document.getElementById('otherField') as HTMLElement).hidden = !usesOther;
     const hint = document.getElementById('gasHint');
-    if (hint) hint.textContent = fieldVal('heat') === 'gas'
-      ? 'Pre-set to a typical similar home — drag to match your bill'
+    const usesGas = g.m.bills.gas > 0;
+    if (hint) hint.textContent = usesGas
+      ? `Pre-set to a typical similar home near ${g.m.R.name} — drag to match your bill`
       : '$0 = no gas service';
   }
 
@@ -568,21 +842,7 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
     return { kind: 'ca' as const, fsa, province, region };
   }
 
-  function heatKey(heat: string) {
-    return heat === 'oil' ? 'oil' : heat === 'electric' ? 'electric' : 'gas';
-  }
-
-  function findMeasure(category: string, era: string, heat: string) {
-    const hk = heatKey(heat);
-    return D.savings.measures.find(
-      (m: any) =>
-        m.category === category &&
-        (!m.eras?.length || m.eras.includes(era)) &&
-        (!m.heatingTypes?.length || m.heatingTypes.includes(hk))
-    );
-  }
-
-  function buildSequence(arch: any, heat: string, syms: string[], goals: string[]) {
+  function buildSequence(arch: any, heat: string, syms: string[], goals: string[], a: Answers) {
     type Item = { category: string; action: string; why: string; score: number };
     const items: Item[] = arch.priorities.map((p: any, i: number) => ({ ...p, score: i * 10 }));
 
@@ -593,16 +853,21 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
     const ensure = (cat: string, action: string, why: string, score: number) => {
       if (!items.find((i) => i.category === cat)) items.push({ category: cat, action, why, score });
     };
-
-    if (heat === 'electric' || heat === 'oil') {
-      ensure('heat-pump', 'Cold-climate heat pump', 'Your heating fuel makes this the biggest single saving available.', -50);
+    const resistanceOrFuel = ['electric', 'elecfurnace', 'oil', 'propane'].includes(heat);
+    if (resistanceOrFuel) {
+      ensure('heat-pump', 'Cold-climate heat pump', 'With your heating fuel, this is usually the biggest single saving available.', -50);
       boost('heat-pump', 100);
     }
-    if (heat === 'heatpump') {
+    if (heat === 'heatpump' || heat === 'geothermal') {
       const idx = items.findIndex((i) => i.category === 'heat-pump');
       if (idx >= 0) items.splice(idx, 1);
       ensure('controls', 'Optimize the heat pump you have', 'Controls, balancing, and envelope work make an existing heat pump cheaper to run.', 45);
     }
+    if (['wood', 'outdoorwood', 'pellet'].includes(heat)) {
+      ensure('wood-safety', 'WETT inspection of the wood-burning system', 'Insurers usually ask for one, and it catches chimney and clearance problems before winter.', -5);
+    }
+    if (a.win === 'single' || a.win === 'singlestorm') boost('windows-doors', 15);
+    if (a.wh === 'electric' || a.wh === 'oil') ensure('water-heating', 'Heat pump water heater', 'Hot water is the second-biggest energy use in most homes, and yours is on an expensive fuel.', 35);
     if (syms.includes('ice-dams')) { boost('air-sealing', 30); boost('attic-insulation', 25); }
     if (syms.includes('drafty-rooms')) boost('air-sealing', 25);
     if (syms.includes('cold-basement')) { boost('basement-insulation', 30); ensure('basement-insulation', 'Basement & rim joist insulation', 'Directly targets the cold-basement problem you flagged.', 25); }
@@ -610,57 +875,64 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
     if (syms.includes('cold-second-floor')) boost('air-sealing', 15);
     if (syms.includes('condensation-mould')) ensure('ventilation', 'Ventilation check / HRV', 'Condensation and musty air are usually ventilation problems — fix the cause, not the windows.', -10);
     if (goals.includes('heatpump')) boost('heat-pump', 40);
-    if (goals.includes('solar')) ensure('solar', 'Rooftop solar + battery', 'On your goal list — and HRSP currently pays up to $10,000 toward it.', 55);
-    if (goals.includes('emissions') && heat === 'gas') boost('heat-pump', 20);
+    if (goals.includes('solar')) ensure('solar', 'Rooftop solar + battery', 'On your goal list; in Ontario, Home Renovation Savings pays toward solar with a battery.', 55);
+    if (goals.includes('emissions') && (heat === 'gas' || heat === 'gasboiler')) boost('heat-pump', 20);
 
-    items.sort((a, b) => a.score - b.score);
+    items.sort((x, y) => x.score - y.score);
     const seen = new Set<string>();
     return items.filter((i) => (seen.has(i.category) ? false : (seen.add(i.category), true))).slice(0, 6);
   }
 
   // ---------- results ----------
   function finish() {
+    const a = readAnswers();
     const postal = fieldVal('postal');
-    const age = fieldVal('age');
-    const htype = fieldVal('htype') || 'detached';
-    const size = fieldVal('size') || 'medium';
-    const heat = fieldVal('heat') || 'gas';
     const water = fieldVal('water') || 'municipal';
     const syms = multiVal('sym');
     const goals = multiVal('goal');
-    const billsReal = touched.gas || touched.elec;
+    const billsReal = touched.gas || touched.elec || touched.other;
     const gasBill = parseFloat(fieldVal('gasBill').replace(/[^0-9.]/g, '')) || 0;
     const elecBill = parseFloat(fieldVal('elecBill').replace(/[^0-9.]/g, '')) || 0;
+    const otherBill = parseFloat(fieldVal('otherBill').replace(/[^0-9.]/g, '')) || 0;
 
-    const loc = parsePostal(postal);
-    const arch = D.archetypes.find((a: any) => a.id === age);
+    const loc = a.loc;
+    const arch = D.archetypes.find((x: any) => x.id === a.age);
     const isON = loc.kind !== 'ca' ? true : loc.province === 'ON'; // Ontario-first default when unknown
     const isToronto = loc.kind === 'ca' && loc.fsa![0] === 'M';
     const regionName = loc.kind === 'ca' && loc.region ? loc.region.name : null;
+    const m = houseModel(a);
 
-    // header
     $('#rTitle').textContent = `Your plan: ${arch.label.split('·')[1]?.trim() ?? arch.label} era home`;
     $('#rSub').textContent = [
       arch.years,
-      htype === 'condo' ? 'condo/apartment' : htype === 'semi' ? 'semi or townhome' : 'detached',
-      heat === 'gas' ? 'gas-heated' : heat === 'electric' ? 'electric baseboard' : heat === 'oil' ? 'oil/propane-heated' : 'heat pump equipped',
-      regionName ?? (loc.kind === 'ca' ? (loc.province ?? 'Canada') : loc.kind === 'us' ? 'United States' : 'Ontario (assumed)'),
+      a.htype === 'condo' ? 'condo/apartment' : a.htype === 'semi' ? 'semi or townhome' : 'detached',
+      `heated by ${HEAT_NAME[a.heat] ?? a.heat}`,
+      regionName ?? (loc.kind === 'ca' ? (m.R.exact ? m.R.name : (loc.province ?? 'Canada')) : loc.kind === 'us' ? 'United States' : 'Ontario (assumed)'),
     ].join(' · ');
 
-    renderBenchmark(heat, size, age, gasBill, elecBill, isON, htype, billsReal);
+    const bills = { gas: gasBill, elec: elecBill, other: otherBill, real: billsReal };
+    const cal = calibrationFor(m, bills);
+    renderBenchmark(m, a, bills, cal);
     renderProfile(arch);
-    renderSequence(arch, heat, syms, goals, age, gasBill, elecBill, isON, isToronto, htype);
-    const testsList = renderTests(age, heat, syms, goals, htype, water);
+    renderSequence(arch, a, syms, goals, m, cal, isON, isToronto);
+    renderSystems(a, m);
+    renderMethod(m, cal);
+    const testsList = renderTests(a.age, m.hi.screen, syms, goals, a.htype, water);
     renderPrograms(loc, goals, isON, isToronto);
     renderIssues(syms);
     renderProviders(loc);
     renderResources(loc, syms, arch);
-    prefillLead(arch, htype, size, heat, syms, goals, loc, testsList);
+    prefillLead(arch, a, syms, goals, loc, testsList, m);
 
     plannerEl.hidden = true;
     resultsEl.hidden = false;
     const url = new URL(location.href);
-    const params: Record<string, string> = { postal, age, htype, size, heat, water, sym: syms.join(','), goal: goals.join(','), gas: touched.gas && gasBill ? String(gasBill) : '', elec: touched.elec && elecBill ? String(elecBill) : '', done: '1' };
+    const params: Record<string, string> = {
+      postal, age: a.age, htype: a.htype, size: a.size, heat: a.heat, hage: a.hage, wh: a.wh, ac: a.ac, win: a.win, prev: a.prev,
+      sec: a.sec.join(','), water, sym: syms.join(','), goal: goals.join(','),
+      gas: touched.gas && gasBill ? String(gasBill) : '', elec: touched.elec && elecBill ? String(elecBill) : '',
+      other: touched.other && otherBill ? String(otherBill) : '', done: '1',
+    };
     Object.entries(params).forEach(([k, v]) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k)));
     history.replaceState(null, '', url);
     const t = $('#rTitle');
@@ -668,33 +940,38 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
     t.focus({ preventScroll: false });
   }
 
-  function renderBenchmark(heat: string, size: string, age: string, gasBill: number, elecBill: number, isON: boolean, htype: string, billsReal: boolean) {
+  type Bills = { gas: number; elec: number; other: number; real: boolean };
+  function calibrationFor(m: ReturnType<typeof houseModel>, b: Bills) {
+    if (!b.real) return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'none', waterHeaterSameFuel: false });
+    const monthly = m.hi.slider === 'gas' ? b.gas : m.hi.slider === 'elec' ? b.elec : b.other;
+    const same = whFuel(m.wk, m.hi) === m.hi.slider;
+    if (!(monthly > 0)) return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'none', waterHeaterSameFuel: same });
+    return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'bill', monthlyBill: monthly, waterHeaterSameFuel: same });
+  }
+
+  function renderBenchmark(m: ReturnType<typeof houseModel>, a: Answers, b: Bills, cal: any) {
     const el = $('#rBenchmark');
     el.innerHTML = '';
-    const userAnnual = (gasBill + elecBill) * 12;
-    if (!billsReal || !userAnnual || !isON || htype === 'condo') return;
-    const R = D.rates.ontario;
-    const B = R.benchmarks;
-    const m = (B.eraMultiplier[age] ?? 1) * (B.sizeMultiplier[size] ?? 1);
-    let typical = 0;
-    if (heat === 'electric') typical = B.electricHeatedElecKwh * m * R.elecPerKwh;
-    else typical = B.gasHeatedGasM3 * m * R.gasPerM3 + B.gasHeatedElecKwh * (B.sizeMultiplier[size] ?? 1) * R.elecPerKwh;
-    const lo = typical * 0.85, hi = typical * 1.15;
+    const userAnnual = (b.gas + b.elec + b.other) * 12;
+    if (!b.real || !userAnnual || a.htype === 'condo') return;
+    const typical = m.bills.gas + m.bills.elec + m.bills.other;
+    if (!(typical > 0)) return;
+    const lo = typical * 0.75, hi = typical * 1.25;
     const delta = Math.round(((userAnnual - typical) / typical) * 100);
     let verdict = '';
     let cls = 'bench-ok';
-    if (delta > 15) { verdict = `You're spending roughly <b class="bench-up">${delta}% more</b> than a typical similar home — that gap is your upgrade budget hiding in plain sight.`; cls = 'bench-up'; }
-    else if (delta < -15) { verdict = `You're spending about <b class="bench-ok">${Math.abs(delta)}% less</b> than a typical similar home — already efficient, so focus on comfort fixes and equipment timing.`; }
-    else { verdict = `You're within the typical range for similar homes — targeted upgrades can still take a meaningful bite.`; }
+    if (delta > 25) { verdict = `You're spending about <b class="bench-up">${delta}% more</b> than our estimate for a similar home here. Part of that can be how a household lives (more people, warmer settings, a hot tub), and part is the house itself; a blower door test and your bill history separate the two.`; cls = 'bench-up'; }
+    else if (delta < -25) { verdict = `You're spending about <b class="bench-ok">${Math.abs(delta)}% less</b> than our estimate for a similar home here, so the house may already have had upgrades. We've scaled the savings below down to match.`; }
+    else { verdict = `You're within the typical range for similar homes here. Targeted upgrades can still take a meaningful bite.`; }
     el.innerHTML = `
       <div class="card bench-card">
-        <h3>Your bills vs. similar homes</h3>
+        <h3>Your bills vs. similar homes near ${esc(m.R.name)}</h3>
         <div class="figures">
-          <div class="fig"><div class="n ${cls}">${money(userAnnual)}</div><div class="l">your estimated annual energy spend</div></div>
-          <div class="fig"><div class="n">${money(lo)}–${money(hi)}</div><div class="l">typical for a ${esc(size)} ${esc(age)} era home (Ontario)</div></div>
+          <div class="fig"><div class="n ${cls}">${money(userAnnual)}</div><div class="l">your estimated yearly energy spend</div></div>
+          <div class="fig"><div class="n">${money(lo)}–${money(hi)}</div><div class="l">typical for a ${esc(a.size === 'xlarge' ? 'very large' : a.size)} ${esc(a.age)} home with ${esc(m.hi.label)}, at local prices</div></div>
         </div>
         <p class="small">${verdict}</p>
-        <p class="meta">Benchmark uses published rate + usage assumptions (${esc(D.rates.asOf)}) — rough by design. Your audit replaces this with a real model.</p>
+        <p class="meta">Our model: about ${Math.round(m.demand)} GJ of heat a year for a house like yours (${m.R.hdd.toLocaleString('en-CA')} heating degree-days), plus hot water, cooling and about ${Math.round(m.baseKwh).toLocaleString('en-CA')} kWh for lights and appliances. ${cal.calibrated ? `Your bills put your heating at about ${Math.round(cal.actualDemandGJ)} GJ, so savings below are scaled by ${cal.factor.toFixed(2)}${cal.clamped ? ' (capped)' : ''}.` : ''}</p>
       </div>`;
   }
 
@@ -714,68 +991,216 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
       ${arch.watchFor.map((w: any) => `<div class="watch-item ${w.severity}"><b>${esc(w.flag)}</b>${esc(w.detail)}</div>`).join('')}`;
   }
 
-  function renderSequence(arch: any, heat: string, syms: string[], goals: string[], age: string, gasBill: number, elecBill: number, isON: boolean, isToronto: boolean, htype: string) {
+  /** Annual saving for one sequence item, valued at the next-unit (variable) price. */
+  function itemSaving(cat: string, a: Answers, m: ReturnType<typeof houseModel>, cal: any): { dollars: number | null; note?: string; cost?: [number, number] } {
+    const R = m.R;
+    const demand = m.demand * cal.factor;
+    const storeys = a.size === 'small' ? 1 : 2;
+    const g = geometry(m.area, storeys, true);
+    const E = MODEL.envelope;
+    const C = MODEL.costs as any;
+    const val = (gj: number) => savingValue(gj, m.hi.sys, R.hdd, R.prices, 'variable').dollars;
+    switch (cat) {
+      case 'air-sealing': {
+        const r = airMeasure({ volumeM3: g.volumeM3, hdd: R.hdd, demandGJ: demand, calibration: 1 });
+        return { dollars: val(r.gj), cost: [C.airSealing.low, C.airSealing.high] };
+      }
+      case 'attic-insulation': {
+        const rb = (E.atticRByVintage as Record<string, number>)[a.age];
+        const t = atticTargetR(R.hdd);
+        const r = atticMeasure({ areaM2: g.atticM2, rBefore: rb, rAfter: t.target, hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
+        const sqft = g.atticM2 * 10.764;
+        return { dollars: r.applicable ? val(r.gj) : 0, note: `R-${rb} to R-${t.target}`, cost: [C.atticPerSqft.low * sqft, C.atticPerSqft.high * sqft] };
+      }
+      case 'wall-insulation': {
+        const rb = (E.wallRsiByVintage as Record<string, number>)[a.age];
+        const r = wallMeasure({ areaM2: g.wallNetM2, option: 'dense', rsiBefore: rb, hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
+        return { dollars: r.applicable ? val(r.gj) : 0 };
+      }
+      case 'basement-insulation': {
+        const rb = (E.basementRsiByVintage as Record<string, number>)[a.age];
+        const r = basementMeasure({ areaM2: g.basementWallM2, rsiBefore: rb, rsiAfter: E.basementTargetRsi, hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
+        return { dollars: r.applicable ? val(r.gj) : 0 };
+      }
+      case 'windows-doors': {
+        const before = winKey(a.win, a.age);
+        const r = windowMeasure({ areaM2: g.windowM2, before, after: 'energyStar', hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
+        return { dollars: r.applicable ? val(r.gj) : 0, cost: [C.windowEach.low * g.windowCount, C.windowEach.high * g.windowCount], note: `${g.windowCount} windows` };
+      }
+      case 'heat-pump': {
+        const now = heatingCost(demand, m.hi.sys, R.hdd, R.prices, 'variable');
+        const hp = heatingCost(demand, 'ashpCold', R.hdd, R.prices, 'variable');
+        if (now.cost === null || hp.cost === null) return { dollars: null };
+        return { dollars: now.cost - hp.cost, cost: [C.ashpColdDucted.low, C.ashpColdDucted.high] };
+      }
+      case 'water-heating': {
+        if (m.wk === 'heatPump') return { dollars: 0 };
+        const cur = m.wk === 'boiler' ? heatingCost(m.water.gj, m.hi.sys, R.hdd, R.prices, 'variable').cost : waterHeaterCost(m.wk, m.water.gj, R.prices, 'variable').cost;
+        const alt = waterHeaterCost('heatPump', m.water.gj, R.prices, 'variable', { sys: m.hi.sys, hdd: R.hdd });
+        if (cur === null || alt.cost === null) return { dollars: null };
+        return { dollars: cur - (alt.cost + (alt.extraCost ?? 0)) };
+      }
+      case 'controls': {
+        const hp = m.hi.sys === 'ashpCold' || m.hi.sys === 'ashpStandard' || m.hi.sys === 'gshp';
+        const r = setbackMeasure({ degrees: hp ? 2 : 3, hours: 8, demandGJ: demand, heatPump: hp });
+        return { dollars: val(r.gj) };
+      }
+    }
+    return { dollars: null };
+  }
+
+  function renderSequence(arch: any, a: Answers, syms: string[], goals: string[], m: ReturnType<typeof houseModel>, cal: any, isON: boolean, isToronto: boolean) {
     const el = $('#rSequence');
-    if (htype === 'condo') {
+    if (a.htype === 'condo') {
       el.innerHTML = `
         <div class="rsec"><h3>Condos work differently</h3>
-        <p class="sub">EnerGuide evaluations and most Ontario rebates target houses and townhomes — in a condo, the envelope and heating usually belong to the corporation. Your best levers: in-suite sealing, window coverings, a heat-pump conversation with your board, and pushing the corporation toward a building-level audit.</p></div>`;
+        <p class="sub">EnerGuide evaluations and most rebates target houses and townhomes — in a condo, the envelope and heating usually belong to the corporation. Your best levers: in-suite sealing, window coverings, a heat-pump conversation with your board, and pushing the corporation toward a building-level audit.</p></div>`;
       return;
     }
-    const R = D.rates.ontario;
-    let heatSpend = 0;
-    if (heat === 'gas' && gasBill) heatSpend = gasBill * 12 * R.benchmarks.heatShareOfGas;
-    if (heat === 'electric' && elecBill) heatSpend = elecBill * 12 * R.benchmarks.heatShareOfElectricHeatedElec;
-
-    const seq = buildSequence(arch, heat, syms, goals);
+    const seq = buildSequence(arch, a.heat, syms, goals, a);
     const rebateChip = (cat: string) => {
       if (!isON) return '';
       const map: Record<string, string> = {
         'air-sealing': 'HRSP assessment path',
-        'attic-insulation': 'HRSP up to $7,700 insulation',
-        'wall-insulation': 'HRSP up to $7,700 insulation',
-        'basement-insulation': 'HRSP up to $7,700 insulation',
+        'attic-insulation': 'HRSP insulation rebates',
+        'wall-insulation': 'HRSP insulation rebates',
+        'basement-insulation': 'HRSP insulation rebates',
         'windows-doors': 'HRSP $100/opening',
-        'heat-pump': 'HRSP up to $7,500 ($2,000 if gas-heated)',
-        'solar': 'HRSP up to $10,000',
+        'heat-pump': 'HRSP heat pump rebate',
+        'solar': 'HRSP solar + battery',
         'water-heating': 'HRSP $500',
-        'controls': 'HRSP $125',
+        'controls': 'HRSP thermostat rebate',
       };
       const label = map[cat];
       const help = isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : '';
       return label ? `<span class="chip chip-active">${label}</span>${help}` : help;
     };
-
+    const local = (t: string) => {
+      let out = isON ? t : t.split(/(?<=[.!?])\s+/).filter((x) => !/HRSP|Ontario|Enbridge|Home Renovation Savings/.test(x)).join(' ');
+      if (a.heat === 'propane') out = out.replace('Oil-heated homes', 'Oil- and propane-heated homes');
+      return out;
+    };
     const rows = seq.map((item) => {
-      const m = findMeasure(item.category, age, heat);
+      const sm = findMeasure(item.category, a.age, m.hi.screen);
+      const s = itemSaving(item.category, a, m, cal);
       let saveTxt = '';
-      if (m) {
-        if (m.fixedAnnual) saveTxt = `~${money(m.fixedAnnual[0])}–${money(m.fixedAnnual[1])}/yr`;
-        else if (m.pctHeating?.[1] > 0) {
-          saveTxt = heatSpend
-            ? `~${money(heatSpend * m.pctHeating[0])}–${money(heatSpend * m.pctHeating[1])}/yr`
-            : `~${Math.round(m.pctHeating[0] * 100)}–${Math.round(m.pctHeating[1] * 100)}% of heating costs`;
+      let payTxt = '';
+      if (s.dollars !== null && s.dollars !== undefined) {
+        if (s.dollars >= 15) {
+          saveTxt = `about ${money(s.dollars)}/yr <span class="save-range">(likely ${money(s.dollars * 0.75)}–${money(s.dollars * 1.25)})</span>`;
+          if (s.cost) {
+            const y1 = s.cost[0] / s.dollars, y2 = s.cost[1] / s.dollars;
+            if (y1 < 100) payTxt = `payback before rebates: ${Math.max(1, Math.round(y1))}–${Math.round(Math.min(y2, 99))}${y2 >= 99 ? '+' : ''} years`;
+          }
+        } else if (item.category === 'heat-pump' && s.dollars < 0) {
+          saveTxt = `<span class="save-neg">costs about ${money(-s.dollars)}/yr more to run than your current fuel at today's prices</span>`;
+        } else if (s.dollars < 15 && item.category !== 'ventilation' && item.category !== 'solar') {
+          saveTxt = `<span class="save-small">little or no bill saving for a house like yours</span>`;
         }
       }
+      const costTxt = s.cost ? `typical cost ${money(s.cost[0])}–${money(s.cost[1])}` : sm?.typicalCost ? `typical cost ${esc(sm.typicalCost)}` : '';
+      const hpNote = item.category === 'heat-pump' && s.dollars !== null && s.dollars < 15
+        ? ' With cheap gas, the case for a heat pump is comfort, air conditioning, lower emissions and rebates more than the bill.' : '';
       return `
         <div class="seq-item">
-          <h4>${esc(item.action)}</h4>
-          <p class="why">${esc(item.why)}${m?.note ? ' ' + esc(m.note) : ''}</p>
+          <h4>${esc(item.action)}${s.note ? ` <span class="small">(${esc(s.note)})</span>` : ''}</h4>
+          <p class="why">${esc(local(item.why))}${sm?.note && local(sm.note) ? ' ' + esc(local(sm.note)) : ''}${hpNote}</p>
           <div class="nums">
             ${saveTxt ? `<span class="save">${saveTxt}</span>` : ''}
-            ${m?.typicalCost ? `<span class="cost">typical cost ${esc(m.typicalCost)}</span>` : ''}
+            ${costTxt ? `<span class="cost">${costTxt}</span>` : ''}
+            ${payTxt ? `<span class="cost">${payTxt}</span>` : ''}
             ${rebateChip(item.category)}
           </div>
         </div>`;
     });
-
+    const basis = cal.calibrated
+      ? `<span class="chip chip-active">Scaled to your bills</span> Dollar figures use your bills and ${esc(m.R.name)}-area prices and climate.`
+      : `<span class="chip chip-neutral">Typical house estimate</span> Based on a typical ${esc(a.age)} house near ${esc(m.R.name)}. <a href="#" id="addBills">Add your bills</a> to scale these to your house.`;
     el.innerHTML = `
       <div class="rsec">
         <h3>Your upgrade sequence</h3>
-        <p class="sub">Ordered for your era, heating, and the problems you flagged. ${heatSpend ? 'Dollar ranges use your bills.' : 'Add your bills (start over → step 6) to see dollar ranges.'}</p>
+        <p class="sub">Ordered for your era, heating, and the problems you flagged. ${basis}</p>
         <div class="seq">${rows.join('')}</div>
-        <p class="small">${esc(D.savings.wholeHouseNote)}</p>
+        <p class="small">Savings don't simply add up: once the attic is insulated there is less heat left to save elsewhere. We value savings at the price of your next unit of energy and stay on the low side on purpose.</p>
       </div>`;
+    document.getElementById('addBills')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      resultsEl.hidden = true; plannerEl.hidden = false; show(6);
+      plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function renderSystems(a: Answers, m: ReturnType<typeof houseModel>) {
+    const el = $('#rSystems');
+    if (a.htype === 'condo') { el.innerHTML = ''; return; }
+    const R = m.R;
+    const cards: string[] = [];
+    // water heater
+    if (m.waterCost !== null) {
+      const alts: string[] = [];
+      const hpwh = waterHeaterCost('heatPump', m.water.gj, R.prices, 'now', { sys: m.hi.sys, hdd: R.hdd });
+      const tl = R.prices.gas ? waterHeaterCost('gasTankless', m.water.gj, R.prices, 'now') : null;
+      if (m.wk !== 'heatPump' && hpwh.cost !== null) alts.push(`heat pump water heater about ${money(hpwh.cost + (hpwh.extraCost ?? 0))}/yr`);
+      if (tl && tl.cost !== null && m.wk === 'gasTank') alts.push(`gas tankless about ${money(tl.cost)}/yr (US DOE: on-demand units are 24–34% more efficient than tanks in homes using up to about 155 litres a day)`);
+      cards.push(`<div class="sys-card"><h4>Hot water: ${esc(WH_NAME[m.wk] ?? m.wk)}${a.wh === 'unsure' ? ' (assumed)' : ''}</h4>
+        <p class="small">About <b>${money(m.waterCost)}/yr</b> for a household of three near ${esc(R.name)} (cold water arrives at about ${m.water.inletC.toFixed(0)} °C here).${alts.length ? ' Alternatives: ' + alts.join('; ') + '.' : ''}</p>
+        <p class="small"><a href="/learn/water-heaters/">Water heaters compared →</a></p></div>`);
+    }
+    // cooling
+    if (m.acKwh > 0) {
+      const ep = R.prices.electricity.now;
+      const old = a.ac === 'central-old';
+      cards.push(`<div class="sys-card"><h4>Cooling: ${esc(m.acNote)}</h4>
+        <p class="small">About <b>${Math.round(m.acKwh).toLocaleString('en-CA')} kWh</b> a summer (${money(m.acKwh * ep)}) with ${R.cdd} cooling degree-days near ${esc(R.name)}.${old ? ' An older central air conditioner is a natural time to switch to a heat pump: one unit then cools and heats.' : ''}</p>
+        <p class="small"><a href="/learn/air-conditioning/">Air conditioning and cooling →</a></p></div>`);
+    }
+    // windows
+    if (a.win !== 'unsure') {
+      const wk = winKey(a.win, a.age);
+      const msg = (wk === 'single' || wk === 'singleStorm')
+        ? 'Single glazing loses far more heat than an insulated wall, so replacement can pay here, but air sealing, attic and basement work usually pay faster. Storm windows are a cheaper middle step.'
+        : wk === 'doubleClear'
+          ? 'Older double-pane windows still work; replacing them mostly buys comfort and quiet. Do it when they fail or at a renovation, and seal around frames now.'
+          : 'Your windows are already efficient; caulk and weatherstrip, and spend elsewhere first.';
+      cards.push(`<div class="sys-card"><h4>Windows: ${esc((MODEL.envelope.windowU as any)[wk]?.label ?? wk)}</h4><p class="small">${msg}</p><p class="small"><a href="/learn/windows-doors/">Windows and doors: when upgrades pay →</a></p></div>`);
+    }
+    // secondary heat
+    if (a.sec.includes('woodstove') || ['wood', 'outdoorwood', 'pellet'].includes(a.heat)) {
+      cards.push(`<div class="sys-card"><h4>Wood heat</h4><p class="small">Have a WETT-certified inspector check the stove, chimney and clearances (insurers usually ask), sweep as needed, and keep a working CO alarm. Wood and pellet costs vary too much to estimate; enter yours in the <a href="/calculators/energy-costs/${esc(R.slug)}/">energy cost calculator</a>.</p><p class="small"><a href="/tests/wood-burning-inspection/">Wood-burning inspections →</a></p></div>`);
+    }
+    if (a.sec.includes('spaceheaters')) {
+      const ep = R.prices.electricity.now;
+      cards.push(`<div class="sys-card"><h4>Electric space heaters</h4><p class="small">A 1,500 W heater costs about ${money(1.5 * ep * 100)} per 100 hours near ${esc(R.name)}. Needing one usually points to a draft, a cold room over a garage, or a duct problem worth finding.</p></div>`);
+    }
+    if (a.sec.includes('solar')) {
+      cards.push(`<div class="sys-card"><h4>Free heat from the sun</h4><p class="small">Sunny south windows supply real heat on clear winter days. Our estimate allows for typical solar gain; if your bills come in lower than the typical range, this is one reason. Keep low-e coatings in mind when replacing south glass.</p><p class="small"><a href="/learn/heating-systems/">Heating systems and solar gain →</a></p></div>`);
+    }
+    // previous audit
+    if (a.prev === 'recent' || a.prev === 'older') {
+      cards.push(`<div class="sys-card prev"><h4>You've had an evaluation before</h4><p class="small">Dig out the report: its upgrade list and blower-door number are still useful for planning. Whether it counts for rebates depends on the program. Ontario's Home Renovation Savings needs a first assessment dated January 28, 2025 or later, done by the same approved organization as the follow-up${a.prev === 'older' ? ', and renovations since your old report change the numbers' : ''}.</p><p class="small"><a href="/learn/previous-audit/">What an old EnerGuide report is still good for →</a></p></div>`);
+    }
+    el.innerHTML = cards.length ? `<div class="rsec"><h3>Your home's systems</h3><p class="sub">Estimated at ${esc(R.name)}-area prices. Every number has a calculator behind it, pre-filled for your city.</p><div class="sys-grid">${cards.join('')}</div></div>` : '';
+  }
+
+  function renderMethod(m: ReturnType<typeof houseModel>, cal: any) {
+    const R = m.R;
+    $('#rMethod').innerHTML = `
+      <details class="card card-pad method">
+        <summary><strong>How we got these numbers</strong> <span class="small">(and why they're conservative)</span></summary>
+        <p class="small">Your postal code ${R.exact ? `matched ${esc(R.name)}` : `isn't in one of the 70 cities we cover, so we used ${esc(R.name)}, the largest covered city in your province`}: ${R.hdd.toLocaleString('en-CA')} heating degree-days (NRCan HOT2000 weather data, the same data EnerGuide evaluations use) and local energy prices with taxes. A typical house like yours needs about <b>${Math.round(m.demand)} GJ</b> of heat a year (NRCan's heating need per square metre for your era, scaled to the local climate).${cal.calibrated ? ` Your bills point to about <b>${Math.round(cal.actualDemandGJ)} GJ</b>, so we scaled every saving by ${cal.factor.toFixed(2)}${cal.clamped ? ' (we cap the scaling between 0.5 and 1.6)' : ''}.` : ' Without your bills, we use the typical figure.'}</p>
+        <p class="small">Each upgrade's saving comes from the physics of that part of the house (R-values, window U-values, air leakage) at your degree-days, then we multiply by 0.75 (0.4 for basements) because sun, people and appliances already supply free heat and real installations underperform their labels. Savings are valued at the price of your <em>next</em> unit of energy, without fixed monthly charges, which is lower than your average price.</p>
+        <p class="small"><a href="/calculators/upgrade-payback/${esc(R.slug)}/">Change any assumption in the upgrade calculator for ${esc(R.name)} →</a> · <a href="/calculators/energy-costs/${esc(R.slug)}/">Compare heating systems →</a> · <a href="/learn/real-numbers/">Worked examples with every step shown →</a></p>
+      </details>`;
+  }
+
+  function findMeasure(category: string, era: string, heat: string) {
+    const hk = heat === 'oil' ? 'oil' : heat === 'electric' ? 'electric' : 'gas';
+    return D.savings.measures.find(
+      (x: any) =>
+        x.category === category &&
+        (!x.eras?.length || x.eras.includes(era)) &&
+        (!x.heatingTypes?.length || x.heatingTypes.includes(hk))
+    );
   }
 
   function renderPrograms(loc: any, goals: string[], isON: boolean, isToronto: boolean) {
@@ -948,12 +1373,13 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
       </div>`;
   }
 
-  function prefillLead(arch: any, htype: string, size: string, heat: string, syms: string[], goals: string[], loc: any, testsList: string[]) {
-    const heatLabel = heat === 'gas' ? 'gas furnace' : heat === 'electric' ? 'electric baseboard' : heat === 'oil' ? 'oil/propane' : 'heat pump';
-    const where = loc.kind === 'ca' && loc.region ? loc.region.name : loc.kind === 'ca' ? (loc.province ?? 'Canada') : 'Ontario';
+  function prefillLead(arch: any, a: Answers, syms: string[], goals: string[], loc: any, testsList: string[], m: ReturnType<typeof houseModel>) {
+    const where = loc.kind === 'ca' && loc.region ? loc.region.name : loc.kind === 'ca' ? (m.R.exact ? m.R.name : (loc.province ?? 'Canada')) : 'Ontario';
     const lines = [
       'My AuditYourHome plan summary:',
-      `• Home: ${arch.years}, ${htype}, ${size}, heated by ${heatLabel}, in ${where}`,
+      `• Home: ${arch.years}, ${a.htype}, ${a.size}, heated by ${HEAT_NAME[a.heat] ?? a.heat}, in ${where}`,
+      `• Water heater: ${a.wh === 'unsure' ? 'not sure' : (WH_NAME[whKey(a.wh, m.hi)] ?? a.wh)}; cooling: ${a.ac}; windows: ${a.win}`,
+      a.prev === 'recent' || a.prev === 'older' ? `• Previous EnerGuide evaluation: yes (${a.prev === 'recent' ? 'last 3 years' : 'more than 3 years ago'})` : '',
       syms.length ? `• Issues: ${syms.join(', ')}` : '',
       goals.length ? `• Goals: ${goals.join(', ')}` : '',
       `• Tests to include in the audit: ${testsList.join('; ')}`,
@@ -1002,11 +1428,19 @@ const ratesAsOf = new Date(rates.asOf + 'T12:00:00').toLocaleDateString('en-CA',
     set('htype', q.get('htype'));
     set('size', q.get('size'));
     set('heat', q.get('heat'));
+    set('hage', q.get('hage'));
+    set('wh', q.get('wh'));
+    set('ac', q.get('ac'));
+    set('win', q.get('win'));
+    set('prev', q.get('prev'));
     set('water', q.get('water'));
     set('gasBill', q.get('gas'));
     set('elecBill', q.get('elec'));
+    set('otherBill', q.get('other'));
     if (q.get('gas')) touched.gas = true;
     if (q.get('elec')) touched.elec = true;
+    if (q.get('other')) touched.other = true;
+    (q.get('sec') ?? '').split(',').filter(Boolean).forEach((v) => set('sec', v));
     (q.get('sym') ?? '').split(',').filter(Boolean).forEach((v) => set('sym', v));
     (q.get('goal') ?? '').split(',').filter(Boolean).forEach((v) => set('goal', v));
     if (q.get('done') === '1' && q.get('age')) finish();

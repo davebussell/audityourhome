@@ -1,0 +1,279 @@
+{
+  "_meta": {
+    "checked": "2026-10-08",
+    "note": "Read on each health unit's own page on 2026-10-08 (WebFetch). Hours and locations change: pages tell readers to confirm. 'radon2012' figures are Health Canada's Cross-Canada Survey of Radon Concentrations in Homes (2012), Table 5, raw percentages for 2007 health regions; values for regions already used by the city pages come from tools/local-pages/research/radon.json, the others from the GSC research file (radonHealthUnits), both read against the canada.ca table and the PDF edition.",
+    "radonSurvey": {
+      "label": "Health Canada — Cross-Canada Survey of Radon Concentrations in Homes, final report (2012), Table 5",
+      "href": "https://www.canada.ca/en/health-canada/services/environmental-workplace-health/reports-publications/radiation/cross-canada-survey-radon-concentrations-homes-final-report-health-canada-2012.html"
+    },
+    "radonLending": {
+      "label": "Take Action on Radon — radon monitor lending programs (page updated 2026-04-17)",
+      "href": "https://takeactiononradon.ca/resources/lending-programs/"
+    }
+  },
+  "hu2007": {
+    "3534": {
+      "region": "Haldimand-Norfolk Health Unit",
+      "tested": 116,
+      "pct": 2.6,
+      "pct600": 0.0
+    },
+    "3533": {
+      "region": "Grey Bruce Health Unit",
+      "tested": 99,
+      "pct": 11.1,
+      "pct600": 1.0
+    },
+    "3554": {
+      "region": "Perth District Health Unit",
+      "tested": 108,
+      "pct": 12.0,
+      "pct600": 0.9
+    },
+    "5952": {
+      "region": "Northern Interior Health Service Delivery Area",
+      "tested": 208,
+      "pct": 12.0,
+      "pct600": 1.9
+    },
+    "5953": {
+      "region": "Northeast Health Service Delivery Area",
+      "tested": 200,
+      "pct": 10.0,
+      "pct600": 0.5
+    }
+  },
+  "units": {
+    "smdhu": {
+      "name": "Simcoe Muskoka District Health Unit",
+      "short": "the Simcoe Muskoka District Health Unit",
+      "wells": {
+        "free": "Free bacteria testing (E. coli and total coliforms) through Public Health Ontario.",
+        "where": "Bottles can be picked up and samples dropped off at health unit offices in Barrie, Collingwood, Cookstown, Gravenhurst, Huntsville and Midland. The Orillia office hands out bottles but doesn't take samples; the Public Health Ontario lab in Orillia does both. Bottle pick-up runs Monday to Friday, 8:30 a.m. to 4:30 p.m.; sample drop-off is Monday to Thursday before 4:30 p.m., with no Friday drop-offs at health unit offices.",
+        "places": [
+          "Barrie",
+          "Collingwood",
+          "Cookstown",
+          "Gravenhurst",
+          "Huntsville",
+          "Midland",
+          "Orillia"
+        ],
+        "frequency": "The health unit says regular testing is the best way to make sure your water stays safe, because private water quality can change over time; it doesn't set a schedule.",
+        "chemistry": "Public Health Ontario doesn't test for chemicals or minerals; for those, use a licensed private laboratory.",
+        "url": "https://www.simcoemuskokahealth.org/Topics/SafeWater/drinkingwater.aspx",
+        "updated": "May 6, 2026"
+      },
+      "radon": {
+        "text": "The health unit says the best time to test is fall to spring, that lower levels such as basements are at greater risk, and that Tarion's warranty covers radon mitigation in new Ontario homes 7 years old or less.",
+        "url": "https://www.simcoemuskokahealth.org/Topics/HealthyEnvironments/Indoor-Environment/Radon"
+      }
+    },
+    "york": {
+      "name": "York Region Public Health",
+      "short": "York Region",
+      "wells": {
+        "free": "Free bacteria testing for owners of private drinking-water wells, analyzed by Public Health Ontario for total coliforms and E. coli.",
+        "where": "Pick up bottles weekdays from 8:30 a.m. to 4:30 p.m. and drop samples off Monday to Thursday before each site's cut-off: in Georgina at 20849 Dalton Road, Sutton (10 a.m.), 24262 Woodbine Avenue, Keswick (11 a.m.) and the Georgina Civic Centre, 26557 Civic Centre Road (10 a.m.); in Newmarket at 17150 Yonge Street (10 a.m.); in Richmond Hill at 50 High Tech Road (11 a.m.); in Vaughan at 9060 Jane Street (11 a.m.); and in Unionville at 4261 Highway 7 (11 a.m.). The Public Health Ontario lab at 81 Resources Road in Etobicoke takes drop-offs only, weekdays 8 a.m. to 2 p.m.",
+        "places": [
+          "Sutton",
+          "Keswick",
+          "Georgina",
+          "Newmarket",
+          "Richmond Hill",
+          "Vaughan",
+          "Unionville"
+        ],
+        "frequency": "Once results are safe, York Region recommends testing each spring, summer and fall, and again after well construction and disinfection, after the well has sat unused for a long time, after snowmelt and after heavy rain or flooding.",
+        "chemistry": "The lab no longer tests well water for nitrates or sodium; York Region suggests a private licensed lab at your own expense, and notes that boiling kills bacteria but concentrates chemicals.",
+        "url": "https://www.york.ca/environment/water-and-wastewater/private-well-water-testing",
+        "updated": "October 1, 2026"
+      }
+    },
+    "waterloo": {
+      "name": "Region of Waterloo Public Health and Paramedic Services",
+      "short": "Region of Waterloo Public Health",
+      "wells": {
+        "free": "Bacteria testing is free, funded by Public Health Ontario; nitrate or fluoride tests cost $21.40 each.",
+        "where": "In the townships, bottles are picked up and samples dropped off at the North Dumfries, Wellesley, Wilmot and Woolwich township offices (rural drop-off is on Tuesdays); the Woolwich Community Health Centre takes bacteria samples, and Region of Waterloo Library branches hand out bottles only. The urban receptions at 150 Main Street, Cambridge and 99 Regina Street South, Waterloo take samples Monday to Thursday.",
+        "places": [
+          "North Dumfries",
+          "Wellesley",
+          "Wilmot",
+          "Woolwich",
+          "Cambridge",
+          "Waterloo"
+        ],
+        "frequency": "The Region advises testing for bacteria three times a year (spring, summer and fall) and for nitrate and fluoride once a year, and offers well-water reminder emails.",
+        "chemistry": "Nitrate and fluoride: $21.40 each through the Region. Other chemistry goes to a private lab.",
+        "url": "https://www.regionofwaterloo.ca/programs-and-services/public-health/health-standards-for-businesses/small-drinking-water-systems-and-private-wells/"
+      }
+    },
+    "hpph": {
+      "name": "Huron Perth Public Health",
+      "short": "Huron Perth Public Health",
+      "wells": {
+        "free": "Free bacterial water testing for all Huron and Perth county residents on a private well.",
+        "where": "Bottles are available from Huron Perth Public Health, hospital and municipal locations or your municipal office, and samples can be dropped off in Clinton, Exeter, Listowel, Milverton, Seaforth, Stratford and Wingham.",
+        "places": [
+          "Clinton",
+          "Exeter",
+          "Listowel",
+          "Milverton",
+          "Seaforth",
+          "Stratford",
+          "Wingham"
+        ],
+        "frequency": "Test at least three times a year, preferably in spring, summer and fall.",
+        "chemistry": "Test for arsenic, fluoride, lead, nitrate and nitrite, sodium and uranium at least once every four to five years, at a licensed private lab for a fee.",
+        "url": "https://www.hpph.ca/classes-clinics-services/well-water-testing/"
+      }
+    },
+    "niagara": {
+      "name": "Niagara Region Public Health",
+      "short": "Niagara Region",
+      "wells": {
+        "free": "Free testing bottles can be picked up at all Public Health locations and most town halls; cistern owners can get free bacteria kits from Municipal Service Centres and Public Health.",
+        "where": "Free testing bottles can be picked up at all Niagara Region Public Health locations and most town halls.",
+        "places": [],
+        "frequency": "Niagara Region says wells should be tested seasonally (spring, summer, fall and winter), or three times one to three weeks apart if seasonal samples aren't possible, and again after repairs, long periods without use, flooding, land-use changes nearby or any change in clarity, colour, odour or taste.",
+        "chemistry": "Bacterial testing tells you nothing about chemical quality; for chemicals, use a private lab at your own expense. The Region's advice is not to use water that has tested positive for total coliforms or E. coli.",
+        "url": "https://www.niagararegion.ca/living/water/cistern-maintenance.aspx"
+      }
+    },
+    "durham": {
+      "name": "Durham Region Health Department",
+      "short": "the Durham Region Health Department",
+      "wells": {
+        "free": "Free water testing for all Durham Region residents.",
+        "where": "North Durham pick-up and drop-off: the Health Department's North Office, 181 Perry Street, Port Perry, and the Township of Uxbridge office, 51 Toronto Street (both Monday to Thursday 8:30 a.m. to 4:30 p.m., Friday 8:30 to 9 a.m.); the Township of Brock office, 1 Cameron Street East, Cannington, hands out bottles only. Regional Headquarters in Whitby (605 Rossland Road East) takes samples until 10 a.m. for same-day delivery, and the Garnet B. Rickard Recreation Complex in Bowmanville is another site. Samples must reach the lab within 24 hours.",
+        "places": [
+          "Port Perry",
+          "Uxbridge",
+          "Cannington",
+          "Whitby",
+          "Bowmanville"
+        ],
+        "frequency": "Durham recommends testing for harmful bacteria at least three times a year.",
+        "chemistry": "If you suspect chemical contamination (pesticides, oil or gasoline), Durham says not to boil the water and to call the Durham Health Connection Line at 905-668-2020 or 1-800-841-2729.",
+        "url": "https://www.durham.ca/en/living-here/private-wells.aspx"
+      }
+    },
+    "grand-erie": {
+      "name": "Grand Erie Public Health",
+      "short": "Grand Erie Public Health",
+      "wells": {
+        "free": "Free bacteria testing through Public Health Ontario, with bottles from Grand Erie Public Health weekdays 8:30 a.m. to 4:30 p.m.",
+        "whereByArea": {
+          "norfolk-county": "Drop samples off at Grand Erie Public Health, 185 Robinson Street (Suite 200), Simcoe, Monday to Thursday, 8:30 a.m. to 4:30 p.m.",
+          "haldimand-county": "Drop samples off at Grand Erie Public Health in Caledonia (100 Haddington Street) or Dunnville (117 Forest Street), Monday to Thursday, 8:30 a.m. to 4:30 p.m.",
+          "county-of-brant": "Pick up bottles at the County of Brant offices in Burford (26 Park Avenue) and Paris (66 Grand River Street North) or at the St. George and Scotland public libraries. The Burford office takes samples on the last Wednesday of every month except December, 8:30 a.m. to 2 p.m."
+        },
+        "where": "Drop-off sites are in Simcoe, Caledonia, Dunnville and, monthly, Burford.",
+        "places": [
+          "Simcoe",
+          "Caledonia",
+          "Dunnville",
+          "Burford",
+          "Paris",
+          "St. George",
+          "Scotland"
+        ],
+        "frequency": "Test at least three times a year (spring, summer, fall), after well repairs or flooding, after the well sits unused for several weeks, and whenever the water's taste, smell or colour changes. Inspect the well for damage once a year. Don't drop samples off on Fridays or holidays.",
+        "chemistry": "Grand Erie Public Health doesn't do chemical testing; it points to Ontario's list of licensed laboratories.",
+        "url": "https://geph.ca/public-health-topic/environmental-health-and-safety/environmental-hazards/"
+      }
+    },
+    "wdg": {
+      "name": "Wellington-Dufferin-Guelph Public Health",
+      "short": "Wellington-Dufferin-Guelph Public Health",
+      "wells": {
+        "free": "Public Health Ontario tests well water for bacteria (E. coli and total coliforms).",
+        "where": "Pick up a bottle at a public health office or a participating municipal office. Samples go back to the Guelph (160 Chancellors Way), Fergus (490 Charles Allen Way) or Orangeville (180 Broadway) offices Monday to Thursday, 8:30 a.m. to 4:30 p.m., with short Friday-morning windows; to the Mel Lloyd Centre in Shelburne (Monday and Wednesday mornings); to reception at Palmerston District Hospital or Louise Marshall Hospital in Mount Forest; or to the Township of Erin office in Hillsburgh (Monday mornings).",
+        "places": [
+          "Guelph",
+          "Fergus",
+          "Orangeville",
+          "Shelburne",
+          "Palmerston",
+          "Mount Forest",
+          "Hillsburgh"
+        ],
+        "frequency": "Test for bacteria at least three times a year; spring is the most important time. Add a cell number to the requisition form to get text alerts about contamination.",
+        "chemistry": "For nitrates, sodium, fluoride, metals or other chemicals, contact a private laboratory.",
+        "url": "https://wdgpublichealth.ca/health-topics/healthy-home/well-water-testing"
+      },
+      "radon": {
+        "text": "Guelph Public Library, Orangeville Public Library and Wellington County Library lend digital radon detectors for a free screening test. The health unit recommends a long-term test of at least three months between October and March, with a device on the C-NRPP approved list.",
+        "url": "https://wdgpublichealth.ca/health-topics/healthy-home/radon"
+      }
+    },
+    "grey-bruce": {
+      "name": "Grey Bruce Public Health",
+      "short": "Grey Bruce Public Health",
+      "wells": {
+        "free": "Free bacteria testing for private drinking-water systems, run by Public Health Ontario.",
+        "where": "Kits are picked up and samples dropped off at 14 Grey-Bruce locations, including Owen Sound and Walkerton; a Public Health Ontario courier collects Grey County samples on Thursdays.",
+        "places": [
+          "Owen Sound",
+          "Walkerton"
+        ],
+        "frequency": "Grey Bruce Public Health recommends testing at least three times a year, after any work on your well or water system and after significant weather events.",
+        "chemistry": "Chemicals, metals and minerals need a private lab; nitrate testing is recommended, especially if an infant will drink the water.",
+        "url": "http://www.publichealthgreybruce.on.ca/Your-Environment/Safe-Water/Private-Drinking-Water/Testing-Drinking-Water"
+      },
+      "radon": {
+        "text": "Grey Bruce Public Health says parts of Grey and Bruce counties have the potential to be high-risk for radon, based on a radon potential map (created in 2012, updated in 2017). It recommends a three-month long-term kit, which it says costs about $40–$60 online or at building stores, retesting every few years, and retesting after any fix; it puts repair costs at anywhere from a few hundred dollars to several thousand.",
+        "url": "https://www.publichealthgreybruce.on.ca/Your-Environment/Healthy-Housing/Radon"
+      }
+    },
+    "peel": {
+      "name": "Peel Public Health",
+      "short": "Peel Region",
+      "wells": {
+        "free": "Free bacteria testing (E. coli and total coliforms) through the provincial Public Health Ontario program.",
+        "where": "Peel's well pages cover construction, maintenance and abandonment but give no testing locations; get bottles through Public Health Ontario, which says to contact your public health unit for a kit.",
+        "places": [],
+        "frequency": null,
+        "chemistry": "Chemistry (nitrate, sodium, metals) goes to a licensed private lab for a fee.",
+        "extra": "Peel Region says private well owners are legally responsible for the wells on their property.",
+        "url": "https://peelregion.ca/water/drinking-water/private-wells"
+      }
+    },
+    "halton": {
+      "name": "Halton Region Public Health",
+      "short": "Halton Region",
+      "wells": {
+        "free": "Free bacteria testing, with a courier taking samples from depots to the lab; the Halton Health Department also tests nitrates free of charge.",
+        "where": "Get bottles at a depot, by online request (they come by mail) or by calling 311, and drop samples off within 24 hours. Halton Hills depots: Halton Hills Town Hall, 1 Halton Hills Drive (Monday to Thursday), and the Georgetown (9 Church Street) and Acton (17 River Street) library branches (Tuesday to Thursday); Georgetown Canadian Tire and Acton Home Hardware hand out bottles only. Nearby Milton depots include Fire Station No. 2 in Campbellville (24 hours, Monday to Thursday) and the Brookville Veterinary Clinic.",
+        "places": [
+          "Georgetown",
+          "Acton",
+          "Campbellville",
+          "Brookville",
+          "Milton"
+        ],
+        "frequency": "Halton recommends testing for bacteria at least three times a year (spring, summer and fall), and after flooding, major rainfall or snowmelt, after disinfecting or servicing the well, and after nearby construction such as excavation or a septic installation.",
+        "chemistry": "Nitrate testing is free through the Halton Health Department; other chemistry goes to a private accredited lab.",
+        "url": "https://www.halton.ca/for-residents/water-and-wastewater-services/drinking-water/well-water/testing-your-well-water"
+      }
+    },
+    "bc-north": {
+      "name": "Northern Health",
+      "short": "Northern Health",
+      "wells": null,
+      "wellsNote": "Northern Health's drinking water FAQ (https://www.northernhealth.ca/services/environmental-health/drinking-water/frequently-asked-questions-faqs, read 2026-10-08): it tests permitted water systems, not individual homes; gen_areas.py quotes it."
+    },
+    "bc-interior": {
+      "name": "Interior Health",
+      "short": "Interior Health",
+      "wells": null,
+      "radon": {
+        "text": "Interior Health recommends a long-term test of at least three months (91 days), in winter where possible, on the lowest floor people use for more than four hours a day, and retesting after renovations, energy-efficiency upgrades or changes to the heating and ventilation system. It calls active soil depressurization the best and most permanent fix, and puts its cost at $350 to $3,000 depending on site conditions.",
+        "url": "https://www.interiorhealth.ca/health-and-wellness/environmental-and-seasonal-health/radon-gas",
+        "checked": "2026-10-08"
+      },
+      "wellsNote": "Interior Health's drinking water page (https://www.interiorhealth.ca/health-and-wellness/environmental-health-and-hazards/drinking-water, read 2026-10-08) gives no private-well testing program; gen_areas.py quotes its private drinking water safety section."
+    }
+  }
+}

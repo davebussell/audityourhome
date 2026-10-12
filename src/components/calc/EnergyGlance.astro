@@ -1,0 +1,86 @@
+---
+import type { EnergyPage } from '../../lib/calc/pages/energy';
+import { MODEL } from '../../lib/calc/engine';
+import { money, qty, gj, int, degC, pct, unitPrice } from '../../lib/calc/format';
+
+interface Props { page: EnergyPage; cityName: string }
+const { page, cityName } = Astro.props;
+const g = page.glance;
+const priced = g.heatRows.filter((r) => r.cost !== null);
+const cheapest = priced.length ? priced.reduce((a, b) => (a.cost! <= b.cost! ? a : b)) : null;
+const effTxt = (r: (typeof g.heatRows)[number]) => (r.heatPump ? `seasonal COP ${r.eff.toFixed(1)}` : `${Math.round(r.eff * 100)}% seasonal efficiency`);
+const checked = page.kicker.split('checked ')[1];
+---
+
+<section class="sec" id="at-a-glance" aria-labelledby="glance-h">
+  <h2 id="glance-h">{cityName} at a glance</h2>
+  <p class="glance-note">These tables use local prices checked {checked} and the same formulas as the calculator. The house: detached, about 1,600 sq ft (149 m²), built 1966–1980, which needs about <strong>{gj(g.demand)}</strong> of heat a year here.</p>
+
+  <div class="card tablewrap">
+    <table class="compact gtable">
+      <caption>Yearly heating cost of a typical house, by system</caption>
+      <thead><tr><th scope="col">Heating system</th><th scope="col" class="num">Energy a year</th><th scope="col" class="num">Cost a year</th><th scope="col" class="num">Per GJ of heat</th></tr></thead>
+      <tbody>
+        {g.heatRows.map((r) => (
+          <tr class={cheapest && r.key === cheapest.key ? 'hl' : ''}>
+            <td class="c-main">{r.label}<span class="sub">{effTxt(r)}{cheapest && r.key === cheapest.key ? ' · lowest cost here' : ''}</span></td>
+            <td class="c-s1 num">{qty(r.units)} {r.unit}</td>
+            <td class="c-val num">{r.cost === null ? <span class="sub">enter a price</span> : money(r.cost)}</td>
+            <td class="c-s2 num" data-k="per GJ">{r.perGJ === null ? '—' : money(r.perGJ)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="glance-note">Average prices including fixed charges. Heat pump efficiencies are seasonal values for {int(page.payload.city.hdd)} degree-days that include backup heat. Propane, firewood and pellet prices are published in only a few provinces; where none is shown, enter your supplier's price in the calculator.</p>
+
+  <div class="card tablewrap">
+    <table class="compact gtable">
+      <caption>What a gigajoule of heat costs in {cityName}, by fuel</caption>
+      <thead><tr><th scope="col">Fuel and equipment</th><th scope="col">Price paid</th><th scope="col" class="num">Per GJ of fuel</th><th scope="col" class="num">Per GJ of heat</th></tr></thead>
+      <tbody>
+        {g.fuelRows.map((r) => (
+          <tr>
+            <td class="c-main">{r.label}<span class="sub">{r.eff.startsWith('COP') ? `seasonal ${r.eff}` : `${r.eff} seasonal efficiency`}</span></td>
+            <td class="c-s1" data-k="price">{r.price}</td>
+            <td class="c-s2 num" data-k="fuel">{r.perGJfuel === null ? '—' : money(r.perGJfuel)}</td>
+            <td class="c-val num">{r.perGJheat === null ? '—' : money(r.perGJheat)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="glance-note">Energy content from NRCan's Heating with Gas, Table 2: natural gas 37.5 MJ/m³, oil 38.2 MJ/L, propane 25.3 MJ/L, electricity 3.6 MJ/kWh, hardwood 30.6 GJ per full cord, pellets 19.8 GJ per tonne. “Per GJ of heat” divides by the equipment's seasonal efficiency.</p>
+
+  <div class="two-up">
+    <div class="card tablewrap">
+      <table class="compact gtable">
+        <caption>Water heaters for a household of three</caption>
+        <thead><tr><th scope="col">Water heater</th><th scope="col" class="num">Energy a year</th><th scope="col" class="num">Cost a year</th></tr></thead>
+        <tbody>
+          {g.water.rows.map((r) => (
+            <tr>
+              <td class="c-main">{r.label}<span class="sub">{r.key === 'heatPump' ? `field COP ${r.uef}` : `UEF ${r.uef.toFixed(2)}`}</span></td>
+              <td class="c-s1 num">{qty(r.units)} {r.unit}</td>
+              <td class="c-val num">{r.total === null ? <span class="sub">enter a price</span> : money(r.total)}{r.key === 'heatPump' && r.extra ? <span class="sub">incl. {money(r.extra)} extra heating</span> : ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="glance-note" style="padding: 0 14px 12px">{int(g.water.litres)} L a day heated from {degC(g.water.inlet)} (annual mean air temperature + 3.3 °C) to 55 °C: {gj(g.water.gj)} a year. The heat pump row includes the winter heat it takes from a house heated by a {MODEL.systems[g.water.spaceSys].short.toLowerCase()}.</p>
+    </div>
+    <div class="card tablewrap">
+      <table class="compact gtable">
+        <caption>Air conditioning running cost</caption>
+        <thead><tr><th scope="col">Equipment</th><th scope="col" class="num">kWh a year</th><th scope="col" class="num">Cost a year</th></tr></thead>
+        <tbody>
+          <tr><td class="c-main">{g.cool.tons.toFixed(1)}-ton central AC, SEER 13<span class="sub">installed 2006–2022</span></td><td class="c-s1 num">{qty(g.cool.kwh)} kWh</td><td class="c-val num">{money(g.cool.cost)}</td></tr>
+          <tr><td class="c-main">Same size, new (SEER 14)</td><td class="c-s1 num">{qty(g.cool.newKwh)} kWh</td><td class="c-val num">{money(g.cool.newCost)}</td></tr>
+          <tr><td class="c-main">One room unit<span class="sub">9,500 Btu/h, EER 11.2</span></td><td class="c-s1 num">{qty(g.cool.roomKwh)} kWh</td><td class="c-val num">{money(g.cool.roomCost)}</td></tr>
+        </tbody>
+      </table>
+      <p class="glance-note" style="padding: 0 14px 12px">{int(g.cool.eflh)} full-load hours a year from NRCan's formula, times 0.8 for real-world use, at {unitPrice(g.cool.price, 'kWh')} for each extra kWh.</p>
+    </div>
+  </div>
+  {g.water.claim && <p class="glance-note">US DOE: tankless heaters can be {pct(g.water.claim[0])}–{pct(g.water.claim[1])} more efficient than a storage tank in homes using about 155 L of hot water a day or less, and 8–14% in homes using about 326 L.</p>}
+</section>

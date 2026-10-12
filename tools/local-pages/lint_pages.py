@@ -26,13 +26,17 @@ for f in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)
             chunks.append(('prov', (p['providers'].get('special') or '') + ' ' + p['providers']['note']))
         if p.get('programs'):
             chunks += [('prog', i['summary']) for i in p['programs']['items']]
+        if p.get('communities'):
+            chunks.append(('communities', txt(p['communities']['html'])))
         for where, t in chunks:
             for name, pat in pats.items():
                 for m in re.finditer(pat, t):
                     hits[name].append((d['slug'], svc, where, t[max(0, m.start()-70): m.end()+50]))
     hub = d['hub']
-    for k in ('lede','climate','housing','heating','radon','description'):
+    for k in ('lede','climate','housing','heating','radon','description','communities'):
         t = hub.get(k) or ''
+        if isinstance(t, dict):
+            t = txt(t['html'])
         for name, pat in pats.items():
             for m in re.finditer(pat, t):
                 hits[name].append((d['slug'], 'HUB', k, t[max(0,m.start()-70):m.end()+50]))

@@ -1,0 +1,838 @@
+{
+ "asOf": "2026-10-08",
+ "radon": {
+  "guideline": 200,
+  "pCiPerL": 37,
+  "homeRule": "If your home is above 200 Bq/m³, Health Canada recommends corrective action within 1 year, and sooner the higher the level.",
+  "homeRuleQuote": "If you've tested your home, and the radon level is above the Canadian guideline of 200 Bq/m³, Health Canada recommends that you take corrective action to lower the level within 1 year.",
+  "sooner": "The higher the radon concentrations, the sooner action should be taken to reduce levels to as low as practically possible.",
+  "publicBuildingsNote": "An older two-tier timeline (within 2 years for 200–600 Bq/m³, within 1 year above 600) now appears only in Health Canada's guide for public buildings.",
+  "risk": [
+   {
+    "exposure": "Low outdoor radon levels (non-smoker) / smoking only, no added radon (smoker)",
+    "radonBqM3": null,
+    "neverSmokerPct": 1,
+    "smokerPct": 12
+   },
+   {
+    "exposure": "Lifetime exposure at 200 Bq/m3",
+    "radonBqM3": 200,
+    "neverSmokerPct": 2,
+    "smokerPct": 17
+   },
+   {
+    "exposure": "Lifetime exposure at 800 Bq/m3",
+    "radonBqM3": 800,
+    "neverSmokerPct": 5,
+    "smokerPct": 30
+   }
+  ],
+  "testKit": {
+   "typicalCAD": 50,
+   "rangeCAD": [
+    30,
+    80
+   ],
+   "basis": "Windsor-Essex County Health Unit: a long-term kit mailed to a lab 'costs approximately $50'; kits from hardware stores or online, including lab fees, 'can range between $30-$80'.",
+   "source": "https://www.wechu.org/node/125",
+   "otherDataPoints": [
+    {
+     "value": "$70 for a single-use 90-day test, including accredited lab analysis and two-way shipping",
+     "who": "Lung Saskatchewan (homeradontest.ca), © 2026",
+     "source": "https://homeradontest.ca/"
+    },
+    {
+     "value": "about $50 including analysis (passive dosimeter)",
+     "who": "Québec government, updated 2026-08-20",
+     "source": "https://www.quebec.ca/habitation-territoire/milieu-de-vie-sain/radon-domiciliaire"
+    },
+    {
+     "value": "$35-100 for 'test kits and detectors'",
+     "who": "Government of New Brunswick",
+     "source": "https://www.gnb.ca/en/topic/laws-safety/health-environment-advisories/radon.html"
+    },
+    {
+     "value": "$25-$75 for a test kit and analysis",
+     "who": "Durham Region Health (fact sheet dated 2018-10-29; older)",
+     "source": "https://www.Durham.ca/en/health-and-wellness/resources/Documents/IllnessInfectionDisease/FactsAbout/Radon.pdf"
+    }
+   ]
+  },
+  "monitor": {
+   "typicalCAD": 189,
+   "source": "https://homeradontest.ca/"
+  },
+  "mitigation": {
+   "low": 2000,
+   "high": 3000,
+   "quote": "Sub-slab or sub-membrane depressurization systems range in cost from about $2,000 to $3,000 including material and labour.",
+   "nationalAverage": 2700,
+   "byRegion": {
+    "BC/Yukon": 3297,
+    "Alberta/NWT": 2601,
+    "Manitoba/Saskatchewan": 2823,
+    "Ontario": 2309,
+    "Quebec": 2051,
+    "Atlantic and Nunavut": 2234
+   },
+   "fan": [
+    50,
+    75
+   ],
+   "performance": "Health Canada: a system can be installed in less than a day and in most homes reduces radon by more than 80%."
+  },
+  "testLength": "Health Canada says to do a long-term test for a minimum of 3 months. Its measurement guide says at least 91 days of the test should fall in the heating season, because heating-season tests give a conservative (higher) estimate. Test in a normal occupancy area on the lowest lived-in level. Provincial pages phrase this as at least 3 months, ideally in winter (e.g. October to April).",
+  "provinces": {
+   "ON": {
+    "buildingCode": "Yes. The 2024 Ontario Building Code (in effect Jan 1, 2025, with a grace period to Mar 31, 2025 for designs already substantially complete) requires every new house, including additions, to include a soil-gas barrier and a rough-in for a subfloor depressurization system, under Division B Subsection 9.13.4 (Soil Gas Control); SB-9 is an alternative route for the soil-gas barrier.",
+    "testKitProgram": "No province-wide free kit program found. Many Ontario public libraries lend digital radon monitors free with a library card (e.g. Hamilton, Vaughan, Guelph, Kingston Frontenac, Greater Sudbury, Thunder Bay, Brantford, Waterloo), and some health units or municipalities run limited free-kit drives, per Take Action on Radon listings checked Sept 2026.",
+    "other": "Tarion new-home warranty covers radon remediation for 7 years from possession when a long-term test (3+ months) exceeds 200 Bq/m3 (maximum coverage $50,000 for purchase agreements signed after Feb 1, 2021). Low/moderate-income households can apply to the Canadian Lung Association's Lungs Matter program for up to $1,500 toward mitigation (Ontario income cap $105,100).",
+    "sources": [
+     "https://www.cityofkingston.ca/building-and-renovating/building-permits/2024-ontario-building-code-updates/",
+     "https://documents.ottawa.ca/sites/default/files/radon_soil_gas_small_buildings_advisory_en.pdf",
+     "https://www.collingwood.ca/media/file/2024-obc-radonpdf",
+     "https://takeactiononradon.ca/resources/lending-programs/",
+     "https://takeactiononradon.ca/provinces/ontario/",
+     "https://www.tarion.com/media/eight-quick-facts-about-radon",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "QC": {
+    "buildingCode": "Yes. Chapter I, Building, of the Québec Construction Code (NBC 2020 as modified for Québec, in force Apr 17, 2025) Subsection 9.13.4 requires a soil-gas air barrier and adds a passive vertical radon exhaust stack for dwellings. The previous edition (in force since Jan 2022) required a rough-in connection for a future depressurization system and may still be used for work begun before Oct 17, 2027 (transition period extended by regulations effective Sept 10, 2026).",
+    "testKitProgram": "No free provincial kit program found. Québec's government radon page points residents to passive detectors sold by the Association pulmonaire du Québec (about $50 including analysis) and notes that some municipal libraries lend electronic radon detectors.",
+    "other": "Québec guidance: use a passive detector for at least 3 months, preferably October to April, and correct levels above 200 Bq/m3 within a year. Lungs Matter mitigation aid (up to $1,500) is available to eligible households (Québec income cap $88,400).",
+    "sources": [
+     "https://www.rbq.gouv.qc.ca/domaines-dintervention/batiment/la-reglementation/chapitre-batiment-du-code-de-construction/chapitre-batiment-du-code-de-construction-du-quebec-incluant-le-cnb-2020/",
+     "https://www.rbq.gouv.qc.ca/salle-de-presse/les-nouvelles/nouvelles-detail/item/2026-08-26-prolongation-de-la-periode-transitoire-en-batiment-et-en-electricite-reglements-publies-pour-entree-en-vigueur/",
+     "https://www.garantiegcr.com/app/uploads/2025/11/ft-9-13-4--02-2020-251121.pdf",
+     "https://www.quebec.ca/habitation-territoire/milieu-de-vie-sain/radon-domiciliaire",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "BC": {
+    "buildingCode": "Yes. The BC Building Code 2024 (building permits applied for on or after Mar 8, 2024) requires a rough-in for a subfloor depressurization system (radon rough-in) in all new Part 9 houses province-wide. It removed the earlier exemption for lower-radon areas (Information Bulletin B24-03-R).",
+    "testKitProgram": "BC Lung Foundation runs a Radon Detector Library Lending Program with many BC library systems (free with a library card) and funds free kit distributions through local governments in Take Action on Radon's 100 Radon Test Kit Challenge (most recently listed for Fall 2024). Long-term kits are sold via BC Lung.",
+    "other": "The BC Centre for Disease Control publishes an interactive BC Radon Map of test results by area. Lungs Matter mitigation aid (up to $1,500) is available to eligible households (BC income cap $102,500).",
+    "sources": [
+     "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/construction-industry/building-codes-and-standards/bulletins/2024-code/b24-03-r_radon.pdf",
+     "https://bclung.ca/radon",
+     "https://takeactiononradon.ca/resources/lending-programs/",
+     "https://bccdc.shinyapps.io/bcradonmap/",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "AB": {
+    "buildingCode": "Yes. The National Building Code - 2023 Alberta Edition (in force May 1, 2024) Division B Subsection 9.13.4 (Soil Gas Control) requires an air barrier against soil gas and, for dwelling units, a rough-in for a radon extraction system under Article 9.13.4.3, \"Providing for the Rough-in for a Subfloor Depressurization System\".",
+    "testKitProgram": "No provincial free-kit program found. Alberta Lung supports library radon-monitor lending, e.g. Edmonton Public Library, Red Deer Public Library, Parkland Regional Library, Marigold Library System and Strathmore Municipal Library (free with a library card). Long-term kits must be bought.",
+    "other": "Lungs Matter mitigation aid (up to $1,500) is available to eligible households (Alberta income cap $112,700).",
+    "sources": [
+     "https://www.alberta.ca/building-codes-and-standards",
+     "https://nrc-publications.canada.ca/eng/view/ft/?id=0316d953-0d55-4311-af69-cad55efec499",
+     "https://open.alberta.ca/dataset/6d43297f-e0ab-4ffa-beaa-173af41f1d8e/resource/75551047-a481-4cfe-9fd4-c64d355e349c/download/ma-standata-joint-bulletin-19-bcb-003-p-20-03-npc15-revision-1.pdf",
+     "https://takeactiononradon.ca/provinces/alberta/",
+     "https://takeactiononradon.ca/resources/lending-programs/",
+     "https://ablung.ca/lung-health/radon/",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "SK": {
+    "buildingCode": "Yes. Saskatchewan adopted the NBC 2020 (effective Jan 1, 2024) under The Construction Codes Act. NBC Sentence 9.13.4.2.(2) requires dwelling units to have a rough-in for subfloor depressurization (Article 9.13.4.3), plus an air-barrier soil-gas barrier.",
+    "testKitProgram": "Lung Saskatchewan sells long-term alpha-track kits for $65, including return shipping and lab analysis. It also supports free radon-monitor lending at eight libraries and library regions, including Regina Public Library and Saskatoon Public Library.",
+    "other": "The Saskatchewan Home Renovation Tax Credit was re-introduced for 2025 and later tax years (10.5% on up to $4,000 of eligible expenses, or $5,000 for seniors), and Lung Saskatchewan lists radon mitigation as eligible. Lung Saskatchewan says its Caring Breaths radon-mitigation assistance returns in 2026 (applications not yet open when checked).",
+    "sources": [
+     "https://www.saskatchewan.ca/buildingstandards",
+     "https://www.regina.ca/export/sites/Regina.ca/bylaws-permits-licences/building-demolition/.galleries/pdfs/Advisory-Radon-Gas.pdf",
+     "https://www.lungsask.ca/education/lung-health/radon",
+     "https://www.lungsask.ca/education/programs-support/find-radon-monitor-lending-program",
+     "https://www.saskatchewan.ca/residents/taxes-and-investments/tax-credits/home-renovation-tax-credit",
+     "https://www.lungsask.ca/lungs/programs-support/caring-breaths-financial-assistance-program"
+    ]
+   },
+   "MB": {
+    "buildingCode": "Yes. The Manitoba Building Code (M.R. 78/2023, in force Jan 1, 2024) adopts the NBC 2020. Manitoba's amendments do not change Subsection 9.13.4 (Soil Gas Control), so the soil-gas barrier and the rough-in for subfloor depressurization apply.",
+    "testKitProgram": "No free provincial kit program found. The province's radon page points to the Manitoba Lung Association's kits and its Library Lending Program, and Take Action on Radon lists many Manitoba regional libraries that lend monitors free with a library card.",
+    "other": "Manitoba Hydro's Home Energy Efficiency Loan can finance radon mitigation up to $5,000 over 5 years (C-NRPP-certified contractor required). Lungs Matter mitigation aid (up to $1,500) is also available (Manitoba income cap $88,900).",
+    "sources": [
+     "https://web2.gov.mb.ca/laws/regs/current/078-2023.php",
+     "https://www.gov.mb.ca/health/publichealth/environmentalhealth/radon.html",
+     "https://takeactiononradon.ca/resources/lending-programs/",
+     "https://www.hydro.mb.ca/your_home/loans_financing/energy_finance_plan/",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "NS": {
+    "buildingCode": "Yes. The Nova Scotia Building Code Regulations (N.S. Reg. 198/2024) adopt the NBC 2020, effective Apr 1, 2025. They make no Nova Scotia amendment to Subsection 9.13.4, so the soil-gas barrier and the radon rough-in for subfloor depressurization apply.",
+    "testKitProgram": "LungNSPEI's Radon Reduction Grant Program, a pilot, provides free radon test kits to low-income Nova Scotia households and mitigation grants of up to $2,500. Its Radon Detector Library Loan Program has put 300+ short-term detectors in Nova Scotia and PEI public libraries. Both are listed on LungNSPEI's current site; no end date is given.",
+    "other": "Nova Scotia publishes an interactive Radon Risk Map (provincial map viewer). Lungs Matter mitigation aid (up to $1,500) is available to eligible households (NS income cap $79,900).",
+    "sources": [
+     "https://news.novascotia.ca/en/2024/09/20/province-adopt-2020-national-building-codes",
+     "https://novascotia.ca/just/regulations/regs/bcregs.htm",
+     "https://www.lungnspei.ca/radonreductiongrantprogram",
+     "https://www.lungnspei.ca/radon-detector-library-loan-program",
+     "https://fletcher.novascotia.ca/DNRViewer/?viewer=Radon",
+     "https://takeactiononradon.ca/provinces/atlantic/",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "NB": {
+    "buildingCode": "Yes. The General Regulation under the Building Code Administration Act (N.B. Reg. 2021-2, as amended) adopts the NBC 2020. NBC 2015 was allowed only for permits issued by Mar 31, 2025. Both include Subsection 9.13.4 soil-gas control with a radon rough-in.",
+    "testKitProgram": "NB Lung's \"Check Out Radon\" program lends free electronic radon screening kits through partner MLA offices, realtors and community health centres, and the GNB radon page (checked Sept 2026) points residents to it. In Oct 2025 New Brunswick also handed out free publicly funded test kits through public libraries, and several libraries ran out within two days; no 2026 round was found.",
+    "other": "GNB says about one in four NB homes exceed 200 Bq/m3 (2024 Cross-Canada Radon Survey). It lists the Homeowner Repair Program and Lungs Matter (up to $1,500; NB income cap $74,600) as possible mitigation help.",
+    "sources": [
+     "https://laws.gnb.ca/en/document/cr/2021-2",
+     "https://www.gnb.ca/en/topic/laws-safety/licensing-inspections/technical-inspections/building-code.html",
+     "https://www.gnb.ca/en/topic/laws-safety/health-environment-advisories/radon.html",
+     "https://nblung.ca/radon-lending-program/",
+     "https://www.ctvnews.ca/canada/article/canadas-first-publicly-funded-radon-testing-program-nearly-runs-out-2-days-after-launch/",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "PE": {
+    "buildingCode": "Yes. PEI adopted the NBC 2020 (Energy Tier 1) effective Mar 31, 2024 under the Building Codes Act regulations; province-wide NBC adoption dates from 2020. The province's radon page says new homes must include a vapour barrier to reduce radon entry and a rough-in for a radon reduction system.",
+    "testKitProgram": "The PEI government radon page (updated July 23, 2026) says kits can be borrowed through the Provincial Library Service (LungNSPEI library loan program) or ordered from LungNSPEI. No free provincial kit giveaway was found.",
+    "other": "PEI points residents to the Canadian Lung Association (Lungs Matter, up to $1,500; PEI income cap $80,600) for mitigation funding. Contact: Environmental Health, 902-368-4970.",
+    "sources": [
+     "https://www.princeedwardisland.ca/en/news/new-building-codes-take-effect-march-31",
+     "https://cbhcc-cchcc.ca/en/provincial-territorial-adoption/",
+     "https://www.princeedwardisland.ca/en/information/health-and-wellness/radon",
+     "https://www.lungnspei.ca/radon-detector-library-loan-program",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "NL": {
+    "buildingCode": "Not province-wide for houses. The Fire Protection Services Regulations (NLR 45/12) adopt the NBC \"except Part 9 where relative to one and 2 family dwellings\", with new editions taking effect 6 months after publication; CBHCC lists the NBC 2025 as enforced from July 12, 2026. Radon measures in new houses therefore depend on municipal building by-laws, which were not verified here. (NBC 2025 Part 9 adds a passive vertical radon stack for dwelling units.)",
+    "testKitProgram": "No provincial program found. The City of St. John's offered about 250 free kits to residents (registration opened Nov 26, 2025), following about 345 kits in Nov 2024. Mount Pearl and Paradise have run similar programs, and several NL public libraries lend radon monitors.",
+    "other": "Lungs Matter mitigation aid (up to $1,500) is available to eligible households (NL income cap $77,400).",
+    "sources": [
+     "https://www.assembly.nl.ca/Legislation/sr/regulations/rc120045.htm",
+     "https://cbhcc-cchcc.ca/en/provincial-territorial-adoption/",
+     "https://cbhcc-cchcc.ca/en/significant-technical-changes-2025-national-model-codes/",
+     "https://www.stjohns.ca/en/news/free-radon-test-kits-return-for-2025-for-st-john-s-residents.aspx",
+     "https://takeactiononradon.ca/provinces/atlantic/",
+     "https://takeactiononradon.ca/resources/lending-programs/",
+     "https://www.lung.ca/how-to-protect-your-lungs/air-quality/radon/lungs-matter-radon/"
+    ]
+   },
+   "YT": {
+    "buildingCode": "Yes (NBC-based). Yukon enforces the NBC 2020 with territorial variations (enforced from Apr 1, 2023 per CBHCC); its Subsection 9.13.4 requires a soil-gas barrier and a radon rough-in for dwellings. Yukon plans to adopt the NBC 2025, which adds a passive radon stack, on June 22, 2027. Whether Yukon's territorial variations change 9.13.4 was not verified.",
+    "testKitProgram": "Yukon Public Libraries lend free radon screening kits from November 2025, available November to May (10 at Whitehorse Public Library plus one each in Dawson City, Haines Junction, Carmacks, Carcross and Watson Lake). Long-term kits must be bought separately.",
+    "other": "The Government of Yukon says there is radon in all Yukon communities and in every subdivision in Whitehorse.",
+    "sources": [
+     "https://cbhcc-cchcc.ca/en/provincial-territorial-adoption/",
+     "https://yukon.ca/en/housing-and-property/building-and-renovating/get-yukon-related-updates-national-building-code",
+     "https://yukon.ca/en/housing-and-property/home-and-property-maintenance/test-your-home-radon"
+    ]
+   },
+   "NT": {
+    "buildingCode": "Yes (NBC-based). CBHCC lists the NBC 2020 as adopted in full in the NWT, enforced Oct 1, 2024, so Subsection 9.13.4 (soil-gas barrier and radon rough-in) applies; a territorial source was not checked.",
+    "testKitProgram": null,
+    "other": "No NWT radon program was found; Take Action on Radon reports no groups working on radon awareness in the NWT. GNWT said it expects to adopt the 2025 NBC (which adds a passive radon stack) within 18 months of national approval.",
+    "sources": [
+     "https://cbhcc-cchcc.ca/en/provincial-territorial-adoption/",
+     "https://www.gov.nt.ca/en/newsroom/provide-feedback-proposed-changes-2020-national-model-codes",
+     "https://takeactiononradon.ca/provinces/northwest-territories/"
+    ]
+   }
+  },
+  "srcs": [
+   "hc-radon-guideline",
+   "hc-radon-measurement",
+   "hc-radon-testing",
+   "hc-radon-reduction",
+   "hc-radon-risk",
+   "hc-radon-survey-2012",
+   "evict-radon-2024",
+   "tar-reduction",
+   "wechu-radon"
+  ]
+ },
+ "humidity": {
+  "rangeLow": 30,
+  "rangeHigh": 50,
+  "coldThresholdC": -10,
+  "coldTarget": 30,
+  "extremeTarget": 25,
+  "cmhcQuote": "Indoor relative humidity should be between 30% and 50%. When it is below -10 ˚C (14 ˚F) outside, the relative humidity inside should be 30% but it can be as low as 25% in extremely cold regions, to prevent condensation on cold surfaces such as windows.",
+  "hcQuote": "maintain relative humidity levels between 30% and 50%",
+  "hIn": 8.33,
+  "rSi": 0.12,
+  "magnus": {
+   "a": 6.112,
+   "b": 17.67,
+   "c": 243.5
+  },
+  "caveats": [
+   "CBD-4: calculated glass temperatures agree with those measured at the centre of the glass; the bottom of the glass runs several degrees colder, so condensation appears there first. Metal frames without a thermal break can run colder than the glass.",
+   "CMHC: 'Heavy curtains or blinds can trap the cold and moisture and cause condensation (water) on your windows.'",
+   "Like CBD-4 Table I, the formula assumes no sun on the glass."
+  ],
+  "warning": "Whole-window U-values are averages; the bottom edge and frame run colder (CBD-4), so real condensation starts at a lower RH than shown. These figures are much higher than CMHC's advice (30% below -10 °C); give homeowners the CMHC rule and use this table only to show how better windows raise the limit.",
+  "srcs": [
+   "hc-humidity",
+   "cmhc-mould-kit",
+   "nrc-cbd4",
+   "nrc-cbd36",
+   "nws-magnus",
+   "nbc-2020",
+   "nrcan-condensation"
+  ]
+ },
+ "alarms": {
+  "ON": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": true,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "Ontario Fire Code Div. B 2.13.2.1: an alarm in the hallway serving sleeping areas (or between the sleeping area and the rest of the home if there is no hallway), and on each storey without a sleeping area, so in practice every storey. Alarms may be hardwired (no disconnect switch) or battery-operated, and must meet CAN/ULC-S531.",
+    "law": "Ontario Fire Code, O. Reg. 213/07, Div. B Section 2.13 and Subsection 6.3.3 (consolidation period from 2026-01-01; last amendment O. Reg. 303/25)",
+    "source": "https://www.ontario.ca/laws/regulation/070213",
+    "note": null,
+    "advice": null,
+    "scope": "Section 2.13 does not apply where alarms were installed under the Building Code as it read on or after April 6, 1998 (2.13.1.1(3)). For those homes, a replacement alarm may not give a lower level or type of protection than the Building Code required when the home was built (6.3.3.7)."
+   },
+   "co": {
+    "existingHomes": true,
+    "appliesTo": "Every building with a residential occupancy that contains a fuel-burning appliance, a fireplace or a storage (attached) garage. Since 2026-01-01 this also covers homes served by a forced-air fuel-burning appliance located outside the building.",
+    "summary": "The Ontario Fire Code requires CO alarms in existing homes, not just new builds. The rule came into force 2014-10-15 (O. Reg. 194/14), with compliance required by 2015-04-15 for buildings with six or fewer suites and by 2015-10-15 for larger buildings. At that point alarms were required next to each sleeping area. O. Reg. 87/25 (filed 2025-06-04) replaced Section 2.16 effective 2026-01-01. Alarms are now required next to each sleeping area AND on every storey without a sleeping area. Hardwired, battery or plug-in alarms are all allowed. The homeowner is responsible in an owner-occupied home and the landlord in a rental. The section does not apply to a building whose CO alarms were installed under the Building Code as it read on or after 2025-01-01.",
+    "law": "Ontario Fire Code (O. Reg. 213/07), Div. B Section 2.16, as replaced by O. Reg. 87/25 (in force 2026-01-01). Originally added by O. Reg. 194/14 (in force 2014-10-15) under the Hawkins Gignac Act (Carbon Monoxide Safety), 2013, S.O. 2013, c. 14, whose sections 2, 4 and 5 were proclaimed in force 2014-10-15.",
+    "source": "https://www.ontario.ca/laws/regulation/r25087",
+    "note": null
+   }
+  },
+  "QC": {
+   "smoke": {
+    "existingHomesRequired": null,
+    "everyStorey": null,
+    "outsideSleepingAreas": null,
+    "inEachBedroom": null,
+    "interconnected": null,
+    "batteryAllowed": null,
+    "rule": "No province-wide rule for houses: smoke-alarm requirements for single-family homes come from municipal by-laws. Québec.ca refers residents to 'la réglementation municipale' and recommends an alarm on each storey including the basement, in the hallway near bedrooms and in each bedroom where someone sleeps; electric alarms should be interconnected so they sound together.",
+    "law": null,
+    "source": "https://www.quebec.ca/securite-situations-urgence/securite-incendie/equipements-securite-incendie-maison/avertisseurs-de-fumee",
+    "note": "By-laws for the other 9 Québec cities on the site (Laval, Gatineau, Longueuil, Sherbrooke, Lévis, Saguenay, Trois-Rivières, Terrebonne, Saint-Jean-sur-Richelieu) were not reviewed. The Safety Code's Building chapter covers larger residential buildings, not houses (see health_rules.json QC CO entry).",
+    "advice": null,
+    "scope": null,
+    "municipalExamples": [
+     {
+      "city": "Québec City",
+      "rule": "Règlement sur la prévention des incendies, R.V.Q. 2241: an alarm on each storey of every dwelling, including a basement or cellar. Electric (hardwired, interconnected, no switch) alarms are required unless the dwelling was built before dates listed on the city page; battery alarms are allowed only in those older dwellings. The occupant keeps alarms working; the owner replaces them (and any alarm over 10 years old).",
+      "source": "https://www.ville.quebec.qc.ca/citoyens/incendie/prevention/conseils/conseils-avertisseur-fumee.aspx"
+     },
+     {
+      "city": "Montréal",
+      "rule": "Every owner must supply smoke alarms and install them where the Règlement sur le Service de sécurité incendie de Montréal requires; occupants must keep them working (SIM news release, 2023-11-02). The release does not list locations.",
+      "source": "https://montreal.ca/communiques-de-presse/lavertisseur-de-fumee-sauve-des-vies-etes-vous-certain-que-le-votre-fonctionne"
+     }
+    ]
+   },
+   "co": {
+    "existingHomes": false,
+    "appliesTo": "Provincially, only existing buildings covered by the Safety Code's Building chapter: multi-unit or co-owned residential buildings of more than 2 storeys and more than 8 units, rooming houses with 10+ rooms, hotels/motels, and seniors' and supervised residences. Single-family houses are excluded and fall under municipal by-laws.",
+    "summary": "Quebec has no province-wide CO alarm requirement for existing houses. The Safety Code's Building chapter (in force 2013-03-18) covers larger multi-unit and co-owned residential buildings, rooming houses, hotels/motels and seniors' residences. In those buildings, art. 359 requires a CO alarm in a dwelling unit, seniors' residence or supervised residence that contains a combustion appliance or has direct access to an indoor parking garage. LégisQuébec shows this version of art. 359 in force from 2014-03-18. The RBQ says single-family dwellings fall under municipal regulations, and Québec.ca tells residents to ask their municipal fire service about local CO alarm rules. So whether a house needs an alarm depends on the municipality.",
+    "law": "Code de sécurité (CQLR c. B-1.1, r. 3), chapitre VIII – Bâtiment, art. 359 (D. 1263-2012); municipal by-laws for houses",
+    "source": "https://www.legisquebec.gouv.qc.ca/fr/version/rc/B-1.1,%20r.%203?code=se%3A359",
+    "note": null
+   }
+  },
+  "BC": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "BC Fire Code 2024 = NFC 2020 plus a BC Schedule; the Schedule does not change Article 2.1.3.3, so the NFC rule applies: alarms in each dwelling unit between sleeping areas and the rest of the home (hallway), battery alarms permitted.",
+    "law": "British Columbia Fire Code 2024 (Ministerial Order FSA 2023 1; NFC 2020 as amended by the Schedule)",
+    "source": "https://www2.gov.bc.ca/gov/content/industry/construction-industry/building-codes-standards/bc-codes/fire",
+    "note": "The previous BC Fire Code 2018 allowed battery alarms only where the BC Building Code did not require alarms when the home was built or altered (2.1.3.3(4), https://free.bcpublications.ca/civix/document/id/public/bcfc2018/bcfc_2018dbp2s21). Local fire by-laws (for example Vancouver) may add rules; not reviewed. The gov.bc.ca page does not give the 2024 code's in-force date directly.",
+    "advice": null,
+    "scope": "BCFC 2024 Div. A 1.1.1.1(2) (Schedule): installation requirements do not apply to existing equipment installed in conformance with previous editions of the BC Fire Code."
+   },
+   "co": {
+    "existingHomes": false,
+    "appliesTo": "No provincial retrofit requirement. New construction is covered by the BC Building Code. The City of Vancouver requires alarms in existing homes under its Fire By-law.",
+    "summary": "B.C.'s fire-safety bulletin says: 'While carbon monoxide alarms are not mandatory in B.C., it is recommended that alarms be installed if a home has a fuel-burning appliance, fireplace or attached garage.' For new construction, BC Building Code Article 9.32.4.2 requires CO alarms in buildings with a residential occupancy that are served by or contain a fuel-burning appliance, or contain a storage garage. The 2024 BCBC keeps this requirement and applies to building permits applied for on or after 2024-03-08. Locally, the City of Vancouver's Fire By-law requires CO alarms in every dwelling unit, new or older, that has an attached garage or a fuel-fired appliance, or shares a wall or floor with a parking garage or a service room containing a fuel-fired appliance.",
+    "law": "BC Fire Code: no CO retrofit requirement. BC Building Code 2024, Div. B Art. 9.32.4.2 (new construction). City of Vancouver Fire By-law (local).",
+    "source": "https://www2.gov.bc.ca/gov/content/safety/public-safety/fire-safety/legislation-regulations-codes/codes-bulletins",
+    "note": null
+   }
+  },
+  "AB": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "National Fire Code – 2023 Alberta Edition, Div. B 2.1.3.3: same text as the NFC 2020 (alarm in each dwelling unit between sleeping areas and the rest of the unit; battery-operated alarms permitted, see also Div. C 2.1.1.1(4)).",
+    "law": "National Fire Code – 2023 Alberta Edition, Div. B 2.1.3.3",
+    "source": "https://www.edmonton.ca/sites/default/files/public-files/NationalFireCode-2023AlbertaEdition.pdf",
+    "note": "Text read from the first printing hosted by the City of Edmonton. health_rules.json notes a second printing effective 2026-08-17; it was not compared.",
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": false,
+    "appliesTo": "New buildings only: those containing a residential occupancy plus a fuel-burning appliance and/or an attached storage garage.",
+    "summary": "Alberta's building code requires certified CO alarms in every new building that contains a residential occupancy and a fuel-burning appliance and/or an attached storage garage. For existing homes, the province only says CO alarms are 'highly recommended'. The National Fire Code – 2023 Alberta Edition (2nd printing effective 2026-08-17 per alberta.ca) requires only that CO alarms be inspected, tested and maintained per the manufacturer's instructions (Div. B Section 6.7). It adds no requirement to install them in existing homes.",
+    "law": "National Building Code – Alberta Edition (new construction); National Fire Code – 2023 Alberta Edition, Div. B s. 6.7 (maintenance only)",
+    "source": "https://ebs.safetycodes.ab.ca/documents/webdocs/PI/safety-tips_carbon-monoxide_jan2020.pdf",
+    "note": null
+   }
+  },
+  "SK": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": true,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": true,
+    "interconnected": "Only when replacing alarms that were hardwired and interconnected",
+    "batteryAllowed": "10-year tamper-resistant battery only",
+    "rule": "Since 2022-07-01 smoke and CO alarms are required in all residential buildings regardless of age. In homes, smoke alarms go on each floor level (on the sleeping level, between the bedrooms and the rest of the floor) and inside each sleeping room. Alarms may be hardwired with battery backup, or battery-only with a 10-year tamper-resistant battery. New alarm locations must use sealed 10-year-battery alarms. Expired hardwired, interconnected alarms must be replaced with hardwired, interconnected alarms with battery backup. Alarms go at the manufacturer's recommended height, or on or near the ceiling.",
+    "law": "The Construction Codes Act; The Building Code Regulations (retroactive alarm amendments effective 2022-07-01; Henry's Law amendments in force 2026-11-01 concern CO alarms)",
+    "source": "https://publications.saskatchewan.ca/api/v1/products/114974/formats/129992/download",
+    "note": null,
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": true,
+    "appliesTo": "All buildings with a residential occupancy that contain a fuel-burning appliance, an attached vehicle parking garage and/or multiple residential suites, regardless of construction date. From 2026-11-01, every residential suite.",
+    "summary": "Saskatchewan's Building Code Regulations require CO alarms and smoke alarms (or combination units) in all residential buildings, regardless of when they were built. Enforcement began 2022-07-01. In homes, CO alarms go inside each sleeping room or within 5 m outside each sleeping-room door, plus in any room with a solid-fuel-burning appliance. 'Henry's Law', The Building Code (Henry Losco) Amendment Regulations, 2026, was introduced 2026-05-05 and comes into force 2026-11-01. It requires a CO alarm in every residential suite, including apartments, condos and houses with secondary suites, regardless of when the building was built or last renovated. It replaces the earlier practice of requiring alarms only in suites sharing a wall, floor or ceiling with a garage or service room.",
+    "law": "The Construction Codes Act; The Building Code Regulations (retroactive CO/smoke alarm rule, enforced from 2022-07-01); The Building Code (Henry Losco) Amendment Regulations, 2026 (in force 2026-11-01)",
+    "source": "https://www.saskatchewan.ca/business/housing-development-construction-and-property-management/building-and-technical-standards/carbon-monoxide-alarms-and-smoke-alarms",
+    "note": null
+   }
+  },
+  "MB": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "The Manitoba Fire Code adopts the NFC 2020. Its amendment to 2.1.3.3 keeps battery-operated alarms allowed (except in home-type care occupancies, where multiple alarms must also be interconnected). Houses follow the NFC rule: an alarm between sleeping areas and the rest of the home.",
+    "law": "Manitoba Fire Code, M.R. 82/2023, s. 1 (adoption of NFC 2020) and Schedule s. 2(3) (replacement of 2.1.3.3(4))",
+    "source": "https://web2.gov.mb.ca/laws/regs/current/082-2023.php?lang=en",
+    "note": null,
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": false,
+    "appliesTo": "Only buildings that must receive regular fire safety inspections under M.R. 208/2014, where a CO exposure risk exists: elderly persons' housing, personal care homes, home-type care occupancies, licensed child care centres, hospitals, schools, recreation centres, hotels/motels, licensed premises, and restaurants in buildings with dwelling units. Private houses are not on the list.",
+    "summary": "The Manitoba Fire Code (M.R. 82/2023, in force 2024-01-01), Article 2.1.3.8, requires CO detection equipment only in buildings that must be inspected under the Fire Safety Inspections (2014) Regulation, where a CO exposure risk exists. Battery-operated alarms are allowed, and the equipment must be installed per the Manitoba Building Code. Ordinary private homes are not among the inspected building types, so there is no provincial retrofit requirement for them. The Manitoba Building Code's CO requirements for new homes were not verified.",
+    "law": "Manitoba Fire Code, M.R. 82/2023, Div. B Art. 2.1.3.8; Fire Safety Inspections (2014) Regulation, M.R. 208/2014, s. 1",
+    "source": "https://web2.gov.mb.ca/laws/regs/current/082-2023.php?lang=en",
+    "note": null
+   }
+  },
+  "NS": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "The Fire Safety Regulations adopt the NFC 2020 as the Nova Scotia Fire Code (s. 27) with no change to 2.1.3.3, so the NFC rule applies to houses. The stricter rule in the regulations' Part 8 (alarms on every storey and in every sleeping room, interconnected) applies only to retrofits of boarding, lodging and rooming houses.",
+    "law": "Fire Safety Regulations, N.S. Reg. 48/2003, as amended to N.S. Reg. 60/2025 (effective 2025-04-01), s. 27",
+    "source": "https://novascotia.ca/just/regulations/regs/fsfiresf.htm",
+    "note": null,
+    "advice": "Nova Scotia's 2024 Fire Prevention release advises alarms in every bedroom, outside each sleeping area and on each level (advice, not law).",
+    "scope": null
+   },
+   "co": {
+    "existingHomes": false,
+    "appliesTo": "New construction under the Building Code: residential or care occupancy buildings with a fuel-burning appliance or storage garage. Existing buildings don't have to be retrofitted unless an official orders it.",
+    "summary": "A Nova Scotia government CO document (December 2024) says the Building Code Regulations (which reference the National Building Code) require a CO alarm in a residential or care occupancy building that has a fuel-burning appliance or storage garage. It also says 'older buildings do not need to be retrofitted' when a new Code is adopted unless a Building Official or Fire Inspector requires more equipment because of unsafe conditions. The Fire Safety Regulations require CO alarms to be inspected, tested and maintained per the manufacturer's instructions. The same document says building owners 'should' install CO monitors in all buildings with fuel-burning equipment, which is a recommendation, not a requirement. Nova Scotia adopted the National Fire Code 2020 effective 2025-04-01.",
+    "law": "Nova Scotia Building Code Regulations (new construction); Fire Safety Regulations, N.S. Reg. 48/2003 (maintenance)",
+    "source": "https://novascotia.ca/lae/healthandsafety/docs/Carbon_Monoxide-Safety.pdf",
+    "note": null
+   }
+  },
+  "NB": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "Regulation 82-20 makes the NFC 2020 a prescribed fire prevention standard, so the NFC rule applies: an alarm between sleeping areas and the rest of the home, battery alarms permitted.",
+    "law": "Fire Prevention and Inspection Regulation, N.B. Reg. 82-20 (consolidated to 2025-05-01), s. 2(a)",
+    "source": "https://laws.gnb.ca/en/document/cr/82-20",
+    "note": "The former Smoke Alarms and Smoke Detectors Regulation 82-95 was revoked on 2014-01-17; it had excluded buildings with two or fewer dwelling units (https://laws.gnb.ca/en/document/cr/82-95). No GNB plain-language page on home smoke-alarm rules was reviewed.",
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": null,
+    "appliesTo": "New construction and alterations under the NBC 2020, adopted through the Building Code Administration Act. No existing-home rule was found.",
+    "summary": "No provincial requirement to install CO alarms in existing homes was found. NB's Fire Prevention Act and its Fire Prevention and Inspection Regulation 82-20 (consolidated to 2025-05-01) contain no CO alarm provision; Regulation 82-20 incorporates the National Fire Code 2020 and National Building Code 2020 as standards. New Brunswick applies the NBC 2020 to construction, alteration and demolition under the Building Code Administration Act.",
+    "law": "Building Code Administration Act (NBC 2020) for new work; Fire Prevention Act / NB Reg. 82-20 (no CO provision found)",
+    "source": "https://www.gnb.ca/en/topic/laws-safety/licensing-inspections/technical-inspections/building-code.html",
+    "note": "No official NB statement was found that explicitly confirms or rules out a CO alarm requirement for existing homes, so this is left null. The 2015 announcement that NB would require CO alarms could not be verified from an official source."
+   }
+  },
+  "PE": {
+   "smoke": {
+    "existingHomesRequired": null,
+    "everyStorey": null,
+    "outsideSleepingAreas": null,
+    "inEachBedroom": null,
+    "interconnected": null,
+    "batteryAllowed": null,
+    "rule": "Not confirmed. The Fire Safety Act (consolidated to 2026-05-29) requires everyone to comply with codes adopted by regulation, but the regulation adopting a fire code could not be located. The Fire Marshal's page advises smoke detectors 'on every floor, as well as every sleeping room' (advice).",
+    "law": null,
+    "source": "https://www.princeedwardisland.ca/en/information/justice-and-public-safety/fire-prevention-resources",
+    "note": null,
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": null,
+    "appliesTo": "No provincial dwelling requirement found.",
+    "summary": "No provincial requirement to install CO alarms in existing homes was found. PEI's Fire Safety Act (consolidated to 2026-05-29) lists CO alarms under 'fire detection system' but does not itself require them in dwellings. The Fire Marshal's prevention page advises, without making it mandatory, that 'CO alarms should be installed outside each sleeping area and on every level of the home'. The older Fire Prevention Act (current to 2023-03-04) has no CO provision.",
+    "law": "Fire Safety Act (PEI), consolidated to 2026-05-29 (no dwelling CO requirement found)",
+    "source": "https://www.princeedwardisland.ca/en/information/justice-and-public-safety/fire-prevention-resources",
+    "note": "Regulations adopting fire or building codes under the Fire Safety Act could not be located (princeedwardisland.ca blocks automated access to some legislation files). Left null."
+   }
+  },
+  "NL": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": "Government info sheet says yes",
+    "interconnected": false,
+    "batteryAllowed": null,
+    "rule": "Fire Protection Services Regulations s. 5: smoke alarms complying with the adopted codes must be installed in new and existing dwelling units, in existing one- and two-family homes (owner-occupied or rented) unless a municipal by-law governs, and in seasonal cottages and homes. The NL Fire and Emergency Services info sheet states: 'Since 2012, working smoke alarms are required in every bedroom of a home or dwelling, and in cottages and cabins too.'",
+    "law": "Fire Protection Services Regulations, NLR 45/12 (amended by 108/17, 2/19, 23/26), s. 3 and s. 5",
+    "source": "https://www.assembly.nl.ca/Legislation/sr/regulations/rc120045.htm",
+    "note": "The regulation text itself says 'each sleeping room not within a dwelling unit'; the 'every bedroom' wording is the province's own info sheet. Interconnection and alarms on every level appear only as tips. The regulations adopt the NFC (2015 edition named; later editions take effect 6 months after publication).",
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": null,
+    "appliesTo": "No provincial CO provision found. Smoke alarms, by contrast, are required in new and existing dwellings.",
+    "summary": "No provincial requirement to install CO alarms in existing homes was found. The Fire Protection Services Regulations (NLR 45/12, amended to 23/26) require smoke alarms in new and existing dwelling units, including existing one- and two-family homes unless a municipal by-law governs, and in seasonal cottages. They contain no CO alarm provision. They adopt the National Building Code except Part 9 as it relates to one- and two-family dwellings, so building rules for new houses are left to municipal by-laws.",
+    "law": "Fire Protection Services Regulations, NLR 45/12 (Fire Protection Services Act) — no CO provision",
+    "source": "https://www.assembly.nl.ca/legislation/sr/regulations/rc120045.htm",
+    "note": "No official NL statement was found that explicitly confirms or rules out a CO alarm requirement for existing homes. Left null."
+   }
+  },
+  "YT": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": "Yukon says yes",
+    "outsideSleepingAreas": true,
+    "inEachBedroom": null,
+    "interconnected": null,
+    "batteryAllowed": null,
+    "rule": "Yukon government: 'Yukon homes are legally required to have working smoke alarms and carbon monoxide detectors.' It states that 'The National Fire Code of Canada requires working smoke alarms on every level of the home and outside all sleeping areas.'",
+    "law": null,
+    "source": "https://yukon.ca/en/emergencies-and-safety/home-fire-safety/install-and-maintain-smoke-and-carbon-monoxide-detectors",
+    "note": "Yukon's 'every level' wording goes beyond the NFC 2020 article text reviewed here (see national.existingBuildingsNFC2020.everyStoreyNote). The Yukon regulation itself was not located (laws.yukon.ca blocks automated access, per health_rules.json).",
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": true,
+    "appliesTo": "Every Yukon residence with a fuel-burning appliance or an attached garage.",
+    "summary": "The Yukon government states: 'Every Yukon residence with a fuel burning appliance or an attached garage must have CO detectors installed' (yukon.ca, modified 2026-01-02). The Oil-fired Appliance Safety Statutory Amendment Act (S.Y. 2013, c. 3) amended the Fire Prevention Act and Building Standards Act to allow regulations requiring owners or occupants to install and maintain CO detectors. A 2019-05-28 Yukon release says homes with gas-burning devices require CO and smoke detectors, and ties this to gas-fitting permits.",
+    "law": "Oil-fired Appliance Safety Statutory Amendment Act, S.Y. 2013, c. 3 (enabling amendments to the Fire Prevention Act and Building Standards Act); implementing regulation not verified",
+    "source": "https://yukon.ca/en/emergencies-and-safety/home-fire-safety/prevent-carbon-monoxide-poisoning",
+    "note": "The implementing regulation's name and in-force date were not located (laws.yukon.ca blocks automated access)."
+   }
+  },
+  "NT": {
+   "smoke": {
+    "existingHomesRequired": true,
+    "everyStorey": null,
+    "outsideSleepingAreas": true,
+    "inEachBedroom": false,
+    "interconnected": false,
+    "batteryAllowed": true,
+    "rule": "The Fire Prevention Regulations adopt the NFC 2020 and NBC 2020 (R-087-2024, in force 2024-10-01), so the NFC rule applies to existing homes.",
+    "law": "Fire Prevention Regulations, RRNWT 1990, c. F-12, s. 2(1), as amended by R-087-2024",
+    "source": "https://www.justice.gov.nt.ca/en/files/legislation/fire-prevention/fire-prevention.r1.pdf",
+    "note": null,
+    "advice": null,
+    "scope": null
+   },
+   "co": {
+    "existingHomes": null,
+    "appliesTo": "New construction through the adopted NBC 2020. No existing-home rule found.",
+    "summary": "No territorial requirement to install CO alarms in existing homes was found. The Fire Prevention Regulations (amended by R-087-2024, in force 2024-10-01) adopt the National Building Code 2020 and National Fire Code 2020. Neither the Fire Prevention Act (latest amendments in force 2026-07-02) nor the Regulations contain a CO alarm provision.",
+    "law": "Fire Prevention Act (RSNWT 1988, c. F-6); Fire Prevention Regulations (RRNWT 1990, c. F-12), as amended by R-087-2024",
+    "source": "https://www.justice.gov.nt.ca/en/files/legislation/fire-prevention/fire-prevention.r1.pdf",
+    "note": "No official NWT statement was found that explicitly confirms or rules out a CO alarm requirement for existing homes. Left null."
+   }
+  }
+ },
+ "alarmsNational": {
+  "nbc": [
+   "9.10.19.1: smoke alarms conforming to CAN/ULC-S531 in each dwelling unit, in each sleeping room not within a dwelling unit, and in ancillary and common spaces of a house with a secondary suite.",
+   "9.10.19.3(1): at least one smoke alarm on each storey, including basements; on any storey with sleeping rooms, one in each sleeping room and one between the sleeping rooms and the rest of the storey (in the hallway if the bedrooms are served by a hallway).",
+   "9.10.19.3(2)-(3): installed to CAN/ULC-S553, on or near the ceiling.",
+   "9.10.19.4: permanently connected to an electrical circuit with no disconnect switch, plus a battery backup that can run the alarm for at least 7 days followed by 4 minutes of alarm. Battery-only alarms are allowed only where the building has no electrical power.",
+   "9.10.19.5(1): where more than one alarm is required in a dwelling unit, they must be interconnected so that any one sounds all of them.",
+   "9.10.19.5(2): in a house with a secondary suite, all alarms in the house must be interconnected (wireless or hard-wired).",
+   "9.10.19.2: temporal-pattern sound (or temporal pattern plus voice).",
+   "9.10.19.6: a silence button that lasts no more than 10 minutes."
+  ],
+  "nfc": [
+   "2.1.3.3(1): smoke alarms conforming to CAN/ULC-S531 in each dwelling unit (unless a residential fire warning system is installed) and in each sleeping room not within a dwelling unit.",
+   "2.1.3.3(2): within dwelling units, alarms between each sleeping area and the rest of the unit; in the hallway if the sleeping areas are served by hallways.",
+   "2.1.3.3(3): installed to CAN/ULC-S553.",
+   "2.1.3.3(4): smoke alarms are permitted to be battery-operated.",
+   "6.7.1.1: inspect, test and maintain smoke alarms to CAN/ULC-S552."
+  ],
+  "nfcEveryStoreyNote": "The NFC article itself does not say 'every storey'. It requires installation to CAN/ULC-S553, which was not reviewed (paid standard). Do not tell readers the NFC requires an alarm on every storey unless a provincial source says so.",
+  "coGuidance": "Every home that has a combustion appliance should have carbon monoxide detectors. The local building code may require it. Typically, the requirement is to have one detector located near the furnace or appliance and one detector in each bedroom area to ensure that the alarm can be heard.",
+  "coGuidanceSrc": "nrcan-kthi-s2-co",
+  "vancouverCo": "The City of Vancouver's Fire By-law requires CO alarms in every dwelling unit, new or older, that has an attached garage or a fuel-fired appliance, or shares a wall or floor with a parking garage or a service room containing a fuel-fired appliance."
+ },
+ "wells": {
+  "provinces": {
+   "ON": {
+    "bacteria": "At least 3 times a year: spring, summer and fall (local health units, e.g. Ottawa); the province says only 'test regularly'",
+    "chemistry": null,
+    "bacteriaNote": null,
+    "chemistryNote": "Not stated by the province, Public Health Ontario or Ottawa Public Health (all checked 2026-10-08). PHO tests bacteria only.",
+    "frequencyNote": null,
+    "bacteriaCost": "Free (Public Health Ontario)",
+    "chemistryCost": "Private licensed labs; no published provincial price. Region of Waterloo: $21.40 each for nitrate or fluoride (well_water.json (checked 2026-09-28)).",
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://www.ontario.ca/page/testing-and-treating-private-water-wells",
+     "https://www.publichealthontario.ca/en/Laboratory-Services/Well-Water-Testing",
+     "https://www.ottawapublichealth.ca/en/public-health-services/free-well-water-testing.aspx"
+    ]
+   },
+   "QC": {
+    "bacteria": "At least twice a year, spring and fall",
+    "chemistry": "A full physico-chemical analysis at the start; then, depending on the contaminant found, follow-up every 2 or every 5 years (moneaumonpuits.ca). The ministry asks for at least one physico-chemical analysis while the well is in use, plus nitrates-nitrites each spring and fall in farm areas or with individual septic systems.",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": null,
+    "chemistryCost": "'de quelques dizaines à quelques centaines de dollars' (a few tens to a few hundred dollars), depending on the analyses",
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://moneaumonpuits.ca/analyser-votre-eau/ou-quand-et-comment-faire-analyser-leau-de-votre-puits/",
+     "https://www.environnement.gouv.qc.ca/eau/potable/depliant/"
+    ]
+   },
+   "BC": {
+    "bacteria": "At least once a year, and right away if clarity, colour or taste changes",
+    "chemistry": "When the well is completed and annually after that",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": null,
+    "chemistryCost": null,
+    "costNote": "Private labs set prices; no published provincial price was found.",
+    "costAsOf": null,
+    "sources": [
+     "https://www.healthlinkbc.ca/healthlinkbc-files/well-water-testing"
+    ]
+   },
+   "AB": {
+    "bacteria": "2 times a year",
+    "chemistry": "Chemicals and trace metals every 3 years",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": "Free (Alberta Health Services)",
+    "chemistryCost": "Free (AHS)",
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://myhealth.alberta.ca/Alberta/Pages/Testing-Your-Drinking-Water-in-Alberta.aspx"
+    ]
+   },
+   "SK": {
+    "bacteria": "Annually (total coliforms) together with nitrate",
+    "chemistry": "Nitrate annually; general chemistry interval not stated",
+    "bacteriaNote": null,
+    "chemistryNote": "The Water Security Agency page (modified 2025-06-16) says only to test 'regularly'.",
+    "frequencyNote": null,
+    "bacteriaCost": "$23.00 total coliforms + E. coli; $29.00 'Water Potability' (bacteria + nitrate)",
+    "chemistryCost": "$104.00 general chemical/water quality analysis; $92.50 Health & Toxicity panel; nitrate alone $11.50",
+    "costNote": null,
+    "costAsOf": "Fee schedule effective 2017-04-01, GST included; lab asks you to confirm current prices (1-866-450-0000)",
+    "sources": [
+     "https://www.saskhealthauthority.ca/facilities-locations/roy-romanow-provincial-laboratory/water-testing-public/testing-scope-and-service-charges",
+     "https://wsask.ca/drinking-water-wastewater/groundwater/testing-private-water-wells/"
+    ]
+   },
+   "MB": {
+    "bacteria": "At least once a year; spring after snowmelt and runoff, or soon after heavy rain, are good times",
+    "chemistry": "Nitrate: after the initial test, every 3 to 5 years (more often where nitrate is a concern). Trace elements (arsenic, barium, boron, fluoride, uranium): every 3 to 5 years in areas known to have elevated levels; all wells should be tested at least once.",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": "$17.67 (tax included) for the once-a-year subsidized test at Duracan (well_water.json (checked 2026-09-28))",
+    "chemistryCost": null,
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://www.gov.mb.ca/sd/pubs/water/well_aware_en.pdf",
+     "https://www.gov.mb.ca/sd/water/drinking-water/well-videos/index.html"
+    ]
+   },
+   "NS": {
+    "bacteria": "At least every year",
+    "chemistry": "Every five years",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": "$34.50 total coliform/E. coli presence-absence; $46.00 MPN count",
+    "chemistryCost": "Package A (arsenic, uranium) $37.63; B (adds lead, nitrate/nitrite, fluoride) $59.10; C (31 parameters) $120.67; D (C plus chloride and sulphate) $138.77. Halifax area/West Hants combined with bacteria: A $72.13, B $93.60, C $162.29, D $198.49.",
+    "costNote": null,
+    "costAsOf": "Nova Scotia Health page, no fee date shown; read 2026-10-08",
+    "sources": [
+     "https://novascotia.ca/well-water-testing/",
+     "https://www.nshealth.ca/laboratory-services/water-testing"
+    ]
+   },
+   "NB": {
+    "bacteria": "Twice a year (spring thaw, fall rains)",
+    "chemistry": "Inorganics at drilling and every 2 years after",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": null,
+    "chemistryCost": null,
+    "costNote": "RPC does not publish prices.",
+    "costAsOf": null,
+    "sources": [
+     "https://www.gnb.ca/en/topic/environment-resources/water/water-contaminants/wellwater-testing.html"
+    ]
+   },
+   "PE": {
+    "bacteria": "At least once a year",
+    "chemistry": "When drilled and every 2 years after",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": "Free for residential wells",
+    "chemistryCost": "Free for residential wells",
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://www.princeedwardisland.ca/en/information/environment-energy-and-climate-action/testing-of-drinking-water"
+    ]
+   },
+   "NL": {
+    "bacteria": null,
+    "chemistry": "Every two years ('Your water supply should be tested for chemical quality every two years to ensure it is free of potential contaminants such as arsenic.')",
+    "bacteriaNote": "No routine bacteria frequency found on the provincial pages, the provincial guide or the Eastern Health page (last updated 2022-04-05). The guide only says to retest 3-4 months after a successful shock chlorination.",
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": "Free (provincial)",
+    "chemistryCost": "Private labs only ('Chemical testing is not a free service in this province'); prices not published",
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://www.gov.nl.ca/hcs/files/publichealth-envhealth-safe-drinking-water2018.pdf",
+     "https://www.gov.nl.ca/hcs/publichealth/envhealth/drinkingwater/",
+     "https://hi.easternhealth.ca/healthy-communities/environmental-health/well-water-testing/"
+    ]
+   },
+   "YT": {
+    "bacteria": "At least once a year",
+    "chemistry": "Two consecutive years at first, then 5-year intervals if results are stable",
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": null,
+    "bacteriaCost": "Free",
+    "chemistryCost": "'often as much as $200 plus shipping' for the 30 common parameters at outside labs",
+    "costNote": null,
+    "costAsOf": null,
+    "sources": [
+     "https://yukon.ca/en/health-and-wellness/drinking-water/get-your-drinking-water-tested"
+    ]
+   },
+   "NT": {
+    "bacteria": null,
+    "chemistry": null,
+    "bacteriaNote": null,
+    "chemistryNote": null,
+    "frequencyNote": "No GNWT recommendation for private wells found; the Health and Social Services drinking-water page covers community systems only.",
+    "bacteriaCost": "$28.00 total coliforms + E. coli (drinking water) at Taiga Environmental Laboratory",
+    "chemistryCost": "$380.00 'Annual Drinking Water Quality Testing' package (Taiga)",
+    "costNote": null,
+    "costAsOf": "Taiga price guide, July 2021",
+    "sources": [
+     "https://www.gov.nt.ca/ecc/sites/ecc/files/resources/taiga_environmental_laboratory-price_guide_2021.pdf",
+     "https://www.hss.gov.nt.ca/en/services/drinking-water-quality"
+    ]
+   }
+  },
+  "labCosts": {
+   "bacteriaTestCAD": {
+    "low": 17.67,
+    "high": 46.0,
+    "basis": "Published fees: Manitoba subsidized $17.67; Saskatchewan RRPL $23 (2017 schedule); NWT Taiga $28 (2021); Nova Scotia Health $34.50 presence-absence, $46.00 MPN. Free in ON, AB, PE, NL and YT."
+   },
+   "fullChemistryPanelCAD": {
+    "low": 104.0,
+    "high": 200.0,
+    "basis": "Saskatchewan general chemistry $104 (2017); Nova Scotia Health packages C/D $120.67-$138.77 (D with bacteria $198.49); Yukon 'often as much as $200 plus shipping'. Outlier: Taiga (NWT) annual drinking-water package $380 (2021)."
+   },
+   "caveat": "These are provincial or public-lab fees. Private-lab price lists for Ontario, BC and Quebec were not found, so no private-lab figure is given for those provinces. Québec's guide says 'a few tens to a few hundred dollars'.",
+   "asOf": "2026-10-08"
+  }
+ },
+ "mould": {
+  "sizes": [
+   {
+    "size": "small",
+    "healthCanada": "1-3 patches, each less than 1 m² (10 square feet)",
+    "cmhc": "One, two or three patches, each smaller than one square metre (1 m × 1 m); mould on window sills is usually small",
+    "whoCleans": "Homeowner, if healthy (CMHC). Clean with water and unscented dishwashing detergent (CMHC).",
+    "diyOk": true
+   },
+   {
+    "size": "medium",
+    "healthCanada": "more than 3 patches, or patches greater than 1 m² but less than 3 m² (32 square feet)",
+    "cmhc": "More than three patches (each under 1 m²) with a total area under 3 m²",
+    "whoCleans": "CMHC: 'qualified and trained maintenance staff'; its kit adds that occupants may be able to attempt it 'with training and proper precautions', but in many cases professional help is needed.",
+    "diyOk": "With training and precautions only"
+   },
+   {
+    "size": "extensive / large",
+    "healthCanada": "the patch is larger than 3 m²",
+    "cmhc": "A single patch larger than 3 m² (for example 1 m × 3 m, about a 4 ft × 8 ft sheet of plywood), or many medium or large patches through the house",
+    "whoCleans": "Health Canada: 'Consider getting professional help with extensive mould growth', especially if it keeps coming back after cleaning. CMHC: 'qualified and trained mould remediation contractors'.",
+    "diyOk": false
+   }
+  ],
+  "rules": [
+   "People at risk from the effects of mould should not clean it and should stay away during clean-up (CMHC kit).",
+   "Required protection for a small clean-up: safety glasses or goggles, a mask (an N95 respirator if possible) and household rubber gloves (CMHC kit).",
+   "Fix the moisture source first (CMHC five steps: find, stop and fix the moisture source; prevent exposure; remove wet or damaged materials; clean up; restore).",
+   "Testing mould concentrations or species is usually unnecessary (Health Canada; see health_rules.json national.mould)."
+  ],
+  "sources": [
+   "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html",
+   "https://assets.cmhc-schl.gc.ca/sf/project/cmhc/pdfs/content/en/how-to-clean-mould-in-your-home.pdf?rev=27ff0795-0292-4d26-b1fc-128b9e9ed7e0",
+   "https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/industry-innovation-and-leadership/industry-expertise/indigenous-housing/develop-manage-indigenous-housing/maintenance-solutions/mould-in-housing/pdfs/mould-info-kit-en-acc.pdf",
+   "https://www.cmhc-schl.gc.ca/professionals/industry-innovation-and-leadership/industry-expertise/indigenous-housing/develop-manage-indigenous-housing/maintenance-solutions/mould-in-housing"
+  ],
+  "costNote": "No Health Canada, CMHC or provincial source gives a cost for a professional mould assessment. HomeStars cost guides (a commercial directory) refused automated access. Leave cost out, or tell readers to get two or three written quotes."
+ }
+}

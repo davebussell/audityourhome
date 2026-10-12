@@ -124,6 +124,12 @@ const sectionActive = (item: (typeof NAV)[number]) =>
     font-weight: 600; font-size: 14.5px; color: var(--ink);
     text-decoration: none; background: none; border: none; cursor: pointer;
     padding: 0 11px; height: 100%;
+    white-space: nowrap;
+  }
+  .cta .btn { white-space: nowrap; }
+  @media (max-width: 1240px) {
+    .inner { gap: 14px; }
+    .deskrow > li > a:not(.btn), .trigger { padding: 0 7px; font-size: 14px; }
   }
   .deskrow > li > a:not(.btn):hover, .trigger:hover { color: var(--heat-deep); }
   .deskrow a[aria-current='page'], .trigger[data-active='true'] {
@@ -195,12 +201,12 @@ const sectionActive = (item: (typeof NAV)[number]) =>
   .m-link { display: block; font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .m-cta { margin-top: 16px; }
 
-  @media (max-width: 920px) {
+  @media (max-width: 1060px) {
     .menu-btn { display: inline-block; }
     .deskrow { display: none; }
     .panel { display: none !important; }
   }
-  @media (min-width: 921px) {
+  @media (min-width: 1061px) {
     .mobile { display: none !important; }
   }
 </style>

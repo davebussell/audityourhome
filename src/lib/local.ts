@@ -81,6 +81,13 @@ export interface ProgramItem {
   audit: boolean;
 }
 
+/** "Communities served" block: places inside the municipality, nearby places without a page, and area-guide links (HTML). */
+export interface CommunitiesBlock {
+  heading: string;
+  html: string;
+  names: string[];
+}
+
 export interface LocalPage {
   service: string;
   city: string;
@@ -98,6 +105,7 @@ export interface LocalPage {
   related: LinkItem[];
   nearby: LinkItem[];
   sources: SourceItem[];
+  communities?: CommunitiesBlock | null;
 }
 
 export interface LocalCity {
@@ -124,6 +132,7 @@ export interface LocalCity {
     radon: string | null;
     services: { slug: string; name: string; cat: string; metric: string }[];
     sources: SourceItem[];
+    communities?: CommunitiesBlock | null;
   };
   pages: Record<string, LocalPage>;
 }

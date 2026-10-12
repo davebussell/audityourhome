@@ -1,0 +1,362 @@
+---
+import { MODEL, VINTAGES, VINTAGE_LABEL, HOUSE_TYPE_LABEL, SIZE_LABEL, SYSTEM_KEYS, WINDOW_KEYS, fuelOf, fuelUnit, atticTargetR, rsiToR } from '../../lib/calc/engine';
+import { upgradeDefaults, computeUpgrade, renderSummary, renderMeasureLine, renderTable, type UpgradePayload } from './upgrade-payback';
+import { money, int } from '../../lib/calc/format';
+
+interface Props { payload: UpgradePayload; cityName: string; hubNote?: string }
+const { payload, cityName, hubNote } = Astro.props;
+const s = upgradeDefaults(payload);
+const r = computeUpgrade(s, payload);
+const m = Object.fromEntries(r.measures.map((x) => [x.key, x]));
+const hasGas = payload.prices.gas !== null;
+const systems = SYSTEM_KEYS.filter((k) => hasGas || fuelOf(k) !== 'gas');
+const unit = fuelUnit(fuelOf(s.system)).unit;
+const t = atticTargetR(payload.city.hdd);
+const v = (n: number | null | undefined) => (typeof n === 'number' ? String(n) : '');
+const C = MODEL.costs;
+---
+
+<section class="calc" id="calculator" aria-labelledby="calc-h">
+  <div class="calc-top">
+    <h2 id="calc-h">Upgrade payback calculator{cityName ? ` for ${cityName}` : ''}</h2>
+    {hubNote && <p class="calc-hub-note">{hubNote}</p>}
+    <p class="small">Pre-filled for a typical 1966–1980 house in {cityName} with {cityName}'s climate, prices and open rebates. The insulation levels are typical assumptions for the era, not measurements: change anything you know about your house. Nothing you enter leaves your browser.</p>
+  </div>
+  <form id="up-form" class="calc-form" novalidate>
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Your house</legend>
+          <fieldset class="rg">
+            <legend class="lbl">Year built</legend>
+            <div class="radio-row">
+              {VINTAGES.map((x) => <label class="radio-pill"><input type="radio" name="vintage" value={x} checked={x === s.vintage} /><span>{VINTAGE_LABEL[x]}</span></label>)}
+            </div>
+          </fieldset>
+          <fieldset class="rg">
+            <legend class="lbl">Type</legend>
+            <div class="radio-row">
+              {(['detached', 'semi', 'row'] as const).map((x) => <label class="radio-pill"><input type="radio" name="type" value={x} checked={x === s.type} /><span>{HOUSE_TYPE_LABEL[x]}</span></label>)}
+            </div>
+          </fieldset>
+          <fieldset class="rg">
+            <legend class="lbl">Size (heated floors above the basement)</legend>
+            <div class="radio-row">
+              {(['small', 'medium', 'large', 'xlarge'] as const).map((x) => <label class="radio-pill"><input type="radio" name="size" value={x} checked={x === s.size} /><span>{SIZE_LABEL[x]}</span></label>)}
+            </div>
+            <div class="field inline">
+              <label for="up-sqft">Or exact size</label>
+              <span class="in-unit"><input id="up-sqft" name="sqft" type="text" inputmode="decimal" placeholder="e.g. 1,650" autocomplete="off" /><span>sq ft</span></span>
+            </div>
+          </fieldset>
+          <div class="grid-fields">
+            <div class="field">
+              <label for="up-storeys">Storeys above ground</label>
+              <select id="up-storeys" name="storeys">
+                {[1, 1.5, 2, 2.5, 3].map((n) => <option value={n} selected={n === s.storeys}>{n}</option>)}
+              </select>
+            </div>
+            <div class="field">
+              <label for="up-basement">Basement</label>
+              <select id="up-basement" name="basement">
+                <option value="1" selected>Full basement</option>
+                <option value="0">No basement (slab or crawl space)</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="cf">
+          <legend>Heating and bills</legend>
+          <div class="field">
+            <label for="up-system">Main heating system</label>
+            <select id="up-system" name="system">
+              {systems.map((k) => <option value={k} selected={k === s.system}>{MODEL.systems[k].label}</option>)}
+            </select>
+          </div>
+          <div class="grid-fields">
+            <div class="field">
+              <label for="up-pvar">Price of one more <span data-unit>{unit}</span></label>
+              <span class="in-unit pre"><span>$</span><input id="up-pvar" name="priceVar" type="text" inputmode="decimal" data-derived value={v(s.priceVar)} placeholder="enter" /></span>
+              <p class="hint">Used for every saving (fixed charges left out).</p>
+            </div>
+            <div class="field">
+              <label for="up-pnow">Average price per <span data-unit>{unit}</span></label>
+              <span class="in-unit pre"><span>$</span><input id="up-pnow" name="priceNow" type="text" inputmode="decimal" data-derived value={v(s.priceNow)} placeholder="enter" /></span>
+              <p class="hint">Only used to turn a monthly bill into energy.</p>
+            </div>
+          </div>
+          <fieldset class="rg">
+            <legend class="lbl">Calibrate to your bills <span class="opt">(optional)</span></legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="billMode" value="none" checked /><span>Use a typical house</span></label>
+              <label class="radio-pill"><input type="radio" name="billMode" value="usage" /><span>Annual use</span></label>
+              <label class="radio-pill"><input type="radio" name="billMode" value="bill" /><span>Monthly bill</span></label>
+            </div>
+            <div class="field inline" data-show="usage" hidden>
+              <label for="up-usage">Energy used in the last 12 months</label>
+              <span class="in-unit"><input id="up-usage" name="usage" type="text" inputmode="decimal" autocomplete="off" /><span data-unit>{unit}</span></span>
+            </div>
+            <div class="field inline" data-show="bill" hidden>
+              <label for="up-monthly">Average monthly bill for this fuel</label>
+              <span class="in-unit pre"><span>$</span><input id="up-monthly" name="monthly" type="text" inputmode="decimal" autocomplete="off" /></span>
+            </div>
+            <div class="field inline" data-show="summer" hidden>
+              <label for="up-summer" data-summer-label>A typical summer month (optional)</label>
+              <span class="in-unit"><input id="up-summer" name="summer" type="text" inputmode="decimal" autocomplete="off" /><span data-summer-unit>kWh</span></span>
+            </div>
+            <label class="inc" style="margin-top:10px"><input type="checkbox" name="waterSame" checked /> My water heater uses the same fuel</label>
+          </fieldset>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="up-summary" aria-live="polite" set:html={renderSummary(r)} />
+    </div>
+
+    <div class="calc-block measures-block">
+      <div class="measures-grid">
+        <fieldset class="measure" data-m="attic">
+          <legend>Attic insulation</legend>
+          <label class="inc"><input type="checkbox" name="on_attic" checked /> Include in the total</label>
+          <div class="grid-fields">
+            <div class="field"><label for="up-ar">Insulation now</label><span class="in-unit pre"><span>R-</span><input id="up-ar" name="attic_rBefore" type="text" inputmode="decimal" data-derived value={v(s.attic.rBefore)} /></span></div>
+            <div class="field"><label for="up-at">Insulate to</label><span class="in-unit pre"><span>R-</span><input id="up-at" name="attic_rAfter" type="text" inputmode="decimal" data-derived value={v(s.attic.rAfter)} /></span></div>
+          </div>
+          <p class="hint mhint">NRCan recommends R-{t.nrcan} for climate zone {t.zone}; we cap the default at R-60. The building code minimum for a new house here is R-{t.codeMinR}.</p>
+          <div class="grid-fields">
+            <div class="field"><label for="up-asq">Attic area</label><span class="in-unit"><input id="up-asq" name="attic_sqft" type="text" inputmode="decimal" data-derived value={v(s.attic.sqft)} /><span>sq ft</span></span></div>
+            <div class="field"><label for="up-aq">Your quote</label><span class="in-unit pre"><span>$</span><input id="up-aq" name="attic_quote" type="text" inputmode="decimal" placeholder="optional" /></span></div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="up-ac-l">Or cost per sq ft (low – high)</span>
+            <div class="pair" role="group" aria-labelledby="up-ac-l">
+              <span class="in-unit pre"><span>$</span><input name="attic_low" aria-label="Low" type="text" inputmode="decimal" value={v(s.attic.perSqftLow)} /></span>
+              <span class="dash">–</span>
+              <span class="in-unit pre"><span>$</span><input name="attic_high" aria-label="High" type="text" inputmode="decimal" value={v(s.attic.perSqftHigh)} /></span>
+            </div>
+            <p class="hint">{C.atticPerSqft.note}</p>
+          </div>
+          <div class="field"><label for="up-arb">Rebate to count</label><select id="up-arb" name="attic_rebateId"><option value="auto">Smallest rebate that applies</option><option value="none">Don't count a rebate</option></select></div>
+          <div class="mout" aria-live="polite" data-out="attic" set:html={renderMeasureLine(m.attic)} />
+        </fieldset>
+
+        <fieldset class="measure" data-m="walls">
+          <legend>Wall insulation</legend>
+          <label class="inc"><input type="checkbox" name="on_walls" checked /> Include in the total</label>
+          <fieldset class="rg">
+            <legend class="lbl">How</legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="walls_option" value="dense" checked={s.walls.option === 'dense'} data-derived /><span>Dense-pack the cavities</span></label>
+              <label class="radio-pill"><input type="radio" name="walls_option" value="exterior" checked={s.walls.option === 'exterior'} data-derived /><span>Add R-10 outside</span></label>
+            </div>
+          </fieldset>
+          <div class="grid-fields">
+            <div class="field"><label for="up-wr">Walls now</label><span class="in-unit pre"><span>RSI</span><input id="up-wr" name="walls_rsiBefore" type="text" inputmode="decimal" data-derived value={v(s.walls.rsiBefore)} /></span><p class="hint" data-r-of="walls_rsiBefore">R-{Math.round(rsiToR(s.walls.rsiBefore ?? 0))}</p></div>
+            <div class="field"><label for="up-wsq">Wall area</label><span class="in-unit"><input id="up-wsq" name="walls_sqft" type="text" inputmode="decimal" data-derived value={v(s.walls.sqft)} /><span>sq ft</span></span></div>
+          </div>
+          <div class="field"><label for="up-wq">Your quote</label><span class="in-unit pre"><span>$</span><input id="up-wq" name="walls_quote" type="text" inputmode="decimal" placeholder="enter your quote" /></span><p class="hint">We couldn't verify a 2025–2026 Canadian price for wall insulation, so this starts blank. NRCan: on an exterior retrofit the insulation is only about 15–20% of the cost.</p></div>
+          <div class="field"><label for="up-wrb">Rebate to count</label><select id="up-wrb" name="walls_rebateId"><option value="auto">Smallest rebate that applies</option><option value="none">Don't count a rebate</option></select></div>
+          <div class="mout" aria-live="polite" data-out="walls" set:html={renderMeasureLine(m.walls)} />
+        </fieldset>
+
+        <fieldset class="measure" data-m="basement">
+          <legend>Basement wall insulation</legend>
+          <label class="inc"><input type="checkbox" name="on_basement" checked /> Include in the total</label>
+          <div class="grid-fields">
+            <div class="field"><label for="up-br">Walls now</label><span class="in-unit pre"><span>RSI</span><input id="up-br" name="basement_rsiBefore" type="text" inputmode="decimal" data-derived value={v(s.basementM.rsiBefore)} /></span><p class="hint" data-r-of="basement_rsiBefore">R-{Math.round(rsiToR(s.basementM.rsiBefore ?? 0))}</p></div>
+            <div class="field"><label for="up-bt">Insulate to</label><span class="in-unit pre"><span>RSI</span><input id="up-bt" name="basement_rsiAfter" type="text" inputmode="decimal" value={v(s.basementM.rsiAfter)} /></span><p class="hint" data-r-of="basement_rsiAfter">R-{Math.round(rsiToR(s.basementM.rsiAfter ?? 0))}</p></div>
+            <div class="field"><label for="up-bsq">Basement wall area</label><span class="in-unit"><input id="up-bsq" name="basement_sqft" type="text" inputmode="decimal" data-derived value={v(s.basementM.sqft)} /><span>sq ft</span></span></div>
+            <div class="field"><label for="up-bq">Your quote</label><span class="in-unit pre"><span>$</span><input id="up-bq" name="basement_quote" type="text" inputmode="decimal" placeholder="enter your quote" /></span></div>
+          </div>
+          <div class="field"><label for="up-brb">Rebate to count</label><select id="up-brb" name="basement_rebateId"><option value="auto">Smallest rebate that applies</option><option value="none">Don't count a rebate</option></select></div>
+          <div class="mout" aria-live="polite" data-out="basement" set:html={renderMeasureLine(m.basement)} />
+        </fieldset>
+
+        <fieldset class="measure" data-m="windows">
+          <legend>New windows</legend>
+          <label class="inc"><input type="checkbox" name="on_windows" checked /> Include in the total</label>
+          <div class="field"><label for="up-wb">Windows now</label><select id="up-wb" name="windows_before" data-derived>{WINDOW_KEYS.filter((k) => k !== 'mostEfficient').map((k) => <option value={k} selected={k === s.windows.before}>{MODEL.envelope.windowU[k].label} (U {MODEL.envelope.windowU[k].u})</option>)}</select></div>
+          <div class="field"><label for="up-wa">New windows</label><select id="up-wa" name="windows_after">{(['doubleLowE', 'energyStar', 'triple', 'mostEfficient'] as const).map((k) => <option value={k} selected={k === s.windows.after}>{MODEL.envelope.windowU[k].label}</option>)}</select></div>
+          <div class="grid-fields">
+            <div class="field"><label for="up-wn">How many</label><span class="in-unit"><input id="up-wn" name="windows_count" type="text" inputmode="numeric" data-derived value={v(s.windows.count)} /><span>windows</span></span></div>
+            <div class="field"><label for="up-wq2">Your quote</label><span class="in-unit pre"><span>$</span><input id="up-wq2" name="windows_quote" type="text" inputmode="decimal" placeholder="optional" /></span></div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="up-wc-l">Or cost per window (low – high)</span>
+            <div class="pair" role="group" aria-labelledby="up-wc-l">
+              <span class="in-unit pre"><span>$</span><input name="windows_low" aria-label="Low" type="text" inputmode="decimal" value={v(s.windows.eachLow)} /></span>
+              <span class="dash">–</span>
+              <span class="in-unit pre"><span>$</span><input name="windows_high" aria-label="High" type="text" inputmode="decimal" value={v(s.windows.eachHigh)} /></span>
+            </div>
+            <p class="hint">{C.windowEach.note}</p>
+          </div>
+          <div class="field"><label for="up-wnrb">Rebate to count</label><select id="up-wnrb" name="windows_rebateId"><option value="auto">Smallest rebate that applies</option><option value="none">Don't count a rebate</option></select></div>
+          <div class="mout" aria-live="polite" data-out="windows" set:html={renderMeasureLine(m.windows)} />
+        </fieldset>
+
+        <fieldset class="measure" data-m="airSealing">
+          <legend>Air sealing</legend>
+          <label class="inc"><input type="checkbox" name="on_airSealing" checked /> Include in the total</label>
+          <div class="grid-fields">
+            <div class="field"><label for="up-ared">Cut in air leakage</label><span class="in-unit"><input id="up-ared" name="air_reduction" type="text" inputmode="decimal" placeholder="20" /><span>%</span></span></div>
+            <div class="field"><label for="up-ach">Blower-door result</label><span class="in-unit"><input id="up-ach" name="air_ach50" type="text" inputmode="decimal" placeholder="optional" /><span>ACH50</span></span></div>
+          </div>
+          <p class="hint mhint">Leave the cut blank for our default: 20%, or 15% if your house tests under 4 ACH50. The blower-door number is on your EnerGuide report.</p>
+          <div class="field">
+            <span class="lbl" id="up-aic-l">Cost (low – high)</span>
+            <div class="pair" role="group" aria-labelledby="up-aic-l">
+              <span class="in-unit pre"><span>$</span><input name="air_low" aria-label="Low" type="text" inputmode="decimal" value={v(s.air.low)} /></span>
+              <span class="dash">–</span>
+              <span class="in-unit pre"><span>$</span><input name="air_high" aria-label="High" type="text" inputmode="decimal" value={v(s.air.high)} /></span>
+            </div>
+            <p class="hint">{C.airSealing.note}</p>
+          </div>
+          <div class="field"><label for="up-airb">Rebate to count</label><select id="up-airb" name="air_rebateId"><option value="auto">Smallest rebate that applies</option><option value="none">Don't count a rebate</option></select></div>
+          <div class="mout" aria-live="polite" data-out="airSealing" set:html={renderMeasureLine(m.airSealing)} />
+        </fieldset>
+
+        <fieldset class="measure" data-m="setback">
+          <legend>Thermostat setback</legend>
+          <label class="inc"><input type="checkbox" name="on_setback" checked /> Include in the total</label>
+          <div class="grid-fields">
+            <div class="field"><label for="up-sd">Turn it down by</label><span class="in-unit"><input id="up-sd" name="setback_degrees" type="text" inputmode="decimal" value={v(s.setback.degrees)} /><span>°C</span></span></div>
+            <div class="field"><label for="up-sh">For</label><span class="in-unit"><input id="up-sh" name="setback_hours" type="text" inputmode="decimal" value={v(s.setback.hours)} /><span>hours a day</span></span></div>
+            <div class="field"><label for="up-sc">Thermostat cost</label><span class="in-unit pre"><span>$</span><input id="up-sc" name="setback_cost" type="text" inputmode="decimal" value={v(s.setback.cost)} /></span></div>
+          </div>
+          <p class="hint mhint">NRCan suggests 17 °C when you're asleep or away and 20 °C when you're home, and not going below 17 °C. $0 if you already have a programmable thermostat; we couldn't verify a 2025–2026 price for a new one.</p>
+          <div class="field"><label for="up-srb">Rebate to count</label><select id="up-srb" name="setback_rebateId"><option value="none" selected>Don't count a rebate</option><option value="auto">Smallest rebate that applies</option></select></div>
+          <div class="mout" aria-live="polite" data-out="setback" set:html={renderMeasureLine(m.setback)} />
+        </fieldset>
+      </div>
+      <div class="up-table" id="up-table" aria-live="polite" set:html={renderTable(r)} />
+    </div>
+  </form>
+</section>
+
+<script type="application/json" id="calc-data" set:html={JSON.stringify(payload)} />
+
+<script>
+  import { fuelOf, fuelUnit, rsiToR, type WindowKey } from '../../lib/calc/engine';
+  import { computeUpgrade, renderSummary, renderMeasureLine, renderTable, derivedDefaults, priceDefaults, MEASURE_KEYS, type UpgradePayload, type UpgradeState, type MeasureKey } from './upgrade-payback';
+  import { readJSON, num, str, checked, setValue, trackDirty, isDirty, show, setOptions, onChange } from './ui';
+  import { money, range } from '../../lib/calc/format';
+
+  const P = readJSON<UpgradePayload>('calc-data');
+  const form = document.getElementById('up-form') as HTMLFormElement;
+  trackDirty(form);
+  let lastHouse = '';
+  let lastSys = '';
+  const REB: Record<MeasureKey, string> = { attic: 'attic_rebateId', walls: 'walls_rebateId', basement: 'basement_rebateId', windows: 'windows_rebateId', airSealing: 'air_rebateId', setback: 'setback_rebateId' };
+
+  function read(): UpgradeState {
+    const sqft = num(form, 'sqft');
+    const red = num(form, 'air_reduction');
+    return {
+      vintage: (str(form, 'vintage') || '1966-1980') as UpgradeState['vintage'],
+      type: (str(form, 'type') || 'detached') as UpgradeState['type'],
+      size: (str(form, 'size') || 'medium') as UpgradeState['size'],
+      sqft: sqft && sqft >= 300 && sqft <= 20000 ? sqft : null,
+      storeys: Number(str(form, 'storeys')) || 2,
+      basement: str(form, 'basement') !== '0',
+      system: str(form, 'system') as UpgradeState['system'],
+      waterSame: checked(form, 'waterSame'),
+      billMode: (str(form, 'billMode') || 'none') as UpgradeState['billMode'],
+      usage: num(form, 'usage'),
+      monthly: num(form, 'monthly'),
+      summer: num(form, 'summer'),
+      priceNow: num(form, 'priceNow'),
+      priceVar: num(form, 'priceVar'),
+      on: Object.fromEntries(MEASURE_KEYS.map((k) => [k, checked(form, `on_${k}`)])) as Record<MeasureKey, boolean>,
+      attic: { rBefore: num(form, 'attic_rBefore'), rAfter: num(form, 'attic_rAfter'), sqft: num(form, 'attic_sqft'), perSqftLow: num(form, 'attic_low'), perSqftHigh: num(form, 'attic_high'), quote: num(form, 'attic_quote'), rebateId: str(form, 'attic_rebateId') || 'auto' },
+      walls: { option: (str(form, 'walls_option') || 'dense') as 'dense' | 'exterior', rsiBefore: num(form, 'walls_rsiBefore'), sqft: num(form, 'walls_sqft'), quote: num(form, 'walls_quote'), rebateId: str(form, 'walls_rebateId') || 'auto' },
+      basementM: { rsiBefore: num(form, 'basement_rsiBefore'), rsiAfter: num(form, 'basement_rsiAfter'), sqft: num(form, 'basement_sqft'), quote: num(form, 'basement_quote'), rebateId: str(form, 'basement_rebateId') || 'auto' },
+      windows: { before: str(form, 'windows_before') as WindowKey, after: str(form, 'windows_after') as WindowKey, count: num(form, 'windows_count'), eachLow: num(form, 'windows_low'), eachHigh: num(form, 'windows_high'), quote: num(form, 'windows_quote'), rebateId: str(form, 'windows_rebateId') || 'auto' },
+      air: { reductionPct: red !== null && red > 0 ? Math.min(red, 60) : null, ach50: num(form, 'air_ach50'), low: num(form, 'air_low'), high: num(form, 'air_high'), quote: num(form, 'air_quote'), rebateId: str(form, 'air_rebateId') || 'auto' },
+      setback: { degrees: num(form, 'setback_degrees'), hours: num(form, 'setback_hours'), cost: num(form, 'setback_cost'), rebateId: str(form, 'setback_rebateId') || 'none' },
+    };
+  }
+
+  function setRadio(name: string, value: string) {
+    const el = form.querySelector<HTMLInputElement>(`input[name="${name}"][value="${value}"]`);
+    if (el) el.checked = true;
+  }
+
+  function syncDerived(s: UpgradeState) {
+    const key = `${s.vintage}|${s.size}|${s.sqft}|${s.storeys}|${s.basement}`;
+    if (key !== lastHouse) {
+      const d = derivedDefaults(s, P.city.hdd);
+      if (!isDirty(form, 'attic_rBefore')) setValue(form, 'attic_rBefore', d.atticR);
+      if (!isDirty(form, 'attic_sqft')) setValue(form, 'attic_sqft', d.atticSqft);
+      if (!isDirty(form, 'walls_rsiBefore')) setValue(form, 'walls_rsiBefore', d.wallRsi);
+      if (!isDirty(form, 'walls_sqft')) setValue(form, 'walls_sqft', d.wallSqft);
+      if (form.querySelector<HTMLInputElement>('input[name="walls_option"]')?.dataset.dirty !== '1') setRadio('walls_option', d.wallOption);
+      if (!isDirty(form, 'basement_rsiBefore')) setValue(form, 'basement_rsiBefore', d.basementRsi);
+      if (!isDirty(form, 'basement_sqft')) setValue(form, 'basement_sqft', d.basementSqft);
+      if (!isDirty(form, 'windows_before')) { const el = form.querySelector<HTMLSelectElement>('select[name="windows_before"]'); if (el) el.value = d.windowBefore; }
+      if (!isDirty(form, 'windows_count')) setValue(form, 'windows_count', d.windowCount);
+      lastHouse = key;
+    }
+    if (s.system !== lastSys) {
+      const pd = priceDefaults(P.prices, s.system);
+      if (!isDirty(form, 'priceVar')) setValue(form, 'priceVar', pd.variable);
+      if (!isDirty(form, 'priceNow')) setValue(form, 'priceNow', pd.now);
+      lastSys = s.system;
+    }
+    const fuel = fuelOf(s.system);
+    form.querySelectorAll('[data-unit]').forEach((el) => (el.textContent = fuelUnit(fuel).unit));
+    show(form.querySelector('[data-show="usage"]'), s.billMode === 'usage');
+    show(form.querySelector('[data-show="bill"]'), s.billMode === 'bill');
+    show(form.querySelector('[data-show="summer"]'), s.billMode !== 'none' && fuel === 'electricity');
+    const su = form.querySelector('[data-summer-unit]');
+    if (su) su.textContent = s.billMode === 'bill' ? '$' : 'kWh';
+    const sl = form.querySelector('[data-summer-label]');
+    if (sl) sl.textContent = s.billMode === 'bill' ? 'Bill for a typical summer month (optional)' : 'Use in a typical summer month (optional)';
+    form.querySelectorAll<HTMLElement>('[data-r-of]').forEach((el) => {
+      const n = num(form, el.dataset.rOf!);
+      el.textContent = n !== null ? `R-${Math.round(rsiToR(n))}` : '';
+    });
+    const bOn = form.querySelector<HTMLInputElement>('input[name="on_basement"]');
+    if (bOn) bOn.disabled = !s.basement;
+    MEASURE_KEYS.forEach((k) => {
+      const box = form.querySelector<HTMLElement>(`[data-m="${k}"]`);
+      if (box) box.dataset.off = checked(form, `on_${k}`) && !(k === 'basement' && !s.basement) ? '0' : '1';
+    });
+  }
+
+  function update() {
+    let s = read();
+    syncDerived(s);
+    s = read();
+    const r = computeUpgrade(s, P);
+    document.getElementById('up-summary')!.innerHTML = renderSummary(r);
+    document.getElementById('up-table')!.innerHTML = renderTable(r);
+    for (const o of r.measures) {
+      const el = form.querySelector(`[data-out="${o.key}"]`);
+      if (el) el.innerHTML = renderMeasureLine(o);
+      const sel = form.querySelector<HTMLSelectElement>(`select[name="${REB[o.key]}"]`);
+      const base = o.key === 'setback'
+        ? [{ value: 'none', label: "Don't count a rebate" }, { value: 'auto', label: 'Smallest rebate that applies' }]
+        : [{ value: 'auto', label: 'Smallest rebate that applies' }, { value: 'none', label: "Don't count a rebate" }];
+      setOptions(sel, [...base, ...o.rebates.map((x) => ({ value: x.id, label: `${x.program}: ${x.eligible ? range(x.amountLow, x.amountHigh, money) : x.reason ?? 'not available'}`, disabled: !x.eligible }))]);
+    }
+  }
+
+  // radios and selects that follow the house description count as "dirty" once the user picks them
+  form.addEventListener('change', (e) => {
+    const t = e.target as HTMLInputElement;
+    if (t.name === 'walls_option' || t.name === 'windows_before') {
+      form.querySelectorAll<HTMLInputElement>(`[name="${t.name}"]`).forEach((x) => (x.dataset.dirty = '1'));
+    }
+  });
+  onChange(form, update);
+  update();
+</script>
+
+<style>
+  .measures-block { display: block; }
+  .measures-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  @media (max-width: 900px) { .measures-grid { grid-template-columns: minmax(0, 1fr); } }
+  .up-table { margin-top: 14px; }
+  :global(.calc .mout) { border-top: 1px dashed var(--line-strong); margin: 4px 0 8px; padding-top: 8px; }
+  :global(.calc .mres) { margin: 0; font-size: 14px; line-height: 1.55; }
+  :global(.calc .measure[data-off="1"] .mres) { opacity: 0.6; }
+  :global(.up-table tr.off td) { opacity: 0.6; }
+</style>

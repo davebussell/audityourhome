@@ -1,6 +1,6 @@
 {
   "federal": {
-    "heading": "The federal picture, honestly",
+    "heading": "The federal picture",
     "intro": "Most \"federal grant\" pages you'll find are out of date. Here's the verified state of the national programs:",
     "items": [
       {
@@ -8,27 +8,30 @@
         "status": "closed",
         "note": "The grant closed to new applicants in February 2024; the interest-free loan (up to $40,000) stopped taking applications October 1, 2025 and its funding is fully committed. Approved applicants keep their funding — new ones can't join.",
         "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-loan",
-        "verified": "September 21, 2026"
+        "verified": "October 8, 2026"
       },
       {
         "name": "Greener Homes Affordability Program",
         "status": "active",
-        "note": "Free direct-install retrofits (insulation, heat pumps) for low-to-median-income owners and tenants — currently delivered in BC, Manitoba, Nova Scotia, PEI, and Quebec through provincial partners, with more to be listed. You apply through your province's program, never through cold-callers.",
+        "note": "Free direct-install retrofits (insulation, heat pumps) for low-to-median-income owners and tenants, delivered through provincial partners in BC, Manitoba, Nova Scotia, PEI and Quebec (Quebec's 2026–27 registration has ended), with more to be listed. You apply through your province's program, never through cold-callers.",
         "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
-        "verified": "September 21, 2026"
+        "verified": "October 8, 2026",
+        "noteByProvince": {
+          "newfoundland-labrador": "NRCan's list of delivery provinces doesn't include Newfoundland and Labrador yet, but takeCHARGE's income-eligible TakeCharge Greener Homes Program, \"delivered in partnership with the Government of Canada\", covers projects completed after October 5, 2026."
+        }
       },
       {
         "name": "Oil to Heat Pump Affordability (OHPA)",
         "status": "closed",
         "note": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). Where NRCan delivered it directly (Alberta, Manitoba, the Northwest Territories, Quebec and Saskatchewan), it paid up to $10,000 toward oil-to-heat-pump conversions for income-qualified households.",
         "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program",
-        "verified": "October 2, 2026",
+        "verified": "October 8, 2026",
         "noteByProvince": {
           "bc": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households.",
           "new-brunswick": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households.",
-          "newfoundland-labrador": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households.",
+          "newfoundland-labrador": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households. Newfoundland and Labrador's own Oil to Electric program is still accepting applications.",
           "pei": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households.",
-          "nova-scotia": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households. Nova Scotia's allocation was fully committed even earlier.",
+          "nova-scotia": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households. Efficiency Nova Scotia stopped taking applications even earlier, on July 2, 2026.",
           "ontario": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). It paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households. In Ontario it was delivered with Save on Energy as a free heat pump installation worth up to $25,000.",
           "north": "Closed to new applications July 31, 2026 (approved participants have until January 31, 2027 to submit receipts). In Yukon it paid up to $15,000 (plus a one-time $250 payment) toward oil-to-heat-pump conversions for income-qualified households, and in the Northwest Territories up to $10,000. Homes in Nunavut were not eligible."
         }
@@ -41,7 +44,7 @@
       "name": "British Columbia",
       "postal": "V",
       "planner": true,
-      "intro": "BC pairs Canada's most ambitious building codes with a genuinely audit-linked rebate: the Home Energy Improvement Bonus pays by measured improvement between two EnerGuide evaluations. Add utility rebates and an income-qualified free stream, and BC is one of the best places in the country to do a retrofit properly.",
+      "intro": "BC pairs ambitious building rules with an audit-linked rebate: the Home Energy Improvement Bonus pays by measured improvement between two EnerGuide evaluations. Add the Home Renovation Rebate program's per-upgrade rebates, income-tiered CleanBC rebates and free upgrades for lower-income households, and BC is one of the better places in the country to do a retrofit properly.",
       "housing": "Vancouver and the coast fight moisture more than cold — older stock leaks air and grows condensation problems in mild wet winters, and wildfire-smoke summers have made filtration a mainstream concern. The Interior and North are a different climate entirely: real winters, wood heat, and homes where envelope upgrades pay fast. Step Code-era new builds are tight and need their ventilation verified.",
       "programs": [
         {
@@ -50,25 +53,25 @@
           "headline": "$20 per %-point improvement · $750–$2,000",
           "note": "Complete three bonus-eligible upgrades with pre- and post-upgrade EnerGuide evaluations within 18 months, apply within six months of the second evaluation, and get paid for the measured improvement. Doing only two upgrades? A separate $300 Two Upgrade Bonus needs no evaluation (one bonus per home). This is the audit-first model done right — the evaluations are the program.",
           "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/bonus-rebates.html",
-          "verified": "October 2, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "bc-home-energy-improvement-bonus"
         },
         {
           "name": "CleanBC Energy Savings Program",
           "status": "income",
-          "headline": "Free upgrades, income-qualified",
-          "note": "Income-qualified households get free upgrades (insulation, heat pumps and more) — and BC is also a Greener Homes Affordability Program delivery province.",
-          "url": "https://www.betterhomesbc.ca/",
-          "verified": "September 18, 2026",
+          "headline": "Income-tiered rebates · heat pumps to $13,000",
+          "note": "Lower- and middle-income households get rebates of up to 100% of eligible costs, capped by level (for example, up to $13,000 for a central heat pump replacing oil, gas or propane), paid through registered contractors. It isn't free installation, and its insulation rebates ended for invoices from July 6, 2026. Free upgrades come through BC Hydro's and FortisBC's programs, which also deliver the federal Affordability Program.",
+          "url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/",
+          "verified": "October 8, 2026",
           "programSlug": "cleanbc-energy-savings-program"
         },
         {
-          "name": "BC Hydro & FortisBC rebates",
+          "name": "Home Renovation Rebate (BC Hydro & FortisBC)",
           "status": "active",
-          "headline": "Equipment rebates via utilities",
-          "note": "Heat pump and equipment offers run through the utilities and change seasonally — check current offers before quoting a project. Through October 31, 2026, BC Hydro adds a limited-time bonus of up to $1,000 for replacing electric heating with a heat pump, while funding lasts.",
-          "url": "https://www.betterhomesbc.ca/rebates/",
-          "verified": "October 2, 2026",
+          "headline": "Heat pumps $4,000 · insulation · windows $100 each",
+          "note": "For any income: $4,000 for a whole-home heat pump replacing electric heat ($1,500 partial), insulation at $0.02–$0.09 × R-value added × sq ft, windows and doors $100 each up to $2,000 (not in the City of Vancouver) and $1,000 for an electric heat pump water heater. Rebates for switching from oil (up to $6,000) or gas and propane (up to $8,000) apply only north of and including 100 Mile House. BC Hydro adds up to $1,000 for an air-source heat pump completed and paid between August 1 and October 31, 2026, while funding lasts.",
+          "url": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/",
+          "verified": "October 8, 2026",
           "programSlug": "bc-home-energy-improvement-bonus"
         }
       ],
@@ -100,25 +103,26 @@
       "name": "Alberta",
       "postal": "T",
       "planner": true,
-      "intro": "Alberta has no provincial audit-linked rebate right now — which makes the audit's other jobs the story here: lower bills in a cold climate with cheap gas, right-sized equipment, and pre-purchase clarity. Financing exists where your municipality runs a Clean Energy Improvement Program.",
+      "intro": "Alberta has no provincial home energy rebate right now, which makes the audit's other jobs the story here: lower bills, right-sized equipment and pre-purchase clarity. Financing exists in the 27 municipalities that run a Clean Energy Improvement Program, which requires an EnerGuide evaluation, though Calgary's intake is closed until winter and Edmonton's is waitlisted.",
       "housing": "Calgary and Edmonton's stock skews newer than central Canada's, but the climate is unforgiving: design temperatures far below the national average make envelope quality the whole game. Older bungalow belts drill-and-fill beautifully; newer tight homes need ventilation verified. Chinook cycling in the south works building envelopes hard.",
       "programs": [
         {
           "name": "Clean Energy Improvement Program (CEIP)",
           "status": "active",
-          "headline": "Property-tax financing, select municipalities",
-          "note": "PACE-style financing repaid via property taxes, running in participating municipalities — check your municipality's current intake. Calgary's residential intake is closed until winter 2026/27. Edmonton's separate HERA rebate is fully subscribed.",
+          "headline": "Property-tax financing, 27 municipalities",
+          "note": "Financing of up to 100% of upgrade costs, repaid on your property tax bill over up to 20 years for some upgrades, with an EnerGuide evaluation required. Calgary's residential intake is closed until winter 2026/27, Edmonton's pre-qualifications go on a waitlist (6.00%), and Lethbridge and Strathcona County are at capacity. Red Deer doesn't participate.",
           "url": "https://ceip.abmunis.ca/residential/",
-          "verified": "October 2, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "alberta-clean-energy-improvement-program"
         },
         {
-          "name": "Provincial audit-linked rebates",
+          "name": "Provincial rebates",
           "status": "closed",
-          "headline": "None active",
-          "note": "No province-wide retrofit rebate is live right now, and the federal loan and OHPA are both closed. An audit here pays through bill savings, correct equipment sizing, and negotiating power — not rebate paperwork.",
-          "url": "https://www.alberta.ca/energy-efficiency-programs",
-          "verified": "September 18, 2026"
+          "headline": "None found",
+          "note": "We found no province-wide home energy rebate: the Government of Alberta's energy-efficiency programs page now returns \"page not found\", the City of Edmonton says it has no residential rebates, and the federal oil-to-heat-pump program, which NRCan ran directly here, closed July 31, 2026.",
+          "url": "/articles/alberta-energy-efficiency-rebates/",
+          "verified": "October 8, 2026",
+          "internal": true
         }
       ],
       "homeHealth": [
@@ -149,25 +153,34 @@
       "name": "Saskatchewan",
       "postal": "S",
       "planner": true,
-      "intro": "Saskatchewan's Home Efficiency Retrofit Rebate ended in April 2026, and nothing province-wide has replaced it. That doesn't change the physics: some of Canada's coldest design temperatures make Saskatchewan homes among the country's most rewarding to air-seal and insulate — the payback just runs through your bills instead of a rebate cheque.",
+      "intro": "Saskatchewan's Home Efficiency Retrofit Rebate ended in April 2026, and no rebate has replaced it. What's left is the Home Renovation Tax Credit (10.5%, up to $420 a year), SaskEnergy rebates on high-efficiency gas equipment, and free upgrades for income-qualified homes. Air sealing and insulation still pay back, just through your bills instead of a rebate cheque.",
       "housing": "Wartime and post-war stock in Regina and Saskatoon with empty walls and thin attics, farmhouses exposed to open-prairie wind, and winters that hold deep cold for months. Blower-door numbers here translate to real dollars faster than almost anywhere.",
       "programs": [
         {
           "name": "Home Efficiency Retrofit Rebate",
           "status": "closed",
           "headline": "Ended April 2026",
-          "note": "The provincial program closed in April 2026. We list it because half the internet still advertises it — don't budget around it.",
-          "url": "https://www.saskatchewan.ca/residents/environment-public-health-and-safety/saskenergy-rebates",
-          "verified": "September 18, 2026",
+          "note": "SaskPower and SaskEnergy say it ended in April 2026, and SaskEnergy's Energy Efficiency Discounts Program ended July 27, 2026. We list them because much of the internet still advertises them; don't budget around either.",
+          "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/home-efficiency-retrofit-rebate",
+          "verified": "October 8, 2026",
           "programSlug": "saskatchewan-home-efficiency-retrofit-rebate"
         },
         {
           "name": "Utility offers (SaskEnergy / SaskPower)",
           "status": "active",
-          "headline": "Check current equipment offers",
-          "note": "Utility rebates rotate — check both utilities' current residential offers before pricing equipment. And the audit still earns its fee in a climate this cold.",
-          "url": "https://www.saskenergy.com/",
-          "verified": "September 21, 2026",
+          "headline": "Gas equipment rebates · free income-qualified upgrades",
+          "note": "SaskEnergy pays $325–$1,000 for replacing a gas furnace, boiler or water heater with a high-efficiency model (apply within 120 days). SaskPower's Energy Assistance Program gives income-qualified households free upgrades, including a smart thermostat if eligible, and participants may qualify for SaskEnergy's free furnace upgrade. Neither utility lists a heat pump rebate.",
+          "url": "https://www.saskenergy.com/ways-save/rebates-programs",
+          "verified": "October 8, 2026",
+          "programSlug": "saskatchewan-home-efficiency-retrofit-rebate"
+        },
+        {
+          "name": "Home Renovation Tax Credit",
+          "status": "active",
+          "headline": "10.5% · up to $420 a year ($525 seniors)",
+          "note": "A non-refundable provincial credit for 2025 and later tax years: 10.5% of renovation expenses above $1,000, up to $5,000 ($6,000 for seniors), incurred on or after October 1, 2024 on your principal residence. Windows, doors, furnaces and ventilation qualify; your own labour and appliances don't.",
+          "url": "https://www.saskatchewan.ca/residents/taxes-and-investments/tax-credits/home-renovation-tax-credit",
+          "verified": "October 8, 2026",
           "programSlug": "saskatchewan-home-efficiency-retrofit-rebate"
         }
       ],
@@ -199,7 +212,7 @@
       "name": "Manitoba",
       "postal": "R",
       "planner": true,
-      "intro": "Manitoba is one of Canada's better-run efficiency markets: Efficiency Manitoba pays a $400 rebate on the EnerGuide evaluation itself, stacks insulation and heating programs on top, and runs free income-qualified streams — all in a climate where the upgrades genuinely earn their keep.",
+      "intro": "Manitoba is one of Canada's better-run efficiency markets: Efficiency Manitoba pays a $400 rebate on the EnerGuide evaluation itself, publishes rebates for windows, heat pumps and insulation, and runs free income-qualified streams.",
       "housing": "Winnipeg's early-1900s cores and post-war rings mirror the classic prairie pattern: solid old bones, empty walls, thin attics, and a winter that finds every leak. Cheap clean hydro power makes electrification math friendlier here than most provinces.",
       "programs": [
         {
@@ -208,16 +221,16 @@
           "headline": "$400 back on the evaluation",
           "note": "Complete a pre-retrofit EnerGuide evaluation through an approved service organization, plan at least one upgrade within 12 months, and apply within 90 days with your reports — $400 back. The audit-first model, subsidized.",
           "url": "https://efficiencymb.ca/my-home/energuide-home-evaluation-rebate/",
-          "verified": "September 21, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "efficiency-manitoba-rebates"
         },
         {
-          "name": "Efficiency Manitoba — insulation & heating",
+          "name": "Efficiency Manitoba — windows, heat pumps & insulation",
           "status": "active",
-          "headline": "Insulation rebates + heat pump offers",
-          "note": "Home insulation rebates and heat pump programs run alongside the evaluation rebate — current amounts on their site. Income-qualified households have a free Energy Efficiency Assistance stream, and Manitoba is a Greener Homes Affordability delivery province.",
-          "url": "https://efficiencymb.ca/my-home/",
-          "verified": "September 21, 2026",
+          "headline": "Windows $100 · heat pumps $1,500–$2,000 · insulation by R-value",
+          "note": "$100 per ENERGY STAR triple-pane window or door ($300 income-qualified), $2,000 for a ducted cold-climate heat pump or $1,500 ductless, a no-upfront-cost ground-source option at $75 a month for 15 years, and insulation at $0.03–$0.15 × R-value added × sq ft. Income-qualified households can get a heat pump free, and Manitoba delivers the federal Greener Homes Affordability Program.",
+          "url": "https://efficiencymb.ca/heat-pumps/",
+          "verified": "October 8, 2026",
           "programSlug": "efficiency-manitoba-rebates"
         }
       ],
@@ -256,9 +269,9 @@
           "name": "Home Renovation Savings Program",
           "status": "active",
           "headline": "$600 assessment rebate · insulation to $7,700 · heat pumps to $7,500 ($12,000 ground-source)",
-          "note": "The audit-linked path: pre- and post-retrofit EnerGuide assessments through one of seven approved service organizations unlock the stack, and the follow-up must be done by December 31, 2026. Full details in our program tracker.",
+          "note": "The audit-linked path: pre- and post-retrofit EnerGuide assessments through one of seven approved service organizations unlock the stack, and the follow-up must be done by December 31, 2026. If your gas comes from Kitchener Utilities or Utilities Kingston rather than Enbridge, check eligibility first. Full details in our program tracker.",
           "url": "https://www.homerenovationsavings.ca/",
-          "verified": "September 28, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "home-renovation-savings-assessment"
         },
         {
@@ -267,7 +280,7 @@
           "headline": "Low-interest City loans · 25% premium refund",
           "note": "Toronto's Home Energy Loan Program funds projects at posted rates (assessment required for most), and CMHC-insured buyers can claim Eco premium refunds. Both verified in the tracker.",
           "url": "/programs/",
-          "verified": "September 28, 2026",
+          "verified": "October 8, 2026",
           "internal": true
         }
       ],
@@ -299,34 +312,34 @@
       "name": "Quebec",
       "postal": "GHJ",
       "planner": true,
-      "intro": "Quebec runs a two-track system: Rénoclimat is the audit-linked path (government-assigned evaluators, rebates for envelope work), while Hydro-Québec's LogisVert pays for heat pumps and equipment with no audit required. Cheap hydro power makes electrification the default answer here more than anywhere else in North America.",
+      "intro": "Quebec runs two main programs. The government's Rénoclimat pays for insulation and high-performance windows and, since October 1, 2026, no longer requires an evaluation (it pays up to $500 toward one); it also added a flood-protection component. Hydro-Québec's LogisVert pays for heat pumps, roof insulation in electrically heated houses, appliances and solar.",
       "housing": "Montreal's plexes — with their exterior stairs, shared walls, and 1900–1950 bones — are their own retrofit discipline; the regions add farmhouses and mid-century bungalows heated with everything from hydro baseboards to oil. Winters are long enough that envelope work pays even at Quebec's low electricity prices.",
       "programs": [
         {
           "name": "Rénoclimat",
           "status": "active",
-          "headline": "Audit-linked envelope rebates",
-          "note": "The provincial audit path: an assigned evaluator ($150 + tax, refunded except the tax when you receive Rénoclimat assistance; the first post-retrofit evaluation is free), then rebates for insulation, air-sealing, and door/window work. A flooding-adaptation component joined the program October 1, 2026. Note: the government assigns the advisor — there's no shopping around.",
-          "url": "https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat",
-          "verified": "October 2, 2026",
+          "headline": "Insulation & windows · evaluation optional since Oct 1, 2026",
+          "note": "New rules since October 1, 2026: insulation paid per square foot (up to $2,000 for the roof, $7,000 for walls and $2,500 for foundations in a house), ENERGY STAR Most Efficient windows at $300 each, up to $500 toward an optional evaluation, and a new flood-protection Adaptation component. Work must be done by RBQ-licensed contractors, and claims go through a new online portal expected this fall. The old evaluation-first rules apply only if you requested a pre-work evaluation by October 12, 2026.",
+          "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adapatation-inondations",
+          "verified": "October 8, 2026",
           "programSlug": "renoclimat"
         },
         {
           "name": "Hydro-Québec LogisVert",
           "status": "active",
-          "headline": "Heat pumps $50–$120 per 1,000 BTU/h · no audit needed",
-          "note": "Active and generous: heat pump grants scaled to capacity (ENERGY STAR models required since November 2025), plus appliances and solar ($1,000/kW). The roof-insulation measure ended August 2025 — envelope money lives in Rénoclimat now.",
+          "headline": "Heat pumps $50–$120 per 1,000 BTU/h · roof insulation $1,500",
+          "note": "Heat pump grants scaled to capacity (ENERGY STAR models required since November 26, 2025; up to $6,700), plus roof insulation with caulking ($1,500 in electrically heated houses), appliances and solar ($1,000/kW). The measure that ended in August 2025 was heat pumps installed with caulking, not roof insulation.",
           "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
-          "verified": "September 21, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "logisvert"
         },
         {
           "name": "Greener Homes Affordability (QC delivery)",
-          "status": "income",
-          "headline": "Free retrofits, income-qualified",
-          "note": "Quebec is one of the federal Affordability Program's delivery provinces — free direct-install retrofits for low-to-median-income households, applied for through the provincial channel.",
-          "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
-          "verified": "September 21, 2026",
+          "status": "closed",
+          "headline": "2026–27 registration ended",
+          "note": "Hydro-Québec's free upgrades for modest-income households, Quebec's delivery of the federal Affordability Program, closed registration for the 2026–27 season and is processing the applications already received.",
+          "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/modest-income-households/",
+          "verified": "October 8, 2026",
           "programSlug": "canada-greener-homes-affordability-program"
         }
       ],
@@ -364,19 +377,19 @@
         {
           "name": "Total Home Energy Savings Program",
           "status": "active",
-          "headline": "Evaluation-first · incentives on recommended upgrades",
-          "note": "Register with NB Power's SaveEnergyNB, get the Home Energy Evaluation, then complete any recommended upgrades within 9 months for incentives — 'up to thousands of dollars' across insulation, heating, doors and windows. (The oil-to-heat-pump advance-funding stream closed June 30, 2026.)",
+          "headline": "Evaluation $99 + HST · heat pumps $400–$2,000",
+          "note": "Register with NB Power's SaveEnergyNB, get the Home Energy Evaluation ($99 + HST covers both visits), then complete recommended upgrades within 9 months: attic insulation at $0.40–$0.85 per sq ft, air sealing $250–$550, a central ducted heat pump $1,500, windows and doors $50 each. Oil-to-heat-pump advance payments closed to new registrations June 30, 2026.",
           "url": "https://www.saveenergynb.ca/en/for-home/total-home/",
-          "verified": "September 21, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "nb-total-home-energy-savings"
         },
         {
           "name": "Enhanced Energy Savings (income-qualified)",
           "status": "income",
-          "headline": "Free upgrades for eligible households",
-          "note": "NB Power's income-qualified streams install free efficiency upgrades — check SaveEnergyNB for current eligibility.",
-          "url": "https://www.saveenergynb.ca/",
-          "verified": "September 21, 2026",
+          "headline": "Free upgrades, household income under $70,000",
+          "note": "Homeowners with combined household income under $70,000 may get free upgrades, especially insulation and air sealing.",
+          "url": "https://www.saveenergynb.ca/en/for-home/enhanced-energy-savings-program/",
+          "verified": "October 8, 2026",
           "programSlug": "nb-total-home-energy-savings"
         }
       ],
@@ -414,28 +427,28 @@
         {
           "name": "Home Energy Assessment path",
           "status": "active",
-          "headline": "Assessment-based rebates (up to $5,000)",
-          "note": "The assessment costs $199 (free for households under Efficiency Nova Scotia's income threshold) and opens rebates of up to $5,000 across insulation, air sealing and equipment. Upgrades must be done within 12 months of the first assessment. Book through Efficiency Nova Scotia's accredited partners.",
+          "headline": "Assessment $199 · rebates up to $5,000",
+          "note": "The assessment costs $199 (waived for households under Efficiency Nova Scotia's income threshold) and opens rebates of up to $5,000, including $300–$600 per ton for heat pumps. Finish the work within 12 months of the first assessment.",
           "url": "https://www.efficiencyns.ca/programs-rebates/home-energy-assessments",
-          "verified": "October 2, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "efficiency-nova-scotia-rebates"
         },
         {
           "name": "Moderate Income Rebates + HomeWarming",
           "status": "income",
-          "headline": "To ~$10,000 moderate-income (standard $5,000 + $5,000 top-up) · free income-qualified",
-          "note": "The Moderate Income Rebate adds up to $5,000 on top of the standard $5,000 (about $10,000 in all) for homes not heated mainly by electricity, and its participants get the $199 assessment fee back when their rebates are issued. HomeWarming installs free upgrades (heat pumps included) for income-qualified homeowners; renters aren't eligible. NS is also a Greener Homes Affordability delivery province.",
-          "url": "https://www.efficiencyns.ca/programs-rebates/homewarming",
-          "verified": "October 2, 2026",
+          "headline": "Moderate Income Rebate up to $5,000 more · HomeWarming free",
+          "note": "The Moderate Income Rebate adds up to $5,000 on top of the standard $5,000 (up to $10,000 in all) for homes not heated mainly by electricity; Efficiency Nova Scotia cut its maximum from $10,000 after the federal oil-to-heat-pump funding ended. HomeWarming installs free upgrades for income-qualified homeowners; renters aren't eligible. NS also delivers the federal Affordability Program through HomeWarming and the African Nova Scotian Communities Retrofit program.",
+          "url": "https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate",
+          "verified": "October 8, 2026",
           "programSlug": "efficiency-nova-scotia-rebates"
         },
         {
           "name": "Oil to Heat Pump Affordability (NS)",
           "status": "closed",
-          "headline": "Funding fully committed",
-          "note": "The federal OHPA's Nova Scotia allocation was fully committed ahead of other provinces, and the national program closed to new applications July 31, 2026. If a contractor is still selling it, walk.",
+          "headline": "Closed to new applicants July 2, 2026",
+          "note": "Efficiency Nova Scotia allocated its federal oil-to-heat-pump funding and stopped taking applications on July 2, 2026; the national program closed July 31. If a contractor is still selling it, walk.",
           "url": "https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program",
-          "verified": "September 21, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "oil-to-heat-pump-affordability"
         }
       ],
@@ -467,7 +480,7 @@
       "name": "Prince Edward Island",
       "postal": "C",
       "planner": true,
-      "intro": "efficiencyPEI keeps the audit-first path cheap and simple: a $99 + HST subsidized home energy assessment through five contracted partners, unlocking insulation rebates and the rest of the Island's program set. For a small province, PEI consistently runs one of the country's most accessible efficiency shops.",
+      "intro": "efficiencyPEI keeps the audit-first path cheap: a $99 + HST subsidized home energy assessment through five approved providers unlocks insulation, window, door and air-sealing rebates. Heat pump rebates ended on April 15, 2026.",
       "housing": "Island farmhouses and village homes with long exposure to wind and salt air, a post-war ring around Charlottetown, and one of Canada's fastest heat-pump adoption curves — driven by years of aggressive conversion programs.",
       "programs": [
         {
@@ -476,16 +489,25 @@
           "headline": "Subsidized audit via 5 partners",
           "note": "The entry point: a subsidized EnerGuide-based assessment booked directly with efficiencyPEI's partner firms, producing the report that unlocks the rebate streams.",
           "url": "https://www.princeedwardisland.ca/en/information/environment-energy-and-climate-action/home-energy-assessments",
-          "verified": "September 21, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "efficiency-pei-rebates"
         },
         {
-          "name": "Home Insulation Rebates + income streams",
+          "name": "Insulation, window & air-sealing rebates",
           "status": "active",
-          "headline": "Insulation rebates · free income-qualified upgrades",
-          "note": "Assessment recommendations feed the insulation rebate program; income-qualified Islanders have free-upgrade streams, and PEI is a Greener Homes Affordability delivery province.",
-          "url": "https://www.princeedwardisland.ca/en/topic/efficiency-pei",
-          "verified": "September 21, 2026",
+          "headline": "Windows $125 per opening · free insulation under $55,000",
+          "note": "After the assessment: insulation rebates by R-value added, $125 per ENERGY STAR window, door or skylight (up to $1,000) and $150–$575 for air sealing, with higher rates for household incomes under $35,000. Households under $55,000 can get insulation free, and PEI delivers the federal Affordability Program.",
+          "url": "https://www.princeedwardisland.ca/en/information/energy/home-insulation-programs",
+          "verified": "October 8, 2026",
+          "programSlug": "efficiency-pei-rebates"
+        },
+        {
+          "name": "Heat pump rebates",
+          "status": "closed",
+          "headline": "Ended April 15, 2026",
+          "note": "PEI ended heat pump, heat pump water heater, HRV and solar rebates on April 15, 2026, and free heat pump and oil-to-heat-pump applications are closed. Equipment bought between April 15, 2025 and April 15, 2026 can still be claimed within a year of purchase.",
+          "url": "https://www.princeedwardisland.ca/en/information/energy/heat-pumps",
+          "verified": "October 8, 2026",
           "programSlug": "efficiency-pei-rebates"
         }
       ],
@@ -517,25 +539,34 @@
       "name": "Newfoundland & Labrador",
       "postal": "A",
       "planner": true,
-      "intro": "NL has no broad audit-linked rebate program right now — takeCHARGE's utility rebates cover selected equipment, and older oil-conversion funding has lapsed. What NL does have is some of Canada's harshest weather and oldest outport stock, which makes the audit's diagnostic job worth the fee even without a rebate attached.",
-      "housing": "St. John's rowhouses and wood-frame stock built long before insulation codes, outport homes facing open-Atlantic weather, and Labrador's genuinely subarctic conditions. Electric baseboard's big share makes heat pump math straightforward on the island grid.",
+      "intro": "Newfoundland and Labrador's programs grew in 2026: takeCHARGE's Oil to Electric program pays up to $9,000 toward a central heat pump replacing oil ($22,000 if income-qualified), insulation rebates reach $3,000 in electrically heated homes, and a new no-cost program for income-eligible homes covers projects completed after October 5, 2026.",
+      "housing": "St. John's rowhouses and wood-frame stock built long before insulation codes, outport homes facing open-Atlantic weather, and Labrador's subarctic conditions. Electric baseboard's big share makes heat pump math simple on the island grid.",
       "programs": [
         {
           "name": "takeCHARGE (NL Power / NL Hydro)",
           "status": "active",
-          "headline": "Utility rebates on selected equipment",
-          "note": "Thermostat, insulation and equipment offers rotate through the joint utility program — check current offers. No EnerGuide-linked retrofit stream is running.",
+          "headline": "Insulation to $3,000 · air sealing · HRV",
+          "note": "Electrically heated homes get 75% of attic and basement insulation costs (up to $1,000 each, plus up to $500 labour each), $200–$750 for blower-door-tested air sealing, and $225 for an HRV.",
           "url": "https://takechargenl.ca/",
-          "verified": "September 18, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "takecharge-nl"
         },
         {
-          "name": "Oil-heated homes funding",
-          "status": "closed",
-          "headline": "Earlier programs lapsed",
-          "note": "The 2018–2022 federal-funded oil-heated homes program has run its course, and national OHPA closed July 31, 2026. Budget conversions on bill savings, not rebates.",
-          "url": "https://www.gov.nl.ca/mpa/low-carbon-economy-programs/oilheatedhomes/",
-          "verified": "September 21, 2026",
+          "name": "Oil to Electric Incentive Program",
+          "status": "active",
+          "headline": "Up to $9,000 · $22,000 income-qualified",
+          "note": "Still accepting applications, with no closure date set: up to $9,000 for a central heat pump replacing oil or propane ($22,000 if income-qualified), less for mini-splits or electric furnaces; retroactive to April 1, 2023. Pre-approval holds the incentive for 365 days.",
+          "url": "https://takechargenl.ca/oiltoelectric/",
+          "verified": "October 8, 2026",
+          "programSlug": "takecharge-nl"
+        },
+        {
+          "name": "TakeCharge Greener Homes (income-eligible)",
+          "status": "income",
+          "headline": "No-cost upgrades, projects after Oct 5, 2026",
+          "note": "For households under its income limits: up to 100% of approved upgrades, including a limited number of no-cost heat pumps, HRVs, insulation and air sealing, with home energy assessments before and after. Only projects completed after October 5, 2026 qualify.",
+          "url": "https://takechargenl.ca/greenerhomes/",
+          "verified": "October 8, 2026",
           "programSlug": "takecharge-nl"
         }
       ],
@@ -567,34 +598,34 @@
       "name": "The North (YT · NT · NU)",
       "postal": "XY",
       "planner": true,
-      "intro": "The territories are their own energy world: extreme design temperatures, diesel-dependent grids in many communities, and delivery organizations built for the context. Yukon's Good Energy rebates and the NWT's Arctic Energy Alliance are the doors to knock on; Nunavut's support runs through the housing corporation.",
+      "intro": "The territories run their own programs through organizations built for northern conditions: Yukon's Energy Branch pays the largest heat pump and insulation rebates in the North, the NWT's Arctic Energy Alliance subsidizes EnerGuide evaluations and insulation, and Nunavut's support runs through the Nunavut Housing Corporation.",
       "housing": "Homes engineered for −40 and building on permafrost — where envelope quality isn't a savings project, it's the difference between livable and not. Fuel costs several times southern prices make every measured improvement count double.",
       "programs": [
         {
-          "name": "Yukon — Good Energy rebates",
+          "name": "Yukon — Energy Branch rebates",
           "status": "active",
-          "headline": "Retrofit, renewables & transport rebates",
-          "note": "Yukon's rebate umbrella covers home retrofits, renewable systems, and clean transport — current residential program details through the Energy Branch.",
-          "url": "https://yukon.ca/en/good-energy-rebates",
-          "verified": "September 21, 2026",
+          "headline": "Heat pumps to $10,500 ($24,000 income-qualified)",
+          "note": "50% of heat pump costs up to $10,500 in an existing home, or 100% up to $24,000 through the income-qualified Affordable Heat Pump Program, plus attic insulation ($2,500), above-ground walls (up to $12,000), air sealing ($5,000) and ENERGY STAR windows ($120 each).",
+          "url": "https://yukon.ca/node/6422",
+          "verified": "October 8, 2026",
           "programSlug": "territories-energy-programs"
         },
         {
           "name": "NWT — Arctic Energy Alliance",
           "status": "active",
-          "headline": "Rebates + advice via AEA",
-          "note": "The AEA delivers the territory's efficiency and renewable rebates and energy advice — the first call for any NWT home project.",
-          "url": "https://aea.nt.ca/",
-          "verified": "September 21, 2026",
+          "headline": "Evaluations $200 + GST · insulation rebates",
+          "note": "The Arctic Energy Alliance subsidizes EnerGuide evaluations ($200 + GST for a house) and pays for insulation (exterior walls up to $8,000), programmable thermostats and wood or pellet stoves. It lists no heat pump rebate and no longer funds fossil-fuel heating.",
+          "url": "https://aea.nt.ca/rebates-services/",
+          "verified": "October 8, 2026",
           "programSlug": "territories-energy-programs"
         },
         {
           "name": "Nunavut — Housing Corporation programs",
           "status": "active",
-          "headline": "Homeowner repair & efficiency support",
-          "note": "Nunavut's homeowner support (repair and efficiency programs) runs through the Nunavut Housing Corporation; note that federal OHPA excluded Nunavut's grid context entirely.",
+          "headline": "Homeowner support via the NHC",
+          "note": "The Nunavut Housing Corporation's homeownership programs offer advice on repairs, renovations, financing and energy conservation. Homes in Nunavut were never eligible for the federal oil-to-heat-pump program because of grid requirements.",
           "url": "https://www.nunavuthousing.ca/",
-          "verified": "September 21, 2026",
+          "verified": "October 8, 2026",
           "programSlug": "territories-energy-programs"
         }
       ],

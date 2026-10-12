@@ -4,6 +4,9 @@
 Writes into the site repo:
   src/data/local/index.json            services, cities (hub metrics), provinces
   src/data/local/cities/<slug>.json    one file per city: city facts + 16 service page payloads + hub payload
+
+Also reads tools/areas/areas.json, tools/areas/research/towns.json and src/data/areas/index.json for the
+"Communities served" blocks, so run tools/areas/gen_areas.py first when the area pages change.
 """
 import html
 import json
@@ -134,7 +137,36 @@ SRC = {
                   'https://www.ashrae.org/technical-resources/bookstore/standards-180-and-211'),
     'portfolio': ('NRCan — Energy benchmarking with ENERGY STAR Portfolio Manager',
                   'https://natural-resources.canada.ca/energy-efficiency/energy-star/energy-benchmarking-energy-starr-portfolio-managerr'),
+    # added October 2026 (search-coverage upgrade); each read on 2026-10-08
+    'hc-measure': ('Health Canada — Guide for radon measurements in residential dwellings (homes)',
+                   'https://www.canada.ca/en/health-canada/services/publications/health-risks-safety/guide-radon-measurements-residential-dwellings.html'),
+    'hc-testing': ('Health Canada — Testing your home for radon',
+                   'https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/testing-your-home.html'),
+    'hc-reduction': ('Health Canada — Radon reduction guide for Canadians (February 2023)',
+                     'https://www.canada.ca/en/health-canada/services/environmental-workplace-health/reports-publications/radiation/radon-reduction-guide-canadians-health-canada.html'),
+    'radon-kit-price': ('Windsor-Essex County Health Unit — radon test kits ($30–$80 including lab fees)', 'https://www.wechu.org/node/125'),
+    'radon-monitor-price': ('Lung Saskatchewan — home radon test kits and electronic monitors', 'https://homeradontest.ca/'),
+    'hc-mould-home': ('Health Canada — Reduce humidity, moisture and mould in your home',
+                      'https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html'),
+    'cmhc-mould': ('CMHC — How to clean mould in your home',
+                   'https://assets.cmhc-schl.gc.ca/sf/project/cmhc/pdfs/content/en/how-to-clean-mould-in-your-home.pdf?rev=27ff0795-0292-4d26-b1fc-128b9e9ed7e0'),
+    'cmhc-kit': ('CMHC — Mould information kit',
+                 'https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/industry-innovation-and-leadership/industry-expertise/indigenous-housing/develop-manage-indigenous-housing/maintenance-solutions/mould-in-housing/pdfs/mould-info-kit-en-acc.pdf'),
+    'nbc2020': ('National Research Council — National Building Code of Canada 2020 (Article 9.33.5.1 and Table 1.3.1.2: CSA F280-12; Article 9.32.3.9: CO alarms)',
+                'https://doi.org/10.4224/w324-hv93'),
 }
+
+# Radon mitigation facts (Health Canada, Radon reduction guide for Canadians, February 2023; guideline page, 2025), shared with tools/areas/gen_areas.py
+RADON_MITIGATION = (
+    "Health Canada recommends fixing levels above 200 Bq/m³ within a year, and sooner the higher the level. The usual fix is a sub-slab depressurization system "
+    "(a sealed pipe through the floor and a fan venting outside), which Health Canada says costs about $2,000 to $3,000 including material and labour and cuts radon by more "
+    "than 80% in most homes. Hire a professional certified for mitigation under C-NRPP.")
+RADON_AFTER = [
+    "A C-NRPP professional runs a short test starting at least 24 hours after the fan is turned on.",
+    "A long-term three-month test follows in the next fall or winter, done by a company other than the installer.",
+    "With an active system, Health Canada recommends a long-term test within two years of activation and every five years after that, and again after renovations.",
+    "Check the system's pressure gauge (manometer) regularly and never switch the fan off. It costs about $50 to $75 a year to run; a replacement fan is $200 to $300.",
+]
 
 
 class Sources:
@@ -373,6 +405,72 @@ PT = {
         evalShort='$200 + GST (AEA)',
     ),
 }
+# CO alarm installation rules by province (research/health_rules.json, read 2026-09-28) — shown on the CO pages
+CO_INSTALL = {
+    'ON': ["Required in every home with a fuel-burning appliance, a fireplace or an attached garage, and since January 1, 2026 also in homes served by a forced-air fuel-burning appliance located outside the building.",
+           "Put an alarm next to each sleeping area and, since January 1, 2026, on every storey that has no sleeping area.",
+           "Hardwired, battery and plug-in alarms are all allowed.",
+           "The homeowner is responsible in an owner-occupied home, and the landlord in a rental."],
+    'SK': ["Required in all residential buildings, whatever their age, that contain a fuel-burning appliance, an attached garage or more than one suite (enforced since July 1, 2022).",
+           "In a house, put an alarm inside each bedroom or within 5 m outside each bedroom door, plus one in any room with a solid-fuel-burning appliance such as a wood stove.",
+           "From November 1, 2026, Henry's Law requires a CO alarm in every residential suite, including houses with secondary suites."],
+    'YT': ["Every Yukon residence with a fuel-burning appliance or an attached garage must have CO detectors (Government of Yukon)."],
+    'BC': ["Not required in existing homes; the province recommends alarms wherever there's a fuel-burning appliance, a fireplace or an attached garage.",
+           "New homes served by or containing a fuel-burning appliance, or with an attached garage, need CO alarms under the BC Building Code."],
+    'AB': ["Required in new homes with a fuel-burning appliance or an attached garage; for existing homes the province calls them highly recommended.",
+           "Alberta's fire code requires CO alarms that are installed to be inspected, tested and maintained following the manufacturer's instructions."],
+    'MB': ["The Manitoba Fire Code requires CO detection only in buildings that need regular fire-safety inspections, such as care homes, schools and hotels; private houses aren't on the list."],
+    'NS': ["New homes with a fuel-burning appliance or an attached garage need a CO alarm under the building code; older homes don't have to be retrofitted unless a building official or fire inspector orders it.",
+           "Nova Scotia's fire safety rules require CO alarms to be inspected, tested and maintained following the manufacturer's instructions."],
+    'QC': ["There's no province-wide rule for houses: municipal by-laws decide, so ask your municipal fire service.",
+           "Provincial rules cover larger buildings (multi-unit buildings of more than 2 storeys and 8 units, rooming houses, hotels and seniors' residences), where units with a combustion appliance or direct access to an indoor parking garage need a CO alarm."],
+    'NB': ["We found no provincial rule requiring CO alarms in existing homes; new construction follows the 2020 National Building Code."],
+    'PE': ["We found no rule requiring CO alarms in existing homes; PEI's Fire Marshal advises installing them outside each sleeping area and on every level."],
+    'NL': ["The province's fire regulations require smoke alarms in existing homes but contain no CO alarm requirement."],
+    'NT': ["We found no territorial requirement for existing homes; the NWT applies the 2020 National Building Code to new construction."],
+}
+CO_NBC = ("For new houses, the National Building Code 2020 (Article 9.32.3.9) requires a CO alarm inside each bedroom or within 5 m outside each bedroom door "
+          "when the home has a fuel-burning appliance or an attached garage, an alarm in any room with a solid-fuel-burning appliance (on or near the ceiling "
+          "unless the maker's instructions say otherwise), and interconnected alarms in a house with a secondary suite.")
+
+# What happens after a positive asbestos result, by province (research/health_rules.json, read 2026-09-28)
+ASB_ABATE = {
+    'ON': ("Ontario's O. Reg. 278/05 classes contractor work as Type 1, 2 or 3, each with its own procedures and training, and requires advance notice for Type 3 "
+           "and some Type 2 jobs. The province's waste rules apply to anyone: asbestos waste can leave the site only for a disposal site whose operator has agreed "
+           "to accept it, in rigid, sealed, impermeable containers that are marked."),
+    'QC': ("Québec.ca says to hire a contractor holding the right RBQ licence (subcategory 2.7, 7, 1.2 or 1.3), to get a written commitment that the work will follow "
+           "the Construction Safety Code, and never to do asbestos work yourself. Quebec has no official accreditation or certification program for asbestos professionals."),
+    'BC': ("Since January 1, 2024, asbestos abatement contractors must be licensed by WorkSafeBC, which publishes a registry of licensed contractors, and anyone doing "
+           "abatement work needs mandatory training and a certificate. Hazardous materials found in the pre-renovation inspection must be safely contained or removed."),
+    'AB': ("Workers in an asbestos work area need government-approved training and a valid asbestos worker certificate, and anyone planning asbestos removal, or "
+           "renovation or demolition of a building containing asbestos, must notify Alberta OHS at least 72 hours before starting. Waste goes in sealed containers "
+           "labelled as a carcinogen, and the landfill must be told in writing."),
+    'SK': ("Contractors must notify Occupational Health and Safety at least 14 days before high-risk asbestos work, and suspect material is treated as asbestos "
+           "until it's shown to be asbestos-free."),
+    'MB': ("Contractors must notify Manitoba's Workplace Safety and Health branch 5 to 10 days before work that may release asbestos, and from June 1, 2027, "
+           "asbestos abatement and sampling work will require a provincial certificate."),
+    'NS': ("Nova Scotia's Asbestos Waste Management Regulations apply to anyone, homeowners included: friable waste must be wetted, double-bagged in 6-mil bags "
+           "(or bagged and drummed), shipped with a shipping document and buried only at an approved site that has agreed to accept it."),
+    'NB': ("Employers and contractors who disturb asbestos-containing material must follow WorkSafeNB's code of practice for working with asbestos."),
+    'PE': ("All asbestos work must be done by a holder of an asbestos contractor's certificate, and workers who handle or remove asbestos need an asbestos "
+           "abatement course."),
+    'NL': ("Only certified asbestos abatement contractors may remove asbestos; the owner or contractor must notify the OHS Division in writing before starting "
+           "and get a disposal permit."),
+    'YT': ("Removal is done by an asbestos control contractor certified by an accredited agency, who takes bagged waste to a pre-arranged landfill where it's "
+           "covered right away."),
+    'NT': ("WSCC's Asbestos Abatement Code of Practice sets the requirements for the work, and asbestos waste must be managed as hazardous waste in sealed, "
+           "impervious containers."),
+}
+
+ASB_ABATE_SRC = {
+    'ON': [('Ontario — R.R.O. 1990, Reg. 347, s. 17 (asbestos waste)', 'https://www.ontario.ca/laws/regulation/900347')],
+    'QC': [('Québec.ca — Prévenir les effets de l’amiante sur la santé', 'https://www.quebec.ca/sante/conseils-et-prevention/sante-et-environnement/prevenir-les-effets-amiante-sur-la-sante')],
+    'AB': [('Government of Alberta — Submit an asbestos project notification', 'https://www.alberta.ca/submit-asbestos-project-notification'),
+           ('Government of Alberta — Alberta Asbestos Abatement Manual', 'https://www.alberta.ca/alberta-asbestos-abatement-manual')],
+    'MB': [('Manitoba — M.R. 108/2025 (asbestos certificates and registration)', 'https://web2.gov.mb.ca/laws/regs/annual/2025/108.php?lang=en')],
+    'PE': [('WCB PEI — Asbestos', 'https://www.wcb.pe.ca/Workplace/Asbestos')],
+}
+
 # city-specific CO notes
 CITY_CO = {
     'vancouver': ("The City of Vancouver's Fire By-law goes further than the province and does require CO alarms in existing homes with an attached garage or a fuel-fired appliance.",
@@ -633,17 +731,17 @@ SERVICES = [
          guide='/tests/blower-door/', guideLabel='The blower door test, step by step',
          blurb='A calibrated fan depressurizes the house to measure air leakage and show where the leaks are.',
          cost='Included in an EnerGuide evaluation'),
-    dict(slug='thermal-imaging', name='Thermal imaging inspection', h1='Thermal imaging inspections', cat='energy', icon='camera',
+    dict(slug='thermal-imaging', name='Thermal imaging inspection', h1='Thermal imaging (thermographic) inspections', cat='energy', icon='camera',
          guide='/tests/thermal-imaging/', guideLabel='How an infrared scan works',
-         blurb='An infrared camera maps cold and warm surfaces to find missing insulation, thermal bridges and hidden moisture.',
+         blurb='An infrared (thermographic) camera maps cold and warm surfaces to find missing insulation, thermal bridges and hidden moisture.',
          cost='Usually included with an evaluation; confirm'),
     dict(slug='heat-loss-calculation', name='Heat loss calculation', h1='Heat loss calculations', cat='energy', icon='gauge',
          guide='/tests/heat-loss-calc/', guideLabel='The CSA F280 heat-loss calculation',
-         blurb='A room-by-room CSA F280 calculation of heat loss at the local design temperature: the right way to size a heat pump or furnace.',
+         blurb='A room-by-room CSA F280-12 calculation of heat loss at the local design temperature: the right way to size a heat pump or furnace.',
          cost='About $150–$400 standalone'),
-    dict(slug='duct-leakage-testing', name='Duct leakage testing', h1='Duct leakage testing', cat='energy', icon='duct',
+    dict(slug='duct-leakage-testing', name='Duct leakage testing', h1='Duct leakage and ductwork pressure testing', cat='energy', icon='duct',
          guide='/tests/duct-leakage/', guideLabel='Duct leakage and airflow testing',
-         blurb='Pressure-tests ductwork and measures airflow at each register to find where heated air disappears.',
+         blurb='Ductwork pressure testing plus airflow at each register, to find where heated air disappears.',
          cost='About $200–$450'),
     dict(slug='combustion-safety-test', name='Combustion safety test', h1='Combustion safety testing', cat='energy', icon='flame',
          guide='/tests/combustion-safety/', guideLabel='The combustion safety and spillage check',
@@ -661,29 +759,29 @@ SERVICES = [
          guide='/tests/bill-analysis/', guideLabel='The 12-month bill analysis',
          blurb='Twelve months of electricity and gas use, weather-normalized and split into heating and baseload: the baseline every savings estimate needs.',
          cost='Free to do yourself; part of an evaluation'),
-    dict(slug='radon-testing', name='Radon testing', h1='Radon testing', cat='health', icon='radon',
+    dict(slug='radon-testing', name='Radon testing', h1='Radon testing and long-term monitoring', cat='health', icon='radon',
          guide='/tests/radon/', guideLabel='The radon testing guide',
-         blurb="A long-term test (at least three months, in the heating season) measures radon against Canada's 200 Bq/m³ guideline.",
-         cost='$30–$60 for a DIY long-term kit'),
-    dict(slug='carbon-monoxide-testing', name='Carbon monoxide testing', h1='Carbon monoxide testing', cat='health', icon='co',
+         blurb="A long-term test (at least 91 days, in the heating season) measures radon against Canada's 200 Bq/m³ guideline; monitors keep watching after mitigation.",
+         cost='$30–$80 for a DIY long-term kit'),
+    dict(slug='carbon-monoxide-testing', name='Carbon monoxide testing', h1='Carbon monoxide testing and CO alarms', cat='health', icon='co',
          guide='/tests/carbon-monoxide/', guideLabel='The carbon monoxide guide',
-         blurb='CO alarms in the right places, plus a check that fuel-burning appliances vent safely.',
+         blurb='CO alarms where the provincial rules put them, plus a check that fuel-burning appliances vent safely.',
          cost='$40–$80 per alarm'),
-    dict(slug='mold-testing', name='Mold and air quality testing', h1='Mold and air quality testing', cat='health', icon='mold',
-         guide='/tests/mold-iaq/', guideLabel='The mold and indoor air quality guide',
-         blurb='Air or surface sampling when you suspect hidden mold, paired with a hunt for the moisture that feeds it.',
-         cost='About $300–$600 for a sampling visit'),
-    dict(slug='asbestos-testing', name='Asbestos and vermiculite testing', h1='Asbestos and vermiculite testing', cat='health', icon='asbestos',
+    dict(slug='mold-testing', name='Mould and indoor air quality testing', h1='Mould and indoor air quality testing', cat='health', icon='mold',
+         guide='/tests/mold-iaq/', guideLabel='The mould and indoor air quality guide',
+         blurb='Mould inspection and air or surface sampling when you suspect hidden mould, a hunt for the moisture that feeds it, and the size rules for cleanup.',
+         cost='No published price; get written quotes'),
+    dict(slug='asbestos-testing', name='Asbestos and vermiculite testing', h1='Asbestos testing and inspection', cat='health', icon='asbestos',
          guide='/tests/asbestos-vermiculite/', guideLabel='The asbestos and vermiculite guide',
-         blurb='Lab analysis of samples from suspect insulation, tiles, plaster or duct wrap before renovation disturbs them.',
+         blurb='Inspection and lab analysis of suspect insulation, tiles, plaster or duct wrap before renovation disturbs them, and what abatement involves.',
          cost='About $50–$150 per lab sample'),
     dict(slug='lead-paint-testing', name='Lead paint testing', h1='Lead paint testing', cat='health', icon='paint',
          guide='/tests/lead-paint/', guideLabel='The lead paint guide',
-         blurb='Swab kits screen painted surfaces; a lab or an X-ray reading confirms before renovation disturbs old paint.',
+         blurb='Swab kits screen painted surfaces; a lab or an X-ray reading confirms before renovation disturbs old paint, and safe removal follows.',
          cost='$15–$40 for swab kits'),
     dict(slug='well-water-testing', name='Well water testing', h1='Well water testing', cat='health', icon='water',
          guide='/tests/well-water/', guideLabel='The well water guide',
-         blurb='Bacteria testing at least once a year and periodic chemistry for homes on private wells.',
+         blurb='Bacteria testing (E. coli and total coliforms) at least once a year and periodic chemistry for homes on private wells.',
          cost='Varies by province'),
     dict(slug='commercial-energy-audit', name='Commercial energy audit', h1='Commercial energy audits', cat='commercial', icon='building',
          guide='/articles/commercial-energy-audits-ontario/', guideLabel='How commercial energy audits work',
@@ -794,10 +892,10 @@ def gen_home_energy_audit(c, src):
     else:
         lede = (f"{k} NRCan-licensed service organization{'s' if k != 1 else ''} deliver{'s' if k == 1 else ''} EnerGuide home evaluations in {c['name']}. "
                 f"Here's what one costs, what it tends to find in {c['name']} houses, and which {c['provName']} rebates it unlocks.")
-    pg['title'] = f"Home energy audits in {c['name']}: EnerGuide evaluations, costs and rebates"
+    pg['title'] = f"Home energy audits in {c['name']}: EnerGuide evaluations (home energy assessments), costs and rebates"
     who = ("booking through Efficiency Nova Scotia" if (k == 0 and c['prov'] == 'NS') else
            'one licensed organization' if k == 1 else f"{k} licensed organizations" if k else 'who to call')
-    pg['description'] = (f"Book an EnerGuide home energy audit in {c['name']}: {who}, local prices, {c['provName']} rebates and what "
+    pg['description'] = (f"Book a home energy assessment (EnerGuide evaluation) in {c['name']}: {who}, local prices, {c['provName']} rebates and what "
                          f"{pct(h['housesPre1991Pct'])} pre-1991 housing means for your upgrade list.")
     pg['lede'] = lede
     glance = [{'k': 'Licensed organizations', 'v': str(k) if k else 'Via Efficiency NS'},
@@ -828,7 +926,7 @@ def gen_home_energy_audit(c, src):
                 "<strong>Report and EnerGuide rating.</strong> You get the home's energy rating in gigajoules per year and a list of recommended upgrades with estimated savings.",
                 "<strong>Do the work.</strong> Most rebate programs only count upgrades done after the initial evaluation.",
                 "<strong>Follow-up evaluation.</strong> A second visit measures the improvement, which is what most rebates pay on."])
-    secs.append({'h2': 'How it works', 'html': steps + p(a(SV['home-energy-audit']['guide'], 'Read the full guide to home energy audits') + '.')})
+    secs.append({'h2': 'How a home energy assessment (EnerGuide evaluation) works', 'html': steps + p(a(SV['home-energy-audit']['guide'], 'Read the full guide to home energy audits') + '.')})
     pg['sections'] = secs
     pg['providers'] = providers_block(c, 'home-energy-audit')
     pg['programs'] = {'heading': f'Rebates and financing an evaluation unlocks in {c["name"]}',
@@ -970,8 +1068,8 @@ def gen_thermal(c, src):
     h = c['housing']
     ev_text, ev_short = eval_price(c, src)
     mild = cl['designHeat'] > -10
-    pg['title'] = f"Thermal imaging home inspection in {c['name']}: when to book and who does it"
-    pg['description'] = (f"Infrared (thermal) home inspections in {c['name']}: when {c['name']}'s weather gives a clear scan, what the camera finds in "
+    pg['title'] = f"Thermal imaging in {c['name']}: infrared thermographic building inspections, timing and who does it"
+    pg['description'] = (f"Infrared thermographic inspection of {c['name']} homes: when {c['name']}'s weather gives a clear scan, what the camera finds in "
                          f"{'older' if h['housesPre1961Pct'] >= 25 else 'local'} houses, and the licensed advisors who bring one.")
     pg['lede'] = (f"An infrared camera shows missing insulation, air leaks and damp spots without opening a wall, but only when it's "
                   f"at least 10°C colder outside than inside. " +
@@ -1002,6 +1100,7 @@ def gen_thermal(c, src):
         {'q': 'Can a thermal camera see through walls?', 'a': 'No. It reads surface temperatures. Missing insulation or an air leak shows up because it changes the temperature of the wall or ceiling surface.'},
         {'q': f'Who does thermal imaging in {c["name"]}?',
          'a': f"Most of the {k} NRCan-licensed organizations serving {c['name']} bring an infrared camera to an EnerGuide evaluation; confirm when you book." if k else "Ask when you book Efficiency Nova Scotia's Home Energy Assessment."},
+        {'q': 'Is thermal imaging the same as a thermographic inspection?', 'a': 'Yes. Thermography, thermal imaging and infrared scanning all mean reading surface temperatures with an infrared camera.'},
     ]
     return pg
 
@@ -1013,13 +1112,13 @@ def gen_heat_loss(c, src):
     dt = cl['designHeat']
     mild = dt > -10
     cold = dt <= -28
-    pg['title'] = f"Heat loss calculation in {c['name']}: sizing a heat pump for {deg(dt)}"
-    pg['description'] = (f"A CSA F280 room-by-room heat loss calculation for {c['name']} homes, sized to the local {deg(dt)} design temperature: "
+    pg['title'] = f"Heat loss calculation in {c['name']}: CSA F280-12 heat pump sizing for {deg(dt)}"
+    pg['description'] = (f"A CSA F280-12 room-by-room heat loss calculation for {c['name']} homes, sized to the local {deg(dt)} design temperature: "
                          f"why it matters for heat pumps, what it costs and who does it.")
     pg['lede'] = (f"The heat loss calculation is how a heat pump or furnace gets sized for your house, and the key input is the design temperature: "
                   f"{deg(dt)} for {c['name']}, from {climate_src_phrase(c)}.")
     pg['glance'] = [{'k': 'Design temperature', 'v': deg(dt)}, {'k': 'Heating degree-days', 'v': n(cl['hdd'])},
-                    {'k': 'Standard', 'v': 'CSA F280'}, {'k': 'Typical cost', 'v': '$150–$400 standalone'}]
+                    {'k': 'Standard', 'v': 'CSA F280-12'}, {'k': 'Typical cost', 'v': '$150–$400 standalone'}]
     secs = []
     colder = DT_RANK[c['slug']]
     rank_txt = (f"the {ordinal(colder)}-coldest design temperature of the {NCITY} cities we cover" if colder <= NCITY // 2
@@ -1036,6 +1135,10 @@ def gen_heat_loss(c, src):
         body.append(p(hs))
         src.add('heating')
     secs.append({'h2': f"Why the design temperature matters in {c['name']}", 'html': ''.join(body)})
+    src.add('nbc2020')
+    secs.append({'h2': 'What CSA F280-12 asks for', 'html': p("The National Building Code 2020 requires the heating capacity for a house to be worked out with CSA F280, "
+                                                              "and its list of referenced documents names the 2012 edition, CSA F280-12. Provincial codes can name their own "
+                                                              "edition and climate values, so ask your designer which ones the calculation uses.")})
     secs.append({'h2': 'Why skipping it costs money', 'html': p("Contractors who size by square footage routinely oversize. An oversized heat pump costs more to buy, cycles on and off, dehumidifies poorly in summer and wears faster. "
                                                               "An undersized one leans on backup heat. The F280 report is the evidence either way, and it's worth having before you compare quotes.")})
     secs.append({'h2': 'What it costs', 'html': p("About $150–$400 as a standalone calculation (a September 2026 planning range; quotes vary). Many energy advisors bundle it with an EnerGuide evaluation, which also gives the calculation measured air-leakage data instead of an assumption.")})
@@ -1044,6 +1147,8 @@ def gen_heat_loss(c, src):
     pg['programs'] = {'heading': f'Heat pump programs in {c["name"]}', 'items': programs_for(c) + municipal_for(c, ('loan', 'rebate-topup'))}
     pg['faq'] = [
         {'q': f'What design temperature is used for heat pump sizing in {c["name"]}?', 'a': f"NRCan's HOT2000 climate data gives {deg(dt)} for {cl['station']}{' (' + str(cl['km']) + ' km away)' if cl['km'] > 20 else ''}. Your designer may use the building code's design value for {c['name']}, which can differ slightly; ask which one the calculation uses."},
+        {'q': 'What is CSA F280-12?', 'a': ('The 2012 edition of CSA F280, Determining the required capacity of residential space heating and cooling appliances. '
+                                             'The National Building Code 2020 requires heating capacity for a house to be determined with it.')},
         {'q': 'How much does a heat loss calculation cost?', 'a': 'About $150–$400 standalone as a planning range; often less when bundled with an EnerGuide evaluation.'},
         {'q': f'Who does F280 calculations in {c["name"]}?', 'a': (f"Many of the {k} NRCan-licensed organizations serving {c['name']} offer them, as do HVAC designers. Ask for the F280 report itself." if k else 'Energy advisors and HVAC designers; ask for the F280 report itself.')},
         {'q': 'Do rebate programs require a heat loss calculation?', 'a': 'Requirements vary by program and change often. Even where it isn\'t required, it is the best protection against an oversized or undersized system.'},
@@ -1056,9 +1161,9 @@ def gen_duct(c, src):
     fa = heat_share(c, 'forcedAir')
     bb = heat_share(c, 'baseboard')
     h = c['housing']
-    pg['title'] = f"Duct leakage testing in {c['name']}: cold rooms, costs and who tests"
-    pg['description'] = (f"Duct leakage and airflow testing in {c['name']}: " + (f"{fa} of local households heat with a forced-air furnace, " if fa else '') +
-                         "why far rooms stay cold, what a test costs and who does it.")
+    pg['title'] = f"Duct leakage testing in {c['name']}: ductwork pressure tests, cold rooms, costs and who tests"
+    pg['description'] = (f"Duct leakage testing in {c['name']}: ductwork pressure testing and airflow checks" + (f" ({fa} of local households heat with a forced-air furnace)" if fa else '') +
+                         ", why far rooms stay cold, what a test costs and who does it.")
     fa_num = float(fa.replace('about ', '').rstrip('%')) if fa else 0
     if fa and fa_num >= 30:
         fa_line = f"In {heating_area(c)}, {fa} of households heat with a forced-air furnace, so duct losses affect many {c['name']} homes."
@@ -1080,7 +1185,7 @@ def gen_duct(c, src):
     body.append(p(housing_sentence(c), "Ducts in older houses often run through unheated spaces with taped or unsealed joints, and supply runs to the far rooms are the first to suffer."))
     pg['sections'] = [
         {'h2': f"Who needs it in {c['name']}", 'html': ''.join(body)},
-        {'h2': 'What the test shows', 'html': ul(['Total duct leakage, as a share of the system\'s airflow, measured with a duct-pressurization fan.',
+        {'h2': 'What the test shows', 'html': ul(['Total duct leakage, as a share of the system\'s airflow, measured by pressure-testing the ductwork with a calibrated duct-pressurization fan.',
                                                   'Airflow at each register, which explains why one bedroom is always cold.',
                                                   'Whether sealing and balancing will fix comfort problems before you buy bigger equipment.']) + p(a(SV['duct-leakage-testing']['guide'], 'Duct leakage testing in detail') + '.')},
         {'h2': 'What it costs', 'html': p('About $200–$450 (a September 2026 planning range; quotes vary). It isn\'t part of a standard EnerGuide evaluation, so ask for it when you book if comfort is your main complaint.')},
@@ -1090,6 +1195,7 @@ def gen_duct(c, src):
     pg['faq'] = [
         {'q': f'How much does duct leakage testing cost in {c["name"]}?', 'a': 'Plan on about $200–$450. It is usually a separate service from an EnerGuide evaluation.'},
         {'q': 'Is duct cleaning the same thing?', 'a': 'No. Cleaning removes dust; it doesn\'t find or seal leaks. A leakage test measures where air is lost.'},
+        {'q': 'What is ductwork pressure testing?', 'a': 'The same thing as a duct leakage test: registers are sealed, a calibrated fan pressurizes the ducts, and the airflow needed to hold the test pressure shows how leaky they are.'},
         {'q': 'Should I close vents in unused rooms?', 'a': 'Usually not. Closing registers raises duct pressure and can increase leakage elsewhere in the system.'},
     ]
     return pg
@@ -1252,17 +1358,17 @@ def gen_radon(c, src):
     r = c['radon']
     pt = PT[c['prov']]
     nw = radon_newer(c)
-    src.add('hc-radon')
-    src.add('cnrpp')
-    fig12 = (f"{pct(r['pct'], 1)} of homes tested above the guideline" if r['pct'] else 'no homes above the guideline in a small sample') if r['pct'] is not None else None
-    pg['title'] = f"Radon testing in {c['name']}: local levels, test kits and certified professionals"
+    for k_ in ('hc-radon', 'cnrpp', 'hc-measure', 'hc-testing', 'hc-reduction', 'radon-kit-price'):
+        src.add(k_)
+    pg['title'] = f"Radon testing in {c['name']}: long-term monitoring, kits and mitigation"
     pg['description'] = (f"Radon in {c['name']}: Health Canada survey results for the {r['region']} region" + (f" ({pct(r['pct'], 1)} above the guideline)" if r['pct'] else '') +
-                         ", how to test for 3+ months, where to get kits and C-NRPP professionals locally.")
+                         ", how to run a 91-day long-term test, digital monitors versus alpha-track kits, and mitigation by C-NRPP professionals ($2,000–$3,000).")
     lede = f"Radon is invisible, has no smell, and is the second-leading cause of lung cancer in Canada. "
     if r['pct']:
-        lede += f"In Health Canada's national survey, {pct(r['pct'], 1)} of homes tested in the {r['region']} health region were above the guideline, and the only way to know about your house is to test it."
+        lede += (f"In Health Canada's national survey, {pct(r['pct'], 1)} of homes tested in the {r['region']} health region were above the guideline, and only a "
+                 "long-term test tells you about your own house.")
     else:
-        lede += "The only way to know about your house is to test it."
+        lede += "Only a long-term test tells you about your own house."
     pg['lede'] = lede
     g1 = ({'k': '2012 survey (health region)', 'v': pct(r['pct'], 1), 'sub': f"{r['tested']} homes" if r['tested'] else None}
           if r['pct'] is not None else {'k': 'Where to test', 'v': 'Lowest lived-in level'})
@@ -1270,8 +1376,8 @@ def gen_radon(c, src):
         g2 = RADON_CITY_PROGRAM[c['slug']]['tile']
     else:
         g2 = ({'k': '2024 survey', 'v': short_pct(nw['figure']), 'sub': scope_label(nw['scope'])}
-              if nw else {'k': 'Test length', 'v': '3+ months', 'sub': 'mostly in the heating season'})
-    pg['glance'] = [g1, g2, {'k': 'Guideline', 'v': '200 Bq/m³'}, {'k': 'DIY long-term kit', 'v': '$30–$60'}]
+              if nw else {'k': 'Test length', 'v': '91+ days', 'sub': 'in the heating season'})
+    pg['glance'] = [g1, g2, {'k': 'Guideline', 'v': '200 Bq/m³'}, {'k': 'Mitigation', 'v': '$2,000–$3,000', 'sub': 'Health Canada'}]
     secs = []
     body = [p(radon_line(c, src))]
     if nw and r['pct'] is not None and c['slug'] not in RADON_CITY_PROGRAM:
@@ -1280,10 +1386,20 @@ def gen_radon(c, src):
     else:
         body.append(p("No survey can tell you about a single house, because neighbouring homes can differ widely. Testing is the only way to know."))
     secs.append({'h2': f"Radon in {c['name']}", 'html': ''.join(body)})
-    secs.append({'h2': 'How to test properly', 'html': ul(["Use a long-term test of at least three months, with most of it in the heating season, which gives the most conservative result.",
-                                                           "Place the detector in the lowest level you spend four or more hours a day in, away from drafts, and follow the kit's instructions.",
-                                                           "If the result is above 200 Bq/m³, Health Canada recommends fixing it within a year, sooner if it's much higher."]) +
-                 p(a(SV['radon-testing']['guide'], 'Our full radon testing guide') + '.')})
+    src.add('radon-monitor-price')
+    secs.append({'h2': 'Long-term monitoring: how to test properly', 'html': (
+        p("Health Canada's measurement guide asks for a long-term test with at least 91 days in the heating season, when closed windows and the stack effect make "
+          "readings higher, so the result is a conservative estimate of the yearly average. It recommends testing for 3 to 12 months. "
+          + a(SV['radon-testing']['guide'], 'Our radon testing guide') + ' walks through each step.')
+        + p("Place the detector on the lowest level where someone spends more than four hours a day, at least 30 cm above the floor and 30 cm from walls, and at least "
+            "1 m from vents, windows and doors; avoid kitchens, laundry rooms and bathrooms. The choice of device:")
+        + ul(["<strong>Alpha track detectors</strong> record radon's alpha particles on a plastic film; you mail them to a lab when the test ends. "
+              "A long-term kit costs about $30–$80 including the lab fee (Windsor-Essex County Health Unit).",
+              "<strong>Electret ion chambers</strong> lose charge as radon ionizes the air inside; a lab reads the voltage drop.",
+              "<strong>Digital (electronic) monitors</strong> read continuously and show results on a screen or an app, and cost more (Lung Saskatchewan sells one for $189). "
+              "For a long-term test, Health Canada says to use one that has passed C-NRPP performance testing, and it still has to run at least three months.",
+              "<strong>Continuous monitoring after mitigation</strong>: a digital monitor left running lets you watch for changes between the follow-up long-term tests "
+              "Health Canada recommends."]))})
     help_ = [pt['radonKits'][0]]
     src.add(f"{c['provName']} — radon test kits and lending", pt['radonKits'][1])
     if c['slug'] in CITY_RADON_KITS:
@@ -1291,6 +1407,7 @@ def gen_radon(c, src):
         src.add(f"{c['name']} — radon kit program", CITY_RADON_KITS[c['slug']][1])
     help_.append(f"For a professional measurement or mitigation, search the {a(SRC['cnrpp'][1], 'C-NRPP directory')} by your {c['name']} postal code; it lists certified measurement and mitigation professionals.")
     secs.append({'h2': f"Kits and professionals in {c['name']}", 'html': ul(help_)})
+    secs.append({'h2': 'If your level is high: mitigation', 'html': p(RADON_MITIGATION, 'After a system goes in:') + ul(RADON_AFTER)})
     rules = [pt['radonCode'][0]]
     src.add(f"{c['provName']} — radon in the building code", pt['radonCode'][1])
     if pt.get('radonHelp'):
@@ -1301,16 +1418,19 @@ def gen_radon(c, src):
                 src.add(lab, url)
         else:
             src.add(f"{c['provName']} — radon mitigation help", hs)
-    rules.append("If your level is high, mitigation (usually a sub-slab depressurization fan system installed by a C-NRPP-certified professional) typically costs $2,000–$4,000.")
     secs.append({'h2': f"Rules and help in {c['provName']}", 'html': ul(rules)})
     pg['sections'] = secs
     pg['providers'] = None
     pg['programs'] = None
     pg['faq'] = [
         {'q': f'Is radon a problem in {c["name"]}?', 'a': strip(radon_line(c, Sources())) + ' Any home can have high radon, so Health Canada recommends testing every home.'},
-        {'q': 'How long should a radon test take?', 'a': 'At least three months, with most of it during the heating season. Short tests can\'t tell you your long-term average.'},
-        {'q': f'Where can I get a radon test kit in {c["name"]}?', 'a': strip(pt['radonKits'][0]) + ' Hardware stores and lung associations also sell long-term kits for about $30–$60.'},
-        {'q': 'What does radon mitigation cost?', 'a': 'Typically $2,000–$4,000 for a sub-slab depressurization system installed by a C-NRPP-certified professional.'},
+        {'q': 'How long should a radon test take?', 'a': 'At least 91 days, in the heating season. Health Canada recommends 3 to 12 months; short tests can\'t tell you your long-term average.'},
+        {'q': f'Where can I get a radon test kit in {c["name"]}?', 'a': strip(pt['radonKits'][0]) + ' Hardware stores and lung associations also sell long-term kits, for about $30–$80 including the lab fee.'},
+        {'q': 'Digital radon monitor or alpha-track kit?', 'a': ('An alpha-track kit is the cheaper long-term test: it sits for three months or more and goes to a lab. A digital monitor shows readings as it goes and '
+                                                                 'can keep running after mitigation; for a long-term result, use one that has passed C-NRPP testing and run it for at least three months.')},
+        {'q': 'What does radon mitigation cost?', 'a': 'Health Canada puts a sub-slab depressurization system at about $2,000 to $3,000 including material and labour, plus about $50 to $75 a year to run the fan. Hire a C-NRPP-certified mitigation professional.'},
+        {'q': 'Should I keep monitoring after mitigation?', 'a': ('Yes. Health Canada recommends a long-term test in the following heating season, another within two years of activation, '
+                                                                 'and one every five years after that. A digital monitor running in between shows if anything changes.')},
     ]
     return pg
 
@@ -1336,9 +1456,10 @@ def gen_co(c, src):
     req_label = {True: 'Required in existing homes', False: 'Not required in existing homes', None: 'No requirement found'}[co_req]
     if c['slug'] in CITY_CO:
         req_label = 'Required by city by-law'
-    pg['title'] = f"Carbon monoxide testing in {c['name']}: the {c['provName']} alarm rules and appliance checks"
-    pg['description'] = (f"CO safety for {c['name']} homes: what {c['provName']} law requires, " +
-                         (f"why it matters with {gas} of households heating with natural gas, " if gas else '') + "where alarms go and how appliances get checked.")
+    pg['title'] = f"Carbon monoxide testing and CO alarms in {c['name']}: {c['provName']} detector installation rules and appliance checks"
+    pg['description'] = (f"CO alarms and carbon monoxide testing for {c['name']} homes: what {c['provName']} law requires, where alarms must go, " +
+                         (f"why it matters with {gas} of households heating with natural gas, " if gas else '') + "and how appliances get checked.")
+    src.add('nbc2020')
     lede_rule = CITY_CO[c['slug']][0] if c['slug'] in CITY_CO else strip(co_text)
     pg['lede'] = f"Carbon monoxide is odourless and can kill. {lede_rule}"
     pg['glance'] = [{'k': 'CO alarm rule', 'v': req_label}, {'k': 'Natural gas heat', 'v': gas or ('No piped gas' if not gu else 'Not published')},
@@ -1356,6 +1477,7 @@ def gen_co(c, src):
         body2.append(p(f"There's no piped natural gas for homes in {c['name']}, so the usual CO sources are oil furnaces, propane appliances, wood stoves and attached garages."))
     body2.append(p(f"Single-detached houses make up {pct(h['singleDetachedPct'])} of {c['name']}'s households; many have an attached garage, another reason to put an alarm near the door into the house."))
     pg['sections'] = [{'h2': f"The rule in {c['provName']}", 'html': ''.join(body)},
+                      {'h2': f"Where CO alarms go: installation rules in {c['provName']}", 'html': p("What the rules say about installing alarms:") + ul(CO_INSTALL[c['prov']] + ([CITY_CO[c['slug']][0]] if c['slug'] in CITY_CO else []) + [CO_NBC])},
                       {'h2': f"CO sources in {c['name']} homes", 'html': ''.join(body2)},
                       {'h2': 'What a CO check involves', 'html': ul(['Alarms next to sleeping areas and on every storey, tested monthly and replaced by their end-of-life date (usually 7 to 10 years).',
                                                                      'Annual service of fuel-burning appliances by a licensed technician.',
@@ -1365,10 +1487,22 @@ def gen_co(c, src):
     pg['programs'] = None
     pg['faq'] = [
         {'q': f'Are carbon monoxide alarms mandatory in {c["name"]}?', 'a': strip(co_text) + (' ' + CITY_CO[c['slug']][0] if c['slug'] in CITY_CO else '')},
-        {'q': 'Where should CO alarms go?', 'a': 'Outside every sleeping area and on every storey, following the manufacturer\'s instructions. Some rules also call for one near a fuel-burning appliance or the door from an attached garage.'},
+        {'q': f'Where should CO alarms go in {c["provName"]}?', 'a': ' '.join(CO_INSTALL[c['prov']][:2]) + ' ' + CO_NBC},
         {'q': 'How long do CO alarms last?', 'a': 'Most have an end-of-life date of 7 to 10 years printed on the unit; replace them by then even if they still beep when tested.'},
     ]
     return pg
+
+
+MOULD_SIZES = ('<table class="stack"><thead><tr><th>Size</th><th>What counts</th><th>Who should clean it</th></tr></thead><tbody>'
+               '<tr><td data-label="Size">Small</td><td data-label="What counts">One to three patches, each smaller than 1 m²</td>'
+               '<td data-label="Who should clean it">A healthy homeowner, with water and unscented dish detergent (CMHC)</td></tr>'
+               '<tr><td data-label="Size">Medium</td><td data-label="What counts">More than three patches, or patches between 1 and 3 m² (32 square feet)</td>'
+               '<td data-label="Who should clean it">Trained help; homeowners only with training and precautions</td></tr>'
+               '<tr><td data-label="Size">Large</td><td data-label="What counts">A patch larger than 3 m², or many patches through the house</td>'
+               '<td data-label="Who should clean it">A qualified mould remediation contractor (CMHC)</td></tr></tbody></table>')
+MOULD_STEPS = ["Fix the moisture source first: a leak, poor drainage, or condensation from high humidity. Health Canada recommends 30–50% relative humidity.",
+               "For a small cleanup, wear safety glasses or goggles, an N95 mask if possible and household rubber gloves. People at risk from mould shouldn't clean it and should stay away.",
+               "Health Canada suggests professional help for extensive mould, especially growth that keeps coming back after cleaning."]
 
 
 def gen_mold(c, src):
@@ -1376,36 +1510,44 @@ def gen_mold(c, src):
     h = c['housing']
     cl = c['climate']
     coastal = cl['designHeat'] > -10 or c['prov'] in ('NS', 'NL', 'PE') and cl['designHeat'] > -20
-    src.add('hc-mould')
-    src.add('aihalap')
-    pg['title'] = f"Mold testing in {c['name']}: air quality sampling and finding the moisture source"
-    pg['description'] = (f"Mold and indoor air quality testing in {c['name']}: when sampling is worth $300–$600, why {'damp coastal' if coastal else 'cold'} "
-                         f"winters cause condensation, and how to find an accredited lab.")
-    pg['lede'] = ("Mold sampling tells you whether there's a hidden mold problem and roughly where. It doesn't tell you why, and fixing the moisture source is the actual cure.")
-    pg['glance'] = [{'k': 'Typical sampling visit', 'v': '$300–$600'}, {'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])},
-                    {'k': 'Winter design temperature', 'v': deg(cl['designHeat'])}, {'k': 'Lab accreditation', 'v': 'AIHA EMLAP'}]
+    for k_ in ('hc-mould', 'hc-mould-home', 'cmhc-mould', 'cmhc-kit', 'aihalap'):
+        src.add(k_)
+    pg['title'] = f"Mould and indoor air quality (IAQ) testing in {c['name']}: air sampling, inspection and remediation"
+    pg['description'] = (f"Mould inspection and indoor air quality testing in {c['name']}: when mold sampling is worth it, why {'damp coastal' if coastal else 'cold'} "
+                         f"winters cause condensation, the CMHC and Health Canada size rules for cleanup, and when to hire a remediation contractor.")
+    pg['lede'] = ("Mould sampling tells you whether there's a hidden mould problem and roughly where. It doesn't tell you why, and fixing the moisture source is the actual cure. "
+                  f"Here's how to inspect a home in {c['name']}, when air quality testing helps, and how much cleanup you can safely do yourself.")
+    pg['glance'] = [{'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])}, {'k': 'Clean it yourself', 'v': 'Up to 3 patches', 'sub': 'each under 1 m²'},
+                    {'k': 'Hire a contractor', 'v': 'Over 3 m²', 'sub': 'or if it keeps coming back'}, {'k': 'Lab accreditation', 'v': 'AIHA EMLAP'}]
     body = [p(climate_sentence(c),
               ("Mild, wet winters keep materials damp, so poorly vented bathrooms, basements and crawlspaces are the usual suspects." if coastal else
-               f"On cold days, exterior corners, closets on outside walls and window frames get cold enough for condensation, which is where mold usually starts in {c['name']} houses."))]
+               f"On cold days, exterior corners, closets on outside walls and window frames get cold enough for condensation, which is where mould usually starts in {c['name']} houses."))]
     body.append(p(housing_sentence(c), "Older basements without a moisture barrier and houses that were air-sealed without adding ventilation are common trouble spots."))
-    prov_note = ''
     if c['prov'] == 'QC':
         prov_note = p("Quebec has a voluntary standard for handling mould in homes (BNQ 3009-600, 2020); no province has a mandatory residential mould standard.")
     else:
         prov_note = p("No Canadian province has a mandatory mould standard for homes. Health Canada's guideline sets no numerical limit: it says to fix moisture problems and clean up visible mould.")
-    pg['sections'] = [{'h2': f"Why mold shows up in {c['name']} homes", 'html': ''.join(body)},
-                      {'h2': 'When sampling is worth it', 'html': ul(['You smell mustiness but can\'t find the source.',
-                                                                      'After a leak or flood, to check that cleanup worked.',
-                                                                      'Before buying an older house with signs of past water damage.']) +
-                       p('If you can see mould, you usually don\'t need a test to know it\'s there; you need to fix the moisture and clean it up properly.') + prov_note},
-                      {'h2': 'Choosing a tester and lab', 'html': p(f"Ask any {c['name']} tester which lab analyzes their samples, and look for one accredited under AIHA's EMLAP program for environmental microbiology. "
-                                                                   "Pair sampling with a ventilation and humidity assessment, which finds the cause.") +
-                       p(a(f"/services/ventilation-assessment/{c['slug']}/", f"Ventilation and humidity assessments in {c['name']}") + ' · ' + a(SV['mold-testing']['guide'], 'Our mold and indoor air quality guide'))}]
+    pg['sections'] = [{'h2': f"Why mould shows up in {c['name']} homes", 'html': ''.join(body)},
+                      {'h2': 'Mould inspection: when sampling is worth it', 'html': p("Start by looking and smelling: stains, discoloured patches, peeling paint and a musty odour, "
+                                                                                       "especially in basements, bathrooms, window frames and closets on outside walls. Health Canada says "
+                                                                                       "measuring mould concentrations or identifying species is usually unnecessary.") + prov_note +
+                       p("Air or surface sampling helps in three cases:") +
+                       ul(['You smell mustiness but can\'t find the source.',
+                           'After a leak or flood, to check that cleanup worked.',
+                           'Before buying an older house with signs of past water damage.'])},
+                      {'h2': 'Cleanup and remediation: the size rules', 'html': p("CMHC and Health Canada sort mould by size, and the size decides who should clean it up:") + MOULD_SIZES + ul(MOULD_STEPS)},
+                      {'h2': 'Choosing a tester, lab or remediation contractor', 'html': p(f"Ask any {c['name']} tester which lab analyzes their samples, and look for one accredited under AIHA's EMLAP program for environmental microbiology. "
+                                                                                          "Pair sampling with a ventilation and humidity assessment, which finds the cause. For remediation, get two or three written quotes "
+                                                                                          "that describe containment, what will be removed and how the area is cleaned.") +
+                       p(a(f"/services/ventilation-assessment/{c['slug']}/", f"Ventilation and humidity assessments in {c['name']}") + ' · ' + a(SV['mold-testing']['guide'], 'Our mould and indoor air quality guide'))}]
     pg['providers'] = None
     pg['programs'] = None
     pg['faq'] = [
-        {'q': f'How much does mold testing cost in {c["name"]}?', 'a': 'Plan on about $300–$600 for a typical sampling visit (a September 2026 planning range); lab fees for extra samples add to that.'},
+        {'q': f'How much does mould testing cost in {c["name"]}?', 'a': ('We found no reputable Canadian source for the cost of a professional mould assessment, so get two or three written quotes '
+                                                                          'and ask how many samples are included, which lab analyzes them and what the report covers.')},
         {'q': 'Do I need a test if I can see mould?', 'a': 'Usually not. Visible mould needs cleanup and a fix for the moisture source. Testing helps most when you suspect mould you can\'t see.'},
+        {'q': 'How much mould can I clean myself?', 'a': 'CMHC says a healthy homeowner can clean one to three patches, each under 1 m², with water and unscented dish detergent. Larger areas need trained help or a remediation contractor.'},
+        {'q': 'When should I hire a mould remediation contractor?', 'a': 'For a single patch over 3 m², many patches through the house, or mould that keeps coming back after cleaning (CMHC, Health Canada).'},
         {'q': 'Is there a legal mould limit for homes in Canada?', 'a': 'No. Health Canada sets no numerical limit; its guidance is to control moisture and clean up mould. Quebec has a voluntary handling standard.'},
     ]
     return pg
@@ -1420,9 +1562,11 @@ def gen_asbestos(c, src):
     src.add('nvlap')
     pre91 = h['housesPre1991Pct']
     n91 = round(h['houses'] * pre91 / 100) if pre91 else None
-    pg['title'] = f"Asbestos testing in {c['name']}: vermiculite, labs and the {c['provName']} rules"
-    pg['description'] = (f"Asbestos and vermiculite testing in {c['name']}, where {pct(pre91)} of houses were built before 1991: what to sample, lab costs "
-                         f"and the {c['provName']} rules for renovation.")
+    pg['title'] = f"Asbestos testing and inspection in {c['name']}: vermiculite, labs, and {c['provName']} abatement and removal rules"
+    for lab, url in ASB_ABATE_SRC.get(c['prov'], []):
+        src.add(lab, url)
+    pg['description'] = (f"Asbestos inspection and testing in {c['name']}, where {pct(pre91)} of houses were built before 1991: what to sample, lab costs, "
+                         f"the {c['provName']} rules for renovation, and what abatement and removal involve if a test is positive.")
     pg['lede'] = (f"About {n(round(n91, -2)) if n91 else 'many'} {c['name']} houses ({pct(pre91)}) were built before 1991, when asbestos still turned up in "
                   "insulation, flooring, plaster and duct wrap. A lab test before renovation is the only way to know.")
     pg['glance'] = [{'k': 'Houses built before 1991', 'v': pct(pre91)}, {'k': 'Lab sample', 'v': '$50–$150'},
@@ -1436,6 +1580,11 @@ def gen_asbestos(c, src):
         {'h2': 'Testing and labs', 'html': p("A trained assessor takes small samples, and an accredited lab analyzes them; plan on about $50–$150 per sample. "
                                              "Asbestos labs in Canada are typically accredited under NIST's NVLAP program" + (" or recognized by the IRSST in Quebec" if c['prov'] == 'QC' else '') + '.') +
          p(a(SV['asbestos-testing']['guide'], 'Our asbestos and vermiculite guide') + ' · ' + a(f"/services/attic-insulation-inspection/{c['slug']}/", f"Attic inspections in {c['name']}"))},
+        {'h2': "If it's positive: abatement and removal", 'html': p("Leave the material alone until a plan is in place. For vermiculite, Health Canada says not to use the attic for storage, "
+                                                                    "to keep children out and to seal gaps around the attic hatch, light fixtures and outlets, and to hire professionals "
+                                                                    "trained to handle asbestos if you plan to renovate.") +
+         p(f"<strong>In {c['provName']}:</strong> {ASB_ABATE[c['prov']]}") +
+         p("Abatement is quoted separately from testing. Get two or three written quotes that describe containment, what will be removed and how the waste will be disposed of.")},
     ]
     pg['providers'] = None
     pg['programs'] = None
@@ -1443,6 +1592,7 @@ def gen_asbestos(c, src):
         {'q': f'Do I need an asbestos test before renovating in {c["name"]}?', 'a': f"If the house was built before 1991 and the work will disturb insulation, flooring, plaster or duct wrap, test first. {strip(t)}"},
         {'q': 'How much does asbestos testing cost?', 'a': 'About $50–$150 per lab sample, plus the assessor\'s visit. Abatement, if needed, is quoted separately.'},
         {'q': 'What should I do if I have vermiculite in the attic?', 'a': 'Leave it alone, keep the attic closed, and have it sampled before any attic work. Health Canada advises against disturbing it or removing it yourself.'},
+        {'q': f'Who removes asbestos in {c["provName"]}?', 'a': strip(ASB_ABATE[c['prov']])},
     ]
     return pg
 
@@ -1454,7 +1604,7 @@ def gen_lead(c, src):
     src.add('aihalap')
     pre61 = h['housesPre1961Pct']
     mid = h['houses1961to1990Pct']
-    pg['title'] = f"Lead paint testing in {c['name']}: which homes are at risk and how to test"
+    pg['title'] = f"Lead paint testing in {c['name']}: at-risk homes, testing and safe abatement"
     pg['description'] = (f"{pct(pre61)} of {c['name']}'s houses were built before 1961, when lead paint was common. How to test with $15–$40 swabs or a lab, "
                          "and how to renovate safely.")
     pg['lede'] = (f"Health Canada says a home built before 1960 probably has lead paint somewhere. That's {pct(pre61)} of {c['name']}'s houses "
@@ -1470,7 +1620,16 @@ def gen_lead(c, src):
                                           'For certainty, send paint chips to a lab accredited under AIHA\'s ELLAP program, or hire a firm with an X-ray fluorescence (XRF) analyzer.',
                                           'Test before sanding, stripping or replacing old windows and trim.']) +
          p(a(SV['lead-paint-testing']['guide'], 'Our lead paint guide') + '.')},
-        {'h2': 'If it\'s positive', 'html': p("Don't dry-sand, use a heat gun or power-wash it. Contain the work area, mist surfaces, clean with a HEPA vacuum, and keep children and pregnant people away until cleanup is done. No province has a lead-paint rule aimed at homeowners, but contractors in B.C. and Yukon must include lead in pre-renovation or demolition hazard inspections.")},
+        {'h2': 'If it\'s positive: lead paint abatement', 'html': p("Health Canada says leaving lead-based paint alone is sometimes safer than removing it, as long as it isn't chipping or within "
+                                                                     "children's reach, and covering it with wallpaper, wallboard or panelling adds protection. Paint that's chipping, flaking or within "
+                                                                     "reach of children is a serious hazard and has to come off carefully; consider hiring an expert before you start.") +
+         p("No province has a lead-paint rule aimed at homeowners, but contractors in B.C. must include lead in pre-renovation and demolition hazard inspections, and in Yukon before demolition. "
+           "If you do the work yourself, Health Canada's precautions are:") +
+         ul(["Don't use sanders, heat guns or blowlamps: they create toxic dust and fumes. For do-it-yourself work, Health Canada suggests a chemical paint-stripper paste applied with a brush.",
+             "Move furniture out or cover it with plastic, seal doorways and vents with plastic sheeting and tape, and run a fan blowing out through an open window.",
+             "Wear goggles, gloves and a good-quality mask, work in 10-minute stretches with breaks outdoors, and don't eat, drink or smoke in the work area.",
+             "Clean up daily: put scrapings in a sealed container marked Hazardous Waste, follow your municipality's disposal instructions, and wipe surfaces with a damp cloth you throw away.",
+             "Keep children and pregnant people away until the work is done; Health Canada says there is no known safe level of lead exposure."])},
     ]
     pg['providers'] = None
     pg['programs'] = None
@@ -1478,6 +1637,8 @@ def gen_lead(c, src):
         {'q': f'Does my {c["name"]} house have lead paint?', 'a': 'If it was built before 1960, probably; 1960–1990, possibly on the exterior. Test the surfaces you plan to disturb.'},
         {'q': 'Are lead test swabs reliable?', 'a': 'They are a useful screen. For renovation decisions, confirm with a lab analysis of paint chips or an XRF reading.'},
         {'q': 'What does lead paint testing cost?', 'a': 'Swab kits run about $15–$40; lab analysis and XRF testing cost more and are quoted by the firm.'},
+        {'q': 'Should I remove lead paint or cover it?', 'a': ('Health Canada says leaving it alone or covering it with wallpaper, wallboard or panelling is sometimes safer than removing it, as long as it isn\'t chipping '
+                                                               'or within children\'s reach. Never sand it or use a heat gun, and consider hiring an expert for removal.')},
     ]
     return pg
 
@@ -1491,11 +1652,11 @@ def gen_wells(c, src):
         src.add(f"{c['name']} — private wells", w['source'])
     status = w.get('wells')
     label = {'common': 'Common', 'some': 'Some rural areas', 'rare': 'Rare'}.get(status, 'Unknown')
-    pg['title'] = f"Well water testing in {c['name']}: how to test and what it costs in {c['provName']}"
+    pg['title'] = f"Well water testing in {c['name']}: bacteria (E. coli and total coliform) tests and costs in {c['provName']}"
     status_txt = {'common': 'many homes outside the piped areas use private wells',
                   'some': 'some rural areas rely on private wells',
                   'rare': 'most homes are on city water, but some rely on wells'}.get(status, 'some homes rely on private wells')
-    pg['description'] = (f"Private well water testing in {c['name']}: {status_txt}. How {c['provName']}'s testing program works, "
+    pg['description'] = (f"Private well water testing in {c['name']}: {status_txt}. How {c['provName']}'s bacteria testing for E. coli and total coliforms works, "
                          f"what it costs and how often to test.")
     pg['lede'] = (w.get('sentence') or f"Some {c['name']} homes are on private wells.") + ' ' + ("If yours is, here's how testing works in " + c['provName'] + '.')
     pg['glance'] = [{'k': 'Private wells in ' + c['name'], 'v': label}, {'k': 'Testing cost', 'v': pt['wellCost']},
@@ -1644,6 +1805,84 @@ def hub_metric(c, svc):
     return ''
 
 
+# ------------------------------------------------------------------ communities served (search-coverage upgrade, October 2026)
+# Places people search for, resolved to a municipality (tools/areas/research/towns.json: CGNDB names, LIO municipal
+# boundaries, BC open data), and the /areas/ guides (tools/areas/areas.json). Run tools/areas/gen_areas.py first so
+# src/data/areas/index.json exists; places an area guide already lists aren't repeated here as "nearby".
+AREAS_CFG = json.load(open(f'{REPO}/tools/areas/areas.json', encoding='utf-8'))['areas']
+TOWNS = json.load(open(f'{REPO}/tools/areas/research/towns.json', encoding='utf-8'))['towns']
+AREA_SERVICES = {'home-energy-audit', 'heat-loss-calculation', 'radon-testing', 'mold-testing', 'well-water-testing', 'wood-burning-inspection'}
+# Earlier official names still in everyday use (CGNDB status "previously official"; FERHF for Newcastle)
+PLACE_ALIASES = {'Newcastle Village': 'Newcastle'}
+
+
+def _area_communities():
+    path = f'{REPO}/src/data/areas/index.json'
+    if not os.path.exists(path):
+        print('warning: src/data/areas/index.json missing; run tools/areas/gen_areas.py first', file=sys.stderr)
+        return set()
+    idx = json.load(open(path, encoding='utf-8'))
+    out = set()
+    for ar in idx['areas']:
+        out.update(x.lower() for x in ar['communities'])
+        for g in ar.get('nearby', []):
+            out.add(g['name'].lower())
+            out.update(x.lower() for x in g['communities'])
+    return out
+
+
+AREA_COMMUNITIES = None
+
+
+def communities_for(c):
+    """Communities inside the city's municipality, nearby places without a page, and neighbouring area guides."""
+    global AREA_COMMUNITIES
+    if AREA_COMMUNITIES is None:
+        AREA_COMMUNITIES = _area_communities()
+    inside = [t for t in TOWNS if t.get('withinCoveredCity') == c['slug']]
+    within = sorted({t['place'] for t in inside}, key=str.lower)
+    muni = inside[0]['municipality'] if inside else None
+    nearby = sorted([t for t in TOWNS if not t.get('withinCoveredCity') and t['nearestCoveredCity'] == c['slug']
+                     and t['type'] not in ('county', 'single-tier') and t['place'].lower() not in AREA_COMMUNITIES],
+                    key=lambda t: t['km'])
+    areas = [x for x in AREAS_CFG if c['slug'] in x['nearbyCities']]
+    if not (within or nearby or areas):
+        return None
+    return {'within': within, 'muni': muni, 'nearby': [{'name': t['place'], 'km': round(t['km'])} for t in nearby], 'areas': areas}
+
+
+def communities_sources(c, src):
+    src.add('NRCan — Canadian Geographical Names Database (official place names)', 'https://geogratis.gc.ca/services/geoname/en/geonames')
+    if c['prov'] == 'ON':
+        src.add('Land Information Ontario — municipal boundaries (lower and single tier)',
+                'https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14')
+
+
+def communities_block(c, svc=None):
+    d = communities_for(c)
+    if not d:
+        return None
+    parts, names = [], []
+    if d['within']:
+        names += d['within'] + [PLACE_ALIASES[x] for x in d['within'] if x in PLACE_ALIASES]
+        shown = [f"{x} ({PLACE_ALIASES[x]})" if x in PLACE_ALIASES else x for x in d['within']]
+        parts.append(p(f"{c['name']}'s {'page covers' if svc else 'pages cover'} the whole {esc(d['muni'])}, including {esc(join_and(shown))}."))
+    if d['nearby']:
+        names += [x['name'] for x in d['nearby']]
+        near = join_and([f"{esc(x['name'])} (about {x['km']} km away)" for x in d['nearby']])
+        parts.append(p(f"Nearby communities without a page of their own: {near}. {c['name']} is the closest city we cover."))
+    if d['within'] or d['nearby']:
+        parts.append(p(f"The organizations and professionals listed for {c['name']} may or may not travel to every community, so ask when you call."))
+    if d['areas']:
+        links = []
+        for ar in d['areas']:
+            href = f"/areas/{ar['slug']}/{svc}/" if svc in AREA_SERVICES else f"/areas/{ar['slug']}/"
+            label = f"{SV[svc]['name']} in {ar['inName']}" if svc in AREA_SERVICES else f"{ar['name']} area guide"
+            links.append(f"{a(href, esc(label))} ({esc(', '.join(ar['titleNames'][:4]))} and more)")
+        parts.append(p(f"{'Area guides' if len(links) > 1 else 'Area guide'} for the surrounding region, with every town and hamlet listed: " + '; '.join(links) + '.'))
+    return {'heading': 'Communities served' if svc else f"Communities around {c['name']}", 'html': ''.join(parts), 'names': names}
+
+
 def hub_provider_phrase(c):
     k = len(c['providers'])
     if k == 1:
@@ -1666,6 +1905,9 @@ def build():
             src = Sources()
             pg = GENERATORS[s['slug']](c, src)
             pg['snapshot'] = snapshot(c, src)
+            pg['communities'] = communities_block(c, s['slug'])
+            if pg['communities']:
+                communities_sources(c, src)
             other, nearby = related_links(c, s['slug'])
             pg['related'] = other
             pg['nearby'] = nearby
@@ -1683,7 +1925,10 @@ def build():
             'climate': climate_sentence(c), 'housing': housing_sentence(c), 'heating': heating_sentence(c),
             'radon': radon_line(c, hub_src),
             'services': [{'slug': s['slug'], 'name': s['name'], 'cat': s['cat'], 'metric': hub_metric(c, s['slug'])} for s in SERVICES],
+            'communities': communities_block(c),
         }
+        if hub['communities']:
+            communities_sources(c, hub_src)
         hub_src.add('hot2000')
         hub_src.add('census')
         hub_src.add('heating')

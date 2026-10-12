@@ -1,0 +1,631 @@
+{
+ "asOf": "2026-10-08",
+ "energyContentGJ": {
+  "gas": 0.0375,
+  "propane": 0.0253,
+  "oil": 0.0382,
+  "electricity": 0.0036,
+  "hardwood": 30.6,
+  "softwood": 18.7,
+  "pellets": 19.8,
+  "src": "nrcan-hwg",
+  "note": "NRCan Heating with Gas Table 2: natural gas 37.5 MJ/m³, propane 25.3 MJ/L, oil 38.2 MJ/L, electricity 3.6 MJ/kWh, hardwood 30,600 MJ and softwood 18,700 MJ per full cord (1.2 × 1.2 × 2.4 m), wood pellets 19,800 MJ/tonne. CER cross-check: natural gas 0.0373 GJ/m³, propane 25.53 GJ/m³, heating oil 36.72 GJ/m³.",
+  "crossCheck": {
+   "gas": 0.0373,
+   "propane": 0.02553,
+   "oil": 0.03672,
+   "src": "cer-conversion"
+  }
+ },
+ "zones": [
+  {
+   "zone": "4",
+   "minHdd": 0,
+   "maxHdd": 2999
+  },
+  {
+   "zone": "5",
+   "minHdd": 3000,
+   "maxHdd": 3999
+  },
+  {
+   "zone": "6",
+   "minHdd": 4000,
+   "maxHdd": 4999
+  },
+  {
+   "zone": "7A",
+   "minHdd": 5000,
+   "maxHdd": 5999
+  },
+  {
+   "zone": "7B",
+   "minHdd": 6000,
+   "maxHdd": 6999
+  },
+  {
+   "zone": "8",
+   "minHdd": 7000,
+   "maxHdd": null
+  }
+ ],
+ "demand": {
+  "refHdd": 4200,
+  "intensityGJperM2": {
+   "pre-1946": 1.0,
+   "1946-1965": 0.7,
+   "1966-1980": 0.6,
+   "1981-1995": 0.45,
+   "1996-2010": 0.4,
+   "2011-plus": 0.3
+  },
+  "typeFactor": {
+   "detached": 1.0,
+   "semi": 0.9,
+   "row": 0.8
+  },
+  "sizeBandM2": {
+   "small": 93,
+   "medium": 149,
+   "large": 232,
+   "xlarge": 325
+  },
+  "src": "nrcan-ceud-t33",
+  "note": "NRCan CEUD Ontario Table 33 gives heating need per floor area of 1.0 (pre-1946), 0.7 (1946–1960), 0.6 (1961–1977), 0.5 (1978–1983), 0.4 (1984–2005) and 0.3 GJ/m² (2006 on). We map the site's eras onto those bands (1981–1995 = 0.45, between the two NRCan bands) and scale by local heating degree-days ÷ 4,200. The type factors for semis (0.9) and row houses (0.8) and the 4,200 normalisation are planning assumptions, checked against NRCan Heating with Gas Table 4 (old Ottawa detached about 110 GJ, Toronto about 95 GJ)."
+ },
+ "calibration": {
+  "min": 0.5,
+  "max": 1.6,
+  "heatShareWithSameFuelWaterHeater": 0.8,
+  "heatShareOtherwise": 0.95,
+  "heatShareNote": "NRCan: space heating is 63.6% and water heating 17.2% of energy in the average Canadian home, so space heating is about 79–80% of a home that heats both with the same fuel. Where the water heater uses another fuel we assume 95% of the fuel is space heating (some goes to cooking, a dryer or a fireplace).",
+  "heatShareSrc": "nrcan-energystar-wh",
+  "elecHeatShare": {
+   "withElectricWaterHeater": 0.54,
+   "withOtherWaterHeater": 0.675
+  },
+  "elecHeatShareNote": "Hydro-Québec: in an electrically heated household, 54% of electricity goes to heating and air conditioning, 20% to hot water, 18% to appliances and electronics, 5% to lighting and 3% to other uses. Without an electric water heater, heating is 54 of the remaining 80 parts (67.5%, derived). A summer-month bill gives a better estimate of your non-heating use.",
+  "elecHeatShareSrc": "hq-consumption-by-use"
+ },
+ "systems": {
+  "gasFurnaceOld": {
+   "label": "Gas furnace, old standard efficiency (about 60%)",
+   "short": "Gas furnace, old",
+   "fuel": "gas",
+   "eff": 0.6,
+   "src": "nrcan-hwg"
+  },
+  "gasFurnaceMid": {
+   "label": "Gas furnace, mid-efficiency (about 80%)",
+   "short": "Gas furnace, mid-efficiency",
+   "fuel": "gas",
+   "eff": 0.8,
+   "src": "nrcan-hwg"
+  },
+  "gasFurnaceHigh": {
+   "label": "Gas furnace, high-efficiency condensing (95%)",
+   "short": "Gas furnace, condensing",
+   "fuel": "gas",
+   "eff": 0.95,
+   "src": "nrcan-gas-furnace-reg"
+  },
+  "gasBoilerMid": {
+   "label": "Gas boiler, non-condensing (about 82%)",
+   "short": "Gas boiler, non-condensing",
+   "fuel": "gas",
+   "eff": 0.82,
+   "src": "nrcan-hwg"
+  },
+  "gasBoilerCondensing": {
+   "label": "Gas boiler, condensing (about 89%)",
+   "short": "Gas boiler, condensing",
+   "fuel": "gas",
+   "eff": 0.89,
+   "src": "nrcan-hwg"
+  },
+  "oilFurnaceOld": {
+   "label": "Oil furnace or boiler, old (about 60%)",
+   "short": "Oil furnace, old",
+   "fuel": "oil",
+   "eff": 0.6,
+   "src": "nrcan-hwg"
+  },
+  "oilFurnaceMid": {
+   "label": "Oil furnace, mid-efficiency (about 78%)",
+   "short": "Oil furnace, mid-efficiency",
+   "fuel": "oil",
+   "eff": 0.78,
+   "src": "nrcan-hwg"
+  },
+  "oilFurnaceNew": {
+   "label": "Oil furnace, new (85%)",
+   "short": "Oil furnace, new",
+   "fuel": "oil",
+   "eff": 0.85,
+   "src": "nrcan-oil-furnace-reg"
+  },
+  "oilBoilerNew": {
+   "label": "Oil boiler, new (86%)",
+   "short": "Oil boiler, new",
+   "fuel": "oil",
+   "eff": 0.86,
+   "src": "nrcan-hwg"
+  },
+  "propaneFurnaceStd": {
+   "label": "Propane furnace, standard efficiency (about 82%)",
+   "short": "Propane furnace",
+   "fuel": "propane",
+   "eff": 0.82,
+   "src": "nrcan-hwg"
+  },
+  "propaneFurnaceCond": {
+   "label": "Propane furnace, condensing (about 93%)",
+   "short": "Propane furnace, condensing",
+   "fuel": "propane",
+   "eff": 0.93,
+   "src": "nrcan-hwg"
+  },
+  "electricResistance": {
+   "label": "Electric baseboards or electric furnace (100%)",
+   "short": "Electric baseboards or furnace",
+   "fuel": "electricity",
+   "eff": 1.0,
+   "src": "nrcan-hwg"
+  },
+  "ashpStandard": {
+   "label": "Air-source heat pump, standard",
+   "short": "Heat pump, standard",
+   "fuel": "electricity",
+   "copBand": "standard",
+   "heatPump": true,
+   "src": "dunsky-cci-2024"
+  },
+  "ashpCold": {
+   "label": "Cold-climate air-source heat pump",
+   "short": "Heat pump, cold-climate",
+   "fuel": "electricity",
+   "copBand": "coldClimate",
+   "heatPump": true,
+   "src": "dunsky-cci-2024"
+  },
+  "gshp": {
+   "label": "Ground-source (geothermal) heat pump",
+   "short": "Ground-source heat pump",
+   "fuel": "electricity",
+   "eff": 2.8,
+   "heatPump": true,
+   "src": "nrcan-heat-pump-guide"
+  },
+  "woodCertified": {
+   "label": "Wood stove, EPA/CSA-certified (about 75%)",
+   "short": "Wood stove, certified",
+   "fuel": "wood",
+   "eff": 0.75,
+   "src": "nrcan-hwg"
+  },
+  "woodOld": {
+   "label": "Wood stove, older non-certified (about 62%)",
+   "short": "Wood stove, older",
+   "fuel": "wood",
+   "eff": 0.62,
+   "src": "nrcan-hwg"
+  },
+  "pellet": {
+   "label": "Pellet stove (about 68%)",
+   "short": "Pellet stove",
+   "fuel": "pellets",
+   "eff": 0.68,
+   "src": "nrcan-hwg"
+  },
+  "outdoorWoodBoiler": {
+   "label": "Outdoor wood boiler, older (about 40%)",
+   "short": "Outdoor wood boiler",
+   "fuel": "wood",
+   "eff": 0.4,
+   "src": "cmhc-wood-guide"
+  }
+ },
+ "ashpCopBands": [
+  {
+   "minHdd": 0,
+   "maxHdd": 2999,
+   "zone": "4",
+   "standard": 2.5,
+   "coldClimate": 2.8,
+   "standardLow": 2.3,
+   "coldClimateLow": 2.3
+  },
+  {
+   "minHdd": 3000,
+   "maxHdd": 3999,
+   "zone": "5",
+   "standard": 2.2,
+   "coldClimate": 2.5,
+   "standardLow": 1.9,
+   "coldClimateLow": 2.2
+  },
+  {
+   "minHdd": 4000,
+   "maxHdd": 4999,
+   "zone": "6",
+   "standard": 1.9,
+   "coldClimate": 2.2,
+   "standardLow": 1.7,
+   "coldClimateLow": 1.9
+  },
+  {
+   "minHdd": 5000,
+   "maxHdd": 5999,
+   "zone": "7A",
+   "standard": 1.7,
+   "coldClimate": 2.0,
+   "standardLow": 1.5,
+   "coldClimateLow": 1.7
+  },
+  {
+   "minHdd": 6000,
+   "maxHdd": null,
+   "zone": "7B/8",
+   "standard": 1.3,
+   "coldClimate": 1.6,
+   "standardLow": 1.1,
+   "coldClimateLow": 1.2
+  }
+ ],
+ "ashpNote": "Seasonal COP for a whole heating season, including electric backup heat and defrost, for a heat pump sized for mild to cold weather. Planning values set slightly below modelled results (Dunsky/CCI 2024) because field studies (RDH for FortisBC; Yukon pilot) came in lower. Above 6,000 degree-days the values rest on one partial-season pilot in Whitehorse, so we use the low end of the band from 7,000 degree-days (Yellowknife).",
+ "ashpSrcs": [
+  "dunsky-cci-2024",
+  "rdh-bc-hp",
+  "yukon-hp-pilot",
+  "nrcan-heat-pump-guide"
+ ],
+ "envelope": {
+  "F": {
+   "aboveGrade": 0.75,
+   "basement": 0.4
+  },
+  "capSingle": 0.35,
+  "capTotal": 0.6,
+  "storeyHeightM": 2.5,
+  "basementWallHeightM": 2.4,
+  "windowShareOfGrossWall": 0.15,
+  "windowAreaShareOfFloor": 0.12,
+  "windowM2Each": 1.2,
+  "atticRByVintage": {
+   "pre-1946": 12,
+   "1946-1965": 12,
+   "1966-1980": 20,
+   "1981-1995": 28,
+   "1996-2010": 40,
+   "2011-plus": 50
+  },
+  "wallRsiByVintage": {
+   "pre-1946": 0.7,
+   "1946-1965": 1.4,
+   "1966-1980": 2.1,
+   "1981-1995": 2.1,
+   "1996-2010": 3.0,
+   "2011-plus": 3.4
+  },
+  "basementRsiByVintage": {
+   "pre-1946": 0.7,
+   "1946-1965": 0.7,
+   "1966-1980": 0.7,
+   "1981-1995": 2.1,
+   "1996-2010": 2.1,
+   "2011-plus": 3.5
+  },
+  "windowByVintage": {
+   "pre-1946": "singleStorm",
+   "1946-1965": "singleStorm",
+   "1966-1980": "doubleClear",
+   "1981-1995": "doubleClear",
+   "1996-2010": "doubleLowE",
+   "2011-plus": "doubleLowE"
+  },
+  "vintageDefaultsNote": "These starting values are AuditYourHome planning assumptions for a typical house of each era, not survey results: we could not verify a Canadian table of insulation levels by year built. Change them to match your house; an EnerGuide evaluation measures them.",
+  "denseRsi": 2.1,
+  "denseNote": "Dense-packed cellulose is about RSI 0.63 per 25.4 mm (NRCan Keeping the Heat In, Table 3-1), so a full 2×4 cavity (89 mm) is about RSI 2.2 nominal; we use RSI 2.1.",
+  "exteriorAddRsi": 1.76,
+  "exteriorNote": "R-10 of continuous exterior insulation = RSI 1.76 (e.g. 50 mm of XPS at RSI 0.88 per 25.4 mm, NRCan Table 3-1). NRCan notes that insulation is only about 15–20% of the cost of an exterior retrofit; most of the cost is cladding, labour and trim.",
+  "basementTargetRsi": 3.5,
+  "atticTargetCapR": 60,
+  "nrcanRetrofitRoofR": {
+   "4": 45,
+   "5": 55,
+   "6": 60,
+   "7A": 80,
+   "7B": 80,
+   "8": 80
+  },
+  "nrcanRetrofitWallR": {
+   "4": 22,
+   "5": 27,
+   "6": 27,
+   "7A": 40,
+   "7B": 40,
+   "8": 40
+  },
+  "nrcanRetrofitBasementR": {
+   "4": 19,
+   "5": 24,
+   "6": 24,
+   "7A": 30,
+   "7B": 30,
+   "8": 30
+  },
+  "nbcCeilingMinRsi": {
+   "4": 6.91,
+   "5": 8.67,
+   "6": 8.67,
+   "7A": 10.43,
+   "7B": 10.43,
+   "8": 10.43
+  },
+  "nbcWallMinRsi": {
+   "4": 2.78,
+   "5": 3.08,
+   "6": 3.08,
+   "7A": 3.08,
+   "7B": 3.85,
+   "8": 3.85
+  },
+  "nbcFoundationMinRsi": {
+   "4": 1.99,
+   "5": 2.98,
+   "6": 2.98,
+   "7A": 3.46,
+   "7B": 3.46,
+   "8": 3.97
+  },
+  "nbcWindowMaxU": {
+   "4": 1.84,
+   "5": 1.84,
+   "6": 1.61,
+   "7A": 1.61,
+   "7B": 1.44,
+   "8": 1.44
+  },
+  "windowU": {
+   "single": {
+    "label": "Single glazing",
+    "u": 5.7,
+    "note": "derived: about twice a double window (NRCan)"
+   },
+   "singleStorm": {
+    "label": "Single glazing with a storm window",
+    "u": 2.9,
+    "note": "derived from NRCan"
+   },
+   "doubleClear": {
+    "label": "Double glazing, clear (1970s–1990s)",
+    "u": 2.86
+   },
+   "doubleLowE": {
+    "label": "Double glazing, low-e and argon (2000s)",
+    "u": 1.8
+   },
+   "energyStar": {
+    "label": "ENERGY STAR (U 1.22 or better)",
+    "u": 1.22
+   },
+   "triple": {
+    "label": "Triple glazing",
+    "u": 1.4
+   },
+   "mostEfficient": {
+    "label": "ENERGY STAR Most Efficient (U 1.05)",
+    "u": 1.05
+   }
+  },
+  "windowSrcs": [
+   "nrcan-windows-2003",
+   "nbc-2020",
+   "nrcan-kthi-s8",
+   "energystar-windows-v5"
+  ],
+  "heatLossShares": {
+   "airLeakage": 0.25,
+   "basement": 0.25,
+   "walls": 0.2,
+   "windowsUpTo": 0.35
+  },
+  "heatLossSrcs": [
+   "nrcan-kthi-s9",
+   "nrcan-kthi-s6",
+   "nrcan-kthi-s7",
+   "nrcan-kthi-s8"
+  ],
+  "air": {
+   "leakShareOfHeatLoss": 0.25,
+   "reductionDefault": 0.2,
+   "reductionTight": 0.15,
+   "tightAch50": 4,
+   "nFactor": 20,
+   "nRange": [
+    10,
+    25
+   ],
+   "volHeatCapKJm3K": 1.21,
+   "note": "Without a blower-door number we use NRCan's rule that \"typically about 25 percent of heat loss can be due to air leakage\". With your EnerGuide blower-door result (ACH50) we estimate everyday leakage as ACH50 ÷ 20, near the conservative end of the 10–25 range, and air's heat capacity of 1.21 kJ/m³·K. Rebate programs pay for measured reductions of 10%, 20% and 30%; we assume 20% (15% if the house is already under 4 ACH50).",
+   "srcs": [
+    "nrcan-kthi-s9",
+    "wikipedia-blower-door",
+    "wikipedia-ach",
+    "wikipedia-shc"
+   ]
+  },
+  "basementNote": "Uninsulated basement walls are taken as RSI 0.7 (concrete plus the soil against it and the inside air film), and basement savings are multiplied by 0.4 rather than 0.75 because most of the wall is below grade, where the ground stays far warmer than winter air. With these values, insulating a bare basement to R-20 saves roughly 10–15% of a typical older house's heating, in line with NRCan's statement that basements can account for about a quarter of heat loss."
+ },
+ "setback": {
+  "perDegPer8h": 0.02,
+  "heatPumpMaxDeg": 2,
+  "minTempC": 17,
+  "quote": "A drop of 1°C (2°F) over an eight-hour period can save about 2 percent on your heating energy consumption.",
+  "src": "nrcan-kthi-s9",
+  "heatPumpQuote": "Moderated setbacks of not more than 2°C should be employed or a \"smart\" thermostat that switches the system on early ... should be used.",
+  "heatPumpSrc": "nrcan-heat-pump-guide"
+ },
+ "water": {
+  "litresPerPerson": 75,
+  "deliveryC": 55,
+  "inletOffsetC": 3.3,
+  "inletMinC": 5,
+  "inletNote": "Average cold-water temperature = annual mean air temperature + 3.3 °C (6 °F), the annual-average shortcut of the ANSI/RESNET 301 mains-temperature method. We never go below 5 °C, the coldest winter intake temperature NRCan mentions, because water mains do not run below freezing.",
+  "kJperLK": 4.186,
+  "types": {
+   "gasTank": {
+    "label": "Gas tank (standard)",
+    "fuel": "gas",
+    "uef": 0.58,
+    "src": "nrcan-gas-wh-reg"
+   },
+   "gasCondensing": {
+    "label": "Gas tank, condensing",
+    "fuel": "gas",
+    "uef": 0.81,
+    "src": "energystar-wh-criteria"
+   },
+   "gasTankless": {
+    "label": "Gas tankless",
+    "fuel": "gas",
+    "uef": 0.87,
+    "src": "nrcan-gas-tankless-reg"
+   },
+   "electricTank": {
+    "label": "Electric tank",
+    "fuel": "electricity",
+    "uef": 0.92,
+    "src": "ecfr-electric-wh"
+   },
+   "heatPump": {
+    "label": "Heat pump water heater",
+    "fuel": "electricity",
+    "uef": 2.2,
+    "src": "doe-hpwh-field"
+   },
+   "oilTank": {
+    "label": "Oil-fired tank",
+    "fuel": "oil",
+    "uef": 0.55,
+    "src": "nrcan-oil-wh-reg"
+   }
+  },
+  "hpwhHeatTaken": {
+   "heatingSeasonShare": 0.6666666666666666,
+   "note": "In the heating season a heat pump water heater cools the room it sits in; the heating system must replace that heat. Added space heating = water-heating load × (1 − 1/COP) × 2/3 (share of hot water used in the heating season, as assumed by TRCA's STEP) ÷ heating-system efficiency.",
+   "src": "trca-step-hpwh"
+  },
+  "tanklessClaim": {
+   "smallUseLitres": 155,
+   "smallUse": [
+    0.24,
+    0.34
+   ],
+   "largeUseLitres": 326,
+   "largeUse": [
+    0.08,
+    0.14
+   ],
+   "quote": "For homes that use 41 gallons or less of hot water daily, demand water heaters can be 24%–34% more energy efficient than conventional storage tank water heaters. They can be 8%–14% more energy efficient for homes that use a lot of hot water — around 86 gallons per day.",
+   "src": "doe-tankless"
+  },
+  "srcs": [
+   "nrcan-water-heater-guide",
+   "resnet-301-mains",
+   "inspq-scald"
+  ]
+ },
+ "cooling": {
+  "usageFactor": 0.8,
+  "usageNote": "NRCan's formula assumes the air conditioner runs whenever it is warm. We multiply by 0.8 because most households do not; with that factor the formula's average for the site's Ontario cities (1,181 kWh) sits within NRCan's measured 2018–2023 range for Ontario central units (1,008–1,645 kWh, mean 1,321).",
+  "btuhPerM2": 200,
+  "sizingNote": "NRCan's rough rule of thumb is 200 Btu/h of cooling per square metre of living space (rounded here to the nearest half ton). NRCan says central units should be sized by a contractor using CSA F280; enter the size on your unit's label if you know it.",
+  "seerByAge": {
+   "before1995": 8,
+   "1995to2006": 10,
+   "2006to2022": 13,
+   "2023on": 14
+  },
+  "seerNote": "NRCan: a 10-year-old unit (in the early 2000s) probably had SEER 7–8; regulated minimums were SEER 10 from 1995, 13 from 2006 and SEER2 13.4 (about SEER 14) from 2023.",
+  "heatPumpSeer": 14.3,
+  "room": {
+   "capacityBtuh": 9500,
+   "ceerNew": 16.0,
+   "eerStock": 11.2,
+   "formulaFactor": 0.9
+  },
+  "centralDefaultCapacityBtuh": 32700,
+  "ontarioCentralMeanKwh": 1321,
+  "ontarioCentralRange": [
+   1008,
+   1645
+  ],
+  "quebecCentralMeanKwh": 1543,
+  "srcs": [
+   "nrcan-ac",
+   "nrcan-ac-regs",
+   "nrcan-ceud-t27-on",
+   "nrcan-ceud-t4-on",
+   "nrcan-room-ac-reg",
+   "nrcan-split-hp-reg"
+  ]
+ },
+ "costs": {
+  "atticPerSqft": {
+   "low": 1.5,
+   "high": 2.45,
+   "note": "HomeStars (updated 21/08/2026): \"installation costs range from $1.50 to $2.45 per square foot\"; Canadian attic jobs average $1,500–$3,000 including materials and installation.",
+   "src": "homestars-attic"
+  },
+  "airSealing": {
+   "low": 350,
+   "high": 1500,
+   "note": "HomeStars (updated 21/08/2026): air sealing and ventilation \"could add $350 to $1,500\" to an attic insulation job.",
+   "src": "homestars-attic"
+  },
+  "windowEach": {
+   "low": 800,
+   "high": 1200,
+   "note": "HomeStars (updated 21/08/2026): $800–$1,000 for a double-hung and $900–$1,200 for a casement window, installed; bay and bow windows $2,500–$4,000.",
+   "src": "homestars-windows"
+  },
+  "tankWaterHeater": {
+   "low": 1000,
+   "high": 1300,
+   "note": "FurnacePrices.ca (updated August 15, 2025): storage tank water heaters $1,000–$1,300 including installation.",
+   "src": "furnaceprices-wh"
+  },
+  "tanklessWaterHeater": {
+   "low": 2000,
+   "high": 4500,
+   "note": "FurnacePrices.ca (updated August 15, 2025): a tankless water heater costs about $2,000–$4,500 including installation.",
+   "src": "furnaceprices-wh"
+  },
+  "ashpColdDucted": {
+   "low": 12000,
+   "high": 18000,
+   "note": "FurnacePrices.ca (updated September 1, 2026): ducted central cold-climate heat pump $12,000–$18,000+ (may include electrical upgrades). Dunsky/CCI (2023$): $11,890–$19,880.",
+   "src": "furnaceprices-hp"
+  },
+  "ashpDuctless": {
+   "low": 5000,
+   "high": 8000,
+   "note": "FurnacePrices.ca (updated September 1, 2026): ductless mini-split, single zone $5,000–$8,000; multi-zone $8,000–$16,000+.",
+   "src": "furnaceprices-hp"
+  },
+  "gshp": {
+   "low": 25000,
+   "high": 40000,
+   "note": "FurnacePrices.ca (updated September 1, 2026): ground-source $25,000–$40,000+.",
+   "src": "furnaceprices-hp"
+  },
+  "gasFurnace": {
+   "low": 4000,
+   "high": 7000,
+   "note": "FurnacePrices.ca (updated April 22, 2026): typical $4,000–$7,000 installed.",
+   "src": "furnaceprices-furnace"
+  },
+  "unverified": "No 2025–2026 Canadian source for installed costs of wall insulation, basement wall insulation, exterior insulation, heat pump water heaters or thermostats was reachable in this session; those fields start blank (enter your quote)."
+ }
+}

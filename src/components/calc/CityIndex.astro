@@ -1,0 +1,21 @@
+---
+/** Every city page for one calculator, grouped by province (west to east). */
+import { citiesByProvince, cityName, type CalcSlug } from '../../lib/calc/data';
+
+interface Props { calc: CalcSlug; current?: string }
+const { calc, current } = Astro.props;
+const groups = citiesByProvince();
+---
+
+<div class="city-index-groups">
+  {groups.map((g) => (
+    <div>
+      <h3>{g.provName}</h3>
+      <ul>
+        {g.cities.map((c) => (
+          <li><a href={`/calculators/${calc}/${c.slug}/`} aria-current={c.slug === current ? 'page' : undefined}>{cityName(c)}</a></li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

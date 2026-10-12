@@ -1,0 +1,669 @@
+{
+ "asOf": "2026-10-08",
+ "notes": [
+  "Prices include taxes and are what a residential customer pays (see each entry for exceptions).",
+  "Electricity \"allIn\" is the average price of a 1,000 kWh/month bill including fixed charges; \"allInCurrentTariff\" rebuilds that bill from tariffs in effect on 2026-10-08. \"variable\" is the price of one more kWh in the tier an electrically heated home reaches in winter.",
+  "Natural gas \"allIn\" spreads fixed charges over 2,400 m³ a year (2,200 m³ in Ontario's former Union zones); \"variable\" excludes fixed charges.",
+  "The federal consumer carbon charge has been zero since April 1, 2025 and BC's consumer carbon tax ended the same day; Quebec's cap-and-trade charge still applies to natural gas.",
+  "Heating oil: Statistics Canada table 18-10-0001-01 (August 2026 and the 12-month average, September 2025 to August 2026). Oil prices rose sharply in 2026.",
+  "Firewood and wood pellets: no 2025–2026 price source could be verified; enter your supplier's price.",
+  "Ontario natural gas prices are for Enbridge's EGD rate zone (Toronto, Ottawa, Niagara). Homes in the former Union Gas zones, and Kitchener Utilities or Utilities Kingston customers, pay different rates."
+ ],
+ "provinces": {
+  "ON": {
+   "electricity": {
+    "allIn": 0.179,
+    "allInCurrentTariff": 0.188,
+    "variable": 0.144,
+    "utility": "Toronto Hydro (provincial default; Ottawa override uses Hydro Ottawa)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Toronto residential bill at 1,000 kWh/month incl. taxes (17.90 c/kWh; 15.57 c/kWh before tax). HQ's 'excluding taxes' Ontario bills already net the Ontario Electricity Rebate (13.1% on 2025-04-01); HST 13% is charged on the pre-rebate subtotal. Rates and the rebate have changed since (see allInCurrentTariff).",
+    "variableBasis": "Marginal cost of one kWh for a Toronto Hydro customer on default time-of-use pricing: TOU average 12.75 c x loss factor 1.0295 + volumetric delivery 2.401 c (transmission and riders) + regulatory 0.53 c = 16.06 c before rebate/tax, x 0.895 (OER 23.5%, HST 13%). Toronto Hydro's residential distribution charge is a fixed service charge, so it does not affect the marginal price.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "RPP prices effective 2025-11-01 (next reset 2026-11-01); Toronto Hydro delivery rates effective 2026-01-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "Same 1,000 kWh/30-day bill rebuilt from tariffs in effect 2026-10-08: RPP time-of-use average 12.75 c/kWh (OEB weights 64% off-peak 9.8 c, 18% mid-peak 15.7 c, 18% on-peak 20.3 c; Nov 1, 2025 prices) x Toronto Hydro loss factor 1.0295; Toronto Hydro 2026 fixed charges $49.11/30 days (service charge $51.18, riders, SME, SSS admin); volumetric riders 0.160 c and transmission 2.241 c/kWh; regulatory 0.53 c/kWh; then Ontario Electricity Rebate 23.5% (since Nov 1, 2025) and HST 13% on the pre-rebate subtotal (net factor 0.895).",
+    "tiers": "Tiered plan (optional): 12.0 c/kWh up to 1,000 kWh/month in winter (Nov-Apr; 600 kWh in May-Oct), 14.2 c/kWh above; an electrically heated home above the winter threshold pays about $0.157/kWh all-in at the margin. Ultra-low overnight plan: 3.9 c/kWh 11 p.m.-7 a.m. (about $0.062/kWh all-in), 39.1 c/kWh on-peak 4-9 p.m. weekdays.",
+    "currentTariffSources": [
+     "https://www.oeb.ca/sites/default/files/rpp-price-report-20251017.pdf",
+     "https://www.oeb.ca/sites/default/files/rpp-backgrounder-20251017.pdf",
+     "https://rds.oeb.ca/CMWebDrawer/Record/923998/File/document",
+     "https://www.torontohydro.com/for-home/rates",
+     "https://www.oeb.ca/sites/default/files/bill-graphic-sample-20191022.pdf"
+    ]
+   },
+   "gas": {
+    "allIn": 0.478,
+    "variable": 0.314,
+    "utility": "Enbridge Gas Inc. - Enbridge Gas Distribution (EGD) rate zone, system gas (Rate 1; Toronto, Ottawa, Niagara per Enbridge)",
+    "basis": "OEB backgrounder for the Oct 1, 2026 QRAM gives a total annual bill of $999.95 for a typical EGD-zone customer using 2,400 m3 (it reconciles with the published rate components only before HST, so it is treated as pre-tax); that figure includes a one-time credit (rate adjustment of -0.6494 c/m3, -$15.59/yr) which is removed here, giving $1,015.54 before tax; x 1.13 HST / 2,400 m3. Variable = gas supply 9.4741 + cost adjustment 0.5322 + delivery 12.2850 (block over 170 m3/month, typical of winter heating months) + transportation to Enbridge 5.4818 c/m3, x 1.13. Federal carbon charge 0 since Apr 1, 2025.",
+    "sourceDate": "Rates effective 2026-10-01 to 2026-12-31 (OEB interim order EB-2026-0221, Sept 24, 2026)",
+    "source": "https://www.oeb.ca/sites/default/files/ENBRIDGE-QRAM%20BG-OCTOBER%202026_FINAL.pdf",
+    "taxes": "included",
+    "taxNote": "HST 13% applied at the standard Ontario rate; no fetched source states the gas tax treatment explicitly.",
+    "zones": {
+     "EGD": {
+      "allIn": 0.478,
+      "variable": 0.314,
+      "assumedM3PerYear": 2400
+     },
+     "UnionSouth": {
+      "allIn": 0.473,
+      "variable": 0.284,
+      "assumedM3PerYear": 2200,
+      "basis": "OEB annual bill $934.80 at 2,200 m3 less one-time $14.68 charge (billed Oct-Dec 2026); variable = commodity 15.3548 + gas price adjustment 2.3461 + delivery 7.4325 (over 250 m3/month) c/m3; transportation is included in the commodity in this zone."
+     },
+     "UnionNorthEast": {
+      "allIn": 0.602,
+      "variable": 0.416,
+      "assumedM3PerYear": 2200,
+      "basis": "OEB annual bill $1,159.01 at 2,200 m3 plus one-time credit $12.22 removed; variable = commodity 15.6674 + adjustment 2.1088 + transportation 1.7135 - 0.5546 + delivery 17.9146 (301-500 m3/month block) c/m3."
+     },
+     "UnionNorthWest": {
+      "allIn": 0.451,
+      "variable": 0.266,
+      "assumedM3PerYear": 2200,
+      "basis": "OEB annual bill $857.98 at 2,200 m3 plus one-time credit $19.90 removed; variable = commodity 9.5866 - 2.6700 + transportation 2.7031 - 0.5594 + delivery 14.4542 (301-500 m3/month block) c/m3."
+     },
+     "note": "Which Ontario cities fall in each Union zone was not verified from a fetched source, so no city overrides were made for gas; Enbridge's rate page names Toronto, Ottawa and Niagara as Rate 1 (EGD) areas."
+    }
+   },
+   "oil": {
+    "perL": 2.447,
+    "month": "2026-08",
+    "avg12mo": 1.949,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Toronto",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "QC": {
+   "electricity": {
+    "allIn": 0.095,
+    "allInCurrentTariff": 0.097,
+    "variable": 0.128,
+    "utility": "Hydro-Québec (Rate D; uniform province-wide south of the 53rd parallel)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Montréal residential bill at 1,000 kWh/month incl. GST 5% and QST 9.975% (9.53 c/kWh; 8.29 c before tax). At 1,000 kWh/month nearly all energy is billed at the lower first-tier price.",
+    "variableBasis": "Second-tier Rate D price 11.142 c/kWh (consumption above 40 kWh/day, assumed for an electrically heated home in winter) x 1.14975 GST+QST.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-04-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "Rate D effective 2026-04-01: access charge 46.154 c/day x 30 days + 1,000 kWh x 7.065 c (all within 40 kWh/day x 30), x 1.14975 (GST + QST).",
+    "tiers": "Rate D (2026-04-01): 46.154 c/day access charge; 7.065 c/kWh for the first 40 kWh x days in the period (about $0.081/kWh with taxes); 11.142 c/kWh beyond. Rate Flex D (optional): winter 4.886 / 9.103 c/kWh outside peak events, 46.463 c/kWh during peak events.",
+    "currentTariffSources": [
+     "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+     "https://www.hydroquebec.com/data/documents-donnees/pdf/rates-chart.pdf?v=HT-2025-v3"
+    ],
+    "firstStep": {
+     "perKwh": 0.0812,
+     "threshold": "40 kWh a day",
+     "basis": "Rate D first-tier price 7.065 c/kWh x 1.14975 (GST + QST), rates of April 1, 2026."
+    }
+   },
+   "gas": {
+    "allIn": 0.903,
+    "variable": 0.794,
+    "utility": "Énergir (Rate D1, distributor's supply service)",
+    "basis": "Énergir Conditions of Service and Tariff effective Oct 1, 2026: D1 basic fee 62.525 c/day (0-10,950 m3/yr); unit prices per m3: supply 15.535 (set monthly), RNG socialization 2.706 + rider 1.349, transportation 2.165, load balancing 7.273, distribution 31.299 (first block, up to 30 m3/day, which covers typical residential use), cap-and-trade (CTEAS) 8.727 (set quarterly) = 69.054 c/m3. Annual: $228.22 basic + 2,400 m3 x $0.69054 = $1,885.51 before tax, x 1.14975, / 2,400.",
+    "sourceDate": "2026-10-01",
+    "source": "https://energir.com/files/energir_common/import/Fichiers/Affaires/Tarif/CST-EN-1oct2026.pdf",
+    "taxes": "included",
+    "taxNote": "GST+QST rates as listed by Hydro-Québec for Montréal; not stated in the Énergir tariff. Inventory-related adjustments (if any are billed) are not included. Quebec's cap-and-trade (CTEAS) charge is part of the price."
+   },
+   "oil": {
+    "perL": 2.193,
+    "month": "2026-08",
+    "avg12mo": 1.92,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Montréal",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "BC": {
+   "electricity": {
+    "allIn": 0.134,
+    "allInCurrentTariff": 0.14,
+    "variable": 0.146,
+    "utility": "BC Hydro (Residential Service - Tiered Rate, RS 1101)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Vancouver residential bill at 1,000 kWh/month incl. GST 5% and the $1.90/month regional transit levy (13.43 c/kWh; 12.60 c before tax and levy).",
+    "variableBasis": "Step 2 price 14.08 c/kWh (use above the 675 kWh/month Step 1 threshold, assumed for an electrically heated home in winter) x 0.985 (DARR -1.5%) x 1.05 GST.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-04-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "RS 1101 effective 2026-04-01: basic 23.44 c/day; Step 1 11.87 c/kWh for 22.1918 kWh/day (665.8 kWh in 30 days); Step 2 14.08 c/kWh; Deferral Account Rate Rider -1.5% (Trade Income Rider 0%); regional transit levy $0.0624/day (as shown on BC Hydro's 2025 sample bill; HQ lists the levy for Vancouver); GST 5%.",
+    "tiers": "Tiered RS 1101: Step 1 11.87 c/kWh (first 675 kWh/month, prorated daily; about $0.123 all-in), Step 2 14.08 c/kWh. Optional flat rate RS 1151: 12.70 c/kWh with 25.00 c/day basic (about $0.131/kWh all-in). Optional time-of-day add-on: -5 c/kWh overnight (11 p.m.-7 a.m.), +5 c/kWh 4-9 p.m.",
+    "currentTariffSources": [
+     "https://app.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/tariff-filings/electric-tariff/bchydro-electric-tariff.pdf",
+     "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/tiered.html",
+     "https://app.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/regulatory-planning-documents/integrated-resource-plans/current-plan/sample-bill-residential-tiered-rate.pdf"
+    ],
+    "firstStep": {
+     "perKwh": 0.1228,
+     "threshold": "675 kWh a month",
+     "basis": "RS 1101 Step 1 price 11.87 c/kWh x 0.985 (DARR -1.5%) x 1.05 GST, rates of April 1, 2026."
+    }
+   },
+   "gas": {
+    "allIn": 0.561,
+    "variable": 0.494,
+    "utility": "FortisBC Energy (Mainland and Vancouver Island service area)",
+    "basis": "FortisBC residential rates effective July 1, 2026 (latest shown on 2026-10-08): basic $0.4216/day; delivery $8.469/GJ; storage and transport $2.472/GJ; cost of gas $1.660/GJ. 2,400 m3 = 89.52 GJ at 0.0373 GJ/m3 (CER). Annual $1,281.93 before tax, x 1.05, / 2,400. Variable = $12.601/GJ x 0.0373 x 1.05. No carbon tax line appears in the current rate table.",
+    "sourceDate": "2026-07-01 (latest rates shown on 2026-10-08)",
+    "source": "https://www.fortisbc.com/accounts/billing-rates/natural-gas-rates/residential-rates",
+    "taxes": "included",
+    "taxNote": "GST only, assuming the PST exemption that BC Hydro's bills show for residential electricity also applies to residential gas; not stated on the FortisBC page."
+   },
+   "oil": {
+    "perL": 2.276,
+    "month": "2026-08",
+    "avg12mo": 1.919,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Vancouver",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "AB": {
+   "electricity": {
+    "allIn": 0.241,
+    "variable": 0.202,
+    "utility": "ENMAX Power (distribution) with ENMAX Energy Rate of Last Resort (Calgary; provincial default). Edmonton override uses EPCOR.",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Calgary residential bill at 1,000 kWh/month incl. GST 5% (24.05 c/kWh; 22.90 c before tax), using the Rate of Last Resort energy price that has been fixed since 2025-01-01.",
+    "variableBasis": "ENMAX Energy RoLR 12.06 c/kWh (AUC Decision 29204-D02-2025; fixed Jan 1, 2025-Dec 31, 2026) + ENMAX Power D100 system usage 1.5477 c + transmission 3.8996 c + balancing pool allocation rider 0.1290 c + TAC deferral rider 0.0483 c (2026 interim schedule) + City of Calgary local access fee 1.5507 c/kWh = 19.235 c, x 1.05 GST. Excludes the quarterly TAC adjustment rider (Q4 2026 value not available; it was between -0.36 and +0.20 c/kWh in 2025).",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-01-01 (delivery, interim); RoLR term to 2026-12-31",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "tiers": "Flat energy price. Regulated option: the Rate of Last Resort (replaced the Regulated Rate Option on 2025-01-01): 12.01 c/kWh (EPCOR Energy, Edmonton and FortisAlberta areas), 12.06 c (ENMAX, Calgary), 12.02 c (Direct Energy Regulated Services, ATCO Electric areas), fixed to 2026-12-31; the 2027-2028 price may move up to 10% either way. Customers can instead buy from competitive retailers."
+   },
+   "gas": {
+    "allIn": 0.377,
+    "variable": 0.169,
+    "utility": "ATCO Gas South (distribution) with Direct Energy Regulated Services default supply (Calgary; provincial default)",
+    "basis": "Regulated rate option for gas: customers without a retail contract in ATCO Gas territory are served by Direct Energy Regulated Services (DERS) under its Default Rate Tariff, paying the AUC-approved monthly Gas Cost Flow-Through Rate (GCFR). Built from: ATCO Gas South Low Use delivery $0.876/day + $1.000/GJ + Rider T $1.260/GJ (2026 interim); City of Calgary franchise fee 11.11% of ATCO charges plus 11.11% x $3.15/GJ deemed gas value; DERS customer charge $0.371/day less Rider C7 $0.041/day (Jul-Dec 2026); GCFR $1.458/GJ for October 2026. 2,400 m3 = 89.52 GJ (CER 0.0373 GJ/m3). Annual $862.35 before GST.",
+    "sourceDate": "GCFR October 2026; DERS rates 2026-09-01; ATCO delivery 2026-01-01 (interim)",
+    "source": "https://media.auc.ab.ca/prd-wp-uploads/Shared%20Documents/Rates/ATCOGasSouth-RateSchedule.pdf",
+    "taxes": "included",
+    "taxNote": "The weather deferral Rider W in the 2026 interim schedule applied Sept 1, 2025-Feb 28, 2026; any later Rider W is not included. Areas served by Apex Utilities were not covered."
+   },
+   "oil": null,
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "SK": {
+   "electricity": {
+    "allIn": 0.206,
+    "allInCurrentTariff": 0.214,
+    "variable": 0.178,
+    "utility": "SaskPower (Regina; Saskatoon Light & Power matches SaskPower rates)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Regina residential bill at 1,000 kWh/month incl. 10% municipal surcharge and GST 5% (20.58 c/kWh; 17.89 c before tax).",
+    "variableBasis": "Energy charge 15.476 c/kWh x 1.15 (Regina municipal surcharge 10% + GST 5%).",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-02-01 (interim; a further 3.9% is planned for 2027-02-01)",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "SaskPower E01 effective 2026-02-01 (3.9% interim increase): basic $31.16/month + 15.476 c/kWh; x 1.15 (10% municipal surcharge + 5% GST on the base bill).",
+    "tiers": "Flat energy charge; no tiers for standard residential service.",
+    "currentTariffSources": [
+     "https://www.saskpower.com/-/media/saskpower/accounts-and-services/rates/service-rates/power-supply-rates/report-rates-residential.pdf",
+     "https://www.saskpower.com/accounts/power-rates/2026-and-2027-rate-increases"
+    ]
+   },
+   "gas": {
+    "allIn": 0.389,
+    "variable": 0.25,
+    "utility": "SaskEnergy (full service)",
+    "basis": "SaskEnergy residential rates (effective Oct 1, 2023 and still listed as current on 2026-10-08): basic $26.50/month, delivery $0.1113/m3, commodity $0.1264/m3. Annual $888.48 before tax, x 1.05, / 2,400. Federal carbon charge $0 from Apr 1, 2025.",
+    "sourceDate": "2023-10-01 (rates unchanged as of 2026-10-08)",
+    "source": "https://www.saskenergy.com/manage-account/rates/residential-rates",
+    "taxes": "partial",
+    "taxNote": "SaskEnergy charges a municipal surcharge where the community participates (GST applies on top); its rate was not available from a fetched source, so it is excluded. PST applies only to service work, not gas."
+   },
+   "oil": {
+    "perL": 1.753,
+    "month": "2026-08",
+    "avg12mo": 1.451,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Regina",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "MB": {
+   "electricity": {
+    "allIn": 0.121,
+    "allInCurrentTariff": 0.126,
+    "variable": 0.107,
+    "utility": "Manitoba Hydro",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Winnipeg residential bill at 1,000 kWh/month (12.07 c/kWh; 10.53 c before tax). HQ applied the tax set for homes heated by something other than electricity: PST 7% + municipal 2.5% + GST 5%.",
+    "variableBasis": "Energy charge 9.970 c/kWh with the electric-heat tax set from Hydro-Québec's table (PST 1.4% + municipal 0.5% + GST 5% on base plus municipal tax; factor 1.06925). With non-electric-heat taxes it would be $0.114/kWh.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-01-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "Manitoba Hydro standard residential effective 2026-01-01 (+4.0%): basic $9.84/month (<=200 A) + 9.970 c/kWh; same non-electric-heat taxes as HQ (factor 1.14625).",
+    "tiers": "Flat energy charge. Seasonal rate: $118.08/year basic + 9.970 c/kWh.",
+    "currentTariffSources": [
+     "https://www.hydro.mb.ca/account/rates/residential/"
+    ]
+   },
+   "gas": {
+    "allIn": 0.313,
+    "variable": 0.236,
+    "utility": "Manitoba Hydro natural gas (system gas commodity)",
+    "basis": "Manitoba Hydro residential natural gas effective Aug 1, 2026: basic $14.75/month; gas commodity 6.60 c/m3 (reset quarterly); delivery 15.83 c/m3 (transportation 4.58 + distribution 11.25). Annual $715.32 before tax, x 1.05, / 2,400.",
+    "sourceDate": "2026-08-01",
+    "source": "https://www.hydro.mb.ca/account/rates/residential/",
+    "taxes": "partial",
+    "taxNote": "Provincial sales tax and Winnipeg municipal tax on residential natural gas could not be verified from a fetched source and are excluded; the true all-in price is likely higher."
+   },
+   "oil": {
+    "perL": 1.975,
+    "month": "2026-08",
+    "avg12mo": 1.519,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Winnipeg",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "NS": {
+   "electricity": {
+    "allIn": 0.215,
+    "allInCurrentTariff": 0.222,
+    "variable": 0.201,
+    "utility": "Nova Scotia Power (Domestic Service Tariff)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Halifax residential bill at 1,000 kWh/month (21.50 c/kWh; 20.48 c before tax). HQ applies 5% tax for Halifax residential customers (full HST applies to business customers).",
+    "variableBasis": "All-in energy rate 19.128 c/kWh x 1.05.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-05-01 (approved tariff steps to $21.04/month and 19.067 c/kWh base energy on 2027-01-01)",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "Rates effective 2026-05-01: customer charge $20.08/month + 19.128 c/kWh (energy 18.324 + fuel adjustment 0.156 + DSM rider 0.648; storm rider 0), x 1.05.",
+    "tiers": "Flat energy rate. Optional Domestic Time-of-Day (for electric thermal storage): Dec-Feb weekdays 24.384 c (7 a.m.-12 p.m., 4-11 p.m.), 19.459 c (12-4 p.m.), 11.632 c (11 p.m.-7 a.m. and weekends), before riders.",
+    "currentTariffSources": [
+     "https://www.nspower.ca/rates",
+     "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf"
+    ]
+   },
+   "gas": {
+    "allIn": 1.228,
+    "variable": 1.067,
+    "utility": "Eastward Energy (Residential)",
+    "basis": "Eastward Energy rate table, October 2026: fixed customer charge $29.00/month; base energy charge 12.349, transportation 0.71, gas cost recovery 12.49 (residential, set Aug 1), RDA recovery 1.000, federal carbon 0 $/GJ; 5.6% municipal tax on the fixed charge and base energy charge; grand total variable $27.24/GJ. 2,400 m3 = 89.52 GJ (CER 0.0373 GJ/m3). Annual $2,806.01 before GST.",
+    "sourceDate": "2026-10-01",
+    "source": "https://eastwardenergy.com/wp-content/uploads/2026/10/Rate-Table_2026-October-FINAL.pdf",
+    "taxes": "included",
+    "taxNote": "5% assumes natural gas is taxed like Nova Scotia home electricity (5% per Hydro-Québec's tax table); not verified for gas. If full HST applies to gas, allIn and variable would be higher."
+   },
+   "oil": {
+    "perL": 2.102,
+    "month": "2026-08",
+    "avg12mo": 1.78,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Halifax",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "NB": {
+   "electricity": {
+    "allIn": 0.208,
+    "allInCurrentTariff": 0.218,
+    "variable": 0.182,
+    "utility": "NB Power (Moncton, Fredericton). Saint John Energy serves Saint John; its rates page only shows April 2024 rates, so no override was made.",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Moncton residential bill at 1,000 kWh/month incl. HST 15% (20.84 c/kWh). HQ's 'excluding taxes' figure for Moncton (16.61 c) is inconsistent with its own tax-included figure; NB Power's April 1, 2025 rates (urban $29.55/month, 14.76 c + 0.41 c variance account charge) give 18.13 c before tax, which x 1.15 matches HQ's 20.84 c. allInPreTax uses the NB Power figure.",
+    "variableBasis": "15.84 c/kWh x 1.15 HST.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-04-14",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "NB Power residential rates effective 2026-04-14: urban service charge $30.82/month + 15.84 c/kWh (15.39 base + 0.45 variance account), x 1.15 HST.",
+    "tiers": "Single energy rate for all kWh; rural/seasonal service charge $33.82.",
+    "currentTariffSources": [
+     "https://nbpower.com/en/products-services/residential/rates"
+    ]
+   },
+   "gas": {
+    "allIn": 1.084,
+    "variable": 0.955,
+    "utility": "Liberty Utilities (Gas New Brunswick), Small General Service with Liberty Utility Gas supply",
+    "basis": "Liberty Utility Gas commodity $11.02/GJ (Oct 1, 2026) + SGS delivery $11.2378/GJ (approved rates in effect since Jan 1, 2025) + customer charge $22.50/month. 2,400 m3 = 89.52 GJ (CER 0.0373 GJ/m3); annual $2,262.52 before tax, x 1.15. Liberty's own example uses 64 GJ/year (about 1,716 m3), which would give a higher per-m3 average because of the fixed charge.",
+    "sourceDate": "2026-10-01 (commodity, monthly)",
+    "source": "https://naturalgasnb.com/en/for-home/accounts-billing/gas-price-update/",
+    "taxes": "included",
+    "taxNote": "HST 15% applied at the New Brunswick rate; the Liberty pages refer to HST without stating the rate."
+   },
+   "oil": {
+    "perL": 2.343,
+    "month": "2026-08",
+    "avg12mo": 1.945,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Saint John",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": 1.105,
+    "basis": "New Brunswick Energy and Utilities Board maximum total price for propane (heating fuel), 110.5 c/L including HST and up to 10 c/L delivery, in effect from 12:01 a.m. Friday, Oct 2, 2026. This is a regulated ceiling; actual prices can be lower.",
+    "sourceDate": "2026-10-02",
+    "source": "https://nbeub.ca/images/documents/petroleum_pricing/currentmaximumpriceenglish.pdf",
+    "taxNote": null
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "PE": {
+   "electricity": {
+    "allIn": 0.226,
+    "allInCurrentTariff": 0.233,
+    "variable": 0.205,
+    "utility": "Maritime Electric (Residential, rate code 110)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, Charlottetown residential bill at 1,000 kWh/month incl. HST 15% (22.64 c/kWh; 19.69 c before tax). HQ's figure does not deduct the 10% provincial energy rebate on the first block that applied from 2018 until June 30, 2026.",
+    "variableBasis": "First-block energy charge 17.84 c/kWh (applies to the first 2,000 kWh/month) x 1.15 HST.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-08-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "IRAC Order UE26-07 rates effective 2026-08-01: service charge $24.57/month + 17.84 c/kWh (first 2,000 kWh/month), x 1.15 HST. The provincial 10% rebate on the first block ended June 30, 2026, so none is deducted.",
+    "tiers": "17.84 c/kWh for the first 2,000 kWh/month, 14.23 c/kWh above (about $0.164/kWh with HST), so homes using more than 2,000 kWh in a month pay less on the excess. Rural service charge $26.92.",
+    "currentTariffSources": [
+     "https://irac.pe.ca/wp-content/uploads/Order-UE26-07.pdf",
+     "https://www.maritimeelectric.com/about-us/messages-for-our-customers/elimination-of-the-pei-government-energy-rebate/"
+    ]
+   },
+   "gas": null,
+   "oil": {
+    "perL": 1.802,
+    "month": "2026-08",
+    "avg12mo": 1.466,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Charlottetown and Summerside",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": 1.07,
+    "basis": "IRAC maximum propane prices for bulk propane effective Oct 2, 2026, excluding tax: 87.1-90.2 c/L by supplier, plus maximum consumer delivery 2.8-4.2 c/L; supplier totals 90.9-93.9 c/L before tax, x 1.15 HST = 104.5-108.0 c/L; perL is the median supplier (Kenmac/Noonan 93.0 c/L before tax). Regulated ceilings; actual prices can be lower.",
+    "sourceDate": "2026-10-02",
+    "source": "https://irac.pe.ca/petrol/current-petroleum-prices/",
+    "taxNote": "Propane for home heating was eligible for the PEI 10% energy rebate (pre-tax); whether that rebate continues after the June 30, 2026 end of the electricity rebate was not confirmed. If it still applies, the net price is about 9% lower."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "NL": {
+   "electricity": {
+    "allIn": 0.179,
+    "allInCurrentTariff": 0.199,
+    "variable": 0.179,
+    "utility": "Newfoundland Power (Domestic Rate #1.1)",
+    "basis": "allIn: Hydro-Québec 2025 comparison, St. John's residential bill at 1,000 kWh/month incl. HST 15% (17.92 c/kWh; 15.59 c before tax). Rates have changed since April 2025, including a July 1, 2026 increase (see allInCurrentTariff).",
+    "variableBasis": "15.587 c/kWh x 1.15 HST.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-07-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "Rate #1.1 effective 2026-07-01: basic customer charge $17.36/month (<=200 A) + 15.587 c/kWh (includes municipal tax and rate stabilization adjustments), x 1.15 HST.",
+    "tiers": "Single energy rate. Optional Domestic Seasonal rate: +0.953 c/kWh Dec-Apr, -1.297 c/kWh May-Nov. A 1.5% prompt-payment discount applies if paid within 10 days.",
+    "currentTariffSources": [
+     "https://newfoundlandpower.com/-/media/PDFs/Business-Services/Commercial-Rates/RateBook_July1_2026_20260612.pdf",
+     "https://www.gov.nl.ca/releases/2026/exec/0422n03/"
+    ]
+   },
+   "gas": null,
+   "oil": {
+    "perL": 2.161,
+    "month": "2026-08",
+    "avg12mo": 1.755,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "St. John's",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": 1.316,
+    "basis": "Newfoundland and Labrador Public Utilities Board maximum retail propane price for Zone 1ANE (Avalon Peninsula Northeast, which includes St. John's): 114.4 c/L excluding tax on Oct 8, 2026 (base zone 108.9 + zone differential 5.5), x 1.15 HST. Regulated ceiling; the Board moved to daily adjustments 'due to market volatility'.",
+    "sourceDate": "2026-10-08",
+    "source": "http://www.pub.nl.ca/PP/Pricing/PricingAllZones-261008.pdf",
+    "taxNote": "The Board's heating-fuel maximums exclude tax; 15% HST was added at the provincial HST rate. Any point-of-sale rebate on home-heating propane was not verified."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "YT": {
+   "electricity": {
+    "allIn": 0.307,
+    "allInCurrentTariff": 0.307,
+    "variable": 0.289,
+    "utility": "ATCO Electric Yukon / Yukon Energy (Whitehorse, Rate Schedule 1160 Hydro Non-Government residential)",
+    "basis": "Not covered by Hydro-Québec. Computed for 1,000 kWh/month from ATCO Electric Yukon base rates with Riders R (14.38%) and J (100.23%) effective Apr 1, 2026: customer charge $31.44/month + 26.05 c/kWh (block 1, first 1,000 kWh), x 1.05 GST.",
+    "variableBasis": "Block 2 price 27.51 c/kWh (1,001-2,500 kWh/month) x 1.05 GST, used as the marginal price for an electrically heated home in winter.",
+    "sourceDate": "2026-04-01",
+    "variableDate": "2026-04-01",
+    "source": "https://www.atcoelectricyukon.com/content/dam/web/electric-yukon/2026-rates/base-rates-r-j-april-1-2026.pdf",
+    "tiers": "Block 1 (first 1,000 kWh/month) 26.05 c (about $0.274 with GST); block 2 (1,001-2,500) 27.51 c; block 3 (over 2,500) 30.02 c (about $0.315). Rates rose sharply in 2026: Rider J went from 55.40% (Oct 2024) to 92.95% (Jan 2026) and 100.23% (Apr 2026); block 1 was 20.61 c in Oct 2024.",
+    "firstStep": {
+     "perKwh": 0.2735,
+     "threshold": "1,000 kWh a month",
+     "basis": "Block 1 price 26.05 c/kWh x 1.05 GST, rates of April 1, 2026."
+    }
+   },
+   "gas": null,
+   "oil": {
+    "perL": 2.135,
+    "month": "2026-08",
+    "avg12mo": 1.764,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Whitehorse",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  },
+  "NT": {
+   "electricity": {
+    "allIn": 0.414,
+    "allInCurrentTariff": 0.414,
+    "variable": 0.393,
+    "utility": "Naka Power Utilities (NWT) (formerly Northland Utilities), Yellowknife Snare Zone residential",
+    "basis": "Not covered by Hydro-Québec. Computed for 1,000 kWh/month from the Naka Power rate schedule effective July 1, 2026: customer charge $18.00/month and energy 23.72 c/kWh base rates, Rider R +8.199% on base rates, Rider F purchased-power adjustment 10.84 c/kWh (Riders E, G, H at 0), City of Yellowknife franchise tax 2.464%, then GST 5%. The energy rate before franchise tax and GST (36.50 c/kWh) matches the GNWT Territorial Power Support Program's Yellowknife reference rate.",
+    "variableBasis": "(23.72 c x 1.08199 + 10.84 c) = 36.50 c/kWh, x 1.02464 franchise tax x 1.05 GST.",
+    "sourceDate": "2026-07-01",
+    "variableDate": "2026-07-01",
+    "source": "https://www.nakapower.com/content/dam/web/nakapower/2026-07-01-NPUNWT-rate-schedule.pdf",
+    "tiers": "Single energy rate in Yellowknife. Yellowknife (Snare Zone) is excluded from the Territorial Power Support Program subsidy, which uses it as the reference rate for other communities."
+   },
+   "gas": null,
+   "oil": {
+    "perL": 2.163,
+    "month": "2026-08",
+    "avg12mo": 1.693,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Yellowknife",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   },
+   "propane": {
+    "perL": null,
+    "note": "No official residential (bulk heating) propane price exists for this province; enter the price on your propane bill."
+   },
+   "wood": null,
+   "pellets": null
+  }
+ },
+ "cityOverrides": {
+  "ottawa": {
+   "electricity": {
+    "allIn": 0.165,
+    "allInCurrentTariff": 0.178,
+    "variable": 0.142,
+    "utility": "Hydro Ottawa",
+    "basis": "Hydro-Québec 2025 comparison, Ottawa residential bill at 1,000 kWh/month incl. taxes (16.50 c/kWh; 14.35 c before tax, after the 13.1% Ontario Electricity Rebate then in force).",
+    "variableBasis": "(12.75 c x 1.0332 + 2.16 + 0.007 - 0.03 + 0.53) x 0.895.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "RPP 2025-11-01; delivery 2026-06-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
+    "allInCurrentTariffBasis": "RPP TOU average 12.75 c x loss factor 1.0332; Hydro Ottawa delivery effective 2026-06-01 (fixed $1.2888 - $0.0391 + $0.05918/day, SME $0.0138/day, SSS admin $0.0082/day; transmission 2.16 c, low-voltage 0.007 c, RPP rider -0.03 c/kWh); regulatory 0.53 c/kWh; OER 23.5% and HST 13% (factor 0.895).",
+    "currentTariffSources": [
+     "https://www.hydroottawa.com/residential/rates-and-conditions",
+     "https://www.oeb.ca/sites/default/files/rpp-price-report-20251017.pdf"
+    ]
+   },
+   "oil": {
+    "perL": 2.237,
+    "month": "2026-08",
+    "avg12mo": 2.032,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Ottawa-Gatineau (Ontario part)",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   }
+  },
+  "edmonton": {
+   "electricity": {
+    "allIn": 0.231,
+    "variable": 0.199,
+    "utility": "EPCOR Distribution & Transmission with EPCOR Energy Rate of Last Resort",
+    "basis": "Hydro-Québec 2025 comparison, Edmonton residential bill at 1,000 kWh/month incl. GST (23.10 c/kWh; 22.00 c before tax).",
+    "variableBasis": "EPCOR Energy RoLR 12.01 c/kWh + EPCOR DAS-R energy charge 1.783 c + SAS-R transmission 4.050 c (2026 interim) + City of Edmonton franchise fee 1.1186 c/kWh (2025 rate; 2026 rate not found) = 18.96 c, x 1.05 GST. EPCOR SAS riders G, J, K not quantified.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
+    "variableDate": "2026-01-01 (delivery, interim)",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf"
+   },
+   "gas": {
+    "allIn": 0.458,
+    "variable": 0.183,
+    "utility": "ATCO Gas North with DERS default supply",
+    "basis": "ATCO Gas North Low Use $0.997/day + $1.049/GJ + Rider T $1.260/GJ; Edmonton Rider A franchise fee 35.00% and Rider B property tax 4.60% of ATCO charges; DERS $0.330/day net; GCFR $1.458/GJ (Oct 2026). Annual $1,047.54 before GST. With the 12-month average GCFR: allIn $0.48, variable $0.206.",
+    "sourceDate": "GCFR October 2026",
+    "source": "https://media.auc.ab.ca/prd-wp-uploads/Shared%20Documents/Rates/ATCOGasNorth-RateSchedule.pdf",
+    "taxes": "included"
+   }
+  },
+  "saskatoon": {
+   "electricity": {
+    "allIn": 0.206,
+    "allInCurrentTariff": 0.214,
+    "variable": 0.178,
+    "utility": "Saskatoon Light & Power (some Saskatoon properties are in SaskPower's franchise area instead; prices match)",
+    "basis": "Saskatoon Light & Power sets its rates to match SaskPower's: Feb 1, 2026 residential $34.28/month and 17.02 c/kWh including the 10% municipal surcharge (= SaskPower's $31.16 and 15.476 c plus 10%). Prices are therefore the same as the Saskatchewan default (Regina basis); GST 5% added.",
+    "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08); SL&P rates effective 2026-02-01",
+    "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf"
+   },
+   "oil": {
+    "perL": 2.021,
+    "month": "2026-08",
+    "avg12mo": 1.637,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Saskatoon",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   }
+  },
+  "kelowna": {
+   "electricity": {
+    "allIn": 0.189,
+    "allInCurrentTariff": 0.189,
+    "variable": 0.163,
+    "utility": "FortisBC Inc. (electric), Rate Schedule 1 Residential",
+    "basis": "Not in the Hydro-Québec comparison. FortisBC electric tariff RS 1 effective Jan 1, 2026 (BCUC G-293-25): 15.503 c/kWh for all kWh + customer charge $49.58 per two months ($24.79/month); 1,000 kWh/month x 1.05 GST. Confirm the address is in FortisBC's (not BC Hydro's) electric service area.",
+    "variableBasis": "15.503 c/kWh x 1.05 GST (no tiers).",
+    "sourceDate": "2026-01-01",
+    "source": "https://fbcdotcomprod.blob.core.windows.net/libraries/docs/default-source/about-us-documents/regulatory-affairs-documents/electric-utility/fortisbcelectrictariff.pdf"
+   }
+  },
+  "red-deer": {
+   "gas": {
+    "allIn": 0.455,
+    "variable": 0.182,
+    "utility": "ATCO Gas North with DERS default supply",
+    "basis": "As Edmonton, with Red Deer Rider A franchise fee 35.00% and Rider B 3.30% of ATCO charges; GCFR $1.458/GJ (Oct 2026).",
+    "sourceDate": "GCFR October 2026",
+    "source": "https://media.auc.ab.ca/prd-wp-uploads/Shared%20Documents/Rates/ATCOGasNorth-RateSchedule.pdf",
+    "taxes": "included"
+   }
+  },
+  "sherwood-park": {
+   "gas": {
+    "allIn": 0.414,
+    "variable": 0.167,
+    "utility": "ATCO Gas North with DERS default supply",
+    "basis": "As Edmonton, with Sherwood Park Rider A franchise fee 22.00% of ATCO charges (no Rider B listed); GCFR $1.458/GJ (Oct 2026).",
+    "sourceDate": "GCFR October 2026",
+    "source": "https://media.auc.ab.ca/prd-wp-uploads/Shared%20Documents/Rates/ATCOGasNorth-RateSchedule.pdf",
+    "taxes": "included"
+   }
+  },
+  "lethbridge": {
+   "gas": {
+    "allIn": 0.411,
+    "variable": 0.174,
+    "utility": "ATCO Gas South with DERS default supply",
+    "basis": "ATCO Gas South Low Use $0.876/day + $1.000/GJ + Rider T $1.260/GJ; Lethbridge Rider A franchise fee 27.00% and Rider B 4.70% of ATCO charges; DERS $0.330/day net; GCFR $1.458/GJ (Oct 2026).",
+    "sourceDate": "GCFR October 2026",
+    "source": "https://media.auc.ab.ca/prd-wp-uploads/Shared%20Documents/Rates/ATCOGasSouth-RateSchedule.pdf",
+    "taxes": "included"
+   }
+  },
+  "thunder-bay": {
+   "oil": {
+    "perL": 2.18,
+    "month": "2026-08",
+    "avg12mo": 1.713,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Thunder Bay",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   }
+  },
+  "quebec-city": {
+   "oil": {
+    "perL": 2.189,
+    "month": "2026-08",
+    "avg12mo": 1.916,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Québec",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   }
+  },
+  "victoria": {
+   "oil": {
+    "perL": 2.562,
+    "month": "2026-08",
+    "avg12mo": 2.126,
+    "avg12moPeriod": "2025-09 to 2026-08",
+    "city": "Victoria",
+    "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101"
+   }
+  }
+ },
+ "oilSource": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101",
+ "oilMonth": "2026-08",
+ "oilAvgPeriod": "2025-09 to 2026-08"
+}

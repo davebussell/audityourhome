@@ -1,0 +1,89 @@
+---
+import type { UpgradePage } from '../../lib/calc/pages/upgrade';
+import { MEASURE_LABEL, pbRange } from './upgrade-payback';
+import { money, gj, pct, range, longDate } from '../../lib/calc/format';
+import { shortProgram } from '../../lib/calc/data';
+
+interface Props { page: UpgradePage; cityName: string; provName: string }
+const { page, cityName, provName } = Astro.props;
+const g = page.glance;
+const MEAS = [
+  { key: 'attic', label: 'Attic insulation' },
+  { key: 'walls', label: 'Wall insulation' },
+  { key: 'basement', label: 'Basement wall insulation' },
+  { key: 'airSealing', label: 'Air sealing' },
+  { key: 'windows', label: 'Windows and doors' },
+] as const;
+const statusLabel: Record<string, string> = { open: 'Open', closed: 'Closed', waitlist: 'Waitlist', 'income-qualified': 'Income-qualified' };
+---
+
+<section class="sec" id="at-a-glance" aria-labelledby="glance-h">
+  <h2 id="glance-h">{cityName} at a glance: standard upgrades for a 1966–1980 house</h2>
+  <p class="glance-note">Detached, about 1,600 sq ft over a full basement, two storeys, with the era's typical insulation (attic R-20, walls RSI 2.1, uninsulated basement walls, double-glazed windows). Savings use the price of one more unit of energy; costs are installed ranges where we could verify one.</p>
+  {g.runs.map((run) => (
+    <div class="card tablewrap">
+      <table class="compact gtable">
+        <caption>{run.label}</caption>
+        <thead><tr><th scope="col">Upgrade</th><th scope="col" class="num">Saved a year</th><th scope="col">Cost and rebate</th><th scope="col">Payback</th><th scope="col" class="num">20 years</th></tr></thead>
+        <tbody>
+          {run.r.measures.map((o) => (
+            <tr>
+              <td class="c-main">{MEASURE_LABEL[o.key]}<span class="sub">{o.m.applicable ? o.detail : o.m.note}</span></td>
+              <td class="c-val num">{o.m.applicable ? money(o.dollars) : '—'}{o.m.applicable && <span class="sub">{gj(o.m.gj)} · {pct(o.m.fraction, 1)}</span>}</td>
+              <td class="c-s1" data-k="cost">{!o.m.applicable ? '—' : o.costLow === null ? 'get a quote' : range(o.costLow, o.costHigh, money)}{o.m.applicable && o.rebate && <span class="sub">rebate {range(o.rebate.amountLow, o.rebate.amountHigh, money)}</span>}</td>
+              <td class="c-s2" data-k="payback">{o.m.applicable ? pbRange(o.pbLow, o.pbHigh) : '—'}</td>
+              <td class="c-s3 num" data-k="20 years">{o.m.applicable ? money(o.twenty) : '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ))}
+  <p class="glance-note">The house needs about {gj(g.runs[0].r.demand)} of heat a year here. Walls in this era already hold about RSI 2.1, so dense-packing gains nothing and the table shows R-10 of exterior insulation instead. Wall and basement prices start blank because we couldn't verify a 2025–2026 Canadian cost; the 20-year column shows what each upgrade is worth to compare with a quote.</p>
+
+  <h3 id="rebates">Rebates for these upgrades in {provName}</h3>
+  {page.glance.prov?.summary && <p class="glance-note">{page.glance.prov.summary}</p>}
+  <div class="two-up">
+    {MEAS.map((m) => {
+      const list = (g.full[m.key] ?? []).filter((e) => e.status !== 'notApplicable');
+      const note = g.prov?.measureNotes?.[m.key];
+      return (
+        <div class="card rule-card">
+          <h3>{m.label}</h3>
+          {list.length === 0 && <p>{note ?? 'No open provincial rebate found.'}</p>}
+          {list.map((e) => (
+            <p>
+              <strong>{shortProgram(e.program)}</strong> <span class={`chip ${e.status === 'open' ? 'chip-active' : 'chip-limited'}`}>{statusLabel[e.status] ?? e.status}</span><br />
+              {e.amount}
+              {e.conditions && <><br /><span class="small">Conditions: {e.conditions}</span></>}
+              {e.deadline && <><br /><span class="small">Deadline: {e.deadline}</span></>}
+              <br /><span class="small">{e.slug && <><a href={`/programs/${e.slug}/`}>Program details</a> · </>}<a href={e.source} rel="noopener">official page ↗</a> · checked {longDate(e.checked ?? '')}</span>
+            </p>
+          ))}
+          {list.length > 0 && note && <p class="small">{note}</p>}
+        </div>
+      );
+    })}
+  </div>
+  {(g.prov?.caps?.length || g.prov?.bonuses?.length) ? (
+    <div class="card card-pad rule-card" style="margin-top:14px">
+      <h3>Caps and bonuses</h3>
+      {g.prov.caps.map((c) => <p>{c.amount} <a href={c.source} rel="noopener">source ↗</a></p>)}
+      {g.prov.bonuses.map((c) => <p>{c.amount} <a href={c.source} rel="noopener">source ↗</a></p>)}
+    </div>
+  ) : null}
+  {g.municipal.length > 0 && (
+    <div class="card card-pad rule-card" style="margin-top:14px">
+      <h3>Local programs in {cityName}</h3>
+      {g.municipal.map((x) => <p><strong>{x.program}</strong> <span class="chip chip-neutral">{statusLabel[x.status] ?? x.status}</span><br />{x.conditions} <a href={x.source} rel="noopener">official page ↗</a></p>)}
+    </div>
+  )}
+  {g.prov?.financing?.filter((f) => !f.city || f.city === page.payload.city.slug).length ? (
+    <div class="card card-pad rule-card" style="margin-top:14px">
+      <h3>Financing</h3>
+      {g.prov.financing.filter((f) => !f.city || f.city === page.payload.city.slug).map((f) => (
+        <p><strong>{f.name}</strong>{f.status && <> <span class="chip chip-neutral">{statusLabel[f.status] ?? f.status}</span></>}<br />{[f.amount, f.interestRate].filter(Boolean).join('; ')} {f.source && <a href={f.source} rel="noopener">official page ↗</a>}</p>
+      ))}
+    </div>
+  ) : null}
+</section>

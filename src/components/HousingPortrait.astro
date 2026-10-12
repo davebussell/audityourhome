@@ -21,9 +21,17 @@ interface Props {
   designHeat: number;
   /** Heading level text above the drawing (omit to hide) */
   heading?: string;
+  /** What "houses" counts (default: the city pages' census definition) */
+  housesLabel?: string;
+  /** Climate source named in the caption (default: NRCan HOT2000) */
+  climateSource?: string;
 }
 
-const { slug, name, era, houses, hdd, designHeat, heading } = Astro.props;
+const {
+  slug, name, era, houses, hdd, designHeat, heading,
+  housesLabel = 'single-detached, semi-detached, row and duplex',
+  climateSource = 'NRCan HOT2000 climate data',
+} = Astro.props;
 
 const ERAS = [
   { key: 'pre1961', label: 'Before 1961', color: '#F4A53F', glow: 0.85, win: 0.95 },
@@ -161,11 +169,11 @@ const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', '
     ))}
   </ul>
   <figcaption id={`${uid}-cap`}>
-    Each house stands for one in ten of {name}'s {fmt(houses)} houses (single-detached, semi-detached, row and duplex),
+    Each house stands for one in ten of {name}'s {fmt(houses)} houses ({housesLabel}),
     drawn by when it was built. The glow shows the usual pattern: older houses tend to be leakier and less insulated.
     Snowfall scales with heating degree-days. Sources: Statistics Canada 2021 Census
     (<a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" rel="noopener">table 98-10-0233-01</a>),
-    NRCan HOT2000 climate data.
+    {climateSource}.
   </figcaption>
 </figure>
 

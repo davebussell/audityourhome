@@ -1,0 +1,79 @@
+---
+import type { AppliancePage } from '../../lib/calc/pages/appliance';
+import { money, qty, int, unitPrice, stationName } from '../../lib/calc/format';
+
+interface Props { page: AppliancePage; cityName: string }
+const { page, cityName } = Astro.props;
+const g = page.glance;
+const p = g.price;
+const rows = g.rows.map((r) => {
+  const oldCost = r.oldKwh != null ? r.oldKwh * p : null;
+  const newCost = r.newKwh != null ? r.newKwh * p : null;
+  const diff = oldCost !== null && newCost !== null ? oldCost - newCost : null;
+  return { ...r, oldCost, newCost, diff };
+});
+const ev = page.payload.items.find((i) => i.id === 'evCharging');
+const evKwh = ev && ev.kwhPer100km && ev.defaultUse ? (ev.kwhPer100km * ev.defaultUse) / 100 : null;
+const bhOld = (g.bh.oldKwh ?? 0) * g.nights;
+const bhNew = (g.bh.newKwh ?? 0) * g.nights;
+const diffText = (d: number | null) => (d === null ? '—' : Math.abs(d) < 0.5 ? 'about the same' : d > 0 ? `saves ${money(d)}/yr` : `uses ${money(-d)}/yr more`);
+---
+
+<section class="sec" id="at-a-glance" aria-labelledby="glance-h">
+  <h2 id="glance-h">{cityName} at a glance</h2>
+  <p class="glance-note">Yearly running cost at {unitPrice(p, 'kWh')}, the price of one more kWh from {g.elecUtil} with taxes. Each row compares the model or habit on the left with the efficient option on the right.</p>
+
+  <div class="card tablewrap">
+    <table class="compact gtable ap-gtable">
+      <caption>What common appliances cost to run in {cityName}</caption>
+      <thead>
+        <tr><th scope="col">Appliance</th><th scope="col" class="num">Older or as is</th><th scope="col" class="num">Efficient option</th><th scope="col" class="num">Difference</th></tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td class="c-main">{r.label}{r.oldLabel && r.newLabel ? <span class="sub">{r.oldLabel} vs {/^[A-Z][a-z]/.test(r.newLabel) ? r.newLabel.charAt(0).toLowerCase() + r.newLabel.slice(1) : r.newLabel}</span> : r.newLabel ? <span class="sub">{r.newLabel}</span> : null}</td>
+            <td class="c-val num">{money(r.oldCost)}{r.oldKwh != null && <span class="sub">{qty(r.oldKwh)} kWh</span>}</td>
+            <td class:list={['c-s2 num', { na: r.newCost === null }]} data-k={r.newCost !== null ? 'efficient:' : undefined}>{r.newCost !== null ? <>{money(r.newCost)}<span class="sub">{qty(r.newKwh)} kWh</span></> : '—'}</td>
+            <td class:list={['c-s1 num', { na: r.diff === null }]}>{diffText(r.diff)}</td>
+          </tr>
+        ))}
+        {evKwh !== null && (
+          <tr>
+            <td class="c-main">Electric vehicle charging<span class="sub">{int(ev!.defaultUse)} km a year at {ev!.kwhPer100km} kWh/100 km</span></td>
+            <td class="c-val num">{money(evKwh * p)}<span class="sub">{qty(evKwh)} kWh</span></td>
+            <td class="c-s2 num na">—</td>
+            <td class="c-s1 num na">—</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+  <p class="glance-note">Per bulb for lighting; the hot tub and standby rows are single estimates. Newer electric ranges are rated slightly higher than 2008 models, so replacing one for efficiency doesn't pay. Sources for every figure are listed below.</p>
+
+  <div class="two-up" style="margin-top:18px">
+    <div class="card rule-card">
+      <h3>Block heaters in {cityName}</h3>
+      {g.nights > 0 ? (
+        <p>{cityName} averages <strong>{int(g.nights)} night{g.nights === 1 ? '' : 's'} a year below −20 °C</strong> (ECCC 1981–2010 normals, {stationName(g.cl.ecccStation)} station). A 500 W block heater plugged in all night (12 hours) on those nights uses about {qty(bhOld)} kWh, or {money(bhOld * p)} a year; on a 4-hour timer, {qty(bhNew)} kWh, or {money(bhNew * p)}.</p>
+      ) : (
+        <p>{cityName} averages <strong>fewer than one night a year below −20 °C</strong> (ECCC 1981–2010 normals, {stationName(g.cl.ecccStation)} station), so a block heater is rarely needed. Each night plugged in costs about ${((g.bh.oldKwh ?? 0) * p).toFixed(2)} for 12 hours and ${((g.bh.newKwh ?? 0) * p).toFixed(2)} on a 4-hour timer.</p>
+      )}
+      <p class="small">SaskPower suggests plugging in below −15 °C, which happens more often, and NRCan suggests a timer set to no more than 2 hours. The calculator lets you enter your own number of nights.</p>
+    </div>
+    <div class="card rule-card">
+      <h3>Electricity prices used here</h3>
+      <ul class="ap-prices">
+        <li><strong>{unitPrice(p, 'kWh')}</strong> for one more kWh{g.firstStep ? `, within the first ${g.firstStep.threshold}` : ''}. This is the price the calculator uses.</li>
+        {g.firstStep && <li><strong>{unitPrice(g.variable, 'kWh')}</strong> for each kWh above {g.firstStep.threshold}.</li>}
+        <li><strong>{unitPrice(g.avg, 'kWh')}</strong> on average for a 1,000 kWh month, fixed charges included.</li>
+      </ul>
+      <p class="small">Fixed monthly charges don't change when you unplug something, so savings use the price of one more kWh. Check the price on your own bill: rates change, and some homes pay by time of use.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ap-prices { margin: 0 0 10px; padding-left: 18px; display: grid; gap: 6px; font-size: 14.5px; }
+  @media (min-width: 641px) { .ap-gtable td.c-s1 { white-space: nowrap; } }
+</style>

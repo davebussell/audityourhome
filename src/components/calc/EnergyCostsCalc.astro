@@ -1,0 +1,384 @@
+---
+/**
+ * Interactive energy-costs calculator (heating, switching, hot water, cooling).
+ * The first result is rendered at build time with the same functions the browser uses.
+ */
+import { MODEL, VINTAGES, VINTAGE_LABEL, HOUSE_TYPE_LABEL, SIZE_LABEL, SYSTEM_KEYS, WATER_HEATER_KEYS, fuelOf, fuelUnit } from '../../lib/calc/engine';
+import type { ResolvedPrices } from '../../lib/calc/data';
+import { energyDefaults, computeEnergy, renderHeating, renderSwitch, renderWater, renderCooling, type EnergyPayload } from './energy-costs';
+import { unitPrice, longDate, rateDate } from '../../lib/calc/format';
+
+interface Props {
+  payload: EnergyPayload;
+  rp: ResolvedPrices;
+  cityName: string;
+  hubNote?: string;
+}
+const { payload, rp, cityName, hubNote } = Astro.props;
+const s = energyDefaults(payload);
+const r = computeEnergy(s, payload);
+const hasGas = payload.prices.gas !== null;
+const sysFuel = fuelOf(s.system);
+const unit = fuelUnit(sysFuel).unit;
+const systems = SYSTEM_KEYS.filter((k) => hasGas || fuelOf(k) !== 'gas');
+const whTypes = WATER_HEATER_KEYS.filter((k) => hasGas || MODEL.water.types[k].fuel !== 'gas');
+const switchTargets = systems.filter((k) => ['ashpCold', 'ashpStandard', 'gshp', 'gasFurnaceHigh', 'oilFurnaceNew', 'propaneFurnaceCond', 'electricResistance', 'woodCertified', 'pellet'].includes(k));
+const p = (n: number | null | undefined) => (typeof n === 'number' ? String(n) : '');
+const elecHint = `${rp.elec.utility.split('(')[0].trim()}; ${rp.elec.tierHigher ? 'the winter step price, since heating pushes use above the first step' : 'average of a 1,000 kWh month incl. fixed charges'}`;
+---
+
+<section class="calc" id="calculator" aria-labelledby="calc-h">
+  <div class="calc-top">
+    <h2 id="calc-h">Heating cost calculator{cityName ? ` for ${cityName}` : ''}</h2>
+    {hubNote && <p class="calc-hub-note">{hubNote}</p>}
+    <p class="small">Every field is pre-filled for {cityName}. Change anything that doesn't match your house; results update as you type. Nothing you enter leaves your browser.</p>
+  </div>
+
+  <form id="ec-form" class="calc-form" novalidate>
+    <!-- 1. heating -->
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Your house</legend>
+          <fieldset class="rg">
+            <legend class="lbl">Year built</legend>
+            <div class="radio-row">
+              {VINTAGES.map((v) => (
+                <label class="radio-pill"><input type="radio" name="vintage" value={v} checked={v === s.vintage} /><span>{VINTAGE_LABEL[v]}</span></label>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset class="rg">
+            <legend class="lbl">Type</legend>
+            <div class="radio-row">
+              {(['detached', 'semi', 'row'] as const).map((t) => (
+                <label class="radio-pill"><input type="radio" name="type" value={t} checked={t === s.type} /><span>{HOUSE_TYPE_LABEL[t]}</span></label>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset class="rg">
+            <legend class="lbl">Size (heated floors above the basement)</legend>
+            <div class="radio-row">
+              {(['small', 'medium', 'large', 'xlarge'] as const).map((z) => (
+                <label class="radio-pill"><input type="radio" name="size" value={z} checked={z === s.size} /><span>{SIZE_LABEL[z]}</span></label>
+              ))}
+            </div>
+            <div class="field inline">
+              <label for="ec-sqft">Or exact size</label>
+              <span class="in-unit"><input id="ec-sqft" name="sqft" type="text" inputmode="decimal" placeholder="e.g. 1,650" autocomplete="off" /><span>sq ft</span></span>
+            </div>
+          </fieldset>
+        </fieldset>
+
+        <fieldset class="cf">
+          <legend>How it's heated now</legend>
+          <div class="field">
+            <label for="ec-system">Main heating system</label>
+            <select id="ec-system" name="system">
+              {systems.map((k) => <option value={k} selected={k === s.system}>{MODEL.systems[k].label}</option>)}
+            </select>
+          </div>
+          <fieldset class="rg">
+            <legend class="lbl">Calibrate to your bills <span class="opt">(optional)</span></legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="billMode" value="none" checked /><span>Use a typical house</span></label>
+              <label class="radio-pill"><input type="radio" name="billMode" value="usage" /><span>Annual use</span></label>
+              <label class="radio-pill"><input type="radio" name="billMode" value="bill" /><span>Monthly bill</span></label>
+            </div>
+            <div class="field inline" data-show="usage" hidden>
+              <label for="ec-usage">Energy used in the last 12 months</label>
+              <span class="in-unit"><input id="ec-usage" name="usage" type="text" inputmode="decimal" autocomplete="off" /><span data-unit>{unit}</span></span>
+              <p class="hint">Total on your heating fuel bills for a year (your utility's online account usually shows it).</p>
+            </div>
+            <div class="field inline" data-show="bill" hidden>
+              <label for="ec-monthly">Average monthly bill for this fuel</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-monthly" name="monthly" type="text" inputmode="decimal" autocomplete="off" /></span>
+              <p class="hint">A year of bills divided by 12, taxes in.</p>
+            </div>
+            <div class="field inline" data-show="summer" hidden>
+              <label for="ec-summer" data-summer-label>A typical summer month (optional)</label>
+              <span class="in-unit"><input id="ec-summer" name="summer" type="text" inputmode="decimal" autocomplete="off" /><span data-summer-unit>kWh</span></span>
+              <p class="hint">Electric heat: your summer use stands in for lights, appliances and hot water, so the rest is heating.</p>
+            </div>
+          </fieldset>
+        </fieldset>
+
+        <details class="cf prices">
+          <summary>Prices for {cityName} <span class="opt">(as of {longDate(rp.asOf)}; edit to match your bill)</span></summary>
+          <div class="price-grid">
+            <div class="field">
+              <label for="ec-p-en">Electricity, average</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-p-en" name="p_elecNow" type="text" inputmode="decimal" value={p(payload.prices.electricity.now)} /><span>/kWh</span></span>
+              <p class="hint">{elecHint}</p>
+            </div>
+            <div class="field">
+              <label for="ec-p-ev">Electricity, one more kWh</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-p-ev" name="p_elecVar" type="text" inputmode="decimal" value={p(payload.prices.electricity.variable)} /><span>/kWh</span></span>
+              <p class="hint">Used for savings{rateDate(rp.elec.varDate) ? `; rates of ${rateDate(rp.elec.varDate)}` : ''}</p>
+            </div>
+            {hasGas && rp.gas && (
+              <>
+                <div class="field">
+                  <label for="ec-p-gn">Natural gas, average</label>
+                  <span class="in-unit pre"><span>$</span><input id="ec-p-gn" name="p_gasNow" type="text" inputmode="decimal" value={p(payload.prices.gas?.now)} /><span>/m³</span></span>
+                  <p class="hint">{rp.gas.utility.split('(')[0].split(' - ')[0].trim()}, incl. fixed charges</p>
+                </div>
+                <div class="field">
+                  <label for="ec-p-gv">Natural gas, one more m³</label>
+                  <span class="in-unit pre"><span>$</span><input id="ec-p-gv" name="p_gasVar" type="text" inputmode="decimal" value={p(payload.prices.gas?.variable)} /><span>/m³</span></span>
+                  <p class="hint">Used for savings{rp.gas.date ? `; rates of ${rp.gas.date.slice(0, 10)}` : ''}</p>
+                </div>
+              </>
+            )}
+            <div class="field">
+              <label for="ec-p-oil">Heating oil</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-p-oil" name="p_oil" type="text" inputmode="decimal" value={p(payload.prices.oil)} placeholder="enter" /><span>/L</span></span>
+              <p class="hint">{rp.oil ? `12-month average ${rp.oil.period}${rp.oil.city ? ` (${rp.oil.city})` : ''}; August 2026: ${unitPrice(rp.oil.latest, 'L')}` : 'No published price for this area'}</p>
+            </div>
+            <div class="field">
+              <label for="ec-p-pro">Propane</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-p-pro" name="p_propane" type="text" inputmode="decimal" value={p(payload.prices.propane)} placeholder="enter" /><span>/L</span></span>
+              <p class="hint">{rp.propaneNote}</p>
+            </div>
+            <div class="field">
+              <label for="ec-p-wood">Firewood (full cord, hardwood)</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-p-wood" name="p_wood" type="text" inputmode="decimal" placeholder="enter" /><span>/cord</span></span>
+              <p class="hint">No verified 2025–2026 price; enter your supplier's.</p>
+            </div>
+            <div class="field">
+              <label for="ec-p-pel">Wood pellets</label>
+              <span class="in-unit pre"><span>$</span><input id="ec-p-pel" name="p_pellets" type="text" inputmode="decimal" placeholder="enter" /><span>/tonne</span></span>
+              <p class="hint">No verified 2025–2026 price; enter your supplier's.</p>
+            </div>
+          </div>
+          {rp.gasNote && <p class="small">{rp.gasNote}</p>}
+        </details>
+      </div>
+      <div class="calc-out" id="ec-heat-out" aria-live="polite" set:html={renderHeating(r)} />
+    </div>
+
+    <!-- 2. switching -->
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Thinking of switching?</legend>
+          <div class="field">
+            <label for="ec-switch">Compare with</label>
+            <select id="ec-switch" name="switchTo">
+              <option value="none">Nothing for now</option>
+              {switchTargets.map((k) => <option value={k} selected={k === s.switchTo}>{MODEL.systems[k].label}</option>)}
+            </select>
+          </div>
+          <fieldset class="rg" data-show="hp">
+            <legend class="lbl">Heat pump type</legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="hpDucted" value="1" checked /><span>Ducted, whole home</span></label>
+              <label class="radio-pill"><input type="radio" name="hpDucted" value="0" /><span>Ductless (mini-split)</span></label>
+            </div>
+            <div class="field inline">
+              <label for="ec-hptons">Size</label>
+              <span class="in-unit"><input id="ec-hptons" name="hpTons" type="text" inputmode="decimal" data-derived value={p(s.hpTons)} /><span>tons</span></span>
+              <p class="hint">Starts at NRCan's rule of thumb for your floor area; used for per-ton rebates.</p>
+            </div>
+          </fieldset>
+          <div class="field">
+            <span class="lbl" id="ec-cost-l">Installed cost (low – high)</span>
+            <div class="pair" role="group" aria-labelledby="ec-cost-l">
+              <span class="in-unit pre"><span>$</span><input name="costLow" aria-label="Low estimate" type="text" inputmode="decimal" data-derived value={p(s.costLow)} placeholder="your quote" /></span>
+              <span class="dash">–</span>
+              <span class="in-unit pre"><span>$</span><input name="costHigh" aria-label="High estimate" type="text" inputmode="decimal" data-derived value={p(s.costHigh)} placeholder="your quote" /></span>
+            </div>
+            <p class="hint" data-cost-note>{MODEL.costs.ashpColdDucted.note}</p>
+          </div>
+          <div class="field">
+            <label for="ec-rebate">Rebate to count</label>
+            <select id="ec-rebate" name="rebateId">
+              <option value="auto">Smallest rebate that applies</option>
+              <option value="none">Don't count a rebate</option>
+            </select>
+          </div>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="ec-switch-out" aria-live="polite" set:html={renderSwitch(r)} />
+    </div>
+
+    <!-- 3. hot water -->
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Hot water</legend>
+          <div class="field inline">
+            <label for="ec-persons">People in the house</label>
+            <select id="ec-persons" name="persons">
+              {[1, 2, 3, 4, 5, 6].map((n) => <option value={n} selected={n === s.persons}>{n}</option>)}
+            </select>
+            <p class="hint">NRCan: about 75 L of hot water per person a day.</p>
+          </div>
+          <div class="field inline">
+            <label for="ec-litres">Or litres a day</label>
+            <span class="in-unit"><input id="ec-litres" name="litres" type="text" inputmode="decimal" placeholder="optional" /><span>L/day</span></span>
+          </div>
+          <div class="field">
+            <label for="ec-wh">Your water heater</label>
+            <select id="ec-wh" name="waterHeater">
+              {whTypes.map((k) => <option value={k} selected={k === s.waterHeater}>{MODEL.water.types[k].label}</option>)}
+            </select>
+          </div>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="ec-water-out" aria-live="polite" set:html={renderWater(r)} />
+    </div>
+
+    <!-- 4. cooling -->
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Air conditioning</legend>
+          <div class="field">
+            <label for="ec-ac">What cools the house</label>
+            <select id="ec-ac" name="acType">
+              <option value="central" selected>Central air conditioner</option>
+              <option value="room">Room (window) air conditioners</option>
+              <option value="heatPump">Heat pump</option>
+              <option value="none">No air conditioning</option>
+            </select>
+          </div>
+          <div class="field" data-show="central">
+            <label for="ec-acage">Installed</label>
+            <select id="ec-acage" name="acAge">
+              <option value="before1995">Before 1995 (about SEER 8)</option>
+              <option value="1995to2006">1995–2006 (about SEER 10)</option>
+              <option value="2006to2022" selected>2006–2022 (about SEER 13)</option>
+              <option value="2023on">2023 or later (about SEER 14)</option>
+            </select>
+          </div>
+          <div class="field inline" data-show="tons">
+            <label for="ec-actons">Size</label>
+            <span class="in-unit"><input id="ec-actons" name="acTons" type="text" inputmode="decimal" data-derived value={p(s.acTons)} /><span>tons</span></span>
+            <p class="hint">On the outdoor unit's label (1 ton = 12,000 Btu/h).</p>
+          </div>
+          <div class="field inline" data-show="room" hidden>
+            <label for="ec-rooms">Number of room units</label>
+            <select id="ec-rooms" name="roomUnits">
+              {[1, 2, 3, 4].map((n) => <option value={n} selected={n === s.roomUnits}>{n}</option>)}
+            </select>
+          </div>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="ec-cool-out" aria-live="polite" set:html={renderCooling(r)} />
+    </div>
+  </form>
+</section>
+
+<script type="application/json" id="calc-data" set:html={JSON.stringify(payload)} />
+
+<script>
+  import { fuelOf, fuelUnit, floorAreaM2, defaultAcTons, type Prices } from '../../lib/calc/engine';
+  import { computeEnergy, renderHeating, renderSwitch, renderWater, renderCooling, switchCostDefault, type EnergyPayload, type EnergyState } from './energy-costs';
+  import { readJSON, num, str, setValue, trackDirty, isDirty, show, setOptions, onChange } from './ui';
+  import { money, range } from '../../lib/calc/format';
+
+  const P = readJSON<EnergyPayload>('calc-data');
+  const form = document.getElementById('ec-form') as HTMLFormElement;
+  const outs = {
+    heat: document.getElementById('ec-heat-out')!,
+    sw: document.getElementById('ec-switch-out')!,
+    water: document.getElementById('ec-water-out')!,
+    cool: document.getElementById('ec-cool-out')!,
+  };
+  trackDirty(form);
+  let lastSwitchKey = '';
+
+  function prices(): Prices {
+    const g = P.prices.gas;
+    return {
+      electricity: { now: num(form, 'p_elecNow'), variable: num(form, 'p_elecVar') },
+      gas: g ? { now: num(form, 'p_gasNow'), variable: num(form, 'p_gasVar') } : null,
+      oil: num(form, 'p_oil'),
+      propane: num(form, 'p_propane'),
+      wood: num(form, 'p_wood'),
+      pellets: num(form, 'p_pellets'),
+    };
+  }
+
+  function read(): EnergyState {
+    const size = (str(form, 'size') || 'medium') as EnergyState['size'];
+    const sqft = num(form, 'sqft');
+    return {
+      vintage: (str(form, 'vintage') || '1966-1980') as EnergyState['vintage'],
+      type: (str(form, 'type') || 'detached') as EnergyState['type'],
+      size,
+      sqft: sqft && sqft >= 300 && sqft <= 20000 ? sqft : null,
+      system: str(form, 'system') as EnergyState['system'],
+      billMode: (str(form, 'billMode') || 'none') as EnergyState['billMode'],
+      usage: num(form, 'usage'),
+      monthly: num(form, 'monthly'),
+      summer: num(form, 'summer'),
+      prices: prices(),
+      persons: Number(str(form, 'persons')) || 3,
+      litres: num(form, 'litres'),
+      waterHeater: str(form, 'waterHeater') as EnergyState['waterHeater'],
+      acType: (str(form, 'acType') || 'none') as EnergyState['acType'],
+      acAge: (str(form, 'acAge') || '2006to2022') as EnergyState['acAge'],
+      acTons: num(form, 'acTons'),
+      roomUnits: Number(str(form, 'roomUnits')) || 1,
+      switchTo: (str(form, 'switchTo') || 'none') as EnergyState['switchTo'],
+      hpDucted: str(form, 'hpDucted') !== '0',
+      hpTons: num(form, 'hpTons'),
+      costLow: num(form, 'costLow'),
+      costHigh: num(form, 'costHigh'),
+      rebateId: str(form, 'rebateId') || 'auto',
+    };
+  }
+
+  function syncDerived(s: EnergyState) {
+    const area = floorAreaM2({ sizeBand: s.size, sqft: s.sqft });
+    const tons = defaultAcTons(area);
+    if (!isDirty(form, 'acTons')) setValue(form, 'acTons', tons);
+    if (!isDirty(form, 'hpTons')) setValue(form, 'hpTons', tons);
+    const key = `${s.switchTo}|${s.hpDucted}`;
+    if (key !== lastSwitchKey) {
+      const c = switchCostDefault(s.switchTo, s.hpDucted);
+      if (!isDirty(form, 'costLow')) setValue(form, 'costLow', c.low);
+      if (!isDirty(form, 'costHigh')) setValue(form, 'costHigh', c.high);
+      const note = form.querySelector('[data-cost-note]');
+      if (note) note.textContent = c.note ?? 'No verified installed-cost range for this option; enter your quote.';
+      lastSwitchKey = key;
+    }
+    const fuel = fuelOf(s.system);
+    const u = fuelUnit(fuel).unit;
+    form.querySelectorAll('[data-unit]').forEach((el) => (el.textContent = u));
+    show(form.querySelector('[data-show="usage"]'), s.billMode === 'usage');
+    show(form.querySelector('[data-show="bill"]'), s.billMode === 'bill');
+    show(form.querySelector('[data-show="summer"]'), s.billMode !== 'none' && fuel === 'electricity');
+    const su = form.querySelector('[data-summer-unit]');
+    if (su) su.textContent = s.billMode === 'bill' ? '$' : 'kWh';
+    const sl = form.querySelector('[data-summer-label]');
+    if (sl) sl.textContent = s.billMode === 'bill' ? 'Bill for a typical summer month (optional)' : 'Use in a typical summer month (optional)';
+    const hp = s.switchTo === 'ashpCold' || s.switchTo === 'ashpStandard' || s.switchTo === 'gshp';
+    show(form.querySelector('[data-show="hp"]'), hp);
+    show(form.querySelector('[data-show="central"]'), s.acType === 'central');
+    show(form.querySelector('[data-show="tons"]'), s.acType === 'central' || s.acType === 'heatPump');
+    show(form.querySelector('[data-show="room"]'), s.acType === 'room');
+  }
+
+  function update() {
+    let s = read();
+    syncDerived(s);
+    s = read();
+    const r = computeEnergy(s, P);
+    outs.heat.innerHTML = renderHeating(r);
+    outs.sw.innerHTML = renderSwitch(r);
+    outs.water.innerHTML = renderWater(r);
+    outs.cool.innerHTML = renderCooling(r);
+    const sel = form.querySelector<HTMLSelectElement>('select[name="rebateId"]');
+    const opts = [{ value: 'auto', label: 'Smallest rebate that applies' }, { value: 'none', label: "Don't count a rebate" }];
+    for (const o of r.sw?.rebates ?? []) {
+      opts.push({ value: o.id, label: `${o.program}: ${o.eligible ? range(o.amountLow, o.amountHigh, money) : 'not available'}`, disabled: !o.eligible });
+    }
+    setOptions(sel, opts);
+  }
+
+  onChange(form, update);
+  update();
+</script>

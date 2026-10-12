@@ -1,0 +1,1832 @@
+{
+ "_meta": {
+  "source": [
+   {
+    "label": "Statistics Canada — Table 98-10-0011-01, population centres (2021 Census)",
+    "href": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810001101",
+    "download": "https://www150.statcan.gc.ca/n1/tbl/csv/98100011-eng.zip"
+   },
+   {
+    "label": "Canadian Geographical Names Database (NRCan) API",
+    "href": "https://geogratis.gc.ca/services/geoname/en/geonames"
+   },
+   {
+    "label": "Land Information Ontario — municipal boundaries, lower and single tier (map service layer 14)",
+    "href": "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   }
+  ],
+  "method": "Each 2021 population centre in Ontario was looked up by name in the CGNDB (official names of populated places: unincorporated places, cities, towns, villages, hamlets). Names held by populated places in more than one county were skipped as ambiguous. The CGNDB point was placed in a municipality with the LIO boundary layer, and a centre is kept only if it falls in one of the areas and its population is no larger than its municipality's.",
+  "fetched": "2026-10-08",
+  "skipped": [
+   "Alexandria",
+   "Alfred",
+   "Almonte",
+   "Amherstburg",
+   "Arnprior",
+   "Atikokan",
+   "Aylmer",
+   "Azilda",
+   "Barrie",
+   "Barry's Bay",
+   "Bath",
+   "Bayfield",
+   "Belleville",
+   "Belmont",
+   "Binbrook",
+   "Blenheim",
+   "Blind River",
+   "Bobcaygeon",
+   "Bourget",
+   "Bowmanville - Newcastle",
+   "Brantford",
+   "Bridgenorth - Chemong Park Area",
+   "Brighton",
+   "Brockville",
+   "Campbellford",
+   "Capreol",
+   "Cardinal",
+   "Carleton Place",
+   "Carlisle (ambiguous: Middlesex, Wentworth)",
+   "Carp",
+   "Casselman",
+   "Chalk River",
+   "Chapleau",
+   "Chatham",
+   "Chelmsford",
+   "Chesley",
+   "Chesterville",
+   "Claremont",
+   "Clinton",
+   "Cobourg",
+   "Cochrane",
+   "Colborne (ambiguous: Norfolk, Northumberland)",
+   "Colchester",
+   "Coniston",
+   "Constance Bay",
+   "Cornwall",
+   "Corunna",
+   "Crystal Beach (ambiguous: Carleton, Niagara)",
+   "Deep River",
+   "Deseronto",
+   "Dorchester",
+   "Dowling",
+   "Dresden",
+   "Dryden (ambiguous: Kenora, Perth)",
+   "Dutton",
+   "Eganville",
+   "Elliot Lake",
+   "Embrun",
+   "Englehart",
+   "Espanola",
+   "Essex",
+   "Exeter",
+   "Fenelon Falls",
+   "Forest (ambiguous: Frontenac, Lambton)",
+   "Fort Frances",
+   "Frankford",
+   "Gananoque",
+   "Geraldton",
+   "Glencoe",
+   "Goderich",
+   "Grand Bend",
+   "Guelph",
+   "Haileybury",
+   "Hamilton",
+   "Harrow",
+   "Hastings",
+   "Havelock",
+   "Hawkesbury",
+   "Hearst",
+   "Hensall",
+   "Ilderton",
+   "Ingersoll",
+   "Ingleside",
+   "Innerkip",
+   "Iroquois",
+   "Iroquois Falls",
+   "Kanata",
+   "Kapuskasing",
+   "Kemptville",
+   "Kenora",
+   "Kincardine",
+   "Kingston",
+   "Kirkland Lake",
+   "Kitchener",
+   "L'Orignal",
+   "Lakefield",
+   "Leamington",
+   "Limoges",
+   "Lindsay",
+   "Listowel",
+   "Little Current",
+   "Lively",
+   "London",
+   "Long Sault",
+   "Longlac",
+   "Lucan",
+   "Lucknow",
+   "Madoc (ambiguous: Hastings, Peel)",
+   "Manitouwadge",
+   "Manotick Station",
+   "Marathon (ambiguous: Carleton, Thunder Bay)",
+   "Marmora",
+   "Mattawa",
+   "McGregor",
+   "Merrickville",
+   "Metcalfe",
+   "Midland",
+   "Mildmay",
+   "Millbrook",
+   "Milton",
+   "Milverton",
+   "Mitchell",
+   "Moosonee",
+   "Morrisburg",
+   "Mount Brydges",
+   "Munster",
+   "Napanee",
+   "New Liskeard",
+   "North Bay",
+   "Norwich",
+   "Norwood",
+   "Omemee",
+   "Orangeville",
+   "Orillia",
+   "Orono",
+   "Osgoode",
+   "Oshawa",
+   "Ottawa - Gatineau (ambiguous: Carleton, Carleton; Russell)",
+   "Owen Sound",
+   "Paisley",
+   "Parkhill",
+   "Parry Sound",
+   "Pembroke",
+   "Perth",
+   "Petawawa",
+   "Peterborough",
+   "Petrolia",
+   "Picton",
+   "Plattsville",
+   "Porcupine",
+   "Port Elgin",
+   "Port Hope",
+   "Port Stanley",
+   "Powassan",
+   "Prescott",
+   "Red Lake",
+   "Renfrew",
+   "Richmond (ambiguous: Carleton, Elgin)",
+   "Ridgetown",
+   "Rockland",
+   "Russell",
+   "Sarnia",
+   "Sault Ste. Marie",
+   "Seaforth",
+   "Sioux Lookout",
+   "Smiths Falls",
+   "Southampton",
+   "St. Catharines - Niagara Falls",
+   "St. Marys",
+   "St. Thomas",
+   "Stirling",
+   "Stratford",
+   "Strathroy",
+   "Sturgeon Falls",
+   "Sudbury",
+   "Tavistock",
+   "Thamesford",
+   "Thessalon",
+   "Thunder Bay (ambiguous: Niagara, Thunder Bay)",
+   "Tilbury",
+   "Tillsonburg",
+   "Timmins",
+   "Toronto",
+   "Tweed",
+   "Valley East",
+   "Vankleek Hill",
+   "Walkerton",
+   "Wallaceburg",
+   "Watford",
+   "Wawa",
+   "Welland - Pelham",
+   "Wellington",
+   "Wendover",
+   "West Lorne",
+   "Wheatley",
+   "Wiarton",
+   "Wikwemikong",
+   "Winchester",
+   "Windsor",
+   "Wingham",
+   "Woodstock",
+   "Wyoming"
+  ]
+ },
+ "places": [
+  {
+   "name": "Alliston",
+   "dguid": "2021S05100008",
+   "prov": "ON",
+   "pop2021": 23253,
+   "base": "Alliston",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF NEW TECUMSETH",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.1536111,
+   "lon": -79.8641667,
+   "cgndbId": "FACOY",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FACOY",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Amigo Beach",
+   "dguid": "2021S05101327",
+   "prov": "ON",
+   "pop2021": 1924,
+   "base": "Amigo Beach",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF SEVERN",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.6863889,
+   "lon": -79.3925,
+   "cgndbId": "FACVR",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FACVR",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Angus - Borden CFB-BFC",
+   "dguid": "2021S05100018",
+   "prov": "ON",
+   "pop2021": 14503,
+   "base": "Angus",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF ESSA",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.31904,
+   "lon": -79.87891,
+   "cgndbId": "FADEK",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FADEK",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Arthur",
+   "dguid": "2021S05100022",
+   "prov": "ON",
+   "pop2021": 2628,
+   "base": "Arthur",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF WELLINGTON NORTH",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.83266,
+   "lon": -80.53789,
+   "cgndbId": "FADVI",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FADVI",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Ayr",
+   "dguid": "2021S05100031",
+   "prov": "ON",
+   "pop2021": 5383,
+   "base": "Ayr",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF NORTH DUMFRIES",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.2855556,
+   "lon": -80.45,
+   "cgndbId": "FEGAH",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEGAH",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Ballantrae",
+   "dguid": "2021S05101370",
+   "prov": "ON",
+   "pop2021": 3224,
+   "base": "Ballantrae",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWN OF WHITCHURCH-STOUFFVILLE",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 44.0355555,
+   "lon": -79.2986111,
+   "cgndbId": "FAENL",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAENL",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Beamsville",
+   "dguid": "2021S05101075",
+   "prov": "ON",
+   "pop2021": 13323,
+   "base": "Beamsville",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWN OF LINCOLN",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 43.1658333,
+   "lon": -79.4763889,
+   "cgndbId": "FEGRM",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEGRM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Beaverton",
+   "dguid": "2021S05100053",
+   "prov": "ON",
+   "pop2021": 3347,
+   "base": "Beaverton",
+   "area": "durham-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF BROCK",
+   "upperTier": "REGIONAL MUNICIPALITY OF DURHAM",
+   "lat": 44.43081,
+   "lon": -79.15267,
+   "cgndbId": "FAGNA",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAGNA",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Beeton",
+   "dguid": "2021S05100058",
+   "prov": "ON",
+   "pop2021": 4151,
+   "base": "Beeton",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF NEW TECUMSETH",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.08259,
+   "lon": -79.7868,
+   "cgndbId": "FAGSD",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAGSD",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Big Bay Point",
+   "dguid": "2021S05101590",
+   "prov": "ON",
+   "pop2021": 1670,
+   "base": "Big Bay Point",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF INNISFIL",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.4,
+   "lon": -79.5169444,
+   "cgndbId": "FAHSX",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAHSX",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Bolton",
+   "dguid": "2021S05100080",
+   "prov": "ON",
+   "pop2021": 26795,
+   "base": "Bolton",
+   "area": "caledon",
+   "section": null,
+   "municipality": "TOWN OF CALEDON",
+   "upperTier": "REGIONAL MUNICIPALITY OF PEEL",
+   "lat": 43.88043,
+   "lon": -79.73807,
+   "cgndbId": "FDJLH",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDJLH",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Bracebridge",
+   "dguid": "2021S05100088",
+   "prov": "ON",
+   "pop2021": 9884,
+   "base": "Bracebridge",
+   "area": "simcoe-county",
+   "section": "muskoka",
+   "municipality": "TOWN OF BRACEBRIDGE",
+   "upperTier": "DISTRICT MUNICIPALITY OF MUSKOKA",
+   "lat": 45.0263889,
+   "lon": -79.19,
+   "cgndbId": "FDGDU",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDGDU",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Bradford",
+   "dguid": "2021S05100089",
+   "prov": "ON",
+   "pop2021": 38128,
+   "base": "Bradford",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF BRADFORD WEST GWILLIMBURY",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.11519,
+   "lon": -79.56595,
+   "cgndbId": "FDOCB",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDOCB",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Burford",
+   "dguid": "2021S05101313",
+   "prov": "ON",
+   "pop2021": 1058,
+   "base": "Burford",
+   "area": "county-of-brant",
+   "section": null,
+   "municipality": "COUNTY OF BRANT",
+   "upperTier": null,
+   "lat": 43.1030556,
+   "lon": -80.4294444,
+   "cgndbId": "FAMVM",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAMVM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Caledon",
+   "dguid": "2021S05101319",
+   "prov": "ON",
+   "pop2021": 1466,
+   "base": "Caledon",
+   "area": "caledon",
+   "section": null,
+   "municipality": "TOWN OF CALEDON",
+   "upperTier": "REGIONAL MUNICIPALITY OF PEEL",
+   "lat": 43.86605,
+   "lon": -79.85901,
+   "cgndbId": "FAYKX",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAYKX",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Caledon East",
+   "dguid": "2021S05101356",
+   "prov": "ON",
+   "pop2021": 4568,
+   "base": "Caledon East",
+   "area": "caledon",
+   "section": null,
+   "municipality": "TOWN OF CALEDON",
+   "upperTier": "REGIONAL MUNICIPALITY OF PEEL",
+   "lat": 43.8694444,
+   "lon": -79.8666667,
+   "cgndbId": "FAYKW",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAYKW",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Caledonia",
+   "dguid": "2021S05100114",
+   "prov": "ON",
+   "pop2021": 12179,
+   "base": "Caledonia",
+   "area": "haldimand-county",
+   "section": null,
+   "municipality": "HALDIMAND COUNTY",
+   "upperTier": null,
+   "lat": 43.0711111,
+   "lon": -79.9536111,
+   "cgndbId": "FANUD",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FANUD",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Cannington",
+   "dguid": "2021S05100126",
+   "prov": "ON",
+   "pop2021": 1839,
+   "base": "Cannington",
+   "area": "durham-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF BROCK",
+   "upperTier": "REGIONAL MUNICIPALITY OF DURHAM",
+   "lat": 44.3494444,
+   "lon": -79.0408333,
+   "cgndbId": "FAOMO",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAOMO",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Cayuga",
+   "dguid": "2021S05100150",
+   "prov": "ON",
+   "pop2021": 1720,
+   "base": "Cayuga",
+   "area": "haldimand-county",
+   "section": null,
+   "municipality": "HALDIMAND COUNTY",
+   "upperTier": null,
+   "lat": 42.95073,
+   "lon": -79.85623,
+   "cgndbId": "FDKBT",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDKBT",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Chippawa",
+   "dguid": "2021S05101504",
+   "prov": "ON",
+   "pop2021": 6077,
+   "base": "Chippawa",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "CITY OF NIAGARA FALLS",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 43.0558334,
+   "lon": -79.0469445,
+   "cgndbId": "FAQPM",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAQPM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Collingwood",
+   "dguid": "2021S05100198",
+   "prov": "ON",
+   "pop2021": 22983,
+   "base": "Collingwood",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF COLLINGWOOD",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.5014,
+   "lon": -80.24071,
+   "cgndbId": "FASGS",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FASGS",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Cookstown",
+   "dguid": "2021S05101248",
+   "prov": "ON",
+   "pop2021": 1647,
+   "base": "Cookstown",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF INNISFIL",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.1902778,
+   "lon": -79.7019444,
+   "cgndbId": "FASVZ",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FASVZ",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Creemore",
+   "dguid": "2021S05101132",
+   "prov": "ON",
+   "pop2021": 1194,
+   "base": "Creemore",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF CLEARVIEW",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.326374,
+   "lon": -80.105761,
+   "cgndbId": "FAUDG",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAUDG",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Delhi",
+   "dguid": "2021S05100221",
+   "prov": "ON",
+   "pop2021": 5344,
+   "base": "Delhi",
+   "area": "norfolk-county",
+   "section": null,
+   "municipality": "NORFOLK COUNTY",
+   "upperTier": null,
+   "lat": 42.8494444,
+   "lon": -80.4916666,
+   "cgndbId": "FECZC",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FECZC",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Drayton",
+   "dguid": "2021S05101317",
+   "prov": "ON",
+   "pop2021": 2279,
+   "base": "Drayton",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF MAPLETON",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.75455,
+   "lon": -80.67151,
+   "cgndbId": "FAZRM",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAZRM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Dundalk",
+   "dguid": "2021S05100244",
+   "prov": "ON",
+   "pop2021": 2803,
+   "base": "Dundalk",
+   "area": "grey-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF SOUTHGATE",
+   "upperTier": "COUNTY OF GREY",
+   "lat": 44.17039,
+   "lon": -80.39351,
+   "cgndbId": "FBALE",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBALE",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Dunnville",
+   "dguid": "2021S05100246",
+   "prov": "ON",
+   "pop2021": 5907,
+   "base": "Dunnville",
+   "area": "haldimand-county",
+   "section": null,
+   "municipality": "HALDIMAND COUNTY",
+   "upperTier": null,
+   "lat": 42.9,
+   "lon": -79.616667,
+   "cgndbId": "FBANZ",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBANZ",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Durham",
+   "dguid": "2021S05100248",
+   "prov": "ON",
+   "pop2021": 2755,
+   "base": "Durham",
+   "area": "grey-county",
+   "section": null,
+   "municipality": "MUNICIPALITY OF WEST GREY",
+   "upperTier": "COUNTY OF GREY",
+   "lat": 44.17794,
+   "lon": -80.81745,
+   "cgndbId": "FBAPV",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBAPV",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Elmira",
+   "dguid": "2021S05100258",
+   "prov": "ON",
+   "pop2021": 10790,
+   "base": "Elmira",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF WOOLWICH",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.59325,
+   "lon": -80.56239,
+   "cgndbId": "FEHOW",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEHOW",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Elmvale",
+   "dguid": "2021S05100259",
+   "prov": "ON",
+   "pop2021": 2520,
+   "base": "Elmvale",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF SPRINGWATER",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.583889,
+   "lon": -79.866944,
+   "cgndbId": "FBCKF",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBCKF",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Erin",
+   "dguid": "2021S05100265",
+   "prov": "ON",
+   "pop2021": 2725,
+   "base": "Erin",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWN OF ERIN",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.7425,
+   "lon": -80.1241666,
+   "cgndbId": "FEVJW",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEVJW",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Everett",
+   "dguid": "2021S05101330",
+   "prov": "ON",
+   "pop2021": 1570,
+   "base": "Everett",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF ADJALA-TOSORONTIO",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.1913889,
+   "lon": -79.9402778,
+   "cgndbId": "FEGNE",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEGNE",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Fergus",
+   "dguid": "2021S05100278",
+   "prov": "ON",
+   "pop2021": 23209,
+   "base": "Fergus",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF CENTRE WELLINGTON",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.70298,
+   "lon": -80.37984,
+   "cgndbId": "FBDWO",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBDWO",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Fort Erie",
+   "dguid": "2021S05101062",
+   "prov": "ON",
+   "pop2021": 15372,
+   "base": "Fort Erie",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWN OF FORT ERIE",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 42.92261,
+   "lon": -79.022,
+   "cgndbId": "FEBVJ",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEBVJ",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Georgetown",
+   "dguid": "2021S05100314",
+   "prov": "ON",
+   "pop2021": 44058,
+   "base": "Georgetown",
+   "area": "halton-hills",
+   "section": null,
+   "municipality": "TOWN OF HALTON HILLS",
+   "upperTier": "REGIONAL MUNICIPALITY OF HALTON",
+   "lat": 43.64689,
+   "lon": -79.91013,
+   "cgndbId": "FBHBE",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBHBE",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Grand Valley",
+   "dguid": "2021S05101129",
+   "prov": "ON",
+   "pop2021": 2720,
+   "base": "Grand Valley",
+   "area": "dufferin-county",
+   "section": null,
+   "municipality": "TOWN OF GRAND VALLEY",
+   "upperTier": "COUNTY OF DUFFERIN",
+   "lat": 43.8997222,
+   "lon": -80.3144445,
+   "cgndbId": "FAHQR",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FAHQR",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Gravenhurst",
+   "dguid": "2021S05100339",
+   "prov": "ON",
+   "pop2021": 5789,
+   "base": "Gravenhurst",
+   "area": "simcoe-county",
+   "section": "muskoka",
+   "municipality": "TOWN OF GRAVENHURST",
+   "upperTier": "DISTRICT MUNICIPALITY OF MUSKOKA",
+   "lat": 44.8686111,
+   "lon": -79.3394445,
+   "cgndbId": "FBJKJ",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBJKJ",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Hagersville",
+   "dguid": "2021S05100346",
+   "prov": "ON",
+   "pop2021": 3059,
+   "base": "Hagersville",
+   "area": "haldimand-county",
+   "section": null,
+   "municipality": "HALDIMAND COUNTY",
+   "upperTier": null,
+   "lat": 42.9619445,
+   "lon": -80.0516667,
+   "cgndbId": "FBKZC",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBKZC",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Hanover",
+   "dguid": "2021S05100352",
+   "prov": "ON",
+   "pop2021": 7761,
+   "base": "Hanover",
+   "area": "grey-county",
+   "section": null,
+   "municipality": "TOWN OF HANOVER",
+   "upperTier": "COUNTY OF GREY",
+   "lat": 44.1544445,
+   "lon": -81.0233334,
+   "cgndbId": "FBLQK",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBLQK",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Harriston",
+   "dguid": "2021S05100359",
+   "prov": "ON",
+   "pop2021": 1887,
+   "base": "Harriston",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWN OF MINTO",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.91198,
+   "lon": -80.87017,
+   "cgndbId": "FBMCB",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBMCB",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Horseshoe Valley",
+   "dguid": "2021S05101593",
+   "prov": "ON",
+   "pop2021": 1127,
+   "base": "Horseshoe Valley",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF ORO-MEDONTE",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.5527778,
+   "lon": -79.6719444,
+   "cgndbId": "FEFJL",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEFJL",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Huntsville",
+   "dguid": "2021S05100383",
+   "prov": "ON",
+   "pop2021": 6639,
+   "base": "Huntsville",
+   "area": "simcoe-county",
+   "section": "muskoka",
+   "municipality": "TOWN OF HUNTSVILLE",
+   "upperTier": "DISTRICT MUNICIPALITY OF MUSKOKA",
+   "lat": 45.31098,
+   "lon": -79.27733,
+   "cgndbId": "FBPPE",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBPPE",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Innisfil",
+   "dguid": "2021S05101512",
+   "prov": "ON",
+   "pop2021": 29464,
+   "base": "Innisfil",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF INNISFIL",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.27462,
+   "lon": -79.618,
+   "cgndbId": "FELTI",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FELTI",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Jarvis",
+   "dguid": "2021S05101151",
+   "prov": "ON",
+   "pop2021": 1214,
+   "base": "Jarvis",
+   "area": "haldimand-county",
+   "section": null,
+   "municipality": "HALDIMAND COUNTY",
+   "upperTier": null,
+   "lat": 42.8861111,
+   "lon": -80.1127778,
+   "cgndbId": "FBRJW",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBRJW",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Keswick - Elmhurst Beach",
+   "dguid": "2021S05101067",
+   "prov": "ON",
+   "pop2021": 27145,
+   "base": "Keswick",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWN OF GEORGINA",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 44.2436111,
+   "lon": -79.4758333,
+   "cgndbId": "FEEFR",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEEFR",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "King",
+   "dguid": "2021S05101513",
+   "prov": "ON",
+   "pop2021": 8396,
+   "base": "King",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF KING",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 43.9286111,
+   "lon": -79.5277778,
+   "cgndbId": "FBUPY",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBUPY",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Marchmont - Bass Lake",
+   "dguid": "2021S05101516",
+   "prov": "ON",
+   "pop2021": 1902,
+   "base": "Marchmont",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF SEVERN",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.632,
+   "lon": -79.51066,
+   "cgndbId": "FDNBB",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDNBB",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Markdale",
+   "dguid": "2021S05100506",
+   "prov": "ON",
+   "pop2021": 1206,
+   "base": "Markdale",
+   "area": "grey-county",
+   "section": null,
+   "municipality": "MUNICIPALITY OF GREY HIGHLANDS",
+   "upperTier": "COUNTY OF GREY",
+   "lat": 44.3183333,
+   "lon": -80.6491666,
+   "cgndbId": "FDNFX",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDNFX",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Meaford",
+   "dguid": "2021S05100522",
+   "prov": "ON",
+   "pop2021": 5078,
+   "base": "Meaford",
+   "area": "grey-county",
+   "section": null,
+   "municipality": "MUNICIPALITY OF MEAFORD",
+   "upperTier": "COUNTY OF GREY",
+   "lat": 44.591111,
+   "lon": -80.743333,
+   "cgndbId": "FEVTZ",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEVTZ",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Mississauga Beach",
+   "dguid": "2021S05101083",
+   "prov": "ON",
+   "pop2021": 5293,
+   "base": "Mississauga Beach",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWN OF NIAGARA-ON-THE-LAKE",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 43.2594445,
+   "lon": -79.0883333,
+   "cgndbId": "FDNKY",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDNKY",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Mount Albert",
+   "dguid": "2021S05101272",
+   "prov": "ON",
+   "pop2021": 5695,
+   "base": "Mount Albert",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWN OF EAST GWILLIMBURY",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 44.13428,
+   "lon": -79.30584,
+   "cgndbId": "FCEZX",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCEZX",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Mount Forest",
+   "dguid": "2021S05100558",
+   "prov": "ON",
+   "pop2021": 5040,
+   "base": "Mount Forest",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF WELLINGTON NORTH",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.9816667,
+   "lon": -80.7366667,
+   "cgndbId": "FCFAL",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCFAL",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "New Dundee",
+   "dguid": "2021S05101429",
+   "prov": "ON",
+   "pop2021": 1174,
+   "base": "New Dundee",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF WILMOT",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.35101,
+   "lon": -80.53657,
+   "cgndbId": "FEAPA",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEAPA",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "New Hamburg",
+   "dguid": "2021S05100578",
+   "prov": "ON",
+   "pop2021": 14379,
+   "base": "New Hamburg",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF WILMOT",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.37876,
+   "lon": -80.71096,
+   "cgndbId": "FEBVH",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FEBVH",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Nobleton",
+   "dguid": "2021S05101071",
+   "prov": "ON",
+   "pop2021": 6507,
+   "base": "Nobleton",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF KING",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 43.90212,
+   "lon": -79.65271,
+   "cgndbId": "FDSCY",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDSCY",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Oro Station - Hawkestone",
+   "dguid": "2021S05101520",
+   "prov": "ON",
+   "pop2021": 1806,
+   "base": "Oro Station",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF ORO-MEDONTE",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.45698,
+   "lon": -79.51517,
+   "cgndbId": "FDMMX",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDMMX",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Palgrave",
+   "dguid": "2021S05101521",
+   "prov": "ON",
+   "pop2021": 1107,
+   "base": "Palgrave",
+   "area": "caledon",
+   "section": null,
+   "municipality": "TOWN OF CALEDON",
+   "upperTier": "REGIONAL MUNICIPALITY OF PEEL",
+   "lat": 43.9486111,
+   "lon": -79.8338889,
+   "cgndbId": "FDRBL",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDRBL",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Palmerston",
+   "dguid": "2021S05100622",
+   "prov": "ON",
+   "pop2021": 2989,
+   "base": "Palmerston",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWN OF MINTO",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.83318,
+   "lon": -80.8466,
+   "cgndbId": "FDRCE",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDRCE",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Paris",
+   "dguid": "2021S05100624",
+   "prov": "ON",
+   "pop2021": 14956,
+   "base": "Paris",
+   "area": "county-of-brant",
+   "section": null,
+   "municipality": "COUNTY OF BRANT",
+   "upperTier": null,
+   "lat": 43.1933334,
+   "lon": -80.3847222,
+   "cgndbId": "FDSRC",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDSRC",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Port Colborne",
+   "dguid": "2021S05101523",
+   "prov": "ON",
+   "pop2021": 15441,
+   "base": "Port Colborne",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "CITY OF PORT COLBORNE",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 42.9155556,
+   "lon": -79.1930555,
+   "cgndbId": "FCHYP",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCHYP",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Port Dover",
+   "dguid": "2021S05100658",
+   "prov": "ON",
+   "pop2021": 7871,
+   "base": "Port Dover",
+   "area": "norfolk-county",
+   "section": null,
+   "municipality": "NORFOLK COUNTY",
+   "upperTier": null,
+   "lat": 42.78975,
+   "lon": -80.20903,
+   "cgndbId": "FCHYX",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCHYX",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Port Perry",
+   "dguid": "2021S05100665",
+   "prov": "ON",
+   "pop2021": 9553,
+   "base": "Port Perry",
+   "area": "durham-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF SCUGOG",
+   "upperTier": "REGIONAL MUNICIPALITY OF DURHAM",
+   "lat": 44.1030555,
+   "lon": -78.9475,
+   "cgndbId": "FCIAS",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCIAS",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Port Rowan",
+   "dguid": "2021S05101524",
+   "prov": "ON",
+   "pop2021": 1357,
+   "base": "Port Rowan",
+   "area": "norfolk-county",
+   "section": null,
+   "municipality": "NORFOLK COUNTY",
+   "upperTier": null,
+   "lat": 42.62628,
+   "lon": -80.45234,
+   "cgndbId": "FCIAV",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCIAV",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Rockwood",
+   "dguid": "2021S05101209",
+   "prov": "ON",
+   "pop2021": 5488,
+   "base": "Rockwood",
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF GUELPH/ERAMOSA",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.6147222,
+   "lon": -80.1363889,
+   "cgndbId": "FCLST",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCLST",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Schomberg",
+   "dguid": "2021S05101357",
+   "prov": "ON",
+   "pop2021": 2656,
+   "base": "Schomberg",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF KING",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 44.0033333,
+   "lon": -79.685,
+   "cgndbId": "FDJFK",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDJFK",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Shelburne",
+   "dguid": "2021S05100755",
+   "prov": "ON",
+   "pop2021": 8989,
+   "base": "Shelburne",
+   "area": "dufferin-county",
+   "section": null,
+   "municipality": "TOWN OF SHELBURNE",
+   "upperTier": "COUNTY OF DUFFERIN",
+   "lat": 44.0763889,
+   "lon": -80.2044445,
+   "cgndbId": "FDJFL",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDJFL",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Simcoe",
+   "dguid": "2021S05100762",
+   "prov": "ON",
+   "pop2021": 16121,
+   "base": "Simcoe",
+   "area": "norfolk-county",
+   "section": null,
+   "municipality": "NORFOLK COUNTY",
+   "upperTier": null,
+   "lat": 42.84186,
+   "lon": -80.31405,
+   "cgndbId": "FCOKQ",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCOKQ",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Smithville",
+   "dguid": "2021S05100767",
+   "prov": "ON",
+   "pop2021": 6456,
+   "base": "Smithville",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF WEST LINCOLN",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 43.09735,
+   "lon": -79.54627,
+   "cgndbId": "FCPLS",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCPLS",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "St. Clements",
+   "dguid": "2021S05101428",
+   "prov": "ON",
+   "pop2021": 1240,
+   "base": "St. Clements",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF WELLESLEY",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.5241667,
+   "lon": -80.6516667,
+   "cgndbId": "FECFA",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FECFA",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "St. George",
+   "dguid": "2021S05101315",
+   "prov": "ON",
+   "pop2021": 3354,
+   "base": "St. George",
+   "area": "county-of-brant",
+   "section": null,
+   "municipality": "COUNTY OF BRANT",
+   "upperTier": null,
+   "lat": 43.24497,
+   "lon": -80.25346,
+   "cgndbId": "FDSZF",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDSZF",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "St. Jacobs",
+   "dguid": "2021S05101245",
+   "prov": "ON",
+   "pop2021": 1959,
+   "base": "St. Jacobs",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF WOOLWICH",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.53485,
+   "lon": -80.55379,
+   "cgndbId": "FECGS",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FECGS",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Stayner",
+   "dguid": "2021S05100871",
+   "prov": "ON",
+   "pop2021": 4699,
+   "base": "Stayner",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF CLEARVIEW",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.398055,
+   "lon": -80.074167,
+   "cgndbId": "FCSCR",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCSCR",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Stevensville",
+   "dguid": "2021S05101525",
+   "prov": "ON",
+   "pop2021": 1316,
+   "base": "Stevensville",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWN OF FORT ERIE",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 42.9438889,
+   "lon": -79.0591667,
+   "cgndbId": "FCSJS",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCSJS",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Stoney Point",
+   "dguid": "2021S05101312",
+   "prov": "ON",
+   "pop2021": 1394,
+   "base": "Stoney Point",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF INNISFIL",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.26357,
+   "lon": -79.54378,
+   "cgndbId": "FCSUM",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCSUM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Stouffville",
+   "dguid": "2021S05101020",
+   "prov": "ON",
+   "pop2021": 36753,
+   "base": "Stouffville",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWN OF WHITCHURCH-STOUFFVILLE",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 43.9733333,
+   "lon": -79.2472222,
+   "cgndbId": "FCSZB",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCSZB",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Sunderland",
+   "dguid": "2021S05101431",
+   "prov": "ON",
+   "pop2021": 1490,
+   "base": "Sunderland",
+   "area": "durham-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF BROCK",
+   "upperTier": "REGIONAL MUNICIPALITY OF DURHAM",
+   "lat": 44.2636111,
+   "lon": -79.0655556,
+   "cgndbId": "FCTWV",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCTWV",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Sutton",
+   "dguid": "2021S05100908",
+   "prov": "ON",
+   "pop2021": 8477,
+   "base": "Sutton",
+   "area": "york-region",
+   "section": null,
+   "municipality": "TOWN OF GEORGINA",
+   "upperTier": "REGIONAL MUNICIPALITY OF YORK",
+   "lat": 44.305,
+   "lon": -79.3580556,
+   "cgndbId": "FCUFV",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCUFV",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Thornbury",
+   "dguid": "2021S05100932",
+   "prov": "ON",
+   "pop2021": 3474,
+   "base": "Thornbury",
+   "area": "grey-county",
+   "section": null,
+   "municipality": "TOWN OF THE BLUE MOUNTAINS",
+   "upperTier": "COUNTY OF GREY",
+   "lat": 44.5597222,
+   "lon": -80.455,
+   "cgndbId": "FCVZO",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCVZO",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Thornton",
+   "dguid": "2021S05101430",
+   "prov": "ON",
+   "pop2021": 1046,
+   "base": "Thornton",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF ESSA",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.27053,
+   "lon": -79.72294,
+   "cgndbId": "FCWAL",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCWAL",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Tottenham",
+   "dguid": "2021S05100945",
+   "prov": "ON",
+   "pop2021": 9609,
+   "base": "Tottenham",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF NEW TECUMSETH",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.0230555,
+   "lon": -79.8047222,
+   "cgndbId": "FCXAB",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCXAB",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Uxbridge",
+   "dguid": "2021S05100963",
+   "prov": "ON",
+   "pop2021": 11794,
+   "base": "Uxbridge",
+   "area": "durham-region",
+   "section": null,
+   "municipality": "TOWNSHIP OF UXBRIDGE",
+   "upperTier": "REGIONAL MUNICIPALITY OF DURHAM",
+   "lat": 44.1086111,
+   "lon": -79.1213889,
+   "cgndbId": "FCZJM",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCZJM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Vineland",
+   "dguid": "2021S05101269",
+   "prov": "ON",
+   "pop2021": 4395,
+   "base": "Vineland",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWN OF LINCOLN",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 43.1538889,
+   "lon": -79.3922222,
+   "cgndbId": "FDABE",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDABE",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Virgil",
+   "dguid": "2021S05101371",
+   "prov": "ON",
+   "pop2021": 3008,
+   "base": "Virgil",
+   "area": "niagara-region",
+   "section": null,
+   "municipality": "TOWN OF NIAGARA-ON-THE-LAKE",
+   "upperTier": "REGIONAL MUNICIPALITY OF NIAGARA",
+   "lat": 43.2261111,
+   "lon": -79.1236111,
+   "cgndbId": "FDACF",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDACF",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Wasaga Beach",
+   "dguid": "2021S05101331",
+   "prov": "ON",
+   "pop2021": 22194,
+   "base": "Wasaga Beach",
+   "area": "simcoe-county",
+   "section": null,
+   "municipality": "TOWN OF WASAGA BEACH",
+   "upperTier": "COUNTY OF SIMCOE",
+   "lat": 44.499167,
+   "lon": -80.016944,
+   "cgndbId": "FDBEV",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDBEV",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Waterford",
+   "dguid": "2021S05101003",
+   "prov": "ON",
+   "pop2021": 4227,
+   "base": "Waterford",
+   "area": "norfolk-county",
+   "section": null,
+   "municipality": "NORFOLK COUNTY",
+   "upperTier": null,
+   "lat": 42.9318,
+   "lon": -80.29105,
+   "cgndbId": "FDBJD",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDBJD",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Wellesley",
+   "dguid": "2021S05101299",
+   "prov": "ON",
+   "pop2021": 3536,
+   "base": "Wellesley",
+   "area": "waterloo-region-townships",
+   "section": null,
+   "municipality": "TOWNSHIP OF WELLESLEY",
+   "upperTier": "REGIONAL MUNICIPALITY OF WATERLOO",
+   "lat": 43.47534,
+   "lon": -80.76374,
+   "cgndbId": "FDBYS",
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDBYS",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Elora",
+   "base": "Elora",
+   "dguid": null,
+   "prov": "ON",
+   "pop2021": null,
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWNSHIP OF CENTRE WELLINGTON",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.685,
+   "lon": -80.42712,
+   "cgndbId": "FCICM",
+   "extra": true,
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FCICM",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Hillsburgh",
+   "base": "Hillsburgh",
+   "dguid": null,
+   "prov": "ON",
+   "pop2021": null,
+   "area": "wellington-county",
+   "section": null,
+   "municipality": "TOWN OF ERIN",
+   "upperTier": "COUNTY OF WELLINGTON",
+   "lat": 43.7930555,
+   "lon": -80.1427778,
+   "cgndbId": "FBNXK",
+   "extra": true,
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FBNXK",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  },
+  {
+   "name": "Scotland",
+   "base": "Scotland",
+   "dguid": null,
+   "prov": "ON",
+   "pop2021": null,
+   "area": "county-of-brant",
+   "section": null,
+   "municipality": "COUNTY OF BRANT",
+   "upperTier": null,
+   "lat": 43.02456,
+   "lon": -80.37434,
+   "cgndbId": "FDVVR",
+   "extra": true,
+   "sources": [
+    "https://geogratis.gc.ca/services/geoname/en/geonames/FDVVR",
+    "https://ws.lioservices.lrc.gov.on.ca/arcgis1071a/rest/services/LIO_OPEN_DATA/LIO_Open03/MapServer/14/query"
+   ]
+  }
+ ]
+}

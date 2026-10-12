@@ -21,8 +21,13 @@ const statusCls = p.status === 'active' ? 'chip-active' : p.status === 'active-l
 const province = p.provinceSlug ? provincesData.provinces.find((x) => x.slug === p.provinceSlug) : null;
 const relatedProgs = (p.related ?? []).map((s) => programBySlug(s)).filter(Boolean);
 
-const title = `${p.name} (2026): amounts, eligibility & how to apply — ${statusLabel.toLowerCase()} | AuditYourHome`;
-const description = `${p.headline}. Status, amounts, who qualifies, step-by-step application, and the gotchas — verified against the official page ${p.lastVerified}.`;
+// Optional search-facing title/description per program (programs.json: seoTitle, seoDescription).
+const seo = p as typeof p & { seoTitle?: string; seoDescription?: string };
+const title = seo.seoTitle
+  ? `${seo.seoTitle} | AuditYourHome`
+  : `${p.name} (2026): amounts, eligibility & how to apply — ${statusLabel.toLowerCase()} | AuditYourHome`;
+const description = seo.seoDescription
+  ?? `${p.headline}. Status, amounts, who qualifies, step-by-step application, and the gotchas — verified against the official page ${p.lastVerified}.`;
 
 const faqs = p.faq && p.faq.length > 0
   ? p.faq
@@ -170,7 +175,8 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
   .headrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .headrow h1 { margin-bottom: 0; }
   .amounts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  .amounts li { display: grid; grid-template-columns: minmax(0, max-content) 1fr; gap: 4px 12px; align-items: baseline; }
+  /* fit-content(45%) keeps long multi-tier values from squeezing the label into a one-word column on phones */
+  .amounts li { display: grid; grid-template-columns: fit-content(45%) 1fr; gap: 4px 12px; align-items: baseline; }
   .amounts .money { font-size: 17px; overflow-wrap: anywhere; }
   .sec { margin: 30px 0 12px; font-size: 23px; }
   .steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 10px; }

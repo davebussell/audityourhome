@@ -1,0 +1,85 @@
+---
+import type { HealthPage } from '../../lib/calc/pages/health';
+import { degC, int, num, longDate } from '../../lib/calc/format';
+
+interface Props { page: HealthPage; cityName: string; provName: string }
+const { page, cityName, provName } = Astro.props;
+const g = page.glance;
+const w = g.wells as Record<string, unknown> | undefined;
+const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : typeof v === 'string' ? v : 'Not confirmed');
+---
+
+<section class="sec" id="at-a-glance" aria-labelledby="glance-h">
+  <h2 id="glance-h">{cityName} at a glance</h2>
+
+  <div class="two-up">
+    <div class="card tablewrap">
+      <table class="compact gtable radon-t">
+        <caption>Radon surveys covering {cityName}</caption>
+        <thead><tr><th scope="col">Survey</th><th scope="col">Result</th></tr></thead>
+        <tbody>
+          {g.r12.pct !== null && g.r12.pct !== undefined && (
+            <tr><td class="c-main">Health Canada, 2012<span class="sub">{g.r12.region}, {int(g.r12.tested)} homes, long-term tests</span></td><td class="c-s1">{num(g.r12.pct, 1)}% above 200 Bq/m³{g.r12.pct600 !== null && g.r12.pct600 !== undefined ? `; ${num(g.r12.pct600, 1)}% above 600` : ''}</td></tr>
+          )}
+          {(g.r12 as { newer?: { scope: string; figure: string }[] }).newer?.map((n) => (
+            <tr><td class="c-main">Cross-Canada survey, 2024<span class="sub">{n.scope.replace(/^(city\/metro area|city|province sub-region|province): /, '')}</span></td><td class="c-s1">{n.figure}</td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="glance-note" style="padding:0 14px 12px">The 2024 survey pools long-term tests that households volunteered, so it is not a random sample, and more tests were in basements than in 2012. Health Canada's guideline: fix a home above 200 Bq/m³ within a year. Test kits cost about $30–$80 including the lab; mitigation about $2,000–$3,000.</p>
+    </div>
+    <div class="card tablewrap">
+      <table class="compact gtable">
+        <caption>Highest indoor humidity before windows fog (21 °C inside)</caption>
+        <thead><tr><th scope="col">Window</th><th scope="col" class="num">At {degC(g.cl.janMean)}</th><th scope="col" class="num">At {degC(g.cl.designHeat)}</th></tr></thead>
+        <tbody>
+          {g.winRows.map((r) => (
+            <tr><td class="c-main">{r.label}<span class="sub">U {r.u}</span></td><td class="c-val num">{r.jan}%</td><td class="c-s2 num" data-k={`at ${degC(g.cl.designHeat)}:`}>{r.design}%</td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="glance-note" style="padding:0 14px 12px">Centre of the glass, from the National Building Code's indoor air film and the Magnus dew point formula. January average from ECCC normals; the cold-snap column is NRCan's winter design temperature. Window edges fog sooner, so follow CMHC: about 30% humidity below −10 °C, which {cityName} sees on about {int(g.cl.nights10)} nights a year.</p>
+    </div>
+  </div>
+
+  <div class="two-up" style="margin-top:18px">
+    <div class="card rule-card">
+      <h3>Smoke alarms in {provName}</h3>
+      <p>{String(g.smoke.rule ?? '')}</p>
+      <p class="small">Existing homes must have them: {yesNo(g.smoke.existingHomesRequired)} · Every storey: {yesNo(g.smoke.everyStorey)} · In each bedroom: {yesNo(g.smoke.inEachBedroom)} · Interconnected: {yesNo(g.smoke.interconnected)}</p>
+      {g.smoke.law ? <p class="small">Law: {String(g.smoke.law)}</p> : null}
+      {g.smoke.source ? <p class="small"><a href={String(g.smoke.source)} rel="noopener">Official source ↗</a></p> : null}
+    </div>
+    <div class="card rule-card">
+      <h3>Carbon monoxide alarms in {provName}</h3>
+      <p>{String(g.co.summary ?? '')}</p>
+      {g.co.note ? <p class="small">{String(g.co.note)}</p> : null}
+      {g.co.source ? <p class="small"><a href={String(g.co.source)} rel="noopener">Official source ↗</a></p> : null}
+    </div>
+  </div>
+
+  <div class="two-up" style="margin-top:18px">
+    <div class="card rule-card">
+      <h3>Well water in {cityName}</h3>
+      {page.glance.wellsCity.sentence && <p>{page.glance.wellsCity.sentence}</p>}
+      {w && (
+        <ul>
+          {w.bacteria ? <li>Bacteria: {String(w.bacteria)}{w.bacteriaCost ? ` (${String(w.bacteriaCost)})` : ''}</li> : <li>Bacteria: {String(w.bacteriaNote ?? w.frequencyNote ?? 'no provincial frequency published')}</li>}
+          {w.chemistry ? <li>Chemistry: {String(w.chemistry)}{w.chemistryCost ? ` (${String(w.chemistryCost)})` : ''}</li> : <li>Chemistry: {String(w.chemistryNote ?? 'no provincial frequency published')}</li>}
+        </ul>
+      )}
+      {Array.isArray(w?.sources) && <p class="small">{(w!.sources as string[]).map((u, i) => <><a href={u} rel="noopener">{provName} source {i + 1} ↗</a>{' '}</>)}</p>}
+    </div>
+    <div class="card rule-card">
+      <h3>Radon help in {provName}</h3>
+      {g.rp?.buildingCode && <p><strong>New homes:</strong> {g.rp.buildingCode}</p>}
+      {g.rp?.testKitProgram && <p><strong>Test kits:</strong> {g.rp.testKitProgram}</p>}
+      {g.rp?.other && <p><strong>Other help:</strong> {g.rp.other}</p>}
+      <p class="small">Find a C-NRPP certified measurement or mitigation professional at c-nrpp.ca. Data checked {longDate(page.payload.city ? '2026-10-08' : '')}.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 641px) { .radon-t td.c-main, .radon-t th:first-child { width: 44%; } }
+</style>

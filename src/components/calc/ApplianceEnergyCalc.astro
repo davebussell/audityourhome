@@ -1,0 +1,167 @@
+---
+import { applianceDefaults, computeAppliances, renderRow, renderTotals, renderFootTotal, type AppliancePayload, type ApItem } from './appliance-energy';
+
+interface Props { payload: AppliancePayload; cityName: string; priceNote: string; hubNote?: string }
+const { payload, cityName, priceNote, hubNote } = Astro.props;
+const s = applianceDefaults(payload);
+const r = computeAppliances(s, payload);
+const byId = Object.fromEntries(r.rows.map((x) => [x.item.id, x]));
+/** rows where owning more than one is common enough to offer a count */
+const MULTI = new Set(['fridge', 'fridgeSecond', 'chestFreezer', 'uprightFreezer', 'tv55', 'desktopComputer', 'gameConsole', 'dehumidifier', 'blockHeater', 'spaceHeater', 'routerModem', 'evCharging']);
+const hasVersion = (it: ApItem) =>
+  ((it.kind === 'annual' || it.kind === 'perBulb' || it.kind === 'perNight') && it.oldKwh != null && it.newKwh != null) ||
+  (it.kind === 'perHour' && Boolean(it.lowKwhPerHour));
+const priceStr = String(Number(payload.price.toFixed(4)));
+// the browser only needs the numbers; labels and hints are already in the HTML
+const clientPayload = { ...payload, items: payload.items.map(({ label, hint, oldLabel, newLabel, useLabel, useUnit, ...rest }) => (void [label, hint, oldLabel, newLabel, useLabel, useUnit], rest)) };
+---
+
+<section class="calc" id="calculator" aria-labelledby="calc-h">
+  <div class="calc-top">
+    <h2 id="calc-h">Appliance energy cost calculator{cityName ? ` for ${cityName}` : ''}</h2>
+    {hubNote && <p class="calc-hub-note">{hubNote}</p>}
+    <p class="small">Pre-filled with an example household: one older fridge, newer laundry and kitchen appliances, 10 LED bulbs and a set of devices on standby. Tick what you have, pick older or newer models and enter your own use. Nothing you enter leaves your browser.</p>
+  </div>
+  <form id="ap-form" class="calc-form" novalidate>
+    <div class="calc-block">
+      <div class="calc-in">
+        <fieldset class="cf">
+          <legend>Your electricity price</legend>
+          <div class="field">
+            <label for="ap-price">Price of one more kWh, taxes in</label>
+            <span class="in-unit pre"><span>$</span><input id="ap-price" name="price" type="text" inputmode="decimal" value={priceStr} autocomplete="off" /><span>per kWh</span></span>
+            <p class="hint">{priceNote} Change it to the price on your bill.</p>
+          </div>
+        </fieldset>
+      </div>
+      <div class="calc-out" id="ap-total" aria-live="polite" set:html={renderTotals(r, payload)} />
+    </div>
+
+    <div class="calc-block ap-block">
+      <fieldset class="cf ap-fs">
+        <legend>Appliances and devices</legend>
+        <ul class="ap-list">
+          {payload.items.map((it) => {
+            const row = s.rows[it.id];
+            return (
+              <li class="ap-row" data-id={it.id} data-off={row.on ? '0' : '1'}>
+                <div class="ap-name">
+                  <label class="ap-inc"><input type="checkbox" name={`on_${it.id}`} checked={row.on} aria-describedby={`ap-o-${it.id}`} /> <span>{it.label}</span></label>
+                  <p class="hint ap-hint">{it.hint}</p>
+                </div>
+                <div class="ap-ctl">
+                  {hasVersion(it) && (
+                    <div class="field">
+                      <label for={`ap-v-${it.id}`}>Model</label>
+                      <select id={`ap-v-${it.id}`} name={`ver_${it.id}`}>
+                        <option value="old" selected={row.version === 'old'}>{it.oldLabel ?? 'Older'}</option>
+                        <option value="new" selected={row.version === 'new'}>{it.newLabel ?? 'Newer'}</option>
+                        {it.removeKwh ? <option value="remove">Unplug it</option> : null}
+                      </select>
+                    </div>
+                  )}
+                  {MULTI.has(it.id) && (
+                    <div class="field">
+                      <label for={`ap-q-${it.id}`}>How many</label>
+                      <select id={`ap-q-${it.id}`} name={`qty_${it.id}`} class="ap-qty">
+                        {[1, 2, 3, 4, 5, 6].map((n) => <option value={n} selected={n === row.qty}>{n}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  {it.kind === 'perBulb' && (
+                    <div class="field">
+                      <label for={`ap-q-${it.id}`}>How many</label>
+                      <span class="in-unit"><input id={`ap-q-${it.id}`} name={`qty_${it.id}`} type="text" inputmode="numeric" value={String(row.qty)} autocomplete="off" /><span>bulbs</span></span>
+                    </div>
+                  )}
+                  {it.useLabel && (
+                    <div class="field">
+                      <label for={`ap-u-${it.id}`}>{it.useLabel}</label>
+                      <span class="in-unit"><input id={`ap-u-${it.id}`} name={`use_${it.id}`} type="text" inputmode="decimal" value={row.use !== null ? String(row.use) : ''} placeholder="enter" autocomplete="off" /><span>{it.useUnit}</span></span>
+                    </div>
+                  )}
+                </div>
+                <p class="ap-out" id={`ap-o-${it.id}`} data-out={it.id} set:html={renderRow(byId[it.id])} />
+              </li>
+            );
+          })}
+        </ul>
+        <p class="ap-foot" id="ap-foot" set:html={renderFootTotal(r)} />
+      </fieldset>
+    </div>
+  </form>
+</section>
+
+<script type="application/json" id="calc-data" set:html={JSON.stringify(clientPayload)} />
+
+<script>
+  import { computeAppliances, renderRow, renderTotals, renderFootTotal, type AppliancePayload, type ApState } from './appliance-energy';
+  import { readJSON, num, str, checked, onChange } from './ui';
+
+  const P = readJSON<AppliancePayload>('calc-data');
+  const form = document.getElementById('ap-form') as HTMLFormElement;
+
+  function read(): ApState {
+    const rows: ApState['rows'] = {};
+    for (const it of P.items) {
+      const q = num(form, `qty_${it.id}`);
+      const ver = str(form, `ver_${it.id}`);
+      rows[it.id] = {
+        on: checked(form, `on_${it.id}`),
+        // items without a count control are one each; a blank count reads as none
+        qty: form.elements.namedItem(`qty_${it.id}`) ? (q !== null ? Math.min(Math.round(q), 500) : 0) : 1,
+        version: (ver === 'old' || ver === 'new' || ver === 'remove' ? ver : it.defaultVersion ?? 'new') as ApState['rows'][string]['version'],
+        use: form.elements.namedItem(`use_${it.id}`) ? num(form, `use_${it.id}`) : null,
+      };
+    }
+    return { price: num(form, 'price'), rows };
+  }
+
+  function update() {
+    const s = read();
+    const r = computeAppliances(s, P);
+    document.getElementById('ap-total')!.innerHTML = renderTotals(r, P);
+    document.getElementById('ap-foot')!.innerHTML = renderFootTotal(r);
+    for (const x of r.rows) {
+      const li = form.querySelector<HTMLElement>(`.ap-row[data-id="${x.item.id}"]`);
+      if (li) li.dataset.off = x.on ? '0' : '1';
+      const out = document.getElementById(`ap-o-${x.item.id}`);
+      if (out) out.innerHTML = renderRow(x);
+    }
+  }
+  onChange(form, update);
+  update();
+</script>
+
+<style>
+  .ap-block { display: block; }
+  .ap-fs { margin: 0; }
+  .ap-list { list-style: none; margin: 0; padding: 0; }
+  .ap-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.25fr) minmax(0, 1fr); gap: 6px 20px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line); }
+  .ap-row:first-child { border-top: none; padding-top: 2px; }
+  .ap-inc { display: flex; align-items: flex-start; gap: 9px; font-weight: 600; font-size: 15px; margin: 0; cursor: pointer; }
+  .ap-inc input { width: 18px; height: 18px; margin: 2px 0 0; flex: none; accent-color: var(--heat); }
+  .ap-hint { margin-left: 27px; }
+  .ap-ctl { display: flex; flex-wrap: wrap; gap: 8px 12px; min-width: 0; }
+  .ap-ctl .field { margin: 0; min-width: 0; max-width: 100%; }
+  .ap-ctl label { font-size: 12.5px; font-weight: 600; color: var(--muted); margin: 0 0 3px; }
+  .ap-ctl select { padding: 7px 10px; font-size: 14.5px; width: auto; max-width: 100%; }
+  .ap-ctl .ap-qty { min-width: 4.2em; }
+  .ap-ctl .in-unit input { width: 6.5em; padding: 7px 10px; }
+  .ap-name { grid-column: 1; min-width: 0; }
+  .ap-ctl { grid-column: 2; }
+  .ap-out { grid-column: 3; margin: 0; font-size: 14.5px; line-height: 1.5; align-self: center; font-variant-numeric: tabular-nums; }
+  .ap-out :global(.save) { color: var(--pine); font-weight: 700; }
+  .ap-out :global(.muted) { color: var(--faint); }
+  .ap-row[data-off="1"] .ap-ctl, .ap-row[data-off="1"] .ap-hint { display: none; }
+  .ap-row[data-off="1"] .ap-inc { font-weight: 500; color: var(--muted); }
+  .ap-foot { margin: 6px 0 0; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); font-size: 15px; }
+  .ap-foot :global(.save) { color: var(--pine); font-weight: 700; }
+  @media (max-width: 900px) {
+    .ap-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    .ap-name, .ap-ctl, .ap-out { grid-column: 1; }
+    .ap-ctl, .ap-out { margin-left: 27px; }
+    .ap-row[data-off="1"] { gap: 2px; }
+    .ap-row[data-off="1"] .ap-out { font-size: 13.5px; }
+  }
+</style>

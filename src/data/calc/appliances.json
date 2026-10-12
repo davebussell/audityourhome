@@ -1,0 +1,333 @@
+{
+ "asOf": "2026-10-08",
+ "methodNotes": [
+  "Hydro-Québec values come from the data file behind its online calculators. In that file, 'power' for refrigerators and freezers is kWh per day, for washers, dryers and dishwashers kWh per load, and for stoves kWh per day of use (confirmed in the calculator script: consumption = power × uses per year).",
+  "NRCan Table 38 values are national averages 'based on rated efficiency' (test conditions), not measured household use.",
+  "ENERGY STAR medians were computed from data.energystar.gov downloads (models whose 'Markets' field includes Canada unless noted). They use U.S. DOE test bases (215 dishwasher loads, 295 washer loads, 283 dryer loads a year).",
+  "Do not mix test bases within one comparison: each item's oldKwh and newKwh share one basis.",
+  "Items with only watts (microwave, space heater, block heater, pool pump, sump pump, baseboard) need hours from the user."
+ ],
+ "unverified": [
+  "Wi-Fi router/modem and well pump: no source found.",
+  "Furnace blower PSC vs ECM: only the percentage saving (NRCan, >70% for continuous circulation) is verified, not kWh.",
+  "HRV: older-unit annual use not verified; new-unit figure is derived.",
+  "Pool pump: typical daily run time not verified.",
+  "Typical measured annual driving distance in Canada (NRCan's 20,000 km is a costing basis)."
+ ],
+ "items": [
+  {
+   "id": "fridge",
+   "label": "Refrigerator (full-size, top freezer)",
+   "oldKwh": 458,
+   "newKwh": 372,
+   "unit": "kWh/yr",
+   "assumption": "Runs 24 h a day; Hydro-Québec's calculator gives kWh per day by model year (× 365). Old = 2002-2008 model (18-24 years old), new = 2017+ model.",
+   "regionFactor": "none",
+   "regionNote": "Rated figures; the ENERGY STAR dataset notes actual use varies with room temperature, door openings and how full the unit is.",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json"
+  },
+  {
+   "id": "fridgeSecond",
+   "label": "Second fridge (garage or basement)",
+   "oldKwh": 622,
+   "newKwh": 372,
+   "unit": "kWh/yr",
+   "assumption": "A second fridge is modelled as a 1994-2001 top-freezer unit (Hydro-Québec, kWh per day × 365). New = replacing it with a 2017+ top-freezer. Unplugging it saves the full old figure.",
+   "regionFactor": "none",
+   "regionNote": "Rated in a lab. ENERGY STAR notes actual use varies with surrounding room temperature; no source quantifying use in an unheated garage or a warm basement was found.",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json",
+   "removeSavingsKwh": 622
+  },
+  {
+   "id": "chestFreezer",
+   "label": "Chest freezer",
+   "oldKwh": 342,
+   "newKwh": 295,
+   "unit": "kWh/yr",
+   "assumption": "Runs 24 h a day; Hydro-Québec kWh per day × 365. Old = 2004-2009 model, new = 2017+.",
+   "regionFactor": "none",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json"
+  },
+  {
+   "id": "uprightFreezer",
+   "label": "Upright freezer (frost-free)",
+   "oldKwh": 631,
+   "newKwh": 464,
+   "unit": "kWh/yr",
+   "assumption": "Runs 24 h a day; Hydro-Québec kWh per day × 365. Old = 2004-2014 self-defrosting model, new = 2017+.",
+   "regionFactor": "none",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json"
+  },
+  {
+   "id": "dishwasher",
+   "label": "Dishwasher (machine only)",
+   "oldKwh": 93,
+   "newKwh": 70,
+   "unit": "kWh/yr",
+   "assumption": "NRCan rated annual use of a new dishwasher sold in 2008 (old) and 2022 (new), excluding hot water. Usage follows the rating test; NRCan's table does not state the cycles per year.",
+   "regionFactor": "none",
+   "source": "https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=CP&sector=res&juris=ca&year=2022&rn=38&page=0",
+   "hotWaterNote": "Most of a dishwasher's energy is hot water. Count it under water heating, or use these totals if the water heater is electric."
+  },
+  {
+   "id": "clothesWasher",
+   "label": "Clothes washer (machine only)",
+   "oldKwh": 41,
+   "newKwh": 27,
+   "unit": "kWh/yr",
+   "assumption": "NRCan rated annual use of a new washer sold in 2008 (old) and 2022 (new), excluding hot water.",
+   "regionFactor": "none",
+   "source": "https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=CP&sector=res&juris=ca&year=2022&rn=38&page=0",
+   "hotWaterNote": "Hot water is most of a washer's energy and is counted separately."
+  },
+  {
+   "id": "clothesDryer",
+   "label": "Electric clothes dryer",
+   "oldKwh": 916,
+   "newKwh": 553,
+   "unit": "kWh/yr",
+   "assumption": "NRCan rated annual use of a new electric dryer sold in 2008 (old) and 2022 (new).",
+   "regionFactor": "none",
+   "source": "https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=CP&sector=res&juris=ca&year=2022&rn=38&page=0"
+  },
+  {
+   "id": "heatPumpDryer",
+   "label": "Heat pump clothes dryer",
+   "oldKwh": 608,
+   "newKwh": 236,
+   "unit": "kWh/yr",
+   "assumption": "ENERGY STAR certified models sold in Canada, U.S. DOE test basis of 283 loads a year. Old = conventional electric vented dryer (median, n=243); new = heat pump ventless dryer (median, n=23). Per load: 2.15 vs 0.83 kWh.",
+   "regionFactor": "none",
+   "source": "https://data.energystar.gov/resource/t9u7-4d2j.json"
+  },
+  {
+   "id": "electricRange",
+   "label": "Electric range and oven",
+   "oldKwh": 522,
+   "newKwh": 550,
+   "unit": "kWh/yr",
+   "assumption": "NRCan rated annual use of a new electric range sold in 2008 (old) and 2022 (new). Ranges have not become more efficient since the mid-2000s, so replacing one saves little energy.",
+   "regionFactor": "none",
+   "source": "https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=CP&sector=res&juris=ca&year=2022&rn=38&page=0"
+  },
+  {
+   "id": "microwave",
+   "label": "Microwave oven",
+   "unit": "kWh per hour of use",
+   "assumption": "Hydro-Québec lists a microwave oven at 1,200 W (Hydro One's calculator uses 1,000 W). Annual use = 1.2 kW × hours of use. No source gives typical minutes per day or an old-versus-new difference.",
+   "regionFactor": "none",
+   "note": "Leave oldKwh/newKwh null; use the watts × time input instead.",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json",
+   "watts": 1200,
+   "kWhPerHour": 1.2,
+   "exampleKwh": 73,
+   "exampleAssumption": "Editorial example, not from a source: 10 minutes a day, every day."
+  },
+  {
+   "id": "tv55",
+   "label": "Television, about 55-inch",
+   "oldKwh": 280,
+   "newKwh": 92,
+   "unit": "kWh/yr",
+   "assumption": "3 hours a day on (Hydro-Québec calculator default), standby the rest of the day. Old = 2008-2009 LCD at 55 in.: 249 W on (Hydro-Québec formula: base watts + size² × per-inch factor) and 1 W standby. New = median ENERGY STAR 55-inch LED-LCD TV: 81.7 W on, 0.30 W networked standby (n=12 models; 5 listed for Canada).",
+   "regionFactor": "none",
+   "source": "https://data.energystar.gov/resource/pd96-rr3d.json"
+  },
+  {
+   "id": "desktopComputer",
+   "label": "Desktop computer with monitor",
+   "oldKwh": 137,
+   "newKwh": 48,
+   "unit": "kWh/yr",
+   "assumption": "3 hours a day in use, asleep the rest (Hydro-Québec calculator default hours). Old = desktop and monitor: 90 W in use, 5 W asleep. New = efficient alternative, a laptop: 30 W in use, 2 W asleep (Hydro-Québec).",
+   "regionFactor": "none",
+   "note": "Gaming or workstation desktops under heavy load use far more; no Canadian source gives a typical figure.",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json"
+  },
+  {
+   "id": "gameConsole",
+   "label": "Game console",
+   "oldKwh": 201,
+   "newKwh": 110,
+   "unit": "kWh/yr",
+   "assumption": "High-performance console, 3 hours a day of play at 100 W (Hydro-Québec). Old = left in instant-on standby the rest of the day at 12 W (Hydro-Québec, new-generation console). New = switched fully off (for example at a power bar) when not in use.",
+   "regionFactor": "none",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json"
+  },
+  {
+   "id": "routerModem",
+   "label": "Wi-Fi router and modem",
+   "unit": "kWh/yr",
+   "regionFactor": "none",
+   "note": "Not verified. Hydro-Québec and Hydro One calculators do not list routers or modems; Hydro One only names internet routers as devices to leave on a 'hot outlet'. No small network equipment data set appears in the current data.energystar.gov listing. Leave out, or let users enter the watts from the label (runs 8,760 hours a year)."
+  },
+  {
+   "id": "dehumidifier",
+   "label": "Portable dehumidifier (seasonal)",
+   "oldKwh": 371,
+   "newKwh": 315,
+   "unit": "kWh/yr",
+   "assumption": "New = median ENERGY STAR portable dehumidifier sold in Canada, 315.0 kWh/yr under the U.S. DOE test's typical-use assumptions (n=481; median capacity 26.9 pints/day; median IEF 2.0 L/kWh). Old = derived 'standard model': new ÷ 0.85, using NRCan's statement that a certified model uses nearly 15% less energy. Hours of use behind the DOE figure are not stated in the data set.",
+   "regionFactor": "humid",
+   "regionNote": "Depends on how damp the basement is and how many months it runs; the figure is a standardized estimate.",
+   "source": "https://data.energystar.gov/resource/mgiu-hu4z.json",
+   "watts": {
+    "hydroQuebec": 600,
+    "hydroOne": 350,
+    "note": "Nameplate-style values from utility calculators for watts × hours estimates."
+   },
+   "derived": "oldKwh is derived (new ÷ 0.85)."
+  },
+  {
+   "id": "spaceHeater",
+   "label": "Portable electric space heater",
+   "unit": "kWh per hour of use",
+   "assumption": "1,500 W × hours of use (Hydro One lists a space heater at 1,500 W; NRCan says portable heaters range from 500 to 1,500 W). All resistance heaters turn electricity into heat at about the same rate, so there is no efficient model: NRCan says electric resistance heating is 'typically 100 per cent efficient'.",
+   "regionFactor": "cold",
+   "regionNote": "Hours depend on the season and the room.",
+   "note": "Annual kWh = 1.5 × hours a day × days. Savings come only from using it fewer hours or heating a smaller space.",
+   "source": "https://www.hydroone.com/saving-money-and-energy/residential/tips-and-tools/appliances",
+   "watts": 1500,
+   "kWhPerHour": 1.5
+  },
+  {
+   "id": "blockHeater",
+   "label": "Engine block heater",
+   "oldKwh": 6.0,
+   "newKwh": 2.0,
+   "unit": "kWh per night plugged in",
+   "assumption": "500 W heater (Hydro-Québec and Hydro One calculators). Old = plugged in 12 hours a night with no timer; new = on a timer for 4 hours (SaskPower). NRCan suggests a timer set to no more than 2 hours, which is 1 kWh a night.",
+   "regionFactor": "cold",
+   "source": "https://www.saskpower.com/power-savings-and-programs/home/power-savings-and-tips/factors-affecting-power-use",
+   "perWinterFormula": "kWh per winter = kWh per night × nights plugged in. SaskPower suggests plugging in when it is colder than -15 °C, so the night count depends on the city's climate (not provided here)."
+  },
+  {
+   "id": "hotTub",
+   "label": "Hot tub (outdoor)",
+   "unit": "kWh/yr",
+   "assumption": "Hydro-Québec spa calculator, used year-round, average use (1-2 times a week). The calculator does not state tub size or cover; it reflects Québec's climate.",
+   "regionFactor": "cold",
+   "regionNote": "Heat flow grows with the temperature difference between the water and the outdoor air (NRC CBD-36, https://doi.org/10.4224/40000846); the Hydro-Québec figure reflects Québec's climate. Use it with care for milder (coastal BC) or colder (Prairie, northern) cities.",
+   "note": "No old-versus-new data were found, so oldKwh/newKwh are null.",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json",
+   "typicalKwh": 4667
+  },
+  {
+   "id": "poolPump",
+   "label": "Pool filter pump",
+   "unit": "kWh per hour of running",
+   "assumption": "Pump power from Hydro-Québec's pool calculator (in-ground: 1,310 W standard high-speed, 310 W low-speed; above-ground: 735 W and 195 W). Season = 120 days (the calculator's default). Hours a day are a user input: no source gives a typical filtration time.",
+   "regionFactor": "none",
+   "regionNote": "Season length varies by city; 120 days is Hydro-Québec's default.",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json",
+   "kWhPerHour": {
+    "inGroundSingleSpeed": 1.31,
+    "inGroundLowSpeed": 0.31,
+    "aboveGroundSingleSpeed": 0.735,
+    "aboveGroundLowSpeed": 0.195
+   },
+   "seasonDays": 120,
+   "savingsRule": "NRCan: an ENERGY STAR in-ground pool pump uses up to 65% less energy than a standard model; certified above-ground pumps about 17% less. Halving pump speed lets the pump use one-eighth as much energy."
+  },
+  {
+   "id": "wellPump",
+   "label": "Well pump",
+   "unit": "kWh/yr",
+   "regionFactor": "none",
+   "note": "Not verified. No NRCan, Hydro-Québec, Hydro One or SaskPower page reviewed gives a well-pump wattage or annual use, and the US DOE Energy Saver appliance-energy page returned 404 on 2026-10-08. Use nameplate watts × pumping hours if needed."
+  },
+  {
+   "id": "sumpPump",
+   "label": "Sump pump",
+   "unit": "kWh per hour of pumping",
+   "assumption": "Hydro One's calculator lists sump pumps at 500 W (1/2 hp) and 1,200 W (3/4 hp). Annual use depends on how much water comes in, so no typical annual figure is given.",
+   "regionFactor": "none",
+   "regionNote": "Runs more in wet springs and in high water-table areas.",
+   "source": "https://www.hydroone.com/saving-money-and-energy/residential/tips-and-tools/appliances",
+   "kWhPerHour": {
+    "halfHp": 0.5,
+    "threeQuarterHp": 1.2
+   }
+  },
+  {
+   "id": "furnaceBlower",
+   "label": "Furnace blower motor (PSC vs ECM)",
+   "unit": "kWh/yr",
+   "regionFactor": "cold",
+   "regionNote": "Hours of blower use rise with heating degree-days and with continuous-fan settings.",
+   "note": "Annual kWh not verified: no Canadian source gives typical blower watts or hours. NRCan says a brushless DC (ECM) motor 'can reduce furnace electrical energy consumption by more than 70 percent, when used for continuous circulation' compared with a standard PSC motor. Canada's gas furnace regulations set a fan energy rating (FER) limit (for gas furnaces without an integrated cooling component: FER ≤ 0.044 × Q max + 195, in W per 1,000 cfm, with minimum AFUE 95%) and require manufacturers to report the blower motor type (brushless permanent magnet, PSC or other).",
+   "source": "https://natural-resources.canada.ca/sites/nrcan/files/energy/pdf/energystar/Heating_With_Gas.pdf",
+   "reductionPct": ">70 (continuous circulation)"
+  },
+  {
+   "id": "hrv",
+   "label": "Heat recovery ventilator (HRV)",
+   "newKwh": 214,
+   "unit": "kWh/yr",
+   "assumption": "Derived: runs continuously (NRCan: 'Never turn your HRV/ERV off'), moving 22 L/s, the minimum principal ventilation rate for a 3-bedroom home (NBC 2020 Table 9.32.3.3: 22-32 L/s), at the ENERGY STAR Canada minimum fan efficacy of 0.90 L/s per W (specification V2.4, effective 2028-01-01) = 24.4 W × 8,760 h.",
+   "regionFactor": "none",
+   "source": "https://natural-resources.canada.ca/sites/admin/files/documents/2026-06/ENERGY_STAR_technical_specification_HRV_ERV_V2.4.pdf",
+   "derived": "newKwh is arithmetic on the cited rate and efficacy, not a published figure.",
+   "oldNote": "No source for an older unit's annual use. Hydro-Québec's calculator lists an 'air exchanger' at 150 W for watts × hours estimates; at that draw around the clock it would use about 1,314 kWh a year."
+  },
+  {
+   "id": "lighting",
+   "label": "Lighting (per bulb; incandescent vs LED)",
+   "oldKwh": 65.7,
+   "newKwh": 10.9,
+   "unit": "kWh/yr per bulb",
+   "assumption": "One 800-lumen bulb on 3 hours a day (Hydro-Québec calculator default). Old = 60 W incandescent, new = 10 W LED (Hydro-Québec's equivalents for 800 lumens).",
+   "regionFactor": "none",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json",
+   "wholeHouse": {
+    "bulbsInAverageHome": 40,
+    "bulbsSource": "https://www.hydroquebec.com/residential/customer-space/electricity-use/electricity-consumption-by-use.html",
+    "bulbsQuote": "The average home can have close to 40 lightbulbs.",
+    "note": "Whole-house use = sum of watts × hours for the bulbs actually used. Most bulbs are not on 3 hours a day, so do not multiply the per-bulb figure by 40. Lighting is about 5% of an average Québec home's electricity use (Hydro-Québec)."
+   }
+  },
+  {
+   "id": "standby",
+   "label": "Standby (phantom) power",
+   "unit": "kWh/yr",
+   "assumption": "Example set of always-plugged devices, picked for illustration (editorial choice of devices; the wattages are Hydro-Québec's): Decoder with recorder 22 W, New-generation high-performance game console 12 W, Computer and monitor 2.5 W, Multipurpose ink-jet printer 2 W, Recent model TV (2008–2013) 1 W, Blu-ray disc player 0.5 W = 40.0 W × 8,760 hours.",
+   "regionFactor": "none",
+   "note": "newKwh is left null: savings depend on which devices a household can switch off (PVRs and routers usually stay on).",
+   "source": "https://www.hydroquebec.com/themes/mieux-consommer/data/calculators/calculator-data.json",
+   "exampleKwh": 350,
+   "exampleAssumption": "Editorial example set of devices (the wattages are Hydro-Québec's)."
+  },
+  {
+   "id": "evCharging",
+   "label": "Electric vehicle charging (battery-electric)",
+   "unit": "kWh/yr",
+   "assumption": "Combined (55% city, 45% highway) ratings of the 221 battery-electric vehicle listings in NRCan's 2026 Fuel Consumption Guide; median 24.1 kWh/100 km × 20,000 km. low/high = efficient and less-efficient quartiles.",
+   "regionFactor": "cold",
+   "regionNote": "Ratings come from standard tests; real use varies with temperature and driving. No source quantifying winter effects was reviewed.",
+   "note": "No old-versus-new pair applies; use typicalKwh (or kWh/100 km × the user's km).",
+   "source": "https://natural-resources.canada.ca/sites/admin/files/documents/2026-02/2026-Fuel-Consumption-Guide.pdf",
+   "typicalKwh": 4820,
+   "lowKwh": 4280,
+   "highKwh": 5330,
+   "kWhPer100km": {
+    "median": 24.1,
+    "lowerQuartile": 21.4,
+    "upperQuartile": 26.65,
+    "min": 15.4,
+    "max": 47.3,
+    "n": 221
+   },
+   "annualKm": 20000,
+   "annualKmBasis": "NRCan's Fuel Consumption Guide bases its annual fuel cost on 20,000 km a year. This is NRCan's costing basis, not a measured Canadian average (a measured average was not verified)."
+  },
+  {
+   "id": "electricBaseboard",
+   "label": "Electric baseboard heater (per heater)",
+   "unit": "W (rated)",
+   "assumption": "Rated watts from Hydro One's calculator. Annual use depends on the room's heat loss and the climate, not on the heater, so no per-room annual figure is given.",
+   "regionFactor": "cold",
+   "note": "Use the site's heating-cost calculator (heat loss × degree-days) rather than this appliance list for baseboards.",
+   "source": "https://www.hydroone.com/saving-money-and-energy/residential/tips-and-tools/appliances"
+  }
+ ]
+}

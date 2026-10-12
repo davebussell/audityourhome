@@ -1,0 +1,271 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
+import LeadForm from '../../components/LeadForm.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { areaIndex } from '../../lib/areas';
+import wood from '../../../tools/areas/research/wood.json';
+
+/*
+ * Every fact on this page comes from tools/areas/research/wood.json (sources read October 8, 2026)
+ * or the National Building Code 2020 (CO alarms). Not published because we could not verify them:
+ * WETT certification or inspection-level names, inspection prices, and any rule that lenders or buyers
+ * require a WETT inspection.
+ */
+const S = wood.sources;
+const CHECKED = 'October 8, 2026';
+
+const title = 'Wood stove and chimney inspections (WETT): what’s checked, how often, and finding a certified inspector | AuditYourHome';
+const description =
+  'What a WETT wood-burning appliance inspection covers, the fire code rule to inspect every chimney at least once every 12 months, how to find a WETT-certified inspector (or an APC member in Québec), and certified versus uncertified stoves.';
+
+const faqs = [
+  {
+    q: 'What is a WETT inspection?',
+    a: 'An inspection of a wood-burning appliance and its chimney or venting by a professional certified through the WETT (Wood Energy Technology Transfer) program. WETT Inc., the non-profit that runs the program, says hiring a WETT-certified professional ensures appliances are inspected, installed and maintained to current safety codes and standards, and helps homeowners meet insurance or regulatory requirements.',
+  },
+  {
+    q: 'How often does a wood stove chimney need to be inspected?',
+    a: 'The National Fire Code and Ontario’s Fire Code require every chimney, flue and flue pipe to be inspected at least once every 12 months, when an appliance is added and after any chimney fire, and cleaned as often as needed to keep combustible deposits from building up. In Québec, the APC suggests sweeping once a year for occasional use and at least twice a year for very frequent use.',
+  },
+  {
+    q: 'How much does a WETT inspection cost?',
+    a: 'WETT doesn’t publish prices and we found no reliable published range, so ask two or three certified inspectors for written quotes that describe what the inspection includes.',
+  },
+  {
+    q: 'Do I need a WETT inspection to buy or insure a house with a wood stove?',
+    a: 'WETT says certification helps homeowners meet insurance or regulatory requirements, but we found no published rule that applies to every buyer or lender. Ask your insurer what it needs before you close. In Québec, insurers accept the electronic visual inspection attestation issued by APC member chimney sweeps.',
+  },
+  {
+    q: 'What does an EPA-certified or CSA B415.1 stove mean?',
+    a: 'The appliance was tested for emissions and efficiency: CSA B415.1 is the Canadian test method, and the US EPA certifies stoves to a particulate limit (2.0 grams per hour with crib wood, or 2.5 g/h with cord wood, for new room heaters since 2020). Several provincial and territorial rebates require one or the other.',
+  },
+  {
+    q: 'How do I find a certified inspector in Québec?',
+    a: 'Use the APC (Association des professionnels du chauffage) directory and filter by inspectors or chimney sweeps. APC members hold the relevant RBQ licence, have passed APC training, carry at least $2 million in liability insurance and have been in business at least two years.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Wood-burning inspection', path: '/tests/wood-burning-inspection/' },
+  ]),
+  faqSchema(faqs),
+];
+
+const sourceKeys = ['wett', 'nfc', 'ofc', 'b365', 'b415', 'epaCert', 'epaMaint', 'epaPractice', 'epaChoose', 'apcFaq', 'apcFind',
+  'bcAppliances', 'bcRegs', 'bcCwsrp', 'bcLocal', 'nbPower', 'pei', 'yukon', 'aea'] as const;
+const sources = [
+  ...sourceKeys.map((k) => S[k]),
+  { label: 'National Research Council — National Building Code of Canada 2020, Article 9.32.3.9 (carbon monoxide alarms)', href: 'https://doi.org/10.4224/w324-hv93' },
+];
+const areas = areaIndex.areas;
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-hero')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Wood-burning inspection</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Specialty test guide · checked {CHECKED}</p>
+        <h1>Wood-burning appliance inspections (WETT): what’s checked and how often</h1>
+        <p class="lede measure">
+          A wood stove, insert or fireplace is only as safe as its chimney and its installation. The National Fire Code and
+          Ontario’s Fire Code require every chimney, flue and flue pipe to be inspected at least once every 12 months, when an
+          appliance is added and after any chimney fire. Outside Québec, look for a professional certified through the WETT
+          program; in Québec, a member of the APC.
+        </p>
+      </div>
+      <Photo name="home-hero" eager hud={false} />
+    </div>
+
+    <div class="glance">
+      <div class="g"><p class="k">Chimney inspection</p><p class="v">Every 12 months</p><p class="s">National and Ontario fire codes</p></div>
+      <div class="g"><p class="k">Clean right away if</p><p class="v">Creosote over 3 mm</p><p class="s">National Fire Code note</p></div>
+      <div class="g"><p class="k">Find an inspector</p><p class="v">WETT directory</p><p class="s">APC directory in Québec</p></div>
+      <div class="g"><p class="k">Certified stove</p><p class="v">CSA B415.1 or US EPA</p><p class="s">needed for most rebates</p></div>
+    </div>
+
+    <div class="measure prose">
+      <h2>What a WETT inspection is</h2>
+      <p>
+        WETT Inc. (Wood Energy Technology Transfer) describes itself as a non-profit training and education association that
+        promotes the safe and effective use of wood-burning systems in Canada and acts as the national registrar of the WETT
+        program. It says hiring a WETT-certified professional ensures wood-burning appliances are inspected, installed and
+        maintained to current safety codes and standards, and helps homeowners meet insurance or regulatory requirements. Its
+        site has a public directory of certified professionals.
+      </p>
+      <p>
+        We couldn’t verify WETT’s inspection-level names or typical prices, so ask each inspector what the inspection
+        includes and get the scope in writing before you book.
+      </p>
+
+      <h2>Who needs one</h2>
+      <ul>
+        <li><strong>Every home that burns wood, every year.</strong> The fire codes require a chimney, flue and flue pipe inspection at least once every 12 months.</li>
+        <li><strong>When you add or replace an appliance</strong>, and <strong>after any chimney fire</strong>: both trigger an inspection under the same fire code article.</li>
+        <li><strong>Buying or insuring a home with a wood stove.</strong> Ask your insurer what it needs before you close. In Québec, insurers accept the electronic visual inspection attestation issued by APC member chimney sweeps.</li>
+        <li><strong>Rebates.</strong> NB Power’s rebates for wood and pellet appliances require a US EPA or CSA B415.1 rating and a WETT installation, and Yukon’s heating system rebate needs an approved final inspection report (details below).</li>
+      </ul>
+
+      <h2>What the inspection checks</h2>
+      <p>An inspection looks at what the fire code and the installation code regulate:</p>
+      <ul>
+        <li><strong>The chimney, flue and flue pipe.</strong> The National Fire Code’s notes list structural deficiencies (a missing liner, inadequate supports or ties) and decay (cracking, settling, crumbling mortar, distortion, advanced corrosion, separated sections, loose or broken supports), plus abandoned openings that haven’t been sealed.</li>
+        <li><strong>Creosote and soot.</strong> Deposits more than 3 mm thick mean the chimney needs cleaning right away, possibly a change in how you burn, and more frequent inspections.</li>
+        <li><strong>Clearances.</strong> The required space between the appliance, flue pipe or chimney and combustible construction must be maintained, and nothing combustible may be stored in it.</li>
+        <li><strong>The installation.</strong> CSA B365 is the installation code for solid-fuel-burning appliances: furnaces, boilers, stoves, ranges, space heaters, factory-built fireplaces and water heaters. It doesn’t apply to site-built fireplaces.</li>
+        <li><strong>The appliance itself.</strong> Whether it’s certified to CSA B415.1 or the US EPA standard, which you can usually tell from its label or certification plate.</li>
+      </ul>
+
+      <h2>How often to inspect and sweep</h2>
+      <p>
+        The National Fire Code 2020 (Division B, Article 2.6.1.4) requires every chimney, flue and flue pipe to be inspected at
+        intervals of no more than 12 months, when any appliance is added and after any chimney fire, and to be cleaned as often
+        as necessary to keep it free of dangerous combustible deposits. Ontario’s Fire Code has the same inspection rule. The US
+        EPA says fire officials recommend having the appliance, chimney and vent professionally inspected every year.
+      </p>
+      <p>
+        How often to sweep depends on how much you burn. In Québec, the APC suggests once a year for occasional use and at least
+        twice a year for very frequent use. Between visits, dense smoke at the top of the chimney is a warning sign: the fire
+        code’s note links it to improper operation, a wrongly sized chimney or unsuitable fuel.
+      </p>
+
+      <h2>Finding a certified inspector</h2>
+      <p>
+        Search the <a href={S.wett.href} rel="noopener">WETT directory ↗</a> for certified professionals near you and confirm
+        they cover your address. In Québec, use the APC’s
+        <a href={S.apcFind.href} rel="noopener">Trouver un professionnel directory ↗</a> and filter by inspectors (Inspecteurs)
+        or chimney sweeps (Ramoneurs). APC members hold the relevant RBQ licence, have passed APC training, carry at least
+        $2 million in liability insurance and have been in business at least two years. WETT doesn’t publish prices, so get two
+        or three written quotes.
+      </p>
+
+      <h2>Certified and uncertified stoves</h2>
+      <p>
+        CSA B415.1 is the Canadian test method for the heat output, efficiency and emissions of stoves, inserts, factory-built
+        fireplaces, furnaces and hydronic heaters that burn cordwood, chips or pellets. The US EPA tested stoves certified to its
+        2015 standard to a particulate limit of 4.5 grams per hour; its 2020 limit for new room heaters is 2.0 g/h tested with
+        crib wood or 2.5 g/h with cord wood. EPA says certified stoves burn cleaner and are more energy efficient. In Québec, the
+        APC notes that a certified stove carries a certification plate showing its emissions, the certification year and the
+        standards body, fitted only at original manufacture.
+      </p>
+      <p>
+        B.C.’s Solid Fuel Burning Domestic Appliance Regulation sets standards for wood-burning appliances sold in the province.
+        The province says a modern, emissions-certified appliance reduces smoke but doesn’t eliminate it, and that modern pellet
+        stoves emit 80–90% less fine particulate (PM2.5) than most appliances burning regular firewood.
+      </p>
+
+      <h2>Rebates for wood and pellet appliances</h2>
+    </div>
+
+    <div class="measure">
+      <table class="stack">
+        <thead><tr><th>Program</th><th>What it pays</th><th>Equipment rule</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="Program">NB Power Total Home Energy Savings (New Brunswick)</td>
+            <td data-label="What it pays">$200 for a wood stove or a wood or pellet insert; $500 for a pellet stove or a wood or pellet boiler or furnace</td>
+            <td data-label="Equipment rule">US EPA or CSA B415.1 rated, and WETT installed</td>
+          </tr>
+          <tr>
+            <td data-label="Program">PEI biomass heating rebates</td>
+            <td data-label="What it pays">Stove up to $1,000 ($1,800 for low-income households); boiler or furnace up to $2,000 ($3,500)</td>
+            <td data-label="Equipment rule">EPA-approved or CSA B415.1-10</td>
+          </tr>
+          <tr>
+            <td data-label="Program">Yukon heating system rebate</td>
+            <td data-label="What it pays">50% of costs, up to $2,500</td>
+            <td data-label="Equipment rule">EPA-listed wood heating system, with an approved final inspection report</td>
+          </tr>
+          <tr>
+            <td data-label="Program">Arctic Energy Alliance (NWT), 2026/27</td>
+            <td data-label="What it pays">50% of the purchase cost, up to $2,000</td>
+            <td data-label="Equipment rule">Wood and pellet stoves under its energy-efficient products program</td>
+          </tr>
+          <tr>
+            <td data-label="Program">B.C. Community Wood Smoke Reduction Program</td>
+            <td data-label="What it pays">Local incentives to replace old wood stoves with cleaner heating</td>
+            <td data-label="Equipment rule">Set by each local program; gas and propane exchanges ended January 1, 2023</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small">Terms change, so check each program’s page (linked in the sources below) before you buy.</p>
+    </div>
+
+    <div class="measure prose">
+      <h2>Keeping it safe between inspections</h2>
+      <ul>
+        <li>Burn dry wood: the US EPA says wood burns best below 20% moisture, and a moisture meter tells you.</li>
+        <li>Keep anything combustible out of the clearance space around the stove and flue pipe.</li>
+        <li>Have the chimney inspected after any chimney fire, and whenever you add or replace an appliance.</li>
+        <li>Put a CO alarm in the room. For new houses, the National Building Code 2020 requires one in any room with a solid-fuel-burning appliance; see the <a href="/tests/carbon-monoxide/">carbon monoxide guide</a> for your province’s rules.</li>
+        <li>Tightening the house changes how chimneys draw, so pair air sealing with a <a href="/tests/combustion-safety/">combustion safety check</a>.</li>
+      </ul>
+    </div>
+
+    <section class="areas">
+      <h2>Wood-burning inspections near you</h2>
+      <p class="small measure">Local versions of this guide, with each area’s climate, housing and, in B.C., wood-smoke programs:</p>
+      <div class="nb">
+        {areas.map((a) => <a href={`/areas/${a.slug}/wood-burning-inspection/`}><span>{a.name}</span></a>)}
+        <a class="all" href="/areas/">All area guides →</a>
+      </div>
+    </section>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {sources.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <p class="meta">Checked {CHECKED}. The US EPA stopped updating its Burn Wise pages on October 30, 2025; they remain online as a historical record.</p>
+    </div>
+
+    <div class="related">
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/carbon-monoxide/">Next guide: carbon monoxide</a>
+    </div>
+
+    <LeadForm
+      heading="Ask about a wood stove or chimney inspection"
+      sub="Tell us your postal code and what you heat with. We’ll point you to the right kind of certified professional for your area, and which programs apply."
+      context="guide-wood-burning"
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 26px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+  .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; overflow-wrap: anywhere; }
+  .glance .s { font-size: 12.5px; color: var(--muted); margin: 2px 0 0; line-height: 1.35; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+  .prose h2 { font-size: 23px; margin: 30px 0 10px; }
+  .prose p { margin: 0 0 1em; }
+  .prose ul { padding-left: 20px; margin: 0 0 1em; display: grid; gap: 7px; }
+  .prose a { overflow-wrap: anywhere; }
+  .areas { padding: 26px 0 30px; }
+  .areas h2 { font-size: 23px; }
+  .nb { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nb a { display: inline-flex; align-items: center; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--ink); background: var(--card); }
+  .nb a:hover { border-color: var(--ink); }
+  .nb a.all { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

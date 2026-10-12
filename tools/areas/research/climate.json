@@ -1,0 +1,1337 @@
+{
+ "_meta": {
+  "eccc": {
+   "label": "Environment and Climate Change Canada — Canadian Climate Normals 1981–2010 (MSC GeoMet API)",
+   "href": "https://climate.weather.gc.ca/climate_normals/index_e.html",
+   "method": "Nearest station with complete 1981-2010 mean-temperature, HDD18 and CDD18 normals coded A-C (eccc_build_climate.py rules), from the area point; each station re-fetched from its own API URL and checked against the bulk pages.",
+   "bulkFetched": [
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?NORMAL_ID=1&f=json&limit=5000&offset=0",
+     "fetchedUtc": "2026-10-08T15:38:00Z",
+     "file": "normals_1_off0.json"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?NORMAL_ID=1&f=json&limit=5000&offset=5000",
+     "fetchedUtc": "2026-10-08T15:38:02Z",
+     "file": "normals_1_off5000.json"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?NORMAL_ID=23&f=json&limit=5000&offset=0",
+     "fetchedUtc": "2026-10-08T15:38:04Z",
+     "file": "normals_23_off0.json"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?NORMAL_ID=23&f=json&limit=5000&offset=5000",
+     "fetchedUtc": "2026-10-08T15:38:19Z",
+     "file": "normals_23_off5000.json"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?NORMAL_ID=32&f=json&limit=5000&offset=0",
+     "fetchedUtc": "2026-10-08T15:38:20Z",
+     "file": "normals_32_off0.json"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?NORMAL_ID=32&f=json&limit=5000&offset=5000",
+     "fetchedUtc": "2026-10-08T15:38:21Z",
+     "file": "normals_32_off5000.json"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?HAS_NORMALS_DATA=Y&f=json&limit=5000&offset=0",
+     "fetchedUtc": "2026-10-08T15:38:22Z",
+     "file": "stations_hasnormals_off0.json"
+    }
+   ],
+   "verifyFetched": [
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6110557&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:05:17Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6110557&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:05:18Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6110557&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:05:19Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6110557",
+     "fetchedUtc": "2026-10-08T16:05:20Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6115525&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:05:35Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6115525&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:05:35Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6115525&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:05:36Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6115525",
+     "fetchedUtc": "2026-10-08T16:05:36Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6154142&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:05:37Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6154142&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:05:39Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6154142&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:05:39Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6154142",
+     "fetchedUtc": "2026-10-08T16:05:40Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:05:41Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:05:42Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:05:42Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6149387",
+     "fetchedUtc": "2026-10-08T16:05:43Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6137161&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:05:44Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6137161&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:05:45Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6137161&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:05:47Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6137161",
+     "fetchedUtc": "2026-10-08T16:06:02Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6164433&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:03Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6164433&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:18Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6164433&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:19Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6164433",
+     "fetchedUtc": "2026-10-08T16:06:20Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6141933&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:20Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6141933&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:21Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6141933&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:22Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6141933",
+     "fetchedUtc": "2026-10-08T16:06:22Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6153194&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:37Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6153194&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:38Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6153194&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:38Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6153194",
+     "fetchedUtc": "2026-10-08T16:06:39Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:40Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:40Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:41Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6155790",
+     "fetchedUtc": "2026-10-08T16:06:42Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6142400&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:43Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6142400&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:44Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6142400&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:44Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6142400",
+     "fetchedUtc": "2026-10-08T16:06:45Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=611HBEC&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:45Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=611HBEC&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:46Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=611HBEC&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:47Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=611HBEC",
+     "fetchedUtc": "2026-10-08T16:06:47Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6152695&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:48Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6152695&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:49Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6152695&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:49Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6152695",
+     "fetchedUtc": "2026-10-08T16:06:50Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1096468&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:51Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1096468&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:51Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1096468&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:52Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1096468",
+     "fetchedUtc": "2026-10-08T16:06:53Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1182285&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:53Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1182285&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:54Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1182285&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:55Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1182285",
+     "fetchedUtc": "2026-10-08T16:06:55Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1183000&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:56Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1183000&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:57Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1183000&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:06:57Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1183000",
+     "fetchedUtc": "2026-10-08T16:06:58Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1126150&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:06:59Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1126150&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:06:59Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1126150&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:07:01Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1126150",
+     "fetchedUtc": "2026-10-08T16:07:02Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1128958&NORMAL_ID=1",
+     "fetchedUtc": "2026-10-08T16:07:02Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1128958&NORMAL_ID=32",
+     "fetchedUtc": "2026-10-08T16:07:03Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1128958&NORMAL_ID=23",
+     "fetchedUtc": "2026-10-08T16:07:04Z"
+    },
+    {
+     "url": "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1128958",
+     "fetchedUtc": "2026-10-08T16:07:04Z"
+    }
+   ]
+  },
+  "nbc": {
+   "label": "National Research Council — National Building Code of Canada 2020, Volume 1, Division B, Appendix C, Table C-2",
+   "href": "https://nrc-publications.canada.ca/eng/view/object/?id=515340b5-f4e0-4798-be69-692e4ec423e8",
+   "doi": "https://doi.org/10.4224/w324-hv93"
+  },
+  "fetched": "2026-10-08"
+ },
+ "areas": {
+  "simcoe-county": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 39 Simcoe County communities in our search data",
+      "lat": 44.4195,
+      "lon": -79.7831,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "BARRIE WPCC",
+     "climateId": "6110557",
+     "km": 8.9,
+     "hdd18": 4254,
+     "cdd18": 242,
+     "janMean": -7.7,
+     "julMean": 20.8,
+     "annualMean": 6.9,
+     "normalCode": "C",
+     "elevationM": 221.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6110557&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6110557&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6110557&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6110557"
+     ]
+    },
+    {
+     "point": {
+      "label": "Bracebridge",
+      "lat": 45.0263889,
+      "lon": -79.19,
+      "pointSource": "https://geogratis.gc.ca/services/geoname/en/geonames/FDGDU",
+      "section": "muskoka"
+     },
+     "station": "MUSKOKA A",
+     "climateId": "6115525",
+     "km": 10.9,
+     "hdd18": 4786,
+     "cdd18": 130,
+     "janMean": -10.3,
+     "julMean": 18.7,
+     "annualMean": 5.2,
+     "normalCode": "C",
+     "elevationM": 281.9,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6115525&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6115525&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6115525&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6115525"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Alliston",
+     "jan25": -23.0,
+     "jan1": -25.0,
+     "hdd": 4200.0,
+     "elevM": 220.0
+    },
+    {
+     "location": "Bradford",
+     "jan25": -23.0,
+     "jan1": -25.0,
+     "hdd": 4280.0,
+     "elevM": 240.0
+    },
+    {
+     "location": "Collingwood",
+     "jan25": -21.0,
+     "jan1": -23.0,
+     "hdd": 4180.0,
+     "elevM": 190.0
+    },
+    {
+     "location": "Elmvale",
+     "jan25": -24.0,
+     "jan1": -26.0,
+     "hdd": 4200.0,
+     "elevM": 220.0
+    },
+    {
+     "location": "Midland",
+     "jan25": -24.0,
+     "jan1": -26.0,
+     "hdd": 4200.0,
+     "elevM": 190.0
+    },
+    {
+     "location": "Penetanguishene",
+     "jan25": -24.0,
+     "jan1": -26.0,
+     "hdd": 4200.0,
+     "elevM": 220.0
+    },
+    {
+     "location": "Borden (CFB)",
+     "jan25": -23.0,
+     "jan1": -25.0,
+     "hdd": 4300.0,
+     "elevM": 225.0
+    }
+   ],
+   "nbcSection": [
+    {
+     "location": "Bracebridge",
+     "jan25": -26.0,
+     "jan1": -28.0,
+     "hdd": 4800.0,
+     "elevM": 310.0
+    },
+    {
+     "location": "Gravenhurst",
+     "jan25": -26.0,
+     "jan1": -28.0,
+     "hdd": 4760.0,
+     "elevM": 255.0
+    },
+    {
+     "location": "Huntsville",
+     "jan25": -26.0,
+     "jan1": -29.0,
+     "hdd": 4850.0,
+     "elevM": 335.0
+    }
+   ]
+  },
+  "york-region": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 12 York Region communities in our search data",
+      "lat": 44.0982,
+      "lon": -79.4198,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "KING SMOKE TREE",
+     "climateId": "6154142",
+     "km": 11.9,
+     "hdd18": 4243,
+     "cdd18": 236,
+     "janMean": -7.4,
+     "julMean": 20.5,
+     "annualMean": 7.0,
+     "normalCode": "C",
+     "elevationM": 352.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6154142&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6154142&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6154142&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6154142"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Newmarket",
+     "jan25": -22.0,
+     "jan1": -24.0,
+     "hdd": 4260.0,
+     "elevM": 185.0
+    },
+    {
+     "location": "Aurora",
+     "jan25": -21.0,
+     "jan1": -23.0,
+     "hdd": 4210.0,
+     "elevM": 270.0
+    },
+    {
+     "location": "Richmond Hill",
+     "jan25": -21.0,
+     "jan1": -23.0,
+     "hdd": 4000.0,
+     "elevM": 230.0
+    },
+    {
+     "location": "Markham",
+     "jan25": -21.0,
+     "jan1": -23.0,
+     "hdd": 4000.0,
+     "elevM": 175.0
+    },
+    {
+     "location": "Vaughan",
+     "jan25": -20.0,
+     "jan1": -22.0,
+     "hdd": 4100.0,
+     "elevM": 165.0
+    }
+   ]
+  },
+  "waterloo-region-townships": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 17 Waterloo Region townships communities in our search data",
+      "lat": 43.479,
+      "lon": -80.5693,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "WATERLOO WELLINGTON A",
+     "climateId": "6149387",
+     "km": 15.4,
+     "hdd18": 4194,
+     "cdd18": 201,
+     "janMean": -6.5,
+     "julMean": 20.0,
+     "annualMean": 7.0,
+     "normalCode": "C",
+     "elevationM": 317.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6149387"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Kitchener",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4200.0,
+     "elevM": 335.0
+    },
+    {
+     "location": "Waterloo",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4200.0,
+     "elevM": 330.0
+    },
+    {
+     "location": "Cambridge",
+     "jan25": -18.0,
+     "jan1": -20.0,
+     "hdd": 4100.0,
+     "elevM": 295.0
+    },
+    {
+     "location": "Listowel",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4300.0,
+     "elevM": 380.0
+    },
+    {
+     "location": "Milverton",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4200.0,
+     "elevM": 370.0
+    }
+   ]
+  },
+  "niagara-region": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 15 Niagara Region communities in our search data",
+      "lat": 43.0549,
+      "lon": -79.2793,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "RIDGEVILLE",
+     "climateId": "6137161",
+     "km": 4.0,
+     "hdd18": 3656,
+     "cdd18": 328,
+     "janMean": -4.4,
+     "julMean": 21.7,
+     "annualMean": 8.8,
+     "normalCode": "C",
+     "elevationM": 236.2,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6137161&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6137161&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6137161&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6137161"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Niagara Falls",
+     "jan25": -16.0,
+     "jan1": -18.0,
+     "hdd": 3600.0,
+     "elevM": 210.0
+    },
+    {
+     "location": "Welland",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3670.0,
+     "elevM": 180.0
+    },
+    {
+     "location": "Fort Erie",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3650.0,
+     "elevM": 180.0
+    },
+    {
+     "location": "Grimsby",
+     "jan25": -16.0,
+     "jan1": -18.0,
+     "hdd": 3520.0,
+     "elevM": 85.0
+    },
+    {
+     "location": "Port Colborne",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3600.0,
+     "elevM": 180.0
+    },
+    {
+     "location": "Pelham (Fonthill)",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3690.0,
+     "elevM": 230.0
+    },
+    {
+     "location": "Smithville",
+     "jan25": -16.0,
+     "jan1": -18.0,
+     "hdd": 3650.0,
+     "elevM": 185.0
+    }
+   ]
+  },
+  "durham-region": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 8 Durham Region communities in our search data",
+      "lat": 44.1419,
+      "lon": -79.0099,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "LINDSAY FROST",
+     "climateId": "6164433",
+     "km": 30.6,
+     "hdd18": 4357,
+     "cdd18": 204,
+     "janMean": -8.4,
+     "julMean": 20.2,
+     "annualMean": 6.6,
+     "normalCode": "C",
+     "elevationM": 262.1,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6164433&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6164433&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6164433&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6164433"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Port Perry",
+     "jan25": -22.0,
+     "jan1": -24.0,
+     "hdd": 4260.0,
+     "elevM": 270.0
+    },
+    {
+     "location": "Uxbridge",
+     "jan25": -22.0,
+     "jan1": -24.0,
+     "hdd": 4240.0,
+     "elevM": 275.0
+    },
+    {
+     "location": "Cannington",
+     "jan25": -24.0,
+     "jan1": -26.0,
+     "hdd": 4310.0,
+     "elevM": 255.0
+    },
+    {
+     "location": "Whitby (Brooklin)",
+     "jan25": -20.0,
+     "jan1": -22.0,
+     "hdd": 4010.0,
+     "elevM": 160.0
+    }
+   ]
+  },
+  "norfolk-county": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 11 Norfolk County communities in our search data",
+      "lat": 42.8044,
+      "lon": -80.4013,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "CULLODEN EASEY",
+     "climateId": "6141933",
+     "km": 37.5,
+     "hdd18": 3912,
+     "cdd18": 272,
+     "janMean": -5.7,
+     "julMean": 21.0,
+     "annualMean": 8.0,
+     "normalCode": "A",
+     "elevationM": 280.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6141933&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6141933&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6141933&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6141933"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Simcoe",
+     "jan25": -17.0,
+     "jan1": -19.0,
+     "hdd": 3700.0,
+     "elevM": 210.0
+    },
+    {
+     "location": "Vittoria",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3680.0,
+     "elevM": 215.0
+    }
+   ]
+  },
+  "haldimand-county": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 6 Haldimand County communities in our search data",
+      "lat": 42.8908,
+      "lon": -79.9605,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "HAMILTON A",
+     "climateId": "6153194",
+     "km": 31.3,
+     "hdd18": 3924,
+     "cdd18": 260,
+     "janMean": -5.5,
+     "julMean": 20.9,
+     "annualMean": 7.9,
+     "normalCode": "A",
+     "elevationM": 237.7,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6153194&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6153194&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6153194&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6153194"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Haldimand",
+     "jan25": -17.0,
+     "jan1": -19.0,
+     "hdd": 3760.0,
+     "elevM": 215.0
+    },
+    {
+     "location": "Dunnville",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3660.0,
+     "elevM": 175.0
+    },
+    {
+     "location": "Nanticoke",
+     "jan25": -17.0,
+     "jan1": -18.0,
+     "hdd": 3700.0,
+     "elevM": 205.0
+    }
+   ]
+  },
+  "dufferin-county": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 8 Dufferin County communities in our search data",
+      "lat": 44.0107,
+      "lon": -80.2066,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "ORANGEVILLE MOE",
+     "climateId": "6155790",
+     "km": 14.1,
+     "hdd18": 4421,
+     "cdd18": 169,
+     "janMean": -7.5,
+     "julMean": 19.4,
+     "annualMean": 6.3,
+     "normalCode": "C",
+     "elevationM": 411.5,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6155790"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Orangeville",
+     "jan25": -21.0,
+     "jan1": -23.0,
+     "hdd": 4450.0,
+     "elevM": 430.0
+    },
+    {
+     "location": "Shelburne",
+     "jan25": -22.0,
+     "jan1": -24.0,
+     "hdd": 4700.0,
+     "elevM": 495.0
+    }
+   ]
+  },
+  "wellington-county": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 9 Wellington County communities in our search data",
+      "lat": 43.6281,
+      "lon": -80.2582,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "FERGUS SHAND DAM",
+     "climateId": "6142400",
+     "km": 13.2,
+     "hdd18": 4307,
+     "cdd18": 197,
+     "janMean": -7.4,
+     "julMean": 20.0,
+     "annualMean": 6.7,
+     "normalCode": "A",
+     "elevationM": 417.6,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6142400&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6142400&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6142400&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6142400"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Fergus",
+     "jan25": -20.0,
+     "jan1": -22.0,
+     "hdd": 4300.0,
+     "elevM": 400.0
+    },
+    {
+     "location": "Mount Forest",
+     "jan25": -21.0,
+     "jan1": -24.0,
+     "hdd": 4700.0,
+     "elevM": 420.0
+    },
+    {
+     "location": "Guelph",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4270.0,
+     "elevM": 340.0
+    }
+   ]
+  },
+  "county-of-brant": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 7 County of Brant communities in our search data",
+      "lat": 43.1411,
+      "lon": -80.3628,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "WATERLOO WELLINGTON A",
+     "climateId": "6149387",
+     "km": 34.4,
+     "hdd18": 4194,
+     "cdd18": 201,
+     "janMean": -6.5,
+     "julMean": 20.0,
+     "annualMean": 7.0,
+     "normalCode": "C",
+     "elevationM": 317.0,
+     "selection": "airport/main-station preference: WATERLOO WELLINGTON A is 1.3 km farther than the nearest qualifying station, WOODSTOCK (33.1 km, codes A/C/C for temperature/HDD/CDD)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6149387&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6149387"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Paris",
+     "jan25": -18.0,
+     "jan1": -20.0,
+     "hdd": 4000.0,
+     "elevM": 245.0
+    },
+    {
+     "location": "Brantford",
+     "jan25": -18.0,
+     "jan1": -20.0,
+     "hdd": 3900.0,
+     "elevM": 205.0
+    }
+   ]
+  },
+  "grey-county": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 9 Grey County communities in our search data",
+      "lat": 44.3282,
+      "lon": -80.5123,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "THORNBURY SLAMA",
+     "climateId": "611HBEC",
+     "km": 27.4,
+     "hdd18": 4188,
+     "cdd18": 208,
+     "janMean": -6.3,
+     "julMean": 19.8,
+     "annualMean": 7.0,
+     "normalCode": "C",
+     "elevationM": 213.4,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=611HBEC&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=611HBEC&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=611HBEC&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=611HBEC"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Owen Sound",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4030.0,
+     "elevM": 215.0
+    },
+    {
+     "location": "Markdale",
+     "jan25": -20.0,
+     "jan1": -22.0,
+     "hdd": 4500.0,
+     "elevM": 425.0
+    },
+    {
+     "location": "Durham",
+     "jan25": -20.0,
+     "jan1": -22.0,
+     "hdd": 4340.0,
+     "elevM": 340.0
+    },
+    {
+     "location": "Dundalk",
+     "jan25": -22.0,
+     "jan1": -24.0,
+     "hdd": 4700.0,
+     "elevM": 525.0
+    },
+    {
+     "location": "Hanover",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4300.0,
+     "elevM": 270.0
+    }
+   ]
+  },
+  "caledon": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 8 Caledon communities in our search data",
+      "lat": 43.8447,
+      "lon": -79.9206,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "ORANGEVILLE MOE",
+     "climateId": "6155790",
+     "km": 15.6,
+     "hdd18": 4421,
+     "cdd18": 169,
+     "janMean": -7.5,
+     "julMean": 19.4,
+     "annualMean": 6.3,
+     "normalCode": "C",
+     "elevationM": 411.5,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6155790&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6155790"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Brampton",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4100.0,
+     "elevM": 215.0
+    },
+    {
+     "location": "Orangeville",
+     "jan25": -21.0,
+     "jan1": -23.0,
+     "hdd": 4450.0,
+     "elevM": 430.0
+    }
+   ]
+  },
+  "halton-hills": {
+   "eccc": [
+    {
+     "point": {
+      "label": "centre of the 4 Halton Hills communities in our search data",
+      "lat": 43.6318,
+      "lon": -79.884,
+      "pointSource": "mean of the community points (CGNDB coordinates) in gsc-research.json"
+     },
+     "station": "GEORGETOWN WWTP",
+     "climateId": "6152695",
+     "km": 1.0,
+     "hdd18": 4153,
+     "cdd18": 193,
+     "janMean": -6.3,
+     "julMean": 20,
+     "annualMean": 7.1,
+     "normalCode": "C",
+     "elevationM": 221.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6152695&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6152695&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=6152695&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=6152695"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Halton Hills",
+     "jan25": -19.0,
+     "jan1": -21.0,
+     "hdd": 4200.0,
+     "elevM": 255.0
+    },
+    {
+     "location": "Milton",
+     "jan25": -18.0,
+     "jan1": -20.0,
+     "hdd": 3920.0,
+     "elevM": 200.0
+    }
+   ]
+  },
+  "northern-bc": {
+   "eccc": [
+    {
+     "point": {
+      "label": "Prince George",
+      "lat": 53.913056,
+      "lon": -122.745278,
+      "pointSource": "https://geogratis.gc.ca/services/geoname/en/geonames/JBLVS"
+     },
+     "station": "PRINCE GEORGE STP",
+     "climateId": "1096468",
+     "km": 4.0,
+     "hdd18": 4673,
+     "cdd18": 38,
+     "janMean": -6.7,
+     "julMean": 16.6,
+     "annualMean": 5.3,
+     "normalCode": "C",
+     "elevationM": 579.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1096468&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1096468&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1096468&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1096468"
+     ]
+    },
+    {
+     "point": {
+      "label": "Dawson Creek",
+      "lat": 55.760556,
+      "lon": -120.235556,
+      "pointSource": "https://geogratis.gc.ca/services/geoname/en/geonames/JAPCN"
+     },
+     "station": "DAWSON CREEK A",
+     "climateId": "1182285",
+     "km": 4.0,
+     "hdd18": 5870,
+     "cdd18": 15,
+     "janMean": -13.2,
+     "julMean": 15.5,
+     "annualMean": 1.9,
+     "normalCode": "C",
+     "elevationM": 654.7,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1182285&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1182285&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1182285&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1182285"
+     ]
+    },
+    {
+     "point": {
+      "label": "Fort St. John",
+      "lat": 56.2525,
+      "lon": -120.846667,
+      "pointSource": "https://geogratis.gc.ca/services/geoname/en/geonames/JAGPB"
+     },
+     "station": "FORT ST JOHN A",
+     "climateId": "1183000",
+     "km": 6.8,
+     "hdd18": 5745,
+     "cdd18": 33,
+     "janMean": -12.8,
+     "julMean": 16.2,
+     "annualMean": 2.3,
+     "normalCode": "A",
+     "elevationM": 694.9,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1183000&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1183000&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1183000&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1183000"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Prince George",
+     "jan25": -32.0,
+     "jan1": -36.0,
+     "hdd": 4720.0,
+     "elevM": 580.0
+    },
+    {
+     "location": "Mackenzie",
+     "jan25": -34.0,
+     "jan1": -38.0,
+     "hdd": 5550.0,
+     "elevM": 765.0
+    },
+    {
+     "location": "Dawson Creek",
+     "jan25": -38.0,
+     "jan1": -40.0,
+     "hdd": 5900.0,
+     "elevM": 665.0
+    },
+    {
+     "location": "Fort St. John",
+     "jan25": -35.0,
+     "jan1": -37.0,
+     "hdd": 5750.0,
+     "elevM": 685.0
+    },
+    {
+     "location": "Chetwynd",
+     "jan25": -35.0,
+     "jan1": -38.0,
+     "hdd": 5500.0,
+     "elevM": 605.0
+    },
+    {
+     "location": "Taylor",
+     "jan25": -35.0,
+     "jan1": -37.0,
+     "hdd": 5720.0,
+     "elevM": 515.0
+    }
+   ]
+  },
+  "okanagan": {
+   "eccc": [
+    {
+     "point": {
+      "label": "Penticton",
+      "lat": 49.500833,
+      "lon": -119.593889,
+      "pointSource": "https://geogratis.gc.ca/services/geoname/en/geonames/JCVCH"
+     },
+     "station": "PENTICTON A",
+     "climateId": "1126150",
+     "km": 4.2,
+     "hdd18": 3341,
+     "cdd18": 239,
+     "janMean": -0.6,
+     "julMean": 21.0,
+     "annualMean": 9.4,
+     "normalCode": "A",
+     "elevationM": 344.4,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1126150&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1126150&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1126150&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1126150"
+     ]
+    },
+    {
+     "point": {
+      "label": "Vernon",
+      "lat": 50.2655555555556,
+      "lon": -119.271388888889,
+      "pointSource": "https://geogratis.gc.ca/services/geoname/en/geonames/JBOAP"
+     },
+     "station": "WINFIELD",
+     "climateId": "1128958",
+     "km": 27.5,
+     "hdd18": 3529,
+     "cdd18": 218,
+     "janMean": -1.9,
+     "julMean": 20.3,
+     "annualMean": 8.9,
+     "normalCode": "C",
+     "elevationM": 506.0,
+     "selection": "nearest qualifying station (all three elements coded A-C)",
+     "source": [
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1128958&NORMAL_ID=1",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1128958&NORMAL_ID=32",
+      "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=100&CLIMATE_IDENTIFIER=1128958&NORMAL_ID=23",
+      "https://api.weather.gc.ca/collections/climate-stations/items?f=json&CLIMATE_IDENTIFIER=1128958"
+     ]
+    }
+   ],
+   "nbc": [
+    {
+     "location": "Penticton",
+     "jan25": -15.0,
+     "jan1": -17.0,
+     "hdd": 3350.0,
+     "elevM": 350.0
+    },
+    {
+     "location": "Kelowna",
+     "jan25": -17.0,
+     "jan1": -20.0,
+     "hdd": 3400.0,
+     "elevM": 350.0
+    },
+    {
+     "location": "Vernon",
+     "jan25": -20.0,
+     "jan1": -23.0,
+     "hdd": 3600.0,
+     "elevM": 405.0
+    },
+    {
+     "location": "Salmon Arm",
+     "jan25": -19.0,
+     "jan1": -24.0,
+     "hdd": 3650.0,
+     "elevM": 425.0
+    },
+    {
+     "location": "Osoyoos",
+     "jan25": -14.0,
+     "jan1": -17.0,
+     "hdd": 3100.0,
+     "elevM": 285.0
+    }
+   ]
+  }
+ }
+}
