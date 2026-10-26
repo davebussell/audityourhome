@@ -13,6 +13,8 @@
  */
 import { STATE_NAMES, METROS, statePrices, statusChip, PRICE_META, FEDERAL, US_VERIFIED, type Metro } from './data';
 import { stateByCode, stateLede, appliesTo, programOpen, clean, type ProgView } from './programs';
+import { stateLine } from './state-text';
+import { cleanStatus } from './clean';
 import pricesJson from '../../data/us/prices.json';
 import climateJson from '../../data/us/climate.json';
 import testsJson from '../../data/us/tests.json';
@@ -20,7 +22,7 @@ import zip3Json from '../../data/us/zip3.json';
 import coolingJson from '../../data/us/cooling-model.json';
 import guidesJson from '../../data/reading-guides.json';
 import { placeClimate, climateMeaning } from '../climate';
-import { climClass, profileSymptoms, type TestFacts } from './plan-content';
+import { climClass, profileSymptoms, coNote, type TestFacts } from './plan-content';
 import type { CoolingData } from './plan-cooling';
 
 const P = pricesJson as any;
@@ -162,7 +164,7 @@ function statePriceRow(st: string): StatePriceRow {
 
 function herProgram(p: ProgView) {
   return {
-    s: p.status ? sentences(cap(p.status), 200) : null,
+    s: p.status ? sentences(cap(cleanStatus(p.status)), 200) : null,
     chip: { cls: p.chip.cls, label: p.chip.label, status: p.chip.status },
     name: p.programName,
     url: p.url,
@@ -196,18 +198,25 @@ function testFacts(): TestFacts {
   const moldLicense: Record<string, string> = {};
   const inState = (st: string) => `In ${st === 'DC' ? 'the District of Columbia' : STATE_NAMES[st] ?? st}: `;
   // Mold: the licensing list says more than the summaries' one-word notes, so it goes first.
+  // stateLine() spells out agency initials, introduces statute cites and turns research notes into plain statements.
+  const line = (st: string, text: string) => {
+    const t = stateLine(text, st);
+    return t ? inState(st) + t : '';
+  };
   for (const r of T.mold.stateLicensing as any[]) {
-    if (r.requirement) moldLicense[r.state] = inState(r.state) + requirementSentence(r.requirement);
+    if (r.requirement) moldLicense[r.state] = line(r.state, requirementSentence(r.requirement));
   }
   for (const r of T.stateSummary as any[]) {
     const seg = summarySegments(r.notes ?? '');
-    if (seg.Radon) radonLicense[r.state] = inState(r.state) + seg.Radon;
-    if (seg.CO) coLaw[r.state] = inState(r.state) + seg.CO;
-    if (seg.Mold && !moldLicense[r.state]) moldLicense[r.state] = inState(r.state) + seg.Mold;
+    if (seg.Radon) radonLicense[r.state] = line(r.state, seg.Radon);
+    // coNote() turns the research wording into guidance here, so the payload carries only what the plan shows
+    if (seg.CO) coLaw[r.state] = coNote(inState(r.state) + seg.CO, STATE_NAMES[r.state] ?? r.state, r.state) ?? null;
+    if (seg.Mold && !moldLicense[r.state]) moldLicense[r.state] = line(r.state, seg.Mold);
   }
   for (const r of T.radon.stateLicensing as any[]) {
-    if (r.requirement && !radonLicense[r.state]) radonLicense[r.state] = inState(r.state) + requirementSentence(r.requirement);
+    if (r.requirement && !radonLicense[r.state]) radonLicense[r.state] = line(r.state, requirementSentence(r.requirement));
   }
+  for (const o of [radonLicense, moldLicense]) for (const k of Object.keys(o)) if (!o[k]) delete o[k];
   return {
     blowerLimitByZone: { warm: Number(must(m?.[1], 'IECC blower door limit (zones 0-2)')), cold: Number(must(m?.[2], 'IECC blower door limit (zones 3-8)')) },
     ductLimit: Number(must(d?.[1], 'IECC duct leakage limit')),
@@ -421,6 +430,15 @@ function testsIncluded(text: string): string[] {
   return t;
 }
 
+/**
+ * A program name as the plan shows it. "(Maricopa County outside Phoenix and Mesa)" reads like it
+ * serves the whole county; ZIP codes can't tell a Phoenix address from a Glendale one, so the name
+ * says who it isn't for.
+ */
+const displayName = (name: string) =>
+  name.replace(/\(([A-Z][\w.]+(?: [A-Z][\w.]+)*) County outside ([A-Z][\w.]+(?: [A-Z][\w.]+)*) and ([A-Z][\w.]+(?: [A-Z][\w.]+)*)\)/,
+    (_m, county: string, a: string, b: string) => `(${county} County; not for ${a} or ${b} residents)`);
+
 const IQ_NAME = /weatheriz|income-qualified|income-eligible|income qualified|low-income|limited income|\bEEA\b|EmPower\+|Casa Verde|HomeWise|\bHERO\b|CommunitySavers|Agencies in Action|Equitable Building|Empower My Home|EASE Home/i;
 const IQ_WHO = /(household )?income (must|up to|at or below|under|below|limits?|guidelines|eligib|qualif)|at or (below|under) \d+%|\d+% of (area|the federal|state|federal)|\b(AMI|SMI|MFI)\b|\d+% FPL|poverty|LIHEAP|bill assistance|low-income|income-(eligible|qualified)/i;
 
@@ -440,10 +458,10 @@ function auditRecord(x: any, m: Metro, utils: UtilityRec[]) {
   const score = (inPerson ? 3 : virtual ? 1 : 0) - (online ? 4 : 0) + (free ? 2 : /\$\s?(\d{1,3})\b/.test(cost) ? 1 : 0)
     + (tests.includes('blower-door') ? 1 : 0) - (iq ? 5 : 0) - (required ? 3 : 0);
   return {
-    n: name,
+    n: displayName(name),
     by: (x.runBy as string) ?? null,
     cost: sentences(cost, 150),
-    s: x.status ? sentences(cap(String(x.status)), 160) : null,
+    s: x.status ? sentences(cap(cleanStatus(String(x.status))), 160) : null,
     chip: { cls: chip.cls, label: chip.label, status: chip.status },
     open: programOpen(x.status),
     url: (x.url as string) ?? null,
@@ -480,7 +498,7 @@ function rebateKeys(r: any): string[] {
 function rebateRecord(x: any, m: Metro, utils: UtilityRec[]) {
   const chip = statusChip(x.status);
   return {
-    n: String(x.name),
+    n: displayName(String(x.name)),
     amt: sentences(String(x.amount ?? ''), 130),
     url: (x.url as string) ?? null,
     cat: String(x.category ?? 'other'),
@@ -504,7 +522,7 @@ function needsFor(slug: string) {
 
 /** What homes in each climate need, from the regional profiles (src/data/climate/us.json). */
 function profilesFor() {
-  const out: Record<string, { cls: string | null; one: string; pri: { t: string; w: string }[]; season: string; sym: string[] }> = {};
+  const out: Record<string, { cls: string | null; one: string; pri: { t: string; w: string }[]; season: string; sym: string[]; smoke: string | null }> = {};
   for (const m of METROS) {
     const pc = placeClimate('us', m.slug);
     if (!pc || out[pc.profile.key]) continue;
@@ -515,6 +533,8 @@ function profilesFor() {
       pri: p.priorities.slice(0, 3).map((x) => ({ t: x.title, w: x.why.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? x.why })),
       season: p.seasonNote,
       sym: profileSymptoms(p.symptoms),
+      // the profile's wildfire smoke advice, for the climates where smoke days happen
+      smoke: ((p as any).health as string[] | undefined)?.find((h) => /smok/i.test(h)) ?? null,
     };
   }
   return out;
@@ -552,7 +572,7 @@ function metroRecord(m: Metro) {
     // open rebates, plus those whose page states no status at all (closed, paused and waitlist ones stay out)
     rb: rebates.filter((x) => programOpen(x.status) || statusChip(x.status).status === 'unknown').map((x) => rebateRecord(x, m, u.list)),
     iqp: ((m.data.incomeQualified ?? []) as any[])
-      .map((x) => ({ n: String(x.name), url: (x.url as string) ?? null, st: states.filter((s) => appliesTo(`${x.name} ${x.runBy ?? ''}`, s, m)) }))
+      .map((x) => ({ n: displayName(String(x.name)), url: (x.url as string) ?? null, st: states.filter((s) => appliesTo(`${x.name} ${x.runBy ?? ''}`, s, m)) }))
       .slice(0, 6),
   };
 }

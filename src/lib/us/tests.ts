@@ -6,6 +6,7 @@
  * src/data/us/test-pages.json. Source lookups throw at build time when a label can't be
  * found, so a renamed source fails the build instead of shipping a dead citation.
  */
+import { stateLine } from './state-text';
 import raw from '../../data/us/tests.json';
 import climate from '../../data/us/climate.json';
 import pagesJson from '../../data/us/test-pages.json';
@@ -122,18 +123,20 @@ const byName = (a: string, b: string) => stateName(a).localeCompare(stateName(b)
 export const SUMMARY_STATES: string[] = SUMMARY.map((s) => s.state).sort(byName);
 export const summaryFor = (st: string) => SUMMARY.find((s) => s.state === st);
 
-function tidy(s: string | null | undefined): string {
+function tidy(s: string | null | undefined, st?: string): string {
   let t = (s ?? '').replace(/\s*\(null\)/g, '').trim();
   if (!t) return '';
   t = t[0].toUpperCase() + t.slice(1);
-  return /[.!?)]$/.test(t) ? t : `${t}.`;
+  t = /[.!?)]$/.test(t) ? t : `${t}.`;
+  // agencies spelled out, statute cites introduced, research notes ("no state license found") made plain
+  return st ? stateLine(t, st) : t;
 }
 
 /** Split a stateSummary note ("Radon: … Mold: … CO: …") into its topic parts. */
-function noteParts(notes: string): Partial<Record<'Radon' | 'Mold' | 'CO', string>> {
+function noteParts(notes: string, st: string): Partial<Record<'Radon' | 'Mold' | 'CO', string>> {
   const parts = notes.split(/(?:^|\s)(Radon|Mold|CO):\s/);
   const out: Partial<Record<'Radon' | 'Mold' | 'CO', string>> = {};
-  for (let i = 1; i < parts.length; i += 2) out[parts[i] as 'Radon' | 'Mold' | 'CO'] = tidy(parts[i + 1]);
+  for (let i = 1; i < parts.length; i += 2) out[parts[i] as 'Radon' | 'Mold' | 'CO'] = tidy(parts[i + 1], st);
   return out;
 }
 
@@ -161,8 +164,8 @@ export function radonStateRows(): StateRow[] {
       st,
       name: stateName(st),
       status: s.radonLicensing ? 'yes' : 'no',
-      text: noteParts(s.notes).Radon ?? '',
-      detail: lic ? tidy(lic.requirement) : undefined,
+      text: noteParts(s.notes, st).Radon ?? '',
+      detail: lic ? tidy(lic.requirement, st) : undefined,
       src: lic ? srcForUrl(lic.url) : s.sources[0],
     } as StateRow;
   });
@@ -173,7 +176,7 @@ export function otherRadonStates(): StateRow[] {
   return (T.radon.stateLicensing as any[])
     .filter((x) => !SUMMARY_STATES.includes(x.state))
     .sort((a, b) => byName(a.state, b.state))
-    .map((x) => ({ st: x.state, name: stateName(x.state), status: 'yes', text: tidy(x.requirement), src: srcForUrl(x.url) }));
+    .map((x) => ({ st: x.state, name: stateName(x.state), status: 'yes', text: tidy(x.requirement, x.state), src: srcForUrl(x.url) }));
 }
 
 /** Statewide carbon monoxide alarm laws for the 20 summary jurisdictions. */
@@ -187,8 +190,8 @@ export function coStateRows(): StateRow[] {
       st,
       name: stateName(st),
       status,
-      text: noteParts(s.notes).CO ?? '',
-      detail: tidy(law.requirement ?? law.notes),
+      text: noteParts(s.notes, st).CO ?? '',
+      detail: tidy(law.requirement ?? law.notes, st),
       src,
       perNcsl: /ncsl\.org/.test(law.url),
     };
@@ -206,8 +209,8 @@ export function moldStateRows(): StateRow[] {
       st,
       name: stateName(st),
       status: s.moldLicensing ? 'yes' : 'no',
-      text: noteParts(s.notes).Mold ?? 'No mold licensing law found.',
-      detail: lic ? tidy(lic.requirement) : undefined,
+      text: noteParts(s.notes, st).Mold ?? 'No state mold licensing law.',
+      detail: lic ? tidy(lic.requirement, st) : undefined,
       src: lic ? srcForUrl(lic.url) : ELI_MOLD(),
     } as StateRow;
   });
@@ -218,7 +221,7 @@ export function otherMoldStates(): StateRow[] {
   return (T.mold.stateLicensing as any[])
     .filter((x) => !SUMMARY_STATES.includes(x.state))
     .sort((a, b) => byName(a.state, b.state))
-    .map((x) => ({ st: x.state, name: stateName(x.state), status: 'yes', text: tidy(x.requirement), src: srcForUrl(x.url) }));
+    .map((x) => ({ st: x.state, name: stateName(x.state), status: 'yes', text: tidy(x.requirement, x.state), src: srcForUrl(x.url) }));
 }
 
 /** Pulls a list of state codes out of a sentence, checking the count the sentence states. */
@@ -253,7 +256,7 @@ export function leadStateRows(): StateRow[] {
       st,
       name: stateName(st),
       status: 'unknown',
-      text: tidy(s.leadProgram),
+      text: tidy(s.leadProgram, st),
       src: S('lead', 'RRP Firm Certification'),
     } as StateRow;
   });

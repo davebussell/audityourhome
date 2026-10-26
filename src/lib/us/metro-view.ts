@@ -12,6 +12,8 @@ import {
   parseCost, audienceOf, formatOf, isOtherSide, shortUtility, ruleReach, RULE_REACH, notesFor, housingPlace, stateSlug,
 } from './metro-text';
 import type { CostInfo, Audience, AuditFormat, RuleReach, MetroNotes } from './metro-text';
+import { stateByCode, stateLede, metroProgramsFor, type ProgView, type StateView } from './programs';
+import { cleanStatus } from './clean';
 
 export { fmtISO, stateSlug, sentence, andList } from './metro-text';
 export type { CostInfo, Audience, AuditFormat, RuleReach, MetroNotes } from './metro-text';
@@ -235,35 +237,42 @@ export interface HerView {
   fromStateTable: boolean;
 }
 
+/** Better status first: the program a household could use now leads the badge. */
+const HER_RANK: Record<NormStatus, number> = { open: 0, limited: 1, closed: 2, 'not-open': 3, unknown: 4 };
+
+/**
+ * One status per state everywhere: the badge and the "Status for the metro" card read the state
+ * tracker (programs.ts STATES), the same records as the state pages and the planner. Where the
+ * metro's own record says something the state's chips don't (MiHER paused across metro Detroit),
+ * that local status leads, exactly as the state page shows it on the metro's card.
+ */
 export function herStatus(m: Metro): HerView {
   const s = m.data.stateHomeEnergyRebates ?? {};
-  if (s.status) {
+  const st = (m.data.states ?? [])[0];
+  const sv = stateByCode(st);
+  if (sv) {
+    const lead = [sv.hear, sv.homes].sort((a, b) => HER_RANK[a.chip.status] - HER_RANK[b.chip.status])[0];
+    const local = metroProgramsFor(m, st).localRebates;
     return {
-      text: s.status,
-      chip: statusChip(s.status),
-      url: s.url ?? null,
-      checked: s.checked ?? null,
-      programName: s.programName ?? null,
-      administrator: s.administrator ?? null,
+      text: local ? `${cleanStatus(local.status)} Statewide: ${stateLede(sv)}` : stateLede(sv),
+      chip: local?.chip ?? lead.chip,
+      url: (local ? s.url : null) ?? lead.url ?? sv.hear.url ?? sv.homes.url ?? null,
+      checked: (local ? s.checked : null) ?? lead.checked ?? null,
+      programName: s.programName ?? lead.programName ?? null,
+      administrator: s.administrator ?? lead.administrator ?? null,
       summary: s.summary ?? null,
-      fromStateTable: false,
+      fromStateTable: !local,
     };
   }
-  const st = (m.data.states ?? [])[0];
-  const row = stateRebateRow(st);
-  const base = row?.baseline?.status as string | undefined;
-  const text = base
-    ? `No ${STATE_NAMES[st] ?? st} state page we checked gives a status. The Building Performance Association’s June 2026 map (a trade association, not an official source) lists ${STATE_NAMES[st] ?? st} as “${base}”.`
-    : `No ${STATE_NAMES[st] ?? st} state page we checked gives a status.`;
   return {
-    text,
-    chip: /not launched/i.test(base ?? '') ? statusChip('not launched') : statusChip(null),
+    text: s.status ? cleanStatus(s.status) : `No ${STATE_NAMES[st] ?? st} state page gives a status yet.`,
+    chip: statusChip(s.status ?? null),
     url: s.url ?? null,
     checked: s.checked ?? null,
     programName: s.programName ?? null,
     administrator: s.administrator ?? null,
     summary: s.summary ?? null,
-    fromStateTable: true,
+    fromStateTable: false,
   };
 }
 
@@ -275,16 +284,28 @@ export interface StateHerRow {
   sources: { label: string; href: string }[];
 }
 
-/** Both federal rebate programs, state by state, from the 50-state table in federal.json. */
+/** Both federal rebate programs, state by state, from the state tracker (the same chips as each state page). */
 export function stateHerRows(m: Metro): StateHerRow[] {
   return metroStates(m).map((state) => {
+    const sv: StateView | undefined = stateByCode(state.code);
     const row = stateRebateRow(state.code) ?? {};
-    const one = (p: any) => {
-      const text = p?.status ?? (row.baseline?.status ? `No state status found; BPA’s June 2026 map: “${row.baseline.status}”` : 'No status found');
-      const chip = p?.status ? statusChip(p.status) : /not launched/i.test(row.baseline?.status ?? '') ? statusChip('not launched') : statusChip(null);
-      return { text, chip, name: p?.programName ?? null, url: p?.url ?? null, checked: p?.checked ?? null };
+    const base: string | null = row.baseline?.status ?? null;
+    const one = (p: ProgView | undefined, raw: any) => {
+      const status: string | null = p ? p.status : raw?.status ?? null;
+      const text = status
+        ? cleanStatus(status)
+        : base
+          ? `No status posted by the state. The Building Performance Association’s June 2026 map lists ${state.name} as “${base}”.`
+          : 'No status posted by the state.';
+      return {
+        text,
+        chip: p ? p.chip : statusChip(status),
+        name: p ? p.programName : raw?.programName ?? null,
+        url: p ? p.url : raw?.url ?? null,
+        checked: p ? p.checked : raw?.checked ?? null,
+      };
     };
-    return { state, hear: one(row.hear), homes: one(row.homes), baseline: row.baseline?.status ?? null, sources: row.sources ?? [] };
+    return { state, hear: one(sv?.hear, row.hear), homes: one(sv?.homes, row.homes), baseline: base, sources: sv?.sources ?? row.sources ?? [] };
   });
 }
 

@@ -47,7 +47,7 @@ type Rebate = {
 };
 /** a metro's own climate notes; `k` names its climate profile */
 type Needs = { k: string; note: string | null; hz: string[] };
-type Profile = { cls: ClimClass | null; one: string; pri: { t: string; w: string }[]; season: string; sym: string[] };
+type Profile = { cls: ClimClass | null; one: string; pri: { t: string; w: string }[]; season: string; sym: string[]; smoke?: string | null };
 type MetroRec = {
   n: string; msa: string; st: string[];
   c: { h: number; k: number; z: string | null; r: number | null; co: string | null; stn: string | null; my: number | null; place: string | null; acs: string | null };
@@ -81,6 +81,10 @@ export function startPlanner() {
   const zipFb = document.getElementById('zipFeedback')!;
   const utilField = document.getElementById('utilField')!;
   const utilOpts = document.getElementById('utilOpts')!;
+  // step 2's "where we placed you" line and utility slot, used when the home page quick start skips step 1
+  const zipMatch = document.getElementById('zipMatch');
+  const utilSlot2 = document.getElementById('utilSlot2');
+  let quickStart = false;
   const climField = document.getElementById('climField')!;
   const climPick = document.getElementById('climPick') as HTMLSelectElement;
   const climLabel = document.getElementById('climLabel')!;
@@ -232,6 +236,23 @@ export function startPlanner() {
   zipEl.addEventListener('blur', () => { zipTouched = true; zipFeedback(true); });
   climPick.addEventListener('change', () => zipFeedback(zipTouched));
 
+  /** "85004 · Phoenix metro, Arizona · Change" on step 2 after a quick start (step 1 never showed). */
+  function syncMatch() {
+    if (!zipMatch || !quickStart) return;
+    const loc = locate(zipEl.value, climPick.value).loc;
+    if (!loc) { zipMatch.hidden = true; return; }
+    const where = loc.metro
+      ? `${metroName(loc.metro)} metro, ${loc.st.n}`
+      : loc.near ? `${loc.st.n} · climate numbers from ${metroName(loc.near)}` : loc.st.n;
+    zipMatch.innerHTML = `<b>${esc(loc.zip5)}</b> · ${esc(where)} · <button type="button" class="linkish" data-change-zip>Change</button>`;
+    zipMatch.hidden = false;
+  }
+  zipMatch?.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('[data-change-zip]')) return;
+    show(1);
+    zipEl.focus();
+  });
+
   /* ------------------------------------------------------------------ wizard */
 
   function fieldVal(name: string): string {
@@ -260,17 +281,19 @@ export function startPlanner() {
     backBtn.hidden = n === 1;
     nextBtn.textContent = n === TOTAL ? 'See my plan' : 'Next';
     if (n === 1) zipFeedback(false);
-    if (n === 2) eraHint();
+    if (n === 2) { eraHint(); syncMatch(); }
     if (n === 4) syncSymptoms();
     if (n === 6) initBills();
     form.querySelectorAll('.step-error').forEach((e) => e.remove());
-    const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input:not([type=hidden])`);
+    // the step's own question gets focus, not the optional utility question moved onto step 2
+    const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] .field:not(.util-field) input:not([type=hidden])`)
+      ?? form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input:not([type=hidden])`);
     first?.focus({ preventScroll: true });
     if (plannerEl.getBoundingClientRect().top < 0) plannerEl.scrollIntoView({ block: 'start' });
   }
 
   function stepError(n: number, msg: string) {
-    const fs = form.querySelector(`fieldset[data-step="${n}"] .field`)!;
+    const fs = form.querySelector(`fieldset[data-step="${n}"] .field:not(.util-field)`)!;
     if (!fs.querySelector('.step-error')) {
       const err = document.createElement('p');
       err.className = 'field-error step-error';
@@ -685,6 +708,8 @@ export function startPlanner() {
 
   let lastSeq: SeqItem[] = [];
   let bookHref = '/us/find/';
+  /** the sticky bar's words when the primary button isn't a booking link */
+  let bookLabel = '';
 
   function finish() {
     const c = context();
@@ -791,6 +816,7 @@ export function startPlanner() {
     const fs = firstStop(c);
     let book = '';
     let cta = '';
+    bookLabel = '';
     if (fs.pick) {
       book = `<p>Programs here depend on who sends your electric bill; book the one for your utility:</p>
         <ul class="next-opts">${fs.perUtil.map((x) => `<li><b>${esc(x.u)} customers:</b> ${ext(x.a.url, x.a.n)}${x.a.cost ? ` <span class="small">(${esc(x.a.cost)})</span>` : ''}</li>`).join('')}${othersLine(fs.others, fs.perUtil)}</ul>`;
@@ -818,9 +844,10 @@ export function startPlanner() {
           : iqOnly
             ? `The open assessment programs we track in ${esc(areaShort(c.loc.metro!))} are for income-qualified households (see “If money is tight” below). Otherwise,`
             : `None of the assessment programs we track in ${esc(areaShort(c.loc.metro!))} is taking sign-ups right now, so`;
-      book = `<p>${lead} book a certified auditor directly. Ask your electric and gas utilities first: many pay for part of an audit.</p>`;
-      bookHref = '/us/find/';
-      cta = `<a class="btn btn-primary" href="/us/find/" data-book>Book my audit</a>`;
+      book = `<p>${lead} book a certified auditor directly. ${esc(askUtilities(c))} first: many pay for part of an audit or list approved auditors.</p>`;
+      bookHref = '#rFind';
+      bookLabel = 'Find a certified auditor';
+      cta = `<a class="btn btn-primary" href="#rFind" data-book>Find a certified auditor</a>`;
     }
     const top = energy.slice(0, 3);
     const tests = top.length
@@ -846,8 +873,16 @@ export function startPlanner() {
     if (sticky) {
       sticky.href = bookHref;
       if (/^https?:/.test(bookHref)) { sticky.target = '_blank'; sticky.rel = 'noopener'; sticky.innerHTML = 'Book my audit&nbsp;↗'; }
-      else { sticky.removeAttribute('target'); sticky.textContent = /^tel:/.test(bookHref) ? 'Call to book my audit' : 'Book my audit'; }
+      else { sticky.removeAttribute('target'); sticky.textContent = /^tel:/.test(bookHref) ? 'Call to book my audit' : bookLabel || 'Book my audit'; }
     }
+  }
+
+  /** "Ask CenterPoint Energy" / "Ask your electric and gas utilities": who to call before hiring an auditor. */
+  function askUtilities(c: Ctx): string {
+    if (c.util && !['unsure', 'other'].includes(c.util)) return `Ask ${utilName(c.util, c)}`;
+    const names = c.metro ? c.metro.u.list.filter((u) => u.st.includes(c.loc.state) && u.runs > 0).map((u) => u.n.replace(/\s*\(.*$/, '')) : [];
+    if (!names.length || names.length > 3) return 'Ask your electric and gas utilities';
+    return `Ask ${names.length === 1 ? names[0] : `${names.slice(0, -1).join(', ')} or ${names[names.length - 1]}`}`;
   }
 
   /** Open rebates that pay for the plan's top upgrades (not income-qualified ones; those are under "If money is tight"). */
@@ -883,6 +918,7 @@ export function startPlanner() {
         ${!here ? `<p class="small">Your ZIP code is outside the metro areas we cover, so this is the climate profile of ${esc(metroName(c.loc.clim))}; check that it matches your area.</p>` : ''}
         <ol class="needs-pri">${p.pri.map((x) => `<li><b>${esc(x.t)}.</b> ${esc(x.w)}</li>`).join('')}</ol>
         ${n.hz.length ? `<p class="needs-h"><b>Plan for:</b></p><ul class="needs-hz">${n.hz.slice(0, 3).map((h) => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
+        ${p.smoke ? `<p class="small needs-smoke"><b>Smoke days:</b> ${esc(p.smoke)} Sealing air leaks keeps more smoke outside; ask the auditor whether your system can take a MERV 13 filter.</p>` : ''}
         <p class="small"><b>When to book:</b> ${esc(p.season)}</p>
         ${here && n.note ? `<p class="small">${esc(n.note)}</p>` : ''}
         <p class="small links">${here ? `<a href="/us/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a> <a href="/us/heat-pumps/${c.loc.metro}/">Heat pumps in ${esc(areaShort(c.loc.metro!))} →</a>` : `<a href="/us/cities/${c.loc.clim}/">The ${esc(metroName(c.loc.clim))} metro guide →</a>`}</p>
@@ -1317,6 +1353,10 @@ export function startPlanner() {
     } else if (fs.audit) {
       const x = fs.audit;
       lead = `<p class="find-first"><b>Start here:</b> ${ext(x.url, x.n)}${x.cost ? ` <span class="small">(${esc(x.cost)})</span>` : ''}.${x.how ? ` ${esc(x.how)}` : ''}</p>`;
+    } else {
+      // no open assessment for this home: the utility comes first, then an independent certified auditor
+      const iqOnly = openAudits(c).some((x) => x.f.iq);
+      lead = `<p class="find-first"><b>${esc(askUtilities(c))} first:</b> many utilities pay for part of an audit or keep a list of approved auditors.${iqOnly ? ' If your household income qualifies, the free programs under “If money is tight” above come first.' : ''}</p>`;
     }
     $('#rFind').innerHTML = `
       <div class="rsec">
@@ -1798,8 +1838,18 @@ export function startPlanner() {
     }
     const ok = !!locate(zipEl.value, climPick.value).loc;
     if (q.get('done') === '1' && fieldVal('age') && ok) { maxStep = TOTAL; finish(); return; }
-    // the home page already asked for the ZIP code (and maybe the year), so pick up at step 2
-    if (ok) { maxStep = 2; show(2); return; }
+    // the home page already asked for the ZIP code (and maybe the year), so pick up at step 2. Step 1
+    // never shows, so step 2 says where we placed the ZIP code and, where utilities run different
+    // programs (APS or SRP, Seattle City Light or PSE), asks who sends the electric bill.
+    if (ok) {
+      quickStart = true;
+      if (utilSlot2) utilSlot2.appendChild(utilField);
+      maxStep = 2;
+      show(2);
+      // on a phone the hero fills the screen: bring the step into view
+      if (plannerEl.getBoundingClientRect().top > window.innerHeight * 0.6) plannerEl.scrollIntoView({ block: 'start' });
+      return;
+    }
     show(1);
   })();
 }

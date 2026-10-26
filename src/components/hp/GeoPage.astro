@@ -7,6 +7,7 @@ import {
   type Market, TYPES, HP_CHECKED, brandHref, statsFor, CA_REGIONS, caRebates, US_METROS, usRebates, metroName, hostOf, statusChipHP,
   usText, usList,
 } from '../../lib/heatpumps';
+import { cleanRecord } from '../../lib/us/clean';
 import '../../styles/hp.css';
 
 interface Props {
@@ -27,7 +28,7 @@ const geoWatchouts: string[] = isCA ? geo.watchouts : usList(geo.watchouts);
 const loopTemp = isCA ? '5–10°C' : '41–50°F (5–10°C)';
 const geoPrograms = isCA
   ? CA_REGIONS.map((r) => ({ place: r.name, href: `/ca/heat-pumps/${r.slug}/`, progs: caRebates(r).filter(isGeo) })).filter((x) => x.progs.length)
-  : US_METROS.map((m) => ({ place: metroName(m), href: `/us/heat-pumps/${m.slug}/`, progs: usRebates(m.slug).filter(isGeo) })).filter((x) => x.progs.length);
+  : US_METROS.map((m) => ({ place: metroName(m), href: `/us/heat-pumps/${m.slug}/`, progs: usRebates(m.slug).filter(isGeo).map((p) => cleanRecord(p)) })).filter((x) => x.progs.length);
 const innovaHere = statsFor(market, 'innova');
 const title = `Geothermal, window and no-outdoor-unit heat pumps (${isCA ? 'Canada' : 'US'}) | AuditYourHome`;
 const description = `Who makes ground-source heat pumps for ${country} and what they warrant, the rebates that cover them, plus window and no-outdoor-unit heat pumps for apartments.`;

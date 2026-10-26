@@ -139,6 +139,9 @@ const leadSub = NETLIFY_FORMS
         <!-- STEP 2 -->
         <fieldset class="step" data-step="2">
           <legend><span class="step-of">Step 2 of 6</span><h2>Tell us about the house</h2></legend>
+          <!-- filled when the home page quick start skips step 1: where we placed the ZIP code, and the utility question -->
+          <p class="zip-match" id="zipMatch" hidden></p>
+          <div id="utilSlot2"></div>
           <div class="field">
             <span class="lbl" id="ageLbl">When was it built? <span class="hint-inline">(a rough guess is fine)</span></span>
             <div class="radio-row" role="radiogroup" aria-labelledby="ageLbl">
@@ -483,7 +486,7 @@ const leadSub = NETLIFY_FORMS
             <li>Cooling savings, as a share of the AC estimate (typical, from NREL ResStock and Florida Solar Energy Center field studies): duct sealing {CD.m.duct[1]}% where ducts run through an attic or crawlspace; a radiant barrier {CD.m.radiant[1]}% over thin insulation; a cool roof {CD.m.coolRoof[1]}%; window film or solar screens {CD.m.film[1]}% and low-SHGC windows {CD.m.lowShgc[1]}% on clear glass; air sealing up to {CD.m.air[1]}–5% by zone; attic insulation by a formula on the before and after R-values; raising the cooling setting by the metro’s share per degree. Measures combine without double counting: attic insulation, a radiant barrier and a cool roof overlap, so the largest counts in full and the others at half.</li>
             <li>Electric bills: a two-bill degree-day split, a two-point version of the billing analysis in DOE’s Uniform Methods Project, using NOAA’s monthly normals. It falls back to the typical house, and says why, when the months’ weather is too similar, the summer bill isn’t higher, or the non-heating, non-cooling use comes out outside 5–60 kWh a day.</li>
             <li>Prices: EIA state averages, shown with the month or week they cover, and U.S. averages, labeled national, where EIA has no state figure. Savings are valued at these averages, which include fixed charges, so they can run a little high.</li>
-            <li>Left out: crawlspace savings, installed costs and paybacks (no verified US prices yet), and pools, EVs and other large loads.</li>
+            <li>Left out: crawlspace savings, installed costs and paybacks (we don’t have reliable US prices for them yet), and pools, EVs and other large loads.</li>
           </ul>
         </div>
       </div>
@@ -656,6 +659,13 @@ const leadSub = NETLIFY_FORMS
   #planner .zip-feedback p { margin: 4px 0 12px; font-size: 14.5px; max-width: 62ch; }
   #planner .zip-ok { color: var(--ink); padding-left: 24px; position: relative; }
   #planner .zip-ok::before { content: "✓"; position: absolute; left: 4px; color: var(--pine); font-weight: 700; }
+  #planner .zip-match {
+    margin: 0 0 16px; padding: 10px 14px 10px 34px; position: relative; font-size: 14.5px; line-height: 1.5;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); max-width: 680px;
+  }
+  #planner .zip-match::before { content: "✓"; position: absolute; left: 13px; top: 10px; color: var(--pine); font-weight: 700; }
+  #planner .zip-match .linkish { background: none; border: none; padding: 0; color: var(--steel); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+  #utilSlot2 .util-field { margin-bottom: 18px; }
   #planner .zip-ca { background: var(--heat-tint); border-radius: 8px; padding: 10px 14px; }
   #planner .zip-ca a { font-weight: 700; }
   .field-error { color: var(--dead); font-size: 13.5px; margin-top: 8px; font-weight: 600; }

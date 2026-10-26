@@ -13,6 +13,8 @@ interface Props {
     contractorRule?: string;
     url?: string;
     checked?: string;
+    /** status wording to show, when it differs from the raw status that sets the chip */
+    statusText?: string;
   };
   /** Our own guide to the program, if we have one */
   guide?: string;
@@ -39,7 +41,7 @@ const clip = (s: string | undefined, n = 520) => (!s ? '' : s.length > n ? `${s.
   {conditions && (
     <p class="muted"><span class="lbl">Other conditions</span>{clip(conditions, 380)}</p>
   )}
-  {p.status && chip.label !== 'Open' && <p class="muted small"><span class="lbl">Status</span>{clip(p.status, 260)}</p>}
+  {p.status && chip.label !== 'Open' && <p class="muted small"><span class="lbl">Status</span>{clip(p.statusText || p.status, 260)}</p>}
   <p class="meta">
     {guide && <><a href={guide}>Our guide to this program</a> · </>}
     {p.url && <a href={p.url} rel="noopener" target="_blank">{hostOf(p.url)}&nbsp;↗</a>}

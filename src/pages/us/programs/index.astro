@@ -6,6 +6,8 @@ import ProgramStyles from '../../../components/us/ProgramStyles.astro';
 import ProgramCard from '../../../components/us/ProgramCard.astro';
 import ProgramStateTable from '../../../components/us/ProgramStateTable.astro';
 import AuditFirst from './_AuditFirst.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
+import BackToPlan from '../../../components/us/BackToPlan.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { statusChip, METROS } from '../../../lib/us/data';
@@ -71,6 +73,8 @@ const schema = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <ProgramStyles />
   <div class="container">
+    <JourneyBar country="us" current={4} ticks={false} compact />
+    <BackToPlan />
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">Program tracker · United States</p>
@@ -117,7 +121,7 @@ const schema = [
           <p>
             Each state runs its own rebates. {taking} are taking applications for at least one of the two
             programs. California’s and Colorado’s launched programs are closed to new applicants, and
-            {COUNTS.group['not-open']} states haven’t launched or couldn’t be confirmed on a state page.
+            {COUNTS.group['not-open']} states haven’t launched or haven’t posted a status.
           </p>
           <p class="up-meta"><a href="/us/programs/states/">All 50 states plus DC</a> · verified {VERIFIED}</p>
         </article>
@@ -283,7 +287,7 @@ const schema = [
       <p class="up-intro">
         HEEHR pays toward electric appliances; HOMES pays toward whole-home upgrades. Each chip summarizes the
         state’s own page as checked on {VERIFIED}; the state page quotes the exact wording and links the
-        official source. “Unconfirmed” means no state page could confirm a status.
+        official source. “Unconfirmed” means the state hasn’t posted a status we can link to, so ask its energy office.
       </p>
       <p class="up-counts">
         {GROUP_ORDER.map((g) => (

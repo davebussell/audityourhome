@@ -6,6 +6,7 @@
 import climate from '../../data/us/climate.json';
 import prices from '../../data/us/prices.json';
 import federal from '../../data/us/federal.json';
+import { cleanRecord } from './clean';
 
 export const US_VERIFIED = 'October 12, 2026';
 export const US_VERIFIED_ISO = '2026-10-12';
@@ -111,7 +112,8 @@ export const METROS: Metro[] = ranked
   .map((r) => {
     const file = Object.entries(metroFiles).find(([p]) => p.endsWith(`/${r.slug}.json`));
     if (!file) return null;
-    return { slug: r.slug, rank: r.rank, population: r.population ?? null, msa: r.msa, data: file[1], climate: (climate as any).metros?.[r.slug] ?? null } as Metro;
+    // research wording ("blocked automated access", "were not researched") becomes homeowner guidance; status fields stay raw
+    return { slug: r.slug, rank: r.rank, population: r.population ?? null, msa: r.msa, data: cleanRecord(file[1]), climate: (climate as any).metros?.[r.slug] ?? null } as Metro;
   })
   .filter((m): m is Metro => m !== null)
   .sort((a, b) => a.rank - b.rank);
@@ -165,7 +167,7 @@ export function statePrices(st: string): StatePrices {
 }
 
 // ---------------------------------------------------------------- federal
-export const FEDERAL = federal as any;
+export const FEDERAL = cleanRecord(federal as any);
 export const stateRebateRow = (st: string) => (FEDERAL.homeEnergyRebates.states as any[]).find((s) => s.state === st);
 
 /** "1,234" */
