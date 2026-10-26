@@ -35,7 +35,7 @@ export const PROVINCE_BOOKING: ProvinceBooking[] = [
     name: 'British Columbia',
     route: 'Book directly with a licensed service organization',
     how: 'You book the EnerGuide evaluation yourself with an NRCan-licensed service organization. There’s no provincial price list, and several BC municipalities subsidize evaluations for their residents. BC’s Home Energy Improvement Bonus pays for the measured improvement between two evaluations.',
-    cost: 'About $400–$500 (City of Nanaimo’s typical figure)',
+    cost: 'About $400–$500 in BC (typical, per the City of Nanaimo)',
     help: 'Municipal subsidies in some cities · Home Energy Improvement Bonus $750–$2,000',
     checked: 'October 8, 2026',
     sources: [
@@ -47,8 +47,8 @@ export const PROVINCE_BOOKING: ProvinceBooking[] = [
     slug: 'alberta',
     name: 'Alberta',
     route: 'Book directly with a licensed service organization',
-    how: 'You book the EnerGuide evaluation yourself with an NRCan-licensed service organization. There’s no provincial rebate or price list; the City of Edmonton’s advice is to expect more than $400 and get two or three quotes. Some municipalities finance upgrades through the Clean Energy Improvement Program (CEIP), which needs an evaluation.',
-    cost: 'Expect $400+ (City of Edmonton)',
+    how: 'You book the EnerGuide evaluation yourself with an NRCan-licensed service organization. There’s no provincial rebate or price list, so get two or three quotes. Some municipalities finance upgrades through the Clean Energy Improvement Program (CEIP), which needs an evaluation.',
+    cost: 'Expect $400 or more in Alberta (per the City of Edmonton)',
     help: 'No provincial rebate · CEIP financing in participating municipalities',
     checked: 'October 8, 2026',
     sources: [
@@ -60,8 +60,8 @@ export const PROVINCE_BOOKING: ProvinceBooking[] = [
     slug: 'saskatchewan',
     name: 'Saskatchewan',
     route: 'Book directly with a licensed service organization',
-    how: 'You book the EnerGuide evaluation yourself with an NRCan-licensed service organization. There’s no provincial rebate for it; the City of Saskatoon quotes $500–$600 as typical for the first evaluation and $300–$400 for the follow-up.',
-    cost: 'About $500–$600 first visit, $300–$400 follow-up (City of Saskatoon)',
+    how: 'You book the EnerGuide evaluation yourself with an NRCan-licensed service organization. There’s no provincial rebate for it.',
+    cost: 'About $500–$600 for the first visit and $300–$400 for the follow-up in Saskatchewan (typical, per the City of Saskatoon)',
     help: 'No provincial rebate (the retrofit rebate ended April 2026)',
     checked: 'October 8, 2026',
     sources: [
@@ -183,7 +183,8 @@ export function providerCountLabel(c: IndexCity): string {
   return `${n} licensed organization${n === 1 ? '' : 's'}`;
 }
 
-interface ProvinceProgram { name: string; status: string; headline: string; programSlug?: string | null; url: string; verified: string }
+/** `city` marks a city-only program (e.g. Toronto HELP), so city-aware pages can leave it out elsewhere. */
+interface ProvinceProgram { name: string; status: string; headline: string; programSlug?: string | null; url: string; verified: string; city?: string }
 interface ProvinceRecord { slug: string; name: string; programs: ProvinceProgram[] }
 const PROVINCES = (provincesJson as unknown as { provinces: ProvinceRecord[] }).provinces;
 

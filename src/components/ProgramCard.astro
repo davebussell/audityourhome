@@ -47,8 +47,9 @@ const statusChip =
 </article>
 
 <style>
-  .prog { display: flex; flex-direction: column; gap: 10px; }
-  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  /* min-width: 0 lets the card shrink inside a 1fr grid track on phones instead of pushing the page wider. */
+  .prog { display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow-wrap: anywhere; }
+  .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; }
   .head h3 { margin: 0; font-size: 18.5px; }
   .head a { color: var(--ink); text-decoration: none; }
   .head a:hover { color: var(--heat-deep); }
@@ -57,5 +58,5 @@ const statusChip =
   .amounts li { font-size: 14.5px; line-height: 1.5; }
   .amounts .money { font-size: 15.5px; }
   .amounts .lbl { color: var(--muted); }
-  .audit-note { margin: auto 0 0; padding-top: 8px; display: flex; align-items: center; gap: 12px; }
+  .audit-note { margin: auto 0 0; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 </style>

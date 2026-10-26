@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
 import { ogFor } from '../../../lib/photos';
 import ProgramCard from '../../../components/ProgramCard.astro';
 import { SITE } from '../../../config/site';
@@ -11,16 +12,32 @@ const title = 'Canadian energy rebate tracker — what’s actually live, provin
 const description =
   'Every major home energy rebate in Canada, verified against official pages with dates: Home Renovation Savings, BC’s Improvement Bonus, Efficiency Manitoba, Rénoclimat, LogisVert, the Atlantic programs, the new federal heat pump rebate — and the closed ones other sites still advertise.';
 
-const isOntario = (p: any) => ['ontario', 'toronto'].includes(p.jurisdiction);
-const isFederal = (p: any) => p.jurisdiction === 'canada';
-const onfed = programs.filter((p) => isOntario(p) || isFederal(p));
-const provincial = programs.filter((p) => !isOntario(p) && !isFederal(p));
+/** West to east, then the territories. Toronto's city program sits with Ontario. */
+const PROVINCES: { slug: string; name: string }[] = [
+  { slug: 'bc', name: 'British Columbia' },
+  { slug: 'alberta', name: 'Alberta' },
+  { slug: 'saskatchewan', name: 'Saskatchewan' },
+  { slug: 'manitoba', name: 'Manitoba' },
+  { slug: 'ontario', name: 'Ontario' },
+  { slug: 'quebec', name: 'Quebec' },
+  { slug: 'new-brunswick', name: 'New Brunswick' },
+  { slug: 'nova-scotia', name: 'Nova Scotia' },
+  { slug: 'pei', name: 'Prince Edward Island' },
+  { slug: 'newfoundland-labrador', name: 'Newfoundland and Labrador' },
+  { slug: 'north', name: 'Yukon, Northwest Territories and Nunavut' },
+];
+const provOf = (p: any) => (p.jurisdiction === 'toronto' ? 'ontario' : p.jurisdiction);
+const order = (p: any) => (p.status === 'active' ? 0 : p.status === 'active-limited' ? 1 : 2);
+
 const announced = programs.filter((p) => p.status === 'announced');
-const live = onfed.filter((p) => p.status === 'active');
-const limited = onfed.filter((p) => p.status === 'active-limited');
-const closed = onfed.filter((p) => p.status === 'closed');
-const provLive = provincial.filter((p) => p.status !== 'closed');
-const provClosed = provincial.filter((p) => p.status === 'closed');
+const federal = programs.filter((p) => p.jurisdiction === 'canada' && (p.status === 'active' || p.status === 'active-limited'));
+const closed = programs.filter((p) => p.status === 'closed');
+const byProv = PROVINCES.map((pr) => ({
+  ...pr,
+  list: programs
+    .filter((p) => provOf(p) === pr.slug && (p.status === 'active' || p.status === 'active-limited'))
+    .sort((a, b) => order(a) - order(b)),
+}));
 
 const schema = [
   breadcrumbSchema([
@@ -34,7 +51,7 @@ const schema = [
   <div class="container">
     <div class="page-hero has-photo">
       <div class="hero-text">
-      <p class="eyebrow">Program tracker</p>
+      <p class="eyebrow">Program tracker · Canada</p>
       <h1>What's actually live right now</h1>
       <p class="lede measure">
         Rebate programs open, shrink, and close with little warning — the Greener Homes Loan died
@@ -45,6 +62,19 @@ const schema = [
       <Photo name={'attic-insulation-inspection'} eager />
     </div>
 
+    <JourneyBar country="ca" current={4} ticks={false} compact />
+
+    <nav class="prov-pick" aria-label="Jump to a province or territory">
+      <a href="#federal">Federal</a>
+      {byProv.map((pr) => <a href={`#prov-${pr.slug}`}>{pr.name.replace('Yukon, Northwest Territories and Nunavut', 'Territories')}</a>)}
+      <a href="#closed">Closed</a>
+    </nav>
+
+    <p class="small measure how">
+      Most of these pay only after an EnerGuide evaluation: book the first visit before you sign a contract or start any work.
+      <a href="/ca/find/">How booking works in your province →</a>
+    </p>
+
     {announced.length > 0 && (
       <>
         <h2 class="grp"><span class="chip chip-info">Announced</span> Coming soon, not open yet</h2>
@@ -54,36 +84,32 @@ const schema = [
       </>
     )}
 
-    <h2 class="grp"><span class="chip chip-active">Active</span> Ontario &amp; federal — live</h2>
+    <h2 class="grp" id="federal"><span class="chip chip-active">Canada-wide</span> Federal programs</h2>
     <div class="grid-3">
-      {live.map((p) => <ProgramCard program={p} />)}
+      {federal.map((p) => <ProgramCard program={p} />)}
     </div>
 
-    {limited.length > 0 && (
-      <>
-        <h2 class="grp"><span class="chip chip-limited">Limits apply</span> Active with restrictions</h2>
-        <div class="grid-3">
-          {limited.map((p) => <ProgramCard program={p} />)}
-        </div>
-      </>
-    )}
+    {byProv.map((pr) => (
+      <section class="prov" id={`prov-${pr.slug}`} aria-labelledby={`h-${pr.slug}`}>
+        <h2 class="grp" id={`h-${pr.slug}`}>{pr.name}</h2>
+        {pr.list.length > 0 ? (
+          <div class="grid-3">
+            {pr.list.map((p) => <ProgramCard program={p} />)}
+          </div>
+        ) : (
+          <p class="small measure">No open province-wide home rebate we track right now. Check your city and utility programs in the province guide.</p>
+        )}
+        <p class="small prov-more"><a href={`/ca/provinces/${pr.slug}/`}>Everything for homes in {pr.name} →</a></p>
+      </section>
+    ))}
 
-    <h2 class="grp"><span class="chip chip-active">Across Canada</span> Provincial programs, coast to coast</h2>
-    <p class="small measure">
-      Every province and territory now has full program pages — amounts, eligibility, how to apply,
-      and the gotchas — each linked to its <a href="/ca/provinces/">provincial guide</a>.
-    </p>
-    <div class="grid-3">
-      {provLive.map((p) => <ProgramCard program={p} />)}
-    </div>
-
-    <h2 class="grp"><span class="chip chip-closed">Closed</span> Gone — but still advertised elsewhere</h2>
+    <h2 class="grp" id="closed"><span class="chip chip-closed">Closed</span> Gone — but still advertised elsewhere</h2>
     <p class="small measure">
       We list closed programs on purpose: if a website or salesperson promises you one of these,
       their information is stale — a useful trust test.
     </p>
     <div class="grid-3">
-      {[...closed, ...provClosed].map((p) => <ProgramCard program={p} />)}
+      {closed.map((p) => <ProgramCard program={p} />)}
     </div>
 
     <div class="card card-pad note">
@@ -100,6 +126,13 @@ const schema = [
 </Base>
 
 <style>
-  .grp { display: flex; align-items: center; gap: 12px; margin: 40px 0 16px; font-size: 22px; }
+  .grp { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 40px 0 16px; font-size: 22px; }
   .note { border-left: 4px solid var(--steel); margin-top: 40px; }
+  .prov-pick { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 6px; }
+  .prov-pick a { font-size: 14px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: #fff; color: var(--steel); text-decoration: none; }
+  .prov-pick a:hover { border-color: var(--steel); }
+  .how { margin-top: 10px; }
+  .prov { scroll-margin-top: 84px; }
+  .prov-more { margin-top: 10px; }
+  #federal, #closed { scroll-margin-top: 84px; }
 </style>

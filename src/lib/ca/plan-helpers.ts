@@ -348,15 +348,19 @@ export function heatPumpCopy(profile: string | undefined, heat: string, saving: 
       climate = 'Cold snaps here go well below the −30 °C rating of cold-climate air-source units, so a heat pump needs a full-size backup. Envelope work comes first and saves more here than almost anywhere.';
       break;
   }
+  if (heat === 'gasboiler') {
+    // Hot-water (boiler) homes: the backup is the boiler, not a furnace.
+    title = title.replace('furnace or AC', 'boiler or AC');
+    climate = climate.replace(/gas furnace/g, 'gas boiler');
+  }
 
+  // Money lines only when the heat pump would actually save; otherwise the card moves to
+  // "when your system needs replacing" and heatPumpLaterNote() says what it would cost.
+  const saves = saving !== null && saving >= 100;
   let fuel = '';
   if (electric) fuel = 'Against baseboards or an electric furnace, a heat pump delivers the same heat with far less electricity.';
-  else if (oilish) fuel = saving !== null && saving >= 100
-    ? `${fuelWord[0].toUpperCase()}${fuelWord.slice(1)} is expensive heat, so switching usually saves more than any other upgrade.`
-    : `${fuelWord[0].toUpperCase()}${fuelWord.slice(1)} is expensive, but at today’s prices in ${place} the heat pump’s electricity costs about as much or more.`;
-  else if (gas) fuel = saving !== null && saving >= 100
-    ? `Even against natural gas, at today’s prices in ${place} a heat pump would trim the bill, and it adds cooling, comfort and lower emissions.`
-    : 'Natural gas is cheap heat, so the bill saving is small; the case is cooling, comfort, lower emissions and rebates.';
+  else if (oilish && saves) fuel = `${fuelWord[0].toUpperCase()}${fuelWord.slice(1)} is expensive heat, so switching usually saves more than any other upgrade.`;
+  else if (gas && saves) fuel = `Even against natural gas, at today’s prices in ${place} a heat pump would trim the bill, and it adds cooling, comfort and lower emissions.`;
   else if (wood) fuel = 'Compared with wood, the case is convenience, cleaner indoor air and cooling more than the bill.';
   return { title, why: [climate, fuel].filter(Boolean).join(' ') };
 }
@@ -364,10 +368,15 @@ export function heatPumpCopy(profile: string | undefined, heat: string, saving: 
 /** Why the heat pump moved to "when your system needs replacing", in plain words. */
 export function heatPumpLaterNote(heat: string, saving: number | null, place: string, profile?: string, prov?: string): string {
   const more = saving !== null && saving < -15
-    ? `it would cost about $${(Math.round(-saving / 10) * 10).toLocaleString('en-CA')} a year more to run than what you have now`
-    : 'its running cost would be about the same as what you have now';
-  if (heat === 'gas' || heat === 'gasboiler') {
-    return `At today’s prices in ${place}, ${more}. Natural gas is cheap heat. A heat pump still adds air conditioning, comfort and lower emissions, and rebates shrink the price gap. Decide when your furnace or AC needs replacing; a hybrid system (heat pump plus your gas furnace as backup) is a middle path.`;
+    ? `it would raise your bill by about $${(Math.round(-saving / 10) * 10).toLocaleString('en-CA')} a year`
+    : saving !== null && saving > 15
+      ? `it would save only about $${(Math.round(saving / 10) * 10).toLocaleString('en-CA')} a year`
+      : 'its running cost would be about the same as what you have now';
+  if (heat === 'gasboiler') {
+    return `At today’s prices in ${place}, ${more}; the case for one is cooling, comfort, lower emissions and rebates. Decide when your boiler needs replacing; ductless heat pumps for most of the year, with the boiler kept for the coldest days, are a middle path.`;
+  }
+  if (heat === 'gas') {
+    return `At today’s prices in ${place}, ${more}; the case for one is cooling, comfort, lower emissions and rebates. Decide when your furnace or AC needs replacing; a hybrid system (a heat pump plus your gas furnace as backup) is a middle path.`;
   }
   if (profile === 'north') {
     const local = prov === 'YT'
