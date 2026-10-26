@@ -258,6 +258,7 @@ export const NAV_CA: NavItem[] = [
           { href: '/ca/learn/hvac-maintenance/', label: 'HVAC maintenance' },
           { href: '/ca/learn/energuide-ratings/', label: 'EnerGuide ratings' },
           { href: '/ca/learn/previous-audit/', label: 'Had an audit before?' },
+          { href: '/ca/glossary/', label: 'Glossary: every term A–Z' },
         ],
       },
     ],
@@ -305,6 +306,13 @@ export const NAV_US: NavItem[] = [
           { href: '/us/tests/lead-paint/', label: 'Lead paint', desc: 'Homes built before 1978' },
           { href: '/us/tests/asbestos-vermiculite/', label: 'Asbestos & vermiculite', desc: 'Test before you disturb it' },
           { href: '/us/tests/well-water/', label: 'Well water', desc: 'Test it every year' },
+        ],
+      },
+      {
+        title: 'Words & numbers',
+        links: [
+          { href: '/us/glossary/', label: 'Glossary', desc: 'Every term and acronym explained' },
+          { href: '/us/how-it-works/', label: 'How an audit works', desc: 'What happens at the visit' },
         ],
       },
     ],

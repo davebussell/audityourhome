@@ -1,0 +1,16 @@
+---
+/** One glossary entry. */
+import GlossaryTerm from '../../../components/glossary/GlossaryTerm.astro';
+import { entriesFor, slugFor, type GlossaryEntry } from '../../../lib/glossary';
+
+export function getStaticPaths() {
+  return entriesFor('ca').map((entry) => ({ params: { slug: slugFor(entry, 'ca') }, props: { entry } }));
+}
+
+interface Props {
+  entry: GlossaryEntry;
+}
+const { entry } = Astro.props;
+---
+
+<GlossaryTerm country="ca" entry={entry} />

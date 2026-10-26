@@ -1,4 +1,5 @@
 ---
+import GlossaryRuntime from '../../../../components/GlossaryRuntime.astro';
 import Base from '../../../../layouts/Base.astro';
 import LeadForm from '../../../../components/LeadForm.astro';
 import CalcStyles from '../../../../components/calc/CalcStyles.astro';
@@ -122,6 +123,7 @@ const related: Record<CalcSlug, { href: string; label: string }[]> = {
       />
     </div>
   </div>
+  <GlossaryRuntime country="ca" live=".calc-out, #up-table, #ap-foot" />
 </Base>
 
 <style>

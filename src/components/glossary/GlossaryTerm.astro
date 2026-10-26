@@ -1,0 +1,168 @@
+---
+/** One glossary entry for one country: what it means, why it matters in an audit, typical numbers, sources. */
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema, definedTermSchema } from '../../lib/schema';
+import { viewFor, seoTitle, type Country, type GlossaryEntry } from '../../lib/glossary';
+
+interface Props {
+  country: Country;
+  entry: GlossaryEntry;
+}
+const { country: c, entry } = Astro.props;
+const v = viewFor(entry, c);
+const home = `/${c}/`;
+const index = `/${c}/glossary/`;
+const title = seoTitle(v);
+const description = v.short;
+const setName = c === 'us' ? 'AuditYourHome home energy audit glossary (United States)' : 'AuditYourHome energy audit glossary (Canada)';
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: home },
+    { name: 'Glossary', path: index },
+    { name: v.term, path: v.path },
+  ]),
+  definedTermSchema({ name: v.term, description: v.short, path: v.path, setPath: index, setName, alternateName: v.aka }),
+];
+const noteHeading = c === 'us' ? 'In the United States' : 'In Canada';
+const who = c === 'us' ? 'auditor' : 'energy advisor';
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container glossary-term">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={index}>Glossary</a> <span aria-hidden="true">/</span> <span>{v.term}</span>
+    </nav>
+
+    <header class="page-hero gt-hero">
+      <p class="eyebrow">Glossary · {v.categoryLabel}</p>
+      <h1>{v.term}</h1>
+      {v.aka.length > 0 && (
+        <p class="gt-aka small" data-no-gloss>
+          Also called: {v.aka.join(' · ')}
+        </p>
+      )}
+      <p class="lede measure">{v.short}</p>
+    </header>
+
+    <div class="gt-grid">
+      <div class="gt-main">
+        <section class="gt-sec" aria-labelledby="gt-what">
+          <h2 id="gt-what">What it means</h2>
+          <p class="measure">{v.body}</p>
+        </section>
+
+        <section class="gt-sec gt-why card card-pad" aria-labelledby="gt-why">
+          <h2 id="gt-why">Why it matters in an audit</h2>
+          <p class="mb-0">{v.why}</p>
+        </section>
+
+        {v.values.length > 0 && (
+          <section class="gt-sec" aria-labelledby="gt-values">
+            <h2 id="gt-values">Typical numbers</h2>
+            <p class="small">
+              Reference values with their sources. Your {who}’s report gives the figure for your own house.
+            </p>
+            <div class="tablewrap">
+              <table class="stack gt-table">
+                <thead>
+                  <tr>
+                    <th scope="col">What</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {v.values.map((x) => (
+                    <tr>
+                      <td>{x.label}</td>
+                      <td data-label="Value">{x.value}</td>
+                      <td data-label="Source">
+                        {x.source ? (
+                          <a href={x.source} rel="noopener" target="_blank">{x.sourceLabel} ↗</a>
+                        ) : (
+                          '—'
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        {v.note && (
+          <section class="gt-sec gt-note card card-pad" aria-labelledby="gt-note">
+            <h2 id="gt-note">{noteHeading}</h2>
+            <p class="mb-0">{v.note}</p>
+          </section>
+        )}
+
+        {v.sources.length > 0 && (
+          <section class="gt-sec gt-sources" aria-labelledby="gt-src">
+            <h2 id="gt-src">Sources</h2>
+            <ul>
+              {v.sources.map((s) => (
+                <li>
+                  <a href={s.href} rel="noopener" target="_blank">{s.label} ↗</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+
+      <aside class="gt-side" aria-label="Related">
+        {v.pages.length > 0 && (
+          <div class="card card-pad gt-pages">
+            <h2>Learn more here</h2>
+            <ul>
+              {v.pages.map((p) => (
+                <li><a href={p.href}>{p.label} →</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {v.related.length > 0 && (
+          <div class="card card-pad gt-rel">
+            <h2>Related terms</h2>
+            <ul>
+              {v.related.map((r) => (
+                <li>
+                  <a href={r.href}>{r.term}</a>
+                  <span class="small">{r.short}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p class="gt-back"><a href={index}>← Every term, A to Z</a></p>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .gt-hero { padding-bottom: 18px; }
+  .gt-aka { margin: -4px 0 14px; max-width: 70ch; }
+  .gt-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px 40px; align-items: start; padding-bottom: 56px; }
+  .gt-sec { margin-bottom: 26px; padding: 0; }
+  .gt-sec.card-pad { padding: 22px 24px; }
+  .gt-sec h2 { font-size: clamp(21px, 2.4vw, 25px); margin-bottom: 10px; }
+  .gt-why { border-left: 4px solid var(--heat); }
+  .gt-note { border-left: 4px solid var(--pine); }
+  .gt-table td:first-child { font-weight: 600; }
+  .gt-table td { font-size: 14.5px; }
+  .gt-sources ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14.5px; }
+  .gt-side { display: grid; gap: 16px; position: sticky; top: 90px; }
+  .gt-side h2 { font-size: 17px; margin: 0 0 10px; }
+  .gt-side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .gt-rel li { display: grid; gap: 2px; }
+  .gt-rel li a { font-weight: 600; }
+  .gt-rel .small { line-height: 1.45; }
+  .gt-back { margin: 0; font-size: 15px; }
+  @media (max-width: 900px) {
+    .gt-grid { grid-template-columns: 1fr; }
+    .gt-side { position: static; }
+  }
+</style>

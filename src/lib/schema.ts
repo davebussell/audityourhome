@@ -80,3 +80,28 @@ export function cityDirectorySchema(region: Region, providerNames: string[]) {
     })),
   };
 }
+
+/** A glossary entry (schema.org DefinedTerm) inside the country glossary. */
+export function definedTermSchema(t: { name: string; description: string; path: string; setPath: string; setName: string; alternateName?: string[] }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    name: t.name,
+    description: t.description,
+    url: `${SITE.url}${t.path}`,
+    ...(t.alternateName && t.alternateName.length ? { alternateName: t.alternateName } : {}),
+    inDefinedTermSet: { '@type': 'DefinedTermSet', name: t.setName, url: `${SITE.url}${t.setPath}` },
+  };
+}
+
+/** The glossary index (schema.org DefinedTermSet). */
+export function definedTermSetSchema(s: { name: string; description: string; path: string; terms: { name: string; path: string }[] }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: s.name,
+    description: s.description,
+    url: `${SITE.url}${s.path}`,
+    hasDefinedTerm: s.terms.map((t) => ({ '@type': 'DefinedTerm', name: t.name, url: `${SITE.url}${t.path}` })),
+  };
+}

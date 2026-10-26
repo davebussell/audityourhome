@@ -1,4 +1,5 @@
 ---
+import GlossaryRuntime from '../../../../components/GlossaryRuntime.astro';
 import Base from '../../../../layouts/Base.astro';
 import { SITE } from '../../../../config/site';
 import { breadcrumbSchema } from '../../../../lib/schema';
@@ -106,6 +107,7 @@ const eras = [
       <a class="btn btn-primary" href="/ca/plan/">Build my full plan →</a>
     </div>
   </div>
+  <GlossaryRuntime country="ca" live="#screenerResults" />
 </Base>
 
 <script>

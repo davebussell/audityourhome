@@ -1,0 +1,253 @@
+---
+/**
+ * Glossary index for one country: A–Z list of every term with its short definition, a search box and
+ * category filters (both work without JavaScript as plain anchor lists).
+ */
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema, definedTermSetSchema } from '../../lib/schema';
+import {
+  entriesFor,
+  viewFor,
+  letterOf,
+  sortTerm,
+  CATEGORY_ORDER,
+  CATEGORY_LABEL,
+  GLOSSARY_CHECKED,
+  type Country,
+} from '../../lib/glossary';
+import { longDate } from '../../lib/calc/format';
+
+interface Props {
+  country: Country;
+}
+const { country: c } = Astro.props;
+const views = entriesFor(c)
+  .map((e) => viewFor(e, c))
+  .sort((a, b) => sortTerm(a.term).localeCompare(sortTerm(b.term), 'en'));
+const letters = [...'#ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+const byLetter = new Map<string, typeof views>();
+for (const v of views) {
+  const l = letterOf(v.term);
+  byLetter.set(l, [...(byLetter.get(l) ?? []), v]);
+}
+const cats = CATEGORY_ORDER.filter((k) => views.some((v) => v.category === k));
+const path = `/${c}/glossary/`;
+const home = `/${c}/`;
+const setName = c === 'us' ? 'AuditYourHome home energy audit glossary (United States)' : 'AuditYourHome energy audit glossary (Canada)';
+const title =
+  c === 'us'
+    ? 'Home energy audit glossary: every term explained | AuditYourHome'
+    : 'Energy audit glossary: every term explained | AuditYourHome';
+const examples = c === 'us' ? 'ACH50, SEER2, Manual J and HERS scores' : 'ACH50, design temperatures, HOT2000 and EnerGuide ratings';
+const description = `Plain-language definitions of the ${views.length} terms you meet in a home energy audit, from ${examples}: what each means, why it matters and what good looks like.`;
+const checked = GLOSSARY_CHECKED ? longDate(GLOSSARY_CHECKED) : null;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: home },
+    { name: 'Glossary', path },
+  ]),
+  definedTermSetSchema({
+    name: setName,
+    description,
+    path,
+    terms: views.map((v) => ({ name: v.term, path: v.path })),
+  }),
+];
+const searchText = (v: (typeof views)[number]) => [v.term, ...v.aka, v.short].join(' ').toLowerCase();
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container glossary-index">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={home}>Home</a> <span aria-hidden="true">/</span> <span>Glossary</span>
+    </nav>
+
+    <div class="page-hero">
+      <p class="eyebrow">Glossary · {views.length} terms{checked && ` · checked ${checked}`}</p>
+      <h1>The energy audit glossary</h1>
+      <p class="lede measure">
+        Energy audits come with their own language: {examples}. Wherever one of these terms appears on
+        this site, its first use on the page links here. Each entry says what the term means in plain words,
+        why an {c === 'us' ? 'auditor' : 'energy advisor'} measures it, and what a good or poor number looks like,
+        with the sources listed.
+      </p>
+    </div>
+
+    <div class="gx-tools card card-pad" id="gx-tools">
+      <label for="gx-q">Search the glossary</label>
+      <input type="search" id="gx-q" placeholder={c === 'us' ? 'Try “SEER2” or “duct leakage”' : 'Try “ACH50” or “radon”'} autocomplete="off" />
+      <div class="gx-cats" role="group" aria-label="Filter by topic">
+        <button type="button" class="gx-cat" data-cat="" aria-pressed="true">All topics</button>
+        {cats.map((k) => (
+          <button type="button" class="gx-cat" data-cat={k} aria-pressed="false">{CATEGORY_LABEL[k]}</button>
+        ))}
+      </div>
+      <p class="small gx-count" id="gx-count" aria-live="polite">{views.length} terms</p>
+    </div>
+
+    <nav class="gx-az" aria-label="Jump to a letter">
+      {letters.map((l) =>
+        byLetter.has(l) ? <a href={`#letter-${l === '#' ? 'num' : l}`}>{l}</a> : <span aria-hidden="true">{l}</span>,
+      )}
+    </nav>
+
+    {letters
+      .filter((l) => byLetter.has(l))
+      .map((l) => (
+        <section class="gx-letter" id={`letter-${l === '#' ? 'num' : l}`} aria-labelledby={`h-letter-${l === '#' ? 'num' : l}`}>
+          <h2 id={`h-letter-${l === '#' ? 'num' : l}`}>{l === '#' ? '0–9' : l}</h2>
+          <ul class="gx-list">
+            {byLetter.get(l)!.map((v) => (
+              <li class="gx-entry" data-cat={v.category} data-text={searchText(v)}>
+                <a class="gx-term" href={v.path}>{v.term}</a>
+                <p class="gx-short">{v.short}</p>
+                <span class="meta">{v.categoryLabel}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    <p class="gx-empty card card-pad" id="gx-empty" hidden>
+      No terms match. Try a shorter word, or <a href={path}>show every term</a>.
+    </p>
+
+    <section class="gx-next" aria-labelledby="gx-next-h">
+      <h2 id="gx-next-h">Put the words to work</h2>
+      <div class="gx-next-grid">
+        <a class="card card-pad" href={`/${c}/plan/`}>
+          <strong>Get your home energy plan →</strong>
+          <span class="small">Six short steps: what your house likely needs, in what order, before anyone visits.</span>
+        </a>
+        <a class="card card-pad" href={`/${c}/tests/`}>
+          <strong>See what each test measures →</strong>
+          <span class="small">Blower door, infrared, radon and more, with what a good result looks like.</span>
+        </a>
+        <a class="card card-pad" href={`/${c}/how-it-works/`}>
+          <strong>How an audit works →</strong>
+          <span class="small">What happens before, during and after the visit, and how rebates fit in.</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const q = document.getElementById('gx-q') as HTMLInputElement | null;
+  const count = document.getElementById('gx-count');
+  const empty = document.getElementById('gx-empty');
+  const items = [...document.querySelectorAll<HTMLElement>('.gx-entry')];
+  const sections = [...document.querySelectorAll<HTMLElement>('.gx-letter')];
+  const cats = [...document.querySelectorAll<HTMLButtonElement>('.gx-cat')];
+  const azLinks = [...document.querySelectorAll<HTMLAnchorElement>('.gx-az a')];
+  let cat = '';
+  const norm = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[\s\-]+/g, ' ').trim();
+  function apply() {
+    const term = norm(q?.value ?? '');
+    let shown = 0;
+    for (const li of items) {
+      const ok = (!cat || li.dataset.cat === cat) && (!term || norm(li.dataset.text ?? '').includes(term));
+      li.hidden = !ok;
+      if (ok) shown++;
+    }
+    for (const s of sections) s.hidden = !s.querySelector('.gx-entry:not([hidden])');
+    for (const a of azLinks) {
+      const target = document.querySelector<HTMLElement>(a.getAttribute('href') ?? '');
+      a.classList.toggle('off', !!target?.hidden);
+    }
+    if (count) count.textContent = shown === items.length ? `${items.length} terms` : `${shown} of ${items.length} terms`;
+    if (empty) empty.hidden = shown > 0;
+  }
+  q?.addEventListener('input', apply);
+  for (const b of cats) {
+    b.addEventListener('click', () => {
+      cat = b.dataset.cat ?? '';
+      for (const x of cats) x.setAttribute('aria-pressed', String(x === b));
+      apply();
+    });
+  }
+  const pre = new URLSearchParams(location.search).get('q');
+  if (pre && q) {
+    q.value = pre;
+    apply();
+  }
+</script>
+
+<style>
+  .glossary-index .page-hero { padding-bottom: 24px; }
+  .gx-tools { display: grid; gap: 10px; margin-bottom: 18px; }
+  .gx-tools label { margin: 0; }
+  .gx-tools input[type='search'] {
+    width: 100%;
+    font: inherit;
+    font-size: 16px;
+    padding: 11px 14px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+  }
+  .gx-tools input[type='search']:focus { border-color: var(--heat); outline: none; box-shadow: 0 0 0 3px var(--heat-tint); }
+  .gx-cats { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gx-cat {
+    font: 600 13.5px/1.2 var(--body);
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line-strong);
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .gx-cat[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .gx-count { margin: 0; }
+  .gx-az {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0 0 8px;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .gx-az a, .gx-az span {
+    min-width: 30px;
+    height: 30px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .gx-az a { background: var(--card); border: 1px solid var(--line); color: var(--steel); }
+  .gx-az a:hover { border-color: var(--heat); color: var(--heat-deep); }
+  .gx-az a.off { opacity: 0.35; }
+  .gx-az span { color: var(--line-strong); }
+  .gx-letter { padding: 22px 0 6px; scroll-margin-top: 80px; }
+  .gx-letter h2 {
+    font-size: 26px;
+    margin: 0 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--line-strong);
+  }
+  .gx-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 26px;
+  }
+  .gx-entry { padding: 10px 0 12px; border-bottom: 1px solid var(--line); }
+  .gx-term { font-family: var(--display); font-weight: 700; font-size: 17.5px; color: var(--ink); text-decoration: none; }
+  .gx-term:hover { color: var(--heat-deep); text-decoration: underline; }
+  .gx-short { margin: 4px 0 4px; font-size: 15px; color: var(--muted); line-height: 1.55; }
+  .gx-empty { margin-top: 18px; }
+  .gx-next { padding: 40px 0 56px; }
+  .gx-next h2 { font-size: clamp(23px, 2.6vw, 28px); }
+  .gx-next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .gx-next-grid a { display: grid; gap: 6px; text-decoration: none; color: var(--ink); }
+  .gx-next-grid a:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .gx-next-grid strong { font-family: var(--display); color: var(--heat-deep); }
+  @media (max-width: 760px) {
+    .gx-list { grid-template-columns: 1fr; }
+    .gx-next-grid { grid-template-columns: 1fr; }
+  }
+</style>

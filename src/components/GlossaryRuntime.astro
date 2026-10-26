@@ -1,0 +1,22 @@
+---
+/**
+ * Lets public/gl.js link glossary terms inside content the browser renders after load (planner and
+ * calculator results). Put it once on a page:
+ *   <GlossaryRuntime country="ca" live="#results, .calc-out" />
+ * `live` (optional) is a CSS selector list: each matching element is linked on load and again whenever
+ * its content changes. Scripts can also call window.AYHGloss.link(element) after they render.
+ * Pages without dynamic content don't need this: the build-time linker (tools/glossary/link.mjs)
+ * handles static text and adds gl.js itself.
+ */
+import { runtimeData, type Country } from '../lib/glossary';
+
+interface Props {
+  country: Country;
+  live?: string;
+}
+const { country, live } = Astro.props;
+const json = JSON.stringify(runtimeData(country)).replace(/</g, '\\u003c');
+---
+
+<script type="application/json" id="gl-full" data-live={live} set:html={json}></script>
+<script is:inline defer src="/gl.js"></script>
