@@ -146,7 +146,7 @@
   window.addEventListener('resize', function () { hideTip(); closePop(false); });
 
   // ------------------------------------------------------------------ dynamic content
-  var matchers = null;
+  var matcherCache = {};
   var B0 = '(?<![\\p{L}\\p{N}])', B1 = '(?![\\p{L}\\p{N}])', SEP = '[\\s\\u00a0\\-\\u2010\\u2011]';
   var ALNUM = null;
   function esc(s) { return s.replace(/[\\^$.*+?()[\]{}|\/]/g, '\\$&'); }
@@ -160,15 +160,19 @@
     var src = esc(t).replace(/ /g, '[\\s\\u00a0]');
     return (ALNUM.test(t.charAt(0)) ? B0 : '') + src + (ALNUM.test(t.charAt(t.length - 1)) ? B1 : '');
   }
-  function buildMatchers() {
-    if (matchers || !full || !full.terms) return matchers;
+  /** Matchers for one province ('' = no province: province-scoped patterns are left out). */
+  function buildMatchers(prov) {
+    var key = prov || '';
+    if (Object.prototype.hasOwnProperty.call(matcherCache, key)) return matcherCache[key];
+    if (!full || !full.terms) return null;
     var ci = {}, cs = {}, loose = [];
     function add(map, key, item) { (map[key] || (map[key] = [])).push(item); }
     try {
       ALNUM = new RegExp('[\\p{L}\\p{N}]', 'u');
       var first = new RegExp('^[\\p{L}\\p{N}]+', 'u');
       full.terms.forEach(function (x) {
-        (x.ci || []).forEach(function (raw) {
+        var sc = prov && x.sc && x.pv && x.pv.indexOf(prov) >= 0 ? x.sc : {};
+        (x.ci || []).concat(sc.ci || []).forEach(function (raw) {
           var p = raw.trim(), f = first.exec(p);
           var item = { slug: x.g, re: new RegExp(ciSrc(p), f ? 'iuy' : 'giu'), w: p.length };
           if (!f) { loose.push(item); return; }
@@ -176,19 +180,20 @@
           add(ci, key, item);
           if (f[0].length === p.length && /[a-z]$/i.test(p) && !/s$/i.test(p)) { add(ci, key + 's', item); add(ci, key + 'es', item); }
         });
-        (x.cs || []).forEach(function (raw) {
+        (x.cs || []).concat(sc.cs || []).forEach(function (raw) {
           var t = raw.trim(), f = first.exec(t);
           var item = { slug: x.g, re: new RegExp(csSrc(t), f ? 'uy' : 'gu'), w: t.length };
           if (f) add(cs, f[0], item); else loose.push(item);
         });
-        (x.re || []).forEach(function (src) { loose.push({ slug: x.g, re: new RegExp(src, 'gu'), w: 5 }); });
+        (x.re || []).concat(sc.re || []).forEach(function (src) { loose.push({ slug: x.g, re: new RegExp(src, 'gu'), w: 5 }); });
       });
     } catch (e) {
+      matcherCache[key] = null;
       return null; // an engine without lookbehind or \p{}: no dynamic linking, tooltips still work
     }
     [ci, cs].forEach(function (map) { for (var k in map) map[k].sort(function (a, b) { return b.w - a.w; }); });
-    matchers = { ci: ci, cs: cs, loose: loose, tokens: new RegExp('[\\p{L}\\p{N}]+', 'gu') };
-    return matchers;
+    matcherCache[key] = { ci: ci, cs: cs, loose: loose, tokens: new RegExp('[\\p{L}\\p{N}]+', 'gu') };
+    return matcherCache[key];
   }
   function tryList(list, text, at, out) {
     if (!list) return;
@@ -230,12 +235,20 @@
   var SKIP = 'a,button,label,select,option,textarea,input,script,style,code,pre,svg,summary,h1,h2,h3,h4,h5,h6,' +
     'nav,header,footer,legend,dialog,[data-no-gloss],.no-gloss,.sr-only,.eyebrow,.chip,.btn,.name,.pname,.rb-name,.ap-name,[aria-hidden="true"]';
 
-  /** Link the first use of each term inside root that isn't linked anywhere on the page yet. */
+  /**
+   * Link the first use of each term inside root that isn't linked anywhere on the page yet. Visible text
+   * goes first; text inside a closed <details> only gets a link for terms with no visible use. Province-scoped
+   * patterns apply when root (or an ancestor, or <html>) carries data-gl-province="ON" etc.
+   */
   function link(root) {
-    var m = buildMatchers();
-    if (!m || !root) return 0;
+    if (!root) return 0;
+    var pe = root.closest ? root.closest('[data-gl-province]') : null;
+    var prov = (pe && pe.getAttribute('data-gl-province')) || document.documentElement.getAttribute('data-gl-province') || '';
+    var m = buildMatchers(prov);
+    if (!m) return 0;
     var used = {};
     Array.prototype.forEach.call(document.querySelectorAll('a.gl[data-gl]'), function (a) { used[a.getAttribute('data-gl')] = 1; });
+    var visible = [], hidden = [];
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         if (!/[A-Za-z0-9]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
@@ -243,28 +256,34 @@
         return !p || p.closest(SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
       },
     });
-    var nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
+    while (walker.nextNode()) {
+      var node = walker.currentNode;
+      (node.parentElement.closest('details:not([open])') ? hidden : visible).push(node);
+    }
     var count = 0;
-    nodes.forEach(function (node) {
-      var text = node.nodeValue;
-      var hits = find(text, m, used);
-      if (!hits.length) return;
-      var frag = document.createDocumentFragment(), pos = 0;
-      hits.forEach(function (h) {
-        if (h.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, h.start)));
-        var a = document.createElement('a');
-        a.className = 'gl';
-        a.href = defs[h.slug].h;
-        a.setAttribute('data-gl', h.slug);
-        a.textContent = text.slice(h.start, h.end);
-        frag.appendChild(a);
-        pos = h.end;
-        count++;
+    function run(nodes) {
+      nodes.forEach(function (node) {
+        var text = node.nodeValue;
+        var hits = find(text, m, used);
+        if (!hits.length) return;
+        var frag = document.createDocumentFragment(), pos = 0;
+        hits.forEach(function (h) {
+          if (h.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, h.start)));
+          var a = document.createElement('a');
+          a.className = 'gl';
+          a.href = defs[h.slug].h;
+          a.setAttribute('data-gl', h.slug);
+          a.textContent = text.slice(h.start, h.end);
+          frag.appendChild(a);
+          pos = h.end;
+          count++;
+        });
+        if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+        node.parentNode.replaceChild(frag, node);
       });
-      if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
-      node.parentNode.replaceChild(frag, node);
-    });
+    }
+    run(visible);
+    run(hidden);
     return count;
   }
 

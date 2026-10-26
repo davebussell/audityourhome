@@ -194,7 +194,10 @@
     {
      "label": "NRCan R-2000 Standard (2012 edition)",
      "value": "1.5 ACH50 or less",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/details-r-2000-standard"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/details-r-2000-standard",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "Passive House (Passive House Institute)",
@@ -379,7 +382,7 @@
    "short": "Uncontrolled air moving in and out of a house through cracks and gaps, carrying heat, moisture and outdoor pollutants with it.",
    "body": "Air leaks in through some gaps in the building envelope (infiltration) and out through others (exfiltration), pushed by wind, the stack effect and exhaust fans. Common leak spots include attic hatches, plumbing and wiring holes, recessed lights, the rim joist (header), window and door frames, outlets and fireplace dampers. It's measured with a blower door test.",
    "whyItMatters": "NRCan says uncontrolled airflow can be the major source of heat loss, and leaks that carry humid indoor air into walls and attics cause condensation, mould and ice dams.",
-   "whyUs": "NRCan says uncontrolled airflow can be the major source of heat loss, and leaks that carry humid indoor air into walls and attics cause condensation, mold and ice dams.",
+   "whyUs": "Sealing air leaks typically cuts heating and cooling bills by 10%–20% (DOE), and air moving through walls and attics carries moisture that can cause condensation, mold and, in cold climates, ice dams.",
    "values": [
     {
      "label": "Moisture carried by air vs. diffusion",
@@ -823,7 +826,18 @@
     {
      "label": "Health Canada indoor CO limits",
      "value": "25 ppm (1-hour average); 10 ppm (24-hour average)",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "US EPA outdoor CO standard (NAAQS)",
+     "value": "9 ppm (8-hour average); 35 ppm (1-hour average)",
+     "source": "https://www.epa.gov/criteria-air-pollutants/naaqs-table",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Typical CO in US homes without gas stoves (EPA)",
@@ -1019,7 +1033,10 @@
     {
      "label": "Health Canada residential limits",
      "value": "25 ppm averaged over 1 hour; 10 ppm averaged over 24 hours",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "Typical US homes (EPA)",
@@ -1085,12 +1102,26 @@
     {
      "label": "Health Canada CO guideline (24-hour average)",
      "value": "10 ppm",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "US EPA outdoor CO standard (8-hour average)",
+     "value": "9 ppm",
+     "source": "https://www.epa.gov/criteria-air-pollutants/naaqs-table",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Health Canada formaldehyde guideline (8-hour average)",
      "value": "40 ppb (50 µg/m³)",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-formaldehyde.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-formaldehyde.html",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -1499,7 +1530,18 @@
     {
      "label": "Typical good windows (NRCan)",
      "value": "Better double-glazed units 1.2 W/m²·K or lower; triple-glazed as low as 0.8",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-8-upgrading-windows-exterior-doors"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-8-upgrading-windows-exterior-doors",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Typical good windows (NRCan)",
+     "value": "Better double-glazed units U-0.21 or lower; triple-glazed as low as U-0.14 (Btu/h·ft²·°F)",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-8-upgrading-windows-exterior-doors",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Single glazing (NRCan)",
@@ -1673,7 +1715,18 @@
     {
      "label": "Highest indoor humidity before window condensation at −20°C outside, 21°C inside (NRCan)",
      "value": "Double-glazed 34%; double-glazed low-e 50%; triple-glazed low-e 67%",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Highest indoor humidity before window condensation at −4°F outside, 70°F inside (NRCan)",
+     "value": "Double-glazed 34%; double-glazed low-e 50%; triple-glazed low-e 67%",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "related": [
@@ -1763,7 +1816,8 @@
      "insulative sheathing",
      "outsulation"
     ]
-   }
+   },
+   "whyCa": "It's often the best way to raise wall performance during a re-siding job, because the outside of the wall is already open."
   },
   {
    "slug": "air-barrier",
@@ -1838,7 +1892,7 @@
    "short": "A layer that slows water vapour moving through walls and ceilings, to keep it from condensing inside the structure.",
    "shortUs": "A layer that slows water vapor moving through walls and ceilings, to keep it from condensing inside the structure.",
    "body": "In cold climates, warm indoor air holds moisture that tries to diffuse outward through walls; a vapour barrier on the warm side, often polyethylene in Canada, slows it. Retarder is the more accurate term, because materials are rated by how much vapour they let through (perm rating), from almost none to quite a lot. Air leakage moves far more moisture than diffusion, so the air barrier matters even more.",
-   "bodyUs": "In cold climates, warm indoor air holds moisture that tries to diffuse outward through walls; a vapor barrier on the warm side, often polyethylene in Canada, slows it. Retarder is the more accurate term, because materials are rated by how much vapor they let through (perm rating), from almost none to quite a lot. Air leakage moves far more moisture than diffusion, so the air barrier matters even more.",
+   "bodyUs": "In cold climates, warm indoor air holds moisture that tries to diffuse outward through walls; a vapor barrier on the warm side, such as polyethylene sheeting or the kraft facing on batts, slows it. Retarder is the more accurate term, because materials are rated by how much vapor they let through (perm rating), from almost none to quite a lot. Air leakage moves far more moisture than diffusion, so the air barrier matters even more.",
    "whyItMatters": "The wrong vapour control for your climate can trap moisture and rot walls, so auditors check it before recommending insulation, especially in basements.",
    "whyUs": "The wrong vapor control for your climate can trap moisture and rot walls, so auditors check it before recommending insulation, especially in basements.",
    "values": [
@@ -1922,7 +1976,18 @@
     {
      "label": "Highest indoor humidity before window condensation at −20°C outside, 21°C inside (NRCan)",
      "value": "Older double-glazed low-e 24%; double-glazed 34%; double-glazed low-e 50%; triple-glazed low-e 67%",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Highest indoor humidity before window condensation at −4°F outside, 70°F inside (NRCan)",
+     "value": "Older double-glazed low-e 24%; double-glazed 34%; double-glazed low-e 50%; triple-glazed low-e 67%",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "related": [
@@ -1965,17 +2030,26 @@
     {
      "label": "Health Canada",
      "value": "Keep indoor RH between 30% and 50%",
-     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "US EPA",
      "value": "Keep indoor RH below 60%, ideally 30%–50%",
-     "source": "https://www.epa.gov/mold/mold-course-chapter-2"
+     "source": "https://www.epa.gov/mold/mold-course-chapter-2",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "NRCan",
      "value": "30%–50%, lower in winter and higher in summer",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-2-your-house-works",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "CMHC rule of thumb for winter",
@@ -2098,7 +2172,8 @@
      "header joist",
      "basement header"
     ]
-   }
+   },
+   "bodyUs": "Called the rim or band joist in the US (and the header in Canada), this strip runs around the basement ceiling where the floor framing meets the foundation. It has many joints, is often left uninsulated and is where the stack effect draws cold air in. Sealing the joints and insulating with rigid foam or spray foam is a common audit recommendation."
   },
   {
    "slug": "knee-wall",
@@ -2135,7 +2210,8 @@
      "kneewall",
      "attic knee wall"
     ]
-   }
+   },
+   "bodyUs": "Knee walls are often poorly insulated, and the floor joists beneath them are often open to the attic, letting outside air flow under the room above. The usual fix is to seal that opening flush with the back of the knee wall finish, then insulate and air seal the wall itself."
   },
   {
    "slug": "attic-bypass",
@@ -2201,7 +2277,10 @@
     {
      "label": "NRCan attic ventilation guidance",
      "value": "About 50% of vent openings at the soffits; total unobstructed vent area about 1:300 of insulated ceiling area (pitched roofs with accessible attics)",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-5-roofs-attics"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-5-roofs-attics",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -2226,7 +2305,8 @@
      "vent chute",
      "baffle"
     ]
-   }
+   },
+   "bodyUs": "Most pitched attics are ventilated: air enters through vents in the soffit (the underside of the roof overhang) and leaves through roof or ridge vents. Baffles fixed between the rafters hold insulation back from the eaves so air can still flow, and insulation stops keep loose-fill from spilling into the soffits. Powered attic fans are usually a poor idea, because they can pull conditioned house air into the attic through ceiling leaks."
   },
   {
    "slug": "ice-dam",
@@ -2437,7 +2517,7 @@
    ],
    "short": "Stiff insulation boards made of foam plastic, used on foundations, under slabs and as a continuous layer over walls and roofs.",
    "body": "Expanded polystyrene (EPS) is the white bead board; extruded polystyrene (XPS) is denser and usually coloured; polyisocyanurate (polyiso) usually comes with foil facings and gives the most insulation per inch. NRCan notes that polyiso's insulating value can drop in cold temperatures, so it suggests using it as an interior layer unless the product is rated for the cold. Taped or sealed boards can also act as an air barrier and, depending on type and thickness, slow vapour.",
-   "bodyUs": "Expanded polystyrene (EPS) is the white bead board; extruded polystyrene (XPS) is denser and usually colored; polyisocyanurate (polyiso) usually comes with foil facings and gives the most insulation per inch. NRCan notes that polyiso's insulating value can drop in cold temperatures, so it suggests using it as an interior layer unless the product is rated for the cold. Taped or sealed boards can also act as an air barrier and, depending on type and thickness, slow vapor.",
+   "bodyUs": "Expanded polystyrene (EPS) is the white bead board; extruded polystyrene (XPS) is denser and usually colored; polyisocyanurate (polyiso) usually comes with foil facings and gives the most insulation per inch. Polyiso's insulating value can drop in cold temperatures, so in cold climates it works best as an inner layer unless the product is rated for the cold. Taped or sealed boards can also act as an air barrier and, depending on type and thickness, slow vapor.",
    "whyItMatters": "Rigid foam is how many basements get insulated and how continuous insulation is added during re-siding, both common audit recommendations.",
    "values": [
     {
@@ -2551,7 +2631,8 @@
      "vermiculite",
      "Zonolite"
     ]
-   }
+   },
+   "bodyUs": "Vermiculite looks like small, light, accordion-shaped pebbles. Much of the vermiculite sold until 1990 came from a mine near Libby, Montana, whose ore was contaminated with asbestos, and it was often sold as Zonolite. Health agencies say to assume it contains asbestos, leave it undisturbed, keep people and storage out of the attic and hire trained professionals before any work there."
   },
   {
    "slug": "rainscreen",
@@ -2655,7 +2736,18 @@
     {
      "label": "Typical dense-pack density (NRCan)",
      "value": "Cellulose about 56 kg/m³ (3.5 lb/ft³); fibreglass about 40 kg/m³",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-3-materials-insulation-house-wrap-barriers-weatherstripping"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-3-materials-insulation-house-wrap-barriers-weatherstripping",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Typical dense-pack density (NRCan)",
+     "value": "Cellulose about 3.5 lb/ft³; fiberglass about 2.5 lb/ft³",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-3-materials-insulation-house-wrap-barriers-weatherstripping",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Holes (NRCan)",
@@ -2681,7 +2773,8 @@
      "dense-pack cellulose",
      "dense-pack insulation"
     ]
-   }
+   },
+   "bodyUs": "An installer drills small holes, typically ⅝ to 2 inches across, into each cavity and fills it through a hose until it's packed firm. A typical dense-pack density for cellulose is about 3.5 pounds per cubic foot; too little leaves voids that settle, and too much can make walls bulge. It's a common way to insulate empty walls in older homes without opening them up."
   },
   {
    "slug": "hygrometer",
@@ -2722,7 +2815,8 @@
      "humidity meter",
      "humidity gauge"
     ]
-   }
+   },
+   "bodyUs": "Mechanical and electronic models are sold wherever room thermometers are, and one per house is usually enough, kept away from heat sources and vents. You can check one's accuracy with damp table salt in a sealed bag: after 8 to 12 hours it should read about 75%."
   },
   {
    "slug": "heat-pump",
@@ -2806,12 +2900,34 @@
     {
      "label": "Efficiency, NRCan",
      "value": "COP typically 2.0–5.4 at 8°C; 1.1–3.7 at −8°C",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Efficiency, NRCan",
+     "value": "COP typically 2.0–5.4 at 46°F (8°C); 1.1–3.7 at 18°F (−8°C)",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Low-temperature limit, NRCan",
      "value": "Newer models' minimum operating temperatures range from −15°C to −25°C",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Low-temperature limit, NRCan",
+     "value": "Newer models' minimum operating temperatures range from 5°F to −13°F (−15°C to −25°C)",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "US federal minimum (2023)",
@@ -2985,12 +3101,18 @@
     {
      "label": "Minimum and market heating COP, NRCan",
      "value": "Minimum 3.6 open loop, 3.1 closed loop; market 3.8–5.0 open loop, 3.2–4.2 closed loop",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "Minimum cooling EER, NRCan",
      "value": "16.2 open loop; 13.4 closed loop",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "Ontario HRSP rebate",
@@ -3031,7 +3153,8 @@
      "GSHP",
      "GSHPs"
     ]
-   }
+   },
+   "whyCa": "Ground-source heat pumps are among the most efficient ways to heat and cool, and rebates for them are often larger to reflect their higher cost."
   },
   {
    "slug": "ductless-mini-split",
@@ -3171,12 +3294,34 @@
     {
      "label": "Air-source heat pumps (NRCan)",
      "value": "2.0–5.4 at 8°C; 1.1–3.7 at −8°C",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Air-source heat pumps (NRCan)",
+     "value": "2.0–5.4 at 46°F (8°C); 1.1–3.7 at 18°F (−8°C)",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Ground-source heat pumps (NRCan)",
      "value": "About 3 in the coldest months; minimum 3.1 closed loop, 3.6 open loop",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Ground-source heat pumps (NRCan)",
+     "value": "About 3 in the coldest months",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star-canada/about/energy-star-announcements/publications/heating-and-cooling-heat-pump/6817",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "ENERGY STAR Cold Climate minimum",
@@ -3424,7 +3569,8 @@
     "ci": [
      "energy efficiency ratio"
     ]
-   }
+   },
+   "whyCa": "A high EER keeps electricity use down on the hottest days, so it matters most where summers are hot and when a heat pump does the cooling."
   },
   {
    "slug": "afue",
@@ -3822,6 +3968,13 @@
     "heat loss and heat gain calculation",
     "room-by-room heat loss"
    ],
+   "akaUs": [
+    "heat loss calculation",
+    "heat-loss calc",
+    "heat loss calc",
+    "heat loss and heat gain calculation",
+    "room-by-room heat loss"
+   ],
    "category": "hvac",
    "countries": [
     "ca",
@@ -3872,7 +4025,9 @@
      "CSA F280:12",
      "F280"
     ]
-   }
+   },
+   "bodyUs": "It adds up heat flow through walls, roof, floors, windows and doors plus air leakage and ventilation at the local design temperature, giving the heating capacity the house needs in BTU/h. In the US the usual method is ACCA Manual J, which also works out the cooling load.",
+   "termUs": "Heat-loss calculation"
   },
   {
    "slug": "design-temperature",
@@ -4267,7 +4422,8 @@
     "re": [
      "(?<![\\p{L}\\p{N}])MERV[\\s \\-]?\\d{1,2}(?![\\p{L}\\p{N}])"
     ]
-   }
+   },
+   "bodyCa": "MERV comes from a standard test with particles between 0.3 and 10 microns. Health agencies commonly suggest at least MERV 13 for wildfire smoke, or the highest rating your system's fan and filter slot can handle. Ask an HVAC technician which filter your system can take."
   },
   {
    "slug": "hrv",
@@ -4410,12 +4566,18 @@
     {
      "label": "Health Canada target",
      "value": "Indoor RH 30%–50%",
-     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "EPA target",
      "value": "Below 60%, ideally 30%–50%",
-     "source": "https://www.epa.gov/mold/mold-course-chapter-2"
+     "source": "https://www.epa.gov/mold/mold-course-chapter-2",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "related": [
@@ -4546,7 +4708,18 @@
     {
      "label": "Setback savings (DOE)",
      "value": "Turning back 7–10°F for 8 hours a day can save up to 10% a year on heating and cooling",
-     "source": "https://www.energy.gov/sites/default/files/2022-08/energy-saver-guide-2022.pdf"
+     "source": "https://www.energy.gov/sites/default/files/2022-08/energy-saver-guide-2022.pdf",
+     "countries": [
+      "us"
+     ]
+    },
+    {
+     "label": "Setback savings (NRCan)",
+     "value": "About 2% of heating energy for each 1°C of setback over 8 hours",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -4593,12 +4766,18 @@
     {
      "label": "DOE",
      "value": "7–10°F for 8 hours a day: up to 10% a year on heating and cooling",
-     "source": "https://www.energy.gov/sites/default/files/2022-08/energy-saver-guide-2022.pdf"
+     "source": "https://www.energy.gov/sites/default/files/2022-08/energy-saver-guide-2022.pdf",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "NRCan",
      "value": "About 2% of heating energy for each 1°C (2°F) of setback over 8 hours; don't go below 17°C (63°F), to limit moisture in exterior walls",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -4684,7 +4863,8 @@
      "(?<![\\p{L}\\p{N}])R-?(?:410A|454B|466A|407C|134a|1234yf|290|744)(?![\\p{L}\\p{N}])",
      "(?<![\\p{L}\\p{N}])(?<!R-?\\d{1,2}(?:\\.\\d{1,2})?[\\s ]?(?:to|–|-)[\\s ]?)(?<!(?:above|below|over|under)[\\s ])(?<!RSI[\\s ]?\\d{1,2}(?:\\.\\d{1,2})?[\\s ]?\\([\\s ]?)R-?(?:22|32)(?![\\p{L}\\p{N}])(?!(?:\\+|[\\s ]+(?:or[\\s ]+(?:more|less)|attics?|walls?|ceilings?|roofs?|insulation|basements?|floors?|per[\\s ]+inch)(?![\\p{L}\\p{N}])|[\\s ]?[–-][\\s ]?R-?\\d|[\\s ]?\\([\\s ]?RSI))"
     ]
-   }
+   },
+   "bodyCa": "The refrigerant absorbs heat as it evaporates in one coil and gives it off as it condenses in the other, which is how a heat pump moves heat. Many refrigerants are strong greenhouse gases, rated by their global warming potential (GWP), so manufacturers are moving new home systems sold in North America from R-410A (GWP 2,088) to R-454B (465) and R-32 (675), following US rules."
   },
   {
    "slug": "defrost-cycle",
@@ -4712,7 +4892,18 @@
     {
      "label": "HRVs (NRCan)",
      "value": "Most have an automatic defrost mode that starts when incoming outdoor air is below −5°C",
-     "source": "https://publications.gc.ca/collections/collection_2013/rncan-nrcan/M144-234-2011-eng.pdf"
+     "source": "https://publications.gc.ca/collections/collection_2013/rncan-nrcan/M144-234-2011-eng.pdf",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "HRVs (NRCan)",
+     "value": "Most have an automatic defrost mode that starts when incoming outdoor air is below 23°F (−5°C)",
+     "source": "https://publications.gc.ca/collections/collection_2013/rncan-nrcan/M144-234-2011-eng.pdf",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "related": [
@@ -4786,7 +4977,8 @@
      "natural-draft water heater",
      "natural-draft furnace"
     ]
-   }
+   },
+   "bodyUs": "These appliances, including many older furnaces and standard gas water heaters, have an opening called a draft hood and depend on the chimney's natural draft to carry exhaust away. If exhaust fans, a dryer or a fireplace depressurize the house, or the chimney is cold or blocked, exhaust can spill back indoors. Pairing one with a powerful kitchen exhaust fan without make-up air is a classic cause of backdrafting."
   },
   {
    "slug": "sealed-combustion",
@@ -4807,7 +4999,7 @@
    "short": "A furnace, boiler, water heater or fireplace that brings in combustion air from outdoors through its own pipe and vents exhaust straight outside.",
    "body": "Because the burner is sealed off from indoor air, house pressure from exhaust fans or a tight building envelope can't pull exhaust back inside the way it can with a natural-draft appliance. Many condensing furnaces, newer water heaters and gas fireplaces are built this way. Fan-assisted appliances that still draw air from the room sit in between: CMHC says they're often resistant to spillage, while sealed combustion restricts it further.",
    "whyItMatters": "NRCan calls switching spillage-prone equipment to direct-vent or sealed-combustion models the first line of defence against combustion gases, which makes deeper air sealing safer.",
-   "whyUs": "NRCan calls switching spillage-prone equipment to direct-vent or sealed-combustion models the first line of defense against combustion gases, which makes deeper air sealing safer.",
+   "whyUs": "Switching spillage-prone equipment to direct-vent or sealed-combustion models is the surest defense against combustion gases, which makes deeper air sealing safer.",
    "values": [],
    "related": [
     "natural-draft-appliance",
@@ -4832,7 +5024,8 @@
      "direct-vent water heater",
      "direct-vent fireplace"
     ]
-   }
+   },
+   "bodyUs": "Because the burner is sealed off from indoor air, house pressure from exhaust fans or a tight building envelope can't pull exhaust back inside the way it can with a natural-draft appliance. Many condensing furnaces, newer water heaters and gas fireplaces are built this way. Fan-assisted appliances that still draw air from the room sit in between: they resist spillage better than natural-draft ones, and sealed combustion restricts it further."
   },
   {
    "slug": "mid-efficiency-furnace",
@@ -4851,7 +5044,7 @@
    ],
    "short": "A non-condensing gas or oil furnace, around 80% efficient, that sends its exhaust up a chimney; most new gas furnaces sold in Canada must now be condensing.",
    "body": "Mid-efficiency furnaces were the standard upgrade before condensing models: they don't recover the heat in their exhaust's water vapour, so roughly a fifth of the fuel's energy goes up the flue. Since July 3, 2019 most new gas furnaces sold in Canada must reach 95% AFUE, which only condensing furnaces do, while the US minimum is still 80%. NRCan notes that after major air sealing a mid-efficiency furnace runs less often, so its chimney can get colder between firings and draft poorly.",
-   "bodyUs": "Mid-efficiency furnaces were the standard upgrade before condensing models: they don't recover the heat in their exhaust's water vapor, so roughly a fifth of the fuel's energy goes up the flue. Since July 3, 2019 most new gas furnaces sold in Canada must reach 95% AFUE, which only condensing furnaces do, while the US minimum is still 80%. NRCan notes that after major air sealing a mid-efficiency furnace runs less often, so its chimney can get colder between firings and draft poorly.",
+   "bodyUs": "Mid-efficiency furnaces were the standard upgrade before condensing models: they don't recover the heat in their exhaust's water vapor, so roughly a fifth of the fuel's energy goes up the flue. The federal minimum for most new gas furnaces in the US is still 80% AFUE, so they're still sold alongside condensing models rated 90% or more. After major air sealing a mid-efficiency furnace runs less often, so its chimney can get colder between firings and draft poorly.",
    "whyItMatters": "If your mid-efficiency furnace is nearing replacement, an audit helps you compare a condensing furnace, a heat pump or a dual-fuel system for your home.",
    "values": [
     {
@@ -4896,7 +5089,8 @@
     "re": [
      "(?<![\\p{L}\\p{N}])8[0-4](?:\\.\\d)?[\\s ]?%[\\s ](?:AFUE[\\s ])?(?:gas[\\s ]|oil[\\s ])?furnaces?(?![\\p{L}\\p{N}])"
     ]
-   }
+   },
+   "shortUs": "A non-condensing gas or oil furnace, around 80% efficient, that sends its exhaust up a chimney; 80% AFUE is still the US minimum for most gas furnaces."
   },
   {
    "slug": "manual-j",
@@ -5143,7 +5337,10 @@
     {
      "label": "NRCan",
      "value": "Region 4 represents climates like the US Midwest; Region 5 covers most of the southern half of the provinces and best reflects the Ottawa area",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/heating-cooling-heat-pump"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/heating-cooling-heat-pump",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -5159,7 +5356,10 @@
     "re": [
      "(?<!(?:EPA|HUD|FEMA|HHS|ACF|USDA|OSHA|SBA|EDA|[Ff]ederal)[\\s ])(?<![\\p{L}\\p{N}])Region[\\s ](?:IV|V)(?![\\p{L}\\p{N}])"
     ]
-   }
+   },
+   "shortUs": "The two climates heat pump heating ratings are usually given for: Region IV, like the Midwest, and the colder Region V, like the northern tier of states.",
+   "bodyUs": "HSPF and HSPF2 depend on the winter assumed in the rating calculation, so the same heat pump scores lower for Region V than for Region IV. Spec sheets and the AHRI directory usually show Region IV. Real seasonal efficiency is lower still where winters have more heating degree days.",
+   "whyUs": "Compare heat pumps using the same region's rating, and in the coldest northern states look for the Region V figure."
   },
   {
    "slug": "ecm-blower-motor",
@@ -5227,7 +5427,8 @@
     "re": [
      "(?<![\\p{L}\\p{N}])ECMs?(?![\\p{L}\\p{N}])(?![\\s \\-‐‑]+(?:(?:(?:circulator|Circulator|CIRCULATOR)|(?:circulating|Circulating|CIRCULATING)|(?:pool|Pool|POOL)|(?:well|Well|WELL))[\\s \\-‐‑]+)?(?:(?:pump|Pump|PUMP)|(?:pumps|Pumps|PUMPS))(?![\\p{L}\\p{N}]))"
     ]
-   }
+   },
+   "bodyUs": "Older furnaces use permanent split capacitor (PSC) motors, which run at about 60%–65% efficiency at full speed and less when slowed down. An electronically commutated motor (ECM, also called a brushless DC motor) stays near 80% efficient even at reduced speed, so the furnace fan can circulate ventilation air or filter smoke cheaply, and it uses far less electricity when the fan runs continuously."
   },
   {
    "slug": "compressor-staging",
@@ -5269,7 +5470,8 @@
      "(?<![\\p{L}\\p{N}])(?:(?:single|Single|SINGLE)|(?:two|Two|TWO)|(?:three|Three|THREE)|(?:multi|Multi|MULTI))[\\-‐‑](?:stage|Stage|STAGE)(?![\\p{L}\\p{N}])(?![\\s \\-‐‑]+(?:(?:process|Process|PROCESS)|(?:processes|Processes|PROCESSES)|(?:application|Application|APPLICATION)|(?:applications|Applications|APPLICATIONS)|(?:review|Review|REVIEW)|(?:approval|Approval|APPROVAL)|(?:rollout|Rollout|ROLLOUT)|(?:launch|Launch|LAUNCH)|(?:program|Program|PROGRAM)|(?:programs|Programs|PROGRAMS)|(?:plan|Plan|PLAN)|(?:approach|Approach|APPROACH)|(?:funding|Funding|FUNDING)|(?:payment|Payment|PAYMENT)|(?:payments|Payments|PAYMENTS))(?![\\p{L}\\p{N}]))",
      "(?<![\\p{L}\\p{N}])(?:(?:two|Two|TWO)|(?:multi|Multi|MULTI))[\\-‐‑](?:speed|Speed|SPEED)(?![\\p{L}\\p{N}])(?![\\s \\-‐‑]+(?:(?:(?:pool|Pool|POOL)|(?:well|Well|WELL)|(?:sump|Sump|SUMP)|(?:circulator|Circulator|CIRCULATOR)|(?:circulating|Circulating|CIRCULATING)|(?:furnace|Furnace|FURNACE)|(?:bath|Bath|BATH)|(?:bathroom|Bathroom|BATHROOM)|(?:exhaust|Exhaust|EXHAUST)|(?:ceiling|Ceiling|CEILING)|(?:attic|Attic|ATTIC))[\\s \\-‐‑]+)?(?:(?:pump|Pump|PUMP)|(?:pumps|Pumps|PUMPS)|(?:fan|Fan|FAN)|(?:fans|Fans|FANS)|(?:motor|Motor|MOTOR)|(?:motors|Motors|MOTORS)|(?:blower|Blower|BLOWER)|(?:blowers|Blowers|BLOWERS))(?![\\p{L}\\p{N}]))"
     ]
-   }
+   },
+   "bodyUs": "Single-stage heat pumps and furnaces always run at full output, which is simple but leads to more on-off cycling. Two-stage and multi-stage models run on low most of the time and switch to high in extreme weather, while variable-speed (inverter) and fully modulating models adjust continuously. Heat pumps at the minimum efficiency ratings are typically single-speed."
   },
   {
    "slug": "certified-wood-stove",
@@ -5280,6 +5482,11 @@
     "CSA B415.1",
     "certified wood stove",
     "EPA/CSA-certified"
+   ],
+   "akaUs": [
+    "EPA-certified wood stove",
+    "EPA-certified stove",
+    "certified wood stove"
    ],
    "category": "hvac",
    "countries": [
@@ -5298,7 +5505,10 @@
     {
      "label": "Effect (CMHC wood-heating guide)",
      "value": "Certified appliances cut smoke by as much as 90%; advanced stoves are about one-third more efficient on average",
-     "source": "https://publications.gc.ca/collections/collection_2009/schl-cmhc/NH15-436-2008E.pdf"
+     "source": "https://publications.gc.ca/collections/collection_2009/schl-cmhc/NH15-436-2008E.pdf",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -5325,7 +5535,10 @@
      "CSA B415",
      "B415.1"
     ]
-   }
+   },
+   "termUs": "EPA-certified wood stove",
+   "shortUs": "A wood stove or insert tested to meet EPA's smoke emission limits; it burns cleaner and more efficiently.",
+   "bodyUs": "Since 2020, new wood heaters sold in the US must emit no more than 2.0 grams of particles an hour when tested with crib wood, or 2.5 grams with cord wood. Certified models carry a metal EPA label, and some rebates require certification."
   },
   {
    "slug": "hvac",
@@ -6100,7 +6313,7 @@
     "us"
    ],
    "short": "Yearly energy use divided by floor area, such as kBtu per square foot or GJ per square metre, for comparing homes of different sizes.",
-   "shortUs": "Yearly energy use divided by floor area, such as kBtu per square foot or GJ per square meter, for comparing homes of different sizes.",
+   "shortUs": "Yearly energy use divided by floor area, such as kBtu per square foot, for comparing homes of different sizes.",
    "body": "Total energy use makes small homes look good and big ones look bad; EUI levels the field. It can be calculated from your bills or from an energy model. Comparing EUI before and after upgrades, or against similar homes, shows how efficient the house really is.",
    "whyItMatters": "EUI is a simple way to benchmark your home and track progress toward targets such as net-zero ready.",
    "values": [
@@ -6131,7 +6344,8 @@
      "energy use per square foot",
      "energy use per square metre"
     ]
-   }
+   },
+   "shortCa": "Yearly energy use divided by floor area, such as GJ or kWh per square metre, for comparing homes of different sizes."
   },
   {
    "slug": "energuide-rating",
@@ -6299,6 +6513,13 @@
     "ENERGY STAR Canada",
     "ENERGY STAR qualified"
    ],
+   "akaUs": [
+    "Energy Star",
+    "ENERGY STAR certified",
+    "ENERGY STAR rated",
+    "ENERGY STAR label",
+    "ENERGY STAR qualified"
+   ],
    "category": "bills",
    "countries": [
     "ca",
@@ -6365,7 +6586,8 @@
      "ENERGY STAR certified"
     ]
    },
-   "noLink": true
+   "noLink": true,
+   "bodyUs": "ENERGY STAR sets specifications for products such as heat pumps, windows, water heaters, dehumidifiers and appliances, and certified models are tested and listed. The program is moving from EPA to the Department of Energy. Many rebates require ENERGY STAR certification."
   },
   {
    "slug": "energy-star-most-efficient",
@@ -6388,7 +6610,10 @@
     {
      "label": "Latest designation confirmed",
      "value": "2025 — NRCan lists 13 categories, including air-source and ground-source heat pumps, windows and sliding glass doors, and dehumidifiers; a 2026 designation could not be confirmed",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/products/energy-star-most-efficient"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/products/energy-star-most-efficient",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -6407,7 +6632,8 @@
      "Most Efficient designation",
      "Most Efficient mark"
     ]
-   }
+   },
+   "whyCa": "Some rebate programs require it for certain products, so check your program's rules before you buy."
   },
   {
    "slug": "ahri-certificate",
@@ -6525,6 +6751,17 @@
     "Zero Energy Ready Home",
     "ZERH",
     "DOE Efficient New Homes"
+   ],
+   "akaCa": [
+    "net zero home",
+    "net-zero home",
+    "net-zero energy",
+    "net zero energy",
+    "net zero ready",
+    "net-zero ready",
+    "net zero ready home",
+    "zero energy ready",
+    "zero energy home"
    ],
    "category": "bills",
    "countries": [
@@ -6733,12 +6970,34 @@
     {
      "label": "NRCan cooling formula (base 18°C)",
      "value": "Full-load hours = 24 × cooling degree-days ÷ (summer outdoor design temperature − 18)",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/air-conditioning-your-home"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/air-conditioning-your-home",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "Worked example",
      "value": "200 cooling degree-days and a 30°C design temperature: 24 × 200 ÷ 12 = 400 full-load hours",
-     "source": "Arithmetic"
+     "source": "Arithmetic",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Cooling formula (base 65°F)",
+     "value": "Full-load hours = 24 × cooling degree days ÷ (summer outdoor design temperature − 65)",
+     "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/air-conditioning-your-home",
+     "countries": [
+      "us"
+     ]
+    },
+    {
+     "label": "Worked example",
+     "value": "1,000 cooling degree days and a 95°F design temperature: 24 × 1,000 ÷ 30 = 800 full-load hours",
+     "source": "Arithmetic",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "related": [
@@ -6759,7 +7018,8 @@
     "cs": [
      "EFLH"
     ]
-   }
+   },
+   "bodyUs": "Real equipment cycles on and off and often runs below full output, so energy calculators turn a season's demand into an equivalent number of hours at full capacity. A common method uses cooling degree days: 24 × cooling degree days ÷ (summer design temperature − 65°F). Multiply the full-load hours by the unit's capacity and divide by its efficiency to estimate the energy it uses."
   },
   {
    "slug": "energuide-appliance-label",
@@ -6972,12 +7232,18 @@
     {
      "label": "Health Canada guideline",
      "value": "200 Bq/m³ (annual average in a normally occupied area); act within 1 year if above, sooner if much higher, and keep levels as low as reasonably achievable",
-     "source": "https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/government-canada-radon-guideline.html"
+     "source": "https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/government-canada-radon-guideline.html",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "US EPA action level",
      "value": "4 pCi/L (EPA rounds it to 150 Bq/m³); consider fixing between 2 and 4 pCi/L",
-     "source": "https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean"
+     "source": "https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "Average US levels (EPA)",
@@ -7055,7 +7321,7 @@
     "us"
    ],
    "short": "Canada measures radon in becquerels per cubic metre (Bq/m³) and the US in picocuries per litre (pCi/L); 1 pCi/L equals 37 Bq/m³.",
-   "shortUs": "Canada measures radon in becquerels per cubic meter (Bq/m³) and the US in picocuries per liter (pCi/L); 1 pCi/L equals 37 Bq/m³.",
+   "shortUs": "The US measures radon in picocuries per liter (pCi/L) and Canada in becquerels per cubic meter (Bq/m³); 1 pCi/L equals 37 Bq/m³.",
    "body": "Both units describe how many radioactive decays happen in a volume of air. To convert, multiply pCi/L by 37 to get Bq/m³, or divide Bq/m³ by 37 to get pCi/L. Health Canada's 200 Bq/m³ guideline is about 5.4 pCi/L, while EPA's 4 pCi/L action level is about 148 Bq/m³, so the US level is lower.",
    "whyItMatters": "Test kits and lab reports may use either unit, and converting correctly tells you which guideline your result falls under.",
    "values": [
@@ -7289,7 +7555,8 @@
      "radon detector",
      "radon test kit"
     ]
-   }
+   },
+   "bodyUs": "Short-term tests last 2 to 90 days and give a quick snapshot, but radon rises and falls with weather and season. Long-term tests run more than 90 days and give a better picture of your yearly average. Place the detector in a regularly used room on the lowest lived-in level, away from kitchens, bathrooms, drafts and the floor."
   },
   {
    "slug": "mould",
@@ -7324,9 +7591,20 @@
      ]
     },
     {
-     "label": "Humidity to discourage mould",
-     "value": "Health Canada: 30%–50%; EPA: below 60%, ideally 30%–50%",
-     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+     "label": "Humidity to discourage mould (Health Canada)",
+     "value": "30%–50%",
+     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Humidity to discourage mold (EPA)",
+     "value": "Below 60%, ideally 30%–50%",
+     "source": "https://www.epa.gov/mold/mold-course-chapter-2",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "caNote": "Health Canada says small and medium areas can generally be cleaned yourself, and to get professional help for extensive or recurring mould.",
@@ -7433,7 +7711,10 @@
     {
      "label": "Health Canada formaldehyde guideline",
      "value": "123 µg/m³ (100 ppb) averaged over 1 hour; 50 µg/m³ (40 ppb) over 8 hours",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-formaldehyde.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-formaldehyde.html",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "caNote": "Health Canada notes most air cleaners remove particles, not gases, so they're not a full answer for VOCs; ventilation is.",
@@ -7458,7 +7739,8 @@
      "offgassing",
      "formaldehyde"
     ]
-   }
+   },
+   "bodyUs": "Formaldehyde is one of the best-known VOCs. Levels are highest after renovations or when new materials go in, and in tight homes with too little ventilation. Choosing low-emission products, ventilating well during and after projects, and storing fuels and solvents outside the house reduce exposure."
   },
   {
    "slug": "pm25",
@@ -7577,7 +7859,8 @@
      "asbestos-containing material"
     ]
    },
-   "noLink": true
+   "noLink": true,
+   "bodyUs": "Homes built before 1990 may contain asbestos in pipe and boiler insulation, vermiculite attic insulation, floor and ceiling tiles, plaster, drywall compounds, siding and roofing. You can't tell by looking; a lab test of a sample is needed."
   },
   {
    "slug": "lead-paint",
@@ -7636,7 +7919,9 @@
      "RRP program",
      "Renovation, Repair and Painting"
     ]
-   }
+   },
+   "bodyCa": "In Canada, homes built before 1960 probably contain lead paint and those from 1960 to 1990 may have it on exterior surfaces. Intact paint out of children's reach is often safer left alone; work that disturbs it, including window replacement, needs lead-safe methods.",
+   "bodyUs": "In the US, the key date is 1978: homes built before then may contain lead-based paint. Intact paint out of children's reach is often safer left alone; work that disturbs it, including window replacement, needs lead-safe methods."
   },
   {
    "slug": "well-water-testing",
@@ -7668,7 +7953,18 @@
     {
      "label": "Safe microbial result (Health Canada)",
      "value": "No E. coli and no total coliforms per 100 mL",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/water-talk-test-well.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/water-talk-test-well.html",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Safe microbial result (EPA)",
+     "value": "No E. coli and no total coliforms per 100 mL",
+     "source": "https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations",
+     "countries": [
+      "us"
+     ]
     },
     {
      "label": "US EPA",
@@ -7695,7 +7991,9 @@
      "private well testing"
     ]
    },
-   "noLink": true
+   "noLink": true,
+   "bodyCa": "Basic tests look for coliform bacteria, including E. coli, which signal contamination from the surface or from sewage. Which chemicals to test for, and how often, depends on local geology and land use, so ask your local public health unit. Follow the lab's sampling instructions.",
+   "bodyUs": "Basic tests look for coliform bacteria, including E. coli, which signal contamination from the surface or from sewage. Which chemicals to test for, and how often, depends on local geology and land use, so ask your local or state health department. Follow the lab's sampling instructions."
   },
   {
    "slug": "coliform-bacteria",
@@ -7722,7 +8020,18 @@
     {
      "label": "Health Canada safe result",
      "value": "None detected: no E. coli and no total coliforms in a 100 mL sample",
-     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/water-talk-test-well.html"
+     "source": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/water-talk-test-well.html",
+     "countries": [
+      "ca"
+     ]
+    },
+    {
+     "label": "Safe result (EPA)",
+     "value": "None detected: no E. coli and no total coliforms in a 100 mL sample",
+     "source": "https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations",
+     "countries": [
+      "us"
+     ]
     }
    ],
    "related": [
@@ -7820,7 +8129,10 @@
     {
      "label": "Health Canada (asbestos)",
      "value": "Hire a professional to test before renovating, and a qualified asbestos removal specialist if asbestos is found",
-     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/health-risks-asbestos.html"
+     "source": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/health-risks-asbestos.html",
+     "countries": [
+      "ca"
+     ]
     },
     {
      "label": "Health Canada (mould)",
@@ -7971,6 +8283,16 @@
     "radon action level",
     "EPA action level"
    ],
+   "akaUs": [
+    "action level",
+    "radon action level",
+    "EPA action level"
+   ],
+   "akaCa": [
+    "radon guideline",
+    "Canadian radon guideline",
+    "Health Canada guideline"
+   ],
    "category": "health",
    "countries": [
     "ca",
@@ -8029,7 +8351,8 @@
       "(?<![\\p{L}\\p{N}])(?:EPA(?:['’]s)?[\\s ])?(?:radon[\\s ])?action[\\s ]level(?=:?[\\s ](?:of[\\s ])?4(?:\\.0)?[\\s ]?pCi/L)"
      ]
     }
-   }
+   },
+   "bodyUs": "EPA recommends fixing your home if radon is 4 pCi/L or more, and considering a fix between 2 and 4 pCi/L, because no level is risk-free. Canada's guideline is higher, 200 Bq/m³ (about 5.4 pCi/L), so the same result can mean fix it now in the US and keep watching in Canada."
   },
   {
    "slug": "epa-radon-zone",
@@ -8212,7 +8535,10 @@
     {
      "label": "NRCan insulation safety rule",
      "value": "Never let insulation contact old knob-and-tube wiring, a chimney or a combustion vent",
-     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-3-materials-insulation-house-wrap-barriers-weatherstripping"
+     "source": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-3-materials-insulation-house-wrap-barriers-weatherstripping",
+     "countries": [
+      "ca"
+     ]
     }
    ],
    "related": [
@@ -8229,7 +8555,8 @@
      "knob-and-tube",
      "knob-and-tube wiring"
     ]
-   }
+   },
+   "bodyUs": "It's found in many older homes, often still live in attics and walls. Insulation shouldn't bury live knob-and-tube wiring, because the wires were designed to shed heat into open air; the national electrical code generally doesn't allow it to be covered by loose, rolled or blown insulation. Have a licensed electrician assess it before anyone air seals or insulates the attic or walls."
   },
   {
    "slug": "wett-inspection",
@@ -8290,7 +8617,7 @@
    ],
    "short": "A flammable tar that builds up inside chimneys and flue pipes when wood smoke cools and condenses; too much of it can start a chimney fire.",
    "body": "Smouldering fires, wet wood and cold chimneys all increase creosote. CMHC's wood-heating guide says to check the flue often and clean it when deposits build up past about 4 mm (1/8 in.); older smoky stoves may need cleaning every few weeks, while efficient certified stoves may need it only once a year.",
-   "bodyUs": "Smoldering fires, wet wood and cold chimneys all increase creosote. CMHC's wood-heating guide says to check the flue often and clean it when deposits build up past about 4 mm (1/8 in.); older smoky stoves may need cleaning every few weeks, while efficient certified stoves may need it only once a year.",
+   "bodyUs": "Smoldering fires, wet wood and cold chimneys all increase creosote. Check the flue often and have it cleaned when deposits build up past about 1/8 inch; older smoky stoves may need cleaning every few weeks, while efficient certified stoves may need it only once a year.",
    "whyItMatters": "Regular sweeping keeps a wood stove safe, and because tightening a house can change how a stove drafts, its venting is part of a combustion safety check.",
    "values": [
     {
@@ -9859,13 +10186,28 @@
    ],
    "match": {
     "ci": [
-     "assessment path",
-     "no-assessment path",
-     "assessment stream",
-     "no-assessment stream",
-     "assessment route",
-     "no-assessment route",
-     "Home Energy Assessment path"
+     "HRSP assessment path",
+     "HRSP no-assessment path",
+     "HRSP assessment stream",
+     "Home Renovation Savings assessment path",
+     "Home Renovation Savings no-assessment path",
+     "Home Renovation Savings assessment stream",
+     "assessment path (HRSP)"
+    ],
+    "scoped": {
+     "ci": [
+      "assessment path",
+      "no-assessment path",
+      "assessment stream",
+      "no-assessment stream",
+      "assessment route",
+      "no-assessment route"
+     ]
+    }
+   },
+   "scope": {
+    "provinces": [
+     "ON"
     ]
    }
   },
@@ -10482,10 +10824,26 @@
    ],
    "match": {
     "cs": [
-     "HELP"
+     "Toronto HELP"
     ],
     "ci": [
-     "Home Energy Loan Program"
+     "Toronto Home Energy Loan Program",
+     "Toronto's Home Energy Loan Program",
+     "City of Toronto's Home Energy Loan Program",
+     "Toronto’s Home Energy Loan Program"
+    ],
+    "scoped": {
+     "cs": [
+      "HELP"
+     ],
+     "ci": [
+      "Home Energy Loan Program"
+     ]
+    }
+   },
+   "scope": {
+    "provinces": [
+     "ON"
     ]
    }
   },
@@ -10863,6 +11221,18 @@
     "Canadian Climate Normals",
     "U.S. Climate Normals"
    ],
+   "akaUs": [
+    "climate normals",
+    "1991–2020 normals",
+    "30-year normals",
+    "U.S. Climate Normals"
+   ],
+   "akaCa": [
+    "climate normals",
+    "1991–2020 normals",
+    "30-year normals",
+    "Canadian Climate Normals"
+   ],
    "category": "climate",
    "countries": [
     "ca",
@@ -10911,7 +11281,9 @@
     "re": [
      "(?<![\\p{L}\\p{N}])(?:19|20)\\d{2}[–-](?:19|20)\\d{2}[\\s ](?:[Cc]limate[\\s ])?normals?(?![\\p{L}\\p{N}])"
     ]
-   }
+   },
+   "bodyCa": "Weather agencies update normals each decade: Environment and Climate Change Canada's current set covers 1991–2020. Calculators and audit reports use them for typical heating and cooling degree-days, so one unusual year doesn't skew the estimate. Some Canadian figures still come from the older 1981–2010 normals.",
+   "bodyUs": "Weather agencies update normals each decade: NOAA's current US set covers 1991–2020. Calculators and audit reports use them for typical heating and cooling degree days, so one unusual year doesn't skew the estimate."
   },
   {
    "slug": "noaa",

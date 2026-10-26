@@ -9,6 +9,8 @@
 //   cs: case-sensitive tokens ("ACH50", "EnerGuide", "Bq/m³"), word boundaries at alphanumeric ends.
 //   re: raw regular-expression sources (Unicode mode, case-sensitive); they carry their own boundaries.
 //   ca / us: { ci, cs, re } extras used on that country's pages only.
+//   scoped: { ci, cs, re } used only on pages in one of entry.scope.provinces (two-letter codes, e.g. ["ON"]),
+//       for wording that names a provincial program only in that province (Ontario's bare "assessment path").
 // Entries with noLink: true are never linked (they still get a glossary page).
 
 const ALNUM = /[\p{L}\p{N}]/u;
@@ -50,24 +52,33 @@ const FIRST_TOKEN = /^[\p{L}\p{N}]+/u;
  * quickly. Patterns that don't start with a letter or digit, and raw regexes, have key null and are
  * scanned directly.
  */
-export function patternsFor(entry, country) {
+export function patternsFor(entry, country, province = null) {
   const m = entry.match ?? {};
   const extra = m[country] ?? {};
+  // Province-scoped patterns (e.g. Ontario-only wording such as a bare "assessment path") apply only on pages
+  // that belong to one of entry.scope.provinces; everywhere else only the entry's specific patterns link.
+  const scoped = province && inScope(entry, province) ? m.scoped ?? {} : {};
   const out = [];
-  for (const p of [...(m.ci ?? []), ...(extra.ci ?? [])]) {
+  for (const p of [...(m.ci ?? []), ...(extra.ci ?? []), ...(scoped.ci ?? [])]) {
     const t = p.trim();
     const first = FIRST_TOKEN.exec(t);
     const key = first ? first[0].toLowerCase() : null;
     const single = !!first && first[0].length === t.length && /[a-z]$/i.test(t) && !/s$/i.test(t);
     out.push({ slug: entry.slug, kind: 'ci', src: ciSource(t), w: weight(t), key, plural: single });
   }
-  for (const p of [...(m.cs ?? []), ...(extra.cs ?? [])]) {
+  for (const p of [...(m.cs ?? []), ...(extra.cs ?? []), ...(scoped.cs ?? [])]) {
     const t = p.trim();
     const first = FIRST_TOKEN.exec(t);
     out.push({ slug: entry.slug, kind: 'cs', src: csSource(t), w: weight(t), key: first ? first[0] : null });
   }
-  for (const p of [...(m.re ?? []), ...(extra.re ?? [])]) out.push({ slug: entry.slug, kind: 'cs', src: p, w: 5, key: null });
+  for (const p of [...(m.re ?? []), ...(extra.re ?? []), ...(scoped.re ?? [])]) out.push({ slug: entry.slug, kind: 'cs', src: p, w: 5, key: null });
   return out;
+}
+
+/** True when a page in `province` (two-letter code, e.g. "ON") may use the entry's scoped patterns. */
+export function inScope(entry, province) {
+  const list = entry.scope?.provinces;
+  return !!province && Array.isArray(list) && list.includes(province);
 }
 
 /** Entries that apply to a country and may be linked. */
@@ -85,12 +96,12 @@ function addKey(map, key, item) {
  * Index the patterns for fast matching: candidates are looked up by the word a match would start
  * with, then tested in place with a sticky regex. Returns { ci: Map, cs: Map, loose: [] }.
  */
-export function buildMatchers(entries, country) {
+export function buildMatchers(entries, country, opts = {}) {
   const ci = new Map();
   const cs = new Map();
   const loose = [];
   for (const e of linkableEntries(entries, country)) {
-    for (const p of patternsFor(e, country)) {
+    for (const p of patternsFor(e, country, opts.province ?? null)) {
       if (p.key === null) {
         loose.push({ slug: p.slug, re: new RegExp(p.src, p.kind === 'ci' ? 'giu' : 'gu'), w: p.w });
         continue;
@@ -202,9 +213,11 @@ export const hrefFor = (e, c) => `/${c}/glossary/${slugFor(e, c)}/`;
 
 // ------------------------------------------------------------------ "What is …?" phrasing
 
-const COUNTABLE = /^(?:test|pump|joist|wall|dam|heater|barrier|retarder|bypass|vent|baffle|furnace|system|thermostat|calculation|score|label|rating|dehumidifier|ventilator|evaluation|advisor|organization|organisation|rebate|credit|report|zone|certificate|camera|monitor|rater|program|loan|grant|screen|rainscreen|compressor|split|point|temperature|climate|home|audit|assessment|metre|meter|ton|therm|gigajoule|kilowatt-hour|setback|unit|mini-split|envelope|tier)$/i;
+const COUNTABLE = /^(?:test|pump|joist|wall|dam|heater|barrier|retarder|bypass|vent|baffle|furnace|system|thermostat|calculation|score|label|rating|dehumidifier|ventilator|evaluation|advisor|organization|organisation|rebate|credit|report|zone|certificate|camera|monitor|rater|program|loan|grant|screen|rainscreen|compressor|split|point|temperature|climate|home|audit|assessment|metre|meter|ton|therm|gigajoule|kilowatt-hour|kilowatt|setback|unit|mini-split|envelope|tier|stove|cycle|region|area|appliance|hygrometer|manometer)$/i;
 const NOT_PLURAL = /^(?:asbestos|gas|bypass|mass|status|analysis|gross|plus|bonus|lens)$/i;
 const THE = /^(?:Program|Grant|Loan|Rebates?|Credit|Act|Index|Network|Institute|Score|Report|System)$/i;
+/** Ordinary terms that read better with "the": the stack effect, the radon action level. */
+const THE_COMMON = /^(?:effect|level|guideline)$/;
 const WORDLIKE = /^(?:MERV|RESNET|NEEP|PACE|HOMES|WAP|HERS|CEE|OBBBA|CEIP|HELP|SEER|SEER2|HSPF|HSPF2|AFUE|UEF)$/;
 /** "a" or "an" by sound: spelled-out acronyms (an HRV, an NBC zone), words (a utility, an attic). */
 function articleFor(word) {
@@ -241,8 +254,10 @@ export function questionParts(term) {
     const lowerHead = /^\p{Ll}/u.test(head);
     subject = (THE.test(head) && !lowerHead ? 'the ' : countable && lowerHead ? articleFor(base) : '') + base;
   } else {
-    const lowered = /^\p{Lu}\p{Ll}+(?:-\p{Ll}*)*$/u.test(words[0] ?? '') ? base.charAt(0).toLowerCase() + base.slice(1) : base;
-    subject = (countable ? articleFor(lowered) : '') + lowered;
+    // Names with a letter or numeral after the first word keep their capitals: Manual J, Region V.
+    const named = words.slice(1).some((w) => /^(?:\p{Lu}|[IVX]{1,4})$/u.test(w));
+    const lowered = !named && /^\p{Lu}\p{Ll}+(?:-\p{Ll}*)*$/u.test(words[0] ?? '') ? base.charAt(0).toLowerCase() + base.slice(1) : base;
+    subject = (countable ? articleFor(lowered) : !named && THE_COMMON.test(head) ? 'the ' : '') + lowered;
   }
   const parenIsAcronym = !!paren && acronymLike(paren) && paren.length <= 8 && !/\s/.test(paren);
   if (!acronym && parenIsAcronym) subject += ` (${paren})`;
@@ -266,6 +281,14 @@ export function runtimePatterns(entries, country) {
     if (ci.length) out.ci = ci;
     if (cs.length) out.cs = cs;
     if (re.length) out.re = re;
+    const sc = m.scoped ?? {};
+    if (e.scope?.provinces?.length && (sc.ci?.length || sc.cs?.length || sc.re?.length)) {
+      out.pv = e.scope.provinces;
+      out.sc = {};
+      if (sc.ci?.length) out.sc.ci = sc.ci;
+      if (sc.cs?.length) out.sc.cs = sc.cs;
+      if (sc.re?.length) out.sc.re = sc.re;
+    }
     return out;
   });
 }

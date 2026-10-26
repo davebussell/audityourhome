@@ -5,8 +5,11 @@
 // Rules: only text inside <main>; never inside links, buttons, form controls, forms, headings, nav,
 // header, footer, summary, code, svg, script/style, [data-no-gloss], .no-gloss, .sr-only, .eyebrow,
 // .chip, .crumbs, .btn, name labels (.name, .pname, .rb-name, .ap-name) or aria-hidden elements. One link per term per page (its first use); the longest
-// phrase wins; a glossary page never links its own term. Skips noindex pages, redirect stubs and the
-// glossary indexes. Safe to run twice (pages that already carry gl-data are left alone).
+// phrase wins; a glossary page never links its own term. The first use chosen is a visible one: text inside
+// a closed <details> only gets a link when the term appears nowhere else on the page. Province-scoped
+// patterns (entry.scope.provinces + match.scoped) only link on pages that belong to that province.
+// Skips noindex pages, redirect stubs and the glossary indexes. Safe to run twice (pages that already
+// carry gl-data are left alone).
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -82,25 +85,32 @@ function excludedTag(name, tag) {
   return !!cls && EXCL_CLASS.test(cls[1] ?? cls[2] ?? cls[3] ?? '');
 }
 
-/** Link terms inside <main> of one page. Returns { html, linked: [slugs] }. */
-export function linkHtml(html, country, matchers, skipSlug = null) {
+/**
+ * Link terms inside <main> of one page. Returns { html, linked: [slugs], used }.
+ * mode "visible" (default) skips text inside closed <details>; mode "hidden" links only text inside closed
+ * <details>, for terms the visible pass didn't find (pass its `used` set in). mode "all" ignores <details>.
+ */
+export function linkHtml(html, country, matchers, skipSlug = null, opts = {}) {
+  const mode = opts.mode ?? 'visible';
+  const used = opts.used ?? new Set();
   const mStart = html.indexOf('<main');
-  if (mStart < 0) return { html, linked: [] };
+  if (mStart < 0) return { html, linked: [], used };
   const mOpen = tagEnd(html, mStart);
   const mEnd = html.lastIndexOf('</main>');
-  if (mEnd < mOpen) return { html, linked: [] };
-  const used = new Set();
+  if (mEnd < mOpen) return { html, linked: [], used };
   const linked = [];
   const out = [];
   let copied = 0;
   const stack = [];
   let excl = 0;
+  let closed = 0; // depth of closed <details> around the current text
   let i = mOpen;
   while (i < mEnd) {
     const lt = html.indexOf('<', i);
     const stop = lt < 0 || lt > mEnd ? mEnd : lt;
     if (stop > i) {
-      if (excl === 0) {
+      const inPass = mode === 'all' || (mode === 'visible' ? closed === 0 : closed > 0);
+      if (excl === 0 && inPass) {
         const raw = html.slice(i, stop);
         if (/[A-Za-z0-9]/.test(raw)) {
           const { text, map } = decode(raw);
@@ -137,7 +147,11 @@ export function linkHtml(html, country, matchers, skipSlug = null) {
       const name = html.slice(i + 2, gt - 1).trim().split(/[\s/>]/)[0].toLowerCase();
       for (let k = stack.length - 1; k >= 0; k--) {
         if (stack[k].name === name) {
-          while (stack.length > k) if (stack.pop().excl) excl--;
+          while (stack.length > k) {
+            const top = stack.pop();
+            if (top.excl) excl--;
+            if (top.closed) closed--;
+          }
           break;
         }
       }
@@ -162,12 +176,76 @@ export function linkHtml(html, country, matchers, skipSlug = null) {
     }
     if (VOID_TAGS.has(name) || /\/\s*>$/.test(tag)) continue;
     const ex = excludedTag(name, tag);
-    stack.push({ name, excl: ex });
+    const isClosed = name === 'details' && !/\sopen(?:[\s=>/]|$)/i.test(tag);
+    stack.push({ name, excl: ex, closed: isClosed });
     if (ex) excl++;
+    if (isClosed) closed++;
   }
-  if (!linked.length) return { html, linked };
+  if (!linked.length) return { html, linked, used };
   out.push(html.slice(copied));
-  return { html: out.join(''), linked };
+  return { html: out.join(''), linked, used };
+}
+
+/** Visible uses first, then (only for terms still unlinked) uses inside closed <details>. */
+export function linkPage(html, country, matchers, skipSlug = null) {
+  const a = linkHtml(html, country, matchers, skipSlug, { mode: 'visible' });
+  const b = linkHtml(a.html, country, matchers, skipSlug, { mode: 'hidden', used: a.used });
+  return { html: b.html, linked: [...a.linked, ...b.linked] };
+}
+
+// ------------------------------------------------------------------ which province a page belongs to
+
+const PROV_SLUG = {
+  ontario: 'ON', toronto: 'ON', bc: 'BC', alberta: 'AB', saskatchewan: 'SK', manitoba: 'MB', quebec: 'QC',
+  'new-brunswick': 'NB', 'nova-scotia': 'NS', pei: 'PE', 'newfoundland-labrador': 'NL',
+};
+function loadJSON(rel) {
+  try { return JSON.parse(readFileSync(join(ROOT, rel), 'utf8')); } catch { return null; }
+}
+const CITY_PROV = new Map();
+{
+  const dir = join(ROOT, 'src', 'data', 'local', 'cities');
+  if (existsSync(dir)) for (const f of readdirSync(dir)) {
+    if (!f.endsWith('.json')) continue;
+    const d = loadJSON(join('src', 'data', 'local', 'cities', f));
+    if (d?.slug && d.prov) CITY_PROV.set(d.slug, d.prov);
+  }
+}
+const AREA_PROV = new Map();
+{
+  const dir = join(ROOT, 'src', 'data', 'areas');
+  if (existsSync(dir)) for (const f of readdirSync(dir)) {
+    if (!f.endsWith('.json') || f === 'index.json') continue;
+    const d = loadJSON(join('src', 'data', 'areas', f));
+    if (d?.prov) AREA_PROV.set(f.replace(/\.json$/, ''), d.prov);
+  }
+}
+const PROGRAM_PROV = new Map();
+for (const p of loadJSON(join('src', 'data', 'programs.json')) ?? []) {
+  const code = PROV_SLUG[p.jurisdiction];
+  if (p.slug && code) PROGRAM_PROV.set(p.slug, code);
+}
+const ARTICLE_PROV = [[/ontario|toronto|london|ottawa/, 'ON'], [/winnipeg|manitoba/, 'MB'], [/(^|-)bc(-|$)|british-columbia/, 'BC'],
+  [/alberta|calgary|edmonton/, 'AB'], [/saskatchewan|regina|saskatoon/, 'SK'], [/quebec|montreal/, 'QC'], [/nova-scotia|halifax/, 'NS']];
+
+/** Two-letter province code for a /ca/ page, or null for national pages. */
+export function provinceForPath(rel) {
+  const parts = rel.split('/').filter(Boolean);
+  if (parts[0] !== 'ca') return null;
+  const [, section, a, b] = parts;
+  if (!section) return null;
+  if (section === 'cities' && a) return CITY_PROV.get(a) ?? null;
+  if ((section === 'services' || section === 'calculators') && b) return CITY_PROV.get(b) ?? null;
+  if ((section === 'provinces' || section === 'heat-pumps') && a) return PROV_SLUG[a] ?? null;
+  if (section === 'areas' && a) return AREA_PROV.get(a) ?? null;
+  if ((section === 'find' || section === 'guides') && a) return 'ON'; // the Ontario area directory and guides
+  if (section === 'providers' && a) return 'ON'; // the Ontario provider directory
+  if (section === 'programs' && a) return PROGRAM_PROV.get(a) ?? null;
+  if (section === 'articles' && a) {
+    for (const [re, code] of ARTICLE_PROV) if (re.test(a)) return code;
+    return null;
+  }
+  return null;
 }
 
 function walk(dir, out = []) {
@@ -191,7 +269,12 @@ function main() {
   for (const e of entries) for (const c of e.countries) ownByPath[c].set(`/${c}/glossary/${slugFor(e, c)}/`, e.slug);
 
   for (const c of ['ca', 'us']) {
-    const matchers = buildMatchers(entries, c);
+    const cache = new Map();
+    const matchersFor = (prov) => {
+      const k = prov ?? '';
+      if (!cache.has(k)) cache.set(k, buildMatchers(entries, c, { province: prov }));
+      return cache.get(k);
+    };
     for (const file of walk(join(DIST, c))) {
       const rel = file.slice(DIST.length).replace(/\\/g, '/').replace(/index\.html$/, '');
       const html = readFileSync(file, 'utf8');
@@ -200,7 +283,8 @@ function main() {
         continue;
       }
       stats.pages++;
-      const { html: out, linked } = linkHtml(html, c, matchers, ownByPath[c].get(rel) ?? null);
+      const prov = c === 'ca' ? provinceForPath(rel) : null;
+      const { html: out, linked } = linkPage(html, c, matchersFor(prov), ownByPath[c].get(rel) ?? null);
       if (!linked.length) continue;
       stats.linkedPages++;
       stats.links += linked.length;

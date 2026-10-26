@@ -35,6 +35,9 @@ export interface GlossaryEntry {
   termCa?: string;
   termUs?: string;
   aka: string[];
+  /** Per-country "also called" lists, used instead of aka (e.g. no CSA standard names on US pages). */
+  akaCa?: string[];
+  akaUs?: string[];
   category: string;
   countries: Country[];
   short: string;
@@ -256,7 +259,7 @@ export function viewFor(e: GlossaryEntry, c: Country): GlossaryView {
   const term = termFor(e, c);
   const norm = (x: string) => x.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
   const seenAka = new Set([term, ...term.split(/\s*\/\s*|\s*[()]\s*/)].map(norm).filter(Boolean));
-  const aka = e.aka
+  const aka = ((c === 'us' ? e.akaUs : e.akaCa) ?? e.aka)
     .map((a) => localize(a, c))
     .filter((a) => {
       const k = norm(a);

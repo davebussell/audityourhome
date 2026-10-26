@@ -77,10 +77,10 @@ const who = c === 'us' ? 'auditor' : 'energy advisor';
                       <td>{x.label}</td>
                       <td data-label="Value">{x.value}</td>
                       <td data-label="Source">
-                        {x.source ? (
+                        {x.source && /^https?:\/\//.test(x.source) ? (
                           <a href={x.source} rel="noopener" target="_blank">{x.sourceLabel} ↗</a>
                         ) : (
-                          '—'
+                          x.source || '—'
                         )}
                       </td>
                     </tr>

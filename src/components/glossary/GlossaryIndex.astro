@@ -53,7 +53,24 @@ const schema = [
     terms: views.map((v) => ({ name: v.term, path: v.path })),
   }),
 ];
-const searchText = (v: (typeof views)[number]) => [v.term, ...v.aka, v.short].join(' ').toLowerCase();
+/** Canadian ↔ US spellings, so a search for "mold" finds "mould" and the other way round. */
+const SPELLINGS: [RegExp, string, RegExp, string][] = [
+  [/mould/g, 'mold', /mold/g, 'mould'], [/fibre/g, 'fiber', /fiber/g, 'fibre'], [/vapour/g, 'vapor', /vapor(?!u)/g, 'vapour'],
+  [/metre/g, 'meter', /meter/g, 'metre'], [/litre/g, 'liter', /liter/g, 'litre'], [/centre/g, 'center', /center/g, 'centre'],
+  [/colour/g, 'color', /color(?!u)/g, 'colour'], [/behaviour/g, 'behavior', /behavior(?!u)/g, 'behaviour'],
+  [/organisation/g, 'organization', /organization/g, 'organisation'], [/draught/g, 'draft', /draft/g, 'draught'],
+];
+const withSpellings = (t: string) => {
+  const extra: string[] = [];
+  for (const [ca, us, usRe, caWord] of SPELLINGS) {
+    if (ca.test(t)) extra.push(t.replace(ca, us));
+    if (usRe.test(t)) extra.push(t.replace(usRe, caWord));
+    ca.lastIndex = 0;
+    usRe.lastIndex = 0;
+  }
+  return extra.length ? `${t} ${extra.join(' ')}` : t;
+};
+const searchText = (v: (typeof views)[number]) => withSpellings([v.term, ...v.aka, v.short].join(' ').toLowerCase());
 ---
 
 <Base title={title} description={description} schema={schema}>

@@ -4,6 +4,7 @@
     "blower-door": {
       "measure": "Air leakage at 50 Pa of pressure: ACH50 = CFM50 × 60 ÷ house volume in cubic feet.",
       "unit": "ACH50 (air changes per hour at 50 Pa)",
+      "caMeasure": "Air leakage at 50 Pa of pressure: how many times an hour the whole volume of air in the house would leak out and be replaced.",
       "countries": [
         "ca",
         "us"
@@ -12,21 +13,46 @@
         {
           "label": "Very tight",
           "range": "1.5 ACH50 or less",
-          "means": "Meets the R-2000 limit and the coldest-zone Zero Energy Ready Home target; very little air leaks through the shell.",
+          "means": "Meets the R-2000 limit; very little air leaks through the shell.",
           "do": "Make sure mechanical ventilation (HRV, ERV or fans) runs, because leaks no longer bring in fresh air.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Very tight",
+          "range": "1.5 ACH50 or less",
+          "means": "Meets DOE's Zero Energy Ready Home target for the coldest zones; very little air leaks through the shell.",
+          "do": "Make sure mechanical ventilation (HRV, ERV or fans) runs, because leaks no longer bring in fresh air.",
+          "countries": [
             "us"
           ]
         },
         {
           "label": "Tight",
           "range": "Over 1.5 to 3 ACH50",
-          "means": "Meets the 3 ACH50 US code limit for most climates; Canadian code airtightness tiers start at 2.5.",
+          "means": "Tighter than most existing homes; the National Building Code's airtightness tiers for new homes start at 2.5.",
           "do": "Seal remaining leaks found with smoke or infrared, and confirm ventilation is adequate.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Tight",
+          "range": "Over 1.5 to 3 ACH50",
+          "means": "Meets the 3 ACH50 limit the US model energy code sets for most climate zones.",
+          "do": "Seal remaining leaks found with smoke or infrared, and confirm ventilation is adequate.",
+          "countries": [
             "us"
+          ]
+        },
+        {
+          "label": "Moderate",
+          "range": "Over 3 to 5 ACH50",
+          "means": "Leakier than new homes built to today’s tighter standards; worthwhile air sealing remains.",
+          "do": "Make air sealing a priority: attic floor, rim joists, and gaps around windows, doors, pipes and wires.",
+          "countries": [
+            "ca"
           ]
         },
         {
@@ -35,8 +61,16 @@
           "means": "Above most new-home limits (US code allows up to 5 only in zones 1–2); worthwhile air sealing remains.",
           "do": "Make air sealing a priority: attic floor, rim joists, and gaps around windows, doors, pipes and wires.",
           "countries": [
-            "ca",
             "us"
+          ]
+        },
+        {
+          "label": "Leaky",
+          "range": "Over 5 ACH50",
+          "means": "Leaky by today’s standards; expect drafts and wasted energy.",
+          "do": "Air-seal first, then retest; check combustion appliances and ventilation after sealing.",
+          "countries": [
+            "ca"
           ]
         },
         {
@@ -45,7 +79,6 @@
           "means": "Leakier than the 2018–2021 US model code allows in any climate zone; expect drafts and wasted energy.",
           "do": "Air-seal first, then retest; check combustion appliances and ventilation after sealing.",
           "countries": [
-            "ca",
             "us"
           ]
         }
@@ -142,6 +175,8 @@
     "radon": {
       "measure": "Average radon gas level in the lived-in part of the home, ideally from a long-term test.",
       "unit": "Bq/m³ (Canada) · pCi/L (US); 37 Bq/m³ = 1 pCi/L",
+      "caUnit": "Bq/m³ (becquerels per cubic metre); 37 Bq/m³ = 1 pCi/L",
+      "usUnit": "pCi/L (picocuries per liter); 1 pCi/L = 37 Bq/m³",
       "countries": [
         "ca",
         "us"
@@ -247,7 +282,15 @@
           "means": "Something is adding CO. Health Canada's limits are 10 ppm averaged over 24 hours and 25 ppm over 1 hour.",
           "do": "Open windows, check stoves, heaters and the attached garage, and have fuel-burning appliances checked by a qualified technician.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "CO detected",
+          "range": "9 to 35 ppm",
+          "means": "Something is adding CO. EPA's outdoor air standards are 9 ppm averaged over 8 hours and 35 ppm over 1 hour.",
+          "do": "Open windows, check stoves, heaters and the attached garage, and have fuel-burning appliances checked by a qualified technician.",
+          "countries": [
             "us"
           ]
         },
@@ -257,7 +300,15 @@
           "means": "Well above Health Canada's limits; people with heart disease may feel chest pain.",
           "do": "Open windows and doors, turn off fuel-burning appliances, and get a qualified technician in before using them again.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Elevated",
+          "range": "36 to 69 ppm",
+          "means": "Above EPA's 1-hour outdoor air standard; people with heart disease may feel chest pain.",
+          "do": "Open windows and doors, turn off fuel-burning appliances, and get a qualified technician in before using them again.",
+          "countries": [
             "us"
           ]
         },
@@ -378,6 +429,10 @@
     "attic-inspection": {
       "measure": "Insulation depth and type on the attic floor, converted to R-value (RSI in Canada), plus air leaks and vermiculite.",
       "unit": "R-value (US) · RSI (Canada); R = RSI × 5.678",
+      "caMeasure": "Insulation depth and type on the attic floor, converted to RSI and R-value, plus air leaks and vermiculite.",
+      "caUnit": "RSI (metric) and R-value; R = RSI × 5.678",
+      "usMeasure": "Insulation depth and type on the attic floor, converted to R-value, plus air leaks and vermiculite.",
+      "usUnit": "R-value",
       "countries": [
         "ca",
         "us"
@@ -422,20 +477,36 @@
         {
           "label": "Little or none",
           "range": "Level with or below the tops of the ceiling joists",
+          "means": "Probably far below today’s recommended levels; a house with this little insulation usually benefits from more.",
+          "do": "Seal attic air leaks, add baffles at the eaves, then add insulation to your zone's level.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Little or none",
+          "range": "Level with or below the tops of the ceiling joists",
           "means": "Probably far below recommended levels; ENERGY STAR says this usually means you need more.",
           "do": "Seal attic air leaks, add baffles at the eaves, then add insulation to your zone's level.",
           "countries": [
-            "ca",
             "us"
           ]
         },
         {
           "label": "Vermiculite",
           "range": "Pebble-like, pour-in granules between the joists",
-          "means": "May contain asbestos; Health Canada and EPA say to treat it as hazardous and leave it undisturbed.",
+          "means": "May contain asbestos; Health Canada says to treat it as hazardous and leave it undisturbed.",
           "do": "Stop work, don't disturb or remove it, and hire an asbestos professional before any insulation job.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Vermiculite",
+          "range": "Pebble-like, pour-in granules between the joists",
+          "means": "May contain asbestos; EPA says to treat it as hazardous and leave it undisturbed.",
+          "do": "Stop work, don't disturb or remove it, and hire an asbestos professional before any insulation job.",
+          "countries": [
             "us"
           ]
         }
@@ -552,6 +623,10 @@
     "heat-loss-calc": {
       "measure": "Installed heating or cooling capacity as a percentage of the room-by-room design load (Manual J or CSA F280).",
       "unit": "% of design load (Btu/h or W)",
+      "caMeasure": "Installed heating or cooling capacity as a percentage of the room-by-room design load (CSA F280 heat-loss calculation).",
+      "caUnit": "% of design load (W or Btu/h)",
+      "usMeasure": "Installed heating or cooling capacity as a percentage of the room-by-room design load (Manual J).",
+      "usUnit": "% of design load (Btu/h)",
       "countries": [
         "ca",
         "us"
@@ -620,20 +695,36 @@
         {
           "label": "Too dry",
           "range": "Under 30%",
-          "means": "Below the 30–50% range Health Canada and the EPA recommend; dry air can irritate throats.",
+          "means": "Below the 30–50% range Health Canada recommends; dry air can irritate throats.",
           "do": "Humidify gently if needed, but in very cold weather keep it low enough to avoid window condensation.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Too dry",
+          "range": "Under 30%",
+          "means": "Below the 30–50% range the EPA recommends; dry air can irritate throats.",
+          "do": "Humidify gently if needed, but in very cold weather keep it low enough to avoid window condensation.",
+          "countries": [
             "us"
           ]
         },
         {
           "label": "Target",
           "range": "30–50%",
-          "means": "The range both Health Canada and the EPA recommend for homes.",
+          "means": "The range Health Canada recommends for homes.",
           "do": "Keep it there: run bath and kitchen fans, and fix leaks and damp spots quickly.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Target",
+          "range": "30–50%",
+          "means": "The range the EPA recommends for homes.",
+          "do": "Keep it there: run bath and kitchen fans, and fix leaks and damp spots quickly.",
+          "countries": [
             "us"
           ]
         },
@@ -706,10 +797,18 @@
         {
           "label": "Clear",
           "range": "No E. coli and no total coliforms per 100 mL; nitrate at or under 10 mg/L as N (45 as nitrate)",
-          "means": "Meets Health Canada and EPA limits for these tests on the day sampled.",
+          "means": "Meets Health Canada's guidelines for these tests on the day sampled.",
           "do": "Keep testing on schedule and after floods, heavy rain, well work or changes in taste, smell or appearance.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Clear",
+          "range": "No E. coli and no total coliforms per 100 mL; nitrate at or under 10 mg/L as N (45 as nitrate)",
+          "means": "Meets EPA limits for these tests on the day sampled.",
+          "do": "Keep testing on schedule and after floods, heavy rain, well work or changes in taste, smell or appearance.",
+          "countries": [
             "us"
           ]
         },
@@ -736,10 +835,18 @@
         {
           "label": "Nitrate high",
           "range": "Over 10 mg/L as nitrate-N (over 45 mg/L as nitrate)",
-          "means": "Above the health limit in both countries; most dangerous for babies under 6 months (blue baby syndrome).",
+          "means": "Above Health Canada's health limit; most dangerous for babies under 6 months (blue baby syndrome).",
           "do": "Use another safe source for drinking and infant formula; treat with certified reverse osmosis or distillation, then retest.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "Nitrate high",
+          "range": "Over 10 mg/L as nitrate-N (over 45 mg/L as nitrate)",
+          "means": "Above EPA's health limit; most dangerous for babies under 6 months (blue baby syndrome).",
+          "do": "Use another safe source for drinking and infant formula; treat with certified reverse osmosis or distillation, then retest.",
+          "countries": [
             "us"
           ]
         }
@@ -916,6 +1023,8 @@
     "bill-analysis": {
       "measure": "A year of actual meter reads split into baseload and weather-driven heating or cooling use.",
       "unit": "kWh, m³ or GJ (Canada) · kWh or therms (US), per month and year",
+      "caUnit": "kWh, m³ of gas or GJ, per month and year",
+      "usUnit": "kWh or therms, per month and year",
       "countries": [
         "ca",
         "us"
@@ -976,6 +1085,8 @@
     "ventilation-assessment": {
       "measure": "Measured fresh-air flow from the ventilation system and fans versus the required rate, plus indoor humidity.",
       "unit": "L/s (Canada) · CFM (US); % RH",
+      "caUnit": "L/s of fresh air; % relative humidity",
+      "usUnit": "CFM of fresh air; % relative humidity",
       "countries": [
         "ca",
         "us"
@@ -1084,10 +1195,18 @@
         {
           "label": "No deficiencies",
           "range": "Certified appliance, required clearances met, chimney and flue sound and clean",
-          "means": "Installed and maintained to the installation code (CSA B365 in Canada, NFPA 211 in the US).",
+          "means": "Installed and maintained to the installation code (CSA B365).",
           "do": "Keep the report for your insurer, have it inspected yearly, and clean the chimney when creosote builds up.",
           "countries": [
-            "ca",
+            "ca"
+          ]
+        },
+        {
+          "label": "No deficiencies",
+          "range": "Certified appliance, required clearances met, chimney and flue sound and clean",
+          "means": "Installed and maintained to the installation standard (NFPA 211).",
+          "do": "Keep the report for your insurer, have it inspected yearly, and clean the chimney when creosote builds up.",
+          "countries": [
             "us"
           ]
         },

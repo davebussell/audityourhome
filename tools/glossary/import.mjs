@@ -5,7 +5,8 @@
 //   slug             kebab-case id, unique (also the default URL segment)
 //   slugCa / slugUs  optional URL segment for one country (e.g. slugUs "mold" for slug "mould")
 //   term             display name; termCa / termUs override it per country
-//   aka              other names as they appear on pages
+//   aka              other names as they appear on pages; akaCa / akaUs replace the list shown on one
+//                    country's pages ("Also called", search), e.g. without CSA standard names on US pages
 //   category         testing | envelope | hvac | water | bills | health | programs | climate
 //   countries        ["ca"], ["us"] or both
 //   short            one sentence, ≤ 160 characters (tooltip); shortCa / shortUs override
@@ -15,7 +16,9 @@
 //   caNote / usNote  how the two countries differ
 //   related          slugs of other entries
 //   sources          URLs
-//   match            { ci: [phrases], cs: [tokens], re: [regex sources], ca: {ci,cs,re}, us: {ci,cs,re} }
+//   match            { ci: [phrases], cs: [tokens], re: [regex sources], ca: {ci,cs,re}, us: {ci,cs,re},
+//                      scoped: {ci,cs,re} (only on pages in scope.provinces) }
+//   scope            { provinces: ["ON", ...] }  (optional; two-letter codes)
 //                    generated from term + aka when missing (see genMatch below)
 //   noLink           true = never auto-link the term (it still gets a glossary page)
 // Text fields without a country override are localized at render time (mould/mold, vapour/vapor, …)
@@ -137,6 +140,7 @@ for (const e0 of list) {
   if (!CATEGORIES.includes(e.category)) warnings.push(`${e.slug}: unknown category "${e.category}"`);
   for (const k of ['short', 'shortCa', 'shortUs']) if (e[k] && e[k].length > 160) warnings.push(`${e.slug}: ${k} is ${e[k].length} characters`);
   e.aka = (e.aka ?? []).map(String);
+  for (const k of ['akaCa', 'akaUs']) if (e[k] !== undefined) e[k] = (Array.isArray(e[k]) ? e[k] : [e[k]]).map(String);
   e.values = (e.values ?? []).filter((v) => v && v.label && v.value);
   e.related = e.related ?? [];
   e.sources = (e.sources ?? []).filter((u) => /^https?:\/\//.test(u));
@@ -157,7 +161,8 @@ for (const e of entries) {
 const owner = new Map();
 for (const e of entries) {
   const m = e.match;
-  const groups = [m, m.ca ?? {}, m.us ?? {}];
+  const groups = [m, m.ca ?? {}, m.us ?? {}, m.scoped ?? {}];
+  if (m.scoped && !e.scope?.provinces?.length) warnings.push(`${e.slug}: match.scoped has no scope.provinces, so it never links`);
   for (const g of groups) {
     for (const p of g.ci ?? []) {
       try { new RegExp(ciSource(p), 'iu'); } catch (err) { fail(`${e.slug}: bad ci "${p}": ${err.message}`); }
