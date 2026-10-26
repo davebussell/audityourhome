@@ -34,6 +34,20 @@ Build locally first (`npm ci && npm run build`) so a broken build never reaches 
 it with `netlify.toml`. Never paste its proxy token anywhere. Never create a new Netlify site. Afterwards: the page you changed at 375px
 and 1280px, `/` redirects to `/ca/` or `/us/`, `get-forms-for-project` still lists the three forms, then record the deploy ID here.
 
+## Systems added 2026-10-26 (regional rewrite)
+- **Glossary:** `src/data/glossary.json` (199 sourced terms, ca 169 / us 168) is the source of truth; `tools/glossary/import.mjs --check`
+  validates it. `tools/glossary/link.mjs` (run by `npm run build`) links the first visible use of each term on every /ca/ and /us/
+  page; `public/gl.js` shows the tooltip/tap popover and links browser-rendered results (`GlossaryRuntime.astro`). Province-only
+  terms (HRSP) link only on that province's pages. Patterns are shared with gl.js via `src/lib/glossary-patterns.mjs`.
+- **Climate profiles:** `src/data/climate/{us,ca}.json` (9 US / 7 CA profiles + every metro, city and province) via
+  `src/lib/climate.ts`; `RegionalNeeds.astro` renders them (full on city/metro guides, service/compact/heatpump variants elsewhere).
+  `tools/local-pages/gen_pages.py` reads the CA file for climate-aware service text.
+- **Reading guides:** `src/data/reading-guides.json` + `ReadingGuide.astro` (`#reading` on every test page and in both planners).
+- **Journey:** `JourneyBar.astro` + `src/lib/journey.ts` (Your free plan → Book the audit → The audit visit and report → Upgrades and rebates).
+- **Planners:** CA logic in `src/pages/ca/plan/index.astro` + `src/lib/ca/plan-helpers.ts` (answers in the # hash, no analytics);
+  US cooling model in `src/lib/us/plan-cooling.ts` from `src/data/us/cooling-model.json` (`node tools/us/test-plan.mjs`).
+- US common problems: `src/data/us/issues.json` → `/us/issues/<slug>/`. US text cleanup of research-note wording: `src/lib/us/clean.ts`.
+
 ## Standards
 - Check every change at 375px and at 1280px+ before saying done.
 - Keep the SEO basics (title, description, canonical, Open Graph, sitemap, `robots.txt`) intact.
