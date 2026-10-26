@@ -130,7 +130,7 @@ booking['north-NU'] = {
 const provPrograms: Record<string, unknown> = {};
 for (const b of PROVINCE_BOOKING) {
   provPrograms[b.slug] = openPrograms(b.slug).map((p) => ({
-    name: p.name, headline: p.headline, status: p.status,
+    name: p.name, headline: p.headline, status: p.status, city: p.city ?? null,
     href: p.programSlug && programSlugs.has(p.programSlug) ? `/ca/programs/${p.programSlug}/` : p.url,
   }));
 }
@@ -204,12 +204,14 @@ const privacyLine = ACCOUNTS_ENABLED
     <div class="page-hero plan-hero">
       <p class="eyebrow">Home Energy Planner · free</p>
       <h1>What does <em>your</em> home actually need?</h1>
-      <p class="lede">
-        Six short steps, about two minutes, no email needed. You’ll get your free plan: what’s
-        probably behind your walls, which upgrades to do first and what they could save in your
-        climate, the rebates open in your province, and how to book the audit that measures it all.
-      </p>
-      <JourneyBar country="ca" current={1} ticks={false} />
+      <div id="planIntro">
+        <p class="lede">
+          Six short steps, about two minutes, no email needed. You’ll get your free plan: what’s
+          probably behind your walls, which upgrades to do first and what they could save in your
+          climate, the rebates open in your province, and how to book the audit that measures it all.
+        </p>
+        <JourneyBar country="ca" current={1} ticks={false} />
+      </div>
     </div>
 
     <div class="planner card" id="planner">
@@ -436,6 +438,7 @@ const privacyLine = ACCOUNTS_ENABLED
         <h2 id="rTitle">Your home’s energy plan</h2>
         <p class="small" id="rSub"></p>
         <p class="small era-note" id="rEra"></p>
+        <p class="small top-edit"><button type="button" class="linkbtn" id="editTopBtn">Edit answers</button></p>
       </div>
       <JourneyBar country="ca" current={2} hereLabel="Your next step" />
 
@@ -552,8 +555,8 @@ const privacyLine = ACCOUNTS_ENABLED
   </div>
 
   <div class="sticky-cta" id="stickyCta" hidden>
-    <span class="sc-t">Next: book your EnerGuide evaluation</span>
-    <a class="btn btn-primary btn-sm" href="#next-steps">Book my audit</a>
+    <span class="sc-t" id="stickyText">Next: your EnerGuide evaluation</span>
+    <a class="btn btn-primary btn-sm" id="stickyBtn" href="#rNext">My next steps</a>
   </div>
 
   <script type="application/json" id="planner-data" set:html={JSON.stringify(payload)} />
@@ -563,6 +566,9 @@ const privacyLine = ACCOUNTS_ENABLED
 <style>
   .page-hero h1 em { font-style: normal; color: var(--heat); }
   .plan-hero { padding-bottom: 24px; }
+  .top-edit { margin: 4px 0 0; }
+  .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--steel); text-decoration: underline; cursor: pointer; }
+  .linkbtn:hover { color: var(--ink); }
   .planner { padding: 26px 34px 30px; margin-bottom: 24px; }
   .steps-nav {
     display: flex; flex-wrap: wrap; gap: 6px 14px;
@@ -613,7 +619,9 @@ const privacyLine = ACCOUNTS_ENABLED
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
     background: var(--card); border-top: 1px solid var(--line-strong); box-shadow: 0 -4px 16px rgba(26, 36, 48, 0.08);
   }
-  .sticky-cta .sc-t { font-size: 14px; font-weight: 600; min-width: 0; }
+  .sticky-cta .sc-t { font-size: 14px; font-weight: 600; min-width: 0; line-height: 1.35; }
+  /* a short label ("Get matched") stays on one line; a program name wraps inside the button */
+  .sticky-cta .btn { flex: 0 0 auto; max-width: 56%; text-align: center; line-height: 1.25; }
   @media (min-width: 761px) { .sticky-cta { display: none !important; } }
   @media (max-width: 600px) {
     .planner { padding: 20px 18px 24px; }
@@ -623,7 +631,7 @@ const privacyLine = ACCOUNTS_ENABLED
 
 <style is:global>
   /* dynamically-rendered result blocks (injected via JS, so unscoped) */
-  body.has-sticky { padding-bottom: 64px; }
+  body.has-sticky { padding-bottom: 84px; }
   /* keep scrolled-to blocks clear of the sticky site header */
   #planner, #results, #results [id], #assumptions { scroll-margin-top: 84px; }
   #matchLine .linkish { font: inherit; font-weight: 700; color: var(--pine-deep); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 2.5px; cursor: pointer; }
@@ -672,6 +680,12 @@ const privacyLine = ACCOUNTS_ENABLED
   .mini-provider .pr { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
   .mini-provider .rev { color: var(--faint); font-size: 12.5px; margin: 6px 0 0; }
   .rsec { margin: 26px 0; }
+  .rsec-collapse { margin: 8px 0 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+  .rsec-collapse > summary { cursor: pointer; padding: 12px 16px; font-weight: 700; color: var(--steel); }
+  .rsec-collapse[open] > summary { border-bottom: 1px solid var(--line); }
+  .rsec-collapse > .test-grid, .rsec-collapse > .badge-legend, .rsec-collapse > .mini-providers { padding: 12px 14px; margin: 0; }
+  .mini-providers + .rsec-collapse { margin-top: 14px; }
+  .flag-line { font-size: 15px; background: var(--warn-tint); border-radius: 8px; padding: 10px 14px; margin: 0 0 4px; overflow-wrap: anywhere; }
   .rsec > h3 { margin-bottom: 4px; }
   .rsec > .sub { color: var(--muted); font-size: 14.5px; margin-bottom: 10px; }
   .province-note { border-left: 4px solid var(--warn); padding: 18px 24px; }
@@ -791,6 +805,13 @@ const privacyLine = ACCOUNTS_ENABLED
   const backBtn = document.getElementById('backBtn') as HTMLButtonElement;
   const resultsEl = document.getElementById('results')!;
   const plannerEl = document.getElementById('planner')!;
+  const introEl = document.getElementById('planIntro');
+  /** One journey bar at a time: the intro's (stage 1) while answering, the results' (stage 2) after. */
+  function setMode(mode: 'wizard' | 'results') {
+    plannerEl.hidden = mode === 'results';
+    resultsEl.hidden = mode !== 'results';
+    if (introEl) introEl.hidden = mode === 'results';
+  }
   const postalEl = document.getElementById('postal') as HTMLInputElement;
   const provEl = document.getElementById('provPick') as HTMLSelectElement;
   const postalErr = document.getElementById('postalError')!;
@@ -898,7 +919,8 @@ const privacyLine = ACCOUNTS_ENABLED
       const prov = provEl.value;
       if (chk.ok) { setPostalError(''); return true; }
       if (chk.reason === 'us-zip') {
-        setPostalError(`That looks like a US ZIP code. <a href="/us/plan/#zip=${encodeURIComponent(chk.zip)}">Open the US planner with ${esc(chk.zip)} →</a>`);
+        const ageNow = fieldVal('age');
+        setPostalError(`That looks like a US ZIP code. <a href="/us/plan/#zip=${encodeURIComponent(chk.zip)}${ageNow ? `&age=${encodeURIComponent(ageNow)}` : ''}">Open the US planner with ${esc(chk.zip)} →</a>`);
         return false;
       }
       if (prov) { setPostalError(''); return true; }
@@ -1338,8 +1360,7 @@ const privacyLine = ACCOUNTS_ENABLED
     renderResources(ctx, arch);
     renderAuditCta(ctx);
 
-    plannerEl.hidden = true;
-    resultsEl.hidden = false;
+    setMode('results');
     const params: Record<string, string> = {
       postal: checkPostal(postal).ok ? formatPostal(postal) : '', prov: checkPostal(postal).ok ? '' : loc.province,
       age: a.age, htype: a.htype, size: a.size, heat: a.heat, hage: a.hage, wh: a.wh, ac: a.ac, win: a.win, prev: a.prev,
@@ -1391,6 +1412,25 @@ const privacyLine = ACCOUNTS_ENABLED
     const onDirectory = ctx.isON && ctx.loc.region;
     let primary = '';
     let secondary = '';
+    // The phone's sticky bar names the real next action: a provincial program books the
+    // evaluation; everywhere else our form matches you with an advisor (a referral, not a booking).
+    const stickyText = document.getElementById('stickyText');
+    const stickyBtn = document.getElementById('stickyBtn') as HTMLAnchorElement | null;
+    if (stickyText && stickyBtn) {
+      if (b?.bookWith) {
+        stickyText.textContent = 'Next: book your EnerGuide evaluation';
+        stickyBtn.textContent = `Book with ${shortLabel(b.bookWith.label)} ↗`;
+        stickyBtn.href = b.bookWith.href;
+        stickyBtn.target = '_blank';
+        stickyBtn.rel = 'noopener';
+      } else {
+        stickyText.textContent = 'Next: get matched with a registered energy advisor';
+        stickyBtn.textContent = 'Get matched';
+        stickyBtn.href = '#lead-form';
+        stickyBtn.removeAttribute('target');
+        stickyBtn.removeAttribute('rel');
+      }
+    }
     if (b?.bookWith) {
       primary = `<a class="btn btn-primary" href="${esc(b.bookWith.href)}" rel="noopener" target="_blank">Book with ${esc(shortLabel(b.bookWith.label))} ↗</a>`;
       secondary = `<a href="#lead-form">Or ask us to match you with a registered energy advisor</a>`;
@@ -1404,7 +1444,9 @@ const privacyLine = ACCOUNTS_ENABLED
     }
     const tests = picks.filter((p) => !p.health).slice(0, 4).concat(picks.filter((p) => p.health && p.level === 'strongly-flagged').slice(0, 2));
     const testLinks = tests.map((p) => `<a href="${esc(p.href)}">${esc(p.name)}</a>`).join('');
-    let progs = (D.provPrograms[ctx.provSlug] ?? []) as { name: string; headline: string; href: string; status: string }[];
+    let progs = ((D.provPrograms[ctx.provSlug] ?? []) as { name: string; headline: string; href: string; status: string; city?: string | null }[])
+      // City-only programs (Toronto HELP) only for that city.
+      .filter((p) => !p.city || p.city === ctx.R.slug);
     if (ctx.provSlug === 'north') {
       // One record covers all three territories: keep this territory's programs only.
       const rx = ctx.loc.province === 'YT' ? /^Yukon/i : ctx.loc.province === 'NU' ? /^Nunavut/i : /^(NWT|Northwest)/i;
@@ -1641,6 +1683,13 @@ const privacyLine = ACCOUNTS_ENABLED
     'attic-insulation': 'Thin by modern standards. On its own the bill saving here is modest, so do it together with air sealing, or for comfort and to stop ice dams.',
     'basement-insulation': 'Bare foundation walls lose heat all winter; the bill saving here is modest, so it often makes most sense during a basement renovation.',
   };
+  // What a long payback means for each upgrade, so two cards don't print the same sentence.
+  const LONG_PAYBACK: Record<string, string> = {
+    'basement-insulation': 'A long payback on bills alone: fix any water problems first, then pair it with finishing the basement.',
+    'windows-doors': 'A long payback on bills alone: replace windows as they wear out or during a renovation, not to cut the bill.',
+    'wall-insulation': 'A long payback on bills alone: cheapest when the siding or drywall comes off for other work.',
+  };
+  const LONG_PAYBACK_ANY = 'A long payback on bills alone: worth it for comfort, for stopping problems, or when it can be combined with other work.';
 
   function noIceDams(text: string): string {
     if (!text || !/ice dam/i.test(text)) return text;
@@ -1671,6 +1720,7 @@ const privacyLine = ACCOUNTS_ENABLED
     lastItems = [];
     const main: string[] = [];
     const laterRows: string[] = [];
+    const usedPayNotes = new Set<string>();
     for (const item of seq) {
       const sm = findMeasure(item.category, a.age, m.hi.screen);
       const s = itemSaving(item.category, a, m, cal);
@@ -1703,7 +1753,7 @@ const privacyLine = ACCOUNTS_ENABLED
         const lowYears = years(payback(cost[0], reb?.amount ?? 0, s.dollars));
         if (lowYears !== null && lowYears > 15) {
           if (NEUTRAL_WHY[item.category] && /cheap win|best payback|Highest return|Cheap, fast/i.test(why)) why = NEUTRAL_WHY[item.category];
-          payNote = 'A long payback on bills alone: worth it for comfort, for stopping problems, or when it can be combined with other work.';
+          payNote = LONG_PAYBACK[item.category] ?? LONG_PAYBACK_ANY;
         }
       }
       // Where ice dams aren't a local problem (mild coastal cities), don't sell upgrades on stopping them.
@@ -1717,7 +1767,7 @@ const privacyLine = ACCOUNTS_ENABLED
           <div class="seq-item">
             <h4>${esc(title)}</h4>
             <p class="why">${esc(heatPumpLaterNote(a.heat, s.dollars, ctx.R.name, ctx.C.key, prov))}</p>
-            <p class="why">${esc(why)}</p>
+            ${why ? `<p class="why">${esc(why)}</p>` : ''}
             <div class="nums">
               ${cost ? `<span class="cost">typical cost ${money(cost[0])}–${money(cost[1])}</span>` : ''}
               ${reb ? `<span class="chip chip-active">rebate: at least ${money(reb.amount)} (${esc(shortLabel(reb.program))})</span>` : ''}
@@ -1740,6 +1790,8 @@ const privacyLine = ACCOUNTS_ENABLED
       }
       if (item.category === 'ventilation') payNote = 'Bought for air quality and moisture control, not for bill savings.';
       if (payNote && sharesPhrase(`${why} ${note}`, payNote)) payNote = '';
+      if (payNote && usedPayNotes.has(payNote)) payNote = '';
+      if (payNote) usedPayNotes.add(payNote);
       const costTxt = cost ? `typical cost ${money(cost[0])}–${money(cost[1])}` : sm?.typicalCost ? `typical cost ${esc(localizeCost(sm.typicalCost, isON))}` : '';
       const onChip = isON && ON_REBATE[item.category] ? `<span class="chip chip-active">${ON_REBATE[item.category]}</span>${isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : ''}` : '';
       const rebChip = !onChip && reb ? `<span class="chip chip-active">rebate: at least ${money(reb.amount)} (${esc(shortLabel(reb.program))})</span>` : '';
@@ -1776,7 +1828,7 @@ const privacyLine = ACCOUNTS_ENABLED
       </div>` : '';
     document.getElementById('addBills')?.addEventListener('click', (e) => {
       e.preventDefault();
-      resultsEl.hidden = true; plannerEl.hidden = false; maxVisited = TOTAL; show(6);
+      setMode('wizard'); maxVisited = TOTAL; show(6);
       setupSticky();
       plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -1954,15 +2006,30 @@ const privacyLine = ACCOUNTS_ENABLED
           <p class="tguide"><a href="${esc(p.href)}"><strong>Full guide: how to test and what to do →</strong></a></p>
         </div>
       </div>`).join('');
+    const nEnergy = picks.filter((p) => !p.health).length;
+    const nHealth = picks.filter((p) => p.health).length;
+    // The cards stay folded (the plan is long on a phone); the tests your answers point
+    // straight to are named, with their guides, above the fold.
+    const strong = picks.filter((p) => p.health && p.level === 'strongly-flagged');
+    const strongLine = strong.length
+      ? `<p class="flag-line"><b>Flagged for your home:</b> ${strong.map((p) => `<a href="${esc(p.href)}">${esc(p.name)}</a>`).join(' · ')}</p>`
+      : '';
     el.innerHTML = `
       <div class="rsec">
         <h3>Tests to ask for, and how to read the results</h3>
         <p class="sub">Ask your energy advisor for these by name: they turn “probably” into measurements. Each card says what a good or bad result looks like. <a href="/ca/tests/">Full testing guide →</a></p>
-        <div class="test-grid">${cards}</div>
+        <details class="rsec-collapse">
+          <summary>Show the ${nEnergy} energy tests and what each result means</summary>
+          <div class="test-grid">${cards}</div>
+        </details>
         ${flagCards ? `<h3 class="spec-h">Health and safety tests for your home</h3>
         <p class="sub">Screened from your answers: era, heating, water source and symptoms. These aren’t part of a standard energy audit.</p>
-        <p class="badge-legend"><b>Flagged for your home:</b> your answers point straight to it. <b>Flagged:</b> likely relevant for a home like yours. <b>Recommended:</b> good practice for any home.</p>
-        <div class="test-grid">${flagCards}</div>` : ''}
+        ${strongLine}
+        <details class="rsec-collapse">
+          <summary>Show the ${nHealth} health and safety test${nHealth === 1 ? '' : 's'} and what each result means</summary>
+          <p class="badge-legend"><b>Flagged for your home:</b> your answers point straight to it. <b>Flagged:</b> likely relevant for a home like yours. <b>Recommended:</b> good practice for any home.</p>
+          <div class="test-grid">${flagCards}</div>
+        </details>` : ''}
         <button type="button" class="btn btn-ghost btn-sm" id="copyTests">Copy my test checklist</button>
       </div>`;
     wireCopy('copyTests');
@@ -2001,7 +2068,11 @@ const privacyLine = ACCOUNTS_ENABLED
       return;
     }
     const all = D.providers.filter((p: any) => p.serves.includes(region.slug));
-    const cards = all.map((p: any) => `
+    // HRSP-approved organizations first (only their assessments earn the $600 rebate); the first
+    // few show, the rest fold away so the request form isn't buried on a phone.
+    const sorted = [...all].sort((x: any, y: any) => Number(!!y.hrsApproved) - Number(!!x.hrsApproved));
+    const FIRST = 4;
+    const card = (p: any) => `
       <div class="mini-provider">
         <a href="/ca/providers/${p.slug}/">${esc(p.name)}</a>
         <p class="reg">✓ ${esc(p.registration)}</p>
@@ -2013,12 +2084,20 @@ const privacyLine = ACCOUNTS_ENABLED
           <a href="${p.reviews.homestars}" rel="noopener nofollow" target="_blank">HomeStars</a> ·
           <a href="${p.reviews.bbb}" rel="noopener nofollow" target="_blank">BBB</a>
         </p>
-      </div>`).join('');
+      </div>`;
+    const rest = sorted.slice(FIRST);
+    const more = rest.length
+      ? `<details class="rsec-collapse">
+          <summary>Show the other ${rest.length} advisor${rest.length === 1 ? '' : 's'} in our ${esc(region.name)} directory</summary>
+          <div class="mini-providers">${rest.map(card).join('')}</div>
+        </details>`
+      : '';
     el.innerHTML = `
       <div class="rsec" id="rProvidersList">
-        <h3>All ${all.length} registered advisors serving ${esc(region.name)}</h3>
-        <p class="sub">Every listing is a licensed service organization. Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate. <a href="/ca/find/${region.slug}/">Full ${esc(region.name)} directory →</a></p>
-        <div class="mini-providers">${cards}</div>
+        <h3>${all.length} registered advisors in our ${esc(region.name)} directory${count > all.length ? ` (of ${count} NRCan-licensed organizations serving ${esc(cityName)})` : ''}</h3>
+        <p class="sub">Every listing is a licensed service organization. Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate. <a href="/ca/find/${region.slug}/">Full ${esc(region.name)} directory →</a>${count > all.length ? ` · <a href="/ca/services/home-energy-audit/${esc(ctx.R.slug)}/#providers">See the ${count} licensed organizations serving ${esc(cityName)} →</a>` : ''}</p>
+        <div class="mini-providers">${sorted.slice(0, FIRST).map(card).join('')}</div>
+        ${more}
       </div>`;
   }
 
@@ -2042,12 +2121,9 @@ const privacyLine = ACCOUNTS_ENABLED
       </div>`;
   }
 
-  function renderAuditCta(ctx: Ctx) {
-    const b = bookingFor(ctx);
-    const local = ctx.isON
-      ? ' In Ontario, the $600 Home Renovation Savings rebate covers most of its cost if you book one of the seven HRSP-approved organizations and install at least two recommended upgrades.'
-      : b?.how ? ` ${b.how}` : '';
-    $('#rAuditCtaText').textContent = `Everything above comes from how homes like yours typically perform (scaled to your bills if you entered them), not from measurements of your house. An EnerGuide evaluation, with a blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers for your address, and it’s the first step for the biggest rebates.${local}`;
+  function renderAuditCta(_ctx: Ctx) {
+    // How to book in this province is in "Your next 3 steps" at the top; don't repeat it here.
+    $('#rAuditCtaText').textContent = 'Everything above comes from how homes like yours typically perform (scaled to your bills if you entered them), not from measurements of your house. An EnerGuide evaluation, with a blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers for your address, and it’s the first step for the biggest rebates.';
   }
 
   function prefillLead(arch: any, a: Answers, syms: string[], goals: string[], ctx: Ctx, testsList: string[], m: ReturnType<typeof houseModel>, water: string) {
@@ -2089,7 +2165,7 @@ const privacyLine = ACCOUNTS_ENABLED
     }
   }
 
-  // ---------- sticky "Book my audit" bar on phones ----------
+  // ---------- sticky next-step bar on phones (text and target set in renderNext) ----------
   let stickyObs: IntersectionObserver | null = null;
   function setupSticky() {
     stickyObs?.disconnect();
@@ -2113,17 +2189,16 @@ const privacyLine = ACCOUNTS_ENABLED
   }
 
   // ---------- edit / restart / share ----------
+  document.getElementById('editTopBtn')?.addEventListener('click', () => document.getElementById('editBtn')?.click());
   document.getElementById('editBtn')?.addEventListener('click', () => {
-    resultsEl.hidden = true;
-    plannerEl.hidden = false;
+    setMode('wizard');
     maxVisited = TOTAL;
     setupSticky();
     show(1);
     plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   document.getElementById('restartBtn')?.addEventListener('click', () => {
-    resultsEl.hidden = true;
-    plannerEl.hidden = false;
+    setMode('wizard');
     form.reset();
     touched.gas = touched.elec = touched.other = false;
     syncHeatAge();

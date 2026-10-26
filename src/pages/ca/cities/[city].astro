@@ -4,6 +4,7 @@ import Photo from '../../../components/Photo.astro';
 import HousingPortrait from '../../../components/HousingPortrait.astro';
 import LeadForm from '../../../components/LeadForm.astro';
 import RegionalNeeds from '../../../components/RegionalNeeds.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
 import { placeClimate } from '../../../lib/climate';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { localIndex, loadCity, services } from '../../../lib/local';
@@ -74,9 +75,12 @@ const clim = placeClimate('ca', city.slug);
           <a class="btn btn-primary" href={`/ca/services/home-energy-audit/${city.slug}/`}>Energy audits in {city.name} →</a>
           <a class="btn btn-ghost" href="#services">All 16 services</a>
         </div>
+        <p class="small plan-link">Not sure what your house needs? <a href="/ca/plan/">Get your free plan →</a> (six short steps, no email)</p>
       </div>
       <Photo name={photoKey} eager />
     </div>
+
+    <div class="jb-wrap"><JourneyBar country="ca" current={1} ticks={false} compact /></div>
 
     <HousingPortrait
       slug={city.slug}
@@ -207,6 +211,7 @@ const clim = placeClimate('ca', city.slug);
 </Base>
 
 <style>
+  .jb-wrap { margin-bottom: 28px; }
   .facts, .svc, .who, .muni, .progsec, .comms { padding: 34px 0 0; }
   .facts h2, .svc h2, .who h2, .muni h2, .progsec h2, .comms h2 { font-size: 26px; }
   .comms .prose :global(p) { margin: 0 0 0.8em; }

@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import issuesData from '../../../data/issues.json';
 import { programs } from '../../../lib/data';
@@ -23,8 +24,10 @@ const extra = issue as typeof issue & {
 };
 
 const title = issue.programIds.length
-  ? `${issue.name} — causes, fixes, and Ontario rebates | AuditYourHome`
+  ? `${issue.name} — causes, fixes and rebates | AuditYourHome`
   : `${issue.name} — causes, fixes and who to call | AuditYourHome`;
+/** The programs listed here are Ontario's (plus Toronto's and federal ones): say so on each line. */
+const JURIS: Record<string, string> = { ontario: 'Ontario', toronto: 'Toronto only', canada: 'Canada-wide' };
 const description = issue.metaDescription;
 
 const faqs = [
@@ -67,9 +70,12 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
       <div class="hero-text">
       <h1>{issue.name}</h1>
       <p class="lede measure">{issue.symptom}</p>
+      <p class="small plan-link">See how this fits your house: <a href="/ca/plan/">get your free plan →</a> (six short steps, no email)</p>
       </div>
       <Photo name={heroPhoto} eager />
     </div>
+
+    <div class="jb-wrap"><JourneyBar country="ca" current={1} ticks={false} compact /></div>
 
     <div class="grid-2">
       <div class="card card-pad">
@@ -139,10 +145,15 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
         <ul class="clean">
           {related.map((p) => (
             <li>
-              <a href={`/ca/programs/${p.slug}/`}><strong>{p.shortName}</strong></a> — {p.headline}
+              <a href={`/ca/programs/${p.slug}/`}><strong>{p.shortName}</strong></a>
+              {JURIS[p.jurisdiction] && <span class="chip chip-neutral juris">{JURIS[p.jurisdiction]}</span>} — {p.headline}
             </li>
           ))}
         </ul>
+        <p class="small rel-more">
+          {related.some((p) => p.jurisdiction === 'ontario' || p.jurisdiction === 'toronto') && 'Outside Ontario? '}
+          <a href="/ca/programs/">See the rebates in your province or territory →</a>
+        </p>
       </div>
     )}
 
@@ -165,6 +176,7 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
 
 <style>
   .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .jb-wrap { margin-bottom: 22px; }
   .crumbs a { color: var(--muted); }
   ul.clean { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
   ul.clean.check { list-style: none; padding-left: 0; }
@@ -173,6 +185,8 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
   .ladder { margin: 0 0 10px; padding-left: 22px; display: grid; gap: 10px; font-size: 15px; }
   .ladder li { display: flex; justify-content: space-between; gap: 14px; }
   .rel { border-left: 4px solid var(--pine); margin-top: 18px; }
+  .rel .juris { margin-left: 6px; vertical-align: 1px; }
+  .rel-more { margin: 12px 0 0; }
   .regional { margin-top: 18px; border-left: 4px solid var(--heat); }
   .reg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 8px; }
   .reg { min-width: 0; }

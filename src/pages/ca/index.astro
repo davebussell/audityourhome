@@ -9,6 +9,7 @@ import { SITE, ACCOUNTS_ENABLED } from '../../config/site';
 import { organizationSchema, faqSchema } from '../../lib/schema';
 import { providers, regions } from '../../lib/data';
 import { PROVINCE_BOOKING, openPrograms, STATUS_CHIP } from '../../lib/find';
+import { JOURNEY_LABELS } from '../../lib/journey';
 
 const title = 'AuditYourHome — find a certified home energy auditor in Canada';
 const description = SITE.description;
@@ -110,33 +111,33 @@ const quickPrivacy = ACCOUNTS_ENABLED
     <div class="container">
       <div class="grid-3 steps">
         <div class="step-card">
-          <Photo name="attic-insulation-inspection" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
-          <div class="step-body">
-            <span class="step-no">1</span>
-            <h3>Your free plan</h3>
-            <p>The planner reads your home's era, heating and symptoms, and estimates what's likely behind the walls and what it's costing you, before anyone visits.</p>
-          </div>
-        </div>
-        <div class="step-card">
           <Photo name="energy-bill-analysis" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
           <div class="step-body">
-            <span class="step-no">2</span>
-            <h3>See the real money</h3>
-            <p>Your plan shows estimated savings per upgrade, typical costs and the rebates in your province, verified against official program pages.</p>
+            <span class="step-no">1</span>
+            <h3>{JOURNEY_LABELS.plan}</h3>
+            <p>The planner reads your home's era, heating and symptoms, then estimates what's likely behind the walls, what each upgrade could save in your climate and which rebates your province offers, before anyone visits.</p>
           </div>
         </div>
         <div class="step-card">
           <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
           <div class="step-body">
+            <span class="step-no">2</span>
+            <h3>{JOURNEY_LABELS.book}</h3>
+            <p>The audit is an EnerGuide evaluation by a registered energy advisor. Book it through your province's program where there is one, or we match you with one licensed organization for your area.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="attic-insulation-inspection" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
             <span class="step-no">3</span>
-            <h3>Get matched with a registered energy advisor</h3>
-            <p>To book the audit (EnerGuide evaluation): we introduce you to one licensed service organization for your area, or point you to your province's booking program.</p>
+            <h3>{JOURNEY_LABELS.visit}</h3>
+            <p>The advisor measures your house (blower door, attic, heating system) and gives you a rating and a ranked list of upgrades: the numbers your rebates are based on.</p>
           </div>
         </div>
       </div>
       <p class="steps-after small">
-        Then come the audit visit and report, and the upgrades and rebates.
-        <a href="/ca/how-it-works/">How a home energy audit works</a> · <a href="/ca/find/">How booking works in your province</a>
+        Then come the upgrades and rebates.
+        <a href="/ca/how-it-works/">How a home energy audit works</a> · <a href="/ca/find/">How booking works in your province</a> · <a href="/ca/programs/">Rebates by province</a>
       </p>
     </div>
   </section>

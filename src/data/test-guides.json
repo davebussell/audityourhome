@@ -101,7 +101,7 @@
       "stepsHeading": "What's involved",
       "steps": [
         { "t": "Measure the envelope", "p": "Wall, window, ceiling and foundation areas with their real insulation values — ideally pulled straight from your EnerGuide assessment file, which is why bundling the calculation with the audit is both cheaper and more accurate than a standalone guess." },
-        { "t": "Apply your design temperature", "p": "Every Ontario locality has a design cold — the temperature your heating must handle. The calculation runs your envelope against that number, not a national average." },
+        { "t": "Apply your design temperature", "p": "Every Canadian locality has a design temperature: the cold your heating must handle on a design winter day, from the National Building Code's climate tables. The calculation runs your envelope against that number, not a national average." },
         { "t": "Account for air leakage and gains", "p": "Your blower door number feeds in (leaky homes lose more), along with internal and solar gains. This is what separates F280 from a square-footage rule of thumb." },
         { "t": "Get room-by-room outputs", "p": "Not just a house total: each room's need in BTU/h. This is what exposes why the far bedroom never worked — and whether the fix is ducting, not a bigger furnace." },
         { "t": "Size equipment against the number", "p": "Heat pump capacity tables at cold temperatures get compared to your load: what the unit delivers at −8°C and at design temperature, and what backup covers the gap. The equipment decision becomes arithmetic instead of salesmanship." }
@@ -202,10 +202,10 @@
           { "name": "Move to sealed combustion", "band": "At replacement time", "note": "Direct-vent and power-vented equipment (condensing furnaces, power-vent water heaters) bring their own air through a sealed pipe — the whole backdraft question disappears, and the house can be as tight as you like." },
           { "name": "Electrify and retire the chimney", "band": "The end state", "note": "A heat pump and heat-pump water heater remove combustion from the house entirely — the path our planner maps, with the rebates that currently apply." }
         ],
-        "footer": "Meanwhile: working CO alarms adjacent to every sleeping area are Ontario law and your backstop — the CO guide covers placement and expiry dates. The alarm is the last line; this check is the first."
+        "footer": "Meanwhile: working CO alarms near every sleeping area are your backstop. Building codes require them in new homes with fuel-burning appliances, and some provinces (Ontario, for example) require them in existing homes too. The CO guide covers placement and expiry dates. The alarm is the last line; this check is the first."
       },
       "faqs": [
-        { "q": "I have CO alarms. Isn't that enough?", "a": "Alarms are the backstop that saves you when everything else fails — this check is what keeps them silent. Ontario's alarm law sets the floor, not the ceiling: prevention is the annual servicing plus this test, especially in the year you air-seal." },
+        { "q": "I have CO alarms. Isn't that enough?", "a": "Alarms are the backstop that saves you when everything else fails — this check is what keeps them silent. Alarm rules set the floor, not the ceiling: prevention is the annual servicing plus this test, especially in the year you air-seal." },
         { "q": "What's an 'orphaned' water heater?", "a": "When a furnace gets replaced with a high-efficiency unit that vents out the wall, the old natural-draft water heater is left alone in a chimney sized for two appliances. The oversized, cool flue drafts poorly — it's the single most common spillage finding, and a liner is the usual fix." },
         { "q": "Who actually performs the check and the fixes?", "a": "The check: your energy advisor during the assessment (it's part of the protocol when combustion appliances are present). The fixes: a licensed gas technician — TSSA-registered contractors in Ontario — or a WETT-certified professional for wood-burning equipment." }
       ],
@@ -293,7 +293,7 @@
         "footer": "Ice dams deserve one myth correction: they're usually caused by the bypasses (warm air melting the roof from below), not by 'not enough insulation' alone — which is why sealing leads the sequence and why another foot of insulation over open chases disappoints."
       },
       "faqs": [
-        { "q": "How much insulation should be up there?", "a": "Common current practice for our climate targets roughly R-50 to R-60 loose-fill. Many older Ontario attics measure R-10 to R-20 in practice once settling and gaps are counted — which is why the attic so often tops the audit's priority list: big delta, modest cost." },
+        { "q": "How much insulation should be up there?", "a": "Common current practice for our climate targets roughly R-50 to R-60 loose-fill. Many older attics measure R-10 to R-20 in practice once settling and gaps are counted — which is why the attic so often tops the audit's priority list: big delta, modest cost." },
         { "q": "Can I do the top-up myself?", "a": "Blowing loose-fill with a rented machine is genuinely DIY-able — after the sealing, hazard check, and baffles are handled, which is the skilled part. Most homes get the best result from a pro seal-and-blow package; the DIY sweet spot is the hatch, baffles, and small sealing jobs." },
         { "q": "Will more insulation stop my ice dams?", "a": "Only if the air leaks are sealed too. Ice dams form when house heat reaches the roof deck and melts snow that refreezes at the cold eave — and warm air through bypasses delivers far more heat than conduction through thin insulation. Seal, insulate, ventilate, in that order." }
       ],
@@ -321,8 +321,8 @@
       "stepsHeading": "What's involved",
       "steps": [
         { "t": "Pull 12 months of both fuels", "p": "Utility web portals export usage history in a click — kWh by month, m³ of gas by month. Twelve months minimum so both seasons are in the data; twenty-four is better because it averages a mild winter against a hard one." },
-        { "t": "Find your baseload", "p": "July gas use is your water heater and stove — that's gas baseload. The overnight-summer floor on hourly hydro data (Ontario smart meters expose it in your utility portal) is your always-on electrical load: fridges, freezers, pumps, standby electronics." },
-        { "t": "Isolate the heating share", "p": "Winter usage minus baseload is what you pay to fight the weather. For most older Ontario homes this is the dominant slice — which is why envelope and heating upgrades headline the plan." },
+        { "t": "Find your baseload", "p": "July gas use is your water heater and stove — that's gas baseload. The overnight-summer floor on hourly hydro data (if your utility has smart meters, its online account shows your hourly use) is your always-on electrical load: fridges, freezers, pumps, standby electronics." },
+        { "t": "Isolate the heating share", "p": "Winter usage minus baseload is what you pay to fight the weather. For most older Canadian homes this is the dominant slice — which is why envelope and heating upgrades headline the plan." },
         { "t": "Normalize for weather", "p": "Dividing heating energy by the winter's heating degree-days makes years comparable — so a mild February doesn't masquerade as savings, and a brutal one doesn't hide them. This is the step that separates analysis from anecdote." },
         { "t": "Benchmark and set the yardstick", "p": "Your per-degree-day, per-square-metre numbers land somewhere against similar homes — the planner's rough benchmark or your advisor's database. Whatever you upgrade next, this baseline is how you'll know it worked: same math, next winter." }
       ],
