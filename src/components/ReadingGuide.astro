@@ -1,0 +1,82 @@
+---
+/**
+ * "How to read your result" for one test: what the number measures, 2–4 result bands with what
+ * each means and what to do, the country's note and sources. Data: src/data/reading-guides.json
+ * (sourced from Health Canada, NRCan, NBC, EPA, ENERGY STAR, DOE/PNNL, ACCA, BPI, CPSC and others,
+ * checked 2026-10-26).
+ */
+import data from '../data/reading-guides.json';
+
+interface Band { label: string; range: string; means: string; do: string; countries?: string[] }
+interface Guide {
+  measure: string; unit: string; countries?: string[]; bands: Band[];
+  caNote?: string; usNote?: string; sources?: { label: string; url: string }[];
+}
+interface Props { country: 'ca' | 'us'; test: string; id?: string; heading?: string }
+const { country, test, id = 'reading', heading = 'How to read your result' } = Astro.props;
+const guides = (data as unknown as { checked: string; tests: Record<string, Guide> }).tests;
+const g = guides[test];
+const bands = g ? g.bands.filter((b) => !b.countries || b.countries.includes(country)) : [];
+const note = g ? (country === 'ca' ? g.caNote : g.usNote) : undefined;
+const show = !!g && (!g.countries || g.countries.includes(country)) && bands.length > 0;
+const checked = (data as unknown as { checked: string }).checked;
+/** Band colour by meaning (explicit, since band order isn't always good → bad). */
+const GOOD = ['Very tight', 'Tight', 'Below guideline', 'Background', 'Pass', 'At target', 'Meets code level', 'Even',
+  'Right-sized', 'Target', 'Clear', 'Built after 1990', 'Below federal threshold', 'None seen', 'No deficiencies', 'Meets code flow', 'Meets design'];
+const MID = ['Moderate', 'Consider fixing', 'CO detected', 'Below target', 'Below code level', 'Patches', 'Oversized', 'Below load',
+  'Too dry', 'Damp', 'Built 1960–1990', 'Untested pre-1978', 'Low or unbalanced', 'Humid or stale', 'Humid', 'Deficiencies'];
+const BAD = ['Leaky', 'Above guideline', 'Fix', 'Elevated', 'Dangerous', 'Spillage', 'High flue CO', 'Stop', 'Little or none',
+  'Vermiculite', 'Streaks', 'Too humid', 'Coliforms found', 'E. coli found', 'Nitrate high', 'Pre-1960 or lead found',
+  'Lead-based paint', 'Vermiculite present', 'Asbestos confirmed', 'Unsafe'];
+const tone = (b: Band) => {
+  if (b.label === 'Low') return test === 'radon' ? 'good' : 'mid';
+  if (GOOD.includes(b.label)) return 'good';
+  if (MID.includes(b.label)) return 'mid';
+  if (BAD.includes(b.label)) return 'bad';
+  return 'neutral';
+};
+---
+
+{show && g && (
+  <section class="rg" id={id} aria-labelledby={`${id}-h`}>
+    <h2 id={`${id}-h`}>{heading}</h2>
+    <p class="rg-measure"><strong>What the number is:</strong> {g.measure} <span class="rg-unit">Unit: {g.unit}</span></p>
+    <ol class="rg-bands">
+      {bands.map((b) => (
+        <li class={`rg-band rg-${tone(b)}`}>
+          <div class="rg-top"><span class="rg-label">{b.label}</span> <span class="rg-range">{b.range}</span></div>
+          <p><strong>What it means:</strong> {b.means}</p>
+          <p><strong>What to do:</strong> {b.do}</p>
+        </li>
+      ))}
+    </ol>
+    {note && <p class="rg-note">{note}</p>}
+    {g.sources && g.sources.length > 0 && (
+      <details class="rg-sources">
+        <summary>Where these numbers come from · checked {checked}</summary>
+        <ul>{g.sources.map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.label}</a></li>)}</ul>
+      </details>
+    )}
+  </section>
+)}
+
+<style>
+  .rg { margin: 40px 0; }
+  .rg-measure { max-width: 70ch; color: var(--ink); }
+  .rg-unit { display: block; color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+  .rg-bands { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .rg-band { background: var(--card); border: 1px solid var(--line); border-top-width: 4px; border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+  .rg-band p { margin: 0 0 6px; font-size: 15px; }
+  .rg-good { border-top-color: var(--pine); }
+  .rg-mid { border-top-color: var(--warn); }
+  .rg-bad { border-top-color: var(--dead); }
+  .rg-neutral { border-top-color: var(--line-strong); }
+  .rg-top { display: grid; gap: 2px; margin-bottom: 8px; }
+  .rg-label { font-family: var(--display); font-weight: 800; font-size: 17px; }
+  .rg-range { font-family: var(--mono); font-size: 13.5px; color: var(--muted); }
+  .rg-note { margin-top: 14px; font-size: 15px; color: var(--muted); max-width: 75ch; }
+  .rg-sources { margin-top: 10px; font-size: 14px; color: var(--muted); }
+  .rg-sources summary { cursor: pointer; }
+  .rg-sources ul { margin: 8px 0 0; padding-left: 1.2em; display: grid; gap: 4px; }
+  .rg-sources a { overflow-wrap: anywhere; }
+</style>

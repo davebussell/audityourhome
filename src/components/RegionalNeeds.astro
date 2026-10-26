@@ -1,0 +1,258 @@
+---
+/**
+ * "What homes here need": a place's climate profile turned into audit priorities, the tests that
+ * matter, upgrades that usually pay off, equipment and health notes, mistakes to avoid and when to
+ * book. Data and sources: src/data/climate/*.json via src/lib/climate.ts.
+ *
+ * Variants:
+ *   full     — the whole profile (metro guides, city pages)
+ *   compact  — summary + top priorities + link to the full version (province, area, calculator pages)
+ *   service  — what one test means in this climate (local service pages); needs testSlug
+ *   heatpump — equipment, upgrades and mistakes relevant to choosing a heat pump or AC
+ */
+import type { ClimateProfile, PlaceClimate, Country } from '../lib/climate';
+import { testName, testHref, CA_SERVICE_FOR_TEST, CLIMATE_CHECKED } from '../lib/climate';
+
+interface Props {
+  country: Country;
+  profile: ClimateProfile;
+  place?: PlaceClimate | null;
+  placeName: string;
+  /** City slug (Canada) so test links go to the local service page */
+  citySlug?: string;
+  variant?: 'full' | 'compact' | 'service' | 'heatpump';
+  testSlug?: string;
+  /** Link to the page with the full profile (compact/service/heatpump variants) */
+  moreHref?: string;
+  id?: string;
+  heading?: string;
+}
+
+const {
+  country, profile: p, place, placeName, citySlug, variant = 'full', testSlug, moreHref, id = 'regional-needs', heading,
+} = Astro.props;
+
+const tHref = (slug: string) => {
+  if (country === 'ca' && citySlug && CA_SERVICE_FOR_TEST[slug]) return `/ca/services/${CA_SERVICE_FOR_TEST[slug]}/${citySlug}/`;
+  return testHref(country, slug);
+};
+const tests = p.tests.filter((t) => testName(country, t.test));
+const svcTest = testSlug ? p.tests.find((t) => t.test === testSlug) : undefined;
+const svcPriorities = testSlug ? p.priorities.filter((x) => x.tests.includes(testSlug)) : [];
+const hpWords = /heat pump|air condition|\bAC\b|cooling|SEER|HSPF|backup heat|Manual J|load calc|heat-loss|dehumidif|ductless|mini-split|furnace|boiler/i;
+const hpUpgrades = p.upgrades.filter((u) => hpWords.test(`${u.title} ${u.why}`));
+const hpAvoid = p.avoid.filter((a) => hpWords.test(`${a.title} ${a.why}`));
+const sources = [...(p.sources ?? []), ...(place?.sources ?? [])].filter(
+  (s, i, arr) => s && s.url && arr.findIndex((x) => x.url === s.url) === i,
+);
+const checked = CLIMATE_CHECKED[country];
+const checkedLabel = checked ? new Date(`${checked}T12:00:00Z`).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }) : '';
+const title = heading ?? (variant === 'full'
+  ? `What homes in ${placeName} need`
+  : variant === 'service'
+    ? `What this means in ${placeName}’s climate`
+    : variant === 'heatpump'
+      ? `Choosing equipment for ${placeName}’s climate`
+      : `${placeName}’s climate: ${p.label.toLowerCase()}`);
+const advisor = country === 'ca' ? 'energy advisor' : 'auditor';
+---
+
+<section class={`rn rn-${variant}`} id={id} aria-labelledby={`${id}-h`}>
+  <div class="rn-head">
+    <p class="rn-kicker"><span class="rn-chip">{p.label}</span> <span class="rn-region">{p.regionName}</span></p>
+    <h2 id={`${id}-h`}>{title}</h2>
+    {variant !== 'service' && <p class="rn-one">{p.oneLiner}</p>}
+  </div>
+
+  {variant === 'full' && (
+    <Fragment>
+      <p class="rn-summary measure">{p.summary}</p>
+      {place?.note && <p class="rn-local measure"><strong>In {placeName}:</strong> {place.note}</p>}
+
+      <div class="rn-grid">
+        <div class="rn-card">
+          <h3>What drives bills and comfort here</h3>
+          <ul class="rn-list">{p.drivers.map((d) => <li>{d}</li>)}</ul>
+        </div>
+        {place?.hazards && place.hazards.length > 0 && (
+          <div class="rn-card">
+            <h3>Local risks to plan for</h3>
+            <ul class="rn-list">{place.hazards.map((h) => <li>{h}</li>)}</ul>
+          </div>
+        )}
+      </div>
+
+      <h3 class="rn-sub">What to check first, and why</h3>
+      <ol class="rn-steps">
+        {p.priorities.map((x) => (
+          <li>
+            <p class="rn-step-title">{x.title}</p>
+            <p>{x.why}</p>
+            <p class="rn-ask"><span>Ask your {advisor}:</span> {x.ask}</p>
+            {x.tests.length > 0 && (
+              <p class="rn-tests">
+                {x.tests.map((t) => {
+                  const h = tHref(t);
+                  return h ? <a class="rn-test" href={h}>{testName(country, t)}</a> : <span class="rn-test">{testName(country, t)}</span>;
+                })}
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+
+      <div class="rn-grid">
+        <div class="rn-card">
+          <h3>Tests that matter most here</h3>
+          <ul class="rn-tlist">
+            {tests.map((t) => {
+              const h = tHref(t.test);
+              return (
+                <li>
+                  {h ? <a href={h}><strong>{testName(country, t.test)}</strong></a> : <strong>{testName(country, t.test)}</strong>}
+                  <span>{t.why}</span>
+                  <span class="rn-when">Best timing: {t.when}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div class="rn-card">
+          <h3>Upgrades that usually pay off here</h3>
+          <ol class="rn-olist">
+            {p.upgrades.map((u) => (
+              <li><strong>{u.title}.</strong> {u.why}{u.note && <span class="rn-note"> {u.note}</span>}</li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      <div class="rn-grid rn-grid-3">
+        <div class="rn-card">
+          <h3>Heating and cooling equipment</h3>
+          <ul class="rn-list">{p.equipment.map((e) => <li>{e}</li>)}</ul>
+        </div>
+        <div class="rn-card">
+          <h3>Health and comfort</h3>
+          <ul class="rn-list">{p.health.map((e) => <li>{e}</li>)}</ul>
+        </div>
+        <div class="rn-card rn-warn">
+          <h3>Common mistakes in this climate</h3>
+          <ul class="rn-list">{p.avoid.map((a) => <li><strong>{a.title}.</strong> {a.why}</li>)}</ul>
+        </div>
+      </div>
+
+      <p class="rn-season"><strong>When to book:</strong> {p.seasonNote}</p>
+    </Fragment>
+  )}
+
+  {variant === 'compact' && (
+    <Fragment>
+      <p class="rn-summary measure">{p.summary}</p>
+      {place?.note && <p class="rn-local measure"><strong>In {placeName}:</strong> {place.note}</p>}
+      <ol class="rn-steps rn-steps-compact">
+        {p.priorities.slice(0, 3).map((x) => (
+          <li><p class="rn-step-title">{x.title}</p><p>{x.why}</p></li>
+        ))}
+      </ol>
+      <p class="rn-season"><strong>When to book:</strong> {p.seasonNote}</p>
+      {moreHref && <p><a class="rn-more" href={moreHref}>Everything homes in {placeName} need →</a></p>}
+    </Fragment>
+  )}
+
+  {variant === 'service' && (
+    <Fragment>
+      <p class="rn-one">{p.oneLiner}</p>
+      {svcTest ? (
+        <div class="rn-card rn-svc">
+          <p><strong>Why it matters here:</strong> {svcTest.why}</p>
+          <p><strong>Best timing:</strong> {svcTest.when}</p>
+        </div>
+      ) : (
+        <p class="rn-summary measure">{p.summary}</p>
+      )}
+      {svcPriorities.length > 0 && (
+        <ul class="rn-list">
+          {svcPriorities.map((x) => <li><strong>{x.title}.</strong> {x.why} <span class="rn-ask"><span>Ask:</span> {x.ask}</span></li>)}
+        </ul>
+      )}
+      {moreHref && <p><a class="rn-more" href={moreHref}>What else homes in {placeName} need →</a></p>}
+    </Fragment>
+  )}
+
+  {variant === 'heatpump' && (
+    <Fragment>
+      <p class="rn-summary measure">{p.summary}</p>
+      <div class="rn-grid">
+        <div class="rn-card">
+          <h3>What to look for in this climate</h3>
+          <ul class="rn-list">{p.equipment.map((e) => <li>{e}</li>)}</ul>
+        </div>
+        <div class="rn-card">
+          <h3>Do these alongside the new system</h3>
+          <ul class="rn-list">{(hpUpgrades.length ? hpUpgrades : p.upgrades.slice(0, 3)).map((u) => <li><strong>{u.title}.</strong> {u.why}</li>)}</ul>
+        </div>
+      </div>
+      {hpAvoid.length > 0 && (
+        <div class="rn-card rn-warn">
+          <h3>Mistakes to avoid</h3>
+          <ul class="rn-list">{hpAvoid.map((a) => <li><strong>{a.title}.</strong> {a.why}</li>)}</ul>
+        </div>
+      )}
+      {moreHref && <p><a class="rn-more" href={moreHref}>What else homes in {placeName} need →</a></p>}
+    </Fragment>
+  )}
+
+  {sources.length > 0 && (
+    <details class="rn-sources">
+      <summary>Sources for this climate guide{checkedLabel && ` · checked ${checkedLabel}`}</summary>
+      <ul>
+        {sources.map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.label}</a></li>)}
+      </ul>
+    </details>
+  )}
+</section>
+
+<style>
+  .rn { margin: 44px 0; }
+  .rn-head h2 { margin-bottom: 0.3em; }
+  .rn-kicker { margin: 0 0 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
+  .rn-chip { display: inline-block; padding: 3px 10px; border-radius: 999px; background: var(--heat-tint); color: var(--heat-deep); font-weight: 700; font-size: 12.5px; letter-spacing: 0.02em; text-transform: uppercase; }
+  .rn-one { font-size: 18.5px; color: var(--ink); font-weight: 600; margin: 0 0 14px; max-width: 62ch; }
+  .rn-summary { color: var(--muted); margin: 0 0 14px; }
+  .rn-local { background: var(--pine-tint); border-left: 4px solid var(--pine); padding: 10px 14px; border-radius: 6px; margin: 0 0 18px; }
+  .rn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 18px 0; }
+  .rn-grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .rn-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow-sm); min-width: 0; }
+  .rn-card h3 { font-size: 17px; margin-bottom: 10px; }
+  .rn-warn { border-color: var(--warn-tint); background: #FFFCF5; }
+  .rn-list, .rn-olist { margin: 0; padding-left: 1.15em; display: grid; gap: 8px; }
+  .rn-list li, .rn-olist li { font-size: 15.5px; }
+  .rn-note { color: var(--muted); }
+  .rn-sub { margin-top: 26px; }
+  .rn-steps { list-style: none; counter-reset: rn; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+  .rn-steps > li { counter-increment: rn; position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px 14px 58px; }
+  .rn-steps > li::before { content: counter(rn); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: #fff; font: 700 14px/28px var(--display); text-align: center; }
+  .rn-steps p { margin: 0 0 6px; font-size: 15.5px; }
+  .rn-step-title { font-family: var(--display); font-weight: 800; font-size: 17px !important; }
+  .rn-ask { color: var(--ink); }
+  .rn-ask > span:first-child { font-weight: 700; color: var(--pine-deep); }
+  .rn-tests { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px !important; }
+  .rn-test { font-size: 13px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--steel); text-decoration: none; background: #fff; }
+  a.rn-test:hover { border-color: var(--steel); }
+  .rn-tlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .rn-tlist li { display: grid; gap: 2px; font-size: 15.5px; }
+  .rn-when { color: var(--muted); font-size: 14px; }
+  .rn-season { background: #F3F0E9; border-radius: var(--radius); padding: 12px 16px; font-size: 15.5px; margin: 16px 0; }
+  .rn-svc p { margin: 0 0 6px; }
+  .rn-more { font-weight: 700; }
+  .rn-sources { margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .rn-sources summary { cursor: pointer; }
+  .rn-sources ul { margin: 8px 0 0; padding-left: 1.2em; display: grid; gap: 4px; }
+  .rn-sources a { overflow-wrap: anywhere; }
+  @media (max-width: 520px) {
+    .rn-steps > li { padding: 14px 14px 12px 50px; }
+    .rn-steps > li::before { left: 12px; }
+    .rn-card { padding: 16px; }
+  }
+</style>

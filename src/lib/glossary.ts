@@ -57,14 +57,15 @@ export interface GlossaryEntry {
 export const GLOSSARY = (data as unknown as { entries: GlossaryEntry[] }).entries;
 export const GLOSSARY_CHECKED: string | null = (data as unknown as { checked?: string | null }).checked ?? null;
 
-export const CATEGORY_ORDER = ['testing', 'envelope', 'hvac', 'water', 'bills', 'health', 'programs', 'climate'] as const;
+export const CATEGORY_ORDER = ['testing', 'envelope', 'hvac', 'water', 'bills', 'health', 'safety', 'programs', 'climate'] as const;
 export const CATEGORY_LABEL: Record<string, string> = {
   testing: 'Testing & air leaks',
   envelope: 'Insulation & windows',
   hvac: 'Heating, cooling & ventilation',
   water: 'Hot water',
   bills: 'Energy, bills & ratings',
-  health: 'Health & safety',
+  health: 'Health & indoor air',
+  safety: 'Fire & electrical safety',
   programs: 'Programs & credentials',
   climate: 'Climate',
 };

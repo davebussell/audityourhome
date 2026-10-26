@@ -27,7 +27,7 @@ import { ciSource, csSource } from '../../src/lib/glossary-patterns.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const OUT = join(ROOT, 'src', 'data', 'glossary.json');
-const CATEGORIES = ['testing', 'envelope', 'hvac', 'water', 'bills', 'health', 'programs', 'climate'];
+const CATEGORIES = ['testing', 'envelope', 'hvac', 'water', 'bills', 'health', 'safety', 'programs', 'climate'];
 
 /** Phrases too generic or ambiguous to auto-link (compared lower-case). */
 const AMBIGUOUS = new Set([

@@ -1,0 +1,1153 @@
+{
+  "checked": "2026-10-26",
+  "tests": {
+    "blower-door": {
+      "measure": "Air leakage at 50 Pa of pressure: ACH50 = CFM50 × 60 ÷ house volume in cubic feet.",
+      "unit": "ACH50 (air changes per hour at 50 Pa)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Very tight",
+          "range": "1.5 ACH50 or less",
+          "means": "Meets the R-2000 limit and the coldest-zone Zero Energy Ready Home target; very little air leaks through the shell.",
+          "do": "Make sure mechanical ventilation (HRV, ERV or fans) runs, because leaks no longer bring in fresh air.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Tight",
+          "range": "Over 1.5 to 3 ACH50",
+          "means": "Meets the 3 ACH50 US code limit for most climates; Canadian code airtightness tiers start at 2.5.",
+          "do": "Seal remaining leaks found with smoke or infrared, and confirm ventilation is adequate.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Moderate",
+          "range": "Over 3 to 5 ACH50",
+          "means": "Above most new-home limits (US code allows up to 5 only in zones 1–2); worthwhile air sealing remains.",
+          "do": "Make air sealing a priority: attic floor, rim joists, and gaps around windows, doors, pipes and wires.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Leaky",
+          "range": "Over 5 ACH50",
+          "means": "Leakier than the 2018–2021 US model code allows in any climate zone; expect drafts and wasted energy.",
+          "do": "Air-seal first, then retest; check combustion appliances and ventilation after sealing.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NRCan calls air sealing the first and most important retrofit. R-2000 homes must test at 1.5 ACH50 or less; NBC 2020 levels run 2.5 to 0.6. Metric: ACH50 = m³/h at 50 Pa ÷ volume (m³).",
+      "usNote": "2018 and 2021 IECC: 3 ACH50 maximum in climate zones 3–8 and 5 in zones 1–2; 2021 also caps trade-offs at 5. DOE Zero Energy Ready Homes need 1.5–3 by zone.",
+      "sources": [
+        {
+          "label": "Building America Solution Center (DOE/PNNL): Enclosure leakage test (ACH50 formula)",
+          "url": "https://basc.pnnl.gov/resource-guides/enclosure-leakage-test"
+        },
+        {
+          "label": "energycodes.gov (DOE): 2021 IECC residential changes webinar slides (air leakage limits)",
+          "url": "https://www.energycodes.gov/sites/default/files/2021-02/2021_IECC_Residential_Webinar_presentation_slides.pdf"
+        },
+        {
+          "label": "Building America Solution Center: DOE Zero Energy Ready Home ACH50 limits",
+          "url": "https://basc.pnnl.gov/information/infiltration-meets-ach50-requirements"
+        },
+        {
+          "label": "NRCan: Details of the R-2000 Standard (airtightness requirement)",
+          "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/details-r-2000-standard"
+        },
+        {
+          "label": "NRC Codes Canada: National Building Code of Canada 2020 (free PDF via NRC Publications Archive)",
+          "url": "https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada/codes-canada-publications/national-building-code-canada-2020"
+        },
+        {
+          "label": "NRCan: Keeping the Heat In (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/canmetenergy/pdf/housing/KeepingtheHeatIn.pdf"
+        },
+        {
+          "label": "Building America Solution Center: Home performance assessment",
+          "url": "https://basc.pnnl.gov/information/home-performance-assessment"
+        }
+      ]
+    },
+    "duct-leakage": {
+      "measure": "Air leaking from ducts at 25 Pa, per 100 sq ft of floor area or % of fan airflow.",
+      "unit": "CFM25 per 100 sq ft of conditioned floor area (or % of system airflow)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Tight",
+          "range": "4 or less CFM25 per 100 sq ft (total, or leakage to outside)",
+          "means": "Meets the US code limit for new homes; very little heated or cooled air is lost.",
+          "do": "No sealing needed; insulate any ducts that run through attics, crawl spaces or garages.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Moderate",
+          "range": "Over 4 to 8 CFM25 per 100 sq ft (total)",
+          "means": "Within ENERGY STAR's final-test limit for new homes but above the code limit; leaks outside the living space waste energy.",
+          "do": "Seal joints and connections with mastic or metal tape, never duct tape, starting with ducts outside the living space.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Leaky",
+          "range": "Over 8 CFM25 per 100 sq ft (total)",
+          "means": "Leakier than new-home limits; a typical unsealed system loses 20–30% of the air it moves.",
+          "do": "Have the ducts professionally sealed and retested before buying bigger heating or cooling equipment.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "These benchmarks come from US code and ENERGY STAR; use them as a yardstick in Canada. Leakage to outside matters most where ducts run through attics, crawl spaces or garages.",
+      "usNote": "IECC 2012–2021 caps total leakage at 4 CFM25 per 100 sq ft (8 when all ducts are inside, 2021). ENERGY STAR caps leakage to outside at 4. Percent = CFM25 ÷ fan flow (~400 CFM per ton).",
+      "sources": [
+        {
+          "label": "Building America Solution Center: Duct leakage tests (IECC and ENERGY STAR limits)",
+          "url": "https://basc.pnnl.gov/resource-guides/duct-leakage-tests"
+        },
+        {
+          "label": "ENERGY STAR Single-Family New Homes: National Rater Field Checklist, Rev. 14 (PDF)",
+          "url": "https://www.energystar.gov/sites/default/files/2025-04/National%20Rater%20Field%20Checklist_Rev%2014.pdf"
+        },
+        {
+          "label": "ENERGY STAR: Duct sealing",
+          "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+        }
+      ]
+    },
+    "radon": {
+      "measure": "Average radon gas level in the lived-in part of the home, ideally from a long-term test.",
+      "unit": "Bq/m³ (Canada) · pCi/L (US); 37 Bq/m³ = 1 pCi/L",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Below guideline",
+          "range": "200 Bq/m³ or less (about 5.4 pCi/L), long-term test",
+          "means": "Low risk, though Health Canada says no radon level is risk-free.",
+          "do": "No fix needed. Retest after renovations or energy retrofits, or if under 91 test days fell in the heating season.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Above guideline",
+          "range": "Over 200 Bq/m³",
+          "means": "Health Canada recommends reducing it within 1 year, and sooner the higher it is.",
+          "do": "Hire a C-NRPP certified mitigation professional; aim as low as reasonably achievable, then retest.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Short test only",
+          "range": "Any result from a test shorter than 91 days",
+          "means": "Too short to estimate your yearly average; Health Canada says short tests shouldn't drive fix decisions.",
+          "do": "Run a long-term test of at least 91 days, mostly during the heating season.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Low",
+          "range": "Under 2 pCi/L (under 75 Bq/m³)",
+          "means": "Below EPA's 'consider fixing' range; the average US home is about 1.3 pCi/L.",
+          "do": "No fix needed. Test again in the future, and on any lower level you start living in.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Consider fixing",
+          "range": "2 to under 4 pCi/L (75–150 Bq/m³)",
+          "means": "EPA says no level is safe and suggests considering a fix in this range.",
+          "do": "Weigh a mitigation system; EPA says most homes can be brought to 2 pCi/L or below.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Fix",
+          "range": "4 pCi/L or more (about 150 Bq/m³ or more)",
+          "means": "At or above EPA's action level; EPA recommends fixing the home.",
+          "do": "Confirm a short-term result with a follow-up test, then hire a qualified radon mitigation contractor.",
+          "countries": [
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Use a long-term test of at least 91 days, mostly in the heating season. Health Canada notes results can vary about 25%, so readings near 200 Bq/m³ could fall either side.",
+      "usNote": "EPA: after a short-term (2–90 day) result of 4 pCi/L or more, confirm with a long-term or second short-term test; above 8 pCi/L, retest immediately. 1 pCi/L = 37 Bq/m³.",
+      "sources": [
+        {
+          "label": "Health Canada: Radon guideline",
+          "url": "https://www.canada.ca/en/health-canada/services/health-risks-safety/radiation/radon/government-canada-radon-guideline.html"
+        },
+        {
+          "label": "Health Canada: Guide for radon measurements in homes",
+          "url": "https://www.canada.ca/en/health-canada/services/publications/health-risks-safety/guide-radon-measurements-residential-dwellings.html"
+        },
+        {
+          "label": "US EPA: What is EPA's action level for radon?",
+          "url": "https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean"
+        },
+        {
+          "label": "US EPA: A Citizen's Guide to Radon (PDF)",
+          "url": "https://www.epa.gov/sites/default/files/2016-12/documents/2016_a_citizens_guide_to_radon.pdf"
+        }
+      ]
+    },
+    "carbon-monoxide": {
+      "measure": "Carbon monoxide in indoor air, read from a CO meter or a low-level CO monitor.",
+      "unit": "ppm (parts per million)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Background",
+          "range": "Under 9 ppm",
+          "means": "Typical when nothing is leaking; homes without gas stoves usually read 0.5–5 ppm.",
+          "do": "Keep certified CO alarms near bedrooms and have fuel-burning appliances serviced every year.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "CO detected",
+          "range": "9 to 35 ppm",
+          "means": "Something is adding CO. Health Canada's limits are 10 ppm averaged over 24 hours and 25 ppm over 1 hour.",
+          "do": "Open windows, check stoves, heaters and the attached garage, and have fuel-burning appliances checked by a qualified technician.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Elevated",
+          "range": "36 to 69 ppm",
+          "means": "Well above Health Canada's limits; people with heart disease may feel chest pain.",
+          "do": "Open windows and doors, turn off fuel-burning appliances, and get a qualified technician in before using them again.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Dangerous",
+          "range": "70 ppm or more, or any alarm sounding",
+          "means": "Headaches, fatigue and nausea become more noticeable; sustained levels above 150–200 ppm can cause collapse and death.",
+          "do": "Get everyone outside to fresh air now and call 911 or the fire department; return only when responders say it's safe.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Health Canada: buy alarms certified to CSA 6.19 and consider one with a digital display for low levels. New homes need an alarm in or within 5 m of each bedroom (NBC 2020).",
+      "usNote": "UL 2034 alarms must sound within 60–240 minutes at 70 ppm, 10–50 at 150 ppm and 4–15 at 400 ppm, and stay quiet at 30 ppm, so silence isn't proof of zero.",
+      "sources": [
+        {
+          "label": "ANSI/BPI-1200-S-2017 Standard Practice for Basic Analysis of Buildings (PDF)",
+          "url": "https://www.bpi.org/__cms/docs/ANSI%20BPI-1200-S-2017%20Standard%20Practice%20for%20Basic%20Analysis%20of%20Buildings.pdf"
+        },
+        {
+          "label": "Health Canada: Residential indoor air quality guideline, carbon monoxide",
+          "url": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guideline-carbon-monoxide.html"
+        },
+        {
+          "label": "Health Canada: Carbon monoxide, preventing exposure (alarms, what to do)",
+          "url": "https://www.canada.ca/en/health-canada/services/air-quality/pollutants/carbon-monoxide/preventing-exposure.html"
+        },
+        {
+          "label": "US EPA: What is the average level of carbon monoxide in homes?",
+          "url": "https://www.epa.gov/indoor-air-quality-iaq/what-average-level-carbon-monoxide-homes"
+        },
+        {
+          "label": "US CPSC: Carbon monoxide questions and answers",
+          "url": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center/Carbon-Monoxide-Questions-and-Answers"
+        },
+        {
+          "label": "US CPSC: CO alarm conformance testing to UL 2034 (alarm response times, PDF)",
+          "url": "https://www.cpsc.gov/s3fs-public/pdfs/COAlarmConformanceReportPhaseI.pdf"
+        },
+        {
+          "label": "NRC Codes Canada: National Building Code of Canada 2020 (free PDF via NRC Publications Archive)",
+          "url": "https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada/codes-canada-publications/national-building-code-canada-2020"
+        }
+      ]
+    },
+    "combustion-safety": {
+      "measure": "Whether flue gases go up the chimney under worst-case house pressure, plus CO in the flue gas.",
+      "unit": "Pass/fail (spillage) · ppm CO air-free (flue gas)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Pass",
+          "range": "No spillage after 2 min (water heater) or 5 min (furnace, boiler); flue CO at or under its limit",
+          "means": "Appliances vent safely even with exhaust fans, dryer and air handler running.",
+          "do": "Retest after air sealing, new exhaust fans or equipment changes, and keep yearly servicing.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Spillage",
+          "range": "Exhaust spills at the draft hood beyond those times",
+          "means": "House depressurization or a venting problem can pull exhaust, including CO, back indoors.",
+          "do": "Have a pro fix the cause: leaky ducts, too little combustion air or vent faults; consider sealed-combustion or heat pump replacement.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "High flue CO",
+          "range": "Over the appliance limit (e.g., 400 ppm air-free for furnaces and boilers, 200 for water heaters)",
+          "means": "The burner is producing too much CO and needs adjustment or repair.",
+          "do": "Have it serviced right away by a qualified technician; if it also spills, shut it off until fixed.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Stop",
+          "range": "Ambient CO 70 ppm or more, or a gas leak detected",
+          "means": "An immediate danger, so the test is halted.",
+          "do": "Leave the house, then call emergency services and the gas utility from outside.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NRCan warning signs: soot or staining near the burner or draft hood, melted plastic on the water heater top, unusual odours or frequent headaches. Canada's code references the CAN/CGSB-51.71 depressurization test.",
+      "usNote": "BPI-1200 flue CO limits: furnaces, boilers and dryers 400 ppm air-free; water heaters and vented room heaters 200; gas ovens 225 ppm as measured.",
+      "sources": [
+        {
+          "label": "ANSI/BPI-1200-S-2017 Standard Practice for Basic Analysis of Buildings (PDF)",
+          "url": "https://www.bpi.org/__cms/docs/ANSI%20BPI-1200-S-2017%20Standard%20Practice%20for%20Basic%20Analysis%20of%20Buildings.pdf"
+        },
+        {
+          "label": "NRCan: Keeping the Heat In (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/canmetenergy/pdf/housing/KeepingtheHeatIn.pdf"
+        },
+        {
+          "label": "Building America Solution Center: Home performance assessment",
+          "url": "https://basc.pnnl.gov/information/home-performance-assessment"
+        },
+        {
+          "label": "NRC Codes Canada: National Building Code of Canada 2020 (free PDF via NRC Publications Archive)",
+          "url": "https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada/codes-canada-publications/national-building-code-canada-2020"
+        }
+      ]
+    },
+    "attic-inspection": {
+      "measure": "Insulation depth and type on the attic floor, converted to R-value (RSI in Canada), plus air leaks and vermiculite.",
+      "unit": "R-value (US) · RSI (Canada); R = RSI × 5.678",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "At target",
+          "range": "R-60 or more in zones 4–8, R-49 in zones 2–3, R-30 in zone 1",
+          "means": "Matches ENERGY STAR's recommended level; adding more may not pay off.",
+          "do": "Check for even depth at the eaves and sealed bypasses around lights, pipes and the hatch.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Below target",
+          "range": "Joists covered, but under your zone's target",
+          "means": "Heat moves through the ceiling faster than it should, raising heating and cooling bills.",
+          "do": "Air-seal the attic floor first, then top up to your zone's target R-value.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Meets code level",
+          "range": "RSI 8.67 (R-49) or more in zones 5–6; RSI 6.91 (R-39) in zone 4; RSI 10.43 (R-59) in zones 7A–8",
+          "means": "At or above the NBC 2020 minimum for a new house in your climate zone.",
+          "do": "Check for even depth at the eaves and sealed gaps around lights, pipes and the hatch.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Below code level",
+          "range": "Joists covered, but under your zone's code level",
+          "means": "Heat escapes through the ceiling faster than a new home would allow, raising heating bills.",
+          "do": "Air-seal the attic floor first, then top up; Québec recommends R-50 or more.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Little or none",
+          "range": "Level with or below the tops of the ceiling joists",
+          "means": "Probably far below recommended levels; ENERGY STAR says this usually means you need more.",
+          "do": "Seal attic air leaks, add baffles at the eaves, then add insulation to your zone's level.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Vermiculite",
+          "range": "Pebble-like, pour-in granules between the joists",
+          "means": "May contain asbestos; Health Canada and EPA say to treat it as hazardous and leave it undisturbed.",
+          "do": "Stop work, don't disturb or remove it, and hire an asbestos professional before any insulation job.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NBC 2020 values assume no HRV (zones 5 and 7A drop a step with one) and are effective values that count the joists, so the insulation itself needs slightly more. Check your province's code.",
+      "usNote": "ENERGY STAR: multiply depth by about R-2.5/inch (loose fiberglass), R-3.7 (cellulose) or R-3.2 (batts). Over 3–4 existing inches, add R-38 (zones 2–3) or R-49 (zones 4–8).",
+      "sources": [
+        {
+          "label": "ENERGY STAR: Recommended home insulation R-values",
+          "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+        },
+        {
+          "label": "ENERGY STAR: DIY checks and inspections (attic insulation levels)",
+          "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections"
+        },
+        {
+          "label": "NRC Codes Canada: National Building Code of Canada 2020 (free PDF via NRC Publications Archive)",
+          "url": "https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada/codes-canada-publications/national-building-code-canada-2020"
+        },
+        {
+          "label": "Gouvernement du Québec: Insulation (attic R-value recommendation)",
+          "url": "https://www.quebec.ca/en/housing-territory/heating-energy-consumption/reducing-energy-consumption-at-home/building-insulation-management/insulation"
+        },
+        {
+          "label": "NRCan: Keeping the Heat In (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/canmetenergy/pdf/housing/KeepingtheHeatIn.pdf"
+        },
+        {
+          "label": "US EPA: Protect your family from asbestos-contaminated vermiculite insulation",
+          "url": "https://www.epa.gov/asbestos/protect-your-family-asbestos-contaminated-vermiculite-insulation"
+        },
+        {
+          "label": "Health Canada: Asbestos and your health (vermiculite advice)",
+          "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/health-risks-asbestos.html"
+        }
+      ]
+    },
+    "thermal-imaging": {
+      "measure": "Surface temperature patterns on an infrared image, read for shape and location rather than exact numbers.",
+      "unit": "Qualitative (surface temperature pattern)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Even",
+          "range": "Fairly even tones; regular lines at studs, joists and window frames",
+          "means": "Insulation is consistent; lines at framing are normal heat flow through wood (thermal bridging).",
+          "do": "No action needed; keep the images as a baseline to compare after future work.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Patches",
+          "range": "Cavity-shaped cold areas in heating season, or warm areas in cooling season",
+          "means": "Missing, settled or displaced insulation in that section of wall or ceiling.",
+          "do": "Confirm in the attic or cavity, seal leaks, then top up or dense-pack the insulation.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Streaks",
+          "range": "Feathered streaks (cold in winter, warm in summer) at top plates, baseboards, outlets, fans, hatches or windows",
+          "means": "Air leakage: outdoor or attic air is moving through gaps into the house.",
+          "do": "Seal those spots with caulk, foam, gaskets or weatherstripping, then rescan under the blower door.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NRCan pairs an infrared scan with a blower door test to find air leaks and missing insulation; a cold day with a big indoor–outdoor difference gives the clearest picture.",
+      "usNote": "BASC: infrared works when indoor and outdoor temperatures differ a lot. In summer, look for warm spots where hot attic air enters, such as around recessed lights.",
+      "sources": [
+        {
+          "label": "Building America Solution Center (DOE/PNNL): Enclosure leakage test (ACH50 formula)",
+          "url": "https://basc.pnnl.gov/resource-guides/enclosure-leakage-test"
+        },
+        {
+          "label": "NRCan: Keeping the Heat In (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/canmetenergy/pdf/housing/KeepingtheHeatIn.pdf"
+        },
+        {
+          "label": "BASC image: even wall image indicates consistent insulation",
+          "url": "https://basc.pnnl.gov/images/ir-camera-image-exterior-wall-shows-fairly-even-warm-color-indicating-wall-insulation"
+        },
+        {
+          "label": "BASC image: thermal bridging through wall framing",
+          "url": "https://basc.pnnl.gov/images/thermal-bridging-or-heat-transfer-through-wall-framing-seen-infrared-camera-image-yellow"
+        },
+        {
+          "label": "BASC image: dark ceiling spots indicate missing or displaced attic insulation",
+          "url": "https://basc.pnnl.gov/images/dark-spots-ceiling-infrared-camera-image-likely-indicate-missing-or-displaced-attic"
+        },
+        {
+          "label": "BASC image: dark spots and streaks show cold air leaking around a bath fan",
+          "url": "https://basc.pnnl.gov/images/dark-spots-and-streaks-infrared-camera-photo-clearly-show-cold-air-leaking-through-gaps"
+        },
+        {
+          "label": "BASC image: purple streaks show air leakage along top plates",
+          "url": "https://basc.pnnl.gov/images/purple-streaks-ir-camera-image-indicate-air-leakage-along-top-plates-which-allowing-cold-air"
+        },
+        {
+          "label": "BASC image: warm areas show attic heat entering around recessed lights",
+          "url": "https://basc.pnnl.gov/images/yellow-areas-infrared-camera-image-show-where-heat-attic-entering-home-around-recessed-can"
+        }
+      ]
+    },
+    "heat-loss-calc": {
+      "measure": "Installed heating or cooling capacity as a percentage of the room-by-room design load (Manual J or CSA F280).",
+      "unit": "% of design load (Btu/h or W)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Right-sized",
+          "range": "Furnace or boiler 100–140% of heat loss; AC or heat pump 90–115% of cooling load (to 120–130% if multi-speed)",
+          "means": "Within ACCA Manual S limits; the system can meet design conditions without excessive cycling.",
+          "do": "Go ahead; check the quote lists the load calculation and the unit's capacity at design temperature.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Oversized",
+          "range": "Above those limits",
+          "means": "Costs more, short-cycles and gives temperature swings and drafts; a heat pump may miss its expected savings.",
+          "do": "Ask for smaller or variable-capacity equipment chosen from the room-by-room calculation.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Below load",
+          "range": "Under 100% of heat loss, or under 90% of cooling load",
+          "means": "A furnace may not keep up on the coldest days; a heat pump will lean more on backup heat.",
+          "do": "Confirm the backup heat plan and expected use, or choose a larger or cold-climate model.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NRCan recommends a recognized load method such as CSA F280-12. Manual S percentages are a US benchmark; ask your designer which sizing limits they used.",
+      "usNote": "Manual S lets a heat pump exceed the cooling load by up to 15,000 Btu/h in heating-dominated, dry climates ('Condition B'). Furnaces paired with AC are allowed up to 400%.",
+      "sources": [
+        {
+          "label": "ENERGY STAR: National HVAC Design Report Rev. 14 (ACCA Manual S sizing limits, PDF)",
+          "url": "https://www.energystar.gov/sites/default/files/2025-01/National%20HVAC%20Design%20Report_Rev%2014.pdf"
+        },
+        {
+          "label": "ACCA: Technical manuals (Manual J, Manual S)",
+          "url": "https://www.acca.org/standards/technical-manuals"
+        },
+        {
+          "label": "NRCan: Heating and cooling with a heat pump (sizing considerations)",
+          "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/heating-cooling-heat-pump"
+        },
+        {
+          "label": "Building America Solution Center: Pre-retrofit assessment of existing HVAC systems",
+          "url": "https://basc.pnnl.gov/information/pre-retrofit-assessment-existing-hvac-systems"
+        }
+      ]
+    },
+    "mold-iaq": {
+      "measure": "Indoor relative humidity: how much moisture the air holds compared with the most it could hold.",
+      "unit": "% relative humidity (RH)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Too dry",
+          "range": "Under 30%",
+          "means": "Below the 30–50% range Health Canada and the EPA recommend; dry air can irritate throats.",
+          "do": "Humidify gently if needed, but in very cold weather keep it low enough to avoid window condensation.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Target",
+          "range": "30–50%",
+          "means": "The range both Health Canada and the EPA recommend for homes.",
+          "do": "Keep it there: run bath and kitchen fans, and fix leaks and damp spots quickly.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Damp",
+          "range": "Over 50% to 60%",
+          "means": "Above Health Canada's range; condensation and mould become more likely.",
+          "do": "Run a dehumidifier and exhaust fans, and find moisture sources such as leaks or laundry drying indoors.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Too humid",
+          "range": "Over 60%",
+          "means": "Well above Health Canada's range; mould growth and moisture damage are likely over time.",
+          "do": "Dehumidify now, fix the moisture source, and clean any small mould patches; get help for large areas.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Damp",
+          "range": "Over 50% to 60%",
+          "means": "Above EPA's ideal range but under its 60% upper limit; watch for condensation and mold.",
+          "do": "Run exhaust fans or a dehumidifier, and find moisture sources such as leaks or indoor laundry drying.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Too humid",
+          "range": "Over 60%",
+          "means": "Above EPA's upper limit; mold growth and moisture damage are likely over time.",
+          "do": "Dehumidify now, fix the moisture source, and clean small mold patches; get help for larger areas.",
+          "countries": [
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Health Canada: clean small areas (1–3 patches under 1 m² each) and most medium areas (up to 3 m²) yourself; get a professional for any patch over 3 m². Air tests usually aren't recommended.",
+      "usNote": "EPA: you can usually clean mold under about 10 sq ft (3 ft × 3 ft) yourself; for more, or heavy water damage, follow EPA's remediation guidance. No federal limits exist for mold spores.",
+      "sources": [
+        {
+          "label": "Health Canada: Mould (humidity and clean-up size categories)",
+          "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+        },
+        {
+          "label": "Health Canada: Guide to addressing moisture and mould indoors",
+          "url": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/addressing-moisture-mould-your-home.html"
+        },
+        {
+          "label": "US EPA: A brief guide to mold, moisture and your home",
+          "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+        },
+        {
+          "label": "NRCan: Keeping the Heat In (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/canmetenergy/pdf/housing/KeepingtheHeatIn.pdf"
+        }
+      ]
+    },
+    "well-water": {
+      "measure": "Lab results for bacteria (total coliforms, E. coli) and nitrate in a water sample from your well.",
+      "unit": "Present/absent per 100 mL (bacteria) · mg/L (nitrate)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Clear",
+          "range": "No E. coli and no total coliforms per 100 mL; nitrate at or under 10 mg/L as N (45 as nitrate)",
+          "means": "Meets Health Canada and EPA limits for these tests on the day sampled.",
+          "do": "Keep testing on schedule and after floods, heavy rain, well work or changes in taste, smell or appearance.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Coliforms found",
+          "range": "Total coliforms present, E. coli absent",
+          "means": "Soil or surface water may be reaching the well, so disease-causing germs are possible.",
+          "do": "Retest soon; if confirmed, shock-disinfect the well, find the entry point, and retest until two samples are clear.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "E. coli found",
+          "range": "Any E. coli",
+          "means": "Fecal contamination: the water is not safe to drink.",
+          "do": "Boil water for drinking, cooking and brushing teeth (1-minute rolling boil) or use another source; retest and disinfect the well.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Nitrate high",
+          "range": "Over 10 mg/L as nitrate-N (over 45 mg/L as nitrate)",
+          "means": "Above the health limit in both countries; most dangerous for babies under 6 months (blue baby syndrome).",
+          "do": "Use another safe source for drinking and infant formula; treat with certified reverse osmosis or distillation, then retest.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Health Canada: test for bacteria at least every 6 months (early spring and fall are best) and general quality every 2 years. If only coliforms appear, you can keep using the water while retesting.",
+      "usNote": "EPA: test yearly for total coliform bacteria, nitrates, total dissolved solids and pH, using a state-certified lab. EPA's nitrate limit is 10 mg/L measured as nitrogen.",
+      "sources": [
+        {
+          "label": "Health Canada: Well water, test your well water",
+          "url": "https://www.canada.ca/en/health-canada/services/environment/drinking-water/well/test.html"
+        },
+        {
+          "label": "Health Canada: Well water, treat your well water",
+          "url": "https://www.canada.ca/en/health-canada/services/environment/drinking-water/well/treat.html"
+        },
+        {
+          "label": "Health Canada: Guidelines for Canadian Drinking Water Quality, summary tables",
+          "url": "https://www.canada.ca/en/health-canada/services/environmental-workplace-health/reports-publications/water-quality/guidelines-canadian-drinking-water-quality-summary-table.html"
+        },
+        {
+          "label": "US EPA: Protect your home's water (private well testing)",
+          "url": "https://www.epa.gov/privatewells/protect-your-homes-water"
+        },
+        {
+          "label": "US EPA: National Primary Drinking Water Regulations (nitrate, coliforms)",
+          "url": "https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations"
+        }
+      ]
+    },
+    "lead-paint": {
+      "measure": "Lead in paint, by XRF reading (mg/cm²), lab analysis (% by weight), or the home's age.",
+      "unit": "mg/cm² (XRF) · % by weight (lab)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Built after 1990",
+          "range": "Home and paint from 1991 or later",
+          "means": "Canadian and US consumer paints were virtually lead-free by then, so lead paint is unlikely.",
+          "do": "No lead-specific precautions needed for paint from this era.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Built 1960–1990",
+          "range": "Home built from 1960 to 1990",
+          "means": "Exterior paint may contain lead; interior paint may have smaller amounts that can still harm children.",
+          "do": "Test before sanding or scraping (lab paint-chip test or XRF), or treat it as lead paint.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Pre-1960 or lead found",
+          "range": "Built before 1960, or a test shows lead",
+          "means": "Probably lead-based paint; dangerous when it chips, flakes or is disturbed, especially for children and during pregnancy.",
+          "do": "Leave intact paint alone or cover it; never sand, heat-gun or torch it; consider an expert for removal.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Below federal threshold",
+          "range": "Under 1.0 mg/cm² and under 0.5% by weight",
+          "means": "Not 'lead-based paint' under the EPA/HUD definition, though some lead may still be present.",
+          "do": "Still keep dust down when working on old paint; ask the inspector which surfaces were tested.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Lead-based paint",
+          "range": "1.0 mg/cm² or more, or 0.5% by weight or more",
+          "means": "Lead-based paint by federal definition; a hazard when peeling, chipping, rubbing or disturbed, especially for children.",
+          "do": "Keep it intact and clean; for renovation hire an EPA lead-safe certified firm, and certified abatement for removal.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Untested pre-1978",
+          "range": "Built before 1978, no lead inspection",
+          "means": "Lead paint is likely; about three-quarters of pre-1978 US homes still contain some.",
+          "do": "Have a certified inspector or risk assessor test it, or assume it's lead paint and work lead-safe.",
+          "countries": [
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Health Canada: to find out, send paint chips to a lab or hire a contractor with x-ray (XRF) equipment. If removing, keep children and pregnant women away and use a chemical stripper, not heat.",
+      "usNote": "EPA/HUD define lead-based paint as 1.0 mg/cm² or more, or 0.5% by weight. Paid work disturbing paint in pre-1978 homes must be done by an EPA lead-safe certified firm.",
+      "sources": [
+        {
+          "label": "Health Canada: Lead-based paint",
+          "url": "https://www.canada.ca/en/health-canada/services/home-safety/lead-based-paint.html"
+        },
+        {
+          "label": "40 CFR 745.103 (EPA/HUD lead disclosure rule): definition of lead-based paint",
+          "url": "https://www.govinfo.gov/content/pkg/CFR-2024-title40-vol34/xml/CFR-2024-title40-vol34-sec745-103.xml"
+        },
+        {
+          "label": "US EPA: Reduce the risk of lead exposure at home",
+          "url": "https://www.epa.gov/lead/reduce-risk-lead-exposure-home"
+        },
+        {
+          "label": "US EPA: Renovation, Repair and Painting (RRP) program for contractors",
+          "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program-contractors"
+        }
+      ]
+    },
+    "asbestos-vermiculite": {
+      "measure": "Visual check for vermiculite and other suspect materials, plus lab results if a professional takes samples.",
+      "unit": "Present / not found (visual or lab)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "None seen",
+          "range": "No vermiculite or other suspect insulation found",
+          "means": "No visible concern; before 1990, though, asbestos was widely used to insulate homes.",
+          "do": "Before renovating an older home, have a professional test any material you plan to disturb.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Vermiculite present",
+          "range": "Pebble-like, pour-in granules in the attic or walls (tested or not)",
+          "means": "Assume it contains asbestos; risk is low only while it stays undisturbed and sealed off.",
+          "do": "Don't disturb or remove it, store items on it, or let children play there; hire an asbestos professional first.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Asbestos confirmed",
+          "range": "Lab report shows asbestos",
+          "means": "Harmful only when disturbed and airborne, but no exposure level is known to be safe.",
+          "do": "Leave it sealed and intact; any removal must be done by a qualified asbestos removal specialist.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Health Canada: with vermiculite in the attic or walls, seal gaps around the attic hatch, light fixtures, outlets and trim, repair wall and ceiling cracks, and hire trained professionals before renovating.",
+      "usNote": "EPA: assume vermiculite came from the Libby mine and contains asbestos. Testing can be costly and may give wrong results, so take precautions whatever a test shows.",
+      "sources": [
+        {
+          "label": "US EPA: Protect your family from asbestos-contaminated vermiculite insulation",
+          "url": "https://www.epa.gov/asbestos/protect-your-family-asbestos-contaminated-vermiculite-insulation"
+        },
+        {
+          "label": "Health Canada: Asbestos and your health (vermiculite advice)",
+          "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/health-risks-asbestos.html"
+        },
+        {
+          "label": "Government of Canada: Vermiculite insulation containing tremolite asbestos",
+          "url": "https://www.canada.ca/en/employment-social-development/services/health-safety/prevention/vermiculite.html"
+        },
+        {
+          "label": "ENERGY STAR: DIY checks and inspections (attic insulation levels)",
+          "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections"
+        }
+      ]
+    },
+    "bill-analysis": {
+      "measure": "A year of actual meter reads split into baseload and weather-driven heating or cooling use.",
+      "unit": "kWh, m³ or GJ (Canada) · kWh or therms (US), per month and year",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Mostly baseload",
+          "range": "Winter and summer use close to spring and fall months",
+          "means": "Heating and cooling are a small share; water heating, appliances and lighting drive your bills.",
+          "do": "Look at water heating, older fridges or freezers and always-on electronics before envelope upgrades.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Heating-driven",
+          "range": "Winter use well above the spring and fall baseline",
+          "means": "Space heating is your biggest load; the winter bump above baseload approximates your heating energy.",
+          "do": "Start with air sealing, attic insulation and heating efficiency; compare with your blower door results.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Cooling-driven",
+          "range": "Summer use well above the spring and fall baseline",
+          "means": "Air conditioning is a major load; the summer bump above baseload approximates your cooling energy.",
+          "do": "Check AC efficiency and sizing, duct leakage, attic insulation and window shading.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NRCan: Canadian homes averaged 87.6 GJ in 2023, about 59% for space heating, 19% water heating, 14% appliances, 4% lighting and 3% cooling. Use 12 months of actual (not estimated) reads.",
+      "usNote": "EIA: the average US residential customer used 10,791 kWh of electricity in 2022. In 2020, space heating and air conditioning were 52% of household energy; water heating, lighting and refrigeration 25%.",
+      "sources": [
+        {
+          "label": "BPI-2400-S-2015 v.2: Calibration to energy use history (baseload/heating/cooling regression, PDF)",
+          "url": "https://www.bpi.org/__cms/docs/20240523_BPI-2400-S-2015_Delta_Standard_v2.pdf"
+        },
+        {
+          "label": "NRCan Comprehensive Energy Use Database: Residential, Canada, Table 2 (2023)",
+          "url": "https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=CP&sector=res&juris=ca&year=2023&rn=2&page=0"
+        },
+        {
+          "label": "EIA FAQ: How much electricity does an American home use?",
+          "url": "https://www.eia.gov/tools/faqs/faq.php?id=97&t=3"
+        },
+        {
+          "label": "EIA Energy Explained: Use of energy in homes (RECS 2020 end uses)",
+          "url": "https://www.eia.gov/energyexplained/use-of-energy/homes.php"
+        }
+      ]
+    },
+    "ventilation-assessment": {
+      "measure": "Measured fresh-air flow from the ventilation system and fans versus the required rate, plus indoor humidity.",
+      "unit": "L/s (Canada) · CFM (US); % RH",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "Meets code flow",
+          "range": "At least the NBC minimum for your bedrooms (16 L/s for 1 up to 30 L/s for 5), supply within 10% of exhaust",
+          "means": "Enough fresh air for a home your size, and the HRV or ERV is balanced.",
+          "do": "Run it whenever the home is occupied, and clean filters and core as the manufacturer recommends.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Low or unbalanced",
+          "range": "Below the NBC minimum, no working system, or supply and exhaust more than 10% apart",
+          "means": "Too little fresh air, or uneven flows that can depressurize the house and upset fuel-burning appliances.",
+          "do": "Have an HRAI-trained contractor clean, repair and rebalance the system, or add one.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Humid or stale",
+          "range": "Humidity over 50% in winter, window condensation or lingering odours",
+          "means": "Moisture and stale air aren't being removed fast enough; mould risk rises.",
+          "do": "Run bath and kitchen fans, raise the HRV speed and cut moisture sources; if it persists, get it assessed.",
+          "countries": [
+            "ca"
+          ]
+        },
+        {
+          "label": "Meets design",
+          "range": "Whole-house flow within ±15 CFM or ±15% of design; bath fans 50+ CFM, kitchen 100+ CFM (intermittent)",
+          "means": "The system delivers its designed fresh air, and spot fans can clear moisture and odors.",
+          "do": "Keep fans and filters clean and run the system as designed.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Low",
+          "range": "Below design flow, or fans weaker than those rates or not vented outdoors",
+          "means": "Too little fresh air or moisture removal; problems grow as the house is sealed tighter.",
+          "do": "Repair or replace weak fans, fix ducts, and add whole-house ventilation sized to ASHRAE 62.2.",
+          "countries": [
+            "us"
+          ]
+        },
+        {
+          "label": "Humid",
+          "range": "Indoor humidity over 60%",
+          "means": "Above EPA's upper limit; mold and moisture damage become likely.",
+          "do": "Find moisture sources, run exhaust fans and a dehumidifier or AC, and have the ventilation checked.",
+          "countries": [
+            "us"
+          ]
+        }
+      ],
+      "caNote": "NBC 2020 also requires a 50 L/s kitchen fan and 25 L/s bathroom fans unless the main system serves them. NRCan: at −20°C, keep humidity under about 26% (standard windows) or 40% (efficient windows) to avoid condensation.",
+      "usNote": "ENERGY STAR checks new-home ventilation against ASHRAE 62.2. BASC notes exhaust fans can pull air from damp crawl spaces or garages if no makeup air path exists.",
+      "sources": [
+        {
+          "label": "NRC Codes Canada: National Building Code of Canada 2020 (free PDF via NRC Publications Archive)",
+          "url": "https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada/codes-canada-publications/national-building-code-canada-2020"
+        },
+        {
+          "label": "NRCan: How to get the ventilation you need in your house (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/energy/pdf/16-0114%20Home%20Ventilation_access_eng.pdf"
+        },
+        {
+          "label": "NRCan: Keeping the Heat In (PDF)",
+          "url": "https://natural-resources.canada.ca/sites/www.nrcan.gc.ca/files/canmetenergy/pdf/housing/KeepingtheHeatIn.pdf"
+        },
+        {
+          "label": "Health Canada: Mould (humidity and clean-up size categories)",
+          "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html"
+        },
+        {
+          "label": "ENERGY STAR Single-Family New Homes: National Rater Field Checklist, Rev. 14 (PDF)",
+          "url": "https://www.energystar.gov/sites/default/files/2025-04/National%20Rater%20Field%20Checklist_Rev%2014.pdf"
+        },
+        {
+          "label": "Building America Solution Center: Pre-retrofit assessment of ventilation systems",
+          "url": "https://basc.pnnl.gov/information/pre-retrofit-assessment-ventilation-systems"
+        },
+        {
+          "label": "Building America Solution Center: Pre-retrofit assessment of existing HVAC systems",
+          "url": "https://basc.pnnl.gov/information/pre-retrofit-assessment-existing-hvac-systems"
+        },
+        {
+          "label": "US EPA: A brief guide to mold, moisture and your home",
+          "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+        }
+      ]
+    },
+    "wood-burning-inspection": {
+      "measure": "An inspector's check of the appliance and its certification label, clearances to combustibles, flue pipe and chimney.",
+      "unit": "Inspection outcome (no deficiencies / deficiencies / unsafe)",
+      "countries": [
+        "ca",
+        "us"
+      ],
+      "bands": [
+        {
+          "label": "No deficiencies",
+          "range": "Certified appliance, required clearances met, chimney and flue sound and clean",
+          "means": "Installed and maintained to the installation code (CSA B365 in Canada, NFPA 211 in the US).",
+          "do": "Keep the report for your insurer, have it inspected yearly, and clean the chimney when creosote builds up.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Deficiencies",
+          "range": "Fixable issues such as short clearances, flue pipe faults, a missing label or creosote buildup",
+          "means": "Part of the installation doesn't meet code or needs maintenance, which raises fire and smoke risk.",
+          "do": "Have a certified installer correct each item, then get it re-inspected; ask your insurer what it requires.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        },
+        {
+          "label": "Unsafe",
+          "range": "A hazard such as a cracked or blocked chimney, or smoke spilling indoors",
+          "means": "Using it now risks a chimney fire or carbon monoxide in the home.",
+          "do": "Stop using it until it is repaired and re-inspected, and make sure smoke and CO alarms work.",
+          "countries": [
+            "ca",
+            "us"
+          ]
+        }
+      ],
+      "caNote": "Hire a WETT-certified professional; Health Canada advises a CSA- or EPA-certified appliance and a yearly inspection. CSA B365 is the installation code, and new homes need a CO alarm in the stove's room (NBC 2020).",
+      "usNote": "EPA-certified stoves carry a metal tag; since 2020 new room heaters must emit no more than 2.0–2.5 g/h. EPA advises yearly professional inspection and cleaning of chimneys and flues.",
+      "sources": [
+        {
+          "label": "WETT Inc. (Wood Energy Technology Transfer)",
+          "url": "https://www.wettinc.ca/"
+        },
+        {
+          "label": "Health Canada: Wood smoke (certified appliances, yearly inspection)",
+          "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/avoid-wood-smoke.html"
+        },
+        {
+          "label": "CSA Group: B365, installation code for solid-fuel-burning appliances",
+          "url": "https://www.csagroup.org/store/product/B365-17/"
+        },
+        {
+          "label": "US EPA Burn Wise: EPA-certified wood stoves (emission limits)",
+          "url": "https://www.epa.gov/burnwise/epa-certified-wood-stoves"
+        },
+        {
+          "label": "Building America Solution Center: Fireplaces and wood stoves have proper ventilation",
+          "url": "https://basc.pnnl.gov/resource-guides/fireplaces-and-wood-stoves-have-proper-ventilation"
+        },
+        {
+          "label": "Building America Solution Center library: NFPA 211 (chimneys, fireplaces, vents, solid-fuel appliances)",
+          "url": "https://basc.pnnl.gov/library/nfpa-211-standard-chimneys-fireplaces-vents-and-solid-fuel-burning-appliances"
+        },
+        {
+          "label": "US EPA: What is the average level of carbon monoxide in homes?",
+          "url": "https://www.epa.gov/indoor-air-quality-iaq/what-average-level-carbon-monoxide-homes"
+        },
+        {
+          "label": "NRC Codes Canada: National Building Code of Canada 2020 (free PDF via NRC Publications Archive)",
+          "url": "https://nrc.canada.ca/en/certifications-evaluations-standards/codes-canada/codes-canada-publications/national-building-code-canada-2020"
+        }
+      ]
+    }
+  }
+}

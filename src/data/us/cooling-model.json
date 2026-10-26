@@ -1,0 +1,3384 @@
+{
+ "checked": "2026-10-26",
+ "benchmarks": {
+  "byZone": {
+   "1A": {
+    "kwhPerHousehold": 10175,
+    "kwhPerSqft": 5.757,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 8,744 + KWHAHUCOL (indoor fan used for cooling) 1,431. Sample n=71 (0.7 million homes; FL 96%, HI 4%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 1,767). Calendar-2020 weather: mean CDD65 at the homes 4,902 (their 1981-2010 normal 4,065). Jackknife SE ±649 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 71,
+    "householdsMillion": 0.7,
+    "kwhCompressor": 8744,
+    "kwhIndoorFan": 1431,
+    "kwhSE": 649,
+    "cooledSqftMean": 1767,
+    "cdd65Ref2020": 4902,
+    "cdd65Normal1981_2010AtHomes": 4065,
+    "whPerCooledSqftPerCDD": 1.178,
+    "heatPumpShare": 0.15,
+    "seerRef": 13.8,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.5,
+    "inPlanner": true
+   },
+   "2A": {
+    "kwhPerHousehold": 6096,
+    "kwhPerSqft": 3.1,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 5,164 + KWHAHUCOL (indoor fan used for cooling) 932. Sample n=900 (8.3 million homes; FL 44%, TX 40%, LA 9%, GA 4%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 1,967). Calendar-2020 weather: mean CDD65 at the homes 3,617 (their 1981-2010 normal 3,062). Jackknife SE ±124 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 900,
+    "householdsMillion": 8.3,
+    "kwhCompressor": 5164,
+    "kwhIndoorFan": 932,
+    "kwhSE": 124,
+    "cooledSqftMean": 1967,
+    "cdd65Ref2020": 3617,
+    "cdd65Normal1981_2010AtHomes": 3062,
+    "whPerCooledSqftPerCDD": 0.858,
+    "heatPumpShare": 0.3,
+    "seerRef": 13.5,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.374,
+    "inPlanner": true
+   },
+   "2B": {
+    "kwhPerHousehold": 7782,
+    "kwhPerSqft": 3.834,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 6,675 + KWHAHUCOL (indoor fan used for cooling) 1,107. Sample n=289 (1.48 million homes; AZ 97%, CA 1%, TX 1%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,030). Calendar-2020 weather: mean CDD65 at the homes 4,756 (their 1981-2010 normal 3,698). Jackknife SE ±258 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 289,
+    "householdsMillion": 1.48,
+    "kwhCompressor": 6675,
+    "kwhIndoorFan": 1107,
+    "kwhSE": 258,
+    "cooledSqftMean": 2030,
+    "cdd65Ref2020": 4756,
+    "cdd65Normal1981_2010AtHomes": 3698,
+    "whPerCooledSqftPerCDD": 0.807,
+    "heatPumpShare": 0.28,
+    "seerRef": 13.6,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.47,
+    "inPlanner": true
+   },
+   "3A": {
+    "kwhPerHousehold": 4415,
+    "kwhPerSqft": 2.147,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 3,730 + KWHAHUCOL (indoor fan used for cooling) 684. Sample n=1333 (9.32 million homes; TX 20%, GA 19%, NC 12%, SC 12%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,056). Calendar-2020 weather: mean CDD65 at the homes 2,101 (their 1981-2010 normal 2,005). Jackknife SE ±72 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 1333,
+    "householdsMillion": 9.32,
+    "kwhCompressor": 3730,
+    "kwhIndoorFan": 684,
+    "kwhSE": 72,
+    "cooledSqftMean": 2056,
+    "cdd65Ref2020": 2101,
+    "cdd65Normal1981_2010AtHomes": 2005,
+    "whPerCooledSqftPerCDD": 1.026,
+    "heatPumpShare": 0.27,
+    "seerRef": 13.3,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.291,
+    "inPlanner": true
+   },
+   "3B": {
+    "kwhPerHousehold": 3350,
+    "kwhPerSqft": 1.791,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 2,864 + KWHAHUCOL (indoor fan used for cooling) 486. Sample n=561 (5.13 million homes; CA 79%, TX 9%, NV 8%, NM 2%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 1,870). Calendar-2020 weather: mean CDD65 at the homes 2,208 (their 1981-2010 normal 1,733). Jackknife SE ±101 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 561,
+    "householdsMillion": 5.13,
+    "kwhCompressor": 2864,
+    "kwhIndoorFan": 486,
+    "kwhSE": 101,
+    "cooledSqftMean": 1870,
+    "cdd65Ref2020": 2208,
+    "cdd65Normal1981_2010AtHomes": 1733,
+    "whPerCooledSqftPerCDD": 0.811,
+    "heatPumpShare": 0.04,
+    "seerRef": 12.9,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.327,
+    "inPlanner": true
+   },
+   "3C": {
+    "kwhPerHousehold": 1530,
+    "kwhPerSqft": 0.762,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 1,274 + KWHAHUCOL (indoor fan used for cooling) 256. Sample n=67 (0.66 million homes; CA 100%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,008). Calendar-2020 weather: mean CDD65 at the homes 967 (their 1981-2010 normal 581). Jackknife SE ±154 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 67,
+    "householdsMillion": 0.66,
+    "kwhCompressor": 1274,
+    "kwhIndoorFan": 256,
+    "kwhSE": 154,
+    "cooledSqftMean": 2008,
+    "cdd65Ref2020": 967,
+    "cdd65Normal1981_2010AtHomes": 581,
+    "whPerCooledSqftPerCDD": 0.753,
+    "heatPumpShare": 0.03,
+    "seerRef": 13.1,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.186,
+    "inPlanner": true
+   },
+   "4A": {
+    "kwhPerHousehold": 3127,
+    "kwhPerSqft": 1.396,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 2,629 + KWHAHUCOL (indoor fan used for cooling) 498. Sample n=2052 (12.03 million homes; VA 14%, MO 12%, TN 11%, NC 10%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,240). Calendar-2020 weather: mean CDD65 at the homes 1,360 (their 1981-2010 normal 1,272). Jackknife SE ±48 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 2052,
+    "householdsMillion": 12.03,
+    "kwhCompressor": 2629,
+    "kwhIndoorFan": 498,
+    "kwhSE": 48,
+    "cooledSqftMean": 2240,
+    "cdd65Ref2020": 1360,
+    "cdd65Normal1981_2010AtHomes": 1272,
+    "whPerCooledSqftPerCDD": 1.029,
+    "heatPumpShare": 0.21,
+    "seerRef": 13.0,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.223,
+    "inPlanner": true
+   },
+   "4B": {
+    "kwhPerHousehold": 2648,
+    "kwhPerSqft": 1.37,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 2,249 + KWHAHUCOL (indoor fan used for cooling) 398. Sample n=61 (0.36 million homes; TX 34%, NM 33%, AZ 18%, CA 16%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 1,933). Calendar-2020 weather: mean CDD65 at the homes 1,746 (their 1981-2010 normal 1,239). Jackknife SE ±223 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 61,
+    "householdsMillion": 0.36,
+    "kwhCompressor": 2249,
+    "kwhIndoorFan": 398,
+    "kwhSE": 223,
+    "cooledSqftMean": 1933,
+    "cdd65Ref2020": 1746,
+    "cdd65Normal1981_2010AtHomes": 1239,
+    "whPerCooledSqftPerCDD": 0.787,
+    "heatPumpShare": 0.06,
+    "seerRef": 13.1,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.221,
+    "inPlanner": false
+   },
+   "4C": {
+    "kwhPerHousehold": 1337,
+    "kwhPerSqft": 0.621,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 1,121 + KWHAHUCOL (indoor fan used for cooling) 216. Sample n=192 (1.01 million homes; OR 59%, WA 41%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,152). Calendar-2020 weather: mean CDD65 at the homes 317 (their 1981-2010 normal 281). Jackknife SE ±90 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 192,
+    "householdsMillion": 1.01,
+    "kwhCompressor": 1121,
+    "kwhIndoorFan": 216,
+    "kwhSE": 90,
+    "cooledSqftMean": 2152,
+    "cdd65Ref2020": 317,
+    "cdd65Normal1981_2010AtHomes": 281,
+    "whPerCooledSqftPerCDD": 2.022,
+    "heatPumpShare": 0.24,
+    "seerRef": 12.9,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.108,
+    "inPlanner": true
+   },
+   "5A": {
+    "kwhPerHousehold": 2102,
+    "kwhPerSqft": 0.95,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 1,769 + KWHAHUCOL (indoor fan used for cooling) 334. Sample n=1859 (12.65 million homes; OH 20%, IL 16%, MI 14%, IN 10%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,213). Calendar-2020 weather: mean CDD65 at the homes 941 (their 1981-2010 normal 784). Jackknife SE ±35 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 1859,
+    "householdsMillion": 12.65,
+    "kwhCompressor": 1769,
+    "kwhIndoorFan": 334,
+    "kwhSE": 35,
+    "cooledSqftMean": 2213,
+    "cdd65Ref2020": 941,
+    "cdd65Normal1981_2010AtHomes": 784,
+    "whPerCooledSqftPerCDD": 1.015,
+    "heatPumpShare": 0.05,
+    "seerRef": 12.7,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.189,
+    "inPlanner": true
+   },
+   "5B": {
+    "kwhPerHousehold": 2140,
+    "kwhPerSqft": 0.91,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 1,799 + KWHAHUCOL (indoor fan used for cooling) 340. Sample n=507 (2.32 million homes; CO 39%, UT 22%, ID 12%, WA 12%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,351). Calendar-2020 weather: mean CDD65 at the homes 966 (their 1981-2010 normal 750). Jackknife SE ±68 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 507,
+    "householdsMillion": 2.32,
+    "kwhCompressor": 1799,
+    "kwhIndoorFan": 340,
+    "kwhSE": 68,
+    "cooledSqftMean": 2351,
+    "cdd65Ref2020": 966,
+    "cdd65Normal1981_2010AtHomes": 750,
+    "whPerCooledSqftPerCDD": 0.941,
+    "heatPumpShare": 0.04,
+    "seerRef": 12.7,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.193,
+    "inPlanner": true
+   },
+   "6A": {
+    "kwhPerHousehold": 1487,
+    "kwhPerSqft": 0.678,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 1,254 + KWHAHUCOL (indoor fan used for cooling) 233. Sample n=649 (3.17 million homes; WI 42%, MN 34%, IA 7%, SD 6%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,192). Calendar-2020 weather: mean CDD65 at the homes 700 (their 1981-2010 normal 588). Jackknife SE ±41 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 649,
+    "householdsMillion": 3.17,
+    "kwhCompressor": 1254,
+    "kwhIndoorFan": 233,
+    "kwhSE": 41,
+    "cooledSqftMean": 2192,
+    "cdd65Ref2020": 700,
+    "cdd65Normal1981_2010AtHomes": 588,
+    "whPerCooledSqftPerCDD": 0.958,
+    "heatPumpShare": 0.03,
+    "seerRef": 12.5,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.143,
+    "inPlanner": true
+   },
+   "6B": {
+    "kwhPerHousehold": 1261,
+    "kwhPerSqft": 0.568,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 1,063 + KWHAHUCOL (indoor fan used for cooling) 198. Sample n=159 (0.32 million homes; MT 39%, WY 23%, ID 19%, UT 16%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,220). Calendar-2020 weather: mean CDD65 at the homes 473 (their 1981-2010 normal 416). Jackknife SE ±71 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 159,
+    "householdsMillion": 0.32,
+    "kwhCompressor": 1063,
+    "kwhIndoorFan": 198,
+    "kwhSE": 71,
+    "cooledSqftMean": 2220,
+    "cdd65Ref2020": 473,
+    "cdd65Normal1981_2010AtHomes": 416,
+    "whPerCooledSqftPerCDD": 1.233,
+    "heatPumpShare": 0.02,
+    "seerRef": 12.9,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.125,
+    "inPlanner": false
+   },
+   "7A": {
+    "kwhPerHousehold": 1060,
+    "kwhPerSqft": 0.447,
+    "basis": "EIA RECS 2020 public microdata (v7), single-family detached homes whose main cooling is central AC (includes central heat pumps), weighted with NWEIGHT. kWh = KWHCOL (compressor/outdoor unit) 894 + KWHAHUCOL (indoor fan used for cooling) 165. Sample n=119 (0.26 million homes; MN 49%, ND 31%, WI 11%, MI 8%). Per sq ft = per COOLED sq ft (TOTCSQFT, mean 2,368). Calendar-2020 weather: mean CDD65 at the homes 419 (their 1981-2010 normal 347). Jackknife SE ±88 kWh (60 replicate weights, EIA microdata guide). Zone = 2012 IECC code as coded in RECS.",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "n": 119,
+    "householdsMillion": 0.26,
+    "kwhCompressor": 894,
+    "kwhIndoorFan": 165,
+    "kwhSE": 88,
+    "cooledSqftMean": 2368,
+    "cdd65Ref2020": 419,
+    "cdd65Normal1981_2010AtHomes": 347,
+    "whPerCooledSqftPerCDD": 1.04,
+    "heatPumpShare": 0.03,
+    "seerRef": 12.2,
+    "seerRefBasis": "assumed stock SEER: harmonic mean over the RECS AC-age mix (ACEQUIPAGE) using acEfficiencyByAge values; an assumption, not a RECS field",
+    "coolingShareOfTotalElectricity": 0.084,
+    "inPlanner": false
+   }
+  },
+  "byMetro": {
+   "miami": {
+    "recsCell": "FL 1A (IECC 2012 code in RECS)",
+    "n": 53,
+    "kwhRef2020": 10342,
+    "kwhSE": 670,
+    "cooledSqftRef": 1753,
+    "cdd65Ref2020": 4926,
+    "cdd65Normal1991_2020": 4656,
+    "kwhAtNormalWeather": 9830,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "tampa": {
+    "recsCell": "FL 2A (IECC 2012 code in RECS)",
+    "n": 330,
+    "kwhRef2020": 5591,
+    "kwhSE": 193,
+    "cooledSqftRef": 1913,
+    "cdd65Ref2020": 3927,
+    "cdd65Normal1991_2020": 3928,
+    "kwhAtNormalWeather": 5592,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "orlando": {
+    "recsCell": "FL 2A (IECC 2012 code in RECS)",
+    "n": 330,
+    "kwhRef2020": 5591,
+    "kwhSE": 193,
+    "cooledSqftRef": 1913,
+    "cdd65Ref2020": 3927,
+    "cdd65Normal1991_2020": 3452,
+    "kwhAtNormalWeather": 4978,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "houston": {
+    "recsCell": "TX 2A (IECC 2012 code in RECS)",
+    "n": 355,
+    "kwhRef2020": 6545,
+    "kwhSE": 185,
+    "cooledSqftRef": 2030,
+    "cdd65Ref2020": 3502,
+    "cdd65Normal1991_2020": 3288,
+    "kwhAtNormalWeather": 6184,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "san-antonio": {
+    "recsCell": "TX 2A (IECC 2012 code in RECS)",
+    "n": 355,
+    "kwhRef2020": 6545,
+    "kwhSE": 185,
+    "cooledSqftRef": 2030,
+    "cdd65Ref2020": 3502,
+    "cdd65Normal1991_2020": 3148,
+    "kwhAtNormalWeather": 5946,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "austin": {
+    "recsCell": "TX 2A (IECC 2012 code in RECS)",
+    "n": 355,
+    "kwhRef2020": 6545,
+    "kwhSE": 185,
+    "cooledSqftRef": 2030,
+    "cdd65Ref2020": 3502,
+    "cdd65Normal1991_2020": 2996,
+    "kwhAtNormalWeather": 5687,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "dallas": {
+    "recsCell": "TX 3A (IECC 2012 code in RECS)",
+    "n": 214,
+    "kwhRef2020": 5002,
+    "kwhSE": 193,
+    "cooledSqftRef": 2150,
+    "cdd65Ref2020": 2556,
+    "cdd65Normal1991_2020": 2824,
+    "kwhAtNormalWeather": 5472,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ],
+    "note": "Dallas County is 2A under IECC 2021 (planner) but 3A in the 2012 coding RECS uses; the Texas 3A cell is used. The Texas 2A cell scaled to Dallas CDD gives a similar answer (about 5,400 kWh)."
+   },
+   "phoenix": {
+    "recsCell": "AZ 2B (IECC 2012 code in RECS)",
+    "n": 285,
+    "kwhRef2020": 7827,
+    "kwhSE": 277,
+    "cooledSqftRef": 2036,
+    "cdd65Ref2020": 4762,
+    "cdd65Normal1991_2020": 4765,
+    "kwhAtNormalWeather": 7831,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "atlanta": {
+    "recsCell": "GA 3A (IECC 2012 code in RECS)",
+    "n": 203,
+    "kwhRef2020": 4021,
+    "kwhSE": 186,
+    "cooledSqftRef": 2204,
+    "cdd65Ref2020": 1904,
+    "cdd65Normal1991_2020": 2051,
+    "kwhAtNormalWeather": 4299,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "charlotte": {
+    "recsCell": "NC+SC 3A (IECC 2012 code in RECS)",
+    "n": 343,
+    "kwhRef2020": 4185,
+    "kwhSE": 140,
+    "cooledSqftRef": 2061,
+    "cdd65Ref2020": 1980,
+    "cdd65Normal1991_2020": 1769,
+    "kwhAtNormalWeather": 3781,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "los-angeles": {
+    "recsCell": "CA 3B (IECC 2012 code in RECS)",
+    "n": 379,
+    "kwhRef2020": 2794,
+    "kwhSE": 99,
+    "cooledSqftRef": 1878,
+    "cdd65Ref2020": 1920,
+    "cdd65Normal1991_2020": 720,
+    "kwhAtNormalWeather": 1156,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "san-diego": {
+    "recsCell": "CA 3B (IECC 2012 code in RECS)",
+    "n": 379,
+    "kwhRef2020": 2794,
+    "kwhSE": 99,
+    "cooledSqftRef": 1878,
+    "cdd65Ref2020": 1920,
+    "cdd65Normal1991_2020": 893,
+    "kwhAtNormalWeather": 1403,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "riverside": {
+    "recsCell": "CA 3B (IECC 2012 code in RECS)",
+    "n": 379,
+    "kwhRef2020": 2794,
+    "kwhSE": 99,
+    "cooledSqftRef": 1878,
+    "cdd65Ref2020": 1920,
+    "cdd65Normal1991_2020": 1854,
+    "kwhAtNormalWeather": 2707,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "san-francisco": {
+    "recsCell": "CA 3C (IECC 2012 code in RECS)",
+    "n": 67,
+    "kwhRef2020": 1530,
+    "kwhSE": 154,
+    "cooledSqftRef": 2008,
+    "cdd65Ref2020": 967,
+    "cdd65Normal1991_2020": 200,
+    "kwhAtNormalWeather": 696,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ],
+    "note": "Marine climate: CDD65 is a weak predictor here; the model uses exponent 0.5, not 0.9, for these metros (see model.parameters). Treat as +/-50%."
+   },
+   "washington-dc": {
+    "recsCell": "DC+MD+VA 4A (IECC 2012 code in RECS)",
+    "n": 440,
+    "kwhRef2020": 3117,
+    "kwhSE": 120,
+    "cooledSqftRef": 2431,
+    "cdd65Ref2020": 1420,
+    "cdd65Normal1991_2020": 1738,
+    "kwhAtNormalWeather": 3739,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "baltimore": {
+    "recsCell": "MD 4A (IECC 2012 code in RECS)",
+    "n": 173,
+    "kwhRef2020": 2905,
+    "kwhSE": 134,
+    "cooledSqftRef": 2518,
+    "cdd65Ref2020": 1403,
+    "cdd65Normal1991_2020": 1322,
+    "kwhAtNormalWeather": 2754,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "philadelphia": {
+    "recsCell": "PA+NJ+DE 4A (IECC 2012 code in RECS)",
+    "n": 300,
+    "kwhRef2020": 2728,
+    "kwhSE": 102,
+    "cooledSqftRef": 2207,
+    "cdd65Ref2020": 1188,
+    "cdd65Normal1991_2020": 1358,
+    "kwhAtNormalWeather": 3077,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "new-york": {
+    "recsCell": "NY+NJ 4A (IECC 2012 code in RECS)",
+    "n": 208,
+    "kwhRef2020": 3024,
+    "kwhSE": 123,
+    "cooledSqftRef": 2181,
+    "cdd65Ref2020": 1180,
+    "cdd65Normal1991_2020": 1016,
+    "kwhAtNormalWeather": 2643,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "st-louis": {
+    "recsCell": "MO+IL 4A (IECC 2012 code in RECS)",
+    "n": 233,
+    "kwhRef2020": 3249,
+    "kwhSE": 119,
+    "cooledSqftRef": 2304,
+    "cdd65Ref2020": 1380,
+    "cdd65Normal1991_2020": 1713,
+    "kwhAtNormalWeather": 3947,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "chicago": {
+    "recsCell": "IL 5A (IECC 2012 code in RECS)",
+    "n": 243,
+    "kwhRef2020": 2126,
+    "kwhSE": 78,
+    "cooledSqftRef": 2361,
+    "cdd65Ref2020": 1012,
+    "cdd65Normal1991_2020": 1003,
+    "kwhAtNormalWeather": 2109,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "detroit": {
+    "recsCell": "MI 5A (IECC 2012 code in RECS)",
+    "n": 182,
+    "kwhRef2020": 1721,
+    "kwhSE": 104,
+    "cooledSqftRef": 2230,
+    "cdd65Ref2020": 784,
+    "cdd65Normal1991_2020": 847,
+    "kwhAtNormalWeather": 1845,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "boston": {
+    "recsCell": "MA 5A (IECC 2012 code in RECS)",
+    "n": 130,
+    "kwhRef2020": 2195,
+    "kwhSE": 122,
+    "cooledSqftRef": 2156,
+    "cdd65Ref2020": 850,
+    "cdd65Normal1991_2020": 802,
+    "kwhAtNormalWeather": 2083,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "minneapolis": {
+    "recsCell": "MN 6A (IECC 2012 code in RECS)",
+    "n": 170,
+    "kwhRef2020": 1592,
+    "kwhSE": 76,
+    "cooledSqftRef": 2270,
+    "cdd65Ref2020": 779,
+    "cdd65Normal1991_2020": 830,
+    "kwhAtNormalWeather": 1686,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "denver": {
+    "recsCell": "CO 5B (IECC 2012 code in RECS)",
+    "n": 158,
+    "kwhRef2020": 2124,
+    "kwhSE": 126,
+    "cooledSqftRef": 2654,
+    "cdd65Ref2020": 904,
+    "cdd65Normal1991_2020": 850,
+    "kwhAtNormalWeather": 2009,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ]
+   },
+   "seattle": {
+    "recsCell": "WA 4C (IECC 2012 code in RECS)",
+    "n": 72,
+    "kwhRef2020": 1138,
+    "kwhSE": 96,
+    "cooledSqftRef": 2313,
+    "cdd65Ref2020": 206,
+    "cdd65Normal1991_2020": 265,
+    "kwhAtNormalWeather": 1291,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ],
+    "note": "Marine climate: CDD65 is a weak predictor here; the model uses exponent 0.5, not 0.9, for these metros (see model.parameters). Treat as +/-50%."
+   },
+   "portland": {
+    "recsCell": "OR+WA 4C (IECC 2012 code in RECS)",
+    "n": 192,
+    "kwhRef2020": 1337,
+    "kwhSE": 90,
+    "cooledSqftRef": 2152,
+    "cdd65Ref2020": 317,
+    "cdd65Normal1991_2020": 508,
+    "kwhAtNormalWeather": 1693,
+    "basis": "RECS 2020 microdata cell (state(s) x RECS climate code) containing the metro; SFD, central AC/HP; kWh incl. indoor fan; kwhAtNormalWeather = kwhRef2020 x (metro 1991-2020 CDD65 / cell 2020 CDD65)^e (e = 0.9, or 0.5 in marine C zones) at the cell mean cooled area",
+    "source": [
+     "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+     "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+    ],
+    "note": "Marine climate: CDD65 is a weak predictor here; the model uses exponent 0.5, not 0.9, for these metros (see model.parameters). Treat as +/-50%."
+   }
+  },
+  "roomAcByZone": {
+   "1A": {
+    "kwhPerHousehold": 2604,
+    "kwhSE": 276,
+    "n": 70,
+    "avgUnits": 2.2,
+    "cdd65Ref2020": 4039,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "2A": {
+    "kwhPerHousehold": 3817,
+    "kwhSE": 268,
+    "n": 99,
+    "avgUnits": 2.7,
+    "cdd65Ref2020": 3376,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "2B": {
+    "kwhPerHousehold": null,
+    "n": 19,
+    "note": "fewer than 20 sample homes in RECS; not published here",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "3A": {
+    "kwhPerHousehold": 2368,
+    "kwhSE": 145,
+    "n": 199,
+    "avgUnits": 2.3,
+    "cdd65Ref2020": 2067,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "3B": {
+    "kwhPerHousehold": 1499,
+    "kwhSE": 111,
+    "n": 78,
+    "avgUnits": 2.3,
+    "cdd65Ref2020": 2013,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "3C": {
+    "kwhPerHousehold": null,
+    "n": 18,
+    "note": "fewer than 20 sample homes in RECS; not published here",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "4A": {
+    "kwhPerHousehold": 1784,
+    "kwhSE": 62,
+    "n": 380,
+    "avgUnits": 2.5,
+    "cdd65Ref2020": 1257,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "4C": {
+    "kwhPerHousehold": 929,
+    "kwhSE": 96,
+    "n": 82,
+    "avgUnits": 1.4,
+    "cdd65Ref2020": 263,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "5A": {
+    "kwhPerHousehold": 1371,
+    "kwhSE": 52,
+    "n": 762,
+    "avgUnits": 2.2,
+    "cdd65Ref2020": 893,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "5B": {
+    "kwhPerHousehold": 965,
+    "kwhSE": 84,
+    "n": 79,
+    "avgUnits": 1.5,
+    "cdd65Ref2020": 915,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   },
+   "6A": {
+    "kwhPerHousehold": 884,
+    "kwhSE": 49,
+    "n": 380,
+    "avgUnits": 1.9,
+    "cdd65Ref2020": 570,
+    "basis": "RECS 2020 microdata, single-family detached/attached and mobile homes whose main AC is window/wall or portable units (ACEQUIPM_PUB 4-5); KWHCOL; NWEIGHT",
+    "source": "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv"
+   }
+  },
+  "publishedRecsTables": {
+   "table": "RECS 2020 Table CE5.3a, Detailed household site electricity end-use consumption, part 1 - averages (kWh sheet), kWh per household using the end use",
+   "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3a.xlsx",
+   "airConditioning": {
+    "Hot-humid": 4173,
+    "Mixed-dry and Hot-dry": 2691,
+    "Mixed-humid": 2293,
+    "Very cold and Cold": 1310,
+    "Marine": 902,
+    "All homes": 2318
+   },
+   "airHandlersForCooling": {
+    "Hot-humid": 720,
+    "Mixed-dry and Hot-dry": 498,
+    "Mixed-humid": 452,
+    "Very cold and Cold": 271,
+    "Marine": 195,
+    "All homes": 457
+   },
+   "dehumidifiers": {
+    "Hot-humid": 1368,
+    "All homes": 999
+   },
+   "note": "Published tables break end uses out by Building America climate region, Census region/division, housing type, year built and size, not by IECC zone (checked CE3.1 and CE5.3a); the IECC-zone values above are computed from the same microdata. Microdata reproduce the published values (e.g. 2,318 kWh all AC users; 4,173 hot-humid; 457 air handlers)."
+  },
+  "resstockCrossCheck": {
+   "what": "NREL ResStock 2024 release 2 (AMY2018 weather), baseline, single-family detached with central AC or ducted heat pump; out.electricity.cooling + cooling_fans_pumps; weighted mean per dwelling",
+   "source": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/",
+   "cells": {
+    "FL 1A": {
+     "n": 2878,
+     "kwh": 10868,
+     "sqft": 2032,
+     "kwhPerSqft": 5.35,
+     "totalKwh": 19549
+    },
+    "FL 2A": {
+     "n": 16049,
+     "kwh": 8396,
+     "sqft": 2068,
+     "kwhPerSqft": 4.06,
+     "totalKwh": 17648
+    },
+    "GA 2A": {
+     "n": 1196,
+     "kwh": 6646,
+     "sqft": 1949,
+     "kwhPerSqft": 3.41,
+     "totalKwh": 16445
+    },
+    "LA 2A": {
+     "n": 3319,
+     "kwh": 8119,
+     "sqft": 1960,
+     "kwhPerSqft": 4.14,
+     "totalKwh": 17294
+    },
+    "TX 2A": {
+     "n": 12857,
+     "kwh": 8737,
+     "sqft": 2110,
+     "kwhPerSqft": 4.14,
+     "totalKwh": 18084
+    },
+    "AZ 2B": {
+     "n": 5663,
+     "kwh": 11264,
+     "sqft": 2268,
+     "kwhPerSqft": 4.97,
+     "totalKwh": 18853
+    },
+    "TX 2B": {
+     "n": 418,
+     "kwh": 8130,
+     "sqft": 1976,
+     "kwhPerSqft": 4.11,
+     "totalKwh": 16985
+    },
+    "GA 3A": {
+     "n": 8078,
+     "kwh": 6078,
+     "sqft": 2076,
+     "kwhPerSqft": 2.93,
+     "totalKwh": 15645
+    },
+    "LA 3A": {
+     "n": 987,
+     "kwh": 7565,
+     "sqft": 1832,
+     "kwhPerSqft": 4.13,
+     "totalKwh": 16416
+    },
+    "NC 3A": {
+     "n": 5214,
+     "kwh": 5833,
+     "sqft": 2013,
+     "kwhPerSqft": 2.9,
+     "totalKwh": 16694
+    },
+    "TX 3A": {
+     "n": 7990,
+     "kwh": 8329,
+     "sqft": 2106,
+     "kwhPerSqft": 3.96,
+     "totalKwh": 18988
+    },
+    "AZ 3B": {
+     "n": 470,
+     "kwh": 5517,
+     "sqft": 1989,
+     "kwhPerSqft": 2.77,
+     "totalKwh": 13431
+    },
+    "CA 3B": {
+     "n": 16359,
+     "kwh": 4629,
+     "sqft": 1941,
+     "kwhPerSqft": 2.38,
+     "totalKwh": 11023
+    },
+    "NV 3B": {
+     "n": 1916,
+     "kwh": 9973,
+     "sqft": 2340,
+     "kwhPerSqft": 4.26,
+     "totalKwh": 16666
+    },
+    "TX 3B": {
+     "n": 1967,
+     "kwh": 6929,
+     "sqft": 1955,
+     "kwhPerSqft": 3.54,
+     "totalKwh": 15471
+    },
+    "CA 3C": {
+     "n": 4356,
+     "kwh": 2040,
+     "sqft": 1979,
+     "kwhPerSqft": 1.03,
+     "totalKwh": 8613
+    },
+    "GA 4A": {
+     "n": 1143,
+     "kwh": 5091,
+     "sqft": 2029,
+     "kwhPerSqft": 2.51,
+     "totalKwh": 16320
+    },
+    "IL 4A": {
+     "n": 1596,
+     "kwh": 4960,
+     "sqft": 1953,
+     "kwhPerSqft": 2.54,
+     "totalKwh": 15731
+    },
+    "NC 4A": {
+     "n": 5334,
+     "kwh": 4682,
+     "sqft": 2033,
+     "kwhPerSqft": 2.3,
+     "totalKwh": 16365
+    },
+    "NY 4A": {
+     "n": 2437,
+     "kwh": 3398,
+     "sqft": 2075,
+     "kwhPerSqft": 1.64,
+     "totalKwh": 11384
+    },
+    "AZ 4B": {
+     "n": 348,
+     "kwh": 4065,
+     "sqft": 2328,
+     "kwhPerSqft": 1.75,
+     "totalKwh": 12128
+    },
+    "CA 4B": {
+     "n": 439,
+     "kwh": 1958,
+     "sqft": 1894,
+     "kwhPerSqft": 1.03,
+     "totalKwh": 10298
+    },
+    "TX 4B": {
+     "n": 510,
+     "kwh": 5647,
+     "sqft": 1838,
+     "kwhPerSqft": 3.07,
+     "totalKwh": 15410
+    },
+    "IL 5A": {
+     "n": 9619,
+     "kwh": 3323,
+     "sqft": 2060,
+     "kwhPerSqft": 1.61,
+     "totalKwh": 11687
+    },
+    "NC 5A": {
+     "n": 216,
+     "kwh": 2311,
+     "sqft": 2003,
+     "kwhPerSqft": 1.15,
+     "totalKwh": 12731
+    },
+    "NY 5A": {
+     "n": 2891,
+     "kwh": 2613,
+     "sqft": 2041,
+     "kwhPerSqft": 1.28,
+     "totalKwh": 11397
+    },
+    "AZ 5B": {
+     "n": 280,
+     "kwh": 2216,
+     "sqft": 1981,
+     "kwhPerSqft": 1.12,
+     "totalKwh": 9226
+    },
+    "CA 5B": {
+     "n": 224,
+     "kwh": 1443,
+     "sqft": 1804,
+     "kwhPerSqft": 0.8,
+     "totalKwh": 9992
+    },
+    "NV 5B": {
+     "n": 732,
+     "kwh": 3245,
+     "sqft": 2162,
+     "kwhPerSqft": 1.5,
+     "totalKwh": 11849
+    },
+    "NY 6A": {
+     "n": 1206,
+     "kwh": 1845,
+     "sqft": 1815,
+     "kwhPerSqft": 1.02,
+     "totalKwh": 10348
+    }
+   },
+   "comparison": "ResStock is 30-65% higher than RECS 2020 in most hot-state cells (TX 2A 8,737 vs 6,545; FL 2A 8,396 vs 5,591; AZ 2B 11,264 vs 7,827; GA 3A 6,078 vs 4,021; CA 3B 4,629 vs 2,794) and about equal in FL 1A (10,868 vs 10,342). RECS end uses are calibrated to each sampled home's utility bills, so RECS is used for the absolute benchmark and ResStock only for relative savings and as the upper edge of the uncertainty band. Different weather years (2018 vs 2020) explain only part of the gap."
+  },
+  "notes": "Primary benchmark: EIA RECS 2020 (latest RECS with end-use estimates; RECS 2024 air-conditioning tables are scheduled for spring 2027 per https://www.eia.gov/consumption/residential/data/2024/). RECS end uses are not metered: EIA runs engineering models (conduction U*A, sensible and latent infiltration, CDD with a state base temperature adjusted for the reported thermostat setting and shade trees; equipment efficiency from federal standards) and then calibrates them to each home's supplier billing data (2020 RECS CE methodology, Appendix B, p. 23-24, https://www.eia.gov/consumption/residential/data/2020/pdf/2020%20RECS%20CE%20Methodology%20-%20Monthly%20Appendix%20-%20Final.pdf). Values are for calendar-2020 weather, which was hotter than normal across the South and West (2B homes: 4,756 CDD65 in 2020 vs 3,698 in their 1981-2010 normal), so always rescale with the metro normal CDD (model.formula). kwhPerHousehold includes the indoor blower used for cooling (KWHAHUCOL, about 15% of the total) because rated SEER includes fan power. RECS codes climate with the 2012 IECC map; the planner uses IECC 2021 zones (Dallas County moved 3A -> 2A). 1A is South Florida (96% of the 1A sample) plus a few Hawaii homes. byMetro uses the RECS state x climate-code cell that contains each planner metro and is the preferred input; byZone is the fallback."
+ },
+ "acEfficiencyByAge": [
+  {
+   "installed": "before 1982",
+   "type": "central AC (split)",
+   "seer": 8.0,
+   "seer2": null,
+   "source": "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+   "note": "LBNL Home Energy Saver/Score shipment-weighted series is flat at SEER 8.0 for 1970-1981 because it is floored at the ANSI/BPI-2400 minimum; true 1970s shipments were probably lower. No federal standard before 1992.",
+   "sources": [
+    "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "1982-1991",
+   "type": "central AC (split)",
+   "seer": 9.0,
+   "seerRange": [
+    8.31,
+    9.49
+   ],
+   "seer2": null,
+   "source": "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+   "note": "LBNL shipment-weighted SEER by year rises from 8.31 (1982) to 9.49 (1991); 9.0 is the period mean.",
+   "sources": [
+    "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "1992 - Jan 22, 2006",
+   "type": "central AC (split)",
+   "seer": 10.9,
+   "seerRange": [
+    10.46,
+    11.32
+   ],
+   "federalMinimum": 10.0,
+   "seer2": null,
+   "source": "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+   "note": "Federal minimum SEER 10.0 split / 9.7 single-package (split made after Jan 1 1992, packaged after Jan 1 1993, both before Jan 23 2006; 10 CFR 430.32(c)(1), 2005 edition). LBNL shipment-weighted 10.46 (1992) to 11.32 (2005).",
+   "sources": [
+    "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+    "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "Jan 23, 2006 - 2014",
+   "type": "central AC (split)",
+   "seer": 13.5,
+   "seerRange": [
+    13.17,
+    13.76
+   ],
+   "federalMinimum": 13.0,
+   "seer2": null,
+   "source": "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+   "note": "Federal minimum SEER 13 for split and packaged units made on or after Jan 23 2006 (10 CFR 430.32(c)(2), 2005 edition). LBNL shipment-weighted 13.17 (2006) to 13.76 (2008-2010; series ends 2010).",
+   "sources": [
+    "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+    "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "2015-2022",
+   "type": "central AC (split)",
+   "seer": 14.6,
+   "seerNorth": 14.1,
+   "federalMinimum": {
+    "north": 13,
+    "southeastSouthwest": 14
+   },
+   "seer2": null,
+   "source": "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+   "note": "Regional standards from Jan 1 2015: split AC 13 SEER (North), 14 SEER installed in the Southeast (AL AR DE FL GA HI KY LA MD MS NC OK SC TN TX VA DC) and Southwest (AZ CA NV NM, which also needs EER 12.2/11.7). Typical 2022 new unit per EIA/Guidehouse (Mar 2023, Appendix A p. 28-29): 14.1 North, 14.6 South.",
+   "sources": [
+    "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf"
+   ],
+   "seerRegionNote": "seer = Southeast/Southwest value (all planner hot metros); seerNorth for the North region"
+  },
+  {
+   "installed": "2023 or later",
+   "type": "central AC (split)",
+   "seer": 15.0,
+   "seerNorth": 14.0,
+   "seer2": 14.3,
+   "seer2North": 13.4,
+   "seer2SoutheastSouthwest45kPlus": 13.8,
+   "federalMinimum": {
+    "north": "13.4 SEER2",
+    "southeastSouthwest": "14.3 SEER2 (<45,000 Btu/h), 13.8 SEER2 (>=45,000 Btu/h)"
+   },
+   "source": "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+   "note": "Jan 1 2023 standards are in SEER2 (M1 test, higher external static pressure). The 2017 direct final rule (82 FR 1786, Table I-1, p. 1788) gives the same levels in SEER: 14 North, 15 SE/SW (<45k), 14.5 (>=45k). So SEER2 = 0.95-0.96 x SEER (13.4/14 = 0.957; 14.3/15 = 0.953; 13.8/14.5 = 0.952).",
+   "sources": [
+    "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+    "https://www.govinfo.gov/content/pkg/FR-2017-01-06/pdf/2016-29992.pdf",
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf"
+   ],
+   "seerRegionNote": "seer = Southeast/Southwest value (all planner hot metros); seerNorth for the North region"
+  },
+  {
+   "installed": "before 1992",
+   "type": "heat pump (split)",
+   "seer": 9.2,
+   "seerRange": [
+    9.0,
+    9.77
+   ],
+   "seer2": null,
+   "source": "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+   "note": "LBNL shipment-weighted heat pump SEER 9.0 (1970-1987, floored) to 9.77 (1991).",
+   "sources": [
+    "https://hes-documentation.lbl.gov/calculation-methodology/calculation-of-energy-consumption/heating-and-cooling-calculation/heating-and-cooling-equipment/heating-and-cooling-equipment-efficiencies",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "1992 - Jan 22, 2006",
+   "type": "heat pump (split)",
+   "seer": 11.1,
+   "seerRange": [
+    10.6,
+    11.6
+   ],
+   "federalMinimum": 10.0,
+   "seer2": null,
+   "source": "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+   "note": "Minimum SEER 10 / HSPF 6.8 (split); LBNL shipment-weighted 10.6-11.6.",
+   "sources": [
+    "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "Jan 23, 2006 - 2014",
+   "type": "heat pump (split)",
+   "seer": 13.6,
+   "federalMinimum": 13.0,
+   "seer2": null,
+   "source": "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+   "note": "Minimum SEER 13 / HSPF 7.7; LBNL shipment-weighted 13.2-13.8 (2006-2010).",
+   "sources": [
+    "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf",
+    "https://docs.google.com/spreadsheets/d/1fYLhC1HxD7zoHkdMd7h8kSBQqEiYXWI1pCSmy7dwMNg/pub?gid=223905169&single=true&output=csv"
+   ]
+  },
+  {
+   "installed": "2015-2022",
+   "type": "heat pump (split)",
+   "seer": 15.3,
+   "federalMinimum": 14.0,
+   "seer2": 14.5,
+   "source": "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+   "note": "National minimum SEER 14 / HSPF 8.2 from 2015; EIA/Guidehouse typical 2022 unit 15.3 SEER (14.5 SEER2), installed-base 2020 15.3 (Appendix A p. 40).",
+   "sources": [
+    "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf"
+   ]
+  },
+  {
+   "installed": "2023 or later",
+   "type": "heat pump (split)",
+   "seer": 15.0,
+   "federalMinimum": "14.3 SEER2 / 7.5 HSPF2",
+   "seer2": 14.3,
+   "source": "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+   "note": "Minimum 14.3 SEER2 = 15 SEER (DFR Table I-1). ENERGY STAR v6.1 16 SEER (15.2 SEER2); variable-speed \"high\" units 21-22.6 SEER (EIA Appendix A p. 40).",
+   "sources": [
+    "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+    "https://www.govinfo.gov/content/pkg/FR-2017-01-06/pdf/2016-29992.pdf",
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf"
+   ]
+  },
+  {
+   "installed": "new variable-speed (for upgrade estimates)",
+   "type": "central AC or heat pump",
+   "seer": 18.0,
+   "seer2": 17.1,
+   "source": "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf",
+   "note": "Planner assumption for a mid-range variable-speed replacement; EIA lists 17.0 SEER as the high-efficiency coil-only AC and 22.6 SEER for heat pumps. Use the quoted SEER2 when the user knows it (SEER = SEER2 / 0.95).",
+   "sources": [
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1259&context=fsec"
+   ]
+  }
+ ],
+ "acAgeBandToInstallPeriod2026": {
+  "0-3 years": "2023 or later",
+  "4-11 years": "2015-2022",
+  "12-20 years": "Jan 23, 2006 - 2014",
+  "21-34 years": "1992 - Jan 22, 2006",
+  "35+ years": "1982-1991 (or before 1982)"
+ },
+ "roomAcEfficiencyByAge": [
+  {
+   "installed": "before 2000",
+   "eer": 9.0,
+   "source": [
+    "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf"
+   ],
+   "note": "Federal minimum EER 9.0 from Jan 1 1990 for the common class (louvered sides, no reverse cycle, 8,000-13,999 Btu/h). Pre-1990 units were lower (no verified figure)."
+  },
+  {
+   "installed": "Oct 2000 - May 2014",
+   "eer": 9.8,
+   "source": [
+    "https://www.govinfo.gov/content/pkg/CFR-2005-title10-vol3/pdf/CFR-2005-title10-vol3-sec430-32.pdf"
+   ],
+   "note": "Minimum EER 9.8 from Oct 1 2000 (same class)."
+  },
+  {
+   "installed": "June 2014 - May 2026",
+   "ceer": 10.9,
+   "source": [
+    "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32",
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf"
+   ],
+   "note": "Minimum CEER 10.9 (class 3); EIA installed-base CEER 10.9 and ENERGY STAR 12.0 (Appendix A p. 32)."
+  },
+  {
+   "installed": "May 26, 2026 or later",
+   "ceer": 16.0,
+   "source": [
+    "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32"
+   ],
+   "note": "New minimum CEER 16.0 for class 3 (10 CFR 430.32(b)(2)); in practice variable-speed units."
+  }
+ ],
+ "measures": {
+  "attic_insulation": {
+   "label": "Attic floor insulation from about R-11/R-19 to R-38/R-49 (vented attic)",
+   "coolingSavingsPct": {
+    "low": 6,
+    "typical": 10,
+    "high": 20
+   },
+   "headlineCase": "R-11 to R-49, one-storey house, zones 2A-3B. From R-19 the typical value is 5% (low 3, high 10); from R-30 about 2% (low 1, high 4). Two-storey houses get about 70% of these numbers.",
+   "formula": "typical % = 100 * k * (1/(R_before+2) - 1/(R_after+2)); k = 1.7 one-storey, 1.2 two-storey; x0.75 in 1A. low = 0.6 x typical, high = 2 x typical. +2 = air films and drywall.",
+   "byBaselineResStock": {
+    "1A R-13": 3.4,
+    "1A R-19": 1.9,
+    "2A R-13": 5.6,
+    "2A R-19": 3.6,
+    "2A R-30": 1.6,
+    "2A R-38": 0.8,
+    "2A R-7": 10.3,
+    "2A Uninsulated": 28.5,
+    "2B R-13": 7.1,
+    "2B R-19": 4.8,
+    "2B R-30": 2.0,
+    "2B R-38": 1.0,
+    "2B R-7": 10.9,
+    "3A R-13": 6.0,
+    "3A R-19": 4.2,
+    "3A R-30": 1.9,
+    "3A R-38": 0.9,
+    "3A R-7": 10.3,
+    "3A Uninsulated": 29.8,
+    "3B R-13": 6.3,
+    "3B R-19": 4.3,
+    "3B R-30": 1.9,
+    "3B R-38": 0.9,
+    "3B R-7": 11.8,
+    "3B Uninsulated": 36.1
+   },
+   "appliesWhen": "Vented attic over conditioned space with R-30 or less; zones 1-3 (cooling-dominated); most valuable with ducts or the air handler in the attic. Ignore for flat/cathedral roofs and finished attics.",
+   "source": [
+    "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/resstock_documentation_2024_release_2.pdf",
+    "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/metadata_and_annual_results/by_state/state=FL/parquet/FL_upgrade16_metadata_and_annual_results.parquet",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1610&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1870&context=fsec",
+    "https://www.energystar.gov/saveathome/seal_insulate/methodology",
+    "https://www.energystar.gov/sites/default/files/asset/document/Measure_Upgrade_Assumptions.pdf"
+   ],
+   "notes": "k is fitted to NREL ResStock 2024.2 (package 16 attic-only homes, SFD with central AC/ducted HP in FL TX AZ GA CA NC LA NV): R-7 -> R-49 saved 10-12% of cooling kWh, R-13 5.6-7.1%, R-19 3.6-4.8%, R-30 1.6-2.0%, R-38 0.8-1.0%, uninsulated 28-36% (zones 2A-3B); fitted k 1.6-1.9 one-storey, 1.0-1.3 two-storey, 1.0 in 1A (target R-30). Field data run higher: FSEC monitoring of Florida Power Corp homes found R-30 homes used 3.4 kWh/day (11%) less cooling than R-19 homes (n=35 vs 43, cross-sectional, so partly confounded); in 25 Palm Beach homes ceiling-insulation retrofits saved 1,934 kWh/yr on average (about 24% of the 8,163 kWh mean; baseline levels not stated). ENERGY STAR/EPA modeling of 25% air sealing plus attic to R-30 (CZ1) / R-38 (CZ2-3) from R-13 gives 7% (CZ1), 9% (CZ2), 14% (CZ3) of heating+cooling costs. Cooling-only savings are modest unless the attic is at R-19 or less; the planner should also keep counting the heating savings it already models."
+  },
+  "air_sealing": {
+   "label": "Whole-house air sealing, 20-30% reduction in leakage (ACH50)",
+   "coolingSavingsPct": {
+    "low": 0,
+    "typical": 4,
+    "high": 7
+   },
+   "byZoneTypical": {
+    "1A": 5,
+    "2A": 5,
+    "3A": 4,
+    "2B": 3,
+    "3B": 1,
+    "3C": 0,
+    "4A": 3,
+    "4C": 0,
+    "5A": 2,
+    "5B": 0,
+    "6A": 2
+   },
+   "byBaselineResStock": {
+    "1A 15 ACH50": 4.7,
+    "1A 20 ACH50": 5.3,
+    "1A 25 ACH50": 5.9,
+    "1A 30 ACH50": 6.2,
+    "1A 40 ACH50": 7.1,
+    "1A 50 ACH50": 7.4,
+    "2A 15 ACH50": 4.4,
+    "2A 20 ACH50": 5.0,
+    "2A 25 ACH50": 5.5,
+    "2A 30 ACH50": 6.0,
+    "2A 40 ACH50": 7.0,
+    "2A 50 ACH50": 7.5,
+    "2B 15 ACH50": 2.6,
+    "2B 20 ACH50": 3.1,
+    "2B 25 ACH50": 3.7,
+    "2B 30 ACH50": 4.0,
+    "2B 40 ACH50": 4.9,
+    "3A 15 ACH50": 3.7,
+    "3A 20 ACH50": 4.5,
+    "3A 25 ACH50": 4.9,
+    "3A 30 ACH50": 5.6,
+    "3A 40 ACH50": 6.5,
+    "3A 50 ACH50": 7.2,
+    "3B 15 ACH50": 0.7,
+    "3B 20 ACH50": 0.8,
+    "3B 25 ACH50": 0.9,
+    "3B 30 ACH50": 1.1,
+    "3B 40 ACH50": 1.4,
+    "3B 50 ACH50": 2.0
+   },
+   "appliesWhen": "Homes above about 10 ACH50 (ResStock medians in hot zones: 20 ACH50 pre-1980, 15 in the 1980s, 10 in the 1990s, 8 after 2000). Values are for a 30% cut; scale linearly (a 20% cut = two-thirds).",
+   "source": [
+    "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/resstock_documentation_2024_release_2.pdf",
+    "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/metadata_and_annual_results/by_state/state=FL/parquet/FL_upgrade16_metadata_and_annual_results.parquet",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1107&context=fsec",
+    "https://www.energystar.gov/saveathome/seal_insulate/methodology",
+    "https://www.energystar.gov/sites/default/files/asset/document/Measure_Upgrade_Assumptions.pdf"
+   ],
+   "notes": "ResStock 2024.2 (30% ACH50 cut, homes >10 ACH50, air-sealing-only cases): 2A 4.4% (15 ACH50) to 7.5% (50 ACH50); 1A 4.7-7.4%; 3A 3.7-7.2%; 2B 2.6-4.9%; 3B 0.7-2.0%. FSEC side-by-side lab homes in central Florida (2.2 vs 6-8 ACH50, 78 F setpoint) found \"little if any\" cooling savings from tightness under natural infiltration because outdoor air is often below the setpoint, which is why low = 0. Leaks to the attic and leaks driven by the air handler (duct leakage) matter far more for cooling than general tightening; count heating savings separately as the planner does now."
+  },
+  "duct_sealing": {
+   "label": "Duct sealing (and insulation) for ducts in an unconditioned attic, crawlspace or garage",
+   "coolingSavingsPct": {
+    "low": 5,
+    "typical": 12,
+    "high": 20
+   },
+   "appliesWhen": "Ducted central AC/heat pump with ducts or air handler outside conditioned space; built before about 2010 or never duct-tested. For 2011+ homes (duct testing in the 2012 IECC) use low 2, typical 5.",
+   "source": [
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1857&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1700&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1177&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1870&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1259&context=fsec",
+    "https://www.energystar.gov/products/energy_star_home_upgrade/clean_heating_cooling"
+   ],
+   "notes": "Field: FSEC repaired ducts in 24 Florida homes, cooling fell from 41.3 to 34.2 kWh/day, an 18.0% average (range 3.5-44.6%); infiltration was 4x higher with the air handler running (91 homes). Return-duct sealing plus airflow fixes in 8 low-income homes in Florida City (1A) saved 12% (2.40 kWh/day, about 880 kWh/yr; individual homes ranged from a 27% increase to a 35% saving). Duct replacement in 25 Palm Beach homes saved 2,894 kWh/yr. FSEC modeling of 4 Florida homes sealed from Qn,out 0.10-0.24 to 0.01-0.07 gave 2.3-6.0% of whole-house energy. Moving ducts from the attic into conditioned space cut measured cooling 13% (SEER 13) and 8% (SEER 21) in FSEC lab homes. ENERGY STAR: poorly sealed ducts can cost up to 30% of system efficiency."
+  },
+  "radiant_barrier": {
+   "label": "Attic radiant barrier (foil on rafters or roof deck)",
+   "coolingSavingsPct": {
+    "low": 2,
+    "typical": 8,
+    "high": 12
+   },
+   "appliesWhen": "Vented attic, zones 1-3, attic insulation R-19 or less, ideally ducts or air handler in the attic. With R-30+ use low 0, typical 3, high 6. Do not stack fully with a cool roof or new attic insulation (see model.combination).",
+   "source": [
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1610&context=fsec",
+    "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers"
+   ],
+   "notes": "FSEC/Florida Power Corp pilot: radiant barriers retrofitted in 9 occupied homes, 8 analysed: average 3.6 kWh/day (9.3%) cooling savings, peak demand -420 W (16%); site results ranged from a 27% saving to an 8% increase, with the largest savings at low ceiling insulation and attic air handlers. Building America Solution Center: a radiant barrier cuts attic-to-house heat flow by about 40%, \"typically 8% to 12% of the annual cooling costs\", and little at R-30 or better."
+  },
+  "cool_roof": {
+   "label": "Cool (high solar reflectance) roof at re-roofing",
+   "coolingSavingsPct": {
+    "low": 3,
+    "typical": 10,
+    "high": 25
+   },
+   "byMaterial": {
+    "cool/white asphalt shingle (reflectance ~0.25)": 10,
+    "white tile, white metal or white coating (0.65-0.77)": 20
+   },
+   "appliesWhen": "Sloped or low-slope roof over a vented attic, zones 1-3 (and 3B inland); savings largest with low attic insulation and attic ducts; only at roof replacement (or for low-slope coatings).",
+   "source": [
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1733&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1569&context=fsec"
+   ],
+   "notes": "FSEC whitened the roofs of 11 occupied Florida homes (solar reflectance 0.20 -> 0.65): cooling fell 19% on average (7.7 kWh/day), range 2-43%, peak -22%; homes with no or low insulation saved 26-43%, R-19 homes 2-13%. Seven identical Fort Myers homes (R-19, attic ducts, unoccupied test) vs dark shingle: white shingle 10.2% (10.6% adjusted), terra-cotta tile 5.9%, white barrel tile 21.8%, white flat tile 22.5%, white metal 29.4% (24.0% adjusted)."
+  },
+  "window_film_solar_screens": {
+   "label": "Spectrally selective window film or exterior solar screens on sun-exposed windows",
+   "coolingSavingsPct": {
+    "low": 2,
+    "typical": 7,
+    "high": 12
+   },
+   "appliesWhen": "Clear (non-low-e) single or double glazing, mostly east/west/south windows without shade; zones 1-3. Skip for existing low-e or shaded windows.",
+   "source": [
+    "https://www.pnnl.gov/main/publications/external/technical_reports/PNNL-24826.pdf",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1628&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1870&context=fsec",
+    "https://www.energystar.gov/sites/default/files/asset/document/Windows_CitySavings_2018-10.pdf"
+   ],
+   "notes": "No field evaluation of film or screens with a verified number was found (FSEC monitoring of 25 Palm Beach homes found no statistically significant savings from window tinting and awnings, small sample). The range is scaled down from whole-window results: PNNL modeling of solar-control low-e storm panels on all windows (RESFEN 6/DOE-2.1E) gives 16-19% (CZ1) and 18-23% (CZ2) of whole-home heating+cooling source energy; film or screens usually cover only part of the glazing. Treat typical/high as judgment, not measured."
+  },
+  "low_shgc_windows": {
+   "label": "Replacement windows with low SHGC (ENERGY STAR southern zone, SHGC <= 0.23-0.25)",
+   "coolingSavingsPct": {
+    "low": 8,
+    "typical": 15,
+    "high": 25
+   },
+   "fromDoubleClear": {
+    "low": 5,
+    "typical": 10,
+    "high": 17
+   },
+   "appliesWhen": "Replacing clear single-pane (main values) or clear double-pane (fromDoubleClear) windows; zones 1-3.",
+   "source": [
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1628&context=fsec",
+    "https://www.energystar.gov/sites/default/files/asset/document/Windows_CitySavings_2018-10.pdf",
+    "https://www.pnnl.gov/main/publications/external/technical_reports/PNNL-24826.pdf"
+   ],
+   "notes": "FSEC side-by-side homes in Melbourne FL: single clear (whole-window SHGC 0.77) vs spectrally selective double low-e (0.36): 14.7% less cooling measured (17 days, unoccupied), 17% simulated annually (5,408 -> 4,471 kWh). ENERGY STAR/D+R International (2015) modeled heating+cooling bill savings in the Southern zone: 31% replacing single clear, 17% replacing double clear (Houston $276/$125, Phoenix $412/$185, Miami $297/$209)."
+  },
+  "raise_cooling_setpoint": {
+   "label": "Raise the cooling thermostat setting (per 1 F, all day)",
+   "coolingSavingsPct": {
+    "low": 4,
+    "typical": 6,
+    "high": 8
+   },
+   "unit": "percent of cooling kWh per +1 F",
+   "formula": "metro-specific % per F = 100 * (CDD65 - CDD70) / (5 * CDD65) from NOAA 1991-2020 normals; clamp to 4-10%",
+   "byMetro": {
+    "new-york": 10.3,
+    "los-angeles": 14.8,
+    "chicago": 9.8,
+    "dallas": 6.6,
+    "houston": 6.8,
+    "atlanta": 8.2,
+    "washington-dc": 8.0,
+    "miami": 7.1,
+    "philadelphia": 8.9,
+    "phoenix": 4.9,
+    "boston": 10.6,
+    "riverside": 9.0,
+    "san-francisco": 15.5,
+    "detroit": 10.9,
+    "seattle": 14.6,
+    "minneapolis": 10.6,
+    "tampa": 7.1,
+    "san-diego": 14.1,
+    "denver": 10.6,
+    "orlando": 7.8,
+    "baltimore": 9.1,
+    "charlotte": 8.6,
+    "st-louis": 8.0,
+    "san-antonio": 6.8,
+    "austin": 6.8,
+    "portland": 13.0
+   },
+   "appliesWhen": "Any home with AC; savings for a setback only part of the day scale with the hours shifted.",
+   "source": [
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1577&context=fsec",
+    "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-annualseasonal-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=ANN-CLDD-NORMAL,ANN-CLDD-BASE60,ANN-CLDD-BASE70,ANN-CLDD-BASE72,ANN-HTDD-NORMAL,ANN-TAVG-NORMAL&format=json&includeStationName=true"
+   ],
+   "notes": "Measured: in 169-171 monitored central-Florida homes, annual cooling rose about 7% for every 1 F lower interior temperature (FSEC 2002). RECS 2020 microdata (log cooling kWh on setpoint with area, CDD and zone controls, SFD+SFA central AC, zones 1A/2A/2B/3A) imply 6.0% per F (this research; reflects EIA's setpoint-adjusted model plus bill calibration). Degree-day sensitivity from NOAA normals: Phoenix 4.9, Dallas/Houston/Austin/San Antonio 6.6-6.8, Miami/Tampa 7.1, Orlando 7.8, Atlanta 8.2, DC 8.0, New York 10.3, Los Angeles 14.8 % per F (mild climates have high % but few kWh)."
+  },
+  "right_sized_variable_speed_ac": {
+   "label": "Replace the central AC/heat pump with a right-sized variable-speed unit",
+   "coolingSavingsPct": {
+    "low": 15,
+    "typical": 25,
+    "high": 45
+   },
+   "formula": "savings = 1 - SEER_existing / SEER_new (use acEfficiencyByAge; SEER = SEER2/0.95); add 0-3% for right-sizing only when ducts are inside conditioned space",
+   "examples": {
+    "SEER 13.5 (2006-14) -> SEER 18": 25,
+    "SEER 10.9 (1992-2005) -> SEER 18": 39,
+    "SEER 9 (1980s) -> SEER 18": 50,
+    "SEER 14.5 (2015-22) -> SEER 18": 19
+   },
+   "appliesWhen": "Central AC or heat pump; in practice at end of life (15+ years). Variable-speed systems can leave indoor humidity higher in humid climates unless set up for dehumidification.",
+   "source": [
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1259&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1746&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1479&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1131&context=fsec",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1870&context=fsec",
+    "https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf"
+   ],
+   "notes": "Measured SEER ratio holds: FSEC lab homes, SEER 21 variable-speed vs SEER 13: about 36% seasonal cooling savings vs 38.1% expected from ratings; indoor RH 52-55% vs 49%. Right-sizing alone is small: oversizing to 120%/150% of Manual J added 3.7%/9.3% summer cooling (368-home Florida study, weak signal); four Florida change-outs to Manual J sizing ranged from a 13% saving to an 18% increase, authors estimate 2-3% only with ducts in conditioned space. Field retrofits: new SEER 16-18 heat pumps plus duct repair cut cooling 46% (4,336 kWh/yr) in 10 Florida deep-retrofit homes; AC replacement saved 3,603 kWh/yr in 25 Palm Beach homes (1990)."
+  },
+  "hpwh_side_cooling": {
+   "label": "Heat pump water heater inside conditioned space (cooling side benefit)",
+   "coolingSavingsPct": {
+    "low": 2,
+    "typical": 3,
+    "high": 5
+   },
+   "kwhPerYear": {
+    "hotHumid": 318,
+    "hotDry": 187,
+    "mixedHumid": 221,
+    "measuredCentralFlorida": 178
+   },
+   "appliesWhen": "HPWH located (or ducted) inside the conditioned space in zones 1-3; in mixed/cold zones the heating penalty is larger than the cooling credit (the planner already models that penalty).",
+   "source": [
+    "https://www.nrel.gov/docs/fy13osti/58594.pdf",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1098&context=fsec",
+    "https://www.energystar.gov/products/heat_pump_water_heaters"
+   ],
+   "notes": "NREL TP-5500-58594 Table 2 (50-gal HPWH, EF 2.35, replacing EF 0.91 electric, conditioned space, heat pump heating): space-cooling source savings 3.65 (hot-humid), 2.15 (hot-dry), 2.54 (mixed-humid) MMBtu/yr; divided by the report's 3.365 source/site ratio = 318, 187, 221 kWh/yr site (conversion by this research). FSEC lab home, ducted indoor-to-indoor HPWH: 0.86 kWh/day (3.8%) in the cooling season, 178 kWh/yr (3.2%) annual cooling savings, 37 kWh/yr heating penalty. Express in kWh rather than %, then divide by the home's cooling kWh if a % is needed."
+  },
+  "dehumidifier": {
+   "label": "Dehumidifier energy (hot-humid homes) and ENERGY STAR replacement",
+   "coolingSavingsPct": {
+    "low": 20,
+    "typical": 20,
+    "high": 20
+   },
+   "pctOf": "dehumidifier kWh, not cooling kWh",
+   "kwhPerYearUsers": {
+    "hotHumidAllUsers": 1329,
+    "portable": 1000,
+    "wholeHome": 2050,
+    "yearRoundUse": 2800,
+    "summerOnly": 575,
+    "recsPublishedHotHumid": 1368
+   },
+   "appliesWhen": "Only homes that run a dehumidifier (about 7-8% of single-family homes in hot-humid areas, 25% in 4A). Show as an added load; a new ENERGY STAR unit uses about 20% less.",
+   "source": [
+    "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+    "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3a.xlsx",
+    "https://www.energystar.gov/products/dehumidifiers",
+    "https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1053&context=fsec"
+   ],
+   "notes": "RECS 2020 microdata (single-family + mobile homes, BA hot-humid, users only): mean 1,329 kWh/yr; portable ~975-1,058, whole-home ~1,942-2,164; year-round users ~2,700-2,900, summer-only ~570-580 (KWHDHUM by DEHUMTYPE/USEDEHUM). Published CE5.3a: 1,368 kWh hot-humid, 999 all homes. ENERGY STAR: certified units use 20% less energy (no range published, so low = typical = high). FSEC: ducting a whole-house unit to/from the central return raised AC+dehumidifier energy about 12% versus room ducting."
+  }
+ },
+ "model": {
+  "formula": "coolingKwh = K_ref * (A / A_ref)^0.6 * (CDD65_metro / CDD65_ref)^e * F_era * F_type * min(1.5, SEER_ref / SEER_unit)   [central AC or heat pump]; roomKwh = K_room,zone * (CDD65_metro / CDD65_room,ref)^0.9 * (10.0 / EER_unit)   [room ACs]; none = 0. savingsKwh_i = coolingKwh * pct_i/100; dollars = savingsKwh * state residential price (EIA, $/kWh). Combine measures multiplicatively (see parameters.combination).",
+  "assumptions": [
+   "K_ref, A_ref (mean cooled sq ft) and CDD65_ref (2020 weather at the sampled homes) come from benchmarks.byMetro (RECS state x climate cell) when present, else benchmarks.byZone; both are RECS 2020 single-family detached homes with central AC, including the indoor fan.",
+   "A = cooled floor area from the planner size band: small 1,000, medium 1,600, large 2,500, xlarge 3,500 sq ft (the engine's 93/149/232/325 m2). Exponent 0.6 because RECS cooling kWh rises less than proportionally with area (fitted elasticity 0.66 +/- 0.03 in zones 1A-3B, 0.54 +/- 0.02 nationally; respondent-reported area may bias this down).",
+   "CDD65_metro = NOAA 1991-2020 normal at the metro station (already in climate.json). Exponent e = 0.9 for moist (A) and dry (B) zones (RECS within-zone elasticity 1.01 +/- 0.05 hot zones, 0.80 +/- 0.04 national); e = 0.5 for marine (C) zones, a judgment because CDD65 explains little there.",
+   "F_era (RECS 2020 regression, zones 1A-3B, normalised to the stock average; AC age, area, CDD, type and zone held constant): pre-1946 1.15, 1946-65 1.12, 1966-80 1.08, 1981-95 0.99, 1996-2010 0.94, 2011+ 0.80. Partly reflects EIA's code-based U-factor assumptions.",
+   "F_type (RECS 2020 regression at equal cooled area, central AC): detached 1.00, semi-detached/row 0.75 (attached 0.73-0.77), mobile 1.00 (mobile homes are smaller, which the area term already captures), apartment in a 2-4 unit building 0.77, condo/apartment in a 5+ unit building 0.57. Foundation: ignore (RECS basement/crawl vs slab within +/-5-8%).",
+   "SEER_ref = the zone's assumed stock SEER (byZone.seerRef, 12.5-13.8); SEER_unit from acEfficiencyByAge by install period and region (heat pumps use the heat-pump rows). RECS itself shows a flatter age effect (20+ year-old units about 1.10x the 5-9 year-old units after controls), so the SEER ratio may overstate how much more an old unit uses; keep it but cap SEER_ref/SEER_unit at 1.5.",
+   "Room ACs: K_room by zone from benchmarks.roomAcByZone (per household, 1.4-2.7 units); EER_ref 10.0 assumed for the RECS 2020 room-AC stock (mix of 9.8 EER and 10.9 CEER units); for 2B and 3C (too few RECS homes) use the 3A value scaled by CDD and flag it.",
+   "Prices: EIA Electric Power Monthly Table 5.6.B year-to-date residential average (prices.json). Average price includes fixed charges, so it slightly overstates the value of a saved kWh where marginal rates are lower; tiered summer rates can understate it.",
+   "Savings percentages apply to cooling kWh including the indoor fan; heating effects of the same measures stay in the existing heating model."
+  ],
+  "parameters": {
+   "areaExponent": 0.6,
+   "cddExponent": {
+    "A": 0.9,
+    "B": 0.9,
+    "C": 0.5
+   },
+   "sizeBandSqft": {
+    "small": 1000,
+    "medium": 1600,
+    "large": 2500,
+    "xlarge": 3500
+   },
+   "eraFactor": {
+    "pre-1946": 1.15,
+    "1946-1965": 1.12,
+    "1966-1980": 1.08,
+    "1981-1995": 0.99,
+    "1996-2010": 0.94,
+    "2011-plus": 0.8
+   },
+   "typeFactor": {
+    "detached": 1.0,
+    "semi": 0.75,
+    "row": 0.75,
+    "mobile": 1.0,
+    "apartment2to4": 0.77,
+    "condo5plus": 0.57
+   },
+   "seerRefByZone": {
+    "1A": 13.8,
+    "2A": 13.5,
+    "2B": 13.6,
+    "3A": 13.3,
+    "3B": 12.9,
+    "3C": 13.1,
+    "4A": 13.0,
+    "4B": 13.1,
+    "4C": 12.9,
+    "5A": 12.7,
+    "5B": 12.7,
+    "6A": 12.5,
+    "6B": 12.9,
+    "7A": 12.2
+   },
+   "seerRatioCap": 1.5,
+   "roomEerRef": 10.0,
+   "atticFormula": {
+    "oneStory": 1.7,
+    "twoStory": 1.2,
+    "zone1AMultiplier": 0.75
+   },
+   "combination": "Apply measures multiplicatively: kWh_after = coolingKwh * product(1 - pct_i/100), in this order: setpoint, envelope (air sealing, attic insulation, windows/film), attic-heat measures, ducts, equipment last. Attic-heat measures (attic insulation, radiant barrier, cool roof) overlap: count the largest in full and the others at 50%; count duct sealing at 75% when a radiant barrier or cool roof is also chosen. These overlap factors are planner judgment, not measured.",
+   "baselineRange": {
+    "lowMultiplier": 0.7,
+    "highMultiplier": 1.35,
+    "marineLowMultiplier": 0.5,
+    "marineHighMultiplier": 1.6
+   },
+   "recsRegression": {
+    "hotZones": {
+     "const": [
+      -4.3828,
+      0.4855
+     ],
+     "lA": [
+      0.6583,
+      0.0283
+     ],
+     "lC": [
+      1.008,
+      0.0518
+     ],
+     "yb1": [
+      0.1167,
+      0.0733
+     ],
+     "yb2": [
+      0.1222,
+      0.0492
+     ],
+     "yb3": [
+      0.0612,
+      0.044
+     ],
+     "yb4": [
+      0.0449,
+      0.0395
+     ],
+     "yb6": [
+      -0.0652,
+      0.0345
+     ],
+     "yb7": [
+      -0.1145,
+      0.0334
+     ],
+     "yb8": [
+      -0.2074,
+      0.0442
+     ],
+     "yb9": [
+      -0.2743,
+      0.0539
+     ],
+     "age1": [
+      -0.0755,
+      0.0336
+     ],
+     "age2": [
+      -0.0161,
+      0.0318
+     ],
+     "age4": [
+      0.0126,
+      0.0309
+     ],
+     "age5": [
+      0.0711,
+      0.0421
+     ],
+     "age6": [
+      0.0942,
+      0.0432
+     ],
+     "attached": [
+      -0.3161,
+      0.0456
+     ],
+     "mobile": [
+      -0.0043,
+      0.0554
+     ],
+     "hp": [
+      -0.0865,
+      0.0241
+     ],
+     "basement": [
+      0.0788,
+      0.0625
+     ],
+     "crawl": [
+      -0.0068,
+      0.0324
+     ],
+     "z1A": [
+      0.0647,
+      0.0842
+     ],
+     "z2A": [
+      -0.1697,
+      0.0421
+     ],
+     "z2B": [
+      -0.2185,
+      0.0547
+     ],
+     "z3B": [
+      -0.4047,
+      0.0337
+     ]
+    },
+    "allZones": {
+     "const": [
+      -2.023,
+      0.2984
+     ],
+     "lA": [
+      0.5379,
+      0.0184
+     ],
+     "lC": [
+      0.7967,
+      0.036
+     ],
+     "yb1": [
+      0.1381,
+      0.0352
+     ],
+     "yb2": [
+      0.1293,
+      0.0311
+     ],
+     "yb3": [
+      0.0265,
+      0.0328
+     ],
+     "yb4": [
+      0.0541,
+      0.0318
+     ],
+     "yb6": [
+      -0.0467,
+      0.0281
+     ],
+     "yb7": [
+      -0.0867,
+      0.0261
+     ],
+     "yb8": [
+      -0.1326,
+      0.0333
+     ],
+     "yb9": [
+      -0.2507,
+      0.039
+     ],
+     "age1": [
+      -0.0935,
+      0.0277
+     ],
+     "age2": [
+      -0.0521,
+      0.0244
+     ],
+     "age4": [
+      0.0011,
+      0.0204
+     ],
+     "age5": [
+      0.0577,
+      0.0256
+     ],
+     "age6": [
+      0.0405,
+      0.0278
+     ],
+     "attached": [
+      -0.2656,
+      0.0238
+     ],
+     "mobile": [
+      0.0044,
+      0.0373
+     ],
+     "hp": [
+      -0.0624,
+      0.0176
+     ],
+     "basement": [
+      0.046,
+      0.0235
+     ],
+     "crawl": [
+      0.0391,
+      0.0204
+     ],
+     "z1A": [
+      0.3718,
+      0.0873
+     ],
+     "z2A": [
+      0.0783,
+      0.0515
+     ],
+     "z2B": [
+      0.0938,
+      0.0578
+     ],
+     "z3A": [
+      0.1325,
+      0.0338
+     ],
+     "z3B": [
+      -0.2671,
+      0.0483
+     ],
+     "z3C": [
+      -0.4499,
+      0.0817
+     ],
+     "z4B": [
+      -0.2258,
+      0.0764
+     ],
+     "z4C": [
+      0.3043,
+      0.0724
+     ],
+     "z5A": [
+      -0.1596,
+      0.0263
+     ],
+     "z5B": [
+      -0.096,
+      0.0336
+     ],
+     "z6A": [
+      -0.2473,
+      0.036
+     ],
+     "z6B": [
+      -0.0359,
+      0.0632
+     ],
+     "z7A": [
+      -0.1494,
+      0.0914
+     ]
+    },
+    "note": "log(cooling kWh) on log cooled sq ft, log CDD65, year-built, AC-age, type, heat pump, foundation and zone dummies; SFD+SFA+mobile with central AC; NWEIGHT; jackknife SEs. Coefficient pairs are [estimate, SE]."
+   }
+  },
+  "uncertainty": "For the typical house in a metro the estimate is good to roughly -30%/+35% (judgment, about one standard deviation): RECS sampling error is small (3-7% per metro cell), but RECS end uses are modeled and calibrated rather than metered, ResStock runs 30-65% higher in most hot states, and FSEC measured a 100:1 spread in cooling kWh per sq ft across 25 similar Florida homes. Marine metros (Seattle, Portland, San Francisco) and 3B coastal California are +/-50% or worse in relative terms but small in kWh. Savings percentages are uncertain by about a factor of two (see low/high); field studies show individual homes from negative to 40%+. Show ranges, not single numbers, and say that a bill entry narrows them.",
+  "examples": [
+   {
+    "metro": "phoenix",
+    "zone": "2B",
+    "cdd65": 4764.6,
+    "state": "AZ",
+    "priceCentsPerKwh": 15.44,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 4731,
+     "typical": 6759,
+     "high": 9124
+    },
+    "coolingDollars": 1044,
+    "olderHouse1946_65Kwh": 7646,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 73,
+     "duct sealing (12%)": 125,
+     "+2 F setpoint": 100,
+     "SEER 13.5 -> 18 replacement (25%)": 261
+    }
+   },
+   {
+    "metro": "miami",
+    "zone": "1A",
+    "cdd65": 4656.0,
+    "state": "FL",
+    "priceCentsPerKwh": 15.3,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 6593,
+     "typical": 9418,
+     "high": 12714
+    },
+    "coolingDollars": 1441,
+    "olderHouse1946_65Kwh": 10655,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 101,
+     "duct sealing (12%)": 173,
+     "+2 F setpoint": 197,
+     "SEER 13.5 -> 18 replacement (25%)": 360
+    }
+   },
+   {
+    "metro": "tampa",
+    "zone": "2A",
+    "cdd65": 3928.2,
+    "state": "FL",
+    "priceCentsPerKwh": 15.3,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 3482,
+     "typical": 4974,
+     "high": 6715
+    },
+    "coolingDollars": 761,
+    "olderHouse1946_65Kwh": 5627,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 54,
+     "duct sealing (12%)": 91,
+     "+2 F setpoint": 104,
+     "SEER 13.5 -> 18 replacement (25%)": 190
+    }
+   },
+   {
+    "metro": "orlando",
+    "zone": "2A",
+    "cdd65": 3451.6,
+    "state": "FL",
+    "priceCentsPerKwh": 15.3,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 3099,
+     "typical": 4427,
+     "high": 5977
+    },
+    "coolingDollars": 677,
+    "olderHouse1946_65Kwh": 5009,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 48,
+     "duct sealing (12%)": 81,
+     "+2 F setpoint": 102,
+     "SEER 13.5 -> 18 replacement (25%)": 169
+    }
+   },
+   {
+    "metro": "houston",
+    "zone": "2A",
+    "cdd65": 3287.7,
+    "state": "TX",
+    "priceCentsPerKwh": 16.06,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 3715,
+     "typical": 5307,
+     "high": 7164
+    },
+    "coolingDollars": 852,
+    "olderHouse1946_65Kwh": 6004,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 60,
+     "duct sealing (12%)": 102,
+     "+2 F setpoint": 112,
+     "SEER 13.5 -> 18 replacement (25%)": 213
+    }
+   },
+   {
+    "metro": "san-antonio",
+    "zone": "2A",
+    "cdd65": 3147.8,
+    "state": "TX",
+    "priceCentsPerKwh": 16.06,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 3572,
+     "typical": 5103,
+     "high": 6889
+    },
+    "coolingDollars": 820,
+    "olderHouse1946_65Kwh": 5773,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 58,
+     "duct sealing (12%)": 98,
+     "+2 F setpoint": 108,
+     "SEER 13.5 -> 18 replacement (25%)": 205
+    }
+   },
+   {
+    "metro": "austin",
+    "zone": "2A",
+    "cdd65": 2995.9,
+    "state": "TX",
+    "priceCentsPerKwh": 16.06,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 3417,
+     "typical": 4881,
+     "high": 6589
+    },
+    "coolingDollars": 784,
+    "olderHouse1946_65Kwh": 5522,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 55,
+     "duct sealing (12%)": 94,
+     "+2 F setpoint": 103,
+     "SEER 13.5 -> 18 replacement (25%)": 196
+    }
+   },
+   {
+    "metro": "dallas",
+    "zone": "2A",
+    "cdd65": 2824.0,
+    "state": "TX",
+    "priceCentsPerKwh": 16.06,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 3129,
+     "typical": 4470,
+     "high": 6034
+    },
+    "coolingDollars": 718,
+    "olderHouse1946_65Kwh": 5057,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 51,
+     "duct sealing (12%)": 86,
+     "+2 F setpoint": 92,
+     "SEER 13.5 -> 18 replacement (25%)": 179
+    }
+   },
+   {
+    "metro": "atlanta",
+    "zone": "3A",
+    "cdd65": 2051.0,
+    "state": "GA",
+    "priceCentsPerKwh": 15.4,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 2422,
+     "typical": 3460,
+     "high": 4671
+    },
+    "coolingDollars": 533,
+    "olderHouse1946_65Kwh": 3915,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 37,
+     "duct sealing (12%)": 64,
+     "+2 F setpoint": 84,
+     "SEER 13.5 -> 18 replacement (25%)": 133
+    }
+   },
+   {
+    "metro": "riverside",
+    "zone": "3B",
+    "cdd65": 1854.3,
+    "state": "CA",
+    "priceCentsPerKwh": 33.25,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1629,
+     "typical": 2327,
+     "high": 3141
+    },
+    "coolingDollars": 774,
+    "olderHouse1946_65Kwh": 2632,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 54,
+     "duct sealing (12%)": 93,
+     "+2 F setpoint": 133,
+     "SEER 13.5 -> 18 replacement (25%)": 193
+    }
+   },
+   {
+    "metro": "charlotte",
+    "zone": "3A",
+    "cdd65": 1768.7,
+    "state": "NC",
+    "priceCentsPerKwh": 14.94,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 2217,
+     "typical": 3168,
+     "high": 4277
+    },
+    "coolingDollars": 473,
+    "olderHouse1946_65Kwh": 3584,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 33,
+     "duct sealing (12%)": 57,
+     "+2 F setpoint": 78,
+     "SEER 13.5 -> 18 replacement (25%)": 118
+    }
+   },
+   {
+    "metro": "washington-dc",
+    "zone": "4A",
+    "cdd65": 1737.8,
+    "state": "DC",
+    "priceCentsPerKwh": 24.66,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1941,
+     "typical": 2773,
+     "high": 3743
+    },
+    "coolingDollars": 684,
+    "olderHouse1946_65Kwh": 3137,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 48,
+     "duct sealing (12%)": 82,
+     "+2 F setpoint": 105,
+     "SEER 13.5 -> 18 replacement (25%)": 171
+    }
+   },
+   {
+    "metro": "st-louis",
+    "zone": "4A",
+    "cdd65": 1713.0,
+    "state": "MO",
+    "priceCentsPerKwh": 13.96,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 2116,
+     "typical": 3023,
+     "high": 4081
+    },
+    "coolingDollars": 422,
+    "olderHouse1946_65Kwh": 3420,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 30,
+     "duct sealing (12%)": 51,
+     "+2 F setpoint": 65,
+     "SEER 13.5 -> 18 replacement (25%)": 106
+    }
+   },
+   {
+    "metro": "philadelphia",
+    "zone": "4A",
+    "cdd65": 1358.3,
+    "state": "PA",
+    "priceCentsPerKwh": 21.04,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1693,
+     "typical": 2419,
+     "high": 3266
+    },
+    "coolingDollars": 509,
+    "olderHouse1946_65Kwh": 2737,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 36,
+     "duct sealing (12%)": 61,
+     "+2 F setpoint": 87,
+     "SEER 13.5 -> 18 replacement (25%)": 127
+    }
+   },
+   {
+    "metro": "baltimore",
+    "zone": "4A",
+    "cdd65": 1321.8,
+    "state": "MD",
+    "priceCentsPerKwh": 21.3,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1400,
+     "typical": 2000,
+     "high": 2699
+    },
+    "coolingDollars": 426,
+    "olderHouse1946_65Kwh": 2262,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 30,
+     "duct sealing (12%)": 51,
+     "+2 F setpoint": 74,
+     "SEER 13.5 -> 18 replacement (25%)": 106
+    }
+   },
+   {
+    "metro": "new-york",
+    "zone": "4A",
+    "cdd65": 1016.5,
+    "state": "NY",
+    "priceCentsPerKwh": 29.38,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1465,
+     "typical": 2093,
+     "high": 2826
+    },
+    "coolingDollars": 615,
+    "olderHouse1946_65Kwh": 2368,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 43,
+     "duct sealing (12%)": 74,
+     "+2 F setpoint": 117,
+     "SEER 13.5 -> 18 replacement (25%)": 154
+    }
+   },
+   {
+    "metro": "chicago",
+    "zone": "5A",
+    "cdd65": 1003.3,
+    "state": "IL",
+    "priceCentsPerKwh": 19.22,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1089,
+     "typical": 1556,
+     "high": 2100
+    },
+    "coolingDollars": 299,
+    "olderHouse1946_65Kwh": 1760,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 21,
+     "duct sealing (12%)": 36,
+     "+2 F setpoint": 56,
+     "SEER 13.5 -> 18 replacement (25%)": 75
+    }
+   },
+   {
+    "metro": "san-diego",
+    "zone": "3B",
+    "cdd65": 893.2,
+    "state": "CA",
+    "priceCentsPerKwh": 33.25,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 844,
+     "typical": 1206,
+     "high": 1628
+    },
+    "coolingDollars": 401,
+    "olderHouse1946_65Kwh": 1364,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 28,
+     "duct sealing (12%)": 48,
+     "+2 F setpoint": 76,
+     "SEER 13.5 -> 18 replacement (25%)": 100
+    }
+   },
+   {
+    "metro": "denver",
+    "zone": "5B",
+    "cdd65": 849.5,
+    "state": "CO",
+    "priceCentsPerKwh": 16.72,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 966,
+     "typical": 1381,
+     "high": 1864
+    },
+    "coolingDollars": 231,
+    "olderHouse1946_65Kwh": 1562,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 16,
+     "duct sealing (12%)": 28,
+     "+2 F setpoint": 44,
+     "SEER 13.5 -> 18 replacement (25%)": 58
+    }
+   },
+   {
+    "metro": "detroit",
+    "zone": "5A",
+    "cdd65": 847.0,
+    "state": "MI",
+    "priceCentsPerKwh": 21.53,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 986,
+     "typical": 1408,
+     "high": 1901
+    },
+    "coolingDollars": 303,
+    "olderHouse1946_65Kwh": 1593,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 21,
+     "duct sealing (12%)": 36,
+     "+2 F setpoint": 58,
+     "SEER 13.5 -> 18 replacement (25%)": 76
+    }
+   },
+   {
+    "metro": "minneapolis",
+    "zone": "6A",
+    "cdd65": 830.0,
+    "state": "MN",
+    "priceCentsPerKwh": 16.25,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 877,
+     "typical": 1253,
+     "high": 1691
+    },
+    "coolingDollars": 204,
+    "olderHouse1946_65Kwh": 1417,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 14,
+     "duct sealing (12%)": 24,
+     "+2 F setpoint": 39,
+     "SEER 13.5 -> 18 replacement (25%)": 51
+    }
+   },
+   {
+    "metro": "boston",
+    "zone": "5A",
+    "cdd65": 801.8,
+    "state": "MA",
+    "priceCentsPerKwh": 30.14,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 1135,
+     "typical": 1622,
+     "high": 2189
+    },
+    "coolingDollars": 489,
+    "olderHouse1946_65Kwh": 1835,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 34,
+     "duct sealing (12%)": 59,
+     "+2 F setpoint": 93,
+     "SEER 13.5 -> 18 replacement (25%)": 122
+    }
+   },
+   {
+    "metro": "los-angeles",
+    "zone": "3B",
+    "cdd65": 720.4,
+    "state": "CA",
+    "priceCentsPerKwh": 33.25,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 696,
+     "typical": 994,
+     "high": 1341
+    },
+    "coolingDollars": 330,
+    "olderHouse1946_65Kwh": 1124,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 23,
+     "duct sealing (12%)": 40,
+     "+2 F setpoint": 63,
+     "SEER 13.5 -> 18 replacement (25%)": 83
+    }
+   },
+   {
+    "metro": "portland",
+    "zone": "4C",
+    "cdd65": 507.7,
+    "state": "OR",
+    "priceCentsPerKwh": 15.4,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 938,
+     "typical": 1340,
+     "high": 1809
+    },
+    "coolingDollars": 206,
+    "olderHouse1946_65Kwh": 1516,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 15,
+     "duct sealing (12%)": 25,
+     "+2 F setpoint": 39,
+     "SEER 13.5 -> 18 replacement (25%)": 52
+    }
+   },
+   {
+    "metro": "seattle",
+    "zone": "4C",
+    "cdd65": 265.0,
+    "state": "WA",
+    "priceCentsPerKwh": 14.4,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 685,
+     "typical": 979,
+     "high": 1321
+    },
+    "coolingDollars": 141,
+    "olderHouse1946_65Kwh": 1107,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 10,
+     "duct sealing (12%)": 17,
+     "+2 F setpoint": 27,
+     "SEER 13.5 -> 18 replacement (25%)": 35
+    }
+   },
+   {
+    "metro": "san-francisco",
+    "zone": "3C",
+    "cdd65": 200.2,
+    "state": "CA",
+    "priceCentsPerKwh": 33.25,
+    "house": "medium (1,600 sq ft cooled), detached, built 1981-1995, central AC installed 2006-2014 (SEER 13.5)",
+    "coolingKwh": {
+     "low": 409,
+     "typical": 584,
+     "high": 788
+    },
+    "coolingDollars": 194,
+    "olderHouse1946_65Kwh": 660,
+    "savingsTypicalDollars": {
+     "attic R-12 -> R-49 (1946-65 two-storey house)": 14,
+     "duct sealing (12%)": 23,
+     "+2 F setpoint": 37,
+     "SEER 13.5 -> 18 replacement (25%)": 49
+    }
+   }
+  ],
+  "examplesNote": "Computed with this model and the planner's prices.json (EIA YTD 2026). Attic example: 1946-65 house at the engine's R-12, two-storey k=1.2. Setpoint uses the metro value (clamped 4-10%) compounded for 2 F."
+ },
+ "billMethod": {
+  "method": "Two-bill degree-day split (a two-point version of the PRISM-type billing regression in the DOE Uniform Methods Project): daily use E = baseload + b_c x daily CDD65 (+ b_h x daily HDD65 if heat is electric). With a summer bill S (month s) and a winter bill W (month w) and non-electric heat: b_c = (S/d_s - W/d_w) / (CDD_s/d_s - CDD_w/d_w); annual cooling = b_c x annual normal CDD65; baseload/day = W/d_w - b_c x CDD_w/d_w. Work in dollars if the user gives dollars (the fixed charge cancels in the difference and the result is the cooling cost at their own rates); divide by the state price only to show kWh. This replaces \"summer minus shoulder bill\", which undercounts in places where every month has cooling (Miami January has 156 CDD65; July 590).",
+  "steps": [
+   "Ask which month each bill covers (a bill period usually straddles two months: weight the monthly normals by days, as RECS does when it calendarizes bills).",
+   "Look up the metro's monthly 1991-2020 CDD65 and HDD65 (monthlyNormals below) and convert each bill and its degree days to per-day values.",
+   "Gas, oil or propane heat: solve b_c and baseload from the two bills as in method. Optionally subtract ~1-2 kWh/day from the winter bill for a gas furnace blower (RECS air handlers for heating average 304 kWh/yr in SFD homes, CE5.3a).",
+   "Electric heat (heat pump or resistance): the winter bill also contains heating. Either ask for a third bill from the mildest month (monthlyNormals.mildestMonth) and use it as baseload, or subtract the planner's modeled heating for that month (annual heating kWh x HDD_w / annual HDD) from the winter bill before solving.",
+   "Annual cooling = b_c x annual normal CDD65; cooling share = annual cooling / (12-month estimate). Calibration factor = bill-based cooling / modeled cooling, clamped to 0.5-1.6 (same clamp as the heating calibration); use it to scale all cooling savings.",
+   "Sanity checks (fall back to the model and say why): b_c <= 0; summer and winter months with similar CDD (|daily CDD difference| < 5); baseload outside 5-60 kWh/day (RECS 5th-95th percentile of non-HVAC use in hot-zone SFD homes with central AC is 8.9-47.1 kWh/day, median 20.9); calibration outside 0.5-1.6 before clamping.",
+   "Show: \"Your bills suggest about X kWh ($Y) a year for air conditioning, about Z% of your electricity; a typical similar house here uses A kWh.\" Note that pools (16% of hot-zone SFD central-AC homes in RECS, about 2,760 kWh/yr per pool pump), EV charging or a summer guest season inflate the summer bill, and that two bills give a rough answer; the Uniform Methods Project asks for at least nine monthly readings spanning summer, winter and shoulder seasons for a site-level regression."
+  ],
+  "exampleMiami": "Miami, gas or no heat: July $280, January $160; daily CDD 19.03 and 5.03: b_c = (9.03 - 5.16) / (19.03 - 5.03) = $0.277 per CDD; annual cooling = 0.277 x 4,656 = $1,287. Treating January as pure baseload (sum of monthly bills minus January) would give $770, missing 40% because January in Miami still has 156 CDD65.",
+  "example": "Houston, gas heat: July $250, January $120 (31 days each), July CDD65 623, January 17: b_c = (8.06 - 3.87) / (20.10 - 0.55) = $0.214 per CDD; annual cooling = 0.214 x 3,288 = $705 (about 4,390 kWh at 16.06 c/kWh); baseload = 3.87 - 0.214 x 0.55 = $3.76/day. Multiplying the July-January difference by 12 would give $1,560.",
+  "source": [
+   "https://www.nrel.gov/docs/fy17osti/68564.pdf",
+   "https://www.eia.gov/consumption/residential/data/2020/pdf/2020%20RECS%20CE%20Methodology%20-%20Monthly%20Appendix%20-%20Final.pdf",
+   "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-monthly-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=MLY-CLDD-NORMAL,MLY-HTDD-NORMAL,MLY-TAVG-NORMAL&format=json&includeStationName=true",
+   "https://www.eia.gov/consumption/residential/data/2020/csv/recs2020_public_v7.csv",
+   "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3a.xlsx"
+  ],
+  "sourceNotes": "NREL/SR-7A40-68564 (UMP Chapter 8, Agnew & Goldberg, DNV GL, 2017): per-premise degree-day regression E_m = mu + b_H H_m + b_C C_m on average daily use, normalized annual consumption NAC = mu x 365.25 + b_H H0 + b_C C0; minimum of nine observations spanning summer (July-August), winter (January-February) and shoulder months for electric sites; cites the PRISM users' guide (Fels et al. 1995). RECS 2020 C&E methodology Appendix C: prorating (\"calendarization\") of bills to calendar months. No EIA or ENERGY STAR page giving a two-bill method was found.",
+  "monthlyNormals": {
+   "new-york": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.0,
+     2.4,
+     30.2,
+     176.7,
+     345.8,
+     310.7,
+     135.3,
+     15.2,
+     0.1,
+     0.0
+    ],
+    "hdd65": [
+     996.5,
+     852.6,
+     739.3,
+     426.8,
+     171.2,
+     20.8,
+     0.3,
+     0.8,
+     33.4,
+     255.4,
+     546.1,
+     829.2
+    ],
+    "annualCdd65": 1016.5,
+    "annualCdd70": 494.7,
+    "mildestMonth": 9
+   },
+   "los-angeles": {
+    "cdd65": [
+     5.8,
+     7.1,
+     8.5,
+     17.0,
+     24.5,
+     56.5,
+     142.5,
+     179.2,
+     155.4,
+     91.1,
+     30.2,
+     2.6
+    ],
+    "hdd65": [
+     227.4,
+     207.3,
+     189.8,
+     132.5,
+     69.5,
+     13.0,
+     1.5,
+     1.0,
+     2.4,
+     26.0,
+     111.2,
+     232.0
+    ],
+    "annualCdd65": 720.4,
+    "annualCdd70": 186.5,
+    "mildestMonth": 6
+   },
+   "chicago": {
+    "cdd65": [
+     0.0,
+     0.0,
+     2.0,
+     7.7,
+     60.0,
+     199.3,
+     325.6,
+     276.8,
+     116.1,
+     15.4,
+     0.4,
+     0.0
+    ],
+    "hdd65": [
+     1233.5,
+     1014.9,
+     808.1,
+     468.2,
+     198.0,
+     31.4,
+     1.8,
+     4.1,
+     77.2,
+     354.8,
+     712.9,
+     1069.3
+    ],
+    "annualCdd65": 1003.3,
+    "annualCdd70": 509.5,
+    "mildestMonth": 9
+   },
+   "dallas": {
+    "cdd65": [
+     2.4,
+     7.5,
+     35.4,
+     101.9,
+     290.4,
+     505.5,
+     641.6,
+     643.0,
+     409.8,
+     154.5,
+     27.3,
+     4.5
+    ],
+    "hdd65": [
+     582.0,
+     413.4,
+     246.2,
+     82.4,
+     9.9,
+     0.1,
+     0.0,
+     0.0,
+     3.4,
+     69.2,
+     285.2,
+     528.3
+    ],
+    "annualCdd65": 2824.0,
+    "annualCdd70": 1888.0,
+    "mildestMonth": 4
+   },
+   "houston": {
+    "cdd65": [
+     17.2,
+     31.7,
+     85.3,
+     179.4,
+     384.0,
+     539.9,
+     623.1,
+     624.6,
+     465.3,
+     238.8,
+     69.7,
+     28.8
+    ],
+    "hdd65": [
+     365.9,
+     236.0,
+     122.5,
+     30.9,
+     1.2,
+     0.0,
+     0.0,
+     0.0,
+     0.3,
+     26.5,
+     158.2,
+     324.8
+    ],
+    "annualCdd65": 3287.7,
+    "annualCdd70": 2165.1,
+    "mildestMonth": 3
+   },
+   "atlanta": {
+    "cdd65": [
+     0.6,
+     2.0,
+     17.1,
+     64.2,
+     214.0,
+     386.5,
+     494.4,
+     469.7,
+     302.3,
+     87.8,
+     10.4,
+     1.9
+    ],
+    "hdd65": [
+     626.7,
+     462.5,
+     308.5,
+     119.7,
+     21.9,
+     1.1,
+     0.0,
+     0.1,
+     5.4,
+     98.6,
+     335.9,
+     550.5
+    ],
+    "annualCdd65": 2051.0,
+    "annualCdd70": 1214.7,
+    "mildestMonth": 4
+   },
+   "washington-dc": {
+    "cdd65": [
+     0.0,
+     0.1,
+     2.9,
+     32.4,
+     132.3,
+     343.0,
+     495.9,
+     446.4,
+     237.5,
+     45.1,
+     2.0,
+     0.2
+    ],
+    "hdd65": [
+     853.9,
+     698.7,
+     543.8,
+     236.4,
+     62.6,
+     4.0,
+     0.0,
+     0.1,
+     15.6,
+     175.2,
+     454.9,
+     724.0
+    ],
+    "annualCdd65": 1737.8,
+    "annualCdd70": 1046.7,
+    "mildestMonth": 5
+   },
+   "miami": {
+    "cdd65": [
+     155.5,
+     181.5,
+     259.5,
+     351.5,
+     466.5,
+     534.0,
+     590.5,
+     595.2,
+     538.5,
+     466.7,
+     297.3,
+     219.3
+    ],
+    "hdd65": [
+     43.7,
+     22.0,
+     8.4,
+     0.5,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.2,
+     3.3,
+     25.5
+    ],
+    "annualCdd65": 4656.0,
+    "annualCdd70": 3012.8,
+    "mildestMonth": 1
+   },
+   "philadelphia": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.7,
+     14.7,
+     82.4,
+     266.4,
+     424.6,
+     367.8,
+     175.4,
+     25.7,
+     0.6,
+     0.0
+    ],
+    "hdd65": [
+     971.7,
+     814.7,
+     665.6,
+     329.7,
+     104.1,
+     9.9,
+     0.0,
+     0.6,
+     28.4,
+     236.5,
+     530.0,
+     818.3
+    ],
+    "annualCdd65": 1358.3,
+    "annualCdd70": 753.2,
+    "mildestMonth": 5
+   },
+   "phoenix": {
+    "cdd65": [
+     2.0,
+     16.3,
+     105.0,
+     258.9,
+     527.8,
+     791.9,
+     945.4,
+     909.8,
+     727.4,
+     390.2,
+     88.1,
+     1.9
+    ],
+    "hdd65": [
+     256.2,
+     159.0,
+     64.7,
+     14.3,
+     0.8,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     5.8,
+     85.0,
+     288.5
+    ],
+    "annualCdd65": 4764.6,
+    "annualCdd70": 3596.2,
+    "mildestMonth": 3
+   },
+   "boston": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.5,
+     4.1,
+     29.3,
+     138.2,
+     284.4,
+     245.0,
+     90.7,
+     9.3,
+     0.3,
+     0.0
+    ],
+    "hdd65": [
+     1086.4,
+     929.6,
+     828.2,
+     496.1,
+     233.9,
+     49.8,
+     4.0,
+     4.8,
+     71.3,
+     325.5,
+     607.8,
+     908.3
+    ],
+    "annualCdd65": 801.8,
+    "annualCdd70": 375.8,
+    "mildestMonth": 9
+   },
+   "riverside": {
+    "cdd65": [
+     5.6,
+     7.2,
+     18.4,
+     48.3,
+     113.8,
+     242.0,
+     421.5,
+     458.7,
+     349.4,
+     153.8,
+     33.4,
+     2.3
+    ],
+    "hdd65": [
+     295.5,
+     250.7,
+     188.9,
+     109.7,
+     33.2,
+     2.0,
+     0.0,
+     0.0,
+     1.5,
+     31.3,
+     154.9,
+     318.3
+    ],
+    "annualCdd65": 1854.3,
+    "annualCdd70": 1020.6,
+    "mildestMonth": 5
+   },
+   "san-francisco": {
+    "cdd65": [
+     0.0,
+     0.0,
+     1.0,
+     4.8,
+     13.5,
+     23.4,
+     25.9,
+     40.9,
+     56.3,
+     32.8,
+     1.7,
+     0.0
+    ],
+    "hdd65": [
+     426.2,
+     323.4,
+     295.5,
+     234.3,
+     170.0,
+     96.9,
+     58.4,
+     44.0,
+     45.8,
+     99.5,
+     259.6,
+     421.5
+    ],
+    "annualCdd65": 200.2,
+    "annualCdd70": 44.9,
+    "mildestMonth": 7
+   },
+   "detroit": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.7,
+     4.5,
+     50.4,
+     176.5,
+     282.8,
+     232.8,
+     89.7,
+     9.6,
+     0.0,
+     0.0
+    ],
+    "hdd65": [
+     1216.5,
+     1035.9,
+     860.9,
+     487.5,
+     197.7,
+     28.1,
+     2.4,
+     6.6,
+     91.4,
+     381.6,
+     712.5,
+     1046.1
+    ],
+    "annualCdd65": 847.0,
+    "annualCdd70": 387.2,
+    "mildestMonth": 9
+   },
+   "seattle": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.2,
+     0.9,
+     9.3,
+     29.4,
+     96.1,
+     98.1,
+     30.4,
+     0.5,
+     0.0,
+     0.0
+    ],
+    "hdd65": [
+     686.7,
+     588.0,
+     556.6,
+     411.9,
+     241.8,
+     117.9,
+     31.1,
+     23.7,
+     102.4,
+     349.3,
+     555.0,
+     711.4
+    ],
+    "annualCdd65": 265.0,
+    "annualCdd70": 71.2,
+    "mildestMonth": 8
+   },
+   "minneapolis": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.4,
+     3.7,
+     44.9,
+     175.3,
+     294.0,
+     219.5,
+     84.0,
+     8.1,
+     0.1,
+     0.0
+    ],
+    "hdd65": [
+     1512.6,
+     1243.1,
+     983.2,
+     542.2,
+     213.9,
+     34.4,
+     4.3,
+     10.3,
+     127.6,
+     488.6,
+     906.0,
+     1332.9
+    ],
+    "annualCdd65": 830.0,
+    "annualCdd70": 388.5,
+    "mildestMonth": 6
+   },
+   "tampa": {
+    "cdd65": [
+     60.9,
+     81.1,
+     154.3,
+     273.7,
+     448.2,
+     538.4,
+     582.8,
+     589.0,
+     532.4,
+     387.8,
+     177.8,
+     101.7
+    ],
+    "hdd65": [
+     152.1,
+     88.1,
+     44.2,
+     6.7,
+     0.3,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     3.4,
+     33.7,
+     104.8
+    ],
+    "annualCdd65": 3928.2,
+    "annualCdd70": 2527.1,
+    "mildestMonth": 2
+   },
+   "san-diego": {
+    "cdd65": [
+     3.0,
+     4.8,
+     9.8,
+     23.2,
+     37.0,
+     74.7,
+     177.3,
+     229.5,
+     201.3,
+     105.9,
+     25.5,
+     1.2
+    ],
+    "hdd65": [
+     209.2,
+     172.8,
+     141.5,
+     84.7,
+     44.8,
+     10.2,
+     0.6,
+     0.1,
+     0.4,
+     11.4,
+     93.0,
+     221.2
+    ],
+    "annualCdd65": 893.2,
+    "annualCdd70": 263.9,
+    "mildestMonth": 5
+   },
+   "denver": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.0,
+     1.2,
+     25.7,
+     147.4,
+     315.2,
+     254.1,
+     99.2,
+     6.6,
+     0.1,
+     0.0
+    ],
+    "hdd65": [
+     1033.9,
+     904.2,
+     725.6,
+     517.1,
+     261.3,
+     51.5,
+     3.8,
+     9.3,
+     105.3,
+     435.8,
+     766.6,
+     1047.6
+    ],
+    "annualCdd65": 849.5,
+    "annualCdd70": 399.8,
+    "mildestMonth": 6
+   },
+   "orlando": {
+    "cdd65": [
+     45.5,
+     66.9,
+     127.3,
+     224.1,
+     383.3,
+     485.9,
+     545.6,
+     547.1,
+     479.9,
+     329.4,
+     140.2,
+     76.3
+    ],
+    "hdd65": [
+     180.1,
+     104.8,
+     54.4,
+     9.6,
+     0.5,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     5.5,
+     42.6,
+     127.4
+    ],
+    "annualCdd65": 3451.6,
+    "annualCdd70": 2109.6,
+    "mildestMonth": 2
+   },
+   "baltimore": {
+    "cdd65": [
+     0.0,
+     0.0,
+     1.8,
+     19.0,
+     90.2,
+     266.0,
+     410.6,
+     346.0,
+     163.0,
+     24.1,
+     0.9,
+     0.1
+    ],
+    "hdd65": [
+     951.4,
+     793.6,
+     641.9,
+     317.6,
+     108.8,
+     11.2,
+     0.0,
+     0.5,
+     35.7,
+     259.7,
+     543.9,
+     819.9
+    ],
+    "annualCdd65": 1321.8,
+    "annualCdd70": 720.3,
+    "mildestMonth": 9
+   },
+   "charlotte": {
+    "cdd65": [
+     0.2,
+     1.5,
+     10.2,
+     47.1,
+     164.8,
+     348.3,
+     468.1,
+     423.2,
+     244.1,
+     53.9,
+     5.7,
+     1.4
+    ],
+    "hdd65": [
+     711.6,
+     540.5,
+     391.5,
+     162.6,
+     39.3,
+     1.9,
+     0.1,
+     0.1,
+     13.1,
+     151.5,
+     415.1,
+     630.6
+    ],
+    "annualCdd65": 1768.7,
+    "annualCdd70": 1012.5,
+    "mildestMonth": 5
+   },
+   "st-louis": {
+    "cdd65": [
+     0.0,
+     0.6,
+     7.3,
+     37.0,
+     149.6,
+     350.8,
+     475.8,
+     428.3,
+     212.3,
+     48.0,
+     3.4,
+     0.1
+    ],
+    "hdd65": [
+     1019.6,
+     792.9,
+     576.1,
+     262.0,
+     72.1,
+     4.4,
+     0.0,
+     0.6,
+     32.4,
+     229.4,
+     559.8,
+     883.5
+    ],
+    "annualCdd65": 1713.0,
+    "annualCdd70": 1024.6,
+    "mildestMonth": 5
+   },
+   "san-antonio": {
+    "cdd65": [
+     7.3,
+     22.3,
+     71.0,
+     165.7,
+     359.3,
+     526.4,
+     613.8,
+     633.8,
+     446.5,
+     229.3,
+     58.1,
+     14.3
+    ],
+    "hdd65": [
+     405.5,
+     265.9,
+     139.2,
+     35.2,
+     2.8,
+     0.0,
+     0.0,
+     0.0,
+     1.0,
+     34.0,
+     185.6,
+     369.2
+    ],
+    "annualCdd65": 3147.8,
+    "annualCdd70": 2074.8,
+    "mildestMonth": 4
+   },
+   "austin": {
+    "cdd65": [
+     7.7,
+     20.0,
+     61.3,
+     145.1,
+     344.8,
+     517.4,
+     606.0,
+     613.7,
+     422.7,
+     194.8,
+     48.4,
+     14.1
+    ],
+    "hdd65": [
+     469.5,
+     321.0,
+     183.7,
+     52.1,
+     3.8,
+     0.0,
+     0.0,
+     0.0,
+     1.2,
+     44.4,
+     219.3,
+     423.2
+    ],
+    "annualCdd65": 2995.9,
+    "annualCdd70": 1970.6,
+    "mildestMonth": 4
+   },
+   "portland": {
+    "cdd65": [
+     0.0,
+     0.0,
+     0.0,
+     2.1,
+     20.9,
+     56.0,
+     171.3,
+     181.0,
+     72.8,
+     3.6,
+     0.0,
+     0.0
+    ],
+    "hdd65": [
+     717.7,
+     583.8,
+     519.3,
+     366.6,
+     196.0,
+     80.0,
+     10.2,
+     7.4,
+     60.9,
+     296.5,
+     538.5,
+     726.9
+    ],
+    "annualCdd65": 507.7,
+    "annualCdd70": 177.3,
+    "mildestMonth": 9
+   }
+  },
+  "monthlyNormalsSource": "https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-monthly-1991-2020&stations=USW00094789,USW00023174,USW00094846,USW00003927,USW00012960,USW00013874,USW00013743,USW00012839,USW00013739,USW00023183,USW00014739,USW00003171,USW00023234,USW00094847,USW00024233,USW00014922,USW00012842,USW00023188,USW00003017,USW00012815,USW00093721,USW00013881,USW00013994,USW00012921,USW00013904,USW00024229&dataTypes=MLY-CLDD-NORMAL,MLY-HTDD-NORMAL,MLY-TAVG-NORMAL&format=json&includeStationName=true"
+ },
+ "resstockStockByVintageHotZones": {
+  "data": {
+   "1940s": {
+    "n": 2801,
+    "medianACH50": 20.0,
+    "medianCeilingR": 13.0,
+    "ductsInAttic": 0.33,
+    "ductLeak20plus": 0.62
+   },
+   "1950s": {
+    "n": 7860,
+    "medianACH50": 20.0,
+    "medianCeilingR": 19.0,
+    "ductsInAttic": 0.33,
+    "ductLeak20plus": 0.61
+   },
+   "1960s": {
+    "n": 8595,
+    "medianACH50": 20.0,
+    "medianCeilingR": 13.0,
+    "ductsInAttic": 0.47,
+    "ductLeak20plus": 0.63
+   },
+   "1970s": {
+    "n": 11852,
+    "medianACH50": 20.0,
+    "medianCeilingR": 19.0,
+    "ductsInAttic": 0.49,
+    "ductLeak20plus": 0.63
+   },
+   "1980s": {
+    "n": 12956,
+    "medianACH50": 15.0,
+    "medianCeilingR": 19.0,
+    "ductsInAttic": 0.58,
+    "ductLeak20plus": 0.67
+   },
+   "1990s": {
+    "n": 13826,
+    "medianACH50": 10.0,
+    "medianCeilingR": 30.0,
+    "ductsInAttic": 0.57,
+    "ductLeak20plus": 0.67
+   },
+   "2000s": {
+    "n": 18723,
+    "medianACH50": 8.0,
+    "medianCeilingR": 30.0,
+    "ductsInAttic": 0.64,
+    "ductLeak20plus": 0.71
+   },
+   "2010s": {
+    "n": 5993,
+    "medianACH50": 8.0,
+    "medianCeilingR": 30.0,
+    "ductsInAttic": 0.66,
+    "ductLeak20plus": 0.71
+   },
+   "<1940": {
+    "n": 2855,
+    "medianACH50": 20.0,
+    "medianCeilingR": 13.0,
+    "ductsInAttic": 0.2,
+    "ductLeak20plus": 0.66
+   }
+  },
+  "source": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/",
+  "note": "ResStock 2024.2 baseline, SFD central AC/ducted HP in FL TX AZ GA CA NC LA NV, zones 1A-3B: weighted medians and shares by vintage (useful to check the planner era assumptions: ResStock median attic R-13/R-19 before 1990 and R-30 after; median 20 ACH50 before 1980, 15 in the 1980s, 10 in the 1990s, 8 after)."
+ }
+}

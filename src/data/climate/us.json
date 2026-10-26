@@ -1,0 +1,3342 @@
+{
+ "checked": "2026-10-26",
+ "profiles": {
+  "very-cold": {
+   "label": "Very cold",
+   "regionName": "Upper Midwest",
+   "places": [
+    "minneapolis"
+   ],
+   "oneLiner": "Long, bitter winters make heating your biggest bill, and summers still need AC.",
+   "summary": "Heating is your biggest bill here: Minneapolis averages 22 nights a year at or below 0°F. Warm air leaking into the attic wastes heat and causes ice dams, and when homes get too cold, a heating breakdown is the usual reason. A good audit seals the attic first, checks that fuel-burning appliances vent safely, and tests for radon.",
+   "drivers": [
+    "Heating dominates: about 7,400 heating degree days a year against 830 cooling degree days, and 72 days that stay below freezing.",
+    "Most homes heat with natural gas, and most houses have basements, where rim joists and foundation walls lose heat.",
+    "The housing is older: about 6 in 10 Hennepin County homes were built before 1980.",
+    "Summers still need cooling: most homes have central AC, and July brings muggy spells."
+   ],
+   "priorities": [
+    {
+     "title": "Seal the attic, then add insulation",
+     "why": "Warm air leaking into the attic is a main cause of ice dams. Sealing those leaks before insulating keeps the insulation working. ENERGY STAR suggests an R-value of R60 for an uninsulated attic here.",
+     "ask": "Ask the auditor to find and seal attic bypasses, such as gaps around chimneys, wiring and plumbing, before quoting insulation.",
+     "tests": [
+      "blower-door",
+      "thermal-imaging",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Make sure gas appliances vent safely",
+     "why": "Air sealing can make furnaces and water heaters with open flues spill exhaust when fans run, known as backdrafting. A combustion safety test catches it, and you need working CO alarms.",
+     "ask": "Ask for a combustion safety test before and after air sealing, with every exhaust fan running.",
+     "tests": [
+      "combustion-safety",
+      "carbon-monoxide"
+     ]
+    },
+    {
+     "title": "Test for radon before and after",
+     "why": "Hennepin County is in EPA radon Zone 1, the highest-potential zone. The state health department says more than 2 in 5 Minnesota homes have radon levels that pose a significant risk.",
+     "ask": "Test before work starts and again after air sealing. Read the two results separately; don't average them.",
+     "tests": [
+      "radon"
+     ]
+    },
+    {
+     "title": "Seal rim joists; check basement walls for water",
+     "why": "Rim joists leak air and heat, and spray foam can seal and insulate them in one step. Fix any water or drainage problems before insulating basement walls.",
+     "ask": "Ask the auditor to inspect the rim joists and look for basement water before writing an insulation plan.",
+     "tests": [
+      "thermal-imaging",
+      "mold-iaq"
+     ]
+    },
+    {
+     "title": "Plan ventilation before deep air sealing",
+     "why": "The residential code calls for whole-house mechanical ventilation in homes that test at 5 ACH50 or tighter. An HRV or ERV brings in fresh air while recovering heat.",
+     "ask": "Ask what your blower door test result is likely to be after sealing, and whether you'll need an HRV or ERV.",
+     "tests": [
+      "blower-door"
+     ]
+    },
+    {
+     "title": "Size any heat pump with Manual J",
+     "why": "A cold-climate heat pump can heat your home here, but its size should come from a load calculation. Rules of thumb often oversize systems.",
+     "ask": "Ask for a Manual J load calculation and the model's certified heating capacity at 5°F.",
+     "tests": [
+      "heat-loss-calc"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "blower-door",
+     "why": "Measures how leaky your house is, sets air-sealing targets and confirms the result after the work.",
+     "when": "Heating season, on a calm day. Wind can throw off the numbers."
+    },
+    {
+     "test": "thermal-imaging",
+     "why": "Shows missing insulation, attic bypasses and cold spots. Air leaks stand out when the blower door is running.",
+     "when": "Winter, early morning or evening. Avoid walls that had sun within about 3 hours, or 8 for masonry."
+    },
+    {
+     "test": "combustion-safety",
+     "why": "Confirms that open-flue furnaces and water heaters still vent outside with every exhaust fan running.",
+     "when": "Before and after air sealing, in the heating season with appliances running."
+    },
+    {
+     "test": "radon",
+     "why": "Hennepin County is radon Zone 1. A long-term test gives the most accurate result.",
+     "when": "Heating season, with the house closed up. Retest after air sealing."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation sizes a new furnace or heat pump to your house instead of a rule of thumb.",
+     "when": "Before you get equipment quotes, ideally after air sealing and insulation."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Attic air sealing plus insulation to R60",
+     "why": "Cuts heat loss and is the long-term fix for ice dams. ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills.",
+     "note": "Seal bypasses first; insulation alone won't stop ice dams."
+    },
+    {
+     "title": "Rim joist and basement wall insulation",
+     "why": "Closes a large air leak and heat loss path. Closed-cell foam 1.5 inches or thicker also acts as an air barrier.",
+     "note": "Fix basement water problems first."
+    },
+    {
+     "title": "Cold-climate heat pump, whole-home or dual-fuel",
+     "why": "Choose a model that meets ENERGY STAR's cold-climate criteria, including a COP of 1.75 or better at 5°F, or one on NEEP's list.",
+     "note": "Keep backup heat for the coldest hours."
+    },
+    {
+     "title": "Sealed-combustion or electric replacements",
+     "why": "When an open-flue furnace or water heater is due for replacement, a sealed-combustion or electric unit removes the spillage risk a tighter house creates.",
+     "note": "Plan ventilation at the same time; the change affects how your house breathes."
+    },
+    {
+     "title": "Radon mitigation at 4 pCi/L or higher",
+     "why": "EPA recommends fixing your home at 4 pCi/L or more, and considering a fix between 2 and 4."
+    }
+   ],
+   "equipment": [
+    "You need a cold-climate heat pump for primary heat here. Check its certified performance at 5°F, because HSPF2 ratings are only tested down to 17°F.",
+    "Size equipment with a Manual J load calculation, and keep backup heat for the coldest hours: your furnace in a dual-fuel setup, or electric strips.",
+    "Federal minimums: 13.4 SEER2 for a split AC, and 14.3 SEER2 with 7.5 HSPF2 for a split heat pump. ENERGY STAR's cold-climate tier for ducted models is 8.1 HSPF2.",
+    "A heat pump water heater needs a space that stays between 40°F and 90°F all year, with about 1,000 cubic feet of air. It cools the room it sits in."
+   ],
+   "health": [
+    "Radon is the top health item. Hennepin County is EPA Zone 1, and more than 2 in 5 Minnesota homes have levels that pose a significant risk.",
+    "Wildfire smoke now reaches Minnesota: 2023 set a record of 22 air-quality alerts covering 52 days. Use MERV 13 filters if your system can handle them, plus a portable air cleaner.",
+    "Winter condensation on windows means indoor air is too humid. EPA advises keeping relative humidity below 60%, ideally 30–50%.",
+    "In older homes, leave suspected vermiculite or asbestos alone until it's tested. Paid work that disturbs paint in pre-1978 homes must follow EPA lead-safe rules."
+   ],
+   "avoid": [
+    {
+     "title": "Adding attic insulation without sealing bypasses first",
+     "why": "Warm air keeps leaking into the attic, so heat loss and ice dams continue."
+    },
+    {
+     "title": "Installing powered attic ventilators",
+     "why": "University of Minnesota Extension advises against them here: they can cause moisture problems and pull air out of your house."
+    },
+    {
+     "title": "Tightening the house without combustion testing",
+     "why": "Open-flue appliances risk backdrafting in a tighter house. Test before and after, and plan ventilation."
+    },
+    {
+     "title": "Choosing a heat pump by HSPF2 alone",
+     "why": "HSPF2 doesn't show how a unit performs at 5°F. Check cold-climate ratings and size it with Manual J."
+    }
+   ],
+   "symptoms": [
+    "High winter bills",
+    "Ice dams",
+    "Drafts or cold rooms",
+    "Window condensation",
+    "Furnace or boiler breakdowns",
+    "Dust or smoke indoors"
+   ],
+   "seasonNote": "Book in the heating season. Winter gives the best blower door and infrared results, and closed-house conditions suit radon tests. Leave time to retest radon after air sealing.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Minneapolis-St. Paul airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00014922.csv"
+    },
+    {
+     "label": "Census American Housing Survey 2021 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2021/AHS%202021%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "University of Minnesota Extension: ice dams",
+     "url": "https://extension.umn.edu/protecting-home-rain-and-ice/dealing-and-preventing-ice-dams"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "DOE Building Science Education: insulating and sealing rim joists",
+     "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists"
+    },
+    {
+     "label": "Census ACS 2020-2024: year structure built (B25034)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25034.dat"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Minneapolis-St. Paul airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00014922.csv"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "Minnesota Department of Health: radon",
+     "url": "https://www.health.state.mn.us/communities/environment/air/radon/index.html"
+    },
+    {
+     "label": "NY Department of State: IRC whole-house mechanical ventilation",
+     "url": "https://dos.ny.gov/mechanical-ventilation-revision-2"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "ENERGY STAR: air-source heat pump criteria",
+     "url": "https://www.energystar.gov/products/air_source_heat_pumps/key-product-criteria"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "Building America Solution Center: finding missing insulation with thermal imaging",
+     "url": "https://basc.pnnl.gov/diy-guides/look-missing-insulation-using-thermal-imaging"
+    },
+    {
+     "label": "ENERGY STAR: seal and insulate",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate"
+    },
+    {
+     "label": "EPA: health risk of radon",
+     "url": "https://www.epa.gov/radon/health-risk-radon"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "Minnesota Pollution Control Agency: record air-quality alerts (2023)",
+     "url": "https://www.pca.state.mn.us/news-and-stories/air-quality-alerts-record"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    },
+    {
+     "label": "EPA: a brief guide to mold, moisture and your home",
+     "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+    },
+    {
+     "label": "EPA: protect your family from asbestos",
+     "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos"
+    },
+    {
+     "label": "EPA: lead Renovation, Repair and Painting rule",
+     "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program"
+    }
+   ],
+   "key": "very-cold"
+  },
+  "cold": {
+   "label": "Cold and humid",
+   "regionName": "Northeast and Great Lakes",
+   "places": [
+    "boston",
+    "chicago",
+    "detroit"
+   ],
+   "oneLiner": "Heating drives your bills, and older homes lose heat through attics, walls and basements.",
+   "summary": "Heating is the main bill here, and many homes are decades old, with heat escaping through attics, walls and basements. Older houses may need knob-and-tube wiring, vermiculite or lead paint handled before insulation goes in. Air sealing, attic insulation and a combustion safety test are the core of a good audit.",
+   "drivers": [
+    "Heating dominates: about 5,500 to 6,100 heating degree days a year, against 800 to 1,000 cooling degree days.",
+    "Old housing: about 7 to 8 in 10 homes in the core counties were built before 1980, many before 1940.",
+    "Heating systems differ: boilers heat about 4 in 10 Boston-area homes, while furnaces dominate around Chicago and Detroit.",
+    "Electricity prices vary: about 19 cents/kWh in Illinois, 23 in Michigan and 30 in Massachusetts (August 2026), which shapes heat pump savings."
+   ],
+   "priorities": [
+    {
+     "title": "Seal the attic and wall tops first",
+     "why": "Air leaks into the attic waste heat and cause ice dams. Seal them, then insulate. ENERGY STAR suggests an R-value of R60 for an uninsulated attic in this zone.",
+     "ask": "Ask for a blower door test with infrared imaging, and a written list of attic bypasses to seal.",
+     "tests": [
+      "blower-door",
+      "thermal-imaging",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Clear old-house hazards before insulating",
+     "why": "Live knob-and-tube wiring and vermiculite or asbestos must be dealt with before insulation goes in. Paid work that disturbs paint in pre-1978 homes must follow EPA lead-safe rules.",
+     "ask": "Ask the auditor to check for knob-and-tube wiring, vermiculite and old paint before writing the insulation scope.",
+     "tests": [
+      "asbestos-vermiculite",
+      "lead-paint"
+     ]
+    },
+    {
+     "title": "Test fuel-burning appliances for safe venting",
+     "why": "Air sealing can make open-flue appliances spill exhaust when fans run. A combustion safety test catches backdrafting, and EPA guidance calls for CO testing and alarms.",
+     "ask": "Ask for a combustion safety test before and after air sealing, and keep CO alarms working.",
+     "tests": [
+      "combustion-safety",
+      "carbon-monoxide"
+     ]
+    },
+    {
+     "title": "Fix basement water, then seal rim joists",
+     "why": "Most houses here have basements. Rim joists leak air, and any water problem should be fixed before insulation goes on basement walls.",
+     "ask": "Ask the auditor to check for water entry and to include rim-joist sealing in the plan.",
+     "tests": [
+      "thermal-imaging",
+      "mold-iaq"
+     ]
+    },
+    {
+     "title": "Test for radon, whatever your county's zone",
+     "why": "Zones change sharply around these cities. Suffolk and Wayne are Zone 3 and Cook is Zone 2, but Middlesex County, next to Boston, is Zone 1. EPA says test every home.",
+     "ask": "Test before work starts and again after air sealing.",
+     "tests": [
+      "radon"
+     ]
+    },
+    {
+     "title": "Check attic ducts added for central AC",
+     "why": "If central AC was added to a radiator-heated house, its ducts may run through the attic. Typical duct systems lose 20–30% of their air through leaks.",
+     "ask": "Ask for a duct leakage test, and have any attic ducts sealed and insulated.",
+     "tests": [
+      "duct-leakage"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "blower-door",
+     "why": "Measures total air leakage and guides sealing. Pair it with infrared to find bypasses and rim-joist leaks.",
+     "when": "Winter, on a calm day."
+    },
+    {
+     "test": "thermal-imaging",
+     "why": "Finds missing wall insulation, attic bypasses and rim-joist leaks.",
+     "when": "Winter, when it's at least 18°F colder outside for about 4 hours. Avoid walls that just had sun."
+    },
+    {
+     "test": "combustion-safety",
+     "why": "Needed whenever air sealing affects natural-draft boilers, furnaces or water heaters.",
+     "when": "Before and after air sealing, in the heating season."
+    },
+    {
+     "test": "radon",
+     "why": "Radon zones vary from county to county here, so test every home.",
+     "when": "Heating season, with the house closed up. Retest after air sealing."
+    },
+    {
+     "test": "asbestos-vermiculite",
+     "why": "Vermiculite and asbestos must be handled before insulating, and accredited professionals should take any samples.",
+     "when": "During the audit walk-through, before the insulation scope is written."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Air sealing plus attic insulation",
+     "why": "Usually the lowest-cost, highest-impact upgrade in older, heating-dominated homes. ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills."
+    },
+    {
+     "title": "Dense-pack insulation for empty walls",
+     "why": "If your older home's walls have no insulation, dense-pack can fill them. Any knob-and-tube wiring has to be cleared first."
+    },
+    {
+     "title": "Rim joist and basement wall insulation",
+     "why": "Rim joists are a big, often-missed air leak in basement homes. Seal them, and insulate basement walls once any water problems are fixed."
+    },
+    {
+     "title": "Cold-climate heat pumps",
+     "why": "Ductless units suit radiator homes, and ducted ones work where ducts exist. They can displace oil, propane or electric resistance heat. In Massachusetts, Mass Save lists up to $8,500 in 2026 equipment rebates.",
+     "note": "Choose ENERGY STAR cold-climate or NEEP-listed models."
+    },
+    {
+     "title": "Sealed-combustion heating or a heat pump water heater",
+     "why": "When it's time to replace, sealed-combustion equipment cuts spillage risk in a tighter house. A heat pump water heater suits a basement that stays between 40°F and 90°F."
+    }
+   ],
+   "equipment": [
+    "A cold-climate heat pump is strongly advised around Chicago (6.5 nights a year at or below 0°F) and Detroit (3.6), and recommended in Boston (0.6).",
+    "Size to the Manual J heating load. A dual-fuel setup, with your furnace as backup, is one way to cover the coldest days.",
+    "Federal minimums: 13.4 SEER2 for a split AC, and 14.3 SEER2 with 7.5 HSPF2 for a split heat pump. ENERGY STAR's cold-climate tier for ducted models is 8.1 HSPF2.",
+    "Radiator and steam homes usually have no ducts. Ductless mini-splits avoid new attic ductwork; if you add ducts, keep them inside the insulated part of the house."
+   ],
+   "health": [
+    "Radon zones change sharply between city and suburban counties, so test every home.",
+    "Homes built before 1978 are more likely to have lead paint, and most homes here were built before 1980. Hire a lead-safe certified firm for paid work that disturbs paint.",
+    "Wildfire smoke reached the Midwest and Northeast in 2023. MERV 13 filters and portable air cleaners help on smoky days.",
+    "Keep relative humidity below 60%. Summer basements often need a dehumidifier, and winter window condensation means the air is too humid."
+   ],
+   "avoid": [
+    {
+     "title": "Insulating over live knob-and-tube wiring",
+     "why": "Old wiring, vermiculite and asbestos need to be handled first. Have suspect material sampled by accredited professionals."
+    },
+    {
+     "title": "Air sealing without combustion and ventilation checks",
+     "why": "Open-flue appliances risk backdrafting in a tighter house. At 5 ACH50 or tighter, the code calls for whole-house mechanical ventilation."
+    },
+    {
+     "title": "Plastic sheeting over fiberglass on basement walls",
+     "why": "Interior poly against below-grade walls with fiberglass batts can trap moisture."
+    },
+    {
+     "title": "Sizing a heat pump on the cooling load",
+     "why": "Heating is the bigger load here. Size to the Manual J heating load, not a rule of thumb."
+    }
+   ],
+   "symptoms": [
+    "High winter bills",
+    "Drafts or cold rooms",
+    "Ice dams",
+    "Damp or musty basement",
+    "Window condensation",
+    "Too cold during outages"
+   ],
+   "seasonNote": "Book in the heating season: cold weather gives the clearest infrared images, and closed-house conditions suit radon tests. Allow time to clear wiring or vermiculite before insulation.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Boston Logan airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00014739.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Chicago O'Hare airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00094846.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Detroit Metro airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00094847.csv"
+    },
+    {
+     "label": "Census ACS 2020-2024: year structure built (B25034)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25034.dat"
+    },
+    {
+     "label": "Mass Save: pre-weatherization barriers (knob-and-tube, vermiculite)",
+     "url": "https://www.masssave.com/business/rebates-offers-services/building-insulation-and-weatherization/pre-weatherization-barrier-mitigation"
+    },
+    {
+     "label": "EPA: lead Renovation, Repair and Painting rule",
+     "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "EIA Electric Power Monthly, Table 5.6.A (August 2026 prices)",
+     "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "University of Minnesota Extension: ice dams",
+     "url": "https://extension.umn.edu/protecting-home-rain-and-ice/dealing-and-preventing-ice-dams"
+    },
+    {
+     "label": "EPA: protect your family from asbestos",
+     "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "DOE Building Science Education: insulating and sealing rim joists",
+     "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "ENERGY STAR: seal and insulate",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate"
+    },
+    {
+     "label": "Mass Save: 2026 home energy offers",
+     "url": "https://www.masssave.com/blog/residential/new-year-smarter-energy-choices-simple-steps-to-make-your-home-more-energy-efficient-in-2026"
+    },
+    {
+     "label": "ENERGY STAR: air-source heat pump criteria",
+     "url": "https://www.energystar.gov/products/air_source_heat_pumps/key-product-criteria"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "Minnesota Pollution Control Agency: record air-quality alerts (2023)",
+     "url": "https://www.pca.state.mn.us/news-and-stories/air-quality-alerts-record"
+    },
+    {
+     "label": "NASA Earth Observatory: smoke smothers the Northeast (June 2023)",
+     "url": "https://science.nasa.gov/earth/earth-observatory/smoke-smothers-the-northeast-151433/"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    },
+    {
+     "label": "EPA: a brief guide to mold, moisture and your home",
+     "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+    },
+    {
+     "label": "NY Department of State: IRC whole-house mechanical ventilation",
+     "url": "https://dos.ny.gov/mechanical-ventilation-revision-2"
+    },
+    {
+     "label": "Building America Solution Center: Class I vapor retarders in humid climates",
+     "url": "https://basc.pnnl.gov/resource-guides/class-i-vapor-retarders-not-installed-above-grade-walls-warm-humid-climate"
+    }
+   ],
+   "key": "cold"
+  },
+  "cold-dry": {
+   "label": "Cold and dry",
+   "regionName": "Colorado Front Range",
+   "places": [
+    "denver"
+   ],
+   "oneLiner": "Cold winters, hot but very dry summers, and high radon risk across the Denver area.",
+   "summary": "Winter heating drives your bills, but summers are hot and very dry. That dry air makes evaporative cooling a real option, and radon is common in Denver-area homes. A good audit pairs air sealing and a combustion safety test with radon testing before and after the work.",
+   "drivers": [
+    "Heating leads: about 5,860 heating degree days a year against 850 cooling degree days, with 156 nights at or below freezing.",
+    "Summers are hot but very dry, so cooling is about temperature, not humidity, and evaporative cooling can work.",
+    "Most homes heat with gas furnaces, and most houses have basements, so rim joists and basement appliances matter.",
+    "Summer heat matters: in a 2023 federal survey, about 1 in 8 Denver-area households were uncomfortably hot for a day or more."
+   ],
+   "priorities": [
+    {
+     "title": "Test for radon before and after work",
+     "why": "Denver, Arapahoe and Jefferson counties are EPA radon Zone 1, the highest-potential zone. Larimer County says over half of Colorado homes have elevated levels.",
+     "ask": "Test before work and again after air sealing, ideally with a long-term test.",
+     "tests": [
+      "radon"
+     ]
+    },
+    {
+     "title": "Seal the attic, then insulate",
+     "why": "Air sealing comes first, then insulation. ENERGY STAR suggests an R-value of R60 for an uninsulated attic in this zone.",
+     "ask": "Ask for a blower door test and a list of attic bypasses to seal before insulation is quoted.",
+     "tests": [
+      "blower-door",
+      "thermal-imaging",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Check that basement appliances vent safely",
+     "why": "Tightening a house and running exhaust fans can make open-flue furnaces and water heaters spill exhaust. A combustion safety test checks for backdrafting and carbon monoxide.",
+     "ask": "Ask for a combustion safety test before and after air sealing.",
+     "tests": [
+      "combustion-safety",
+      "carbon-monoxide"
+     ]
+    },
+    {
+     "title": "Pick a cooling plan that suits dry air",
+     "why": "Dry summers make evaporative cooling effective, and a heat pump is the other strong option. Either way, leaky ducts waste the cooling you pay for.",
+     "ask": "Ask whether evaporative cooling or a heat pump suits your house, and for a duct leakage test.",
+     "tests": [
+      "duct-leakage",
+      "heat-loss-calc"
+     ]
+    },
+    {
+     "title": "Seal rim joists in basement homes",
+     "why": "Rim joists are a common air leak in basement homes, and sealing them cuts drafts and heat loss.",
+     "ask": "Ask the auditor to check rim joists with infrared while the blower door runs.",
+     "tests": [
+      "thermal-imaging",
+      "blower-door"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "blower-door",
+     "why": "Measures air leakage and points to the biggest leaks.",
+     "when": "Heating season; winter mornings pair best with infrared."
+    },
+    {
+     "test": "thermal-imaging",
+     "why": "Finds attic bypasses, rim-joist leaks and missing insulation.",
+     "when": "Winter mornings. Strong sun heats south and west walls, so scan from inside and wait 3+ hours after sun."
+    },
+    {
+     "test": "radon",
+     "why": "Denver County is radon Zone 1, and a long-term test is the most accurate.",
+     "when": "Heating season, with the house closed up. Retest after air sealing."
+    },
+    {
+     "test": "combustion-safety",
+     "why": "Checks natural-draft basement furnaces and water heaters for spillage and carbon monoxide.",
+     "when": "Before and after air sealing."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation keeps a new furnace, AC or heat pump from being oversized.",
+     "when": "Before any HVAC quote."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Air sealing plus attic insulation",
+     "why": "Heating is the main load here, and ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills."
+    },
+    {
+     "title": "Radon mitigation at 4 pCi/L or higher",
+     "why": "EPA recommends fixing your home at 4 pCi/L or more, and considering a fix between 2 and 4."
+    },
+    {
+     "title": "Evaporative cooling, direct or two-stage",
+     "why": "In dry air, an evaporative cooler can use about a quarter of the energy of central AC and cost less than half as much to install and run.",
+     "note": "It needs open windows or relief vents, and maintenance at least twice a year."
+    },
+    {
+     "title": "Cold-climate heat pump",
+     "why": "Denver averages about 6 nights a year at or below 0°F, so choose a model that meets ENERGY STAR's cold-climate criteria.",
+     "note": "Keep backup heat for the coldest nights."
+    },
+    {
+     "title": "Heat pump water heater in the basement",
+     "why": "A basement that stays between 40°F and 90°F suits one, and it cools and dehumidifies the space around it."
+    }
+   ],
+   "equipment": [
+    "Federal minimums: 13.4 SEER2 for a split AC, and 14.3 SEER2 with 7.5 HSPF2 for a split heat pump.",
+    "For heat pumps, choose cold-climate models with verified 5°F performance, size them with Manual J, and keep backup heat.",
+    "Evaporative coolers work best when summer humidity is low. They replace the house air every 2–3 minutes, so they need open windows or relief vents."
+   ],
+   "health": [
+    "Radon is the headline health risk here. EPA says to test every home, and to fix it at 4 pCi/L or more.",
+    "On smoky days, cover evaporative-cooler intakes with MERV 13 filters or run the cooler sparingly, and use MERV 13 in a central system if it can handle it.",
+    "Drain an evaporative cooler's pan when it will sit idle for more than a few days, so it can't breed mosquitoes or bacteria such as Legionella."
+   ],
+   "avoid": [
+    {
+     "title": "Running an evaporative cooler with the windows shut",
+     "why": "Without relief openings the air has nowhere to go and the cooler can't work. During smoke, filter the intake or limit use."
+    },
+    {
+     "title": "Skipping the radon retest after air sealing",
+     "why": "Sealing changes how air moves through your house, so test again after the work."
+    },
+    {
+     "title": "Air sealing without combustion testing",
+     "why": "Open-flue basement furnaces and water heaters risk backdrafting in a tighter house."
+    },
+    {
+     "title": "Oversizing the AC",
+     "why": "An oversized system short-cycles and wastes energy. Size it with a Manual J load calculation."
+    }
+   ],
+   "symptoms": [
+    "High winter bills",
+    "Drafts or cold rooms",
+    "Hot rooms in summer",
+    "AC can't keep up",
+    "Dust or smoke indoors",
+    "Furnace or boiler breakdowns"
+   ],
+   "seasonNote": "Book in the heating season, ideally on a winter morning, for the clearest infrared results and closed-house radon testing. Settle cooling plans before summer.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Denver airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00003017.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Denver airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00003017.csv"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "Building America Solution Center: evaporative cooling",
+     "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems"
+    },
+    {
+     "label": "Larimer County, CO: radon",
+     "url": "https://larimer.gov/radon"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20Metropolitan%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building Science Education: insulating and sealing rim joists",
+     "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "University of Minnesota Extension: ice dams",
+     "url": "https://extension.umn.edu/protecting-home-rain-and-ice/dealing-and-preventing-ice-dams"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "ENERGY STAR: seal and insulate",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate"
+    },
+    {
+     "label": "EPA: health risk of radon",
+     "url": "https://www.epa.gov/radon/health-risk-radon"
+    },
+    {
+     "label": "ENERGY STAR: air-source heat pump criteria",
+     "url": "https://www.energystar.gov/products/air_source_heat_pumps/key-product-criteria"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    }
+   ],
+   "key": "cold-dry"
+  },
+  "mixed-humid": {
+   "label": "Mixed-humid",
+   "regionName": "Mid-Atlantic and St. Louis",
+   "places": [
+    "baltimore",
+    "new-york",
+    "philadelphia",
+    "st-louis",
+    "washington-dc"
+   ],
+   "oneLiner": "You pay to heat and to cool, and muggy summers make basements and AC health matter.",
+   "summary": "You pay to heat in winter and to cool and dry the air in muggy summers. Many homes are old, with basements that can get damp and lead paint to plan around. A good audit covers air sealing and attic insulation, basement moisture, safe venting of fuel-burning equipment and AC health.",
+   "drivers": [
+    "Two real seasons: about 3,800 to 4,500 heating degree days and 1,300 to 1,700 cooling degree days a year.",
+    "Muggy summers: July dew points average 63–67°F, so your AC has to remove moisture as well as heat.",
+    "Old housing: in the core cities, the median home was built between 1938 (St. Louis) and 1958 (Washington, DC).",
+    "Power is pricey along the Northeast corridor, about 21 to 29 cents/kWh in August 2026, against 16 cents in Missouri."
+   ],
+   "priorities": [
+    {
+     "title": "Seal and insulate for both seasons",
+     "why": "Air sealing and attic insulation cut both heating and cooling bills. ENERGY STAR suggests an R-value of R60 for an uninsulated attic in this zone.",
+     "ask": "Ask for a blower door test with infrared imaging, and a sealing plan for the attic and top-floor ceilings.",
+     "tests": [
+      "blower-door",
+      "thermal-imaging",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Fix basement water, then seal and dehumidify",
+     "why": "Most houses here have basements. Fix water entry first, then seal rim joists and keep summer relative humidity below 60%.",
+     "ask": "Ask the auditor to measure basement humidity and look for water staining before anything is insulated.",
+     "tests": [
+      "mold-iaq",
+      "thermal-imaging"
+     ]
+    },
+    {
+     "title": "Check boilers, furnaces and water heaters vent safely",
+     "why": "Open-flue boilers, furnaces and water heaters risk backdrafting once a house is tightened. EPA guidance includes CO testing and alarms.",
+     "ask": "Ask for a combustion safety test before and after air sealing, including any oil or steam system.",
+     "tests": [
+      "combustion-safety",
+      "carbon-monoxide"
+     ]
+    },
+    {
+     "title": "Plan for lead, asbestos and old wiring",
+     "why": "Most homes in these core cities were built before 1980. Paid work that disturbs paint in pre-1978 homes must follow EPA lead-safe rules, and vermiculite or knob-and-tube needs handling before insulation.",
+     "ask": "Ask whether the work will disturb paint, and have suspect materials checked before the scope is final.",
+     "tests": [
+      "lead-paint",
+      "asbestos-vermiculite"
+     ]
+    },
+    {
+     "title": "Test for radon, especially in the suburbs",
+     "why": "DC, Philadelphia and New York City are radon Zone 3, but suburban counties such as Montgomery (MD), Fairfax (VA), Bucks and Baltimore County are Zone 1.",
+     "ask": "Test before work and again after air sealing, even if your city's zone is low.",
+     "tests": [
+      "radon"
+     ]
+    },
+    {
+     "title": "Keep the AC healthy and the ducts tight",
+     "why": "AC breakdowns are the most common reason homes here get too hot. Typical duct systems lose 20–30% of their air through leaks, and an oversized AC leaves humidity high.",
+     "ask": "Ask for a duct leakage test and a check of your AC's size against a Manual J load calculation.",
+     "tests": [
+      "duct-leakage",
+      "heat-loss-calc"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "blower-door",
+     "why": "Measures air leakage and guides sealing; pair it with infrared to find attic bypasses.",
+     "when": "Winter is best. Hot afternoons with the AC running can also work."
+    },
+    {
+     "test": "thermal-imaging",
+     "why": "Finds missing insulation and hidden air leaks.",
+     "when": "Winter, or a hot afternoon with the AC on. Scan from inside and skip walls that just had sun."
+    },
+    {
+     "test": "combustion-safety",
+     "why": "Checks boilers, furnaces and water heaters for spillage and carbon monoxide in a tightened house.",
+     "when": "Before and after air sealing."
+    },
+    {
+     "test": "mold-iaq",
+     "why": "A basement moisture check, with humidity readings and a look for water stains, shows whether it's safe to insulate. Aim for below 60% relative humidity.",
+     "when": "Mid-summer, when dew points peak."
+    },
+    {
+     "test": "radon",
+     "why": "Suburban counties around DC, Baltimore and Philadelphia are Zone 1.",
+     "when": "With the house closed up, before and after air sealing."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Air sealing plus attic insulation",
+     "why": "It cuts both heating and cooling loads, and ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills."
+    },
+    {
+     "title": "Basement water fixes, rim sealing, dehumidification",
+     "why": "Controls summer basement humidity and mold, and closes a common air leak at the rim joists."
+    },
+    {
+     "title": "Duct sealing, or moving ducts inside",
+     "why": "Where ducts run through an unconditioned attic, they can lose 10–45% of the heating and cooling energy they carry. Sealing, insulating or moving them inside cuts that loss."
+    },
+    {
+     "title": "Heat pumps, ducted or ductless",
+     "why": "These cities average 0–1 nights a year at or below 0°F, so a standard variable-speed heat pump can carry most hours. Ductless units suit radiator homes.",
+     "note": "A cold-climate heat pump adds margin for cold snaps."
+    },
+    {
+     "title": "Heat pump water heater in the basement",
+     "why": "It cools and dehumidifies the space around it, which helps in a muggy basement."
+    }
+   ],
+   "equipment": [
+    "Federal AC rules differ here: Baltimore and DC follow Southeast rules (14.3 SEER2 for most split ACs), while New York, Philadelphia and St. Louis follow North rules (13.4 SEER2).",
+    "Split heat pumps must meet at least 14.3 SEER2 and 7.5 HSPF2. ENERGY STAR models start at 15.2 SEER2 and 7.8 HSPF2.",
+    "A cold-climate heat pump is optional, since winters rarely reach 0°F. Still check capacity at 17°F and 5°F for the coldest days.",
+    "Size with Manual J. An oversized AC short-cycles and leaves your house cool but clammy."
+   ],
+   "health": [
+    "Wildfire smoke: in June 2023, New York City's fine-particle AQI topped 175, a record, and DC had some of its smokiest air in 25 years. Use MERV 13 filters and recirculate.",
+    "Heat waves are a serious health risk in these cities, especially in homes without working AC.",
+    "Keep basement relative humidity below 60% to limit mold; a dehumidifier helps in summer.",
+    "Older homes may hold lead paint and asbestos, and suburban homes may have high radon. Test before work starts."
+   ],
+   "avoid": [
+    {
+     "title": "Plastic vapor barriers on above-grade walls",
+     "why": "The code doesn't require interior vapor retarders in this zone, and low-perm layers can trap summer moisture driven inward."
+    },
+    {
+     "title": "Disturbing lead paint without lead-safe practices",
+     "why": "Paid work that disturbs paint in pre-1978 homes must follow EPA's Renovation, Repair and Painting rule."
+    },
+    {
+     "title": "An oversized AC",
+     "why": "It cools fast but shuts off before removing moisture, so rooms feel clammy."
+    },
+    {
+     "title": "Insulating a basement that still takes on water",
+     "why": "Fix drainage and leaks first, or the insulation can trap moisture and grow mold."
+    }
+   ],
+   "symptoms": [
+    "High winter bills",
+    "High summer bills",
+    "Humid or sticky indoors",
+    "Damp or musty basement",
+    "Drafts or cold rooms",
+    "AC breaks down in heat waves",
+    "Dust or smoke indoors"
+   ],
+   "seasonNote": "Winter gives the clearest blower door and infrared results and good closed-house radon testing. Check basement humidity in mid-summer, and have AC problems fixed before heat waves.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Reagan National airport (DC)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013743.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Philadelphia airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013739.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Reagan National airport (DC)",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00013743.csv"
+    },
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "EPA: lead Renovation, Repair and Painting rule",
+     "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: BWI airport (Baltimore)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00093721.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): LaGuardia airport (New York)",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00014732.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): St. Louis Lambert airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00013994.csv"
+    },
+    {
+     "label": "EIA Electric Power Monthly, Table 5.6.A (August 2026 prices)",
+     "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a"
+    },
+    {
+     "label": "ENERGY STAR: seal and insulate",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "Census American Housing Survey 2021 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2021/AHS%202021%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building Science Education: insulating and sealing rim joists",
+     "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists"
+    },
+    {
+     "label": "EPA: a brief guide to mold, moisture and your home",
+     "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+    },
+    {
+     "label": "Census ACS 2020-2024: year structure built (B25034)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25034.dat"
+    },
+    {
+     "label": "Mass Save: pre-weatherization barriers (knob-and-tube, vermiculite)",
+     "url": "https://www.masssave.com/business/rebates-offers-services/building-insulation-and-weatherization/pre-weatherization-barrier-mitigation"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "Building America Solution Center: whole-house dehumidification",
+     "url": "https://basc.pnnl.gov/resource-guides/whole-house-dehumidification"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "Building America Solution Center: finding missing insulation with thermal imaging",
+     "url": "https://basc.pnnl.gov/diy-guides/look-missing-insulation-using-thermal-imaging"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: St. Louis Lambert airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013994.csv"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "ENERGY STAR: air-source heat pump criteria",
+     "url": "https://www.energystar.gov/products/air_source_heat_pumps/key-product-criteria"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "NASA Earth Observatory: smoke smothers the Northeast (June 2023)",
+     "url": "https://science.nasa.gov/earth/earth-observatory/smoke-smothers-the-northeast-151433/"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EPA: protect your family from asbestos",
+     "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos"
+    },
+    {
+     "label": "ICC technical note: vapor retarders in the IRC",
+     "url": "https://www.iccsafe.org/wp-content/uploads/proclamations/TN06-Vapor-Retarders_pdf.pdf"
+    },
+    {
+     "label": "Building America Solution Center: Class I vapor retarders in humid climates",
+     "url": "https://basc.pnnl.gov/resource-guides/class-i-vapor-retarders-not-installed-above-grade-walls-warm-humid-climate"
+    }
+   ],
+   "key": "mixed-humid"
+  },
+  "mixed-humid-warm": {
+   "label": "Warm mixed-humid",
+   "regionName": "Southeast Piedmont",
+   "places": [
+    "atlanta",
+    "charlotte"
+   ],
+   "oneLiner": "Long, muggy summers and short winters; ducts, crawlspaces and humidity drive comfort.",
+   "summary": "Summers here are long and muggy, and winters are short but bring regular freezes. Ducts running through hot attics and damp crawlspaces waste energy, and controlling humidity matters as much as temperature. A good audit tests the ducts, checks the attic and crawlspace, and includes a radon test in the Atlanta area.",
+   "drivers": [
+    "Both seasons count: 47–49 days a year reach 90°F, and 36–58 nights fall to 32°F or below.",
+    "Very humid summers: July dew points average about 68°F, so your AC must dry the air as well as cool it.",
+    "Where ducts run through attics or crawlspaces, leaks and heat loss can waste 10–45% of heating and cooling energy.",
+    "Electric heat is common: about half of homes heat with electricity, so heat pump efficiency shows up in winter bills too."
+   ],
+   "priorities": [
+    {
+     "title": "Test and seal ducts in attics and crawlspaces",
+     "why": "Leaky or poorly insulated ducts in unconditioned space can waste 10–45% of heating and cooling energy, and typical systems lose 20–30% of their air to leaks.",
+     "ask": "Ask for a duct leakage test that measures both total leakage and leakage to outside.",
+     "tests": [
+      "duct-leakage"
+     ]
+    },
+    {
+     "title": "Dry out and close up the crawlspace",
+     "why": "EPA's retrofit guidance favors turning vented crawlspaces into sealed, insulated and drained spaces, with a sealed vapor barrier over any dirt floor.",
+     "ask": "Ask the auditor to check crawlspace humidity, wood moisture and standing water, and whether closing it makes sense.",
+     "tests": [
+      "mold-iaq"
+     ]
+    },
+    {
+     "title": "Test for radon in the Atlanta area",
+     "why": "Fulton, Cobb and Gwinnett counties are EPA radon Zone 1, the highest-potential zone, which is unusual in the South. Mecklenburg is Zone 3, but EPA says test every home.",
+     "ask": "Test before air sealing and again after.",
+     "tests": [
+      "radon"
+     ]
+    },
+    {
+     "title": "Seal, insulate and shade the attic",
+     "why": "ENERGY STAR suggests an R-value of R49 for an uninsulated attic in this zone. A radiant barrier typically trims 8–12% of cooling costs and helps most when ducts run through the attic.",
+     "ask": "Ask for attic air sealing first, then insulation, and whether a radiant barrier suits your roof and ducts.",
+     "tests": [
+      "attic-inspection",
+      "blower-door",
+      "thermal-imaging"
+     ]
+    },
+    {
+     "title": "Right-size cooling and control humidity",
+     "why": "An oversized AC or heat pump short-cycles and leaves indoor humidity high. Aim to keep relative humidity below 60%.",
+     "ask": "Ask for a Manual J load calculation before replacing equipment, and log indoor humidity for a few days.",
+     "tests": [
+      "heat-loss-calc",
+      "mold-iaq"
+     ]
+    },
+    {
+     "title": "Check gas furnaces and water heaters vent safely",
+     "why": "Where gas equipment remains, open-flue appliances can spill exhaust after air sealing.",
+     "ask": "Ask for a combustion safety test if you have gas appliances.",
+     "tests": [
+      "combustion-safety",
+      "carbon-monoxide"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "duct-leakage",
+     "why": "Measures total leakage and leakage to outside for ducts in attics and crawlspaces.",
+     "when": "Any season."
+    },
+    {
+     "test": "blower-door",
+     "why": "Measures whole-house leakage. With infrared, it finds attic bypasses, knee-wall gaps and missing insulation.",
+     "when": "Winter mornings, when lows average 32–36°F, or hot afternoons with the AC running."
+    },
+    {
+     "test": "mold-iaq",
+     "why": "A crawlspace check of humidity, wood moisture, standing water and ground cover shows mold risk; indoor humidity logs show whether the AC dries the air.",
+     "when": "Late summer, when crawlspace humidity peaks."
+    },
+    {
+     "test": "radon",
+     "why": "Atlanta's core counties are Zone 1.",
+     "when": "With the house closed up, before and after air sealing."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation sizes a new AC or heat pump so it runs long enough to dry the air.",
+     "when": "Before you get quotes for new equipment."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Seal and insulate ducts, or move them inside",
+     "why": "Ducts in attics and crawlspaces can waste 10–45% of heating and cooling energy, so this is often the biggest avoidable loss."
+    },
+    {
+     "title": "Attic sealing, R49 insulation and a radiant barrier",
+     "why": "Cuts winter heat loss and summer attic heat. A radiant barrier pays off most when ducts run through the attic."
+    },
+    {
+     "title": "Closed crawlspace with drainage and dehumidification",
+     "why": "Controls humidity, mold and musty odors under the house."
+    },
+    {
+     "title": "Right-sized variable-speed heat pump",
+     "why": "It handles mild winters and long, humid summers. Cold-climate models aren't required here, but check heating capacity on freezing nights.",
+     "note": "Ask how the system controls humidity."
+    },
+    {
+     "title": "Heat pump water heater",
+     "why": "It works in a garage or indoor space that stays between 40°F and 90°F, and it cools and dehumidifies that space."
+    }
+   ],
+   "equipment": [
+    "Southeast rules apply: a new split AC must be at least 14.3 SEER2 (13.8 for the largest sizes), based on installation date.",
+    "Split heat pumps must meet at least 14.3 SEER2 and 7.5 HSPF2. ENERGY STAR models start at 15.2 SEER2 and 7.8 HSPF2.",
+    "If relative humidity stays above 60% after the system is right-sized, add dehumidification. A dehumidifier won't fix an oversized AC or leaky ducts."
+   ],
+   "health": [
+    "Radon is a real concern around Atlanta, where the core counties are EPA Zone 1. Test every home.",
+    "Damp crawlspaces can bring mold and musty smells into the house. Keep indoor relative humidity below 60%.",
+    "AC failure is the main reason Atlanta-area homes get uncomfortably hot, so keep your system serviced before summer."
+   ],
+   "avoid": [
+    {
+     "title": "Plastic or vinyl on the inside of exterior walls",
+     "why": "The code requires no interior vapor retarder in this zone, and plastic or vinyl wallcovering can trap summer moisture inside the wall."
+    },
+    {
+     "title": "Venting the crawlspace or leaving bare dirt",
+     "why": "Humid summer air vented into a cool crawlspace adds moisture. Cover dirt floors with a sealed vapor barrier."
+    },
+    {
+     "title": "Buying a bigger AC than you need",
+     "why": "Oversized systems short-cycle and leave the house humid."
+    },
+    {
+     "title": "Skipping radon because 'the South is low'",
+     "why": "Atlanta's core counties are radon Zone 1, the highest-potential zone."
+    }
+   ],
+   "symptoms": [
+    "High summer bills",
+    "Humid or sticky indoors",
+    "Musty smell",
+    "Hot upstairs rooms",
+    "AC runs all the time",
+    "AC breaks down in heat waves"
+   ],
+   "seasonNote": "Book any time. Late summer shows crawlspace moisture best, and winter mornings or hot afternoons suit infrared. Test radon with the house closed up, before and after air sealing.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Atlanta airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013874.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Charlotte airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013881.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Atlanta airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00013874.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Charlotte airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00013881.csv"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "Building America Solution Center: whole-house dehumidification",
+     "url": "https://basc.pnnl.gov/resource-guides/whole-house-dehumidification"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "Building America Solution Center: attic radiant barriers",
+     "url": "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "Building America Solution Center: finding missing insulation with thermal imaging",
+     "url": "https://basc.pnnl.gov/diy-guides/look-missing-insulation-using-thermal-imaging"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: Atlanta airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00013874.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: Charlotte airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00013881.csv"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "ENERGY STAR: air-source heat pump criteria",
+     "url": "https://www.energystar.gov/products/air_source_heat_pumps/key-product-criteria"
+    },
+    {
+     "label": "EPA: a brief guide to mold, moisture and your home",
+     "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "ICC technical note: vapor retarders in the IRC",
+     "url": "https://www.iccsafe.org/wp-content/uploads/proclamations/TN06-Vapor-Retarders_pdf.pdf"
+    },
+    {
+     "label": "Building America Solution Center: Class I vapor retarders in humid climates",
+     "url": "https://basc.pnnl.gov/resource-guides/class-i-vapor-retarders-not-installed-above-grade-walls-warm-humid-climate"
+    }
+   ],
+   "key": "mixed-humid-warm"
+  },
+  "hot-humid": {
+   "label": "Hot and humid",
+   "regionName": "Florida, Texas and the Gulf Coast",
+   "places": [
+    "miami",
+    "orlando",
+    "tampa",
+    "houston",
+    "san-antonio",
+    "austin",
+    "dallas"
+   ],
+   "oneLiner": "Cooling and humidity drive your bills; attic ducts, AC health and outages drive comfort.",
+   "summary": "Cooling and humidity drive your bills, and in slab homes the ducts often run through a hot attic. Comfort depends on an AC that is sized right, dries the air and keeps running, plus a house that can ride out outages, storms and, in Texas, hard freezes. A good audit starts with the ducts, the attic and the AC.",
+   "drivers": [
+    "Cooling dominates: about 2,800 to 4,700 cooling degree days a year, and 91 to 124 days at 90°F or more.",
+    "Humid air: July dew points average 68–74°F, so your AC has to remove moisture as well as heat.",
+    "Most homes sit on slabs, so ducts and the air handler often run through the hottest space in the house, the attic.",
+    "Most homes heat with electricity, and long power outages are more common here than nationally."
+   ],
+   "priorities": [
+    {
+     "title": "Fix attic ducts and the air handler",
+     "why": "In slab homes this is often the biggest avoidable loss. Return ducts that pull in hot, humid attic air are a classic problem. Check leakage and insulation, and consider bringing ducts inside.",
+     "ask": "Ask for a duct leakage test that measures leakage to outside, plus an attic check of duct insulation.",
+     "tests": [
+      "duct-leakage",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Control humidity, not just temperature",
+     "why": "Keep indoor relative humidity below 60%. An oversized AC short-cycles and leaves moisture behind, and AC breakdowns are the top reason homes here get too hot.",
+     "ask": "Ask the auditor to log indoor humidity and compare your AC's size to a Manual J load calculation.",
+     "tests": [
+      "heat-loss-calc",
+      "mold-iaq"
+     ]
+    },
+    {
+     "title": "Cut attic heat: insulation and a radiant barrier",
+     "why": "ENERGY STAR suggests R30 (zone 1) to R49 (zone 2) for an uninsulated attic. A radiant barrier cuts attic heat flow by about 40%, typically 8–12% of cooling costs.",
+     "ask": "Ask whether a radiant barrier fits your roof, and to seal attic air leaks before adding insulation.",
+     "tests": [
+      "attic-inspection",
+      "thermal-imaging"
+     ]
+    },
+    {
+     "title": "Block solar heat at the windows",
+     "why": "Single-pane and aluminum-frame windows are still common in this region. Low-SHGC glass, exterior solar screens and shading cut the heat coming in.",
+     "ask": "Ask which windows take the most sun, and whether screens or shading would help before replacing windows.",
+     "tests": [
+      "thermal-imaging"
+     ]
+    },
+    {
+     "title": "Plan for outages, storms and freezes",
+     "why": "Long outages are more common here than nationally, hurricanes threaten Florida and the Gulf, and Texas sees multi-day freezes. A tight, well-insulated house holds its temperature longer.",
+     "ask": "Ask how long your house would hold temperature in an outage, and where pipes could freeze in a Texas cold snap.",
+     "tests": [
+      "blower-door"
+     ]
+    },
+    {
+     "title": "Check the pool pump, water heater and radon",
+     "why": "About one in six houses in this region has a pool, and its pump is a large, controllable load. Miami-Dade and Hillsborough counties are radon Zone 2.",
+     "ask": "Ask for pool pump and water heater advice, and test for radon; EPA says every home should be tested.",
+     "tests": [
+      "radon",
+      "bill-analysis"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "duct-leakage",
+     "why": "Finds leaks in attic ducts and the air handler, measured as leakage to outside.",
+     "when": "Any time. Do the attic inspection in the morning, before the attic heats up."
+    },
+    {
+     "test": "blower-door",
+     "why": "Measures whole-house air leakage. With the house depressurized, an infrared scan shows leaks even at small temperature differences.",
+     "when": "Hot afternoons with the AC on. To image insulation, run the AC a few degrees cooler for about 4 hours first."
+    },
+    {
+     "test": "mold-iaq",
+     "why": "Logging indoor temperature and humidity for several days shows whether your AC removes moisture. Aim for below 60% relative humidity.",
+     "when": "Humid spring or fall days, when the AC runs less and humidity tends to climb."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation checks your AC's size against your house. Some utilities, such as Austin Energy, require one for rebates.",
+     "when": "Before replacing your AC or heat pump."
+    },
+    {
+     "test": "radon",
+     "why": "Miami-Dade and Hillsborough counties are Zone 2, and EPA says to test every home.",
+     "when": "With windows and doors closed, before and after air sealing."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Seal and insulate ducts, or bring them inside",
+     "why": "Options include a sealed attic or burying ducts in insulation. In humid climates, buried ducts must first be encapsulated in closed-cell foam to prevent condensation.",
+     "note": "A sealed attic needs a way to remove moisture."
+    },
+    {
+     "title": "Right-sized variable-speed AC or heat pump",
+     "why": "Sized with Manual J and Manual S, it runs longer, gentler cycles that pull more moisture from the air.",
+     "note": "Add a dehumidifier only if humidity stays above 60% afterward."
+    },
+    {
+     "title": "Attic insulation plus a radiant barrier",
+     "why": "Attic heat drives your cooling load and heats any ducts up there. A radiant barrier cuts attic heat flow about 40%.",
+     "note": "Install foil at the roof deck or rafters, not on the attic floor, where dust ruins it."
+    },
+    {
+     "title": "Solar control at the windows",
+     "why": "Low-SHGC glass, exterior solar screens and shading cut solar heat gain. Some utility programs, such as CPS Energy's Casa Verde, fund solar screens."
+    },
+    {
+     "title": "Heat pump water heater in the garage",
+     "why": "It cools and dehumidifies the space around it.",
+     "note": "It needs a space that stays between 40°F and 90°F."
+    }
+   ],
+   "equipment": [
+    "Southeast rules: a new split AC must be at least 14.3 SEER2 (13.8 for the largest sizes), based on installation date. EER2 shows efficiency on the hottest afternoons.",
+    "Florida heating loads are tiny, so a heat pump or AC with strip heat covers winter. Texas homes need dependable heat for multi-day freezes: check heat pump capacity at 17°F and backup heat sizing.",
+    "Size with Manual J and Manual S, not a rule of thumb. Oversized systems short-cycle and leave the house humid.",
+    "Avoid exhaust-only ventilation: it depressurizes the house and pulls in humid outdoor air. Balanced ventilation, such as an ERV, avoids that."
+   ],
+   "health": [
+    "Mold and dust mites thrive in humid air. Keep indoor relative humidity below 60%, ideally 30–50%.",
+    "Long outages in summer heat are a health risk. Keep portable generators outside, away from windows and doors, because their exhaust contains carbon monoxide.",
+    "In flood-prone areas, ask the auditor about where your equipment sits and any signs of water intrusion."
+   ],
+   "avoid": [
+    {
+     "title": "Plastic or vinyl wallpaper on exterior walls",
+     "why": "On the inside of exterior walls, plastic or vinyl wallpaper traps moisture that humid outdoor air drives into the wall."
+    },
+    {
+     "title": "Oversized AC or rule-of-thumb sizing",
+     "why": "Short cycles leave humidity behind. Insist on a Manual J load calculation."
+    },
+    {
+     "title": "Burying attic ducts without encapsulating them",
+     "why": "In humid climates, ducts buried in insulation without closed-cell foam can sweat and drip."
+    },
+    {
+     "title": "Sealing the attic without moisture removal",
+     "why": "A sealed attic brings ducts inside the envelope, but it needs a way to remove moisture."
+    }
+   ],
+   "symptoms": [
+    "High summer bills",
+    "Humid or sticky indoors",
+    "AC runs all the time",
+    "Musty smell",
+    "Hot upstairs rooms",
+    "AC breaks down in heat waves",
+    "Too hot or cold during outages"
+   ],
+   "seasonNote": "Book in spring, before peak heat, so fixes are done by summer. Hot afternoons suit infrared, and humid spring or fall days show whether your AC dries the air.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Miami airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012839.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Dallas/Fort Worth airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00003927.csv"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "EIA RECS 2024 housing characteristics, HC2.6 (preliminary)",
+     "url": "https://www.eia.gov/consumption/residential/data/2024/hc/xls/HC2.6_2024.xlsx"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Houston Bush airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00012960.csv"
+    },
+    {
+     "label": "Building America Solution Center: whole-house dehumidification",
+     "url": "https://basc.pnnl.gov/resource-guides/whole-house-dehumidification"
+    },
+    {
+     "label": "National Weather Service Fort Worth: February 2021 winter storm",
+     "url": "https://weather.gov/fwd/Feb-2021-WinterEvent"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Austin-Bergstrom airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013904.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Miami airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00012839.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Dallas/Fort Worth airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00003927.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): San Antonio airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00012921.csv"
+    },
+    {
+     "label": "Census American Housing Survey 2021 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2021/AHS%202021%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "Building America Solution Center: unvented attics",
+     "url": "https://basc.pnnl.gov/resource-guides/unvented-conditioned-attic-spray-foam-insulation-below-roof-deck"
+    },
+    {
+     "label": "EPA: a brief guide to mold, moisture and your home",
+     "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "Building America Solution Center: attic radiant barriers",
+     "url": "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers"
+    },
+    {
+     "label": "ENERGY STAR: window, door and skylight criteria",
+     "url": "https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "Building America Solution Center: finding missing insulation with thermal imaging",
+     "url": "https://basc.pnnl.gov/diy-guides/look-missing-insulation-using-thermal-imaging"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "Austin Energy: AC and heat pump rebates",
+     "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating/ac"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "CPS Energy: Casa Verde weatherization",
+     "url": "https://www.cpsenergy.com/casaverde"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Orlando airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012815.csv"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "Building America Solution Center: Class I vapor retarders in humid climates",
+     "url": "https://basc.pnnl.gov/resource-guides/class-i-vapor-retarders-not-installed-above-grade-walls-warm-humid-climate"
+    }
+   ],
+   "key": "hot-humid"
+  },
+  "hot-dry": {
+   "label": "Hot and dry",
+   "regionName": "Desert Southwest and inland valleys",
+   "places": [
+    "phoenix",
+    "riverside"
+   ],
+   "oneLiner": "Months of extreme heat make AC your biggest bill and a safety system, too.",
+   "summary": "Cooling is your biggest bill, and in extreme heat your AC is also a safety system. Ducts and air handlers often sit in the attic, the hottest place in the house, so leaks there waste a lot of cooling. A good audit checks the AC's health and size, tests and seals the ducts, and cuts attic and window heat.",
+   "drivers": [
+    "Extreme, long heat: Phoenix averages 173 days a year at 90°F or more and 111 at 100°F or more.",
+    "Dry heat: summer dew points are low, so cooling is mostly about temperature. The monsoon raises humidity in late summer.",
+    "Most homes sit on slabs, so ducts and air handlers often run through the attic, the hottest space in the house.",
+    "Power prices differ: about 15 cents/kWh in Arizona but about 30 cents in California (August 2026), so Inland Empire cooling costs more."
+   ],
+   "priorities": [
+    {
+     "title": "Keep your AC reliable and right-sized",
+     "why": "A working AC is a safety system here. In Maricopa County's 2024 indoor heat deaths, 88% of homes had an AC, but 70% of those units weren't working.",
+     "ask": "Ask for an AC performance check and a Manual J comparison before you repair or replace your system.",
+     "tests": [
+      "heat-loss-calc"
+     ]
+    },
+    {
+     "title": "Seal and insulate attic ducts",
+     "why": "Ducts in an unconditioned attic can lose 10–45% of the cooling they carry, and typical systems lose 20–30% of their air to leaks.",
+     "ask": "Ask for a duct leakage test that measures leakage to outside, and a check of the attic air handler.",
+     "tests": [
+      "duct-leakage",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Cut attic heat gain",
+     "why": "ENERGY STAR suggests an R-value of R49 for an uninsulated attic in zones 2 and 3. A radiant barrier typically saves 8–12% of cooling costs and keeps attic ducts cooler.",
+     "ask": "Ask whether a radiant barrier at the roof deck makes sense, and to seal attic leaks before insulating.",
+     "tests": [
+      "attic-inspection",
+      "thermal-imaging"
+     ]
+    },
+    {
+     "title": "Tame west sun and old windows",
+     "why": "Single-pane glass is still common in this region. Shading, solar screens and low-SHGC glass cut the heat coming in.",
+     "ask": "Ask which windows take the hottest sun, and whether screens or shading should come before new windows.",
+     "tests": [
+      "thermal-imaging"
+     ]
+    },
+    {
+     "title": "Keep dust and smoke out",
+     "why": "Air leaks let in dust and, in Riverside County, wildfire smoke. Sealing leaks and using MERV 13 filters keep more of it outside.",
+     "ask": "Ask for a blower door test to find leakage paths, and whether your system can take a MERV 13 filter.",
+     "tests": [
+      "blower-door"
+     ]
+    },
+    {
+     "title": "Check the pool pump and water heater",
+     "why": "About one in six houses in this region has a pool. Pool pumps and water heating are large loads you can control.",
+     "ask": "Ask for pool pump run-time and water heater recommendations; your bills can show how big these loads are.",
+     "tests": [
+      "bill-analysis"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "thermal-imaging",
+     "why": "With a big indoor-outdoor temperature difference, missing insulation and air leaks show up clearly.",
+     "when": "Summer afternoons with the AC running. Scan from inside; sun-baked outside walls give misleading readings for hours."
+    },
+    {
+     "test": "duct-leakage",
+     "why": "Finds leaks in attic ducts and the air handler.",
+     "when": "Early morning, before the attic gets too hot to work in safely."
+    },
+    {
+     "test": "blower-door",
+     "why": "Measures total air leakage and finds the paths dust and smoke take into your house.",
+     "when": "Any season."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation checks whether your AC is the right size before you repair or replace it.",
+     "when": "Cooling season, before any replacement."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Duct sealing, plus insulation or buried ducts",
+     "why": "In dry climates, burying ducts in attic insulation works without the condensation worries of humid areas."
+    },
+    {
+     "title": "Attic insulation plus a roof-deck radiant barrier",
+     "why": "A radiant barrier cuts heat flow from the attic into the house by about 40%, typically 8–12% of cooling costs, and keeps attic ducts cooler.",
+     "note": "Install foil at the roof deck or rafters, never on the attic floor."
+    },
+    {
+     "title": "High-EER2 AC or heat pump",
+     "why": "EER2 measures efficiency at peak heat, which is why Southwest rules set an EER2 minimum. A heat pump also covers your small heating load."
+    },
+    {
+     "title": "Evaporative or two-stage cooling, where it fits",
+     "why": "An evaporative cooler can use about a quarter of the energy of central AC. It works less well as humidity rises, such as during the monsoon.",
+     "note": "It needs relief vents or open windows, and regular maintenance."
+    },
+    {
+     "title": "Shade screens and window shading",
+     "why": "Solar screens and shading cut heat through older glass. SRP, for example, rebates professionally installed shade screens."
+    }
+   ],
+   "equipment": [
+    "Southwest rules: most new split ACs need at least 14.3 SEER2 and 11.7 EER2 (9.8 EER2 if rated 15.2 SEER2 or higher). Packaged ACs need at least 10.6 EER2.",
+    "Heat pumps suit this climate: heating loads are small, and about a third of Phoenix-area homes already heat with one.",
+    "Direct evaporative coolers drop supply air 15–40°F but add humidity. Indirect and indirect/direct units cool without adding moisture.",
+    "Size with a Manual J load calculation; oversized units short-cycle."
+   ],
+   "health": [
+    "Heat illness is the main risk when AC fails. Keep your system maintained and have a backup plan for cooling.",
+    "On smoky or dusty days, use MERV 13 filters, recirculate indoor air and filter any evaporative cooler intake.",
+    "Drain an idle evaporative cooler's pan so it can't breed mosquitoes or bacteria such as Legionella.",
+    "Maricopa and Riverside counties are radon Zone 2. EPA says to test every home."
+   ],
+   "avoid": [
+    {
+     "title": "Buying an AC on SEER2 alone",
+     "why": "EER2 shows efficiency at peak heat, and Southwest rules set a minimum for it."
+    },
+    {
+     "title": "Running an evaporative cooler with the windows shut",
+     "why": "Without relief openings it can't work. In humid or smoky spells, adjust use or filter the intake."
+    },
+    {
+     "title": "Laying radiant barrier foil on the attic floor",
+     "why": "Dust settles on it and ruins its effect. Install it at the roof deck or rafters."
+    },
+    {
+     "title": "An oversized AC",
+     "why": "Bigger isn't better: oversized units short-cycle and run less efficiently."
+    }
+   ],
+   "symptoms": [
+    "High summer bills",
+    "AC runs all the time",
+    "AC can't keep up",
+    "Hot west-facing rooms",
+    "Hot upstairs rooms",
+    "Dust or smoke indoors"
+   ],
+   "seasonNote": "Get the AC checked in spring, before triple-digit heat. Summer afternoons give the clearest infrared images, but attic and duct work belongs in the early morning.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Phoenix Sky Harbor airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023183.csv"
+    },
+    {
+     "label": "Maricopa County: 2024 heat deaths report",
+     "url": "https://www.maricopa.gov/CivicAlerts.aspx?AID=3222"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "Building America Solution Center: attic radiant barriers",
+     "url": "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Phoenix Sky Harbor airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00023183.csv"
+    },
+    {
+     "label": "EIA Electric Power Monthly, Table 5.6.A (August 2026 prices)",
+     "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "EIA RECS 2024 housing characteristics, HC2.6 (preliminary)",
+     "url": "https://www.eia.gov/consumption/residential/data/2024/hc/xls/HC2.6_2024.xlsx"
+    },
+    {
+     "label": "ENERGY STAR: window, door and skylight criteria",
+     "url": "https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "Building America Solution Center: evaporative cooling",
+     "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems"
+    },
+    {
+     "label": "SRP: residential rebates",
+     "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/residential-rebates"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Riverside Municipal airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00003171.csv"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    }
+   ],
+   "key": "hot-dry"
+  },
+  "mild-coastal": {
+   "label": "Mild coastal",
+   "regionName": "Coastal California",
+   "places": [
+    "los-angeles",
+    "san-diego",
+    "san-francisco"
+   ],
+   "oneLiner": "Small loads and high power prices, plus heat waves in homes built without AC.",
+   "summary": "Your heating and cooling loads are small, but California electricity costs far more than the national average, so waste still adds up. Many homes have no AC, and many older ones heat with wall or floor furnaces, so heat-wave planning and safe venting matter most. A good audit seals and insulates the attic, tests fuel-burning equipment and sizes any cooling for heat waves without oversizing.",
+   "drivers": [
+    "Small loads: the coastal airports log only about 200 to 900 cooling degree days and 1,000 to 2,500 heating degree days a year.",
+    "High prices: California electricity averaged about 30 cents/kWh in August 2026, against about 18 cents nationally.",
+    "Many homes lack AC: about half of San Francisco-area homes and nearly 1 in 5 Los Angeles-area homes have none.",
+    "Inland is different: hotter valleys behave like the Hot and dry climate, with many more 90°F days than the coast."
+   ],
+   "priorities": [
+    {
+     "title": "Seal and insulate the attic",
+     "why": "ENERGY STAR suggests an R-value of R49 for an uninsulated attic in this zone. A well-insulated attic helps in winter and keeps homes without AC cooler in heat waves.",
+     "ask": "Ask for a blower door test with infrared imaging, and a list of ceiling leaks to seal before insulating.",
+     "tests": [
+      "blower-door",
+      "thermal-imaging",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Check wall furnaces and water heaters vent safely",
+     "why": "Wall and floor furnaces are common in older Los Angeles and San Francisco homes. Check them for spillage and carbon monoxide, especially before air sealing.",
+     "ask": "Ask for a combustion safety test before and after air sealing, and keep CO alarms working.",
+     "tests": [
+      "combustion-safety",
+      "carbon-monoxide"
+     ]
+    },
+    {
+     "title": "Prepare for heat waves without oversizing",
+     "why": "Many homes lack AC, and the top reason people here give for being too hot is not enough cooling capacity. A right-sized heat pump adds efficient cooling and can replace a wall furnace.",
+     "ask": "Ask for a Manual J load calculation that sizes cooling for heat waves, not a rule of thumb.",
+     "tests": [
+      "heat-loss-calc"
+     ]
+    },
+    {
+     "title": "Check ducts in attics and under floors",
+     "why": "Ducts here often run through attics or crawlspaces under raised floors, and typical systems lose 20–30% of their air through leaks.",
+     "ask": "Ask for a duct leakage test if you have a forced-air furnace.",
+     "tests": [
+      "duct-leakage"
+     ]
+    },
+    {
+     "title": "Brace the water heater for earthquakes",
+     "why": "California law requires water heaters to be braced, anchored or strapped, and Los Angeles and San Francisco face some of the highest earthquake risk in the US.",
+     "ask": "Ask the auditor to check the water heater's strapping and gas connector.",
+     "tests": [
+      "combustion-safety"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "blower-door",
+     "why": "Measures air leakage and guides attic and ceiling sealing.",
+     "when": "Any season; pair it with infrared on a winter morning."
+    },
+    {
+     "test": "thermal-imaging",
+     "why": "Finds missing insulation and ceiling bypasses.",
+     "when": "Winter mornings with the heat on, when it's about 18–24°F cooler outside. Coastal summers rarely give enough contrast."
+    },
+    {
+     "test": "combustion-safety",
+     "why": "Checks wall furnaces, floor furnaces and water heaters for spillage and carbon monoxide.",
+     "when": "Heating season, before and after air sealing."
+    },
+    {
+     "test": "duct-leakage",
+     "why": "Finds leaks in ducts that run through attics or under raised floors.",
+     "when": "Any season."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation sizes a heat pump for heat waves without oversizing it.",
+     "when": "Before you buy cooling or a heat pump."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Air sealing plus attic insulation",
+     "why": "In Los Angeles, inadequate insulation is one of the top reasons people give for being too cold. ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills."
+    },
+    {
+     "title": "Heat pump to replace a wall furnace",
+     "why": "A ducted or ductless heat pump adds cooling for heat waves and heats efficiently. Cold-climate models aren't needed: the coastal airports almost never freeze."
+    },
+    {
+     "title": "Duct sealing",
+     "why": "Typical systems lose 20–30% of their air through leaks, and ducts here often run through attics or under raised floors."
+    },
+    {
+     "title": "Heat pump water heater",
+     "why": "It moves heat instead of making it, and it needs a space that stays between 40°F and 90°F."
+    },
+    {
+     "title": "Attic heat control for inland homes",
+     "why": "In hotter inland neighborhoods, a radiant barrier cuts attic heat during heat waves. At the cool coast, it does much less."
+    }
+   ],
+   "equipment": [
+    "Southwest rules apply statewide: a new split AC needs at least 14.3 SEER2 plus an EER2 minimum, based on installation date.",
+    "A standard heat pump is enough here. The coastal airports average almost no nights at or below freezing, so you don't need a cold-climate heat pump.",
+    "Size cooling for heat waves with a Manual J load calculation, without oversizing."
+   ],
+   "health": [
+    "Wildfire smoke: on smoky days, use MERV 13 filters, recirculate indoor air and run a portable air cleaner.",
+    "Wall furnaces and water heaters can produce carbon monoxide if they vent poorly. Keep CO alarms working.",
+    "Heat waves are a health risk in homes without AC. Plan how you'll keep at least one room cool.",
+    "Los Angeles and San Francisco counties are radon Zone 2, so test. In pre-1978 homes, use lead-safe certified firms for paint work."
+   ],
+   "avoid": [
+    {
+     "title": "Phoenix-style oversized cooling at the coast",
+     "why": "Your loads are small. An oversized system costs more and short-cycles, and you don't need cold-climate heating either."
+    },
+    {
+     "title": "Tightening a house with wall furnaces, untested",
+     "why": "Open-flue wall furnaces risk backdrafting in a tighter house. Test before and after air sealing."
+    },
+    {
+     "title": "Skipping water heater strapping",
+     "why": "California law requires it, and an unstrapped water heater can tip and break its gas line in an earthquake."
+    }
+   ],
+   "symptoms": [
+    "Too hot in heat waves",
+    "Drafts or cold rooms",
+    "High bills for a mild climate",
+    "Dust or smoke indoors",
+    "Hot upstairs rooms"
+   ],
+   "seasonNote": "Book in winter, when the heat is on, for the best blower door and infrared results. Plan any cooling upgrade before summer heat waves.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Los Angeles airport (LAX)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023174.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: San Diego airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023188.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: San Francisco airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023234.csv"
+    },
+    {
+     "label": "EIA Electric Power Monthly, Table 5.6.A (August 2026 prices)",
+     "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Downtown Los Angeles (USC)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00093134.csv"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "California Health and Safety Code 19211: water heater bracing",
+     "url": "https://pfwt.ssc.ca.gov/wp-content/uploads/sites/17/2020/08/health_and_safety_19211.pdf"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: San Francisco airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00023234.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: Los Angeles airport (LAX)",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00023174.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: San Diego airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00023188.csv"
+    },
+    {
+     "label": "ENERGY STAR: seal and insulate",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "Building America Solution Center: attic radiant barriers",
+     "url": "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA: lead Renovation, Repair and Painting rule",
+     "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program"
+    },
+    {
+     "label": "NY Department of State: IRC whole-house mechanical ventilation",
+     "url": "https://dos.ny.gov/mechanical-ventilation-revision-2"
+    }
+   ],
+   "key": "mild-coastal"
+  },
+  "marine": {
+   "label": "Marine",
+   "regionName": "Pacific Northwest",
+   "places": [
+    "seattle",
+    "portland"
+   ],
+   "oneLiner": "A long, damp heating season, plus summer heat waves many homes aren't built for.",
+   "summary": "Your heating season is long and damp, and many homes heat with electric baseboards. Summers are usually mild, but the 2021 heat dome showed how many homes have no way to cool. A heat pump can solve both, and a good audit also checks the crawlspace, the attic and ventilation.",
+   "drivers": [
+    "Heating leads: about 4,100 to 4,400 heating degree days a year, but only 265 to 510 cooling degree days.",
+    "Electric heat is common: about half of homes heat with electricity, much of it with baseboard heaters.",
+    "Heat waves are new: the June 2021 heat dome set all-time records across the region, and many homes have no AC.",
+    "Most houses sit over crawlspaces, so ground moisture, floor insulation and crawlspace ducts matter."
+   ],
+   "priorities": [
+    {
+     "title": "Switch to a heat pump that also cools",
+     "why": "Homes with baseboard heat or no AC gain the most. One heat pump replaces resistance heat and covers heat waves.",
+     "ask": "Ask for a Manual J load calculation that sizes for winter heating and checks summer cooling capacity.",
+     "tests": [
+      "heat-loss-calc"
+     ]
+    },
+    {
+     "title": "Fix the crawlspace: drainage, ground cover, insulation",
+     "why": "Fix drainage first, then lay a sealed vapor barrier over the dirt. ENERGY STAR suggests an R-value of R30 for floor insulation in this zone.",
+     "ask": "Ask the auditor to check crawlspace moisture, the ground cover and any ducts down there.",
+     "tests": [
+      "mold-iaq",
+      "duct-leakage"
+     ]
+    },
+    {
+     "title": "Seal and insulate the attic",
+     "why": "A long heating season makes this a core upgrade. ENERGY STAR suggests R60 for an uninsulated attic in this zone.",
+     "ask": "Ask for a blower door test with infrared imaging to find attic bypasses before insulating.",
+     "tests": [
+      "blower-door",
+      "thermal-imaging",
+      "attic-inspection"
+     ]
+    },
+    {
+     "title": "Plan ventilation for a long damp season",
+     "why": "If air sealing brings your house to 5 ACH50 or tighter, the code calls for whole-house mechanical ventilation, such as an HRV or ERV.",
+     "ask": "Ask what your blower door test result will be after sealing, and how the house will get fresh air.",
+     "tests": [
+      "blower-door"
+     ]
+    },
+    {
+     "title": "Test radon and gas appliance venting",
+     "why": "Multnomah County is radon Zone 2. In homes with gas heat, open-flue appliances can spill exhaust after air sealing.",
+     "ask": "Ask for a radon test and, if you have gas, a combustion safety test before and after sealing.",
+     "tests": [
+      "radon",
+      "combustion-safety"
+     ]
+    }
+   ],
+   "tests": [
+    {
+     "test": "blower-door",
+     "why": "Measures air leakage; pair it with infrared to find attic bypasses and missing wall and floor insulation.",
+     "when": "Winter mornings, when it's about 30°F colder outside than in. Summer is usually too mild for infrared."
+    },
+    {
+     "test": "mold-iaq",
+     "why": "A crawlspace check of moisture, ground cover and duct condition shows whether floor insulation or closing the crawlspace is safe.",
+     "when": "Late winter or spring, when crawlspaces are wettest."
+    },
+    {
+     "test": "duct-leakage",
+     "why": "Crawlspace and attic ducts leak and can pull in damp air.",
+     "when": "Any season."
+    },
+    {
+     "test": "combustion-safety",
+     "why": "Gas heats 40–46% of homes here, and open-flue appliances can spill exhaust after tightening.",
+     "when": "Before and after air sealing."
+    },
+    {
+     "test": "heat-loss-calc",
+     "why": "A Manual J load calculation sizes for heating and checks cooling capacity for heat waves.",
+     "when": "Before you get heat pump quotes."
+    }
+   ],
+   "upgrades": [
+    {
+     "title": "Heat pumps replacing baseboard or old furnaces",
+     "why": "Ductless or ducted, a heat pump gives efficient heat plus cooling for heat waves."
+    },
+    {
+     "title": "Air sealing plus attic insulation",
+     "why": "A long, mild heating season rewards it, and ENERGY STAR says sealing and insulating can save up to 10% on annual energy bills."
+    },
+    {
+     "title": "Crawlspace vapor barrier and floor insulation",
+     "why": "Most homes sit over crawlspaces. Fix drainage, lay a sealed ground cover, then insulate the floor to R30, or close the crawlspace."
+    },
+    {
+     "title": "Duct sealing",
+     "why": "Crawlspace ducts leak and can draw in damp air. Typical systems lose 20–30% of their air through leaks."
+    },
+    {
+     "title": "Heat pump water heater",
+     "why": "Mild garages and basements suit them, and they need a space that stays between 40°F and 90°F."
+    }
+   ],
+   "equipment": [
+    "North rules: at least 13.4 SEER2 for a split AC, and 14.3 SEER2 with 7.5 HSPF2 for a split heat pump.",
+    "Winters rarely reach 0°F, so a standard variable-speed heat pump handles most hours. A cold-climate heat pump adds margin for cold snaps and ice storms.",
+    "Size to the Manual J heating load, but confirm the system has enough cooling capacity for heat-dome events."
+   ],
+   "health": [
+    "Wildfire smoke can reach hazardous levels: use MERV 13 filters, recirculate indoor air and run portable air cleaners.",
+    "Winter condensation and mold: keep indoor relative humidity below 60%, ideally 30–50%.",
+    "Heat waves are a health risk in homes without AC.",
+    "Multnomah County (Portland) is radon Zone 2. EPA says to test every home."
+   ],
+   "avoid": [
+    {
+     "title": "Insulating crawlspace floors before fixing moisture",
+     "why": "Without a ground cover and moisture control, new floor insulation can stay damp and grow mold."
+    },
+    {
+     "title": "Air sealing without a ventilation plan",
+     "why": "A tight house needs fresh air, especially in a long damp season. At 5 ACH50 or tighter, the code calls for mechanical ventilation."
+    },
+    {
+     "title": "Sizing a heat pump for heating only",
+     "why": "Recent heat waves mean you need enough cooling capacity, too."
+    },
+    {
+     "title": "Ignoring vapor-retarder rules in this zone",
+     "why": "The code sets specific vapor-retarder rules for this marine zone. Ask how any wall upgrade will meet them."
+    }
+   ],
+   "symptoms": [
+    "High winter bills",
+    "Cold floors",
+    "Window condensation",
+    "Musty smell",
+    "Too hot in heat waves",
+    "Dust or smoke indoors"
+   ],
+   "seasonNote": "Book in winter for the clearest blower door and infrared results. Check the crawlspace in late winter or spring, and settle cooling plans before summer heat waves.",
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Seattle-Tacoma airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00024233.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Portland airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00024229.csv"
+    },
+    {
+     "label": "NOAA Climate.gov: record Pacific Northwest heat (June 2021)",
+     "url": "https://www.climate.gov/news-features/event-tracker/astounding-heat-obliterates-all-time-records-across-pacific-northwest"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "Census American Housing Survey 2019 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2019/AHS%202019%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building Science Education: proper HVAC sizing",
+     "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems"
+    },
+    {
+     "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades",
+     "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf"
+    },
+    {
+     "label": "ENERGY STAR: recommended insulation levels",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+    },
+    {
+     "label": "NY Department of State: IRC whole-house mechanical ventilation",
+     "url": "https://dos.ny.gov/mechanical-ventilation-revision-2"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "Snell Group: infrared inspection conditions (ASTM and RESNET)",
+     "url": "https://www.thesnellgroup.com/sites/default/files/2021-06/successful-warm-weather-infrared-inspections.pdf"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: Seattle-Tacoma airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00024233.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: Portland airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00024229.csv"
+    },
+    {
+     "label": "ENERGY STAR: duct sealing",
+     "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    },
+    {
+     "label": "ENERGY STAR: seal and insulate",
+     "url": "https://www.energystar.gov/saveathome/seal_insulate"
+    },
+    {
+     "label": "ENERGY STAR: heat pump water heaters",
+     "url": "https://www.energystar.gov/products/heat_pump_water_heaters"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "Lane Regional Air Protection Agency: record Oregon smoke (Sept 2020)",
+     "url": "https://www.lrapa-or.gov/download/117/2020/4253/09-15-2020-wildfire-smoke-brings-record-poor-air-quality-to-oregon-new-data-shows"
+    },
+    {
+     "label": "EPA: wildfires and indoor air quality",
+     "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"
+    },
+    {
+     "label": "EPA: a brief guide to mold, moisture and your home",
+     "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "ICC technical note: vapor retarders in the IRC",
+     "url": "https://www.iccsafe.org/wp-content/uploads/proclamations/TN06-Vapor-Retarders_pdf.pdf"
+    }
+   ],
+   "key": "marine"
+  }
+ },
+ "places": {
+  "atlanta": {
+   "profile": "mixed-humid-warm",
+   "note": "Atlanta is unusual for the South: Fulton, Cobb and Gwinnett counties are all EPA radon Zone 1, so test every home. Houses here mix slabs, basements and crawlspaces, so ducts may run through the attic, crawlspace or basement.",
+   "hazards": [
+    "Severe storms: FEMA rates tornado, strong-wind and inland-flood risk relatively high.",
+    "Extreme heat: about 47 days a year reach 90°F or more.",
+    "Freezes: about 36 nights a year; protect pipes in crawlspaces and attics."
+   ],
+   "sources": [
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Atlanta airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013874.csv"
+    }
+   ]
+  },
+  "austin": {
+   "profile": "hot-humid",
+   "note": "Austin averages 124 days a year at 90°F or more, 24 of them at 100°F or more, plus about 33 freezing nights. Austin Energy's AC and heat pump rebates require a Manual J load calculation and replacing all system components.",
+   "hazards": [
+    "February 2021: 3–8 inches of snow fell along I-35, and temperatures stayed below freezing for days.",
+    "Hail: check roofs, skylights and outdoor AC units after storms.",
+    "Freezes: protect pipes in exterior walls and attics."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Austin-Bergstrom airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013904.csv"
+    },
+    {
+     "label": "Austin Energy: AC and heat pump rebates",
+     "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating/ac"
+    },
+    {
+     "label": "National Weather Service Austin/San Antonio: February 2021 event summary",
+     "url": "https://www.weather.gov/media/ewx/wxevents/ewx-20210218.pdf"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    }
+   ]
+  },
+  "baltimore": {
+   "profile": "mixed-humid",
+   "note": "Half of Baltimore city's homes were built in 1947 or earlier, and nearly 1 in 5 Baltimore-area homes already heat with a heat pump. Baltimore County is radon Zone 1, higher than the city's Zone 2.",
+   "hazards": [
+    "Heat waves: a serious health risk in homes without working AC.",
+    "Summer heat: about 34 days a year reach 90°F or more.",
+    "Hard freezes: 93 nights a year at or below 32°F; protect pipes in exterior walls.",
+    "Muggy summers: July dew points average about 66°F."
+   ],
+   "sources": [
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "Census American Housing Survey 2021 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2021/AHS%202021%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: BWI airport (Baltimore)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00093721.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): BWI airport (Baltimore)",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00093721.csv"
+    }
+   ]
+  },
+  "boston": {
+   "profile": "cold",
+   "note": "Half the homes in Suffolk County (Boston) were built in 1949 or earlier, and about 4 in 10 Boston-area homes heat with boilers, so ductless heat pumps often fit. Mass Save offers no-cost energy assessments, 75–100% off approved insulation and a 0% HEAT Loan.",
+   "hazards": [
+    "Coastal flooding and nor'easters: FEMA rates coastal-flood and hurricane risk relatively high.",
+    "Winter: about 49 inches of snow a year at Logan, and 92 nights at or below freezing.",
+    "Radon: Suffolk is Zone 3, but neighboring Middlesex County is Zone 1.",
+    "Summer heat: about 14 days a year reach 90°F or more."
+   ],
+   "sources": [
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "Mass Save: 2026 home energy offers",
+     "url": "https://www.masssave.com/blog/residential/new-year-smarter-energy-choices-simple-steps-to-make-your-home-more-energy-efficient-in-2026"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Boston Logan airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00014739.csv"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    }
+   ]
+  },
+  "charlotte": {
+   "profile": "mixed-humid-warm",
+   "note": "Half of Mecklenburg County's homes were built in 1997 or later, and more than half heat with electricity, so heat pump efficiency shows up in winter bills. Mecklenburg is radon Zone 3, but EPA still says to test.",
+   "hazards": [
+    "Ice storms: FEMA rates ice-storm risk relatively high, so plan for winter outages.",
+    "Severe storms: FEMA rates tornado and strong-wind risk relatively high.",
+    "Freezes: about 58 nights a year; protect pipes in crawlspaces and attics.",
+    "Extreme heat: about 49 days a year reach 90°F or more."
+   ],
+   "sources": [
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Charlotte airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013881.csv"
+    }
+   ]
+  },
+  "chicago": {
+   "profile": "cold",
+   "note": "With about 6 nights a year at or below 0°F, Chicago-area heat pumps should be cold-climate models with backup heat. Most homes here heat with gas furnaces, and most houses have basements, so rim-joist sealing and venting checks matter.",
+   "hazards": [
+    "Winter storms and ice: FEMA rates winter-weather and ice-storm risk very high.",
+    "Flooding: FEMA rates inland-flood risk very high, so check your basement for water entry.",
+    "Severe cold: 43 days a year stay below freezing; watch for frozen pipes and ice dams.",
+    "Radon: Cook and the collar counties are Zone 2, so test every home."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Chicago O'Hare airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00094846.csv"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building Science Education: insulating and sealing rim joists",
+     "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    }
+   ]
+  },
+  "dallas": {
+   "profile": "hot-humid",
+   "note": "Dallas County moved from IECC climate zone 3A to 2A in the 2021 code, while Collin, Denton, Kaufman and Rockwall counties remain 3A. Expect about 106 days a year at 90°F or more, plus real freezes.",
+   "hazards": [
+    "February 2021: DFW fell to -2°F and stayed at or below freezing for 139 hours.",
+    "Hail and tornadoes: hail losses here are among the highest in the US.",
+    "Heat waves: heat-wave risk to people here is among the highest in the US.",
+    "Extreme heat: about 20 days a year reach 100°F or more."
+   ],
+   "sources": [
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Dallas/Fort Worth airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00003927.csv"
+    },
+    {
+     "label": "National Weather Service Fort Worth: February 2021 winter storm",
+     "url": "https://weather.gov/fwd/Feb-2021-WinterEvent"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    }
+   ]
+  },
+  "denver": {
+   "profile": "cold-dry",
+   "note": "Denver's summer air is very dry, with July dew points averaging under 50°F, so evaporative cooling works well here. Denver, Arapahoe and Jefferson counties are all radon Zone 1.",
+   "hazards": [
+    "Hail: losses here are among the highest in the US. Check roofs and AC units after storms.",
+    "Heat: about 46 days a year reach 90°F or more.",
+    "Cold snaps: about 6 nights a year at or below 0°F.",
+    "Big swings: January afternoons average about 45°F, but nights average about 19°F."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Denver airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00003017.csv"
+    },
+    {
+     "label": "Building America Solution Center: evaporative cooling",
+     "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Denver airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00003017.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 monthly normals: Denver airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00003017.csv"
+    }
+   ]
+  },
+  "detroit": {
+   "profile": "cold",
+   "note": "Outages matter here: in the 2023 American Housing Survey, about 1 in 6 Detroit-area households were uncomfortably cold for a day or more, mostly because of utility interruptions. A tight, well-insulated house holds heat longer when the power goes out.",
+   "hazards": [
+    "Severe cold: 42 days a year stay below freezing; watch for frozen pipes.",
+    "Radon: Wayne is Zone 3, but Oakland County is Zone 2. Test every home.",
+    "Summer heat: about 13 days a year reach 90°F or more."
+   ],
+   "sources": [
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Detroit Metro airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00094847.csv"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    }
+   ]
+  },
+  "houston": {
+   "profile": "hot-humid",
+   "note": "Houston combines Gulf humidity (July dew points near 73°F) with hurricanes and flooding. Hurricane Beryl in July 2024 cut power to nearly 3 million Texans, and heat during the outages contributed to deaths, so resilience belongs in your audit.",
+   "hazards": [
+    "Flooding: inland flood losses here are high; ask where your equipment sits.",
+    "Hurricanes: plan for high winds and long outages.",
+    "Extreme heat: about 111 days a year reach 90°F, and 7 reach 100°F.",
+    "Freezes: about 10 nights a year at or below 32°F."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Houston Bush airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00012960.csv"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "KPLC: Texas deaths after Hurricane Beryl outages (July 2024)",
+     "url": "https://www.kplctv.com/2024/07/26/texas-deaths-hurricane-beryl-climb-least-36-including-more-who-lost-power-heat/"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Houston Bush airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012960.csv"
+    }
+   ]
+  },
+  "los-angeles": {
+   "profile": "mild-coastal",
+   "note": "Near the coast, Los Angeles needs little heating or cooling, but inland valleys behave like the Hot and dry climate. Even downtown averages about 26 days a year at 90°F or more, versus 5 at LAX.",
+   "hazards": [
+    "Earthquakes: risk here is among the highest in the US; state law requires a strapped water heater.",
+    "Wildfire and smoke: wildfire risk is elevated across the county.",
+    "Flash floods: debris flows and flash flooding are a real risk.",
+    "Wall and floor furnaces heat about 1 in 5 area homes; get them safety-tested."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Los Angeles airport (LAX)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023174.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Downtown Los Angeles (USC)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00093134.csv"
+    },
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "California Health and Safety Code 19211: water heater bracing",
+     "url": "https://pfwt.ssc.ca.gov/wp-content/uploads/sites/17/2020/08/health_and_safety_19211.pdf"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "Building America Solution Center: combustion appliance zone test",
+     "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test"
+    }
+   ]
+  },
+  "miami": {
+   "profile": "hot-humid",
+   "note": "Miami-Dade is IECC climate zone 1A, with about 100 heating degree days a year, and the normal dew point stays at or above 70°F from June through September. Miami-Dade is radon Zone 2; Broward and Palm Beach are Zone 3.",
+   "hazards": [
+    "Hurricanes and coastal flooding: FEMA rates coastal-flood risk very high.",
+    "Extreme heat: about 91 days a year reach 90°F or more.",
+    "Outages: plan how your house will stay cool and dry if the power goes out."
+   ],
+   "sources": [
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Miami airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012839.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Miami airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00012839.csv"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EIA RECS 2024 housing characteristics, HC2.6 (preliminary)",
+     "url": "https://www.eia.gov/consumption/residential/data/2024/hc/xls/HC2.6_2024.xlsx"
+    }
+   ]
+  },
+  "minneapolis": {
+   "profile": "very-cold",
+   "note": "With about 22 nights a year at or below 0°F, a heat pump that serves as your main heat should be a cold-climate model. Home Energy Squad (CenterPoint Energy and Xcel Energy) offers a $100 visit for pre-2000 homes, including a blower door test.",
+   "hazards": [
+    "Severe cold: 72 days a year stay below freezing, so watch for frozen pipes and ice dams.",
+    "Wildfire smoke: Minnesota set a record in 2023 with 22 air-quality alerts over 52 days.",
+    "Hail: check the roof and outdoor AC unit after storms.",
+    "Summer heat: about 12 days a year reach 90°F or more."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: Minneapolis-St. Paul airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00014922.csv"
+    },
+    {
+     "label": "NEEP cold-climate heat pump specification and list",
+     "url": "https://neep.org/heating-electrification/ccashp-specification-product-list"
+    },
+    {
+     "label": "Center for Energy and Environment: Home Energy Squad",
+     "url": "https://mncee.org/solutions/homes/home-energy-squad/"
+    },
+    {
+     "label": "Minnesota Pollution Control Agency: record air-quality alerts (2023)",
+     "url": "https://www.pca.state.mn.us/news-and-stories/air-quality-alerts-record"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    }
+   ]
+  },
+  "new-york": {
+   "profile": "mixed-humid",
+   "note": "Almost half of New York-area homes heat with steam or hot water, and more than half cool with room ACs, so ductless heat pumps often fit. All five boroughs are IECC climate zone 4A, but nearby Bergen County, NJ, is 5A.",
+   "hazards": [
+    "Wildfire smoke: in June 2023, the city's fine-particle AQI topped 175, a record.",
+    "Coastal storms: FEMA rates hurricane risk relatively high and inland-flood risk very high.",
+    "Summer heat: about 22 days a year reach 90°F or more at LaGuardia.",
+    "Hard freezes: 62 nights a year at or below 32°F; protect pipes in exterior walls."
+   ],
+   "sources": [
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "DOE Building America: high-performance ducts",
+     "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf"
+    },
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "NASA Earth Observatory: smoke smothers the Northeast (June 2023)",
+     "url": "https://science.nasa.gov/earth/earth-observatory/smoke-smothers-the-northeast-151433/"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: LaGuardia airport (New York)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00014732.csv"
+    }
+   ]
+  },
+  "orlando": {
+   "profile": "hot-humid",
+   "note": "Orange County is IECC climate zone 2A, a step cooler than Miami, but heating is still small at about 525 heating degree days a year. Expect about 110 days a year at 90°F or more and tropical humidity all summer.",
+   "hazards": [
+    "Hurricanes and strong winds: wind losses here run well above most US counties.",
+    "Occasional freezes: about 2 nights a year at or below 32°F.",
+    "Outages: plan how your house will stay cool and dry if the power goes out."
+   ],
+   "sources": [
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Orlando airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012815.csv"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Orlando airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00012815.csv"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EIA RECS 2024 housing characteristics, HC2.6 (preliminary)",
+     "url": "https://www.eia.gov/consumption/residential/data/2024/hc/xls/HC2.6_2024.xlsx"
+    }
+   ]
+  },
+  "philadelphia": {
+   "profile": "mixed-humid",
+   "note": "Half of Philadelphia's homes were built in 1949 or earlier, so plan for lead paint and asbestos before work starts. The city is radon Zone 3, but Bucks, Montgomery and Delaware counties are all Zone 1.",
+   "hazards": [
+    "Heat waves: heat-wave risk to people here is among the highest in the US.",
+    "Summer heat: about 30 days a year reach 90°F or more.",
+    "Wildfire smoke reached the region in June 2023.",
+    "Hard freezes: 77 nights a year at or below 32°F."
+   ],
+   "sources": [
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "EPA: lead Renovation, Repair and Painting rule",
+     "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program"
+    },
+    {
+     "label": "EPA: protect your family from asbestos",
+     "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Philadelphia airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013739.csv"
+    },
+    {
+     "label": "NASA Earth Observatory: smoke smothers the Northeast (June 2023)",
+     "url": "https://science.nasa.gov/earth/earth-observatory/smoke-smothers-the-northeast-151433/"
+    }
+   ]
+  },
+  "phoenix": {
+   "profile": "hot-dry",
+   "note": "Phoenix-area homes get electricity from APS or SRP, depending on where you live, and each runs its own programs; SRP, for example, rebates AC, insulation, duct repair and shade screens. Check which utility is on your bill before you book.",
+   "hazards": [
+    "Extreme heat: about 111 days a year reach 100°F or more.",
+    "Record heat: in 2023, Phoenix had 31 straight days at or above 110°F.",
+    "Monsoon storms: flash flooding is a real risk."
+   ],
+   "sources": [
+    {
+     "label": "SRP: about SRP (central Arizona, the Valley)",
+     "url": "https://www.srpnet.com/about"
+    },
+    {
+     "label": "APS: about us",
+     "url": "https://www.aps.com/en/About/Our-Company/About-us"
+    },
+    {
+     "label": "City of Phoenix: weatherization program (APS and SRP funded)",
+     "url": "https://www.phoenix.gov/administration/departments/nsd/housing-repairs/weatherization.html"
+    },
+    {
+     "label": "SRP: residential rebates",
+     "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/residential-rebates"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Phoenix Sky Harbor airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023183.csv"
+    },
+    {
+     "label": "NPR: Phoenix ends 31-day streak at or above 110 degrees (2023)",
+     "url": "https://www.npr.org/2023/08/01/1191238086/phoenix-ends-31-day-streak-of-highs-at-or-above-110-degrees-by-reaching-108"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    }
+   ]
+  },
+  "portland": {
+   "profile": "marine",
+   "note": "Portland reached 116°F on June 28, 2021, and its air quality index hit a record 477 in wildfire smoke on September 13, 2020. Energy Trust of Oregon offers PGE and NW Natural customers a free online home assessment and incentive matching.",
+   "hazards": [
+    "Ice storms and winter weather: FEMA rates both relatively high.",
+    "Earthquakes: risk here is among the highest in the US.",
+    "Radon: Multnomah and Washington counties are Zone 2.",
+    "Summer heat: about 15 days a year reach 90°F or more."
+   ],
+   "sources": [
+    {
+     "label": "NOAA Climate.gov: record Pacific Northwest heat (June 2021)",
+     "url": "https://www.climate.gov/news-features/event-tracker/astounding-heat-obliterates-all-time-records-across-pacific-northwest"
+    },
+    {
+     "label": "Lane Regional Air Protection Agency: record Oregon smoke (Sept 2020)",
+     "url": "https://www.lrapa-or.gov/download/117/2020/4253/09-15-2020-wildfire-smoke-brings-record-poor-air-quality-to-oregon-new-data-shows"
+    },
+    {
+     "label": "Energy Trust of Oregon: free home energy assessment",
+     "url": "https://www.energytrust.org/?p=31090"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Portland airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00024229.csv"
+    }
+   ]
+  },
+  "riverside": {
+   "profile": "hot-dry",
+   "note": "Riverside County is all IECC climate zone 3B, including the Coachella Valley desert, which is far hotter than the city of Riverside. California electricity, about 30 cents/kWh in August 2026, makes every bit of wasted cooling expensive.",
+   "hazards": [
+    "Wildfire: losses here are among the highest in the US, so plan for smoke.",
+    "Earthquakes: California law requires water heaters to be braced, anchored or strapped.",
+    "Flash flooding: inland and debris-flow flood risk is high.",
+    "Extreme heat: about 100 days a year reach 90°F, and 22 reach 100°F."
+   ],
+   "sources": [
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "EIA Electric Power Monthly, Table 5.6.A (August 2026 prices)",
+     "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "California Health and Safety Code 19211: water heater bracing",
+     "url": "https://pfwt.ssc.ca.gov/wp-content/uploads/sites/17/2020/08/health_and_safety_19211.pdf"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Riverside Municipal airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00003171.csv"
+    }
+   ]
+  },
+  "san-antonio": {
+   "profile": "hot-humid",
+   "note": "San Antonio averages about 18 days a year at 100°F or more, plus real freezes. CPS Energy's Casa Verde program offers income-qualified weatherization, including attic insulation, duct sealing, solar screens and AC tune-ups.",
+   "hazards": [
+    "February 2021: the airport stayed below freezing for 4.5 days, and outages left many homes cold.",
+    "Hail: losses here are high; check roofs and outdoor AC units after storms.",
+    "Extreme heat: about 122 days a year reach 90°F or more."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: San Antonio airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012921.csv"
+    },
+    {
+     "label": "CPS Energy: Casa Verde weatherization",
+     "url": "https://www.cpsenergy.com/casaverde"
+    },
+    {
+     "label": "National Weather Service Austin/San Antonio: February 2021 event summary",
+     "url": "https://www.weather.gov/media/ewx/wxevents/ewx-20210218.pdf"
+    },
+    {
+     "label": "Census American Housing Survey 2021 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2021/AHS%202021%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    }
+   ]
+  },
+  "san-diego": {
+   "profile": "mild-coastal",
+   "note": "San Diego's coast is mild, with about 3 days a year at 90°F or more at the airport, but inland and East County neighborhoods behave like the Hot and dry climate. The energy code puts the whole county in zone 3B.",
+   "hazards": [
+    "Wildfire and smoke: wildfire losses here are among the highest in the US.",
+    "Earthquakes: state law requires water heaters to be braced, anchored or strapped.",
+    "Radon: San Diego County is Zone 3, but EPA says to test every home."
+   ],
+   "sources": [
+    {
+     "label": "NOAA 1991-2020 climate normals: San Diego airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023188.csv"
+    },
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "California Health and Safety Code 19211: water heater bracing",
+     "url": "https://pfwt.ssc.ca.gov/wp-content/uploads/sites/17/2020/08/health_and_safety_19211.pdf"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    }
+   ]
+  },
+  "san-francisco": {
+   "profile": "mild-coastal",
+   "note": "San Francisco is IECC climate zone 3C (marine) with tiny cooling loads, but about half of Bay Area homes have no AC, so plan for the occasional heat spell. Half of the city's homes were built in 1946 or earlier.",
+   "hazards": [
+    "Earthquakes: risk here is among the highest in the US; state law requires a strapped water heater.",
+    "Heat spells: about 1 in 7 Bay Area households got too hot for a day or more.",
+    "Radon: San Francisco County is Zone 2, so test your home."
+   ],
+   "sources": [
+    {
+     "label": "PNNL-33270: 2021 IECC climate zones by county",
+     "url": "https://www.osti.gov/servlets/purl/1893981/"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: San Francisco airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023234.csv"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "California Health and Safety Code 19211: water heater bracing",
+     "url": "https://pfwt.ssc.ca.gov/wp-content/uploads/sites/17/2020/08/health_and_safety_19211.pdf"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    }
+   ]
+  },
+  "seattle": {
+   "profile": "marine",
+   "note": "Seattle hit 108°F on June 28, 2021, and nearly 4 in 10 Seattle-area homes still have no AC. Electric baseboard heats nearly 1 in 4 homes, so a heat pump can cut heating costs and add cooling at once.",
+   "hazards": [
+    "Earthquakes: risk in King County is among the highest in the US.",
+    "Freezes: about 25 nights a year at or below 32°F.",
+    "Heat waves: rare, but recent ones broke all-time records."
+   ],
+   "sources": [
+    {
+     "label": "NOAA Climate.gov: record Pacific Northwest heat (June 2021)",
+     "url": "https://www.climate.gov/news-features/event-tracker/astounding-heat-obliterates-all-time-records-across-pacific-northwest"
+    },
+    {
+     "label": "Census American Housing Survey 2023 (public-use file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2023/AHS%202023%20National%20PUF%20v1.1%20Flat%20CSV.zip"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Seattle-Tacoma airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00024233.csv"
+    }
+   ]
+  },
+  "st-louis": {
+   "profile": "mixed-humid",
+   "note": "Half of St. Louis city's homes were built in 1938 or earlier, so plan for lead paint and asbestos before work. Electricity is cheaper here than on the East Coast, about 16 cents/kWh in August 2026.",
+   "hazards": [
+    "Extreme heat: about 47 days a year reach 90°F, and 3 reach 100°F.",
+    "Heat waves: heat-wave risk to people here is among the highest in the US.",
+    "Flooding: inland flood risk is significant; check basements for water entry.",
+    "Earthquakes: the New Madrid seismic zone adds some risk."
+   ],
+   "sources": [
+    {
+     "label": "Census ACS 2020-2024: median year built (B25035)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25035.dat"
+    },
+    {
+     "label": "EPA: lead Renovation, Repair and Painting rule",
+     "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program"
+    },
+    {
+     "label": "EPA: protect your family from asbestos",
+     "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos"
+    },
+    {
+     "label": "EIA Electric Power Monthly, Table 5.6.A (August 2026 prices)",
+     "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: St. Louis Lambert airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013994.csv"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    }
+   ]
+  },
+  "tampa": {
+   "profile": "hot-humid",
+   "note": "About half of Tampa-area homes already heat with a heat pump. Hillsborough County is radon Zone 2, while Pinellas and Pasco are Zone 3, and EPA says to test every home.",
+   "hazards": [
+    "Hurricanes and storm surge: FEMA rates coastal-flood risk relatively high.",
+    "Extreme heat: about 94 days a year reach 90°F or more.",
+    "Outages: plan how your house will stay cool and dry if the power goes out."
+   ],
+   "sources": [
+    {
+     "label": "Census American Housing Survey 2021 (metro file)",
+     "url": "https://www2.census.gov/programs-surveys/ahs/2021/AHS%202021%20Metropolitan%20PUF%20v1.0%20Flat%20CSV.zip"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "EPA Map of Radon Zones",
+     "url": "https://www.epa.gov/radon/epa-map-radon-zones"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Tampa airport",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00012842.csv"
+    },
+    {
+     "label": "EIA RECS 2024 housing characteristics, HC2.6 (preliminary)",
+     "url": "https://www.eia.gov/consumption/residential/data/2024/hc/xls/HC2.6_2024.xlsx"
+    }
+   ]
+  },
+  "washington-dc": {
+   "profile": "mixed-humid",
+   "note": "DC homes split almost evenly between gas and electric heat, and new central ACs here follow the Southeast standard of 14.3 SEER2 for most split systems. DC is radon Zone 3, but Montgomery County, MD, and Fairfax County, VA, are Zone 1.",
+   "hazards": [
+    "Wildfire smoke: in June 2023, the region had some of its smokiest air in 25 years.",
+    "Extreme heat: about 40 days a year reach 90°F or more.",
+    "Heat waves: a serious health risk in homes without working AC.",
+    "Muggy summers: July dew points average about 66°F."
+   ],
+   "sources": [
+    {
+     "label": "Census ACS 2020-2024: home heating fuel (B25040)",
+     "url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b25040.dat"
+    },
+    {
+     "label": "DOE 2023 central AC and heat pump standards FAQ",
+     "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf"
+    },
+    {
+     "label": "EPA Map of Radon Zones: county list",
+     "url": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+    },
+    {
+     "label": "NASA Earth Observatory: smoke smothers the Northeast (June 2023)",
+     "url": "https://science.nasa.gov/earth/earth-observatory/smoke-smothers-the-northeast-151433/"
+    },
+    {
+     "label": "NOAA 1991-2020 climate normals: Reagan National airport (DC)",
+     "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00013743.csv"
+    },
+    {
+     "label": "FEMA National Risk Index: county data",
+     "url": "https://services.arcgis.com/XG15cJAlne2vxtgt/ArcGIS/rest/services/National_Risk_Index_Counties/FeatureServer/0"
+    },
+    {
+     "label": "NOAA 1991-2020 hourly normals (dew point): Reagan National airport (DC)",
+     "url": "https://www.ncei.noaa.gov/data/normals-hourly/1991-2020/access/USW00013743.csv"
+    }
+   ]
+  }
+ }
+}
