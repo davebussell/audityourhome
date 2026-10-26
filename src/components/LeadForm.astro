@@ -121,7 +121,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         </div>
         <div class="field">
           <label for={`${uid}-message`}>What are you planning? <span class="optional">(optional)</span></label>
-          <textarea id={`${uid}-message`} name="message" rows="3" maxlength="2000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
+          <textarea id={`${uid}-message`} name="message" rows="3" maxlength="2000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want to know which rebates apply"></textarea>
         </div>
         <label class="lf-check"><input type="checkbox" name="consent" value="yes" /> <span>{MATCH_CONSENT}</span></label>
         <label class="lf-check lf-alerts"><input type="checkbox" name="alerts" value="yes" /> <span>Also email me when rebates in my province change (free, a few emails a year, unsubscribe any time).</span></label>
@@ -201,7 +201,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
       </div>
       <div class="field">
         <label for={`${uid}-f-message`}>What are you planning? <span class="optional">(optional)</span></label>
-        <textarea id={`${uid}-f-message`} name="message" rows="3" maxlength="4000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
+        <textarea id={`${uid}-f-message`} name="message" rows="3" maxlength="4000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want to know which rebates apply"></textarea>
       </div>
       <button class="btn btn-primary" type="submit">Request my match</button>
       <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory. See our <a href="/privacy/">privacy note</a>.</p>

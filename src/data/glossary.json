@@ -6014,7 +6014,11 @@
      "heating degree day",
      "degree day"
     ]
-   }
+   },
+   "shortCa": "A measure of how cold a place is: each day adds how far its average temperature falls below 18°C. More degree-days means more heating.",
+   "shortUs": "A measure of how cold a place is: each day adds how far its average temperature falls below 65°F. More degree days means more heating.",
+   "bodyCa": "A day averaging 8°C adds 10 heating degree-days; a day at or above 18°C adds none. Yearly totals track how much heating a house needs, which is why building codes, climate zones and bill analysis use them. Canadian totals use °C, so they look smaller than US figures for the same climate (multiply by 1.8 to compare).",
+   "bodyUs": "A day averaging 50°F adds 15 heating degree days; a day at or above 65°F adds none. Yearly totals track how much heating a house needs, which is why climate zones and bill analysis use them. US totals use °F; Canadian figures use °C and look smaller (multiply them by 1.8 to compare)."
   },
   {
    "slug": "cooling-degree-days",
@@ -6074,7 +6078,11 @@
     "ci": [
      "cooling degree day"
     ]
-   }
+   },
+   "shortCa": "A measure of how hot a place is: each day adds how far its average temperature rises above 18°C. More degree-days means more cooling.",
+   "shortUs": "A measure of how hot a place is: each day adds how far its average temperature rises above 65°F. More degree days means more air conditioning.",
+   "bodyCa": "A day averaging 24°C adds 6 cooling degree-days. Yearly totals track air-conditioning demand. Every Canadian city has far more heating than cooling degree-days, but hot-summer places still need cooling planned in, especially when a heat pump replaces a furnace.",
+   "bodyUs": "A day averaging 78°F adds 13 cooling degree days. Yearly totals track air-conditioning demand. Where cooling degree days outnumber heating degree days, as in Phoenix, Houston or Miami, the climate is cooling-dominated and summer bills matter most."
   },
   {
    "slug": "energy-use-intensity",

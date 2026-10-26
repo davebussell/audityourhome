@@ -18,6 +18,26 @@ const guides = (data as unknown as { checked: string; tests: Record<string, Guid
 const g = guides[test];
 const bands = g ? g.bands.filter((b) => !b.countries || b.countries.includes(country)) : [];
 const note = g ? (country === 'ca' ? g.caNote : g.usNote) : undefined;
+/** Country-specific wording for the shared "what the number is" and unit lines. */
+const OVERRIDE: Record<string, Partial<Record<'ca' | 'us', { measure?: string; unit?: string }>>> = {
+  'blower-door': { ca: { measure: 'Air leakage at 50 Pa of pressure: how many times an hour the whole volume of air in the house would leak out and be replaced.' } },
+  radon: { ca: { unit: 'Bq/m³ (becquerels per cubic metre); 37 Bq/m³ = 1 pCi/L' }, us: { unit: 'pCi/L (picocuries per liter); 1 pCi/L = 37 Bq/m³' } },
+  'attic-inspection': {
+    ca: { measure: 'Insulation depth and type on the attic floor, converted to RSI and R-value, plus air leaks and vermiculite.', unit: 'RSI (metric) and R-value; R = RSI × 5.678' },
+    us: { measure: 'Insulation depth and type on the attic floor, converted to R-value, plus air leaks and vermiculite.', unit: 'R-value' },
+  },
+  'heat-loss-calc': {
+    ca: { measure: 'Installed heating or cooling capacity as a percentage of the room-by-room design load (CSA F280 heat-loss calculation).', unit: '% of design load (W or Btu/h)' },
+    us: { measure: 'Installed heating or cooling capacity as a percentage of the room-by-room design load (Manual J).', unit: '% of design load (Btu/h)' },
+  },
+  'bill-analysis': { ca: { unit: 'kWh, m³ of gas or GJ, per month and year' }, us: { unit: 'kWh or therms, per month and year' } },
+  'ventilation-assessment': { ca: { unit: 'L/s of fresh air; % relative humidity' }, us: { unit: 'CFM of fresh air; % relative humidity' } },
+};
+const measure = g ? (OVERRIDE[test]?.[country]?.measure ?? g.measure) : '';
+const unit = g ? (OVERRIDE[test]?.[country]?.unit ?? g.unit) : '';
+/** US pages don't list Canadian sources (Canadian bands sometimes lean on US sources, so CA pages keep all). */
+const CA_SRC = /(canada\.ca|\.gc\.ca|nrc\.canada\.ca|nrc-publications|quebec\.ca|csagroup|wettinc|crosscanadaradon|c-nrpp|cmhc|ontario\.ca|gov\.bc\.ca)/i;
+const sources = (g?.sources ?? []).filter((s) => country === 'ca' || !CA_SRC.test(s.url));
 const show = !!g && (!g.countries || g.countries.includes(country)) && bands.length > 0;
 const checked = (data as unknown as { checked: string }).checked;
 /** Band colour by meaning (explicit, since band order isn't always good → bad). */
@@ -40,7 +60,7 @@ const tone = (b: Band) => {
 {show && g && (
   <section class="rg" id={id} aria-labelledby={`${id}-h`}>
     <h2 id={`${id}-h`}>{heading}</h2>
-    <p class="rg-measure"><strong>What the number is:</strong> {g.measure} <span class="rg-unit">Unit: {g.unit}</span></p>
+    <p class="rg-measure"><strong>What the number is:</strong> {measure} <span class="rg-unit">Unit: {unit}</span></p>
     <ol class="rg-bands">
       {bands.map((b) => (
         <li class={`rg-band rg-${tone(b)}`}>
@@ -51,10 +71,10 @@ const tone = (b: Band) => {
       ))}
     </ol>
     {note && <p class="rg-note">{note}</p>}
-    {g.sources && g.sources.length > 0 && (
+    {sources.length > 0 && (
       <details class="rg-sources">
         <summary>Where these numbers come from · checked {checked}</summary>
-        <ul>{g.sources.map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.label}</a></li>)}</ul>
+        <ul>{sources.map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.label}</a></li>)}</ul>
       </details>
     )}
   </section>
