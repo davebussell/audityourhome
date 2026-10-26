@@ -93,15 +93,26 @@ const tests = [
         </ul>
       </div>
 
-      <form class="card hero-form" action="/us/plan/" method="GET" aria-label="Start your home energy plan">
+      <form class="card hero-form" id="usQuick" action="/us/plan/" method="GET" aria-label="Start your home energy plan">
         <h2>Start your home energy plan</h2>
-        <p class="small">Enter your ZIP code to see the programs, rebates and tests that matter for your area.</p>
+        <p class="small">6 short steps, about 2 minutes, no email: the upgrades, programs, rebates and tests that matter for your home and climate.</p>
         <div class="field">
           <label for="h-zip">ZIP code</label>
           <input id="h-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 60614" autocomplete="postal-code" required title="Five-digit ZIP code" />
         </div>
+        <div class="field">
+          <span class="lbl-sm" id="h-age-l">When was your home built? <span class="opt">(optional)</span></span>
+          <div class="radio-row" role="radiogroup" aria-labelledby="h-age-l">
+            <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Pre-1946</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>'46–'65</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1966-1980" /><span>'66–'80</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1981-1995" /><span>'81–'95</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1996-2010" /><span>'96–'10</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="2011-plus" /><span>2011+</span></label>
+          </div>
+        </div>
         <button class="btn btn-primary" type="submit">Build my plan →</button>
-        <p class="meta">Or browse <a href="/us/cities/">the {n} metro guides</a>.</p>
+        <p class="meta">Runs in your browser; nothing you enter is stored. Or browse <a href="/us/cities/">the {n} metro guides</a>.</p>
       </form>
     </div>
   </section>
@@ -250,6 +261,9 @@ const tests = [
   .hero-form h2 { font-size: 21px; margin-bottom: 4px; }
   .hero-form .meta { margin: 12px 0 0; }
   .hero-form .meta a { color: var(--steel); }
+  .hero-form .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
+  .hero-form .opt { font-weight: 400; color: var(--faint); font-size: 13px; }
+  .hero-form .radio-pill span { padding: 7px 13px; font-size: 14px; }
 
   .changed { padding: 56px 0; }
   .changed .eyebrow { color: #F08246; }
@@ -291,3 +305,18 @@ const tests = [
   }
   .lf-wrap { margin: 30px 0 48px; }
 </style>
+
+<script>
+  // Quick start: hand the ZIP code (and build year) to the planner in the #fragment, which never
+  // reaches a server, and let the planner open at step 2. Without JavaScript the form's GET still works.
+  const quick = document.getElementById('usQuick') as HTMLFormElement | null;
+  quick?.addEventListener('submit', (e) => {
+    const zip = (quick.querySelector('#h-zip') as HTMLInputElement | null)?.value.trim() ?? '';
+    if (!/^\d{5}$/.test(zip)) return;
+    e.preventDefault();
+    const q = new URLSearchParams({ zip });
+    const age = quick.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value;
+    if (age) q.set('age', age);
+    location.href = `/us/plan/#${q.toString()}`;
+  });
+</script>

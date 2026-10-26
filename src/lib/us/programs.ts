@@ -353,12 +353,19 @@ const STATE_RX: Record<string, RegExp> = {
   WA: /Washington State|Washington side|Washington Commerce|Southwest Washington|Clark|Vancouver|\bWA\b/,
 };
 
-function appliesTo(text: string, st: string, m: Metro): boolean {
+/** Whether a metro record's program or utility (by its name and description) serves the side of the metro in `st`. */
+export function appliesTo(text: string, st: string, m: Metro): boolean {
   const states: string[] = m.data.states ?? [];
   if (states.length < 2) return true;
   const mentions = (code: string) => STATE_RX[code]?.test(text) ?? false;
   if (states[0] === st) return mentions(st) || !states.filter((c) => c !== st).some(mentions);
   return mentions(st);
+}
+
+/** A metro audit or rebate program is open now: open, or open with limits (including a short window or an end date); not paused, waitlist-only or mostly closed. */
+export function programOpen(status: string | null | undefined): boolean {
+  const c = statusChip(status);
+  return c.status === 'open' || (c.status === 'limited' && !['Paused', 'Waitlist', 'Partly open'].includes(c.label));
 }
 
 export interface MetroPrograms {
@@ -382,11 +389,7 @@ export function metroProgramsFor(m: Metro, st: string): MetroPrograms {
     ...((m.data.auditPrograms ?? []) as any[]).map((x) => ({ ...x, kind: 'audit' as const })),
     ...((m.data.rebates ?? []) as any[]).map((x) => ({ ...x, kind: 'rebate' as const })),
   ].filter((x) => appliesTo(`${x.name} ${x.runBy ?? ''}`, st, m));
-  // open now: open, or open with limits (including a short window or an end date); not paused, waitlist-only or mostly closed
-  const isOpen = (x: any) => {
-    const c = statusChip(x.status);
-    return c.status === 'open' || (c.status === 'limited' && !['Paused', 'Waitlist', 'Partly open'].includes(c.label));
-  };
+  const isOpen = (x: any) => programOpen(x.status);
   const open = items.filter(isOpen);
   const dupName = (n: string) => open.filter((x) => x.name === n).length > 1;
   const primary = (m.data.states ?? [])[0] === st;
