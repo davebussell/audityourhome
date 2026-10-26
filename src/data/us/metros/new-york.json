@@ -1,0 +1,384 @@
+{
+  "slug": "new-york",
+  "name": "New York City",
+  "metroName": "New York-Newark-Jersey City, NY-NJ Metropolitan Statistical Area",
+  "states": ["NY", "NJ"],
+  "principalCity": "New York, NY",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Con Edison (Consolidated Edison Company of New York)",
+        "serves": "Electric delivery in New York City and Westchester County (3.6 million customers, 604-square-mile territory). The Rockaway Peninsula in Queens is served by PSEG Long Island instead.",
+        "url": "https://www.coned.com/en/about-us/corporate-facts"
+      },
+      {
+        "name": "PSEG Long Island",
+        "serves": "Nassau and Suffolk counties and the Rockaways (Queens). The site's service selector reads 'I have service in Long Island or The Rockaways, NY'.",
+        "url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/homeenergyassessment"
+      },
+      {
+        "name": "PSE&G (Public Service Electric & Gas)",
+        "serves": "New Jersey side: electric and gas across much of northern and central NJ. Its assessment scheduler lists Bergen, Burlington, Camden, Essex, Gloucester, Hudson, Hunterdon, Mercer, Middlesex, Monmouth, Morris, Ocean, Passaic, Somerset and Union counties.",
+        "url": "https://homeenergy.pseg.com/WHAssessment"
+      },
+      {
+        "name": "JCP&L (Jersey Central Power & Light, FirstEnergy)",
+        "serves": "New Jersey side: one of the four NJ electric distribution utilities listed by the NJ Board of Public Utilities",
+        "url": "https://www.nj.gov/bpu/commercial/shopping.html"
+      },
+      {
+        "name": "Rockland Electric (Orange & Rockland)",
+        "serves": "New Jersey side: one of the four NJ electric distribution utilities listed by the NJ Board of Public Utilities",
+        "url": "https://www.nj.gov/bpu/commercial/shopping.html"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Con Edison",
+        "serves": "Natural gas to 1.1 million customers in Manhattan, the Bronx, Queens and Westchester County",
+        "url": "https://www.coned.com/en/about-us/corporate-facts"
+      },
+      {
+        "name": "National Grid (downstate NY gas)",
+        "serves": "Brooklyn, Queens and Staten Island. Its NYC rebate paperwork says Rockaway Peninsula residents fall under the Long Island program. The territory statement comes from a 2019 National Grid application form; no current page was found that restates it.",
+        "url": "https://www.nationalgridus.com/media/pdfs/resi-ways-to-save/national-grid-nyc-residential-gas-rebate-application.pdf"
+      },
+      {
+        "name": "PSE&G, New Jersey Natural Gas, Elizabethtown Gas",
+        "serves": "New Jersey side gas distribution utilities, as listed by the NJ Board of Public Utilities. South Jersey Gas is also on the BPU list. Town-level gas territories were not checked.",
+        "url": "https://www.nj.gov/bpu/commercial/shopping.html"
+      }
+    ],
+    "notes": "Both states have retail choice. In New York, energy service companies (ESCOs) registered with the NY Public Service Commission can sell the electricity or gas supply. Con Edison still delivers it, reads the meter, bills and handles emergencies. In New Jersey, the deregulation law opens the supply portion of the bill to third-party suppliers, and the utility still delivers. Efficiency programs follow the delivery utility, not the supplier. Sources: https://www.coned.com/en/save-money/shop-for-energy-service-companies and https://www.nj.gov/bpu/commercial/shopping.html"
+  },
+  "auditPrograms": [
+    {
+      "name": "Home Energy Plan (virtual Home Energy Assessment)",
+      "runBy": "NYSERDA",
+      "cost": "Free ('no-cost energy assessment')",
+      "whoQualifies": "Homeowners of one-to-four family homes in New York State. The page states no income or utility-territory limit.",
+      "whatYouGet": "A virtual assessment that produces a 'comprehensive Home Energy Plan': where the home wastes energy, plus flags for potential health or safety issues",
+      "howToBook": "Online via NYSERDA's 'Get a Virtual Home Energy Assessment' link (navigator.climative.ai/nyserda). For questions, contact your Regional Clean Energy Hub.",
+      "url": "https://www.nyserda.ny.gov/All-Programs/Home-Energy-Plan",
+      "status": "Open. The page is live with no dates and no pause notice.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "EmPower+ comprehensive home energy assessment",
+      "runBy": "NYSERDA",
+      "cost": "No cost",
+      "whoQualifies": "Income-eligible owners and renters of 1–4 family homes. Household income must be below 80% of State/Area Median Income, or the household must take part in a utility payment assistance program (EmPower+ Income Eligibility Guidelines 2026).",
+      "whatYouGet": "A 'no-cost comprehensive home energy assessment' with a customized plan. Improvements are then installed by participating contractors at no cost (low income) or 50% cost-share (moderate income), up to the caps listed under rebates.",
+      "howToBook": "Apply through NYSERDA's MyEnergy portal, or by mail with the PDF application, or by calling 866-NYSERDA. Once approved, a contractor is assigned and schedules the assessment.",
+      "url": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program",
+      "status": "Open. 2026 income guidelines are published and the page has no pause or waitlist notice.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Weather Ready (contractor home assessment plus weatherization incentive)",
+      "runBy": "Con Edison",
+      "cost": "Assessment done by a participating contractor. The page does not state a separate assessment fee.",
+      "whoQualifies": "Homeowners or renters in single-family or 2–4 family homes heated by Con Edison gas or electricity, or by delivered fuel with Con Edison electric cooling",
+      "whatYouGet": "Contractor home assessment (1–3 hours; visual inspection and combustion safety checks, plus blower door and infrared if needed), then insulation and air sealing with Con Edison covering up to 50% of cost",
+      "howToBook": "Not currently possible",
+      "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/savings-to-weatherize-your-home",
+      "status": "Closed. The program is 'no longer accepting applications.' Westchester incentives now run through NYSERDA Comfort Home, and Con Edison says information on 2027 Residential Weatherization incentives is coming.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Whole House Energy Assessment (Home Performance with ENERGY STAR)",
+      "runBy": "PSEG Long Island",
+      "cost": "Free",
+      "whoQualifies": "'Available to all PSEG Long Island customers, regardless of heat source.' In NYC this means the Rockaways.",
+      "whatYouGet": "Insulation and draft check, thermal scan, and blower-door test. Rebates follow for recommended upgrades (see rebates).",
+      "howToBook": "Choose a participating contractor, then complete PSEG Long Island's online application",
+      "url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/homeenergyassessment",
+      "status": "Open. 2026 income guidelines are posted; no end date is given.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Savings Your Way no-cost home energy assessment",
+      "runBy": "National Grid (delivered with Franklin Energy)",
+      "cost": "No cost",
+      "whoQualifies": "Residential customers. The page does not define the service area; its testimonials name Brooklyn and Queens customers.",
+      "whatYouGet": "In-person or virtual assessment with a personalized report, plus over $100 of energy-saving products (showerheads, aerators, pipe insulation, thermostatic shut-off valves) installed during in-person visits",
+      "howToBook": "Through the program website",
+      "url": "https://www.ngridsavings.com/",
+      "status": "Unverified. WebFetch returned live program content, but a direct HTTP request returned a 404 and no eligibility or region statement was found. Confirm with National Grid before listing.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Whole Home Energy Assessment (NJ side)",
+      "runBy": "PSE&G",
+      "cost": "Free",
+      "whoQualifies": "All PSE&G residential gas and/or electric customers in a single-family home or a building with fewer than five units. Limited to one check-up per year per account and residence.",
+      "whatYouGet": "About a one-hour walk-through by a certified energy adviser (insulation, air leakage, HVAC, lighting, appliances, water heating) and a customized report. No-cost installs may include an ENERGY STAR smart thermostat, LEDs, aerators, showerheads, pipe insulation, advanced power strips, door sweeps and attic hatch insulation.",
+      "howToBook": "Online portal, or by phone: 1-855-846-2895 for Bergen, Burlington, Camden, Gloucester, Hudson, Mercer, Middlesex, Monmouth, Ocean and Passaic counties; 1-855-522-8211 for Essex, Hunterdon, Morris, Somerset and Union",
+      "url": "https://homeenergy.pseg.com/WHAssessment",
+      "status": "Open. The page says the program is 'subject to change, including termination, without prior notice'.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Whole Home Energy Assessment (NJ side)",
+      "runBy": "JCP&L (administered by CLEAResult)",
+      "cost": "No cost",
+      "whoQualifies": "JCP&L residential customers who pass the online eligibility check",
+      "whatYouGet": "In-home energy assessment. JCP&L says over 38,000 customers have saved an average of $250 a year.",
+      "howToBook": "Online in four steps (verify eligibility, request an appointment, add to cart, check out)",
+      "url": "https://residential.energysavenj.com/jersey-central/WHEA",
+      "status": "Open",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Clean Heat air-source heat pump incentive (full replacement)",
+      "runBy": "Con Edison (NYS Clean Heat)",
+      "category": "heat-pump",
+      "amount": "Single-family: $10,000 if the home is weatherized, or $7,000 standard; in a Disadvantaged Community, $11,000 or $8,000. Apartments: $5,000 or $3,500 ($5,500 or $4,000 in a DAC). Keeping the old system with integrated controls pays $2,500 single-family or $1,000 apartment ($4,500 or $2,000 in a DAC). Customers who already got a partial heat pump incentive can get up to $4,000 more (single-family) or $1,500 (apartment) when they remove or disable the fossil fuel system. All incentives are capped at 70% of project cost (85% in a DAC).",
+      "whoQualifies": "Con Edison customers in single-family homes, 2–4 family buildings, or individually owned apartments in 5+ unit buildings. Work must be done by a Clean Heat Participating Contractor and the home must be deemed 'service adequate'.",
+      "status": "Open. Offered 'subject to program rules and available funding'; the page gives no end date.",
+      "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Geothermal heat pump incentive",
+      "runBy": "Con Edison (NYS Clean Heat)",
+      "category": "heat-pump",
+      "amount": "Whole-building retrofit: $30,000 if the home is weatherized, or $25,000 standard; in a Disadvantaged Community, $40,000 or $35,000. New construction: $15,000 ($20,000 in a DAC). All incentives are capped at 70% of project cost (85% in a DAC). Con Edison's overview page still says 'up to $35,000'.",
+      "whoQualifies": "Con Edison customers working with an approved contractor. The home must be deemed 'service adequate'.",
+      "status": "Open. The page gives no dates or funding status.",
+      "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-thousands-on-a-geothermal-system",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Heat pump water heater instant rebate",
+      "runBy": "Con Edison",
+      "category": "heat-pump",
+      "amount": "$1,500 instant rebate for purchases September 1 to November 30, 2026; $1,300 outside that window",
+      "whoQualifies": "Active Con Edison electric account holders. The unit must be ENERGY STAR certified, under 120 gallons, and bought in store at a participating Lowe's or Home Depot (coupon from VerifyConEdRebates.com) or through a contractor via a participating distributor.",
+      "status": "Open. The $1,500 promotion runs through November 30, 2026, and there is no reimbursement after purchase.",
+      "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/swap-your-water-heater-and-save",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Comfort Home (insulation and air-sealing packages)",
+      "runBy": "NYSERDA",
+      "category": "insulation-air-sealing",
+      "amount": "Good package (attic and rim joist): $2,500. Better package (plus walls and floors): $3,000. Windows add-on: $2,000. Repeat participants get $1,000 if their last incentive was within a year, $2,000 if longer. Westchester projects may get an extra $1,000.",
+      "whoQualifies": "Homeowners of one-to-four family homes who pay the System Benefits Charge (SBC) on their electric bill, per the May 2025 fact sheet. Eligibility is checked in the MyEnergy portal. The page does not say whether contractors cover all five boroughs.",
+      "status": "Open. The page is live with no closure notice.",
+      "url": "https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "EmPower+ upgrade incentives (including HEAR and Sustainable Futures add-ons)",
+      "runBy": "NYSERDA",
+      "category": "income-qualified",
+      "amount": "Downstate (all five NYC boroughs, Nassau, Suffolk, Westchester): low income gets no-cost improvements up to $14,000 per project; moderate income gets 50% of cost up to $7,000. On top of those caps, the Sustainable Futures Program adds air-source heat pump $10,000, ground-source $10,000, heat pump water heater $5,000, panel box $5,000 and electrical wiring $2,500. HEAR adds air sealing, insulation and ventilation: $1,600.",
+      "whoQualifies": "Households below 80% of State/Area Median Income, or in a utility payment assistance program. Owners and renters of 1–4 family homes.",
+      "status": "Open. The page has no pause notice.",
+      "url": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Appliance Upgrade Program (heat pump clothes dryers, panels, wiring)",
+      "runBy": "NYSERDA (IRA Home Electrification and Appliance Rebate funds, per NYSERDA's Nov 21, 2024 launch release)",
+      "category": "appliances",
+      "amount": "Heat pump dryer: 100% of project cost up to $840 (0–80% AMI) or 50% up to $840 (80–150% AMI). Electrical panel: up to $4,000. Electrical wiring: up to $2,500. Same 100%/50% split.",
+      "whoQualifies": "Households up to 150% of Area Median Income. Renters need landlord attestation. Cannot be used at the same time as EmPower+.",
+      "status": "Open. The page is live; the launch release called it 'first-come, first-served'. Program changes under DOE's May 29, 2026 guidance were not mentioned on the page.",
+      "url": "https://www.nyserda.ny.gov/All-Programs/Appliance-Upgrade-Program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Performance with ENERGY STAR rebates (insulation, air sealing, duct sealing, windows)",
+      "runBy": "PSEG Long Island",
+      "category": "insulation-air-sealing",
+      "amount": "Insulation $2,500 (market rate), $3,125 (market rate in a Disadvantaged Community), $5,200 (low income and DAC). Air sealing $1,000, $1,250, $2,000. Duct sealing $500, $625, $800. Windows $4, $4, $8 (the unit is footnoted on the page and not shown in the table text).",
+      "whoQualifies": "PSEG Long Island customers, including the Rockaways, using a participating contractor. Insulation requires blower-door-assisted air sealing. Enhanced tiers need income verification: low income is 60% of AMI (e.g., $98,925 for a household of 4 in 2026) and moderate income is 80% of AMI ($131,900 for 4).",
+      "status": "Open",
+      "url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/homeenergyassessment",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Whole-house cold-climate heat pump rebate",
+      "runBy": "PSEG Long Island",
+      "category": "heat-pump",
+      "amount": "Per single-family home (1–4 units): Low Income (<60% AMI) $7,500; Moderate Income (<80% AMI) $5,000; Market Rate in a Disadvantaged Community $5,000; Market Rate $4,000",
+      "whoQualifies": "PSEG Long Island customers using a participating contractor. The system must meet 100–120% of the whole-home heating load (Manual J). Integrated controls are required, or the fossil system must be removed. Equipment must be on the NEEP ccASHP list.",
+      "status": "Open",
+      "url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/HomeComfort/HeatPumps/Rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Smart Energy Loan / On-Bill Recovery Loan",
+      "runBy": "NYSERDA (Green Jobs – Green New York)",
+      "category": "financing",
+      "amount": "$1,500 to $25,000, unsecured, 5-, 10- or 15-year terms. Rates are not stated on the page; use NYSERDA's 'Find Interest Rate' link.",
+      "whoQualifies": "Owners of existing 1–4 family homes. A no-cost energy assessment is required first. On-Bill Recovery requires a participating utility (Con Edison qualifies; PSEG Long Island customers apply through the utility) and estimated savings greater than the loan payment.",
+      "status": "Open",
+      "url": "https://www.nyserda.ny.gov/All-Programs/Residential-Financing-Programs",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Building Decarbonization heat pump instant rebates (NJ side)",
+      "runBy": "PSE&G",
+      "category": "heat-pump",
+      "amount": "PSE&G's current page advertises 'up to $1,050 in instant savings', plus 'an additional $300 per eligible measure' for low- to moderate-income customers. The amounts PSE&G listed in early October 2026 could not be re-confirmed there: full displacement with a cold-climate ASHP, lesser of $10,000 or 50% of the largest system's project cost (low- to moderate-income customers: lesser of $12,000 or 60%); up to $2,000 for decommissioning, up to $2,000 for re-ducting, and $2,000 for each additional ccASHP needed; dual-fuel projects, lesser of $5,000 or 50% (LMI: $6,000 or 60%), plus up to $1,500 per integrated control (max two); standard HVAC instant rebates of ccASHP $600, ASHP $300/$450 and HPWH $450; 0% on-bill repayment up to $50,000 for decarbonization ($75,000 combined).",
+      "whoQualifies": "PSE&G residential electric customers (or Butler Electric customers with PSE&G gas) who own a 1–4 unit home, through a participating contractor. New construction is excluded. LMI means ≤400% of the Federal Poverty Level, a low/moderate-income census tract, or enrollment in a listed assistance program.",
+      "status": "Open. Subject to change or termination without notice.",
+      "url": "https://myhomeenergy.pseg.com/appliance-offers/heatingandcooling",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Whole Home Energy Solutions (NJ side)",
+      "runBy": "PSE&G and JCP&L (separate utility programs)",
+      "category": "whole-home",
+      "amount": "PSE&G: up to $7,500 in rebates plus up to $25,000 in interest-free on-bill repayment (contractors set their own fee for the initial assessment). JCP&L: $2,000 plus $200 for each percentage point of modeled savings above 5%, capped at $7,500 and at 50% of cost, with 0% loans of $2,500–$25,000 repaid on the bill.",
+      "whoQualifies": "Residential customers of the respective utility working with a participating BPI-certified contractor. JCP&L requires at least 5% modeled savings.",
+      "status": "Open",
+      "url": "https://homeenergy.pseg.com/WHES",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "New York: launched (HEAR). NYSERDA began paying federal Home Electrification and Appliance Rebates through the Appliance Upgrade Program on November 21, 2024, and EmPower+ lists a HEAR cap of $1,600 for air sealing, insulation and ventilation. The status of New York's Home Efficiency Rebates (HOMES) could not be confirmed on any NYSERDA page. New Jersey: not launched. The programs are 'currently in development and are not yet open for applications.'",
+    "programName": "NY: Appliance Upgrade Program and HEAR incentives within EmPower+. NJ: Home Efficiency Rebates (HER) and Home Electrification and Appliance Rebates (HEAR), not yet open.",
+    "administrator": "NY: NYSERDA. NJ: NJ Board of Public Utilities (New Jersey's Clean Energy Program).",
+    "summary": "New York's federal allocation is $317.4 million ($159M Home Efficiency Rebates, $158.4M HEAR). New Jersey's BPU reported $91,654,709 for HER and $91,307,380 for HEAR, and in January 2025 expected rebates in fall 2025. That launch has not happened: NJ's page says the state is still finalizing implementation blueprints with DOE and gives no date. Nationally, DOE Program Notice 26-2 (effective May 29, 2026) removed rebates for fuel switching (replacing non-electric appliances), required insulation and air sealing before heating and cooling upgrades, and gave launched programs three months to conform. Existing approved reservations may still be honored. None of the NYSERDA pages checked mention these changes.",
+    "url": "https://www.nyserda.ny.gov/About/Newsroom/2024-Announcements/2024-11-21-Saving-Families-Money-Governor-Hochul-Announces-Retail-Rebates",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "EmPower+",
+      "runBy": "NYSERDA",
+      "summary": "Free assessment and no-cost upgrades for households under 80% of State/Area Median Income or in utility payment assistance. Downstate caps are $14,000 for low income and $7,000 (50% cost-share) for moderate income, plus Sustainable Futures heat pump and electrical add-ons. Owners and renters of 1–4 family homes.",
+      "url": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program"
+    },
+    {
+      "name": "Weatherization Assistance Program (WAP), New York",
+      "runBy": "NYS Homes and Community Renewal (HCR), through local subgrantees: community-based nonprofits, community action agencies, counties and local governments",
+      "summary": "HCR says each of New York State's 62 counties is covered by one or more providers. HCR's consumer page could not be loaded (403 and fetch errors), so the income limits and the specific NYC providers were not verified.",
+      "url": "https://hcr.ny.gov/weatherization-assistance-program-wap"
+    },
+    {
+      "name": "Home Comfort Plus / income-eligible rebates",
+      "runBy": "PSEG Long Island",
+      "summary": "Enhanced rebates for income-verified households in the Rockaways and on Long Island: ccASHP $7,500 (low income, <60% AMI) or $5,000 (moderate, <80% AMI), and insulation up to $5,200. NYS On-Bill Recovery and Smart Energy loans are also available.",
+      "url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/HomeComfort/HeatPumps/Rebates"
+    },
+    {
+      "name": "Comfort Partners (NJ side)",
+      "runBy": "NJ Board of Public Utilities with the NJ electric and gas utilities",
+      "summary": "Free energy assessment and all recommended measures (insulation, air sealing, duct sealing, refrigerator replacement, thermostats, water-heating measures, HVAC maintenance) plus energy education. For NJ households at or below 250% of federal poverty guidelines ($82,500 a year for a family of 4), or receiving TANF, Section 8, SNAP, SSI or GA. The customer must be the utility ratepayer of record, in a building of 14 or fewer individually metered units. Registrations are open on a rolling basis; call 866-378-4345. Homes heated by oil, propane or kerosene are referred to the DCA Office of Weatherization.",
+      "url": "https://cleanenergy.nj.gov/programs/energy-efficiency/comfort-partners"
+    },
+    {
+      "name": "Weatherization Assistance Program, New Jersey",
+      "runBy": "NJ Department of Community Affairs (DCA), through county-based local WAP agencies (e.g., La Casa de Don Pedro and United Community Corporation for Essex County; PROCEED for Somerset and Union)",
+      "summary": "Weatherization and heating-system efficiency help for elderly, handicapped and low-income households; contact the WAP agency serving your county. The 2026 NJ WAP State Plan is posted as a draft, and the page was modified 09/10/2026.",
+      "url": "https://www.nj.gov/dca/dhcr/offices/wap.shtml"
+    },
+    {
+      "name": "Home Weatherization for Income-Qualified Customers (NJ side)",
+      "runBy": "JCP&L",
+      "summary": "Free in-home assessment plus up to $14,000 in efficiency upgrades and up to $2,500 in health and safety improvements at no cost. For moderate-income JCP&L customers: household income above 250% and below 400% of federal poverty guidelines, residence in a moderate-income census tract, or NJ SHARES participation. Covers 1–4 unit individually metered homes 5+ years old. Call 800-915-8309, option 2. PSE&G and the NJ gas utilities run parallel moderate-income weatherization programs.",
+      "url": "https://residential.energysavenj.com/jersey-central/IQWX/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "NYC Local Law 97 (building emissions limits)",
+      "appliesTo": "Large buildings only. Covers buildings over 25,000 gross square feet, two or more buildings on one tax lot together over 50,000 sq ft, or condo buildings under one board together over 50,000 sq ft. Not ordinary 1–4 family homes.",
+      "summary": "Carbon limits began in 2024 and tighten in 2030. Owners file an annual emissions report by May 1, the first one due May 1, 2025 for 2024 emissions. Rent-regulated and affordable buildings are not exempt but may follow Articles 320/321 alternatives.",
+      "url": "https://www.nyc.gov/site/buildings/codes/greenhouse-gas-emission-reporting.page"
+    },
+    {
+      "name": "NYC Local Law 84/133 benchmarking and LL33/95 energy grades",
+      "appliesTo": "Large buildings (over 25,000 gross sq ft, per NYC Accelerator). Garden-style apartments are excluded. Does not affect ordinary homeowners.",
+      "summary": "Annual energy and water benchmarking through ENERGY STAR Portfolio Manager is due May 1. Covered buildings must post a letter-grade energy label (A–F, N) near each public entrance within 30 days of its October 1 release; failing to post carries a $1,250 fine.",
+      "url": "https://www.nyc.gov/site/buildings/codes/benchmarking.page"
+    },
+    {
+      "name": "NYC Local Law 87 (energy audits and retro-commissioning)",
+      "appliesTo": "Buildings larger than 50,000 gross sq ft. Does not affect ordinary homeowners.",
+      "summary": "An energy audit and retro-commissioning are required every ten years",
+      "url": "https://accelerator.nyc/building-laws"
+    },
+    {
+      "name": "NYC Local Law 154 (all-electric new buildings)",
+      "appliesTo": "New buildings and Alt-CO New Building filings, including 1- and 2-family homes. It does not reach routine equipment replacement in existing homes.",
+      "summary": "Fossil-fuel combustion is barred in new construction, phased by initial filing date: January 1, 2024 for Group R-3 (1- and 2-family homes) and all occupancies under 7 stories (excluding service hot water); December 31, 2025 for affordable housing under 7 stories; July 2, 2027 for all occupancies including service hot water; December 31, 2027 for affordable housing 7+ stories. Exceptions cover certain uses such as manufacturing, labs, laundromats, hospitals, crematoria, commercial kitchens and emergency power. DOB's page shows no coverage of furnace or boiler replacement in existing homes.",
+      "url": "https://www.nyc.gov/site/buildings/codes/ll154-building-electrification.page"
+    },
+    {
+      "name": "NYC Local Laws 92/94 (green roof or solar) and Local Law 32 (No. 4 oil phase-out)",
+      "appliesTo": "NYC Accelerator lists both as applying to 'all buildings'. LL92/94 is triggered only by new buildings or major roof replacements. LL32 matters only to buildings burning No. 4 oil.",
+      "summary": "LL92/94 requires solar PV and/or a green roof on new buildings and on existing buildings undergoing major roof replacement. LL32 prohibits No. 4 heating oil in City buildings from July 1, 2025 and in all buildings from July 1, 2027; DOB stopped issuing or renewing No. 4 oil permits as of June 30, 2024. A homeowner replacing a whole roof deck should confirm LL92/94 applicability with DOB.",
+      "url": "https://accelerator.nyc/building-laws"
+    },
+    {
+      "name": "New York 'Truth in Heating' disclosure (Energy Law §17-103)",
+      "appliesTo": "Ordinary homeowners selling or renting out a residential structure",
+      "summary": "On a prospective buyer's written request, made before a purchase contract is signed, the seller must provide heating and cooling bills (or a summary) for the past two years or the life of the structure, whichever is shorter, within 15 days. The seller must also give a statement of insulation installed. A landlord whose tenant would pay heating or cooling must provide the bills immediately on request.",
+      "url": "https://www.nysenate.gov/legislation/laws/ENG/17-103"
+    },
+    {
+      "name": "New Jersey energy and water benchmarking",
+      "appliesTo": "Commercial buildings over 25,000 sq ft. Single-family homes are not addressed. Does not affect ordinary homeowners.",
+      "summary": "Owners or operators must benchmark energy and water use annually. The first submissions were due October 1, 2023 for 2022 data.",
+      "url": "https://nj.gov/bpu/newsroom/2022/approved/20220907.html"
+    }
+  ],
+  "notes": "Metro definition: under OMB's July 2023 delineation, the New York-Newark-Jersey City MSA covers New York and New Jersey only. Pike County, PA, is no longer included, so 'PA' is dropped from states. Its NY counties are the five boroughs plus Nassau, Suffolk, Putnam, Rockland and Westchester; NJ counties are Bergen, Essex, Hudson, Hunterdon, Middlesex, Monmouth, Morris, Ocean, Passaic, Somerset, Sussex and Union. Federal tax credits: the IRS says the Energy Efficient Home Improvement Credit (25C, including the up-to-$150 home energy audit credit) covers improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) is 'not available for any property placed in service after December 31, 2025'. Neither applies to 2026 projects. DOE Program Notice 26-2 (effective May 29, 2026) ended federal HEAR/HEEHR rebates for fuel switching and requires insulation and air sealing first. Expect NYSERDA's HEAR components to change. The notice covers only the federal HOMES/HEEHR funds; whether any utility or NYSERDA heat pump incentive above draws on those funds was not checked, except where a page says so. Con Edison's Weather Ready insulation program is closed, with a 2027 weatherization offer announced as 'coming'. Not verified: the current National Grid downstate (Brooklyn/Queens/Staten Island) residential rebate menu, because the regionalized site would not render NYC-specific offers; NY WAP income limits and NYC providers; Comfort Home contractor coverage inside the five boroughs; the NY HOMES launch status. Gas-utility weatherization in NYC beyond these could not be confirmed. Several NYSERDA and ny.gov pages block scripted requests, so they were read through WebFetch only.",
+  "sources": [
+    { "label": "Census Bureau – OMB July 2023 CBSA delineation file (List 1)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "Con Edison – corporate facts (service territory)", "href": "https://www.coned.com/en/about-us/corporate-facts" },
+    { "label": "Con Edison – shop for energy service companies", "href": "https://www.coned.com/en/save-money/shop-for-energy-service-companies" },
+    { "label": "Con Edison – residential rebates and incentives", "href": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers" },
+    { "label": "Con Edison – Weather Ready (closed)", "href": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/savings-to-weatherize-your-home" },
+    { "label": "Con Edison – heat pump overview", "href": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners" },
+    { "label": "Con Edison – air-source heat pump incentives", "href": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-on-a-central-air-source-heat-pump" },
+    { "label": "Con Edison – geothermal heat pump incentives", "href": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/save-thousands-on-a-geothermal-system" },
+    { "label": "Con Edison – heat pump water heater rebate", "href": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-heating-and-cooling-technology-for-renters-homeowners/swap-your-water-heater-and-save" },
+    { "label": "NYSERDA – EmPower+", "href": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program" },
+    { "label": "NYSERDA – EmPower+ eligibility guidelines 2026", "href": "https://www.nyserda.ny.gov/All-Programs/EmPower-New-York-Program/Eligibility-Guidelines" },
+    { "label": "NYSERDA – Comfort Home", "href": "https://www.nyserda.ny.gov/All-Programs/Comfort-Home-Program" },
+    { "label": "NYSERDA – Comfort Home fact sheet (v6 5/25)", "href": "https://www.nyserda.ny.gov/-/media/Project/Nyserda/Files/Programs/Comfort-Home/Customer-Facing-Fact-Sheet.pdf" },
+    { "label": "NYSERDA – Home Energy Plan (virtual assessment)", "href": "https://www.nyserda.ny.gov/All-Programs/Home-Energy-Plan" },
+    { "label": "NYSERDA – Appliance Upgrade Program", "href": "https://www.nyserda.ny.gov/All-Programs/Appliance-Upgrade-Program" },
+    { "label": "NYSERDA – Nov 21, 2024 HEAR retail rebate launch", "href": "https://www.nyserda.ny.gov/About/Newsroom/2024-Announcements/2024-11-21-Saving-Families-Money-Governor-Hochul-Announces-Retail-Rebates" },
+    { "label": "NYSERDA – residential financing", "href": "https://www.nyserda.ny.gov/All-Programs/Residential-Financing-Programs" },
+    { "label": "NYSERDA – income-eligible programs", "href": "https://www.nyserda.ny.gov/All-Programs/Residential-and-Property-Owner-Income-Eligible-Programs" },
+    { "label": "PSEG Long Island – Whole House Energy Assessment and HPwES rebates", "href": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/homeenergyassessment" },
+    { "label": "PSEG Long Island – heat pump rebates", "href": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/HomeComfort/HeatPumps/Rebates" },
+    { "label": "National Grid – NYC residential gas rebate application (2019; territory statement)", "href": "https://www.nationalgridus.com/media/pdfs/resi-ways-to-save/national-grid-nyc-residential-gas-rebate-application.pdf" },
+    { "label": "National Grid – Savings Your Way", "href": "https://www.ngridsavings.com/" },
+    { "label": "NYS HCR – Weatherization Assistance Program", "href": "https://hcr.ny.gov/weatherization-assistance-program-wap" },
+    { "label": "NYC DOB – LL97 greenhouse gas emission reporting", "href": "https://www.nyc.gov/site/buildings/codes/greenhouse-gas-emission-reporting.page" },
+    { "label": "NYC DOB – benchmarking and energy grades", "href": "https://www.nyc.gov/site/buildings/codes/benchmarking.page" },
+    { "label": "NYC DOB – Local Law 154", "href": "https://www.nyc.gov/site/buildings/codes/ll154-building-electrification.page" },
+    { "label": "NYC Accelerator – building laws", "href": "https://accelerator.nyc/building-laws" },
+    { "label": "NY Energy Law §17-103 (Truth in Heating)", "href": "https://www.nysenate.gov/legislation/laws/ENG/17-103" },
+    { "label": "NJ Clean Energy Program – IRA Home Energy Rebates in NJ", "href": "https://cleanenergy.nj.gov/programs/energy-efficiency/inflation-reduction-act-home-energy-rebates-in-new-jersey" },
+    { "label": "NJ BPU – Jan 27, 2025 HER/HEAR release", "href": "https://nj.gov/bpu/newsroom/2025/approved/20250127.html" },
+    { "label": "NJ Clean Energy Program – utility-run programs for homeowners", "href": "https://cleanenergy.nj.gov/programs/energy-efficiency/utility-run-programs-for-homeowners" },
+    { "label": "NJ Clean Energy Program – Comfort Partners", "href": "https://cleanenergy.nj.gov/programs/energy-efficiency/comfort-partners" },
+    { "label": "NJ BPU – shop for energy suppliers", "href": "https://www.nj.gov/bpu/commercial/shopping.html" },
+    { "label": "NJ BPU – benchmarking requirement (Sept 2022)", "href": "https://nj.gov/bpu/newsroom/2022/approved/20220907.html" },
+    { "label": "NJ DCA – Weatherization Assistance Program", "href": "https://www.nj.gov/dca/dhcr/offices/wap.shtml" },
+    { "label": "PSE&G – Whole Home Energy Assessment", "href": "https://homeenergy.pseg.com/WHAssessment" },
+    { "label": "PSE&G – Whole Home Energy Solutions", "href": "https://homeenergy.pseg.com/WHES" },
+    { "label": "PSE&G – HVAC Instant Rebates and building decarbonization", "href": "https://myhomeenergy.pseg.com/appliance-offers/heatingandcooling" },
+    { "label": "JCP&L – Whole Home Energy Solutions", "href": "https://residential.energysavenj.com/jersey-central/WHES/" },
+    { "label": "JCP&L – Whole Home Energy Assessment", "href": "https://residential.energysavenj.com/jersey-central/WHEA" },
+    { "label": "JCP&L – HVAC rebates", "href": "https://residential.energysavenj.com/jersey-central/hvac/" },
+    { "label": "JCP&L – income-qualified home weatherization", "href": "https://residential.energysavenj.com/jersey-central/IQWX/" },
+    { "label": "DOE – Program Notice 26-2 (HEEHR, effective May 29, 2026)", "href": "https://www.energy.gov/documents/program-notice-26-2" },
+    { "label": "DOE – Home Energy Rebates program page", "href": "https://www.energy.gov/cmei/scep/home-energy-rebates-program" },
+    { "label": "IRS – Energy Efficient Home Improvement Credit (25C)", "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" },
+    { "label": "IRS – Residential Clean Energy Credit (25D)", "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit" }
+  ]
+}

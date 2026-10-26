@@ -1,0 +1,415 @@
+---
+/**
+ * What happens in a US home energy audit: the kinds of audit, the tests, how long it takes, the
+ * report and what comes next. Facts from federal.json, tests.json and the metro research records,
+ * verified October 12, 2026.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import FaqList from '../../components/us/FaqList.astro';
+import LeadFormUS from '../../components/us/LeadFormUS.astro';
+import WapNote from '../../components/us/WapNote.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { FEDERAL, US_VERIFIED, metroBySlug } from '../../lib/us/data';
+import testsData from '../../data/us/tests.json';
+
+const T = testsData as any;
+const E = T.energyTests;
+const hes = FEDERAL.homeEnergyScore;
+const hesSrc = (hes.sources as any[])[0];
+const portlandHes = (hes.sources as any[]).find((s) => /portland\.gov\/bps\/climate-action\/pdxhes$/.test(s.href));
+const cred = (re: RegExp) => (FEDERAL.credentials as any[]).find((c) => re.test(c.name));
+const bpiHep = cred(/HEP\) Energy Auditor/);
+const bpiBap = cred(/Building Analyst Professional/);
+const hers = cred(/RESNET HERS/);
+const hersInfo = E.hersIndex;
+const doeAssess = (FEDERAL.auditCosts.sources as any[]).find((s) => /professional-home-energy-assessments/.test(s.href));
+const other = FEDERAL.otherFederal as any[];
+const fha = other.find((o) => /FHA Energy Efficient Mortgage/.test(o.name));
+const gc = other.find((o) => /GreenCHOICE/.test(o.name));
+const fannie = other.find((o) => /Fannie Mae/.test(o.name));
+const src = (list: any[], re: RegExp) => list?.find((s: any) => re.test(s.href) || re.test(s.label));
+
+/** a metro program's official link, by metro slug and a name fragment */
+function prog(slug: string, frag: string) {
+  const m = metroBySlug(slug);
+  const p = (m?.data.auditPrograms ?? []).find((a: any) => a.name.toLowerCase().includes(frag.toLowerCase()));
+  return { metro: m?.data.name ?? slug, slug, url: p?.url as string | undefined, name: p?.name as string | undefined };
+}
+const nicor = prog('chicago', 'online self-assessment');
+const pseg = prog('new-york', 'Whole Home Energy Assessment');
+const ouc = prog('orlando', 'OUC free');
+const srp = prog('phoenix', 'SRP Home Energy Assessment');
+const cps = prog('san-antonio', 'No-Cost Home Energy Assessment');
+const squad = prog('minneapolis', 'Home Energy Squad');
+const ameren = prog('st-louis', 'CommunitySavers');
+const hesCa = prog('los-angeles', 'Home Energy Score California');
+const pdx = prog('portland', 'Portland Home Energy Score');
+const gaPower = prog('atlanta', 'Free In-Home');
+const psegli = prog('new-york', 'Whole House Energy Assessment');
+const dte = prog('detroit', 'DTE Home Energy Assessment');
+const xcelPlus = prog('denver', 'Home Energy Squad (Colorado)');
+const massSave = prog('boston', 'Mass Save Home Energy Assessment');
+const pse = prog('seattle', 'PSE In-Home');
+const nyPlan = prog('new-york', 'Home Energy Plan');
+const gaHer = prog('atlanta', 'Home Efficiency Rebates');
+
+const title = 'How a home energy audit works in the U.S.: types, tests and what comes next | AuditYourHome';
+const description = `What happens in a U.S. home energy audit: utility assessments, BPI diagnostic audits, HERS ratings and the DOE Home Energy Score, the blower door, infrared and combustion safety tests, how long it takes and what you get. Verified ${US_VERIFIED}.`;
+
+const faqs = [
+  {
+    q: 'How long does a home energy audit take?',
+    a: 'It depends on the kind. Published times: about 20 minutes for Nicor Gas’s online self-assessment; under an hour for a DOE Home Energy Score walk-through (most Home Energy Score California visits take 45–90 minutes, including the attic and crawlspace); about an hour for PSE&G’s Whole Home Energy Assessment in New Jersey and for OUC’s audit in Orlando; about 90 minutes for SRP’s in-home assessment in Phoenix; 1–2 hours for CPS Energy’s in San Antonio; and 2–3 hours for a Home Energy Squad visit in Minnesota, which includes a blower door measurement on the Energy Planner visit.',
+  },
+  {
+    q: 'What is a blower door test?',
+    a: 'A blower door test depressurizes the whole house, usually to 50 pascals, to measure how much air leaks in. The result is often given as ACH50, air changes per hour at 50 pascals: the airflow at 50 pascals in cubic feet per minute, times 60, divided by the house volume in cubic feet. For comparison, the 2021 energy code (IECC) requires new homes to test at 3.0 ACH50 or less in climate zones 3–8 and 5.0 or less in zones 0–2. With the house depressurized, an infrared camera also shows where the air gets in.',
+  },
+  {
+    q: 'Is a Home Energy Score the same as an energy audit?',
+    a: 'No. The DOE Home Energy Score is a standardized 1–10 rating built from about 40 data points collected in a walk-through of under an hour. It rates the house, not how you use it, and comes with cost-effective upgrade recommendations. A diagnostic audit by a BPI professional adds measurements such as a blower door test, combustion safety testing and often an infrared scan, plus energy modeling and a prioritized scope of work.',
+  },
+  {
+    q: 'Do I need an audit to get rebates?',
+    a: 'Often, yes. Mass Save’s insulation rebates follow the recommendations from a Mass Save Home Energy Assessment. NYSERDA’s Smart Energy Loan requires a no-cost energy assessment first. Georgia’s Home Efficiency Rebates set the rebate tier from the whole-home energy savings a program-approved contractor models. Under DOE’s 2026 rules for the federal Home Energy Rebates, insulation and air sealing come before heating and cooling upgrades unless a home already meets a state-set level.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'How it works', path: '/us/how-it-works/' },
+  ]),
+  faqSchema(faqs),
+];
+const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => /program-notice-26-2/.test(s.href));
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">How it works · verified {US_VERIFIED}</p>
+        <h1>What happens in a home energy audit</h1>
+        <p class="lede measure">
+          A good audit measures the house instead of guessing: a blower door for air leaks, an infrared camera for missing
+          insulation and safety checks on gas appliances, then a report that ranks the upgrades. Here is what each kind of
+          U.S. audit includes, how long it takes and what comes next.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#kinds">The four kinds</a>
+          <a class="btn btn-ghost" href="#tests">The tests</a>
+        </div>
+      </div>
+      <Photo name="blower-door-test" eager />
+    </div>
+
+    <!-- KINDS -->
+    <section id="kinds" class="sec">
+      <h2>Four kinds of home energy audit</h2>
+      <p class="measure">They differ in who does them, what gets measured and what you get at the end. Prices are on <a href="/us/cost/">what an audit costs</a>.</p>
+      <div class="kinds">
+        <article class="card kind">
+          <span class="kn">1</span>
+          <h3>Utility or state program assessment</h3>
+          <p>
+            A visit from your utility’s energy advisor or a participating contractor, often free and often with free products
+            installed. What gets measured varies a lot. Georgia Power’s free in-home audit is a walk-through with recommendations;
+            PSEG Long Island’s includes a thermal scan and a blower door test; Minnesota’s Home Energy Squad adds a blower door
+            measurement and a heating safety test on its Energy Planner visit.
+          </p>
+          <dl class="facts">
+            <div><dt>Who</dt><dd>Utility staff or the program’s contractors</dd></div>
+            <div><dt>Cost</dt><dd>Free in many metros; $49–$100 in some</dd></div>
+            <div><dt>You get</dt><dd>Recommendations and the program’s rebates, e.g. Mass Save’s report lists the rebates you qualify for</dd></div>
+          </dl>
+          <p class="links">
+            {gaPower.url && <a href={gaPower.url} rel="noopener" target="_blank">Georgia Power&nbsp;↗</a>}
+            {psegli.url && <span> · <a href={psegli.url} rel="noopener" target="_blank">PSEG Long Island&nbsp;↗</a></span>}
+            {squad.url && <span> · <a href={squad.url} rel="noopener" target="_blank">Home Energy Squad&nbsp;↗</a></span>}
+            {massSave.url && <span> · <a href={massSave.url} rel="noopener" target="_blank">Mass Save&nbsp;↗</a></span>}
+          </p>
+        </article>
+
+        <article class="card kind">
+          <span class="kn">2</span>
+          <h3>Comprehensive diagnostic audit</h3>
+          <p>
+            A certified professional tests the whole house. BPI describes its Home Energy Professional Energy Auditor as someone
+            who evaluates a home’s energy efficiency, health and safety with diagnostic tools and modeling software and writes a
+            prioritized scope of work. DTE’s contractor-delivered assessment in Michigan, for example, includes blower door tests,
+            safety and efficiency testing of heating and cooling equipment, thermal imaging and energy modeling.
+          </p>
+          <dl class="facts">
+            <div><dt>Who</dt><dd>BPI Building Analyst Professional or Home Energy Professional Energy Auditor</dd></div>
+            <div><dt>Cost</dt><dd>Set by the contractor; some utilities pay part (DTE, Georgia Power, SRP, Xcel)</dd></div>
+            <div><dt>You get</dt><dd>Test results and a prioritized list of upgrades</dd></div>
+          </dl>
+          <p class="links">
+            {bpiHep && <a href={bpiHep.sources[0].href} rel="noopener" target="_blank">BPI&nbsp;↗</a>}
+            {dte.url && <span> · <a href={dte.url} rel="noopener" target="_blank">DTE&nbsp;↗</a></span>}
+            {doeAssess && <span> · <a href={doeAssess.href} rel="noopener" target="_blank">DOE Energy Saver&nbsp;↗</a></span>}
+          </p>
+        </article>
+
+        <article class="card kind">
+          <span class="kn">3</span>
+          <h3>HERS rating</h3>
+          <p>
+            A RESNET HERS Rater tests the home, typically with blower door and duct leakage tests, and scores it on the HERS Index
+            against a modeled reference home built to the 2006 energy code (IECC). That reference scores 100; lower is better, so
+            70 means 30% more efficient and 0 means net zero. HERS ratings are used most for new homes, ENERGY STAR and code
+            compliance, and FHA accepts them for its Energy Efficient Mortgage.
+          </p>
+          <dl class="facts">
+            <div><dt>Who</dt><dd>A RESNET HERS Rater</dd></div>
+            <div><dt>Cost</dt><dd>RESNET publishes no price</dd></div>
+            <div><dt>You get</dt><dd>A HERS Index score, listed in RESNET’s registry</dd></div>
+          </dl>
+          <p class="links">
+            {hers && <a href={hers.sources[0].href} rel="noopener" target="_blank">RESNET&nbsp;↗</a>}
+            {src(hersInfo.sources, /what-is-the-hers-index/) && <span> · <a href={src(hersInfo.sources, /what-is-the-hers-index/).href} rel="noopener" target="_blank">HERS Index&nbsp;↗</a></span>}
+          </p>
+        </article>
+
+        <article class="card kind">
+          <span class="kn">4</span>
+          <h3>DOE Home Energy Score</h3>
+          <p>
+            A 1–10 rating, like a miles-per-gallon label for the house: 5 is an average U.S. home and 10 is the top 10%. A certified
+            assessor collects about 40 data points in a walk-through of under an hour. The score rates the house, not how you use
+            it, and comes with upgrade recommendations that pay back within 10 years and a “score with improvements.” Single-family
+            homes, townhouses and duplexes can be scored; multifamily and mobile homes can’t.
+          </p>
+          <dl class="facts">
+            <div><dt>Who</dt><dd>A Home Energy Score Certified Assessor</dd></div>
+            <div><dt>Cost</dt><dd>DOE doesn’t set fees; in California a $250 rebate applies for many utility customers</dd></div>
+            <div><dt>Required</dt><dd>In Portland, Oregon, before most homes are listed for sale</dd></div>
+          </dl>
+          <p class="links">
+            {hesSrc && <a href={hesSrc.href} rel="noopener" target="_blank">DOE&nbsp;↗</a>}
+            {hesCa.url && <span> · <a href={hesCa.url} rel="noopener" target="_blank">Home Energy Score California&nbsp;↗</a></span>}
+            {portlandHes && <span> · <a href={portlandHes.href} rel="noopener" target="_blank">City of Portland&nbsp;↗</a></span>}
+          </p>
+        </article>
+      </div>
+
+      <div class="card card-pad online">
+        <h3>Online self-assessments</h3>
+        <p>
+          Many utilities offer a free online check that takes about 20 minutes (Nicor Gas’s) and mails energy-saving products.
+          Nothing is measured, so treat it as a first look. Read the terms: Nicor says customers who complete its
+          self-assessment can’t receive additional services through its Home Energy Savings offering.
+          {nicor.url && <a href={nicor.url} rel="noopener" target="_blank">Nicor Gas&nbsp;↗</a>}
+        </p>
+      </div>
+    </section>
+
+    <!-- TESTS -->
+    <section id="tests" class="sec">
+      <h2>The tests</h2>
+      <p class="measure">DOE says many professional assessments include a blower door test and an infrared scan. These are the tests worth asking about, with links to our full guides.</p>
+      <div class="tests">
+        <a class="test card" href="/us/tests/blower-door/">
+          <h3>Blower door test</h3>
+          <p>
+            Depressurizes the house, usually to 50 pascals, to measure air leakage. ACH50 = airflow at 50 Pa (cfm) × 60 ÷ house
+            volume (cubic feet). The 2021 IECC asks new homes for 3.0 ACH50 or less in zones 3–8.
+          </p>
+          <span class="go">Blower door guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/thermal-imaging/">
+          <h3>Infrared scan</h3>
+          <p>
+            Shows missing, partial or damaged insulation in framed walls and ceilings (ASTM C1060). With the house depressurized,
+            it also finds air leaks (ASTM E1186). ASTM says confirming missing insulation needs an independent check.
+          </p>
+          <span class="go">Infrared guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/combustion-safety/">
+          <h3>Combustion safety</h3>
+          <p>
+            Checks gas appliances for spillage and carbon monoxide under worst-case depressurization. BPI’s ambient CO levels:
+            9–35 ppm advise, 36–69 ppm ventilate and shut off sources, 70 ppm or more evacuate and call for help from outside.
+          </p>
+          <span class="go">Combustion safety guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/duct-leakage/">
+          <h3>Duct leakage</h3>
+          <p>
+            Tests the ducts at 25 pascals with the registers sealed. The 2021 IECC limit for new homes is 4.0 cfm25 per
+            100 sq ft of conditioned floor area.
+          </p>
+          <span class="go">Duct leakage guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/heat-loss-calc/">
+          <h3>Heat-loss calculation</h3>
+          <p>
+            ACCA Manual J works out room-by-room heating and cooling loads; Manual S sizes the equipment from them and Manual D
+            designs the ducts. Where codes adopt them, new equipment must be sized this way.
+          </p>
+          <span class="go">Heat-loss guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/attic-inspection/">
+          <h3>Attic inspection</h3>
+          <p>
+            Measures insulation depth against ENERGY STAR’s retrofit levels: in climate zones 4–8, R60 for an uninsulated attic,
+            or R49 if it already has 3–4 inches.
+          </p>
+          <span class="go">Attic guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/bill-analysis/">
+          <h3>Utility bill analysis</h3>
+          <p>
+            A year of bills sets the baseline. Utilities that use the Green Button standard let you download your own usage data.
+          </p>
+          <span class="go">Bill analysis guide →</span>
+        </a>
+        <a class="test card" href="/us/tests/">
+          <h3>Home health tests</h3>
+          <p>
+            Radon, carbon monoxide, lead paint, asbestos, mold and well water need their own tests and specialists.
+          </p>
+          <span class="go">The testing guide →</span>
+        </a>
+      </div>
+      <p class="small srcline">
+        Sources: {src(E.blowerDoor.sources, /enclosure-leakage-test/) && <a href={src(E.blowerDoor.sources, /enclosure-leakage-test/).href} rel="noopener" target="_blank">DOE Building America (blower door)&nbsp;↗</a>} ·
+        {src(E.infrared.sources, /c1060/) && <a href={src(E.infrared.sources, /c1060/).href} rel="noopener" target="_blank">ASTM C1060&nbsp;↗</a>} ·
+        {src(E.combustionSafety.sources, /bpi\.org\/resources\/standards/) && <a href={src(E.combustionSafety.sources, /bpi\.org\/resources\/standards/).href} rel="noopener" target="_blank">BPI standards&nbsp;↗</a>} ·
+        {src(E.ductLeakage.sources, /duct-leakage-tests/) && <a href={src(E.ductLeakage.sources, /duct-leakage-tests/).href} rel="noopener" target="_blank">DOE Building America (ducts)&nbsp;↗</a>} ·
+        {src(E.loadCalculation.sources, /manual-j/) && <a href={src(E.loadCalculation.sources, /manual-j/).href} rel="noopener" target="_blank">ACCA Manual J&nbsp;↗</a>} ·
+        {src(E.insulation.sources, /insulation-r-values/) && <a href={src(E.insulation.sources, /insulation-r-values/).href} rel="noopener" target="_blank">ENERGY STAR R-values&nbsp;↗</a>} ·
+        {src(E.billAnalysis.sources, /green-button$/) && <a href={src(E.billAnalysis.sources, /green-button$/).href} rel="noopener" target="_blank">DOE Green Button&nbsp;↗</a>} ·
+        verified {US_VERIFIED}
+      </p>
+    </section>
+
+    <!-- HOW LONG -->
+    <section id="time" class="sec">
+      <h2>How long it takes</h2>
+      <p class="measure">Times as programs publish them:</p>
+      <div class="tablewrap card">
+        <table class="stack" aria-label="Published visit times for home energy audits">
+          <thead><tr><th scope="col">What</th><th scope="col">Example</th><th scope="col">Time</th></tr></thead>
+          <tbody>
+            <tr><td data-label="What">Online self-assessment</td><td data-label="Example">{nicor.url ? <a href={nicor.url} rel="noopener" target="_blank">Nicor Gas, Chicago area&nbsp;↗</a> : 'Nicor Gas'}</td><td data-label="Time">About 20 minutes</td></tr>
+            <tr><td data-label="What">Home Energy Score</td><td data-label="Example">{hesSrc && <a href={hesSrc.href} rel="noopener" target="_blank">DOE&nbsp;↗</a>}; {hesCa.url && <a href={hesCa.url} rel="noopener" target="_blank">Home Energy Score California&nbsp;↗</a>}; {pdx.url && <a href={pdx.url} rel="noopener" target="_blank">Portland&nbsp;↗</a>}</td><td data-label="Time">Under an hour (DOE); most 45–90 minutes in California; about 45–60 minutes in Portland</td></tr>
+            <tr><td data-label="What">Utility walk-through</td><td data-label="Example">{pseg.url && <a href={pseg.url} rel="noopener" target="_blank">PSE&amp;G, New Jersey&nbsp;↗</a>}; {ouc.url && <a href={ouc.url} rel="noopener" target="_blank">OUC, Orlando&nbsp;↗</a>}</td><td data-label="Time">About an hour</td></tr>
+            <tr><td data-label="What">Utility in-home assessment</td><td data-label="Example">{srp.url && <a href={srp.url} rel="noopener" target="_blank">SRP, Phoenix&nbsp;↗</a>}; {cps.url && <a href={cps.url} rel="noopener" target="_blank">CPS Energy, San Antonio&nbsp;↗</a>}; {ameren.url && <a href={ameren.url} rel="noopener" target="_blank">Ameren CommunitySavers, St. Louis&nbsp;↗</a>}</td><td data-label="Time">About 90 minutes (SRP); 1–2 hours (CPS Energy); about 2 hours (Ameren)</td></tr>
+            <tr><td data-label="What">Visit with a blower door test</td><td data-label="Example">{squad.url && <a href={squad.url} rel="noopener" target="_blank">Home Energy Squad, Minnesota&nbsp;↗</a>}</td><td data-label="Time">2–3 hours</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="report" class="sec">
+      <h2>The report you get</h2>
+      <ul class="reports measure">
+        <li><strong>Mass Save (Massachusetts):</strong> an Energy Specialist’s recommendations and a Decarbonization Report listing the rebates you qualify for. {massSave.url && <a href={massSave.url} rel="noopener" target="_blank">Mass Save&nbsp;↗</a>}</li>
+        <li><strong>PSE (Seattle area):</strong> a custom report with prioritized recommendations, referrals to PSE Recommended Energy Professionals and guidance on rebates. {pse.url && <a href={pse.url} rel="noopener" target="_blank">PSE&nbsp;↗</a>}</li>
+        <li><strong>NYSERDA’s virtual assessment (New York):</strong> a Home Energy Plan showing where the home wastes energy, with flags for possible health or safety issues. {nyPlan.url && <a href={nyPlan.url} rel="noopener" target="_blank">NYSERDA&nbsp;↗</a>}</li>
+        <li><strong>Home Energy Score:</strong> the 1–10 score, energy-use, cost and emissions estimates, and prioritized upgrades. In Portland the report is posted to the Green Building Registry and can be reused for up to eight years if nothing assessed has changed. {pdx.url && <a href={pdx.url} rel="noopener" target="_blank">Portland&nbsp;↗</a>}</li>
+        <li><strong>Georgia’s Home Efficiency Rebates:</strong> a contractor assessment and project scope that models whole-home savings, which sets your rebate tier. {gaHer.url && <a href={gaHer.url} rel="noopener" target="_blank">GEFA&nbsp;↗</a>}</li>
+      </ul>
+    </section>
+
+    <!-- NEXT -->
+    <section id="next" class="sec">
+      <h2>What happens next</h2>
+      <div class="next">
+        <article class="card nx">
+          <h3>Rebates</h3>
+          <p>
+            Many rebates need the assessment or its recommendations first. Under DOE’s 2026 rules for the federal Home Energy
+            Rebates, insulation and air sealing come before heating and cooling upgrades, and the federal appliance rebates no
+            longer pay for switching from gas, oil or propane to electric. Your metro guide lists what’s open.
+          </p>
+          <p class="links"><a href="/us/cities/">Metro guides</a> · <a href="/us/programs/">Rebates and programs</a>{pn262 && <span> · <a href={pn262.href} rel="noopener" target="_blank">DOE notice&nbsp;↗</a></span>}</p>
+        </article>
+        <article class="card nx">
+          <h3>Contractors</h3>
+          <p>
+            Programs often pay only through their own contractor networks: Georgia’s Home Efficiency Rebates need a
+            program-approved contractor, and Mass Save’s heat pump rebates need a Heat Pump Installer Network contractor. Ask
+            before you sign.
+          </p>
+          <p class="links"><a href="/us/find/">Finding a certified pro</a></p>
+        </article>
+        <article class="card nx">
+          <h3>Financing</h3>
+          <p>
+            {fha && <>FHA’s Energy Efficient Mortgage adds cost-effective upgrades to a purchase or refinance and needs an assessment no more than 120 days old. </>}
+            {gc && <>Freddie Mac’s GreenCHOICE needs a HERS report, Home Energy Score report or comparable audit when improvements top $6,500. </>}
+            Some utilities lend too: Mass Save’s HEAT Loan is 0% up to $25,000.
+          </p>
+          <p class="links">
+            {fha && <a href={fha.url} rel="noopener" target="_blank">HUD&nbsp;↗</a>}
+            {gc && <span> · <a href={gc.url} rel="noopener" target="_blank">Freddie Mac&nbsp;↗</a></span>}
+            {fannie && <span> · <a href={fannie.url} rel="noopener" target="_blank">Fannie Mae HomeStyle&nbsp;↗</a></span>}
+          </p>
+        </article>
+        <article class="card nx">
+          <h3>Tax credits: none for 2026 work</h3>
+          <p>
+            The federal 25C and 25D credits ended for work after December 31, 2025, including the $150 audit credit. Some state
+            and utility pages haven’t caught up.
+          </p>
+          <p class="links"><a href="/us/programs/federal-tax-credits/">What ended and when</a></p>
+        </article>
+      </div>
+      <WapNote heading="Lower income? The Weatherization Assistance Program includes the audit" />
+    </section>
+
+    <FaqList faqs={faqs} />
+
+    <div class="lf-wrap">
+      <LeadFormUS heading="Ready to measure instead of guess?" context="us-how-it-works" />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .sec { padding: 36px 0 0; scroll-margin-top: 80px; }
+  .sec > h2 { font-size: clamp(24px, 3vw, 30px); }
+  .kinds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+  @media (max-width: 860px) { .kinds { grid-template-columns: 1fr; } }
+  .kind { position: relative; padding: 22px 24px 20px; display: grid; gap: 10px; align-content: start; box-shadow: none; }
+  .kn { font-family: var(--mono); font-weight: 600; font-size: 13px; color: var(--heat); }
+  .kind h3 { margin: -4px 0 0; font-size: 20px; }
+  .kind p { margin: 0; font-size: 15px; color: var(--muted); }
+  .facts { margin: 4px 0 0; display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .facts div { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 10px; font-size: 14px; }
+  .facts dt { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); padding-top: 2px; }
+  .facts dd { margin: 0; }
+  .links { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--faint); }
+  .kind .links a, .online a, .srcline a, .nx .links a, .reports a { color: var(--steel); overflow-wrap: anywhere; }
+  .online { margin-top: 16px; border-left: 4px solid var(--steel); box-shadow: none; }
+  .online h3 { font-size: 18px; }
+  .online p { margin: 0; font-size: 15px; color: var(--muted); }
+
+  .tests { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 16px; }
+  .test { padding: 18px 20px; display: grid; gap: 8px; align-content: start; text-decoration: none; color: var(--ink); box-shadow: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+  .test:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .test h3 { font-size: 17px; margin: 0; }
+  .test p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .test .go { font-weight: 700; font-size: 14px; color: var(--heat-deep); }
+  .srcline { margin-top: 14px; line-height: 1.8; }
+
+  .tablewrap { margin-top: 12px; }
+  .tablewrap td a { overflow-wrap: anywhere; }
+  .reports { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 10px; font-size: 15px; }
+
+  .next { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin: 16px 0 18px; }
+  .nx { padding: 18px 20px; display: grid; gap: 8px; align-content: start; box-shadow: none; }
+  .nx h3 { font-size: 17px; margin: 0; }
+  .nx p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .lf-wrap { margin: 30px 0 48px; }
+</style>

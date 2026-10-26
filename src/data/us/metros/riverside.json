@@ -1,0 +1,389 @@
+{
+  "slug": "riverside",
+  "name": "Riverside",
+  "metroName": "Riverside-San Bernardino-Ontario, CA Metropolitan Statistical Area",
+  "states": [
+    "CA"
+  ],
+  "principalCity": "Riverside",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Riverside Public Utilities (RPU)",
+        "serves": "City of Riverside (city-owned electric and water utility)",
+        "url": "https://riversideca.gov/utilities/residents/our-energy/about"
+      },
+      {
+        "name": "Southern California Edison (SCE)",
+        "serves": "Most of Riverside and San Bernardino counties outside municipal-utility areas; SCE serves 15 million people across 50,000 sq mi of central, coastal and Southern California",
+        "url": "https://www.sce.com/about-sce"
+      },
+      {
+        "name": "Moreno Valley Utility (MVU)",
+        "serves": "Public electric service within MVU's mapped service area in Moreno Valley",
+        "url": "https://www.moval.org/mvu/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Southern California Gas Company (SoCalGas)",
+        "serves": "Most of the metro; 21.1 million consumers in 500+ communities across Central and Southern California",
+        "url": "https://www.socalgas.com/about-us"
+      },
+      {
+        "name": "Southwest Gas",
+        "serves": "Says it serves 'portions of California'; its About page does not list which Inland Empire communities",
+        "url": "https://www.swgas.com/en/about-us"
+      }
+    ],
+    "notes": "RPU's own income-qualified programs pair RPU electric service with a SoCalGas gas account, so RPU rebates and SoCalGas programs can both apply to a Riverside home. Other municipal and district utilities serve parts of the two counties (for example Imperial Irrigation District, which says it serves more than 150,000 customers, but its page did not state its territory), so check your bill."
+  },
+  "auditPrograms": [
+    {
+      "name": "SCE Home Performance Plus",
+      "runBy": "CLEAResult under contract with Southern California Edison",
+      "cost": "Free home energy assessment and Energy Advisor guidance",
+      "whoQualifies": "SCE residential electric customers who rent or own a single-family detached home or a unit in a building of 4 units or less located in a Disadvantaged or Low-Income community (not available to RPU-only electric customers)",
+      "whatYouGet": "On-site visit by an Energy Specialist, a custom report with recommendations and available rebates, and access to more than $5,000 in program rebates",
+      "howToBook": "Schedule with an Energy Advisor via homeperformanceplusca.com/sce or call 888-662-1637 (9am-5pm PT, Mon-Fri)",
+      "url": "https://homeperformanceplusca.com/sce/",
+      "status": "open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Energy Score California (statewide)",
+      "runBy": "Bay Area Regional Energy Network (BayREN) and Earth Advantage; funded by PG&E, SDG&E, SoCalGas and SCE ratepayers under the CPUC",
+      "cost": "Cost varies by assessor (BayREN says it depends on factors such as location and home size); the program FAQ says customers who get gas and/or electricity from a CCA or investor-owned utility are eligible for a $250 rebate toward it (Berkeley residents excepted because of BESO)",
+      "whoQualifies": "California homeowners can hire a certified assessor; the $250 rebate is for customers who receive gas and/or electric service from an investor-owned utility (such as PG&E, SCE, SoCalGas or SDG&E) or a community choice aggregator",
+      "whatYouGet": "Certified assessor walk-through (most take 45-90 minutes, including attic and crawlspace), a U.S. DOE 1-10 Home Energy Score, a report with energy-use, cost and emissions estimates, and prioritized upgrade recommendations",
+      "howToBook": "Find a certified assessor on homescoreca.org and ask for a score through the HES California program; confirm rebate eligibility and cost with the assessor",
+      "url": "https://www.homescoreca.org/faq",
+      "status": "open (statewide program page live; no closing date stated)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Equitable Building Decarbonization (EBD) Direct Install - Southern California",
+      "runBy": "County of Los Angeles as Southern Region administrator for the California Energy Commission",
+      "cost": "No cost to eligible households",
+      "whoQualifies": "Households up to 80% of area median income in single-family, multifamily or manufactured homes built before January 1, 2020 that heat space or water with gas, propane or another fossil fuel, in an initial community focus area. Inland Empire focus areas: Hesperia, Indio, Moreno Valley, Riverside/Highgrove, San Bernardino and Victorville/Apple Valley.",
+      "whatYouGet": "Eligibility screening, a home assessment, then no-cost heat pump and/or heat pump water heater plus possible insulation, air sealing, duct sealing, induction stove, electric dryer and panel work",
+      "howToBook": "Interest form at socalebd.org or call 1-424-285-6602",
+      "url": "https://socalebd.org/",
+      "status": "accepting interest forms in select communities; CEC expected first focus-area retrofits in Summer 2026; a community application process for other areas is expected late 2026",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "RPU Residential Heating and Cooling Rebate Program",
+      "runBy": "Riverside Public Utilities",
+      "category": "heat-pump",
+      "amount": "Electric heat pump (15.2 SEER or greater) $750 per ton; central AC $150/ton (15.2-15.9 SEER) or $250/ton (16 SEER+); HVAC tune-up with refrigerant check $25; whole-house evaporative cooler $150; room evaporative cooler $50; Wi-Fi smart thermostat $50",
+      "whoQualifies": "RPU residential electric customers; matched condenser and coil required; apply within 90 days of purchase",
+      "status": "open (subject to fund availability; may be cancelled at any time)",
+      "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/heat-pump-and-air-conditioning-rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "RPU Weatherization Rebate Program",
+      "runBy": "Riverside Public Utilities",
+      "category": "insulation-air-sealing",
+      "amount": "Attic insulation 10 cents/sq ft (R-19), 15 or 20 cents/sq ft (R-30 or R-38+); exterior wall insulation (R-13+) 15 cents/sq ft; whole house fan $100; solar attic fan $100 (limit 2); electric attic fan $50 (limit 2); full insulated duct replacement (R-6 min) $150; cool roof $0.10/sq ft; ENERGY STAR windows/glass doors $1/sq ft; window film $1/sq ft; solar window screens $1/sq ft",
+      "whoQualifies": "All RPU residential electric customers; apply within 90 days of purchase",
+      "status": "open (subject to fund availability)",
+      "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/weatherization",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "RPU ENERGY STAR and new-technology rebates",
+      "runBy": "Riverside Public Utilities",
+      "category": "appliances",
+      "amount": "ENERGY STAR heat pump water heater $200; heat pump dryer $200; refrigerator $200 with recycling of old unit ($100 without; $50 recycling only); clothes washer $75; dishwasher $50; room AC $50; ceiling fans $25 each (max 4); high-efficiency electric water heater $50",
+      "whoQualifies": "RPU residential electric customers buying new qualifying products",
+      "status": "open",
+      "url": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-star",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SCE Home Performance Plus rebates",
+      "runBy": "CLEAResult for Southern California Edison",
+      "category": "whole-home",
+      "amount": "Attic insulation $1.07/sq ft; wall insulation $1.06/sq ft; heat pump water heaters $500-$1,350; ducted heat pump $667/ton; ductless mini-split $600/ton or $1,144.80/ton; induction cooktop $424",
+      "whoQualifies": "SCE residential electric customers in single-family homes or buildings of up to 4 units; work through program trade allies. The program's main page limits it to Disadvantaged or Low-Income communities, but the rebates page does not mention that limit, so it could not be re-confirmed. Heat pumps must be rated 16 SEER2 or higher. A ducted heat pump must replace a central AC rated 13 SEER (12.4 SEER2) or lower and a gas furnace rated 80% AFUE or lower; a ductless one must replace a gas wall furnace with no blower fan rated 67% AFUE or lower.",
+      "status": "open; the rebates page gives no status or end date",
+      "url": "https://homeperformanceplusca.com/sce/rebates/",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "SoCalGas Home Energy Efficiency Rebate Program (2026)",
+      "runBy": "SoCalGas",
+      "category": "appliances",
+      "amount": "ENERGY STAR furnace (AFUE 92%+) $1.40-$25 per kBTUh; tankless water heater $80-$1,500; storage water heater $300-$575; other gas appliances listed",
+      "whoQualifies": "SoCalGas residential customers installing qualifying gas appliances in an existing home",
+      "status": "open; first-come, first-served until December 31, 2026 or until funds run out",
+      "url": "https://www.socalgas.com/savings/rebates-and-incentives",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "South Coast AQMD GO ZERO single-family heat pump rebate",
+      "runBy": "South Coast Air Quality Management District",
+      "category": "heat-pump",
+      "amount": "Standard $1,000-$2,000 per unit; up to $3,000 in overburdened communities",
+      "whoQualifies": "Single-family homeowners in the South Coast AQMD area (which includes large areas of Riverside and San Bernardino counties, including the Coachella Valley) replacing gas or propane equipment with heat pumps",
+      "status": "closed: reopened August 28, 2026, portal closed September 4, 2026 at 5:00 PM; new single-family and multifamily applications are still not being accepted. AQMD's Governing Board approved Phase 2 on October 2, 2026 for up to $60.2 million; the relaunch is 'forthcoming', with no date given",
+      "url": "https://www.aqmd.gov/go-zero",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "HEEHRA Phase I heat pump rebates (California's IRA Home Electrification and Appliance Rebates)",
+      "runBy": "California Energy Commission, delivered through TECH Clean California",
+      "category": "income-qualified",
+      "amount": "Single-family: up to $8,000 (household income under 80% AMI) or up to $4,000 (80-150% AMI) for a qualifying heat pump HVAC system; multifamily up to $14,000 per unit",
+      "whoQualifies": "Income-qualified owners (or landlords renting to income-qualified households) replacing a non-heat-pump heating system; only through HEEHRA-trained, TECH-certified contractors with a pre-approved reservation",
+      "status": "closed to new applicants: single-family rebates fully reserved statewide since February 24, 2026 (unapproved requests waitlisted; no new income verifications); multifamily fully reserved since September 1, 2026 per TECH",
+      "url": "https://techcleanca.com/incentives/heehrarebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "TECH Clean California single-family heat pump HVAC and heat pump water heater incentives",
+      "runBy": "TECH Clean California (Energy Solutions, under contract with SCE on behalf of California utilities, CPUC oversight)",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "California single-family homes through enrolled contractors",
+      "status": "fully reserved since November 14, 2025; not accepting new reservations",
+      "url": "https://techcleanca.com/incentives/single-family-incentives/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "GoGreen Home Energy Financing",
+      "runBy": "State of California GoGreen Financing program (the page links to the State Treasurer's residential portal); utilities named do not lend",
+      "category": "financing",
+      "amount": "Loan amounts and rates not stated on the page; it advertises below-market rates, extended terms, no property lien, up to 30% of financing for other improvements, and 0% financing for heat pump heating, cooling and water heating in qualifying communities",
+      "whoQualifies": "Owners (and tenants with owner permission) of single-family homes, townhomes, condos, 2-4 unit buildings and manufactured homes on a site-built foundation who are customers of PG&E, SDG&E, SCE, SoCalGas or City of Palo Alto Utilities; customers of other publicly owned utilities 'may finance most measures'",
+      "status": "open (page modified October 6, 2026)",
+      "url": "https://gogreenfinancing.com/residential",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "closed to new applicants (waitlist only): HEEHRA Phase I single-family fully reserved statewide since 2026-02-24 and multifamily since 2026-09-01 (per TECH); HEEHRA Phase II not yet available; HOMES not available as rebates (some HOMES funds pay for no-cost EBD Direct Install retrofits in selected low-income communities)",
+    "programName": "HEEHRA (Home Electrification and Appliance Rebates) and HOMES (Home Owner Managing Energy Savings)",
+    "administrator": "California Energy Commission (HEEHRA Phase I delivered by TECH Clean California; EBD Direct Install run by three regional administrators)",
+    "summary": "California received $590 million in total for Home Energy Rebates ($290 million HEEHRA awarded June 2024; $291 million HOMES approved January 2025). HEEHRA Phase I paid up to $8,000 (under 80% AMI) or $4,000 (80-150% AMI) toward a heat pump HVAC system through TECH-certified contractors; it launched October 2024, paused February 2025, resumed March 2025, was fully reserved in June 2025, reopened October 2025 and was fully reserved again on February 24, 2026. The HOMES award is split between EBD Direct Install ($130.3 million, no-cost retrofits for low-income households, projects must model at least 20% savings) and a statewide Pay for Performance program ($90.8 million) that has not launched (solicitation concept workshop held August 8, 2025). Note: the CEC Q&A still says multifamily HEEHRA rebates are available, but TECH's incentives page says they were fully reserved as of September 1, 2026.",
+    "url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program / LIHEAP - Riverside County",
+      "runBy": "Community Action Partnership of Riverside County (951-955-4900), a CSD local service provider",
+      "summary": "Home weatherization, bill payment help and energy-crisis assistance for income-eligible households in Riverside County.",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "Weatherization Assistance Program - San Bernardino County",
+      "runBy": "Community Action Partnership of San Bernardino County (909-723-1500), a CSD local service provider",
+      "summary": "Home weatherization, energy-crisis help and residential lead-based paint hazard control (per CSD's directory).",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "RPU Energy Savings Assistance Program (with SoCalGas)",
+      "runBy": "Riverside Public Utilities with SoCalGas; installs by RPU contractor Synergy",
+      "summary": "Income-qualified RPU renters and homeowners who first qualify through SoCalGas ESA can get no-cost refrigerator replacement, LED lighting, AC tune-ups, ECM motors, smart thermostat, insulation, weather-stripping, duct sealing and testing, and whole house fans (home size limits apply). Call 1-800-818-4298.",
+      "url": "https://riversideca.gov/utilities/residents/assistance-programs/energy-savings-assistance-program"
+    },
+    {
+      "name": "RPU Mobile-Home and Multi-Family Energy Efficiency Program",
+      "runBy": "Riverside Public Utilities with SoCalGas (contractor Synergy Companies)",
+      "summary": "No-cost measures (refrigerator, smart thermostat, LED lighting, ECM motors, crossover duct replacement for mobile homes) for RPU electric customers in mobile homes or multifamily housing with an active SoCalGas account; subject to funding.",
+      "url": "https://riversideca.gov/utilities/residents/assistance-programs/mobile-home-and-multi-family-energy-efficiency-program"
+    },
+    {
+      "name": "SCE and SoCalGas Energy Savings Assistance (ESA)",
+      "runBy": "Southern California Edison; SoCalGas",
+      "summary": "No-cost efficiency upgrades for households at or below 250% of federal poverty guidelines (e.g., $82,500 for 4 people, June 1, 2026-May 31, 2027) or enrolled in qualifying public programs. SCE's Building Electrification program closed in September 2026 and the ESA Whole Home pilot is closed to new projects and ends with 2026.",
+      "url": "https://www.sce.com/save-money/income-qualified-programs/energy-savings-assistance-program"
+    },
+    {
+      "name": "Farmworker housing energy efficiency and solar",
+      "runBy": "La Cooperativa Campesina de California & MAROMA Energy Services (CSD provider for Riverside and San Diego counties), 833-367-5497",
+      "summary": "Installation of energy-efficiency and weatherization upgrades, rooftop solar and solar water heaters for farmworker housing.",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "Equitable Building Decarbonization Direct Install (Southern California)",
+      "runBy": "County of Los Angeles for the California Energy Commission",
+      "summary": "No-cost retrofits for households up to 80% AMI in focus areas including Moreno Valley, Riverside/Highgrove, Indio, San Bernardino, Hesperia and Victorville/Apple Valley.",
+      "url": "https://socalebd.org/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "California Building Energy Benchmarking Program (AB 802)",
+      "appliesTo": "Large buildings only: commercial buildings over 50,000 sq ft with no residential utility accounts, and multifamily buildings over 50,000 sq ft with 17 or more utility accounts. Does not affect ordinary homeowners.",
+      "summary": "Owners report energy use to the California Energy Commission by June 1 every year.",
+      "url": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    },
+    {
+      "name": "South Coast AQMD Proposed Amended Rules 1111 and 1121 (zero-emission furnaces and water heaters)",
+      "appliesTo": "Would have affected homeowners replacing gas furnaces and water heaters in the South Coast air district; not adopted",
+      "summary": "The AQMD Governing Board voted 7 to 5 on June 6, 2025 not to approve the amendments; previously amended rule language remains in effect, so there is no new zero-emission appliance mandate.",
+      "url": "https://www.aqmd.gov/home/rules-compliance/rules/scaqmd-rule-book/proposed-rules/rule-1111-and-rule-1121"
+    }
+  ],
+  "notes": "No city or county time-of-sale energy disclosure, benchmarking or building performance rule for homes was found for Riverside or the Inland Empire in the official pages reviewed. The Inland Regional Energy Network (I-REN) runs a Residential Incentive Finder for Riverside and San Bernardino county residents but states it does not administer the residential programs it lists; its own programs target public agencies, workforce training and codes. RPU's rebate amounts are modest (e.g., attic insulation 10-20 cents/sq ft) compared with SCE's Home Performance Plus ($1.07/sq ft), but Home Performance Plus is limited to SCE customers in disadvantaged or low-income communities. We found no free in-home audit open to all RPU customers on RPU's rebate, assistance or conservation pages; RPU's no-cost assessments come through the income-qualified ESAP. Federal home-efficiency tax credits are over: the IRS says the Energy Efficient Home Improvement Credit (25C) covered improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) is not available for property placed in service after December 31, 2025.",
+  "sources": [
+    {
+      "label": "Census Bureau July 2023 CBSA delineation file",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    },
+    {
+      "label": "RPU Weatherization rebates",
+      "href": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/weatherization"
+    },
+    {
+      "label": "RPU Heat Pump and Air Conditioning rebates",
+      "href": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/heat-pump-and-air-conditioning-rebates"
+    },
+    {
+      "label": "RPU ENERGY STAR rebates",
+      "href": "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-star"
+    },
+    {
+      "label": "RPU 2026 residential rebate application (PDF)",
+      "href": "https://www.riversideca.gov/utilities/sites/riversideca.gov.utilities/files/RPU_Residential%20Rebates_Form_EnglishSpanish_2026_FIllable.pdf"
+    },
+    {
+      "label": "RPU Energy Savings Assistance Program",
+      "href": "https://riversideca.gov/utilities/residents/assistance-programs/energy-savings-assistance-program"
+    },
+    {
+      "label": "RPU Mobile-Home and Multi-Family program",
+      "href": "https://riversideca.gov/utilities/residents/assistance-programs/mobile-home-and-multi-family-energy-efficiency-program"
+    },
+    {
+      "label": "RPU Our Energy - About",
+      "href": "https://riversideca.gov/utilities/residents/our-energy/about"
+    },
+    {
+      "label": "Moreno Valley Utility",
+      "href": "https://www.moval.org/mvu/"
+    },
+    {
+      "label": "SCE About (service area)",
+      "href": "https://www.sce.com/about-sce"
+    },
+    {
+      "label": "SCE ESA and program notices",
+      "href": "https://www.sce.com/save-money/income-qualified-programs/energy-savings-assistance-program"
+    },
+    {
+      "label": "SCE Rebates & SCE Marketplace",
+      "href": "https://www.sce.com/save-money/rebates-financial-assistance/rebates-sce-marketplace"
+    },
+    {
+      "label": "Home Performance Plus (SCE)",
+      "href": "https://homeperformanceplusca.com/sce/"
+    },
+    {
+      "label": "Home Performance Plus rebates",
+      "href": "https://homeperformanceplusca.com/sce/rebates/"
+    },
+    {
+      "label": "SoCalGas Rebates & Incentives",
+      "href": "https://www.socalgas.com/savings/rebates-and-incentives"
+    },
+    {
+      "label": "SoCalGas ESA",
+      "href": "https://www.socalgas.com/billing-payment/assistance-programs/energy-savings-assistance-program"
+    },
+    {
+      "label": "SoCalGas About Us",
+      "href": "https://www.socalgas.com/about-us"
+    },
+    {
+      "label": "Southwest Gas About Us",
+      "href": "https://www.swgas.com/en/about-us"
+    },
+    {
+      "label": "Imperial Irrigation District - Energy",
+      "href": "https://www.iid.com/energy"
+    },
+    {
+      "label": "I-REN Residential Incentive Finder",
+      "href": "https://iren.gov/190/Residential-Incentive-Finder"
+    },
+    {
+      "label": "South Coast AQMD GO ZERO",
+      "href": "https://www.aqmd.gov/go-zero"
+    },
+    {
+      "label": "South Coast AQMD release Aug 28, 2026",
+      "href": "https://www.aqmd.gov/docs/default-source/news-archive/2026/go-zero-incentive-program-for-zero-emission-heat-pumps-re-opens-august-28-2026.pdf"
+    },
+    {
+      "label": "GO ZERO portal closure notice",
+      "href": "https://gozeroprogram.com/"
+    },
+    {
+      "label": "South Coast AQMD PAR 1111/1121 status",
+      "href": "https://www.aqmd.gov/home/rules-compliance/rules/scaqmd-rule-book/proposed-rules/rule-1111-and-rule-1121"
+    },
+    {
+      "label": "CEC IRA residential energy rebate programs",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs"
+    },
+    {
+      "label": "TECH Clean California HEEHRA rebates",
+      "href": "https://techcleanca.com/incentives/heehrarebates/"
+    },
+    {
+      "label": "TECH Clean California incentives updates",
+      "href": "https://techcleanca.com/incentives/"
+    },
+    {
+      "label": "TECH Clean California single-family incentives",
+      "href": "https://techcleanca.com/incentives/single-family-incentives/"
+    },
+    {
+      "label": "CEC EBD Statewide Direct Install",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/equitable-building-decarbonization-program/ebd-statewide-direct"
+    },
+    {
+      "label": "SoCal EBD",
+      "href": "https://socalebd.org/"
+    },
+    {
+      "label": "LA County ISD EBD release",
+      "href": "https://isd.lacounty.gov/no-cost-home-energy-upgrades/"
+    },
+    {
+      "label": "Home Energy Score California FAQ",
+      "href": "https://www.homescoreca.org/faq"
+    },
+    {
+      "label": "GoGreen Home Energy Financing",
+      "href": "https://gogreenfinancing.com/residential"
+    },
+    {
+      "label": "CSD Weatherization Assistance Program",
+      "href": "https://csd.ca.gov/Pages/Residential-Energy-Efficiency.aspx"
+    },
+    {
+      "label": "CSD Directory of Service Providers (CSV)",
+      "href": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "label": "CEC Building Energy Benchmarking Program",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    },
+    {
+      "label": "IRS 25C credit",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS 25D credit",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    }
+  ]
+}

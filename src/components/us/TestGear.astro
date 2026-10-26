@@ -1,0 +1,21 @@
+---
+/**
+ * Links from a US test guide to the matching US gear guides (/us/products/<category>/).
+ * Category slugs follow src/data/products.json.
+ */
+interface Props {
+  heading?: string;
+  cats: { slug: string; label: string }[];
+}
+const { heading = 'Gear guides that pair with this test', cats } = Astro.props;
+---
+
+<aside class="card gear" aria-label={heading}>
+  <p class="gh">{heading}</p>
+  <ul class="linkrow">
+    {cats.map((c) => (
+      <li><a href={`/us/products/${c.slug}/`}>{c.label} →</a></li>
+    ))}
+  </ul>
+  <p class="gnote"><a href="/us/products/">All gear guides →</a></p>
+</aside>

@@ -1,0 +1,299 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import LeadFormUS from '../../../../components/us/LeadFormUS.astro';
+import TestStyles from '../../../../components/us/TestStyles.astro';
+import { breadcrumbSchema } from '../../../../lib/schema';
+import { ogFor } from '../../../../lib/photos';
+import { US_VERIFIED } from '../../../../lib/us/data';
+import { screenerFacts, SUMMARY_STATES, stateName, ZONE_SOURCES } from '../../../../lib/us/tests';
+import { screenUsTests, renderResultHtml, ZONE_TEXT, type ScreenerInput } from '../../../../lib/us/screener';
+
+const title = 'Which home tests do you need? A US screener for radon, lead, mold and more | AuditYourHome';
+const description =
+  'Answer a few questions about your home’s age, location, water, fuel and plans, and get the specialty tests to consider, each with the EPA, CPSC or DOE reason.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Testing guide', path: '/us/tests/' },
+    { name: 'Test screener', path: '/us/tests/screener/' },
+  ]),
+];
+
+const facts = screenerFacts(US_VERIFIED);
+const DEFAULTS: ScreenerInput = {
+  built: 'unsure', metro: '', radonZone: 0, state: '', water: 'public',
+  fuel: false, garage: false, moisture: false, vermiculite: false, household: false, plans: [],
+};
+const initialHtml = renderResultHtml(DEFAULTS, screenUsTests(DEFAULTS, facts), facts);
+const factsJson = JSON.stringify(facts).replace(/</g, '\\u003c');
+
+const otherStates = Object.keys(facts.states)
+  .filter((st) => !SUMMARY_STATES.includes(st))
+  .sort((a, b) => stateName(a).localeCompare(stateName(b)));
+
+const builtOpts = [
+  { v: 'pre1978', l: 'Before 1978' },
+  { v: '1978-1989', l: '1978–1989' },
+  { v: '1990plus', l: '1990 or later' },
+  { v: 'unsure', l: 'Not sure' },
+];
+const hasOpts = [
+  { v: 'fuel', l: 'Gas, oil, propane or wood-burning appliances, or a fireplace' },
+  { v: 'garage', l: 'An attached garage' },
+  { v: 'moisture', l: 'Moisture, leaks or a musty odor' },
+  { v: 'vermiculite', l: 'Vermiculite insulation in the attic or walls' },
+  { v: 'household', l: 'Young children, someone pregnant or nursing, or older adults' },
+];
+const planOpts = [
+  { v: 'reno', l: 'Renovating or remodeling' },
+  { v: 'sale', l: 'Buying or selling' },
+  { v: 'sealing', l: 'Air sealing or insulation' },
+  { v: 'hvac', l: 'Replacing heating or cooling' },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
+  <TestStyles />
+  <div class="container ust">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Test screener</span>
+    </nav>
+    <div class="page-hero">
+      <p class="eyebrow">Free tool · about a minute · verified {US_VERIFIED}</p>
+      <h1>Which tests does your home need?</h1>
+      <p class="lede measure">
+        Radon, carbon monoxide, lead, asbestos, mold and well water each have their own triggers: the
+        year the house was built, where it is, its water and fuel, and what you’re planning. Answer a
+        few questions and get the tests to consider, each with the reason from EPA, CPSC or DOE.
+      </p>
+    </div>
+
+    <div class="sgrid">
+      <form class="card card-pad sform" id="usScreener" novalidate data-defaults={JSON.stringify(DEFAULTS)} data-clarity-mask="True">
+        <fieldset class="q">
+          <legend class="qlabel">When was your home built?</legend>
+          <div class="pills">
+            {builtOpts.map((o) => (
+              <label class="radio-pill"><input type="radio" name="built" value={o.v} checked={o.v === DEFAULTS.built} /><span>{o.l}</span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="q">
+          <label class="qlabel" for="s-metro">Metro area <span class="optional">(optional)</span></label>
+          <select id="s-metro" name="metro">
+            <option value="">Not listed, or skip</option>
+            {facts.metros.map((m) => <option value={m.slug}>{m.name}</option>)}
+          </select>
+          <p class="hint" id="metro-note" hidden></p>
+        </div>
+
+        <fieldset class="q" id="zone-pick">
+          <legend class="qlabel">Your county’s EPA radon zone <span class="optional">(optional)</span></legend>
+          <div class="pills">
+            <label class="radio-pill"><input type="radio" name="zone" value="0" checked /><span>Don’t know</span></label>
+            {[1, 2, 3].map((z) => (
+              <label class="radio-pill" title={ZONE_TEXT[z]}><input type="radio" name="zone" value={String(z)} /><span>Zone {z}</span></label>
+            ))}
+          </div>
+          <p class="hint">Look up your county on <a href={ZONE_SOURCES.radon.href} rel="noopener">EPA’s county list&nbsp;↗</a>. The zone never decides whether to test.</p>
+        </fieldset>
+
+        <div class="q">
+          <label class="qlabel" for="s-state">State</label>
+          <select id="s-state" name="state">
+            <option value="">Choose a state</option>
+            <optgroup label="Rules checked in full">
+              {SUMMARY_STATES.map((st) => <option value={st}>{stateName(st)}</option>)}
+            </optgroup>
+            <optgroup label="Other states">
+              {otherStates.map((st) => <option value={st}>{stateName(st)}</option>)}
+            </optgroup>
+          </select>
+        </div>
+
+        <fieldset class="q">
+          <legend class="qlabel">Where does your water come from?</legend>
+          <div class="pills">
+            <label class="radio-pill"><input type="radio" name="water" value="public" checked /><span>Public water</span></label>
+            <label class="radio-pill"><input type="radio" name="water" value="well" /><span>Private well</span></label>
+            <label class="radio-pill"><input type="radio" name="water" value="unsure" /><span>Not sure</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend class="qlabel">Does your home have any of these? <span class="optional">(check all that apply)</span></legend>
+          <div class="checks">
+            {hasOpts.map((o) => (
+              <label class="check"><input type="checkbox" name="has" value={o.v} /><span>{o.l}</span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend class="qlabel">Planning any of these? <span class="optional">(check all that apply)</span></legend>
+          <div class="checks">
+            {planOpts.map((o) => (
+              <label class="check"><input type="checkbox" name="plan" value={o.v} /><span>{o.l}</span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <button class="btn btn-primary" type="submit">Show my tests</button>
+        <p class="meta">Runs entirely in your browser. Your answers aren’t stored or sent anywhere.</p>
+      </form>
+
+      <div class="sres" id="usScreenerResults" aria-live="polite" data-clarity-mask="True">
+        <p class="example" id="example-note">Example: the results for the answers already filled in. Change any answer and they update.</p>
+        <div id="usScreenerOut" set:html={initialHtml}></div>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="card card-pad">The screener needs JavaScript to update. Every test has a full guide on the <a href="/us/tests/">testing guide</a> page.</p>
+    </noscript>
+
+    <section class="sec prose" aria-labelledby="how-h">
+      <h2 id="how-h">How the screener decides</h2>
+      <ul>
+        <li><strong>Radon</strong> is on every list, because EPA says every home should be tested. Your radon zone adds context but never takes it off the list.</li>
+        <li><strong>Carbon monoxide</strong> alarms are recommended for every home; fuel-burning appliances, a fireplace or an attached garage move them to the top.</li>
+        <li><strong>Lead</strong> comes up for homes built before 1978, or when you’re not sure of the year.</li>
+        <li><strong>Asbestos and vermiculite</strong> come up for homes built before 1990, the end of the period when Libby, Montana vermiculite dominated U.S. sales, or whenever you’ve seen vermiculite.</li>
+        <li><strong>Mold</strong> comes up when you report moisture or a musty odor; <strong>well water</strong> when you’re on a private well.</li>
+        <li>Energy work adds tests that protect it: a <strong>combustion safety test</strong> when air sealing a home with fuel-burning appliances, and a <strong>Manual J</strong> when replacing heating or cooling.</li>
+      </ul>
+      <p class="small">
+        State rules come from the 20 jurisdictions we checked in full plus national reviews of radon and
+        mold laws, verified {US_VERIFIED}. This is a screener, not a diagnosis: a certified professional’s
+        test is what tells you the answer for your home.
+      </p>
+    </section>
+
+    <div class="lead-wrap">
+      <LeadFormUS
+        heading="Want help booking the right tests?"
+        sub="Email us your ZIP code and the list the screener gave you. A person reads every message and replies with the certified pros and programs that serve your area."
+        context="us-screener"
+      />
+    </div>
+  </div>
+  <script type="application/json" id="us-screener-facts" set:html={factsJson}></script>
+  <script>
+    import { screenUsTests, renderResultHtml, type ScreenerFacts, type ScreenerInput, type Built, type Water, type Plan } from '../../../../lib/us/screener';
+
+    const factsEl = document.getElementById('us-screener-facts');
+    const form = document.getElementById('usScreener') as HTMLFormElement | null;
+    const out = document.getElementById('usScreenerOut');
+    const panel = document.getElementById('usScreenerResults');
+    const example = document.getElementById('example-note');
+    const metroSel = document.getElementById('s-metro') as HTMLSelectElement | null;
+    const stateSel = document.getElementById('s-state') as HTMLSelectElement | null;
+    const zonePick = document.getElementById('zone-pick');
+    const metroNote = document.getElementById('metro-note');
+
+    if (factsEl && form && out && metroSel && stateSel) {
+      const facts = JSON.parse(factsEl.textContent || '{}') as ScreenerFacts;
+      const checked = (name: string) =>
+        Array.from(form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)).map((i) => i.value);
+
+      const read = (): ScreenerInput => {
+        const has = new Set(checked('has'));
+        return {
+          built: (checked('built')[0] ?? 'unsure') as Built,
+          metro: metroSel.value,
+          radonZone: Number(checked('zone')[0] ?? 0) as 0 | 1 | 2 | 3,
+          state: stateSel.value,
+          water: (checked('water')[0] ?? 'public') as Water,
+          fuel: has.has('fuel'),
+          garage: has.has('garage'),
+          moisture: has.has('moisture'),
+          vermiculite: has.has('vermiculite'),
+          household: has.has('household'),
+          plans: checked('plan') as Plan[],
+        };
+      };
+
+      const syncMetro = () => {
+        const m = facts.metros.find((x) => x.slug === metroSel.value);
+        if (zonePick) zonePick.hidden = !!m;
+        if (metroNote) {
+          metroNote.hidden = !m;
+          metroNote.textContent = m
+            ? `${m.county ?? m.name}: EPA radon Zone ${m.radonZone ?? '?'}${m.climateZone ? `, IECC climate zone ${m.climateZone}` : ''}. Other counties in the metro can differ.`
+            : '';
+        }
+      };
+
+      const render = () => {
+        const input = read();
+        out.innerHTML = renderResultHtml(input, screenUsTests(input, facts), facts);
+      };
+
+      metroSel.addEventListener('change', () => {
+        const m = facts.metros.find((x) => x.slug === metroSel.value);
+        if (m && m.st) stateSel.value = m.st;
+        syncMetro();
+      });
+      form.addEventListener('change', () => {
+        if (example) example.hidden = true;
+        render();
+      });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (example) example.hidden = true;
+        render();
+        panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // a back/forward visit can restore old answers: show results for what's actually on screen
+      syncMetro();
+      render();
+      if (example && form.dataset.defaults && JSON.stringify(read()) !== JSON.stringify(JSON.parse(form.dataset.defaults))) {
+        example.hidden = true;
+      }
+    }
+  </script>
+</Base>
+
+
+
+<style is:global>
+  .ust .sgrid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 22px; align-items: start; margin-bottom: 16px; }
+  @media (max-width: 900px) { .ust .sgrid { grid-template-columns: 1fr; } }
+  .ust .sform fieldset { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
+  .ust .sform .q { margin-bottom: 20px; }
+  .ust .sform .qlabel { display: block; font-family: var(--body); font-weight: 700; font-size: 15px; margin: 0 0 8px; padding: 0; color: var(--ink); }
+  .ust .sform .optional { font-weight: 400; color: var(--faint); font-size: 13px; }
+  .ust .sform .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ust .sform .hint { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+  .ust .sform .checks { display: grid; gap: 8px; }
+  .ust .sform .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 500; font-size: 14.5px; margin: 0; cursor: pointer; line-height: 1.4; }
+  .ust .sform .check input { width: 18px; height: 18px; margin: 1px 0 0; flex-shrink: 0; accent-color: var(--ink); }
+  .ust .sform .meta { margin: 10px 0 0; }
+  .ust .sform select { max-width: 100%; }
+  .ust .sres { min-width: 0; scroll-margin-top: 90px; }
+  .ust .sres .example { font-size: 13px; color: var(--muted); background: var(--warn-tint); border-radius: 8px; padding: 8px 12px; margin: 0 0 12px; }
+  .ust .sres .rhead { margin-bottom: 6px; }
+  .ust .sres .rtitle { font-size: 26px; margin: 0 0 4px; }
+  .ust .sres .rfor { font-size: 14px; color: var(--muted); margin: 0; }
+  .ust .sres .rstate { font-size: 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; margin: 10px 0 4px; }
+  .ust .sres .lvl { font-family: var(--mono); font-size: 12.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); margin: 18px 0 8px; }
+  .ust .sres .lvl span { text-transform: none; letter-spacing: 0; font-family: var(--body); font-weight: 400; color: var(--faint); font-size: 13px; margin-left: 6px; }
+  @media (max-width: 640px) { .ust .sres .lvl span { display: block; margin: 2px 0 0; } }
+  .ust .sflag { padding: 14px 16px; margin-bottom: 10px; }
+  .ust .sflag.lvl-start { border-left: 4px solid var(--heat); }
+  .ust .sflag.lvl-next { border-left: 4px solid var(--warn); }
+  .ust .sflag.lvl-good { border-left: 4px solid var(--line-strong); }
+  .ust .sflag h4 { margin: 0 0 6px; font-size: 17px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .ust .sflag h4 a { color: var(--ink); text-decoration: none; }
+  .ust .sflag h4 a:hover { color: var(--heat-deep); text-decoration: underline; }
+  .ust .sflag .why { margin: 0 0 4px; padding-left: 18px; font-size: 14.5px; }
+  .ust .sflag .why li { margin-bottom: 4px; }
+  .ust .sflag .cite { margin: 6px 0 4px; }
+  .ust .sflag .go { margin: 0; font-size: 14px; }
+  .ust .sflag .go a { color: var(--heat-deep); font-weight: 600; text-decoration: none; }
+  .ust .sflag .go a:hover { text-decoration: underline; }
+  .ust .sres .rfoot { font-size: 14px; color: var(--muted); margin: 12px 0 0; }
+</style>

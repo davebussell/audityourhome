@@ -1,0 +1,300 @@
+---
+/**
+ * What a US home energy audit costs. No official national price exists (federal.json auditCosts),
+ * so this shows what the audit programs in the 26 metro records publish, verified October 12, 2026.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import FaqList from '../../components/us/FaqList.astro';
+import LeadFormUS from '../../components/us/LeadFormUS.astro';
+import StatusLine from '../../components/us/StatusLine.astro';
+import CreditsEnded from '../../components/us/CreditsEnded.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { METROS, FEDERAL, US_VERIFIED } from '../../lib/us/data';
+import { auditProgramsSorted, auditTags } from '../../lib/us/metro-view';
+import { trivialFreeText } from '../../lib/us/metro-text';
+
+const n = METROS.length;
+const byMetro = METROS.map((m) => ({ m, programs: auditProgramsSorted(m) }));
+const all = byMetro.flatMap((x) => x.programs.map((p) => ({ ...p, metro: x.m })));
+const count = (k: string) => all.filter((p) => p.cost.kind === k).length;
+const kinds = { free: count('free'), fee: count('fee'), discount: count('discount'), varies: count('varies'), unpublished: count('unpublished') };
+const liveFree = all.filter((p) => p.live && p.cost.kind === 'free').length;
+
+const costs = FEDERAL.auditCosts;
+const costSrc = (re: RegExp) => (costs.sources as any[]).find((s) => re.test(s.href));
+const doeHes = costSrc(/home-energy-score-faqs/);
+const ect = costSrc(/energizect/);
+const foe = costSrc(/focusonenergy/);
+const gefa = costSrc(/energyrebates\.georgia/);
+const doeAssess = costSrc(/professional-home-energy-assessments/);
+
+/** link to a program in the records, by metro slug and name fragment */
+const prog = (slug: string, frag: string) => all.find((p) => p.metro.slug === slug && p.name.toLowerCase().includes(frag.toLowerCase()));
+const fees = [
+  { p: prog('phoenix', 'SRP Home Energy Assessment'), where: 'Phoenix', text: '$49 for an in-home visit (free if income-qualified); the virtual visit is free' },
+  { p: prog('minneapolis', 'Home Energy Squad'), where: 'Minneapolis–St. Paul', text: '$100 Energy Planner visit (pre-2000 homes, adds a blower door test) or $70 Energy Saver visit; Minneapolis pays the fee for all households while funds last' },
+  { p: prog('baltimore', 'Home Performance with ENERGY STAR'), where: 'Baltimore', text: '$100 (“a $400 value”); no cost depending on income' },
+  { p: prog('washington-dc', 'Home Performance with ENERGY STAR'), where: 'Maryland suburbs of DC', text: '$100 for homes up to 3,000 sq ft with one combustion appliance zone; no cost for qualifying moderate-income customers' },
+  { p: prog('denver', 'Squad, Squad Plus'), where: 'Denver', text: 'Squad Plus, with a blower door test, combustion safety test and infrared, is $100 “for a limited time”; the standard visit is free for a limited time' },
+];
+const rebated = [
+  { p: prog('atlanta', 'Home Energy Assessment rebate'), where: 'Atlanta', text: 'Georgia Power rebates 50% of the contractor’s price, up to $150, once a calendar year' },
+  { p: prog('denver', 'Home Energy Audit rebate'), where: 'Denver', text: 'Xcel rebates 60%: up to $100 for a standard audit, $160 with a blower door and $200 with infrared' },
+  { p: prog('phoenix', 'SRP Home Energy Audit discount'), where: 'Phoenix', text: 'SRP takes $100 off an in-person audit by a BPI-certified contractor' },
+  { p: prog('detroit', 'DTE Home Energy Assessment'), where: 'Detroit', text: 'DTE pays $50 for the blower-door pre-test, plus $75–$150 for measured air-leakage cuts of 10–40%' },
+  { p: prog('los-angeles', 'Home Energy Score California'), where: 'California metros', text: 'a $250 rebate toward a Home Energy Score for customers of an investor-owned utility or community choice aggregator' },
+];
+const austin = prog('austin', 'ECAD');
+
+const title = 'What a home energy audit costs in the U.S. (2026): real prices by metro | AuditYourHome';
+const description = `There’s no official national price for a home energy audit. Here is what ${all.length} audit programs in the ${n} largest U.S. metros publish, from free utility assessments to $49–$100 fees and contractor prices with rebates. Verified ${US_VERIFIED}.`;
+
+const faqs = [
+  {
+    q: 'How much does a home energy audit cost in 2026?',
+    a: `No DOE, EPA or HUD page states a national typical price, and DOE says Home Energy Score fees vary across the country. Across the ${n} largest U.S. metros, ${kinds.free} of the ${all.length} audit programs in our research list the assessment as free (some only for income-qualified households or as an online tool), and the published fees we found run from $49 (SRP’s in-home visit in Phoenix) to $100 (Home Performance with ENERGY STAR in Maryland, Minnesota’s Energy Planner visit and Xcel’s Squad Plus in Colorado). For private audits, Nicor Gas says an energy audit may cost between $100 and $500 or more, and Austin Energy estimates about $200–$300 for a typical home of 1,800 sq ft or less.`,
+  },
+  {
+    q: 'Why do some audits cost nothing?',
+    a: 'Utility and state efficiency programs commonly pay for most or all of an assessment, and many of their rebates start from it. For lower-income households, the federal Weatherization Assistance Program pays for an audit and the work that follows; state offices describe it as provided at no cost.',
+  },
+  {
+    q: 'Is a free utility assessment as thorough as a paid audit?',
+    a: 'It varies by program, so ask what will be measured. PSEG Long Island’s free assessment includes a thermal scan and a blower door test, while Consumers Energy’s free analysis page doesn’t describe diagnostic testing. Some programs price the tests in tiers: Minnesota’s $100 Energy Planner visit adds a blower door test to the $70 visit, and Xcel’s Colorado audit rebate pays more for audits with a blower door ($160) or infrared ($200).',
+  },
+  {
+    q: 'Can I claim a home energy audit on my taxes?',
+    a: 'Not for 2026. The federal credit of up to $150 for a home energy audit, part of the 25C credit, doesn’t apply to audits paid for or done after December 31, 2025. An audit done in 2025 is claimed on the 2025 return with Form 5695.',
+  },
+  {
+    q: 'Does the assessment for a federal HOMES rebate cost anything?',
+    a: 'It may. Georgia tells homeowners to ask their contractor about any assessment fees first, and Wisconsin’s HOMES program offers low-income households up to $500 toward the assessment. Only some states have launched HOMES; check your state’s page.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'What an audit costs', path: '/us/cost/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>What an audit costs</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Cost guide · verified {US_VERIFIED}</p>
+        <h1>What a home energy audit costs in the U.S.</h1>
+        <p class="lede measure">
+          There’s no official national price: DOE, EPA and HUD don’t publish one, and DOE says Home Energy Score fees vary
+          across the country. So here is what programs actually charge in the {n} largest metros. Many utility and state
+          assessments are free, a few charge <strong>$49–$100</strong>, and some utilities pay back part of a private audit.
+        </p>
+      </div>
+      <Photo name="energy-bill-analysis" eager />
+    </div>
+
+    <div class="tiles">
+      <div class="tile card"><span class="big free">{kinds.free}</span><span>programs list the assessment as free ({liveFree} of them open now)</span></div>
+      <div class="tile card"><span class="big">{kinds.fee}</span><span>charge a set fee</span></div>
+      <div class="tile card"><span class="big">{kinds.discount}</span><span>let a contractor set the price, then rebate part of it</span></div>
+      <div class="tile card"><span class="big">{kinds.varies + kinds.unpublished}</span><span>don’t publish a price or leave it to the provider</span></div>
+    </div>
+    <p class="small tile-note">Out of {all.length} audit programs listed in our {n} metro guides. Online tools and income-qualified programs are included and labelled in the tables below.</p>
+
+    <section class="sec" id="fees">
+      <h2>Published fees</h2>
+      <ul class="plist">
+        {fees.filter((f) => f.p).map((f) => (
+          <li>
+            <strong>{f.p!.name}</strong> <span class="where">{f.where}</span>
+            <span class="txt">{f.text}.</span>
+            <span class="meta">{f.p!.url && <a href={f.p!.url} rel="noopener" target="_blank">Official page&nbsp;↗</a>} · <a href={`/us/cities/${f.p!.metro.slug}/`}>{f.p!.metro.data.name} guide</a></span>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="h2b">Contractor prices with a utility rebate</h2>
+      <ul class="plist">
+        {rebated.filter((f) => f.p).map((f) => (
+          <li>
+            <strong>{f.p!.name}</strong> <span class="where">{f.where}</span>
+            <span class="txt">{f.text}.</span>
+            <span class="meta">{f.p!.url && <a href={f.p!.url} rel="noopener" target="_blank">Official page&nbsp;↗</a>} · <a href={`/us/cities/${f.p!.metro.slug}/`}>{f.p!.metro.data.name} guide</a></span>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="h2b">What private audits cost</h2>
+      <p class="measure">
+        Few official sources give a price for a private audit. Two in our research do: Nicor Gas, in the Chicago area, says an energy
+        audit “may cost between $100 and $500 or more,” and Austin Energy estimates about $200–$300 for the audit Austin requires
+        at most home sales, for a typical single-family home of 1,800 sq ft or less with one A/C system.
+        {austin?.url && <a href={austin.url} rel="noopener" target="_blank">Austin Energy&nbsp;↗</a>}
+        <a href="/us/cities/chicago/">Chicago guide</a> · <a href="/us/cities/austin/">Austin guide</a>
+      </p>
+
+      <h2 class="h2b">Elsewhere in the country</h2>
+      <ul class="plist">
+        <li>
+          <strong>Energize Connecticut Home Energy Solutions</strong>
+          <span class="txt">A $40 copay from April 1, 2026, for a visit with a blower door test, up to seven hours of air sealing and a written report (about $1,000 in services on average); no cost for households under 60% of state median income.</span>
+          <span class="meta">{ect && <a href={ect.href} rel="noopener" target="_blank">Energize Connecticut&nbsp;↗</a>}</span>
+        </li>
+        <li>
+          <strong>Federal HOMES rebate assessments</strong>
+          <span class="txt">May carry a fee: Georgia tells homeowners to ask their contractor about assessment fees first, and Wisconsin’s HOMES program offers low-income households up to $500 toward the assessment.</span>
+          <span class="meta">{gefa && <a href={gefa.href} rel="noopener" target="_blank">Georgia&nbsp;↗</a>} {foe && <span>· <a href={foe.href} rel="noopener" target="_blank">Focus on Energy&nbsp;↗</a></span>}</span>
+        </li>
+        <li>
+          <strong>Weatherization Assistance Program</strong>
+          <span class="txt">For eligible lower-income households, the audit and the work that follows are provided at no cost.</span>
+          <span class="meta"><a href="/us/programs/weatherization-assistance-program/">Our guide</a></span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="credits-wrap"><CreditsEnded /></div>
+
+    <section class="sec" id="by-metro">
+      <h2>Every audit program, by metro</h2>
+      <p class="measure">
+        Prices, inclusions and statuses as each program published them on {US_VERIFIED}, open programs first. A free visit
+        isn’t always a diagnostic audit, so check what’s included. Pick a metro, or
+        <button type="button" class="linkish" data-toggle-all>open all {n}</button>.
+      </p>
+      <nav class="jump" aria-label="Metros">
+        {byMetro.map(({ m }) => <a href={`#cost-${m.slug}`}>{m.data.name}</a>)}
+      </nav>
+
+      {byMetro.map(({ m, programs }) => (
+        <details class="metro" id={`cost-${m.slug}`}>
+          <summary>
+            <span class="mname">{m.data.name}</span>
+            <span class="st">{(m.data.states ?? []).join(' · ')}</span>
+            <span class="msum">
+              {programs.length} program{programs.length === 1 ? '' : 's'} · {programs.filter((p) => p.live && p.cost.kind === 'free').length} free and open
+            </span>
+          </summary>
+          <p class="small mlink"><a href={`/us/cities/${m.slug}/`}>{m.data.name} guide: rebates, utilities and local rules →</a></p>
+          <div class="tablewrap card">
+            <table class="stack" aria-label={`Home energy audit programs in the ${m.data.name} metro`}>
+              <thead>
+                <tr><th scope="col">Program</th><th scope="col">Published cost</th><th scope="col">What’s included</th><th scope="col">Status</th></tr>
+              </thead>
+              <tbody>
+                {programs.map((p) => (
+                  <tr>
+                    <td data-label="Program">
+                      {p.url ? <a href={p.url} rel="noopener" target="_blank">{p.name}&nbsp;↗</a> : p.name}
+                      {p.runBy && <span class="by">{p.runBy}</span>}
+                      {auditTags(p).length > 0 && <span class="tags">{auditTags(p).join(' · ')}</span>}
+                    </td>
+                    <td data-label="Published cost">
+                      <span class:list={['cost', { free: p.cost.kind === 'free' }]}>{p.cost.label}</span>
+                      {p.costText && p.costText.trim() !== p.cost.label && !(p.cost.kind === 'free' && trivialFreeText(p.costText)) && <span class="cost-src">{p.costText}</span>}
+                    </td>
+                    <td data-label="What’s included" class="inc">{p.whatYouGet ?? 'Not described'}</td>
+                    <td data-label="Status"><StatusLine text={p.statusText} chip={p.chip} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      ))}
+      <p class="small">
+        Sources: each program’s official page, linked above, and the sources on each metro guide.
+        {doeHes && <> National context: <a href={doeHes.href} rel="noopener" target="_blank">DOE Home Energy Score FAQ&nbsp;↗</a></>}
+        {doeAssess && <> · <a href={doeAssess.href} rel="noopener" target="_blank">DOE Energy Saver&nbsp;↗</a></>}
+      </p>
+    </section>
+
+    <FaqList faqs={faqs} />
+
+    <div class="lf-wrap">
+      <LeadFormUS heading="Got a quote and not sure about it?" sub="Email us your ZIP code, the quote and what it includes. A person reads every message and replies with the programs and certified auditors that serve your area." context="us-cost" />
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Open a metro's table when the address points at it, and let readers open or close all at once.
+  const metros = () => [...document.querySelectorAll<HTMLDetailsElement>('details.metro')];
+  function openFromHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = id ? document.getElementById(id) : null;
+    if (el instanceof HTMLDetailsElement) el.open = true;
+  }
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+  const toggle = document.querySelector<HTMLButtonElement>('[data-toggle-all]');
+  toggle?.addEventListener('click', () => {
+    const all = metros();
+    const open = !all.every((d) => d.open);
+    all.forEach((d) => (d.open = open));
+    toggle.textContent = open ? 'close all' : `open all ${all.length}`;
+  });
+</script>
+
+<style>
+  .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 420px) { .tiles { grid-template-columns: 1fr; } }
+  .tile { padding: 16px 18px; display: grid; gap: 4px; align-content: start; font-size: 14px; color: var(--muted); box-shadow: none; }
+  .tile .big { font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1.05; color: var(--ink); }
+  .tile .big.free { color: var(--pine); }
+  .tile-note { margin: 10px 0 0; }
+
+  .sec { padding: 36px 0 0; scroll-margin-top: 80px; }
+  .sec > h2 { font-size: clamp(24px, 3vw, 30px); }
+  .h2b { font-size: 22px !important; margin-top: 30px; }
+  .plist { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; max-width: 900px; }
+  .plist li { display: grid; gap: 3px; padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .plist strong { font-size: 15.5px; line-height: 1.35; }
+  .plist .where { font-family: var(--mono); font-size: 11.5px; color: var(--heat-deep); letter-spacing: 0.03em; }
+  .plist .txt { font-size: 14.5px; color: var(--muted); }
+  .plist .meta a { color: var(--steel); }
+  .credits-wrap { margin-top: 30px; }
+
+  .jump { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 14px 0 6px; }
+  .jump a { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--ink); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 4px 12px; background: var(--card); }
+  .jump a:hover { border-color: var(--ink); }
+  .metro { border-bottom: 1px solid var(--line); scroll-margin-top: 80px; }
+  .metro summary {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 14px 28px 14px 0; cursor: pointer;
+    list-style: none; position: relative;
+  }
+  .metro summary::-webkit-details-marker { display: none; }
+  .metro summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-family: var(--mono); font-size: 18px; color: var(--heat); }
+  .metro[open] summary::after { content: "–"; }
+  .mname { font-family: var(--display); font-weight: 800; font-size: 19px; }
+  .metro .st { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--faint); letter-spacing: 0.04em; }
+  .msum { flex-basis: 100%; font-size: 13.5px; color: var(--muted); }
+  @media (min-width: 700px) { .msum { flex-basis: auto; margin-left: auto; } }
+  .mlink { margin: 0 0 10px; }
+  .metro .tablewrap { margin-bottom: 18px; }
+  .linkish { font: inherit; color: var(--steel); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 2.5px; cursor: pointer; }
+  .metro td { font-size: 14px; }
+  .metro td a { overflow-wrap: anywhere; }
+  .by { display: block; font-size: 12.5px; color: var(--faint); margin-top: 2px; }
+  .tags { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 3px; }
+  .cost { display: block; font-family: var(--display); font-weight: 800; font-size: 15px; line-height: 1.3; }
+  .cost.free { color: var(--pine); }
+  .cost-src { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+  .inc { color: var(--muted); line-height: 1.5; }
+  @media (min-width: 641px) {
+    .metro td:nth-child(1) { width: 24%; }
+    .metro td:nth-child(2) { width: 20%; }
+    .metro td:nth-child(3) { width: 34%; }
+  }
+  .lf-wrap { margin: 30px 0 48px; }
+</style>

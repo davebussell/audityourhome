@@ -1,0 +1,401 @@
+{
+  "slug": "chicago",
+  "name": "Chicago",
+  "metroName": "Chicago-Naperville-Elgin, IL-IN Metropolitan Statistical Area",
+  "states": [
+    "IL",
+    "IN"
+  ],
+  "principalCity": "Chicago, IL",
+  "utilities": {
+    "electric": [
+      {
+        "name": "ComEd (Commonwealth Edison)",
+        "serves": "Electric delivery for the City of Chicago and most of northern Illinois (ComEd says it delivers energy 'for over 9 million people in northern Illinois'). Its efficiency programs are open only to ComEd residential delivery customers.",
+        "url": "https://poweringlives.comed.com/from-serving-our-country-to-serving-northern-illinois-customers/"
+      },
+      {
+        "name": "NIPSCO (Northern Indiana Public Service Co.)",
+        "serves": "Electric and gas utility for northern Indiana, which covers the metro's Indiana side (Lake, Porter, Jasper and Newton counties). Service boundaries were not checked county by county.",
+        "url": "https://www.nipsco.com/energy-efficiency/for-your-home/home-energy-assessment"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Peoples Gas",
+        "serves": "City of Chicago. The rebate application says the program 'serves Peoples Gas customers in the city of Chicago'.",
+        "url": "https://www.peoplesgasdelivery.com/savings/rebates-residential"
+      },
+      {
+        "name": "North Shore Gas",
+        "serves": "The '54 communities between Winnetka and the Illinois-Wisconsin border'. It shares rebate programs with Peoples Gas.",
+        "url": "https://www.northshoregasdelivery.com/company/about"
+      },
+      {
+        "name": "Nicor Gas",
+        "serves": "'Most of the northern third of Illinois, excluding the city of Chicago', which means most Illinois suburbs in the metro.",
+        "url": "https://www.nicorgas.com/homerebates"
+      }
+    ],
+    "notes": "Chicago homes pair ComEd (electric) with Peoples Gas (gas). Most Illinois suburbs pair ComEd with Nicor Gas, and the north-shore suburbs pair ComEd with North Shore Gas. Some suburbs buy power from municipal or cooperative utilities, which ComEd and Nicor programs don't cover. Illinois EPA's Residential Electrification Catalyst Grant is aimed at those 'municipal and cooperative utility service areas', but only through weatherization agencies. The Indiana counties are served by NIPSCO."
+  },
+  "auditPrograms": [
+    {
+      "name": "Home Energy Savings in-home assessment (ComEd with Nicor Gas, Peoples Gas and North Shore Gas)",
+      "runBy": "ComEd Energy Efficiency Program, jointly with Nicor Gas, Peoples Gas and North Shore Gas",
+      "cost": "Free",
+      "whoQualifies": "ComEd residential delivery customers in single-family homes, two-flats, condos, mobile or manufactured homes and townhomes. Renters need the landlord's permission. Total household income must be at or below 80% of area median income. ComEd's limits for most of the Chicago metro are $67,150 for 1 person, $76,750 for 2, $86,350 for 3, $95,900 for 4, $103,600 for 5, $111,250 for 6, $118,950 for 7 and $126,600 for 8. Homes without gas service can still take part. Market-rate households can't get the in-home visit; they can do the online self-assessment described below.",
+      "whatYouGet": "A 60-90 minute in-person walkthrough by a ComEd-authorized energy advisor. ComEd says it is 'a visual walkthrough only – no diagnostic testing is performed'. Free installed products may include LEDs, a programmable or ENERGY STAR smart thermostat, WaterSense showerheads and aerators, hot-water pipe insulation and door sweeps. Advanced power strips, smart sockets and air filters can follow for self-install. You get a personalized report. Households that would benefit most may then get a separate 3-4 hour weatherization assessment (thermal imaging, blower door and combustion safety testing) and free insulation and air sealing, or a referral to IHWAP.",
+      "howToBook": "Online at eesavings.com or call 1-855-433-2700. Nicor customers can also call 855.660.9378. Have your ComEd and gas account numbers ready.",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/home-energy-savings/single-family",
+      "status": "Open to income-eligible customers (at or below 80% AMI) as of 2026-10-12. ComEd says program details are 'subject to change or cancellation due to funding limits'.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Energy Savings online self-assessment",
+      "runBy": "Nicor Gas and ComEd (Home Energy Savings offering)",
+      "cost": "Free",
+      "whoQualifies": "Nicor Gas customers, owners and renters. Nicor's page states no income test for the self-assessment, unlike the in-home visit. Customer Select customers who get their gas bill from Nicor Gas are eligible.",
+      "whatYouGet": "A short online survey (about 20 minutes) that sends free or discounted energy-saving products to your home for self-install, plus recommendations. Nicor notes: 'Customers who complete a self-assessment will not be able to receive additional services through the Home Energy Savings offering.'",
+      "howToBook": "Start at eesavings.com or call 855.660.9378.",
+      "url": "https://www.nicorgas.com/ways-to-save/residential-savings/free-products-and-services.html",
+      "status": "Listed as available on Nicor's page as of 2026-10-12. No dates or funding status are given.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Chicago Bungalow Association: Home Energy Savings intake",
+      "runBy": "Chicago Bungalow Association (nonprofit), with ComEd, Nicor Gas, Peoples Gas and North Shore Gas",
+      "cost": "Free assessment",
+      "whoQualifies": "Homeowners, or renters with the owner's consent, in single-family homes, two-flats, condos and townhomes in ComEd territory. Household income must be at or below 80% AMI. You can't have taken part in Energy Savers or Home Energy Savings before. For two-flats, both units must take part to be considered for additional products and services.",
+      "whatYouGet": "The same ComEd Home Energy Savings assessment and free products, with weatherization for certain eligible customers.",
+      "howToBook": "Online application at chicagobungalow.org/apply2025, which asks for your 10-digit ComEd Choice ID. If you're eligible, they contact you to schedule.",
+      "url": "https://chicagobungalow.org/apply2025",
+      "status": "Taking applications, but the page warns 'Funding for this program is extremely limited this year' and 'services cannot be guaranteed'.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "NIPSCO Home Energy Assessment (Indiana side of the metro)",
+      "runBy": "NIPSCO, delivered by TRC",
+      "cost": "Free ('no-cost Home Energy Assessment')",
+      "whoQualifies": "NIPSCO residential customers with active service in a home more than five years old. You can't have had a NIPSCO-sponsored assessment or Income Qualified Weatherization in the past three years, or a NIPSCO Virtual Home Energy Assessment in the last 12 months. Renters need written landlord permission before permanent products are installed. There is no income test.",
+      "whatYouGet": "A 1-2 hour visit that includes an HVAC efficiency review, a custom home energy report (NIPSCO values it at $250) and direct install of some or all of these: ENERGY STAR LEDs, duct sealing, aerators, showerheads, pipe wrap, a smart Wi-Fi thermostat and outlet gaskets. Follow-up incentives are up to $200 off air sealing (blower door tested) and up to $700 off attic insulation from R-11 or less to R-38 or more, both by a licensed contractor.",
+      "howToBook": "Use the 'Schedule Now' link on the page or call TRC at 1-800-721-7385.",
+      "url": "https://www.nipsco.com/energy-efficiency/for-your-home/home-energy-assessment",
+      "status": "Open as of 2026-10-12. The page says 'Program funds for 2026 are limited' (first come, first served), and insulation and air sealing must be finished before the end of the 2026 program year.",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "ComEd heat pump instant discounts (ducted air-source and ductless mini-split)",
+      "runBy": "ComEd Energy Efficiency Program",
+      "category": "heat-pump",
+      "amount": "Ducted air-source: Tier 1 (at least 15.2 SEER2, 9.4 EER2 and 8.1 HSPF2) up to $900, or up to $1,400 at 2.5 tons or more. Tier 2 (at least 17 SEER2, 9.4 EER2 and 8.5 HSPF2) up to $2,000 at 2.5 tons or more, or up to $1,500 below that. Ductless mini-split (at least 17 SEER2, 9.4 EER2 and 9 HSPF2) up to $500, or up to $1,000 at 1.5 tons or more. Plus $75 for an ENERGY STAR smart thermostat installed with the heat pump.",
+      "whoQualifies": "ComEd residential customers. The work must be installed by a ComEd Heat Pump Trained Contractor, and self-installs don't qualify. Equipment must be AHRI-listed and use refrigerant with a global warming potential of 700 or less. ComEd says sell-through R-410A equipment became eligible 'effective July 27, 2026'.",
+      "status": "Available as of 2026-10-12, with no end date stated. Taken off the contractor's invoice, with no application. 'Program details are subject to change or cancellation due to funding limits.'",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-discounts",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "ComEd geothermal (ground-source) heat pump incentive",
+      "runBy": "ComEd Energy Efficiency Program",
+      "category": "heat-pump",
+      "amount": "Up to $6,000 per home for qualifying water-to-air or water-to-water systems, closed or open loop, or DGX. Indoor-unit replacements get $800 at 17 EER or more and $1,200 at 20 EER or more.",
+      "whoQualifies": "ComEd residential customers. The installer must be an ICC-certified ComEd Energy Efficiency Service Provider with geothermal certification, and every project needs pre-approval.",
+      "status": "Available as of 2026-10-12. Paid as an invoice credit or a check after completion.",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-discounts",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "ComEd heat pump water heater discount",
+      "runBy": "ComEd Energy Efficiency Program",
+      "category": "appliances",
+      "amount": "Up to $750 per unit. Integrated units need a UEF of 3.30 or more; 120V/15A and split systems need 2.20 or more.",
+      "whoQualifies": "ComEd residential customers. Taken off the invoice through a ComEd Heat Pump Water Heater Contractor, or claimed as a $750 appliance rebate.",
+      "status": "Available as of 2026-10-12.",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-discounts",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "ComEd ENERGY STAR appliance rebates (standard)",
+      "runBy": "ComEd Energy Efficiency Program",
+      "category": "appliances",
+      "amount": "Air purifier $50; all-in-one washer with electric dryer $250; all-in-one washer with heat pump dryer $350; clothes washer $40; dehumidifier $45; electric dryer $40; heat pump dryer $200; heat pump water heater $750; select induction cooktops and ranges $100; smart thermostat $75; weatherization products up to $3 off in stores.",
+      "whoQualifies": "Current ComEd residential delivery customers. Limits are two air purifiers and two dehumidifiers per account per program year, and one of each other appliance. The rebates can't be combined with other ComEd efficiency offers.",
+      "status": "Open for 2026 purchases. Buy by December 31, 2026 and apply within 60 days of purchase or by February 28, 2027, whichever comes first.",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "ComEd income-eligible appliance rebates and instant discounts (higher amounts)",
+      "runBy": "ComEd Energy Efficiency Program",
+      "category": "income-qualified",
+      "amount": "Air purifier $75; all-in-one washer with electric dryer $350; all-in-one washer with heat pump dryer $550; clothes washer $150; dehumidifier $75; electric dryer $150; heat pump dryer $400; select induction cooktops and ranges $150; room AC $75 (seasonal); smart thermostat $100. In-store discounts: advanced power strips up to $13, smart plugs up to $7, low-flow showerheads up to $9, weatherization products up to $5, LED night lights up to $10.",
+      "whoQualifies": "ComEd residential customers with total household income at or below 80% AMI (for example, $95,900 for a 4-person household in most of the Chicago metro).",
+      "status": "Open for 2026 purchases (buy by December 31, 2026; apply within 60 days or by February 28, 2027).",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/income-eligible/instant-discounts",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Nicor Gas insulation, air sealing, duct sealing and window rebates",
+      "runBy": "Nicor Gas Energy Efficiency Program",
+      "category": "insulation-air-sealing",
+      "amount": "Air sealing $500 (at least a 200 CFM reduction). Attic insulation $400 (from R20 or less to R49 or more, after air sealing). Exterior wall insulation $150. Foundation sidewall insulation $200. Duct sealing $600. Low-e storm window inserts $100 per window, up to $1,000. ENERGY STAR windows $100-$125 per window, up to $3,000 per home.",
+      "whoQualifies": "Nicor Gas residential customers. Air sealing, insulation, duct sealing and window work must be done by a program-approved contractor.",
+      "status": "Open for 2026. Install between January 1 and December 31, 2026, and apply within 90 days of installation or by January 31, 2027, whichever comes first.",
+      "url": "https://www.nicorgas.com/homerebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Nicor Gas heating, water heating and thermostat rebates",
+      "runBy": "Nicor Gas Energy Efficiency Program",
+      "category": "appliances",
+      "amount": "Furnace: $225 at 97% AFUE or more, $150 at 95% or more. Furnace plus smart thermostat bundle: $275 at 97% or more, $200 at 95% or more. Boiler at 95% AFUE or more: $350. Combination boiler: $500. Tankless or tanked water heater: $150. Smart thermostat: $25 (one per household). Pool covers: $1.25 per sq ft indoor, $0.75 per sq ft outdoor.",
+      "whoQualifies": "Nicor Gas residential customers. Products must be installed by a professional contractor.",
+      "status": "Open for 2026. Install between January 1 and December 31, 2026; apply within 90 days or by January 31, 2027.",
+      "url": "https://www.nicorgas.com/homerebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Peoples Gas / North Shore Gas Home Energy Rebates (weatherization and HVAC)",
+      "runBy": "Peoples Gas and North Shore Gas energy efficiency program (applications are processed by Franklin Energy)",
+      "category": "insulation-air-sealing",
+      "amount": "Weatherization, as an instant discount through an approved contractor, capped at $1,200 per project: air sealing 40 cents per CFM reduction (up to $400); wall insulation 50 cents per sq ft (up to $400, only with air sealing); attic insulation 30 cents per sq ft (up to $500, existing R0-R14 raised to R49 or more, only with air sealing); duct sealing $2 per CFM25 reduction (up to $400). Equipment: furnace $200 at 95% AFUE or more, $225 at 97% or more; hot-water boilers up to $350; boiler plus integrated domestic hot water up to $500; steam boiler at 82.5% AFUE or more $150; tankless or indirect water heater $150; gas heat pump $575 (space heating) or $700 (space plus water), listed on the rebate page but not on the 2026 HVAC and Water Heating application, so these could not be confirmed; smart thermostat $25; programmable thermostat $20; pipe insulation $1 per linear foot.",
+      "whoQualifies": "Single-family homes, two-flats and individually metered condos or townhomes with an active Service Classification 1 Peoples Gas (City of Chicago) or North Shore Gas account. Insulation and duct sealing must be done by an approved contractor.",
+      "status": "Open for 2026. The application is 'Valid Jan. 1, 2026 - Dec. 31, 2026', and applications are due within 30 days of installation or by December 31, 2026, whichever comes first. 'Funds are limited.'",
+      "url": "https://www.peoplesgasdelivery.com/savings/rebates-residential",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "ComEd Whole Home Electric (free heat pump and electric appliances for income-eligible homes)",
+      "runBy": "ComEd Energy Efficiency Program (Chicago Bungalow Association also takes applications)",
+      "category": "income-qualified",
+      "amount": "Free for single-family customers: an air-source heat pump, a heat pump water heater (or ENERGY STAR electric water heater), an induction or electric stove, and a heat pump or electric dryer, depending on the home.",
+      "whoQualifies": "ComEd customers with household income at or below 80% AMI. The Chicago Bungalow Association version also requires a single-family home or two-flat, a furnace, and heating or cooling equipment 5 or more years old.",
+      "status": "Closed for gas-heated homes for 2026. ComEd: '2026 funding for homes currently heated with natural gas has been fully allocated... Please check back in January 2027.' The page does not say whether electric- or propane-heated homes are still being enrolled; call 855-433-2700.",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/income-eligible/whole-home-electric",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Illinois Energy Efficiency Loan Program (on-bill financing)",
+      "runBy": "Energy Finance Solutions with ComEd, Nicor Gas, Peoples Gas, North Shore Gas and Ameren Illinois",
+      "category": "financing",
+      "amount": "$500-$20,000, unsecured, at a 7.49% fixed rate for 1-10 years. 7- and 10-year terms need a loan over $8,000. No fees and no prepayment penalty. Repaid as a monthly charge on the utility bill.",
+      "whoQualifies": "Owner- or tenant-occupied 1-4 unit homes, condos and mobile homes. The account must be current, and all borrowers must be on the utility bill.",
+      "status": "ComEd's on-bill financing is closing. The site says ComEd 'expects to stop accepting new OBF applications on October 15, 2026' and that 'Beginning January 1, 2027, the OBF Program will no longer be offered to new customers.' Nicor Gas, Peoples Gas and North Shore Gas measures are still listed, with no end date shown.",
+      "url": "https://www.ilenergyloan.com/",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "not launched (as of 2026-10-12). Illinois HOMES pilot 'pending USDOE approval'; HEAR application 'has not yet been processed by USDOE'. Indiana side of the metro: open (Indiana Energy Saver Program, launched 2025-05-14).",
+    "programName": "Illinois Home Energy Rebate Programs: Home Efficiency Rebates (HOMES, IRA Section 50121) and Home Electrification and Appliance Rebates (HEAR, Section 50122)",
+    "administrator": "Illinois EPA Office of Energy. HOMES is to be run by the Illinois Department of Commerce and Economic Opportunity (DCEO).",
+    "summary": "Illinois was allocated $263 million and neither program has launched as of 2026-10-12. On HOMES, Illinois EPA says it 'intends to launch a pilot... with two Local Administering Agencies' and 'The program launch is pending USDOE approval.' On HEAR, the application 'has not yet been processed by USDOE or provided to Illinois EPA for administration or distribution.' Illinois plans to put 100% of rebate funds toward households below 80% AMI at first, with at least 10% for low-income multifamily. It will not pay retroactive rebates. The page gives no launch date or rebate amounts. On the Indiana side of the metro, the Indiana Energy Saver Program (HOMES and HEAR, about $182 million, run by the Indiana Office of Energy Development) launched May 14, 2025, and its official pages show applications open (indianaenergysaver.com).",
+    "url": "https://epa.illinois.gov/topics/energy/residential/energy-rebates.html",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Illinois Home Weatherization Assistance Program (IHWAP), delivered in Cook County by CEDA",
+      "runBy": "Illinois DCEO (statewide). CEDA (Community and Economic Development Association of Cook County) delivers it locally.",
+      "summary": "Free weatherization: air sealing, insulation, heating repair or replacement and ventilation (windows usually not eligible), up to $20,000 per home. Household income must be at or below 200% of the federal poverty level. CEDA serves owner-occupied buildings of up to four units that are structurally sound and haven't had IHWAP in the last 15 years. Elderly, disabled and young-child households get priority. Apply through DCEO's online pre-application, by calling 1-800-571-2332, or at a CEDA partner intake site. Peoples Gas (the City of Chicago's gas utility) sends customers to CEDA for weatherization. DCEO's directory sends 'Cook County (Outside of Chicago)' to CEDA, and 'Chicago only' to the City's Department of Family and Support Services, which lists only CSBG services. Collar-county agencies on DCEO's list include DuPage County Department of Community Services, Will County Center for Community Concerns, Community Action Partnership of Lake County, McHenry County Housing Authority, Kendall-Grundy Community Action and Family Services Agency of DeKalb County.",
+      "url": "https://www.cedaorg.net/en/find-services/home-weatherization"
+    },
+    {
+      "name": "ComEd Home Energy Savings weatherization path",
+      "runBy": "ComEd with Nicor Gas, Peoples Gas and North Shore Gas. The work is done by Community Action Agencies or participating efficiency contractors.",
+      "summary": "Households at or below 80% AMI that complete the free in-home assessment may get a diagnostic weatherization assessment and free insulation, air sealing and duct sealing. Some also get heating or cooling repair or replacement and health and safety fixes, sometimes coordinated with IHWAP.",
+      "url": "https://www.comed.com/ways-to-save/for-your-home/home-energy-savings/single-family/faqs"
+    },
+    {
+      "name": "Green Homes Chicago",
+      "runBy": "City of Chicago Department of Housing and Department of Environment, with Elevate and Zero Homes. ComEd committed $1 million from Whole Home Electric to cost-share.",
+      "summary": "Free whole-home retrofits (insulation, cold-climate heat pumps, efficient appliances, health and safety repairs) for owner-occupied 1-2 unit homes that are the owner's only residence, with income at or below 80% AMI. Condos, mixed-use and 3+ unit buildings don't qualify, and windows, doors and boilers aren't covered. Registration is closed. The last window ran from 9:00 am February 17 to 4:30 pm February 27, 2026, and registering didn't guarantee service.",
+      "url": "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/green-homes-chicago.html"
+    },
+    {
+      "name": "City of Chicago Emergency Heating Repair Program",
+      "runBy": "City of Chicago Department of Housing",
+      "summary": "Free emergency heating system repair or replacement (not water heaters) for owner-occupants of 1-4 unit Chicago properties at or below 80% AMI who have been on the deed at least a year. As of 2026-10-12 the page says it 'is currently closed and not accepting applications.'",
+      "url": "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/emergency-heating-repair-program.html"
+    },
+    {
+      "name": "City of Chicago Home Repair Program (roof and porch)",
+      "runBy": "City of Chicago Department of Housing",
+      "summary": "Roof and porch repairs plus small accessibility fixes for homeowners at or below 50% AMI. This is a repair program, not energy-specific. 'Home Repair Program registration will not be opening in 2026.' Applicants from 2024-2025 stay on the waitlist.",
+      "url": "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home-repair-program.html"
+    },
+    {
+      "name": "Chicago Bungalow Association programs",
+      "runBy": "Chicago Bungalow Association (nonprofit)",
+      "summary": "Takes applications for ComEd Home Energy Savings and Whole Home Electric (both at or below 80% AMI, ComEd territory) and points to CEDA weatherization, furnace assistance and the Illinois Energy Efficiency Loan. Its programs page still lists the federal 25C tax credit as available, but that credit ended for property placed in service after 2025 (IRS).",
+      "url": "https://www.chicagobungalow.org/programs"
+    },
+    {
+      "name": "Indiana Weatherization Assistance Program (Indiana side of the metro)",
+      "runBy": "Indiana Housing & Community Development Authority (IHCDA) through local agencies",
+      "summary": "Indiana's Office of Energy Development says IHCDA runs the Weatherization Assistance Program for low-income Hoosiers. I didn't verify the local agency for Lake and Porter counties.",
+      "url": "https://www.in.gov/oed/grants-and-funding-opportunities/homeowner-incentives/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Chicago Energy Benchmarking Ordinance",
+      "appliesTo": "Large buildings only: existing commercial, institutional and residential buildings over 50,000 sq ft. It does not affect ordinary homeowners.",
+      "summary": "Owners benchmark whole-building energy use in ENERGY STAR Portfolio Manager every year, report to the City by June 1, and have the data verified by a credentialed professional every three years.",
+      "url": "https://www.chicago.gov/city/en/depts/mayor/supp_info/chicago-energy-benchmarking/ChicagoEnergyBenchmarkingOverview.html"
+    },
+    {
+      "name": "Chicago Energy Rating System (placard)",
+      "appliesTo": "Large buildings only (50,000 sq ft or more). It does not affect single-family homes.",
+      "summary": "Benchmarked buildings get a 1-4 star rating placard that must be posted in a prominent place and shared when the property is listed for sale or lease.",
+      "url": "https://www.chicago.gov/city/en/progs/env/ChicagoEnergyRating.html"
+    },
+    {
+      "name": "Clean and Affordable Buildings Ordinance (proposed)",
+      "appliesTo": "New construction only, as proposed. It does not cover existing homes.",
+      "summary": "Introduced January 24, 2024 to set an emissions standard that would push most new buildings to all-electric. It was sent to the Rules Committee. I couldn't find an official source confirming it passed. Treat it as pending or unverified, not as a rule homeowners must follow.",
+      "url": "https://www.cbsnews.com/chicago/news/city-council-proposed-ordinance-natural-gas-ban/"
+    }
+  ],
+  "notes": "As of 2026-10-12: (1) The free utility in-home assessment in ComEd territory is now income-qualified (80% AMI or less). Market-rate Chicago-area homeowners get only the online self-assessment and kit, so a diagnostic (blower door) audit means paying a private auditor. Nicor itself says an energy audit 'may cost between $100 and $500 or more'. (2) ComEd's on-bill financing stops taking new applications about October 15, 2026 and closes to new customers January 1, 2027. (3) ComEd Whole Home Electric funding for gas-heated homes is fully allocated for 2026. (4) Illinois has not launched its IRA HOMES or HEAR rebates (pending USDOE). (5) Green Homes Chicago registration closed February 27, 2026. Federal 25C and 25D tax credits do not apply to property placed in service after December 31, 2025, per IRS. Some partner pages (Chicago Bungalow Association, Indiana OED) still describe the federal credits as available. The old City 'Retrofit Chicago Residential Partnership' FAQ page is out of date and was left out. Kenosha County, WI is in the Chicago-Naperville combined statistical area but not the MSA under OMB Bulletin 23-01, so WI is not listed.",
+  "sources": [
+    {
+      "label": "OMB Bulletin 23-01 (July 21, 2023): MSA delineations",
+      "href": "https://www.whitehouse.gov/wp-content/uploads/2023/07/OMB-Bulletin-23-01.pdf"
+    },
+    {
+      "label": "ComEd: Single Family Home Energy Savings",
+      "href": "https://www.comed.com/ways-to-save/for-your-home/home-energy-savings/single-family"
+    },
+    {
+      "label": "ComEd: Single Family Home Energy Savings FAQs",
+      "href": "https://www.comed.com/ways-to-save/for-your-home/home-energy-savings/single-family/faqs"
+    },
+    {
+      "label": "ComEd: Heating & Cooling Discounts",
+      "href": "https://www.comed.com/ways-to-save/for-your-home/rebates-discounts/heating-cooling-discounts"
+    },
+    {
+      "label": "ComEd: Appliance Rebates",
+      "href": "https://www.comed.com/ways-to-save/for-your-home/rebates-discounts/appliance-rebates"
+    },
+    {
+      "label": "ComEd: Income Eligible Instant Discounts",
+      "href": "https://www.comed.com/ways-to-save/for-your-home/income-eligible/instant-discounts"
+    },
+    {
+      "label": "ComEd: Whole Home Electric",
+      "href": "https://www.comed.com/ways-to-save/for-your-home/income-eligible/whole-home-electric"
+    },
+    {
+      "label": "ComEd Powering Lives: service area statement",
+      "href": "https://poweringlives.comed.com/from-serving-our-country-to-serving-northern-illinois-customers/"
+    },
+    {
+      "label": "Nicor Gas: Home Rebates",
+      "href": "https://www.nicorgas.com/homerebates"
+    },
+    {
+      "label": "Nicor Gas: Free Energy Efficiency Products and Services",
+      "href": "https://www.nicorgas.com/ways-to-save/residential-savings/free-products-and-services.html"
+    },
+    {
+      "label": "Nicor Gas: service territory statement",
+      "href": "https://www.nicorgas.com/news/natural-science-receives-2024-nicor-gas-multicultural-innovator-award.html"
+    },
+    {
+      "label": "Peoples Gas: Home Energy Rebates",
+      "href": "https://www.peoplesgasdelivery.com/savings/rebates-residential"
+    },
+    {
+      "label": "Peoples Gas: 2026 HVAC and Water Heating Rebate Application (PDF)",
+      "href": "https://www.peoplesgasdelivery.com/savings/pdf/residential_hvac.pdf"
+    },
+    {
+      "label": "Peoples Gas: Weatherization and repair programs",
+      "href": "https://www.peoplesgasdelivery.com/payment-bill/wap"
+    },
+    {
+      "label": "North Shore Gas: About",
+      "href": "https://www.northshoregasdelivery.com/company/about"
+    },
+    {
+      "label": "Illinois EPA: Energy Rebates (IRA HOMES/HEAR)",
+      "href": "https://epa.illinois.gov/topics/energy/residential/energy-rebates.html"
+    },
+    {
+      "label": "Illinois DCEO: Home Weatherization (IHWAP)",
+      "href": "https://dceo.illinois.gov/communityservices/homeweatherization.html"
+    },
+    {
+      "label": "Illinois DCEO: Community Action Agencies / LAAs",
+      "href": "https://dceo.illinois.gov/communityservices/homeweatherization/communityactionagencies.html"
+    },
+    {
+      "label": "CEDA: Home Weatherization",
+      "href": "https://www.cedaorg.net/en/find-services/home-weatherization"
+    },
+    {
+      "label": "Chicago Bungalow Association: Available Programs",
+      "href": "https://www.chicagobungalow.org/programs"
+    },
+    {
+      "label": "Chicago Bungalow Association: Home Energy Savings application",
+      "href": "https://chicagobungalow.org/apply2025"
+    },
+    {
+      "label": "City of Chicago: Green Homes Chicago",
+      "href": "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/green-homes-chicago.html"
+    },
+    {
+      "label": "City of Chicago press release: Green Homes Chicago registration reopens (Feb 20, 2026)",
+      "href": "https://www.chicago.gov/city/en/depts/mayor/press_room/press_releases/2026/february/green-homes-chicago.html"
+    },
+    {
+      "label": "City of Chicago: Emergency Heating Repair Program",
+      "href": "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/emergency-heating-repair-program.html"
+    },
+    {
+      "label": "City of Chicago: Home Repair Program",
+      "href": "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home-repair-program.html"
+    },
+    {
+      "label": "City of Chicago: Energy Benchmarking Overview",
+      "href": "https://www.chicago.gov/city/en/depts/mayor/supp_info/chicago-energy-benchmarking/ChicagoEnergyBenchmarkingOverview.html"
+    },
+    {
+      "label": "City of Chicago: Chicago Energy Rating",
+      "href": "https://www.chicago.gov/city/en/progs/env/ChicagoEnergyRating.html"
+    },
+    {
+      "label": "CBS Chicago: Clean and Affordable Buildings Ordinance introduced (Jan 24, 2024)",
+      "href": "https://www.cbsnews.com/chicago/news/city-council-proposed-ordinance-natural-gas-ban/"
+    },
+    {
+      "label": "Illinois Energy Efficiency Loan Program",
+      "href": "https://www.ilenergyloan.com/"
+    },
+    {
+      "label": "NIPSCO: Home Energy Assessment",
+      "href": "https://www.nipsco.com/energy-efficiency/for-your-home/home-energy-assessment"
+    },
+    {
+      "label": "Indiana OED: Homeowner Incentives",
+      "href": "https://www.in.gov/oed/grants-and-funding-opportunities/homeowner-incentives/"
+    },
+    {
+      "label": "Indiana Energy Saver Program",
+      "href": "https://indianaenergysaver.com/"
+    },
+    {
+      "label": "IRS: Energy Efficient Home Improvement Credit (25C)",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS: Residential Clean Energy Credit (25D)",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    }
+  ]
+}

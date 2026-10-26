@@ -1,0 +1,128 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import LeadFormUS from '../../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../../components/us/ProgramStyles.astro';
+import ProgramStateTable from '../../../../components/us/ProgramStateTable.astro';
+import ProgramSources from '../../../../components/us/ProgramSources.astro';
+import { ogFor } from '../../../../lib/photos';
+import { breadcrumbSchema } from '../../../../lib/schema';
+import { STATES, COUNTS, GROUPS, GROUP_ORDER, statesIn, takingPhrase, src, dedupe, VERIFIED } from '../../../../lib/us/programs';
+
+const taking = takingPhrase();
+const differs = STATES.filter((s) => s.differs);
+const mapOnly = STATES.filter((s) => s.mapOnly);
+const via = STATES.filter((s) => s.hear.via || s.homes.via);
+
+const title = 'Home Energy Rebates by state (2026): HOMES and HEEHR status in all 50 states | AuditYourHome';
+const description = `HOMES and HEEHR rebate status for all 50 states plus DC from each state’s own page, checked ${VERIFIED}. Open in ${taking}.`;
+
+const sources = dedupe([
+  src(/06\.2026-State-Home-Energy-Rebates-Factsheet/),
+  src(/03\.2026-State-Home-Energy-Rebate-Programs-Factsheet/),
+  src(/scep\/home-energy-rebates-program$/),
+  src(/energy\.gov\/save\/rebates$/),
+  src(/nccleantech\.ncsu\.edu/),
+]);
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Rebates by state', path: '/us/programs/states/' },
+  ]),
+];
+const list = (xs: { name: string }[]) => (xs.length < 2 ? xs.map((x) => x.name).join('') : `${xs.slice(0, -1).map((x) => x.name).join(', ')} and ${xs.at(-1)!.name}`);
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-hero')}>
+  <ProgramStyles />
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Rebates by state</span>
+    </nav>
+
+    <div class="page-hero st-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Home Energy Rebates · 50 states plus DC</p>
+        <h1>Home Energy Rebates by state</h1>
+        <p class="lede measure">
+          Where the two federal rebate programs stand in every state, from each state’s own program page as checked on
+          {' '}{VERIFIED}. HEEHR pays toward electric appliances; HOMES pays toward whole-home upgrades.
+          {' '}{taking} are taking applications for at least one of them.
+        </p>
+        <p class="up-related" style="margin:18px 0 0">
+          <a class="btn btn-ghost btn-sm" href="/us/programs/home-energy-rebates/">How the programs work →</a>
+        </p>
+      </div>
+      <aside class="card card-pad glance" aria-label="Count by status">
+        <p class="g-h">States by status</p>
+        {GROUP_ORDER.map((g) => (
+          <a class="g-row" href={`#${GROUPS[g].anchor}`}>
+            <span class={`chip ${GROUPS[g].cls}`}>{COUNTS.group[g]}</span>
+            <span>{GROUPS[g].label}</span>
+          </a>
+        ))}
+        <p class="up-meta g-f">Checked {VERIFIED}</p>
+      </aside>
+    </div>
+
+    <nav class="jump" aria-label="Jump to a state">
+      <p class="jump-h">Go to your state</p>
+      <p class="jump-l">
+        {STATES.map((s, i) => (<>{i > 0 && ' · '}<a href={`/us/programs/states/${s.slug}/`}>{s.name}</a></>))}
+      </p>
+    </nav>
+
+    <div class="card card-pad up-note">
+      <h3>Where this comes from</h3>
+      <p>
+        DOE no longer publishes a current state-by-state list; its old status map shows “Last updated 04/09/2024.” We
+        checked each state’s own page and compared it with the Building Performance Association’s June 2026 map, a
+        trade-group source. Where they disagree, we report the state’s page{differs.length > 0 && <>: {list(differs)} differs from the map</>}.
+      </p>
+      <p>
+        {mapOnly.length > 0 && <>No state page could be checked for {list(mapOnly)}, so their status comes from that map and the chip says Unconfirmed. </>}
+        {via.length > 0 && <>For {list(via)}, the status comes from our metro research, which reached the program’s own site; the state pages explain. </>}
+        Some state pages are themselves out of date, and the state pages note when.
+      </p>
+    </div>
+
+    {GROUP_ORDER.map((g) => (
+      <section class="grp-s" id={GROUPS[g].anchor} aria-labelledby={`${GROUPS[g].anchor}-h`}>
+        <h2 class="up-grp" id={`${GROUPS[g].anchor}-h`}>
+          <span class={`chip ${GROUPS[g].cls}`}>{GROUPS[g].label}</span>
+          <span class="n">{statesIn(g).length} {statesIn(g).length === 1 ? 'state' : 'states'}</span>
+        </h2>
+        <p class="up-intro">{GROUPS[g].desc}</p>
+        <ProgramStateTable states={statesIn(g)} wording caption={`Home Energy Rebates: ${GROUPS[g].label}`} />
+      </section>
+    ))}
+
+    <div class="up-lf">
+      <LeadFormUS context="us-rebates-by-state" />
+    </div>
+
+    <ProgramSources sources={sources} verified={VERIFIED} note="Each state page lists the state’s own sources." />
+
+    <p class="up-related">
+      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">Home Energy Rebates explained</a>
+      <a class="btn btn-ghost" href="/us/cities/">Metro guides</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .grp-s { padding: 0; }
+  .st-hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px 48px; align-items: center; }
+  @media (max-width: 860px) { .st-hero { grid-template-columns: 1fr; padding-top: 32px; } }
+  .glance { display: grid; gap: 10px; }
+  .g-h { margin: 0 0 2px; font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .g-row { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-size: 15px; font-weight: 600; }
+  .g-row:hover { color: var(--heat-deep); }
+  .g-row .chip { min-width: 46px; justify-content: center; }
+  .g-f { margin-top: 4px; }
+  .jump { margin: 0 0 8px; }
+  .jump-h { margin: 0 0 4px; font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .jump-l { margin: 0; font-size: 14.5px; line-height: 1.9; }
+</style>

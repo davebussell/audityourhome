@@ -1,0 +1,100 @@
+---
+/**
+ * Certified heat pump systems (ENERGY STAR rows) in a compact table: one outdoor unit per row with
+ * its best certified pairing, cold-weather numbers first. Rebadged twins with identical ratings
+ * are folded into one row and named under "also listed as".
+ */
+import type { Market, ModelRow } from '../../lib/heatpumps';
+import { fmtInt, fmtCop, fmt1, fmtPct, tons, brandHref, at5, statsFor } from '../../lib/heatpumps';
+
+interface Props {
+  rows: ModelRow[];
+  market: Market;
+  caption: string;
+  showBrand?: boolean;
+  /** Lead with cooling numbers (hot climates) */
+  cooling?: boolean;
+}
+const { rows, market, caption, showBrand = false, cooling = false } = Astro.props;
+const t5 = at5(market);
+const linkable = (slug: string | null) => (slug && statsFor(market, slug) ? brandHref(market, slug) : null);
+---
+
+<div class="tablewrap card">
+  <table class="stack dt">
+    <caption class="sr-only">{caption}</caption>
+    <thead>
+      <tr>
+        {showBrand && <th scope="col">Brand</th>}
+        <th scope="col">Outdoor / indoor model</th>
+        <th scope="col" class="num">Size</th>
+        {cooling ? (
+          <>
+            <th scope="col" class="num">SEER2</th>
+            <th scope="col" class="num">EER2</th>
+            <th scope="col" class="num">HSPF2</th>
+            <th scope="col" class="num">COP at {t5}</th>
+          </>
+        ) : (
+          <>
+            <th scope="col" class="num">Heat at {t5}</th>
+            <th scope="col" class="num">COP at {t5}</th>
+            <th scope="col" class="num">HSPF2</th>
+            <th scope="col" class="num">SEER2</th>
+          </>
+        )}
+        <th scope="col">Refrigerant</th>
+        <th scope="col">AHRI #</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => {
+        const href = linkable(r.slug);
+        return (
+          <tr>
+            {showBrand && (
+              <td class="brand-cell">
+                {href ? <a href={href}>{r.brand}</a> : r.brand}
+                {r.series && <span class="sub">{r.series}</span>}
+              </td>
+            )}
+            <td class="model" data-label="Outdoor / indoor model">
+              {r.outdoor}
+              {r.indoor && <span>{r.indoor}</span>}
+              {!showBrand && r.series && <span class="also">{r.series}</span>}
+              {r.alsoAs.length > 0 && <span class="also">Same ratings also listed as {r.alsoAs.join(', ')}</span>}
+            </td>
+            <td class="num" data-label="Size">
+              {fmtInt(r.cap47, market)} BTU/h
+              <span class="sub">{tons(r.capCool ?? r.cap47)}</span>
+            </td>
+            {cooling ? (
+              <>
+                <td class="num" data-label="SEER2">{fmt1(r.seer2)}</td>
+                <td class="num" data-label="EER2">{fmt1(r.eer2)}</td>
+                <td class="num" data-label="HSPF2">{fmt1(r.hspf2)}</td>
+                <td class="num" data-label={`COP at ${t5}`}>{fmtCop(r.cop5)}</td>
+              </>
+            ) : (
+              <>
+                <td class="num" data-label={`Heat at ${t5}`}>
+                  {fmtInt(r.cap5, market)} BTU/h
+                  <span class="sub">{fmtPct(r.ret)} of rated</span>
+                </td>
+                <td class="num" data-label={`COP at ${t5}`}>{fmtCop(r.cop5)}</td>
+                <td class="num" data-label="HSPF2">{fmt1(r.hspf2)}</td>
+                <td class="num" data-label="SEER2">{fmt1(r.seer2)}</td>
+              </>
+            )}
+            <td data-label="Refrigerant">
+              {r.refrig}
+              {r.cold && <span class="sub">ENERGY STAR Cold Climate</span>}
+              {market === 'ca' && r.nrcanLike && <span class="sub">Meets NRCan's −15°C thresholds</span>}
+            </td>
+            <td class="mono ahri" data-label="AHRI #">{r.ahri ?? '—'}</td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>

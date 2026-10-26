@@ -1,0 +1,177 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  slides21: S('blowerDoor', '2021 IECC Residential Webinar slides'),
+  tsd21: S('blowerDoor', '2021 IECC Final Determination'),
+  tsd24: S('blowerDoor', '2024 IECC Determination TSD'),
+  web24: S('blowerDoor', '2024 IECC webinar'),
+  det: S('blowerDoor', 'Determinations'),
+  resnet: S('blowerDoor', 'RESNET-ANSI'),
+  basc: S('blowerDoor', 'Enclosure Leakage Test'),
+  doe: S('blowerDoor', 'Professional Home Energy Assessments'),
+  hers: S('hersIndex', 'What Is the HERS Index'),
+  hersScore: S('hersIndex', 'Understanding the HERS Score'),
+  hersFind: S('hersIndex', 'Find a HERS Rater'),
+  irs: S('hersIndex', 'IRS'),
+  combustion: S('combustionSafety', 'Combustion Appliance Zone'),
+  e1186: S('infrared', 'E1186'),
+};
+
+const limits = [
+  { zones: 'Climate zones 0–2', y2021: '5.0 ACH50', y2024: '4.0 ACH50' },
+  { zones: 'Climate zones 3–5', y2021: '3.0 ACH50', y2024: '3.0 ACH50' },
+  { zones: 'Climate zones 6–8', y2021: '3.0 ACH50', y2024: '2.5 ACH50' },
+  { zones: 'Cap on performance and ERI paths', y2021: '5.0 ACH50', y2024: '4.0 ACH50' },
+];
+
+const faqs = [
+  {
+    q: 'What’s a good ACH50 for an existing home?',
+    a: 'Our sources don’t give an official benchmark for existing homes. The IECC limits are written for new homes: 5.0 ACH50 in climate zones 0–2 and 3.0 in zones 3–8 under the 2021 code, tightening in the 2024 code. Use them as a reference point, and judge your own result against your home before and after air sealing.',
+    src: [src.slides21, src.web24],
+  },
+  {
+    q: 'How is ACH50 calculated?',
+    a: 'ACH50 = (CFM50 × 60) ÷ the building’s volume in cubic feet, where CFM50 is the airflow the fan needs to hold the house at 50 pascals. A 16,000 cubic-foot house that needs 1,600 CFM50 works out to 6.0 ACH50.',
+    src: [src.basc],
+  },
+  {
+    q: 'Is a blower door test part of a home energy audit?',
+    a: 'Often. DOE says many professional home energy assessments include a blower door test and a thermographic (infrared) scan. Ask before you book.',
+    src: [src.doe],
+  },
+  {
+    q: 'Can I still claim the federal tax credit for an energy audit?',
+    a: 'Probably not for a 2026 audit. The IRS page says the Energy Efficient Home Improvement Credit (30% of qualified costs, up to $150 for a home energy audit of your main home) is allowed for qualifying property placed in service on or after January 1, 2023 and before December 31, 2025. That 2026 audits don’t qualify is our reading; the IRS page doesn’t address them directly.',
+    src: [src.irs],
+  },
+  {
+    q: 'Which standard should the test follow?',
+    a: 'ANSI/RESNET/ICC 380 is the U.S. standard for testing airtightness, and HERS raters test under it. DOE’s Building America Solution Center says enclosure tests follow RESNET Standards Chapter 8, ASTM E1827 or ASTM E779.',
+    src: [src.resnet, src.basc],
+  },
+];
+
+const sources = [
+  src.basc, src.resnet, src.slides21, src.tsd21, src.tsd24, src.web24, src.det, src.doe,
+  src.hers, src.hersScore, src.hersFind, src.irs, src.combustion, src.e1186,
+];
+---
+
+<TestPage
+  slug="blower-door"
+  title="Blower door test: ACH50, the 2021 and 2024 IECC limits, and how to get one | AuditYourHome"
+  description="A blower door measures whole-house air leakage at 50 pascals. What ACH50 means, the IECC limits for new homes by climate zone, the RESNET test standard and finding a rater."
+  heroTitle="Blower door test: how leaky your house is, in one number"
+  glance={[
+    { k: 'Test pressure', v: '50 pascals', src: src.basc, srcLabel: 'DOE BASC' },
+    { k: '2021 IECC, zones 0–2', v: '5.0 ACH50 max', src: src.slides21, srcLabel: 'DOE' },
+    { k: '2021 IECC, zones 3–8', v: '3.0 ACH50 max', src: src.slides21, srcLabel: 'DOE' },
+    { k: 'Typical cost', v: 'Not published' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Want a blower door test with your audit?"
+  leadSub="Email us your ZIP code and the kind of home you have. A person reads every message and replies with certified auditors and HERS raters who serve your area."
+>
+  <Fragment slot="lede">
+    A blower door is a calibrated fan fitted into an exterior doorway. It pulls the house to a
+    standard 50 pascals and measures the airflow needed to hold it there. The result, ACH50, is how
+    many times an hour the home’s whole volume of air would be replaced at that pressure, and it’s the
+    number the energy code uses for new homes.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="num-h">
+    <h2 id="num-h">What the number means</h2>
+    <p class="formula">ACH50 = (CFM50 × 60) ÷ volume in cubic feet</p>
+    <p>CFM50 is the airflow, in cubic feet per minute, that the fan needs to hold the house at 50 pascals.</p>
+    <div class="card card-pad callout steel">
+      <h3>Example</h3>
+      <p class="mb-0">
+        A 2,000 sq ft house with 8-foot ceilings has a volume of 16,000 cubic feet. If the fan needs
+        1,600 CFM50 to hold 50 pascals, the house tests at (1,600 × 60) ÷ 16,000 =
+        <strong>6.0 ACH50</strong>.
+      </p>
+    </div>
+    <p>
+      The U.S. test standard is <strong>ANSI/RESNET/ICC 380</strong>; its latest edition is 380-2025.
+      HERS ratings currently use 380-2019, and 380-2022 becomes mandatory for HERS on January 1, 2027.
+      DOE’s Building America Solution Center says enclosure tests follow RESNET Standards Chapter 8,
+      ASTM E1827 or ASTM E779.
+    </p>
+    <TestCite src={[src.basc, src.resnet]} labels={['DOE Building America Solution Center', 'RESNET standards']} />
+  </section>
+
+  <section class="sec" aria-labelledby="code-h">
+    <h2 id="code-h">The code limits for new homes</h2>
+    <p class="measure">
+      Under the 2021 IECC, every new dwelling must pass a whole-house blower door test at 50 pascals,
+      plus field checks of the air-barrier checklist. New in 2021: tested leakage may never exceed
+      5.0 ACH50 in any zone, even on the performance and ERI trade-off paths. The 2024 IECC tightens
+      the limits.
+    </p>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>Maximum air leakage for new homes</caption>
+        <thead><tr><th scope="col">Where</th><th scope="col">2021 IECC</th><th scope="col">2024 IECC</th></tr></thead>
+        <tbody>
+          {limits.map((l) => (
+            <tr>
+              <td>{l.zones}</td>
+              <td class="kv" data-label="2021 IECC">{l.y2021}</td>
+              <td class="kv" data-label="2024 IECC"><strong>{l.y2024}</strong></td>
+            </tr>
+          ))}
+          <tr>
+            <td>Alternative for attached units and smaller homes</td>
+            <td data-label="2021 IECC">0.30 cfm50 per sq ft of enclosure (attached units, or under 1,500 sq ft)</td>
+            <td data-label="2024 IECC"><strong>0.27 cfm50 per sq ft</strong> (multifamily alternative)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="small measure">
+      <li>Which edition applies depends on what your state or city has adopted. DOE issued its 2024 IECC determination on December 20, 2024, and state certifications are due December 30, 2026.</li>
+      <li>On the 0.30 alternative, DOE’s 2021 analysis prints the unit as cfm25 per sq ft while its 2024 slides say cfm50; check the adopted code text.</li>
+      <li>Find your climate zone in the <a href="/us/tests/attic-inspection/#zones">attic insulation guide</a>.</li>
+    </ul>
+    <TestCite src={[src.slides21, src.web24, src.det]} labels={['DOE 2021 IECC webinar slides', 'DOE 2024 IECC webinar', 'DOE determinations']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="get-h">
+    <h2 id="get-h">How to get it done</h2>
+    <p>
+      DOE says many professional home energy assessments include a blower door test and a
+      thermographic scan, so ask for both when you book. ASTM’s leak-detection practice says the house
+      should be pressurized or depressurized to find leaks, which is what the fan does, so ask for the
+      <a href="/us/tests/thermal-imaging/">infrared scan</a> while it’s running.
+    </p>
+    <p>
+      A <strong>HERS rating</strong> also includes the test: RESNET’s HERS Index is calculated under
+      ANSI/RESNET/ICC 301 and tested under 380. A home built to the 2006 IECC scores 100, and lower is
+      better: 70 means 30% more efficient than that reference home, and 0 means net zero energy.
+    </p>
+    <p>
+      What it costs: no official source publishes a price for a blower door test, so we don’t quote
+      one. See <a href="/us/cost/">what an audit costs</a> for how audit pricing works.
+    </p>
+    <ul class="linkrow">
+      <li><a href="/us/find/">Find a certified auditor</a></li>
+      <li><a href={src.hersFind.href} rel="noopener">RESNET: find a HERS rater&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.doe, src.e1186, src.hers, src.hersScore]} labels={['DOE professional assessments', 'ASTM E1186', 'RESNET HERS Index', 'HERS score explained']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If your home is leaky</h2>
+    <ul>
+      <li>Use the leaks found while the fan was running as the air-sealing to-do list.</li>
+      <li>If the home has natural-draft furnaces, boilers or water heaters, DOE calls for combustion appliance zone testing during air sealing. See the <a href="/us/tests/combustion-safety/">combustion safety guide</a>.</li>
+      <li>Retest after the work so you know what changed.</li>
+    </ul>
+    <TestCite src={src.combustion} labels={['DOE BASC, CAZ testing']} />
+  </section>
+</TestPage>

@@ -1,0 +1,331 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../components/us/ProgramStyles.astro';
+import ProgramCard from '../../../components/us/ProgramCard.astro';
+import ProgramStateTable from '../../../components/us/ProgramStateTable.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { statusChip, METROS } from '../../../lib/us/data';
+import {
+  STATES, COUNTS, GROUPS, GROUP_ORDER, TAX, otherFederal, src, stateByCode, takingPhrase, metroName, metroStates, VERIFIED,
+} from '../../../lib/us/programs';
+
+const taking = takingPhrase();
+const title = 'US home energy rebates and programs in 2026: what’s open | AuditYourHome';
+const description = `Federal energy tax credits ended after 2025; Home Energy Rebates are open in ${taking}. Every federal program and all 50 states, checked ${VERIFIED}.`;
+
+const S = {
+  pl21: { label: 'Public Law 119-21', href: src(/PLAW-119publ21/).href },
+  fs: { label: 'IRS FS-2025-05', href: src(/faqs-for-modification-of-sections-25c/).href },
+  irs25c: { label: 'IRS 25C page', href: src(/energy-efficient-home-improvement-credit$/).href },
+  pl74: { label: 'Public Law 119-74', href: src(/PLAW-119publ74/).href },
+  moa: { label: 'DOE–EPA agreement', href: src(/DOE_EPA_MOA_20260303/).href },
+  pn262: { label: 'DOE Program Notice 26-2', href: src(/program-notice-26-2/).href },
+  irs45l: { label: 'IRS 45L page', href: src(/credit-for-builders-of-energy-efficient-homes/).href },
+  co: { label: 'Colorado Energy Office', href: stateByCode('CO')!.hear.url! },
+  nc: { label: 'NC DEQ program changes', href: src(/Program Changes \(HEAR updates\)/).href },
+  ri: { label: 'RI Office of Energy Resources', href: stateByCode('RI')!.homes.url! },
+  md: { label: 'Maryland Energy Administration', href: stateByCode('MD')!.hear.url! },
+  pl103: { label: 'Public Law 119-103', href: src(/PLAW-119publ103/).href },
+  doeHer: { label: 'DOE program page', href: src(/scep\/home-energy-rebates-program$/).href },
+  bpa: { label: 'Trade-group map, June 2026', href: src(/06\.2026-State-Home-Energy-Rebates-Factsheet/).href },
+  wap: { label: 'DOE WAP', href: src(/scep\/wap\/weatherization-assistance-program$/).href },
+  wpn262: { label: 'DOE WPN 26-2', href: src(/wap-wpn-26-2\.pdf/).href },
+  liheap: { label: 'HHS ACF', href: src(/acf\.gov\/ocs\/programs\/liheap$/).href },
+  liheapFinal: { label: 'ACF FY2026 final release', href: src(/final-block-grant-funding-release-ffy-2026/).href },
+  estar: { label: 'DOE ENERGY STAR page', href: src(/buildings\/energy-starr/).href },
+  rebateFinder: { label: 'ENERGY STAR Rebate Finder', href: src(/energystar\.gov\/rebate-finder/).href },
+  hes: { label: 'DOE Home Energy Score', href: src(/betterbuildingssolutioncenter\.energy\.gov\/home-energy-score$/).href },
+  hud: { label: 'HUD Handbook 4000.1', href: otherFederal(/FHA Energy Efficient Mortgage/).url },
+  fannie: { label: 'Fannie Mae', href: otherFederal(/Fannie Mae/).url },
+  freddie: { label: 'Freddie Mac', href: otherFederal(/Freddie Mac/).url },
+  usda: { label: 'USDA Rural Development', href: otherFederal(/USDA Section 504/).url },
+};
+
+const changes = [
+  { d: 'July 4, 2025', t: 'Public Law 119-21 cut the home energy tax credits short: 25C and 25D end for work after December 31, 2025, and 45L for homes acquired after June 30, 2026. It did not rescind the two Home Energy Rebate programs.', s: S.pl21 },
+  { d: 'December 31, 2025', t: 'Last day for work to count toward 25C, including its $150 home energy audit credit, and 25D.', s: S.fs },
+  { d: 'January 23, 2026', t: 'Public Law 119-74 funded the Weatherization Assistance Program for FY2026 and set at least $33,024,000 for ENERGY STAR.', s: S.pl74 },
+  { d: 'March 3, 2026', t: 'DOE and EPA signed a 10-year agreement making DOE the lead agency for ENERGY STAR.', s: S.moa },
+  { d: 'May 29, 2026', t: 'DOE Program Notices 26-1 and 26-2 took effect: HEAR became HEEHR and stopped paying to replace gas or other fuel-burning equipment, and insulation and air sealing now come before heating and cooling upgrades.', s: S.pn262 },
+  { d: 'June 30, 2026', t: '45L, the credit builders claim for efficient new homes, ended for homes acquired after this date.', s: S.irs45l },
+  { d: 'August 1–2, 2026', t: 'Colorado’s single-family HEAR rebates closed with $0 remaining.', s: S.co },
+  { d: 'September 1, 2026', t: 'North Carolina and Wisconsin applied DOE’s new rules. Launched programs had about three months to conform.', s: S.nc },
+  { d: 'September 23, 2026', t: 'Rhode Island launched HOMES for income-eligible multifamily buildings of five or more units.', s: S.ri },
+  { d: 'September 30, 2026', t: 'Maryland resubmitted its rebate applications under the new rules. Its launch depends on DOE approval.', s: S.md },
+  { d: 'October 1, 2026', t: 'FY2027 began under a continuing resolution (Public Law 119-103) that funds programs at FY2026 rates through December 11, 2026.', s: S.pl103 },
+];
+
+const open = statusChip('open');
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
+  <ProgramStyles />
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Program tracker · United States</p>
+        <h1>What’s open for US homeowners in 2026</h1>
+        <p class="lede measure">
+          The federal tax credits most guides still quote ended with 2025. The new Home Energy Rebates
+          run state by state, and most states haven’t opened them. Every program below links to its
+          official source, checked on {VERIFIED}.
+        </p>
+        <div class="up-cta">
+          <a class="btn btn-primary" href="#states">Check your state</a>
+          <a class="btn btn-ghost" href="/us/find/">Find a certified auditor</a>
+        </div>
+      </div>
+      <Photo name="energy-bill-analysis" eager />
+    </div>
+
+    <section id="changes" aria-labelledby="changes-h">
+      <h2 class="up-sec" id="changes-h">What changed in 2026</h2>
+      <div class="up-three">
+        <article class="card card-pad chg">
+          <span class="chip chip-closed">Ended</span>
+          <h3>Federal tax credits</h3>
+          <p>
+            25C and 25D don’t apply to work after December 31, 2025 (Public Law 119-21, signed July 4, 2025).
+            That includes the $150 credit for a home energy audit. 2025 work is still claimed on 2025 returns
+            with IRS Form 5695.
+          </p>
+          <p class="up-meta"><a href={S.fs.href} rel="noopener" target="_blank">{S.fs.label}&nbsp;↗</a> · verified {VERIFIED}</p>
+        </article>
+        <article class="card card-pad chg">
+          <span class="chip chip-limited">Rewritten</span>
+          <h3>Home Energy Rebate rules</h3>
+          <p>
+            Since May 29, 2026, HEAR is HEEHR, and it pays only for electric-to-electric upgrades, not for
+            replacing gas, oil or propane equipment (new construction still qualifies). Insulation and air
+            sealing come before heating and cooling upgrades.
+          </p>
+          <p class="up-meta"><a href={S.pn262.href} rel="noopener" target="_blank">{S.pn262.label}&nbsp;↗</a> · verified {VERIFIED}</p>
+        </article>
+        <article class="card card-pad chg">
+          <span class="chip chip-info">State by state</span>
+          <h3>Rebates open in {taking}</h3>
+          <p>
+            Each state runs its own rebates. {taking} are taking applications for at least one of the two
+            programs. California’s and Colorado’s launched programs are closed to new applicants, and
+            {COUNTS.group['not-open']} states haven’t launched or couldn’t be confirmed on a state page.
+          </p>
+          <p class="up-meta"><a href="/us/programs/states/">All 50 states plus DC</a> · verified {VERIFIED}</p>
+        </article>
+      </div>
+
+      <h3 class="up-sub">2025 to 2026, in order</h3>
+      <ol class="up-tl measure">
+        {changes.map((c) => (
+          <li>
+            <span class="d">{c.d}</span>
+            <span class="t">{c.t} <a class="up-ext" href={c.s.href} rel="noopener" target="_blank">{c.s.label}&nbsp;↗</a></span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="federal" aria-labelledby="federal-h">
+      <h2 class="up-sec" id="federal-h">Federal programs</h2>
+      <p class="up-intro">
+        Status as of {VERIFIED}. The chip is our summary; the line beside it is what the official source says.
+      </p>
+      <div class="up-three">
+        <ProgramCard
+          title="Federal tax credits (25C, 25D, 45L)"
+          href="/us/programs/federal-tax-credits/"
+          cta="What ended and what’s left"
+          chip={statusChip(TAX['25C'].status)}
+          status={`25C: ${TAX['25C'].status}. 25D: ${TAX['25D'].status}.`}
+          sources={[S.irs25c, S.fs, S.pl21]}
+          verified={VERIFIED}
+        >
+          <p>
+            25C paid 30% of efficiency upgrades, up to $1,200 a year plus $2,000 for heat pumps, including up to
+            $150 for a home energy audit. 25D paid 30% of solar, battery and geothermal systems.
+          </p>
+          <p>45L, the credit builders claim for efficient new homes, ended for homes acquired after June 30, 2026.</p>
+        </ProgramCard>
+
+        <ProgramCard
+          title="Home Energy Rebates (HOMES and HEEHR)"
+          href="/us/programs/home-energy-rebates/"
+          cta="How HOMES and HEEHR work now"
+          chip={statusChip('partly open')}
+          status={`DOE: “Home Energy Rebates are now available in select states” (program page modified July 8, 2026). Taking applications in ${taking} as of ${VERIFIED}.`}
+          sources={[S.doeHer, S.bpa]}
+          verified={VERIFIED}
+        >
+          <p>
+            Two Inflation Reduction Act programs, funded through September 30, 2031: HOMES pays for whole-home
+            upgrades by their energy savings, and HEEHR pays for electric appliances for households up to 150%
+            of area median income.
+          </p>
+          <p><a href="#states">See every state’s status</a></p>
+        </ProgramCard>
+
+        <ProgramCard
+          title="Weatherization Assistance Program"
+          href="/us/programs/weatherization-assistance-program/"
+          cta="Who qualifies and how to apply"
+          chip={open}
+          status="Funded for FY2026 by Public Law 119-74; DOE’s Program Year 2026 allocations total $369 million. Apply through your state’s weatherization agency."
+          sources={[S.wap, S.wpn262]}
+          verified={VERIFIED}
+        >
+          <p>
+            Pays for energy-efficiency work, starting with an energy audit, in homes of households at or below
+            200% of the federal poverty guidelines or with a member who received TANF or SSI in the past year.
+          </p>
+          <p>Program Year 2026 average spending limit: $8,813 per home.</p>
+        </ProgramCard>
+
+        <ProgramCard
+          title="LIHEAP (energy bill help)"
+          href="/us/programs/weatherization-assistance-program/#liheap"
+          cta="LIHEAP and weatherization"
+          chip={open}
+          status="Funded for FY2026: HHS released $3,713,859,933 on Nov. 28, 2025 and a final $421,540,067 on Apr. 17, 2026. FY2027 runs on a continuing resolution through Dec. 11, 2026."
+          sources={[S.liheap, S.liheapFinal]}
+          verified={VERIFIED}
+        >
+          <p>
+            Helps pay heating and cooling bills, avoid shutoffs and make energy-related repairs, through your
+            state or local LIHEAP office. Federal law caps income at the greater of 150% of the poverty level or
+            60% of state median income; states set the exact limits.
+          </p>
+          <p>The FY2027 budget proposed ending LIHEAP again.</p>
+        </ProgramCard>
+
+        <ProgramCard
+          title="ENERGY STAR"
+          chip={open}
+          status="Kept. Congress set at least $33,024,000 for FY2026 (Public Law 119-74), and DOE is taking over as lead agency from EPA under an agreement effective Mar. 3, 2026."
+          sources={[S.estar, S.pl74, S.rebateFinder]}
+          verified={VERIFIED}
+        >
+          <p>
+            EPA’s FY2026 budget had proposed eliminating the program that housed ENERGY STAR. energystar.gov and
+            its ZIP-code Rebate Finder remain online; the website is set to move to DOE before July 2027.
+          </p>
+          <p>DOE’s 2026 rules made ENERGY STAR certification optional in HOMES projects.</p>
+        </ProgramCard>
+
+        <ProgramCard
+          title="DOE Home Energy Score"
+          href="/us/programs/home-energy-score/"
+          cta="Where it’s required"
+          chip={open}
+          status="Continues on DOE’s Better Buildings Solution Center (homeenergyscore.gov redirects there), with a ZIP-code Find an Assessor tool."
+          sources={[S.hes]}
+          verified={VERIFIED}
+        >
+          <p>
+            A 1-to-10 rating of a home’s expected energy use from a walk-through of under an hour, with upgrade
+            recommendations. Portland, Oregon requires one before most homes are listed for sale; Berkeley,
+            California requires one before single-family homes and duplexes are listed.
+          </p>
+        </ProgramCard>
+
+        <ProgramCard
+          title="Energy-efficient mortgages"
+          chip={open}
+          status="FHA’s Energy Efficient Mortgage is in HUD Handbook 4000.1 (last revised Aug. 12, 2026). Fannie Mae’s HomeStyle Energy is now HomeStyle Refresh."
+          sources={[S.hud, S.fannie, S.freddie]}
+          verified={VERIFIED}
+        >
+          <ul>
+            <li>FHA EEM: adds cost-effective energy improvements to an FHA purchase or no-cash-out refinance, based on a home energy assessment no more than 120 days old.</li>
+            <li>Fannie Mae HomeStyle Refresh and Freddie Mac GreenCHOICE: improvements up to 15% of the as-completed value.</li>
+          </ul>
+        </ProgramCard>
+
+        <ProgramCard
+          title="USDA home repair loans and grants (Section 504)"
+          chip={statusChip('year-round')}
+          status="Applications accepted year-round at local Rural Development offices; approval depends on local funding (USDA page modified Oct. 1, 2026)."
+          sources={[S.usda]}
+          verified={VERIFIED}
+        >
+          <p>
+            For homeowners who live in the home, can’t get affordable credit elsewhere and meet the county’s
+            low-income limits: loans up to $40,000 at 1% fixed for 20 years, and grants up to $10,000 for
+            homeowners 62 and older with very low income to remove health and safety hazards. Combined maximum
+            $50,000; grants are repaid if the home is sold within three years.
+          </p>
+        </ProgramCard>
+      </div>
+    </section>
+
+    <section id="states" aria-labelledby="states-h">
+      <h2 class="up-sec" id="states-h">Home Energy Rebates by state</h2>
+      <p class="up-intro">
+        HEEHR pays toward electric appliances; HOMES pays toward whole-home upgrades. Each chip summarizes the
+        state’s own page as checked on {VERIFIED}; the state page quotes the exact wording and links the
+        official source. “Unconfirmed” means no state page could confirm a status.
+      </p>
+      <p class="up-counts">
+        {GROUP_ORDER.map((g) => (
+          <a href={`/us/programs/states/#${GROUPS[g].anchor}`}><span class={`chip ${GROUPS[g].cls}`}>{COUNTS.group[g]}</span>{GROUPS[g].label}</a>
+        ))}
+      </p>
+      <ProgramStateTable states={STATES} split caption="Home Energy Rebate status by state" />
+      <p class="up-related">
+        <a class="btn btn-ghost" href="/us/programs/states/">All states grouped by status →</a>
+        <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">How HOMES and HEEHR work →</a>
+      </p>
+    </section>
+
+    <section id="metros" aria-labelledby="metros-h">
+      <h2 class="up-sec" id="metros-h">Local programs in {METROS.length} metro areas</h2>
+      <p class="up-intro">
+        Utility audits and rebates, weatherization agencies and local energy rules for the largest US metro
+        areas, in Census population order.
+      </p>
+      <div class="up-metros">
+        {METROS.map((m) => (
+          <a class="up-metro" href={`/us/cities/${m.slug}/`}>
+            <span class="n">{metroName(m)}</span>
+            <span class="s">{metroStates(m)}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="up-lf">
+      <LeadFormUS heading="Not sure which programs fit your home?" context="us-programs" />
+    </div>
+
+    <div class="card card-pad up-note">
+      <h3>How this tracker works</h3>
+      <p>
+        Every program here links to its official source, checked on {VERIFIED}. DOE no longer publishes a
+        current state-by-state list, so we checked each state’s own program page and compared it with the
+        Building Performance Association’s June 2026 map, a trade-group source. Where they disagree, we report
+        the state’s page and say so on that state’s page. Some state pages are out of date themselves; the
+        state pages note when.
+      </p>
+      <p>
+        Federal and state programs change quickly. Confirm the details on the official page before you sign a
+        contract or buy equipment.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .chg { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .chg h3 { margin: 4px 0 0; font-size: 19px; }
+  .chg p { margin: 0; }
+  .chg p:not(.up-meta) { font-size: 15px; }
+  .chg .up-meta { margin-top: auto; padding-top: 6px; }
+  section { padding: 0; }
+</style>

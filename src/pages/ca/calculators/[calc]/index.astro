@@ -1,0 +1,131 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import LeadForm from '../../../../components/LeadForm.astro';
+import CalcStyles from '../../../../components/calc/CalcStyles.astro';
+import CityPicker from '../../../../components/calc/CityPicker.astro';
+import EnergyCostsCalc from '../../../../components/calc/EnergyCostsCalc.astro';
+import UpgradePaybackCalc from '../../../../components/calc/UpgradePaybackCalc.astro';
+import HomeHealthCalc from '../../../../components/calc/HomeHealthCalc.astro';
+import ApplianceEnergyCalc from '../../../../components/calc/ApplianceEnergyCalc.astro';
+import HowWeCalculate from '../../../../components/calc/HowWeCalculate.astro';
+import CityIndex from '../../../../components/calc/CityIndex.astro';
+import { breadcrumbSchema } from '../../../../lib/schema';
+import { ogFor } from '../../../../lib/photos';
+import { CALC_META, CALC_SLUGS, CALC_CITIES, cityBySlug, cityName, type CalcSlug } from '../../../../lib/calc/data';
+import { energyPage } from '../../../../lib/calc/pages/energy';
+import { upgradePage } from '../../../../lib/calc/pages/upgrade';
+import { healthPage } from '../../../../lib/calc/pages/health';
+import { appliancePage } from '../../../../lib/calc/pages/appliance';
+import { longDate } from '../../../../lib/calc/format';
+
+export function getStaticPaths() {
+  return CALC_SLUGS.map((calc) => ({ params: { calc } }));
+}
+
+const { calc } = Astro.params as { calc: CalcSlug };
+const meta = CALC_META[calc];
+const city = cityBySlug('toronto');
+const name = cityName(city);
+const page: any =
+  calc === 'upgrade-payback' ? upgradePage(city)
+  : calc === 'home-health' ? healthPage(city)
+  : calc === 'appliance-energy' ? appliancePage(city)
+  : energyPage(city);
+
+const loads: Record<CalcSlug, string> = {
+  'energy-costs': 'its own climate, fuel prices and utilities',
+  'upgrade-payback': 'its own climate, prices and open rebates',
+  'home-health': 'its own winter temperatures, radon survey results and alarm rules',
+  'appliance-energy': 'its own electricity price and number of very cold nights',
+};
+const hubNote = `Set up for Toronto, Ontario, as an example. Pick your city above to load ${loads[calc]}.`;
+
+const intro: Record<CalcSlug, string> = {
+  'energy-costs': 'Estimate what heating, hot water and air conditioning cost a year at your local 2026 prices, then compare every common heating system side by side: gas, oil, propane, electric baseboards, heat pumps and wood. Add your own bills and the results are scaled to your house.',
+  'upgrade-payback': 'See what attic, wall and basement insulation, new windows, air sealing and a thermostat setback would save in your climate, what they cost, which rebates are open today and how long each takes to pay back. The savings are deliberately conservative.',
+  'home-health': 'Four quick checks for a healthier house: what a radon test result means, the winter humidity that keeps your windows dry, how many smoke and carbon monoxide alarms your province requires and recommends, and when mould needs a professional.',
+  'appliance-energy': 'What a fridge, freezer, dryer, block heater, hot tub or EV costs to run a year at your local electricity price, and what a newer model, a timer or switching off would save.',
+};
+
+const path = `/ca/calculators/${calc}/`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Calculators', path: '/ca/calculators/' },
+    { name: meta.name, path },
+  ]),
+];
+const others = CALC_SLUGS.filter((c) => c !== calc);
+const related: Record<CalcSlug, { href: string; label: string }[]> = {
+  'energy-costs': [{ href: '/ca/issues/high-heating-bills/', label: 'High heating bills' }, { href: '/ca/issues/switching-to-heat-pump/', label: 'Switching to a heat pump' }, { href: '/ca/services/energy-bill-analysis/', label: 'Energy bill analysis' }],
+  'upgrade-payback': [{ href: '/ca/issues/drafty-rooms/', label: 'Drafty rooms' }, { href: '/ca/issues/ice-dams/', label: 'Ice dams' }, { href: '/ca/programs/', label: 'Rebates and programs' }],
+  'home-health': [{ href: '/ca/tests/radon/', label: 'Radon testing explained' }, { href: '/ca/issues/condensation-mould/', label: 'Condensation and mould' }, { href: '/ca/services/well-water-testing/', label: 'Well water testing' }],
+  'appliance-energy': [{ href: '/ca/services/energy-bill-analysis/', label: 'Energy bill analysis' }, { href: '/ca/issues/high-heating-bills/', label: 'High energy bills' }],
+};
+---
+
+<Base title={meta.hubTitle} description={meta.hubDescription} schema={schema} ogImage={ogFor(meta.photo)}>
+  <CalcStyles />
+  <div class="container cpage">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/ca/calculators/">Calculators</a> <span aria-hidden="true">/</span>
+      <span>{meta.name}</span>
+    </nav>
+
+    <div class="page-hero calc-hero">
+      <p class="eyebrow">{CALC_CITIES.length} Canadian cities · prices and programs checked {longDate('2026-10-08')}</p>
+      <h1>{meta.hubH1}</h1>
+      <p class="lede">{intro[calc]}</p>
+      <CityPicker id="hub-city" calc={calc} label="Your city" selected="toronto" button="Open my city's calculator" hint="Each city page is pre-filled with local numbers. Every city is also listed further down." />
+    </div>
+
+    {calc === 'energy-costs' && <EnergyCostsCalc payload={page.payload} rp={page.rp} cityName={name} hubNote={hubNote} />}
+    {calc === 'upgrade-payback' && <UpgradePaybackCalc payload={page.payload} cityName={name} hubNote={hubNote} />}
+    {calc === 'home-health' && <HomeHealthCalc payload={page.payload} cityName={name} hubNote={hubNote} />}
+    {calc === 'appliance-energy' && <ApplianceEnergyCalc payload={page.payload} cityName={name} priceNote={page.priceNote} hubNote={hubNote} />}
+
+    <HowWeCalculate calc={calc} cityName={name} hdd={city.hot2000.hdd} annualMean={city.eccc.annualMean} prov={city.prov} />
+
+    <section class="sec city-index" aria-labelledby="ci-h">
+      <h2 id="ci-h">{meta.name} by city</h2>
+      <p class="small">Each page is pre-filled with that city's climate, prices and programs, with a table of typical results you can read without changing anything.</p>
+      <CityIndex calc={calc} />
+    </section>
+
+    <section class="sec" aria-labelledby="more-h">
+      <h2 id="more-h">More calculators</h2>
+      <div class="calc-cards">
+        {others.map((c) => (
+          <a class="card calc-card" href={`/ca/calculators/${c}/`}><strong>{CALC_META[c].name}</strong><span>{CALC_META[c].blurb}</span></a>
+        ))}
+      </div>
+      <div class="linkrow">
+        <a class="primary" href="/ca/plan/">Build your upgrade plan →</a>
+        <a href="/ca/calculators/">All calculators</a>
+        {related[calc].map((r) => <a href={r.href}>{r.label}</a>)}
+      </div>
+    </section>
+
+    <div class="card card-pad srcs">
+      <h3>Sources for the Toronto example</h3>
+      <ul class="src-list">
+        {page.sources.map((s: { title: string; url: string }) => <li><a href={s.url} rel="noopener">{s.title} ↗</a></li>)}
+      </ul>
+      <p class="meta">Each city page lists the sources for its own numbers.</p>
+    </div>
+
+    <div class="lead-wrap">
+      <LeadForm
+        heading="Want real numbers for your house?"
+        sub="An EnerGuide evaluation measures your house and replaces every assumption in this calculator. Tell us your postal code and we'll connect you with a registered energy advisor for your area."
+        context={`calc-${calc}`}
+      />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .calc-hero { padding-bottom: 22px; }
+  .calc-hero .lede { max-width: 72ch; font-size: 18px; }
+  .lead-wrap { margin: 36px 0 30px; }
+</style>

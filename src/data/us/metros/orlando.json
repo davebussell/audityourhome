@@ -1,0 +1,352 @@
+{
+  "slug": "orlando",
+  "name": "Orlando",
+  "metroName": "Orlando-Kissimmee-Sanford, FL Metropolitan Statistical Area",
+  "states": [
+    "FL"
+  ],
+  "principalCity": "Orlando",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Duke Energy Florida",
+        "serves": "About 2.0 million Florida customers. Its service area 'includes the densely populated areas around Orlando' (2026 Ten-Year Site Plan).",
+        "url": "https://www.floridapsc.com/pscfiles/website-files/PDF/Utilities/Electricgas/TenYearSitePlans/2026/DEF-revised.pdf"
+      },
+      {
+        "name": "Orlando Utilities Commission (OUC)",
+        "serves": "Municipal utility for the City of Orlando, authorized to serve Orange and Osceola counties. It also operates and supplies the City of St. Cloud's electric system under an interlocal agreement extended through 2042. Rebates apply only inside OUC's electric (or water) territory.",
+        "url": "https://www.ouc.com/solutions-programs/savings/rebates/"
+      },
+      {
+        "name": "Other city-owned utilities (FMPA members)",
+        "serves": "Kissimmee (82,807 customers), Leesburg (27,597), Winter Park (14,709) and Mount Dora (5,978). St. Cloud (39,071) is OUC-operated. Their programs were not researched.",
+        "url": "https://fmpa.com/members/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Peoples Gas",
+        "serves": "Statewide gas utility (500,000+ customers, an Emera company). Its site lists Orlando and Eustis among its local areas (under 'Appliances and Sales'). Gas is available only at some addresses; check by ZIP code.",
+        "url": "https://www.peoplesgas.com/residential/saveenergy/rebates/"
+      }
+    ],
+    "notes": "Electric service in the metro is split among Duke Energy Florida, OUC and several city utilities, plus other providers in parts of Lake and Seminole counties that were not verified. Confirm the utility by address before showing programs. The brief's 'TECO Peoples Gas' now brands itself 'Peoples Gas'."
+  },
+  "auditPrograms": [
+    {
+      "name": "OUC free home energy and water audit",
+      "runBy": "Orlando Utilities Commission",
+      "cost": "Free",
+      "whoQualifies": "OUC customers, homeowners and renters. You need at least six months of consumption history at the property, and solar customers should have their monthly production data ready.",
+      "whatYouGet": "An in-person visit of about an hour by an OUC conservation specialist. It reviews your usage and checks attic insulation and A/C ducts (single-family homes only), filters, caulking, appliances, lighting, thermostat, windows, weatherstripping, water-heater temperature, and water fixtures and irrigation. You get a written report with recommendations and free energy and/or water conservation kits. The audit is also the first step into Efficiency Delivered.",
+      "howToBook": "Request by phone or with OUC's online home-audit form. Appointments run Mon-Fri, from 8 a.m. to a last arrival window of 2-5 p.m. During peak season (June-October) bookings can run up to six weeks out.",
+      "url": "https://www.ouc.com/solutions-programs/savings/conservation-audits/",
+      "status": "open (no end date published)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Duke Energy Florida Home Energy Check",
+      "runBy": "Duke Energy Florida",
+      "cost": "Free",
+      "whoQualifies": "All Duke Energy Florida residential customers, including renters and apartment residents, who have not had a Home Energy Check in the past two years.",
+      "whatYouGet": "An energy audit done online, by phone or in person (a walk-through), with personalized recommendations. Duke also provides a kit of easy-install energy-saving measures. Completing a check makes the customer eligible for Duke's home improvement rebates, which Duke describes as 'up to $3,800'.",
+      "howToBook": "Sign up through Duke Energy's Home Energy Check page on duke-energy.com, which is linked from Duke's June 24, 2026 news release. duke-energy.com blocked automated access, so the booking page itself was not read.",
+      "url": "https://news.duke-energy.com/releases/duke-energy-city-of-pinellas-park-team-up-to-help-local-residents-save-energy-and-money-this-summer",
+      "status": "open (promoted by Duke on 2026-06-24 and 2026-08-05; no end date published)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Peoples Gas Online Energy Audit (personalized or simple)",
+      "runBy": "Peoples Gas",
+      "cost": "Free",
+      "whoQualifies": "The personalized audit is for Peoples Gas customers who log in. The simple audit needs no account.",
+      "whatYouGet": "The personalized audit gives a report based on your home's actual gas use, plus alerts. The simple audit estimates use from a home profile and local weather. Both point to natural gas appliance options.",
+      "howToBook": "Online at the Peoples Gas Energy Audit page. There is no appointment.",
+      "url": "https://www.peoplesgas.com/residential/saveenergy/energyaudit/",
+      "status": "open (online tool)",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "OUC Heat Pump A/C rebate",
+      "runBy": "Orlando Utilities Commission",
+      "category": "heat-pump",
+      "amount": "$45 to $1,150 depending on system size and SEER2 rating, paid as a bill credit",
+      "whoQualifies": "OUC electric customers installing a heat pump rated 15.2 SEER2 / 16 SEER or higher. Submit the invoice with indoor and outdoor model numbers and the AHRI certificate via myOUC within six months of purchase. Not available to water-only customers.",
+      "status": "open",
+      "url": "https://www.ouc.com/solutions-programs/savings/rebates/heat-pump-ac/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "OUC Ceiling Insulation rebate",
+      "runBy": "Orlando Utilities Commission",
+      "category": "insulation-air-sealing",
+      "amount": "$0.10 per square foot (OUC website). OUC's April 2026 Ten-Year Site Plan describes $0.12 per square foot for upgrading to R-38 or higher.",
+      "whoQualifies": "Existing insulation must be R-19 or less, and the final level must be R-30 or higher (website). DIY projects qualify with receipts and a coverage chart. Conditioned areas only, so garages are excluded. Apply within six months.",
+      "status": "open",
+      "url": "https://www.ouc.com/solutions-programs/savings/rebates/ceiling-insulation/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "OUC Duct Repair/Replacement rebate",
+      "runBy": "Orlando Utilities Commission",
+      "category": "insulation-air-sealing",
+      "amount": "100% of the cost, up to $100",
+      "whoQualifies": "Residential and business OUC electric customers. Ducts must be sealed with mastic (or mastic with UL-approved tape) on all accessible boots, joints and seams. Apply within six months.",
+      "status": "open",
+      "url": "https://www.ouc.com/solutions-programs/savings/rebates/duct-repair-replacement/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "OUC Efficiency Delivered",
+      "runBy": "Orlando Utilities Commission",
+      "category": "income-qualified",
+      "amount": "Up to $2,500 of energy and water upgrades per home. OUC pays 85% for household income of $40,000 or less (max $2,125), 50% for $40,001-$60,000 (max $1,250), and standard rebates only above $60,000. The customer's share can be spread interest-free over up to 24 months on the utility bill.",
+      "whoQualifies": "OUC residential customers (owners, or renters with landlord approval; landlords can also participate) whose account is in good standing. A free OUC home audit comes first. Measures include A/C tune-ups, duct repair, insulation, air sealing and water-saving fixtures.",
+      "status": "open",
+      "url": "https://www.ouc.com/solutions-programs/savings/efficiency-delivered/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "OUC heat pump water heater, ENERGY STAR window and smart thermostat rebates",
+      "runBy": "Orlando Utilities Commission",
+      "category": "appliances",
+      "amount": "Heat pump water heater (UEF above 2.2): $500. ENERGY STAR windows (U-factor 0.32 or less, SHGC 0.23 or less): $1.50 per square foot. Smart thermostat: $50 per installation, 'slated to be released in 2026'.",
+      "whoQualifies": "OUC residential customers, per OUC's 2025 DSM Plan as described in its April 2026 Ten-Year Site Plan.",
+      "status": "unverified on ouc.com: these measures are listed in OUC's April 2026 Ten-Year Site Plan but did not appear in the rebate list shown on OUC's rebate page on 2026-10-12",
+      "url": "https://www.floridapsc.com/pscfiles/website-files/PDF/Utilities/Electricgas/TenYearSitePlans/2026/Orlando%20Utilities%20Commission.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "OUC Battery Storage rebate",
+      "runBy": "Orlando Utilities Commission",
+      "category": "other",
+      "amount": "Up to $2,000 ($150 per rated kWh)",
+      "whoQualifies": "OUC customers with rooftop solar under 20 kW who export under the Community Solar Energy Rate (per OUC's 2026 Ten-Year Site Plan).",
+      "status": "open",
+      "url": "https://www.ouc.com/solutions-programs/savings/rebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Duke Energy Florida home improvement rebates (Residential Incentive Program)",
+      "runBy": "Duke Energy Florida",
+      "category": "other",
+      "amount": "'Up to $3,800 in rebates' after a free Home Energy Check (Duke, June 24 and Aug. 5, 2026). Per-measure amounts were not verified because duke-energy.com blocked automated access.",
+      "whoQualifies": "Duke Energy Florida residential customers who have completed a Home Energy Check. Measures named by Duke include attic insulation, HVAC, duct repair and energy-efficient windows. The 2026 Ten-Year Site Plan also lists home energy management systems.",
+      "status": "open (Duke promotion dated 2026-08-05)",
+      "url": "https://news.duke-energy.com/releases/what-duke-energy-florida-customers-need-to-know-as-summer-heat-peaks-in-august",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Peoples Gas residential energy conservation rebates",
+      "runBy": "Peoples Gas (Peoples Gas System, an Emera company)",
+      "category": "appliances",
+      "amount": "Replacing electric with natural gas / replacing gas with gas: tank water heater $550 / $350; ENERGY STAR tank water heater $650 / $400; tankless water heater $700 / $550; cooking $300 / $100; clothes drying $300 / $150; gas furnace $725 / $500; gas space conditioning $500 per ton / $150 per ton. The rebate cannot exceed the total cost of equipment, installation, piping and venting.",
+      "whoQualifies": "Peoples Gas residential customers. Equipment must be installed within one year before applying. Used, refurbished or thrift-store appliances, propane conversions, point-of-use tankless units (minimum 5 gpm), fireplaces, fire pits, grills and portable heaters do not qualify. For electric-to-gas conversions the invoice must say 'electric to gas'. CLEAResult may verify the installation by smartphone.",
+      "status": "open (no end date published; Peoples Gas may change or end it without notice)",
+      "url": "https://www.peoplesgas.com/residential/saveenergy/rebates/",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "not launched (as of 2026-10-12)",
+    "programName": "Florida Energy Saver Program: HOMES (Home Owner Managing Energy Savings) and HEEHR (High-Efficiency Electric Home Rebates, Florida's name for HEAR)",
+    "administrator": "Florida Department of Agriculture and Consumer Services (FDACS), Office of Energy",
+    "summary": "The state portal says both programs 'are expected to launch in the future' and that 'additional information on the program timeline will be made available soon'. Homeowners can only register and fill in a profile to be emailed when applications open. Florida has about $346 million in federal funding. Planned HEEHR caps: heat pump $8,000; heat pump water heater $1,750; electric stove/cooktop/range/oven or heat pump dryer $840; panel (load service center) $4,000; insulation, air sealing and ventilation $1,600; wiring $2,500; up to $14,000 per household. It covers 100% of project cost under 80% of area median income (AMI) and 50% at 80-150% AMI. Households over 150% AMI are not eligible. Planned single-family HOMES limits (20-34% modeled savings / 35%+): under 80% AMI $16,000 / $20,000 (up to 100% of cost); 80% AMI and above $2,000 / $4,000 (up to 50% of cost). These pages carry a 2025 copyright and predate DOE's May 2026 program notices, so final terms (for example fuel switching under HEEHR) may change. On June 8, 2026 U.S. Rep. Kathy Castor said Florida's funding was approved in January 2025 but has been delayed since.",
+    "url": "https://floridaenergysaverprogram.fdacs.gov/en-US/",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program: Orange and Osceola counties",
+      "runBy": "Osceola County Council on Aging, Inc.",
+      "summary": "Local WAP provider for both Orange and Osceola counties: (407) 846-8532. Applications are available only through the local provider (FloridaCommerce). Florida WAP serves households under 200% of the federal poverty level.",
+      "url": "https://floridajobs.org/community-development/Weatherization-Assistance-Program/contact-your-local-weatherization-office-for-help"
+    },
+    {
+      "name": "Weatherization Assistance Program: Seminole County",
+      "runBy": "Meals on Wheels, Etc.",
+      "summary": "Local WAP provider for Seminole County: (407) 333-8877.",
+      "url": "https://floridajobs.org/community-development/Weatherization-Assistance-Program/contact-your-local-weatherization-office-for-help"
+    },
+    {
+      "name": "Weatherization Assistance Program: Lake County",
+      "runBy": "Lake Community Action Agency, Inc.",
+      "summary": "Local WAP provider for Lake County: (352) 352-5550.",
+      "url": "https://floridajobs.org/community-development/Weatherization-Assistance-Program/contact-your-local-weatherization-office-for-help"
+    },
+    {
+      "name": "OUC Efficiency Delivered (income-tiered)",
+      "runBy": "Orlando Utilities Commission",
+      "summary": "OUC pays 85% of up to $2,500 in upgrades for households earning $40,000 or less (50% for $40,001-$60,000). The balance can be paid interest-free on the bill over up to 24 months.",
+      "url": "https://www.ouc.com/solutions-programs/savings/efficiency-delivered/"
+    },
+    {
+      "name": "Duke Energy Florida Neighborhood Energy Saver",
+      "runBy": "Duke Energy Florida",
+      "summary": "Free energy-saving measures for low-income customers in neighborhoods that meet income criteria. Measures include air infiltration, water heating, lighting, insulation, duct repair, and heat pump/AC tune-ups, plus smart thermostats. Duke plans about 5,775 homes a year (2026 Ten-Year Site Plan). Duke picks the neighborhoods, so there is no individual application.",
+      "url": "https://www.floridapsc.com/pscfiles/website-files/PDF/Utilities/Electricgas/TenYearSitePlans/2026/DEF-revised.pdf"
+    },
+    {
+      "name": "Duke Energy Florida Low Income Weatherization Assistance Program",
+      "runBy": "Duke Energy Florida with local agencies",
+      "summary": "Duke funds weatherization and efficiency measures for low-income customers through local agency partners, about 500 customers a year (2026 Ten-Year Site Plan).",
+      "url": "https://www.floridapsc.com/pscfiles/website-files/PDF/Utilities/Electricgas/TenYearSitePlans/2026/DEF-revised.pdf"
+    },
+    {
+      "name": "Florida Energy Saver Program HEEHR (when launched)",
+      "runBy": "FDACS Office of Energy",
+      "summary": "Planned rebates of up to $14,000 for households under 150% AMI. Not launched as of 2026-10-12.",
+      "url": "https://floridaenergysaverprogram.fdacs.gov/en-US/heehr-program/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "City of Orlando Building Energy and Water Efficiency Strategy (BEWES, 2016)",
+      "appliesTo": "Large buildings only: buildings of 50,000 sq ft and above (IMT also lists city-owned buildings of 10,000+ sq ft). It does not affect single-family homeowners.",
+      "summary": "Owners benchmark energy use every year in ENERGY STAR Portfolio Manager and report it to the City. The 2026 compliance deadline was May 1, 2026 (exemption requests by April 1, extensions by April 15). Buildings with an ENERGY STAR score below 50 need an energy audit or retro-commissioning every five years (IMT). Non-compliant properties are listed publicly.",
+      "url": "https://www.orlando.gov/Initiatives/Building-Energy-Water-Efficiency-Strategy"
+    },
+    {
+      "name": "Florida Building Energy-Efficiency Rating Act: disclosure at sale (s. 553.996, Florida Statutes)",
+      "appliesTo": "Every sale of real property with a building on it, including ordinary single-family homes. It affects homeowners who sell or buy.",
+      "summary": "Before or when the buyer signs the contract, they must be given information telling them they can get an energy-efficiency rating on the building. The information covers how to analyze the rating, comparisons to statewide averages, ways to improve the rating, and a notice that a rating may qualify the buyer for an energy-efficient mortgage. This is a disclosure of information only. No rating or audit is required.",
+      "url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0500-0599/0553/Sections/0553.996.html"
+    },
+    {
+      "name": "State preemption of local energy-source and appliance restrictions (s. 366.032, Florida Statutes)",
+      "appliesTo": "Applies statewide and limits local governments. It affects homeowners indirectly.",
+      "summary": "Counties, cities and other local bodies may not restrict or prohibit the types or fuel sources of energy that utilities and gas suppliers deliver, or appliances (including stoves and grills) that use them. The only exception is enforcing the Florida Building Code or Fire Prevention Code. In practice no Florida city or county can adopt a gas ban or all-electric mandate for homes.",
+      "url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0366/Sections/0366.032.html"
+    }
+  ],
+  "notes": "MSA: CBSA 36740 (OMB July 2023): Lake, Orange, Osceola and Seminole counties. OUC's ceiling insulation terms differ by source: the website shows $0.10/sq ft with a final level of R-30 or higher, while the April 2026 Ten-Year Site Plan (2025 DSM Plan) says $0.12/sq ft to R-38. The website's rebate list initially shows only six items (heat pump A/C, battery storage, ceiling insulation, duct repair, Efficiency Delivered, EV) behind a 'Load All' control. The heat pump water heater, windows and smart thermostat measures from the site plan were not confirmed on the website. Duke Energy Florida's per-measure rebate amounts could not be read (duke-energy.com blocked automated access). Only the 'up to $3,800' total after a Home Energy Check is verified. Florida's IRA rebate program has still not launched. The FDACS portal still says only that both programs are 'expected to launch in the future'. The research tool's web-search budget ran out partway through, so programs of Kissimmee, Winter Park and other city utilities were not followed up. Federal tax credits: the IRS says the Energy Efficient Home Improvement Credit (25C) can be claimed for improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) 'is not available for any property placed in service after December 31, 2025.' Do not list either as a current incentive. Federal rule change for the IRA rebates: DOE Program Notices 26-1 (HOMES) and 26-2 (HEAR/HEEHR), effective May 29, 2026, removed fuel-switching (gas/propane-to-electric) from HEAR so it now covers only electric-to-electric upgrades, and generally require insulation/air sealing to be addressed before heating and cooling upgrades. Launched states had to comply within three months; per NASEO's August 2026 FAQ, reservations made on or after September 1, 2026 must follow the new notices and DOE is extending award periods to September 30, 2031.",
+  "sources": [
+    {
+      "label": "OUC - Rebates for efficiency upgrades",
+      "href": "https://www.ouc.com/solutions-programs/savings/rebates/"
+    },
+    {
+      "label": "OUC - Heat pump A/C rebate",
+      "href": "https://www.ouc.com/solutions-programs/savings/rebates/heat-pump-ac/"
+    },
+    {
+      "label": "OUC - Ceiling insulation rebate",
+      "href": "https://www.ouc.com/solutions-programs/savings/rebates/ceiling-insulation/"
+    },
+    {
+      "label": "OUC - Duct repair/replacement rebate",
+      "href": "https://www.ouc.com/solutions-programs/savings/rebates/duct-repair-replacement/"
+    },
+    {
+      "label": "OUC - Conservation audits",
+      "href": "https://www.ouc.com/solutions-programs/savings/conservation-audits/"
+    },
+    {
+      "label": "OUC - Efficiency Delivered",
+      "href": "https://www.ouc.com/solutions-programs/savings/efficiency-delivered/"
+    },
+    {
+      "label": "OUC 2026 Ten-Year Site Plan (Florida PSC) - DSM programs, service area",
+      "href": "https://www.floridapsc.com/pscfiles/website-files/PDF/Utilities/Electricgas/TenYearSitePlans/2026/Orlando%20Utilities%20Commission.pdf"
+    },
+    {
+      "label": "FMPA - Members (municipal utilities)",
+      "href": "https://fmpa.com/members/"
+    },
+    {
+      "label": "City of Orlando - Building Energy & Water Efficiency Strategy (BEWES)",
+      "href": "https://www.orlando.gov/Initiatives/Building-Energy-Water-Efficiency-Strategy"
+    },
+    {
+      "label": "FloridaCommerce - Contact your local Weatherization office (county list)",
+      "href": "https://floridajobs.org/community-development/Weatherization-Assistance-Program/contact-your-local-weatherization-office-for-help"
+    },
+    {
+      "label": "IMT - Comparison of U.S. Commercial Building Energy Benchmarking and Transparency Policies (January 2026)",
+      "href": "https://cityenergyproject.org/wp-content/uploads/2015/09/Benchmarking-Matrix-June-2026.pdf"
+    },
+    {
+      "label": "IMT - Audit and Retuning Policy Matrix (August 2024)",
+      "href": "https://www.cityenergyproject.org/wp-content/uploads/2023/07/IMT-Audit-and-Retuning-Matrix-August-2024.pdf"
+    },
+    {
+      "label": "Duke Energy Florida 2026 Ten-Year Site Plan (revised), filed with Florida PSC - DSM program list and service area",
+      "href": "https://www.floridapsc.com/pscfiles/website-files/PDF/Utilities/Electricgas/TenYearSitePlans/2026/DEF-revised.pdf"
+    },
+    {
+      "label": "Duke Energy news, June 24, 2026 - Home Energy Check / up to $3,800 rebates",
+      "href": "https://news.duke-energy.com/releases/duke-energy-city-of-pinellas-park-team-up-to-help-local-residents-save-energy-and-money-this-summer"
+    },
+    {
+      "label": "Duke Energy news, Aug. 5, 2026 - Florida summer savings programs",
+      "href": "https://news.duke-energy.com/releases/what-duke-energy-florida-customers-need-to-know-as-summer-heat-peaks-in-august"
+    },
+    {
+      "label": "Peoples Gas - Residential rebates",
+      "href": "https://www.peoplesgas.com/residential/saveenergy/rebates/"
+    },
+    {
+      "label": "Peoples Gas - Online Energy Audit",
+      "href": "https://www.peoplesgas.com/residential/saveenergy/energyaudit/"
+    },
+    {
+      "label": "Peoples Gas - About us (500,000+ customers; Emera)",
+      "href": "https://www.peoplesgas.com/company/about/"
+    },
+    {
+      "label": "FDACS - Florida Energy Saver Program portal (home)",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/en-US/"
+    },
+    {
+      "label": "FDACS - HEEHR program page",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/en-US/heehr-program/"
+    },
+    {
+      "label": "FDACS - HOMES program page",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/en-US/homes-program/"
+    },
+    {
+      "label": "FDACS - Florida Energy Saver Program FAQs/resources",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/resources"
+    },
+    {
+      "label": "Rep. Kathy Castor release, June 8, 2026 (via Capitol Releases)",
+      "href": "https://capitolreleases.com/releases/971af4f2-558f-45a0-a9f6-15acb1d8866e"
+    },
+    {
+      "label": "Florida Statutes s. 553.996 (energy-efficiency rating information at sale)",
+      "href": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0500-0599/0553/Sections/0553.996.html"
+    },
+    {
+      "label": "Florida Statutes s. 366.032 (preemption over utility service restrictions)",
+      "href": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0366/Sections/0366.032.html"
+    },
+    {
+      "label": "Florida Statutes s. 163.08 (PACE qualifying improvements)",
+      "href": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0163/Sections/0163.08.html"
+    },
+    {
+      "label": "IRS - Energy Efficient Home Improvement Credit (25C)",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS - Residential Clean Energy Credit (25D)",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    },
+    {
+      "label": "U.S. DOE - Program Notice 26-2 (HEEHR/HEAR), effective May 29, 2026",
+      "href": "https://www.energy.gov/documents/program-notice-26-2"
+    },
+    {
+      "label": "NASEO - Home Energy Rebates FAQ, August 2026",
+      "href": "https://wwww.naseo.org/Data/Sites/1/media/tknaseo/home-energy-rebates_faq-august-2026_final_8.31.2026.pdf"
+    },
+    {
+      "label": "U.S. Census Bureau - CBSA delineation file (OMB, July 2023)",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    }
+  ]
+}

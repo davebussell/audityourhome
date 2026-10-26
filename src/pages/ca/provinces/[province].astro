@@ -1,0 +1,201 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor, PROV_SLUG_PHOTO } from '../../../lib/photos';
+import EraBar from '../../../components/EraBar.astro';
+import { localCities } from '../../../lib/local';
+import LeadForm from '../../../components/LeadForm.astro';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema } from '../../../lib/schema';
+import data from '../../../data/provinces.json';
+
+export function getStaticPaths() {
+  return data.provinces.map((p) => ({ params: { province: p.slug } }));
+}
+
+const { province } = Astro.params;
+const p = data.provinces.find((x) => x.slug === province)!;
+const others = data.provinces.filter((x) => x.slug !== p.slug);
+
+const title = `Home energy audits in ${p.name} — live programs, honest status | AuditYourHome`;
+const description = p.intro.length > 158 ? p.intro.slice(0, 155).trimEnd() + '…' : p.intro;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Provinces', path: '/ca/provinces/' },
+    { name: p.name, path: `/ca/provinces/${p.slug}/` },
+  ]),
+];
+
+const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
+  active: { cls: 'chip-active', label: 'live' },
+  income: { cls: 'chip-info', label: 'income-qualified' },
+  announced: { cls: 'chip-info', label: 'announced' },
+  closed: { cls: 'chip-closed', label: 'closed' },
+};
+const provCities = localCities.filter((c) => c.provSlug === p.slug).sort((a, b) => b.population - a.population);
+// Federal notes can differ by province (e.g. OHPA paid up to $15,000 + $250 where co-delivered, $10,000 where NRCan delivered it directly).
+type FedItem = { note: string; noteByProvince?: Record<string, string> };
+const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(PROV_SLUG_PHOTO[p.slug] ?? 'home-hero')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/provinces/">Provinces</a> <span aria-hidden="true">/</span> <span>{p.name}</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+      <p class="eyebrow">Provincial guide · program status verified per item</p>
+      <h1>Home energy audits in {p.name}</h1>
+      <p class="lede measure">{p.intro}</p>
+      </div>
+      <Photo name={PROV_SLUG_PHOTO[p.slug] ?? 'home-hero'} eager />
+    </div>
+
+    <div class="measure prose">
+      <h2>The housing stock, read like an auditor</h2>
+      <p>{p.housing}</p>
+    </div>
+
+    <h2 class="sec">Programs in {p.name}: what's actually live</h2>
+    <div class="prog-grid">
+      {p.programs.map((pr) => (
+        <article class={`card card-pad pcard s-${pr.status}`}>
+          <div class="phead">
+            <span class={`chip ${STATUS_CHIP[pr.status]?.cls ?? 'chip-neutral'}`}>{STATUS_CHIP[pr.status]?.label}</span>
+            <p class="phl">{pr.headline}</p>
+          </div>
+          <h3>{pr.name}</h3>
+          <p class="pnote">{pr.note}</p>
+          <p class="meta">
+            {'programSlug' in pr && (pr as any).programSlug && (
+              <><a href={`/ca/programs/${(pr as any).programSlug}/`}><strong>Full program guide →</strong></a>{' · '}</>
+            )}
+            {'internal' in pr && (pr as any).internal
+              ? <a href={pr.url}>Details on our tracker →</a>
+              : <a href={pr.url} rel="noopener">Official page ↗</a>}
+            {' · verified '}{pr.verified}
+          </p>
+        </article>
+      ))}
+    </div>
+
+    <div class="card card-pad fed">
+      <h3>{data.federal.heading}</h3>
+      <div class="fed-rows">
+        {data.federal.items.map((f) => (
+          <p class="fed-line">
+            <span class={`chip ${STATUS_CHIP[f.status]?.cls ?? 'chip-neutral'}`}>{STATUS_CHIP[f.status]?.label}</span>
+            <strong>{f.name}:</strong> {fedNote(f)} {'programSlug' in f && (f as { programSlug?: string }).programSlug && <><a href={`/ca/programs/${(f as { programSlug?: string }).programSlug}/`}>What we know →</a>{' '}</>}<a href={f.url} rel="noopener">↗</a>
+          </p>
+        ))}
+      </div>
+    </div>
+
+    <a class="card card-pad hp-link" href={`/ca/heat-pumps/${p.slug}/`}>
+      <span class="hp-t">Heat pumps in {p.name} →</span>
+      <span class="hp-d">What one costs to run against gas, oil and baseboards here, every heat pump rebate with its equipment rule, and the certified cold-climate systems and brands that suit the winters.</span>
+    </a>
+
+    {provCities.length > 0 && (
+      <>
+        <h2 class="sec">Local guides for {provCities.length} {provCities.length === 1 ? 'city' : 'cities'} in {p.name}</h2>
+        <p class="small measure">
+          Each city page covers 16 audit and testing services with that city's own climate, housing
+          age and service organizations. The bar shows its houses by construction era, oldest first.
+        </p>
+        <div class="pc-grid">
+          {provCities.map((c) => (
+            <a class="pc" href={`/ca/cities/${c.slug}/`}>
+              <span class="pcn">{c.name}</span>
+              <EraBar era={c.facts.era} name={c.name} />
+              <span class="pcf">{c.facts.hdd.toLocaleString('en-CA')} HDD · {Math.round(c.facts.housesPre1961 ?? 0)}% pre-1961</span>
+            </a>
+          ))}
+        </div>
+      </>
+    )}
+
+    <h2 class="sec">Monitor &amp; test in {p.name}</h2>
+    <p class="small measure">
+      Local geology, water sources, and climate set the home-health checklist. Each item links to
+      its full guide; the <a href="/ca/tests/screener/">30-second screener</a> personalizes it to
+      your exact house.
+    </p>
+    <div class="hh-grid">
+      {p.homeHealth.map((h) => (
+        <article class="card card-pad hh">
+          <h3><a href={h.link}>{h.name}</a></h3>
+          <p class="mb-0">{h.note}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="card card-pad next-cta">
+      <div>
+        <h3>Run your {p.name} home through the planner</h3>
+        <p class="mb-0 small">
+          Postal code in, plan out: your era's likely story, the tests to ask for by name, and the
+          {' '}{p.name} programs above matched to your situation.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/ca/plan/">Check my home →</a>
+    </div>
+
+    <p class="also">
+      Other provinces:
+      {others.map((o, i) => (
+        <span>{i > 0 && ' · '}<a href={`/ca/provinces/${o.slug}/`}>{o.name}</a></span>
+      ))}
+    </p>
+
+    <LeadForm
+      heading={`Find a registered advisor in ${p.name}`}
+      sub="NRCan-registered service organizations work in every province. Tell us where you are and what you're planning — we'll point you at the right door, with your province's programs flagged."
+      context={`province-${p.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 8px 0 10px; }
+  .sec { margin: 32px 0 10px; font-size: 23px; }
+  .pc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 14px 0 8px; }
+  .pc { display: grid; gap: 6px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .pc:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .pcn { font-family: var(--display); font-weight: 700; font-size: 16px; }
+  .pcf { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 14px 0 18px; }
+  .pcard { display: grid; gap: 6px; align-content: start; }
+  .pcard.s-active { border-left: 4px solid var(--pine); }
+  .pcard.s-income { border-left: 4px solid var(--steel); }
+  .pcard.s-closed { border-left: 4px solid var(--dead); }
+  .phead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .phl { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink); margin: 0; }
+  .pcard h3 { font-size: 17.5px; margin: 0; }
+  .pnote { font-size: 14px; color: var(--muted); margin: 0; }
+  .pcard .meta a { color: var(--heat-deep); text-decoration: none; }
+  .fed { border-left: 4px solid var(--steel); margin: 6px 0 10px; }
+  .fed h3 { margin-bottom: 10px; }
+  .fed-rows { display: grid; gap: 10px; }
+  .fed-line { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .fed-line .chip { margin-right: 6px; }
+  .fed-line strong { color: var(--ink); }
+  .fed-line a { color: var(--heat-deep); text-decoration: none; }
+  .hp-link { display: grid; gap: 4px; margin: 4px 0 10px; border-left: 4px solid var(--heat); text-decoration: none; color: var(--ink); }
+  .hp-link:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .hp-t { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--heat-deep); }
+  .hp-d { font-size: 14.5px; color: var(--muted); }
+  .hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  @media (max-width: 780px) { .hh-grid { grid-template-columns: 1fr; } }
+  .hh { border-left: 4px solid var(--steel); }
+  .hh h3 { font-size: 16.5px; margin-bottom: 6px; }
+  .hh h3 a { color: var(--ink); text-decoration: none; }
+  .hh h3 a:hover { color: var(--heat-deep); }
+  .hh p { font-size: 14.5px; }
+  .next-cta { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin: 26px 0 14px; }
+  .next-cta h3 { margin-bottom: 4px; }
+  .also { font-size: 13.5px; color: var(--muted); margin-bottom: 26px; }
+</style>

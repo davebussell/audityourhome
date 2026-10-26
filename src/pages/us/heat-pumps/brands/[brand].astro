@@ -1,0 +1,11 @@
+---
+import BrandPage from '../../../../components/hp/BrandPage.astro';
+import { brandSlugs } from '../../../../lib/heatpumps';
+
+export function getStaticPaths() {
+  return brandSlugs('us').map((brand) => ({ params: { brand } }));
+}
+const { brand } = Astro.params;
+---
+
+<BrandPage market="us" slug={brand!} />

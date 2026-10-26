@@ -1,6 +1,27 @@
 ---
 import { SITE, ACCOUNTS_ENABLED } from '../config/site';
 import Logo from './Logo.astro';
+import { countryOf } from '../lib/country';
+
+const country = countryOf(Astro.url.pathname);
+const blurb =
+  country === 'us'
+    ? 'Plan home energy upgrades in the United States with certified auditors, real prices and rebate data we keep current.'
+    : country === 'ca'
+      ? 'The trusted way to plan home energy upgrades in Canada: verified auditors, real prices, and rebate data we actually keep current.'
+      : 'Find a certified home energy auditor, compare real prices and see which rebates are live, in Canada and the United States.';
+const notAffiliated =
+  country === 'us'
+    ? 'We are not affiliated with the U.S. Department of Energy, the EPA, RESNET, BPI, any utility or any government program.'
+    : country === 'ca'
+      ? 'We are not affiliated with Natural Resources Canada, Enbridge, the IESO, or any government program.'
+      : 'We are not affiliated with any government program, utility or certification body in Canada or the United States.';
+const metaLine =
+  country === 'us'
+    ? 'United States edition'
+    : country === 'ca'
+      ? 'Canada-wide, province by province · Version française à venir'
+      : 'Canada and the United States';
 ---
 
 <footer class="band-dark site-footer">
@@ -8,61 +29,91 @@ import Logo from './Logo.astro';
     <div class="cols">
       <div class="brand-col">
         <Logo onDark />
-        <p class="small">
-          The trusted way to plan home energy upgrades in Canada: verified auditors, real prices,
-          and rebate data we actually keep current.
-        </p>
-        <p class="meta">Program data last reviewed {SITE.dataReviewDate}</p>
+        <p class="small">{blurb}</p>
+        {country === 'ca' && <p class="meta">Program data last reviewed {SITE.dataReviewDate}</p>}
       </div>
-      <nav aria-label="Homeowners">
-        <h4>Homeowners</h4>
-        <ul>
-          <li><a href="/plan/">Home Energy Planner</a></li>
-          <li><a href="/calculators/">Calculators for your city</a></li>
-          <li><a href="/learn/">Keeping the heat in</a></li>
-          <li><a href="/find/">Find an auditor</a></li>
-          <li><a href="/programs/">Rebates &amp; programs</a></li>
-          <li><a href="/updates/">Rebate &amp; program changes</a></li>
-          {ACCOUNTS_ENABLED && <li><a href="/alerts/">Free home alerts</a></li>}
-          {ACCOUNTS_ENABLED && <li><a href="/account/">My Home (sign in)</a></li>}
-          <li><a href="/tests/">The complete testing guide</a></li>
-          <li><a href="/tests/screener/">Specialty test screener</a></li>
-          <li><a href="/products/">Monitoring &amp; testing gear</a></li>
-          <li><a href="/provinces/">Province-by-province</a></li>
-          <li><a href="/cities/">70 cities, 16 local services</a></li>
-          <li><a href="/areas/">Smaller towns &amp; counties</a></li>
-          <li><a href="/services/">Audit &amp; testing services</a></li>
-          <li><a href="/guides/">Ontario city guides</a></li>
-          <li><a href="/articles/">Articles</a></li>
-          <li><a href="/issues/">Fix an issue</a></li>
-          <li><a href="/cost/">What an audit costs</a></li>
-          <li><a href="/how-it-works/">How an audit works</a></li>
-        </ul>
-      </nav>
+      {country === 'ca' && (
+        <nav aria-label="Homeowners">
+          <h4>Homeowners</h4>
+          <ul>
+            <li><a href="/ca/plan/">Home Energy Planner</a></li>
+            <li><a href="/ca/calculators/">Calculators for your city</a></li>
+            <li><a href="/ca/learn/">Keeping the heat in</a></li>
+            <li><a href="/ca/find/">Find an auditor</a></li>
+            <li><a href="/ca/programs/">Rebates &amp; programs</a></li>
+            <li><a href="/ca/updates/">Rebate &amp; program changes</a></li>
+            {ACCOUNTS_ENABLED && <li><a href="/ca/alerts/">Free home alerts</a></li>}
+            {ACCOUNTS_ENABLED && <li><a href="/account/">My Home (sign in)</a></li>}
+            <li><a href="/ca/tests/">The complete testing guide</a></li>
+            <li><a href="/ca/tests/screener/">Specialty test screener</a></li>
+            <li><a href="/ca/products/">Monitoring &amp; testing gear</a></li>
+            <li><a href="/ca/provinces/">Province-by-province</a></li>
+            <li><a href="/ca/cities/">70 cities, 16 local services</a></li>
+            <li><a href="/ca/areas/">Smaller towns &amp; counties</a></li>
+            <li><a href="/ca/services/">Audit &amp; testing services</a></li>
+            <li><a href="/ca/guides/">Ontario city guides</a></li>
+            <li><a href="/ca/articles/">Articles</a></li>
+            <li><a href="/ca/issues/">Fix an issue</a></li>
+            <li><a href="/ca/cost/">What an audit costs</a></li>
+            <li><a href="/ca/how-it-works/">How an audit works</a></li>
+          </ul>
+        </nav>
+      )}
+      {country === 'us' && (
+        <nav aria-label="Homeowners">
+          <h4>Homeowners</h4>
+          <ul>
+            <li><a href="/us/plan/">Home Energy Planner</a></li>
+            <li><a href="/us/find/">Find a certified auditor</a></li>
+            <li><a href="/us/cities/">26 metro areas</a></li>
+            <li><a href="/us/programs/">Rebates, tax credits &amp; programs</a></li>
+            <li><a href="/us/programs/states/">Home energy rebates by state</a></li>
+            <li><a href="/us/tests/">The complete testing guide</a></li>
+            <li><a href="/us/tests/screener/">Specialty test screener</a></li>
+            <li><a href="/us/products/">Monitoring &amp; testing gear</a></li>
+            <li><a href="/us/cost/">What an audit costs</a></li>
+            <li><a href="/us/how-it-works/">How an audit works</a></li>
+          </ul>
+        </nav>
+      )}
+      {!country && (
+        <nav aria-label="Country sites">
+          <h4>Choose your country</h4>
+          <ul>
+            <li><a href="/ca/">Canada</a></li>
+            <li><a href="/us/">United States</a></li>
+          </ul>
+        </nav>
+      )}
       <nav aria-label="Professionals and company">
-        <h4>Professionals</h4>
-        <ul>
-          <li><a href="/for-professionals/">Leads &amp; listings for advisors</a></li>
-        </ul>
-        <h4 class="second">Company</h4>
+        {country === 'ca' && (
+          <>
+            <h4>Professionals</h4>
+            <ul>
+              <li><a href="/ca/for-professionals/">Leads &amp; listings for advisors</a></li>
+            </ul>
+          </>
+        )}
+        <h4 class:list={[{ second: country === 'ca' }]}>Company</h4>
         <ul>
           <li><a href="/about/">About &amp; data policy</a></li>
           <li><a href="/privacy/">Privacy</a></li>
           <li><a href={`mailto:${SITE.contactEmail}`}>Contact</a></li>
+          {country === 'ca' && <li><a href="/us/">United States site</a></li>}
+          {country === 'us' && <li><a href="/ca/">Canadian site</a></li>}
         </ul>
       </nav>
     </div>
     <div class="legal">
       <p>
-        {SITE.name} is an independent directory and planning tool. We are not affiliated with
-        Natural Resources Canada, Enbridge, the IESO, or any government program. Program details
+        {SITE.name} is an independent directory and planning tool. {notAffiliated} Program details
         change — always confirm on the official program page before spending money. Savings figures
         are estimates based on typical performance of similar homes, not a model of yours.
         Photos on this site are AI-generated illustrations made for it; they don't show real
         customers, specific homes or any listed provider, and the infrared views are illustrative,
         not measurements.
       </p>
-      <p class="meta">© 2026 {SITE.name} · Canada-wide, province by province · US launch coming · Version française à venir</p>
+      <p class="meta">© 2026 {SITE.name} · {metaLine}</p>
     </div>
   </div>
 </footer>

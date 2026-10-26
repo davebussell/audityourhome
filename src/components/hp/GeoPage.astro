@@ -1,0 +1,158 @@
+---
+/** Geothermal makers plus window and no-outdoor-unit heat pumps, for one country. */
+import Base from '../../layouts/Base.astro';
+import QuoteForm from './QuoteForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import {
+  type Market, TYPES, HP_CHECKED, brandHref, statsFor, CA_REGIONS, caRebates, US_METROS, usRebates, metroName, hostOf, statusChipHP,
+} from '../../lib/heatpumps';
+import '../../styles/hp.css';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const country = isCA ? 'Canada' : 'the US';
+const geo = TYPES.geothermal;
+const win = TYPES['window-heat-pumps'];
+const gradient = TYPES.gradient;
+const isGeo = (p: any) => /ground|geotherm/i.test(`${p.name} ${p.heatPumpRebate ?? ''}`);
+const geoPrograms = isCA
+  ? CA_REGIONS.map((r) => ({ place: r.name, href: `/ca/heat-pumps/${r.slug}/`, progs: caRebates(r).filter(isGeo) })).filter((x) => x.progs.length)
+  : US_METROS.map((m) => ({ place: metroName(m), href: `/us/heat-pumps/${m.slug}/`, progs: usRebates(m.slug).filter(isGeo) })).filter((x) => x.progs.length);
+const innovaHere = statsFor(market, 'innova');
+const title = `Geothermal, window and no-outdoor-unit heat pumps (${isCA ? 'Canada' : 'US'}) | AuditYourHome`;
+const description = `Who makes ground-source heat pumps for ${country} and what they warrant, the rebates that cover them, plus window and no-outdoor-unit heat pumps for apartments.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: `/${market}/` },
+    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
+    { name: 'Geothermal and other types', path: `/${market}/heat-pumps/geothermal/` },
+  ]),
+];
+const clip = (s: string, n = 300) => (s.length > n ? `${s.slice(0, n).replace(/\s+\S*$/, '')}…` : s);
+// The research note lists US sellers with their URLs, then the Canadian finding; show the half for this country, without URLs.
+const winEvidence = (win.soldIn?.evidence ?? '')
+  .replace(/,?\s*https?:\/\/[^\s),;]+/g, '')
+  .replace(/\(\s*\)/g, '')
+  .replace(/\s+,/g, ',')
+  .replace(/\s+/g, ' ')
+  .trim();
+const winUS = winEvidence.split(/;\s*CA:/)[0].replace(/^US:\s*/, '');
+const winIntro = isCA
+  ? "In our October check, no cold-climate window heat pump was confirmed on sale to Canadian homeowners. Gradient's warranty covers the continental US only, and Midea had only announced a Canadian pilot (December 2025)."
+  : winUS
+    ? `Sold in the US: ${winUS}.`
+    : '';
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/${market}/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span> <span>Geothermal and other types</span></nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Heat pump types · checked {HP_CHECKED}</p>
+        <h1>Geothermal, window and no-outdoor-unit heat pumps</h1>
+        <p class="lede measure">
+          Most homes get an air-source heat pump. These are the other options: ground-source systems that hold their output in any weather, and
+          small units for apartments and rooms where an outdoor unit isn't possible.
+        </p>
+      </div>
+    </div>
+
+    <section id="geothermal" class="sec">
+      <h2>Geothermal (ground-source) heat pump makers</h2>
+      <p class="sec-intro">
+        A ground loop keeps the heat pump's source near 5–10°C all winter, so capacity doesn't fall in a cold snap. The loop (drilled or trenched) is
+        most of the cost, and its design decides how well the system works. Geothermal units aren't in ENERGY STAR's air-source list, so this section
+        uses the makers' own pages.
+      </p>
+      <div class="cards">
+        {geo.lines.map((l: any) => (
+          <article class="card c">
+            <h3>{l.name}</h3>
+            <p>{l.claim ?? 'Warranty terms not published on the pages we could read.'}</p>
+            {l.url && <p class="meta"><a href={l.url} rel="noopener" target="_blank">{hostOf(l.url)}&nbsp;↗</a></p>}
+          </article>
+        ))}
+      </div>
+      <div class="pros">
+        <div class="card good"><h3>Why people choose it</h3><ul>{geo.strengths.map((s: string) => <li>{s}</li>)}</ul></div>
+        <div class="card watch"><h3>Watch-outs</h3><ul>{geo.watchouts.map((s: string) => <li>{s}</li>)}</ul></div>
+      </div>
+      <p class="tnote">{geo.priceNote}</p>
+
+      <h3 class="sub-h">Rebates that cover ground-source systems</h3>
+      {geoPrograms.length ? (
+        <div class="tablewrap card">
+          <table class="stack dt">
+            <caption class="sr-only">Ground-source heat pump programs</caption>
+            <thead><tr><th scope="col">{isCA ? 'Province or territory' : 'Metro'}</th><th scope="col">Program</th><th scope="col">Status</th><th scope="col">Ground-source terms</th></tr></thead>
+            <tbody>
+              {geoPrograms.flatMap((g) => g.progs.map((p: any) => (
+                <tr>
+                  <td class="brand-cell"><a href={g.href}>{g.place}</a></td>
+                  <td data-label="Program">{p.url ? <a href={p.url} rel="noopener" target="_blank">{p.name}</a> : p.name}</td>
+                  <td data-label="Status"><span class={`chip ${statusChipHP(p.status).cls}`}>{statusChipHP(p.status).label}</span></td>
+                  <td data-label="Ground-source terms">{clip(p.heatPumpRebate ?? '')}</td>
+                </tr>
+              )))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p>No ground-source rebate turned up in our {HP_CHECKED} check for {country}.</p>
+      )}
+      {!isCA && <p class="tnote">The federal 25D credit, which covered geothermal heat pumps, ended for expenditures made after December 31, 2025.</p>}
+    </section>
+
+    <section id="window" class="sec">
+      <h2>Window and saddle heat pumps{isCA ? ' (US only for now)' : ''}</h2>
+      <p class="sec-intro">{winIntro}</p>
+      <div class="cards">
+        {win.lines.map((l: any) => (
+          <article class="card c">
+            <h3>{l.name}</h3>
+            <p>{l.claim ?? 'No low-temperature figure published.'}</p>
+            {l.url && <p class="meta"><a href={l.url} rel="noopener" target="_blank">{hostOf(l.url)}&nbsp;↗</a></p>}
+          </article>
+        ))}
+      </div>
+      <div class="pros">
+        <div class="card good"><h3>Where they make sense</h3><ul>{win.strengths.map((s: string) => <li>{s}</li>)}</ul></div>
+        <div class="card watch"><h3>Watch-outs</h3><ul>{[...win.watchouts, ...(gradient?.watchouts ?? []).slice(0, 1)].map((s: string) => <li>{s}</li>)}</ul></div>
+      </div>
+      {win.priceNote && <p class="tnote">{win.priceNote}</p>}
+    </section>
+
+    <section id="no-outdoor-unit" class="sec">
+      <h2>Heat pumps with no outdoor unit</h2>
+      <p class="sec-intro">
+        Wall-mounted units that breathe through two holes in the exterior wall, for heritage buildings, condos and rooms where an outdoor unit isn't
+        allowed. They are less efficient in deep cold than a split system.
+      </p>
+      {innovaHere ? (
+        <p>The main maker certified for {country} is Innova (sold in the US as Ephoca until 2026). See <a href={brandHref(market, 'innova')}>Innova's certified models and warranty</a>.</p>
+      ) : (
+        <p>No no-outdoor-unit heat pump is certified for {country} on ENERGY STAR's list.</p>
+      )}
+    </section>
+
+    <section id="air-to-water" class="sec">
+      <h2>Air-to-water heat pumps</h2>
+      <p class="sec-intro">
+        For homes with radiators or in-floor heating. Makers with lines in North America include Mitsubishi Electric (ecodan, launched in the US in 2026),
+        Daikin (Altherma 3 H HT, US 2026), Samsung (EHS) and Carrier. They aren't on ENERGY STAR's air-source list; ask installers for the maker's
+        performance data at your design temperature.
+      </p>
+    </section>
+
+    <div class="lf-wrap">
+      <QuoteForm market={market} context="types" heading="Get quotes for a geothermal or specialty heat pump" />
+    </div>
+    <section class="related">
+      <div class="nb"><a class="all" href={`/${market}/heat-pumps/`}>Back to the comparison guide →</a></div>
+    </section>
+  </div>
+</Base>

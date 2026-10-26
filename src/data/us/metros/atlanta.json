@@ -1,0 +1,378 @@
+{
+  "slug": "atlanta",
+  "name": "Atlanta",
+  "metroName": "Atlanta-Sandy Springs-Roswell, GA Metropolitan Statistical Area",
+  "states": [
+    "GA"
+  ],
+  "principalCity": "Atlanta",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Georgia Power",
+        "serves": "Investor-owned utility fully regulated by the Georgia PSC, with about 2.7 million customers in 155 of Georgia's 159 counties. All Georgia Power programs below are for its own customers only.",
+        "url": "https://www.georgiapower.com/residential/solutions/home-solutions.html"
+      },
+      {
+        "name": "Electric membership corporations (EMCs), for example Jackson EMC",
+        "serves": "Georgia has 41 EMCs (PSC). Jackson EMC, for example, serves 10 counties including Gwinnett, its largest county by meters (135,868). EMC customers cannot use Georgia Power programs. EMC programs were not researched.",
+        "url": "https://www.jacksonemc.com/my-cooperative/about-jackson-emc/facts-service-area"
+      },
+      {
+        "name": "Municipal electric systems",
+        "serves": "Georgia has 52 municipally owned electric systems over which the PSC has limited authority. Individual metro-Atlanta city systems were not researched.",
+        "url": "https://psc.ga.gov/utilities/electric/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Atlanta Gas Light (AGL)",
+        "serves": "Delivery-only gas utility. Its own words: 'we don't sell natural gas to customers'. It operates the pipes that deliver gas to customers of certified marketers, about 1.8 million customers in Georgia (the same About page also says 1.6 million). AGL runs the gas rebate programs.",
+        "url": "https://atlantagaslight.com/company/about-us.html"
+      },
+      {
+        "name": "PSC-certified natural gas marketers (15)",
+        "serves": "They sell the gas and bill AGL-system customers: Axpo U.S., Colonial Energy, Constellation, Fuel Georgia, Gas South, Georgia Natural Gas, Mansfield Power & Gas, NextEra Energy Service Georgia, NRG Business Marketing, SCANA Energy, Stream Energy, Town Square Energy, True Natural Gas, Walton EMC Natural Gas, Xoom Energy.",
+        "url": "https://psc.ga.gov/utilities/natural-gas/list-of-certified-marketers-and-contact-information/"
+      }
+    ],
+    "notes": "Georgia's gas market was restructured under a 1997 law, so homeowners on AGL's system must choose a certified marketer to buy gas from. AGL delivers it and to establish service AGL tells you to 'contact a marketer'. AGL's rebates require an active account in good standing with a Georgia certified marketer. SCANA Energy is the PSC-approved Regulated Provider for low-income consumers and for customers who cannot get service from another marketer. Community Action Agencies handle qualification. No energy-efficiency rebates run by the marketers themselves were found, but the marketers were not checked one by one."
+  },
+  "auditPrograms": [
+    {
+      "name": "Georgia Power Free In-Home Energy Audit",
+      "runBy": "Georgia Power, delivered by Utility Energy Services (UES)",
+      "cost": "Free",
+      "whoQualifies": "Eligible Georgia Power residential customers. Availability is limited, and customers who had an in-home audit or similar assessment in the past 12 months may not be eligible.",
+      "whatYouGet": "A UES Energy Advisor walks through the home (insulation, heating and cooling, water heating, major appliances, ductwork) and gives personalized recommendations. Select energy-saving products may be installed free 'when available and appropriate'.",
+      "howToBook": "Schedule online through Georgia Power's UES scheduler (https://utility-energyservices.my.site.com/s/GPClipboardAuditScheduler) or call UES at 877-310-5607, option 3 (Mon-Fri 8 a.m.-7 p.m. ET). Visits are booked in four-hour windows, and an adult 18 or older must be home.",
+      "url": "https://www.georgiapower.com/residential/solutions/home-solutions/in-home-audit.html",
+      "status": "open (availability limited; no end date published)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Power Online Home Energy Checkup",
+      "runBy": "Georgia Power",
+      "cost": "Free",
+      "whoQualifies": "Georgia Power residential customers (online tool).",
+      "whatYouGet": "An online analysis of your home's efficiency.",
+      "howToBook": "Start online at https://customerservice2.southerncompany.com/OnlineEnergyCheckup (linked from Georgia Power's Home Solutions page).",
+      "url": "https://www.georgiapower.com/residential/solutions/home-solutions.html",
+      "status": "open (online tool)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Energy Assessment rebate (Georgia Power Home Energy Improvement Program)",
+      "runBy": "Georgia Power HEIP; the assessment is done by an HEIP Program Installer",
+      "cost": "The contractor sets the price. Georgia Power rebates 50% of the cost up to $150, one assessment per calendar year.",
+      "whoQualifies": "Georgia Power residential customers.",
+      "whatYouGet": "A home energy assessment by a Program Installer, valid for one year. A test-in assessment is required before rebated dense-pack or spray-foam insulation and air sealing.",
+      "howToBook": "Find a Program Installer through Georgia Power's HEIP contractor search, then apply for the rebate within 60 days at georgiapowerrebates.com/residential.",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Home Efficiency Rebates (HER) energy assessment",
+      "runBy": "Georgia Environmental Finance Authority (GEFA), through program-approved contractors",
+      "cost": "Not stated. GEFA tells homeowners to 'ask your contractor about any potential assessment fees, first.'",
+      "whoQualifies": "Georgia residents (primary home), owners or renters with landlord authorization, who are pursuing an HER project.",
+      "whatYouGet": "A contractor energy assessment and a project scope that models whole-home energy savings, which sets your HER rebate tier.",
+      "howToBook": "Use the program's contractor directory at energyrebates.georgia.gov/find-approved-contractor and track the application in the Neighborly portal. Contact center: 877-348-5237 (Mon-Fri 9-6 ET).",
+      "url": "https://energyrebates.georgia.gov/home-efficiency-rebates",
+      "status": "open (no pause notice on the HER pages as of 2026-10-12)",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Georgia Home Efficiency Rebates (HER, Georgia's HOMES program)",
+      "runBy": "GEFA (federally funded by U.S. DOE)",
+      "category": "whole-home",
+      "amount": "Under 80% AMI: up to 98% of cost, max $10,000 (20-34% modeled savings) or $16,000 (35%+ savings). 80% AMI and above: up to 50%, max $2,000 (20-34%) or $4,000 (35%+).",
+      "whoQualifies": "Households whose primary home is in Georgia. Owners show a property tax record or insurance document, and renters need a Landlord Authorization Form. The tier depends on income vs. county AMI; a SNAP, Medicaid or LIHEAP benefit letter can establish eligibility. A program-approved contractor is required, with no DIY path.",
+      "status": "open (GEFA reported more than $50 million issued as of 2026-08-12; no pause notice)",
+      "url": "https://energyrebates.georgia.gov/home-efficiency-rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Home Electrification and Appliance Rebates (HEAR)",
+      "runBy": "GEFA",
+      "category": "income-qualified",
+      "amount": null,
+      "whoQualifies": "Low- and moderate-income households. When HEAR reopens, single-family applicants can get rebates only for electrical wiring and panel upgrades, and only together with an eligible HER project. HEAR will not reopen for multifamily.",
+      "status": "paused (not accepting new applications since 2026-08-14; GEFA says it will reopen in October 2026 with limited funding and limited measures; program-update webinar on 2026-10-14)",
+      "url": "https://energyrebates.georgia.gov/hear-program-updates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Power HEIP: furnace conversion to air-source heat pump",
+      "runBy": "Georgia Power",
+      "category": "heat-pump",
+      "amount": "50% of cost, up to $1,500 (ground-source heat pump conversion: 50% up to $300), per the 2026 requirements PDF. Georgia Power's HEIP web page shows these as 'Up to $1,500' and 'Up to $300' without mentioning the 50% limit. The web page also lists 'Ductless Mini Split Heat Pump - Combined: Up to $500' and 'Combination Heat Pump Water/Space Heating: Up to $500'. Neither is in the 2026 PDF, so their terms could not be confirmed.",
+      "whoQualifies": "Georgia Power residential customers replacing an electric furnace. A licensed HVAC installer is required, the system must be AHRI-listed, and the installer must attest that it replaced an electric furnace.",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Georgia Power HEIP: Home Comfort Bundle (attic insulation + air sealing + duct repair and sealing)",
+      "runBy": "Georgia Power",
+      "category": "insulation-air-sealing",
+      "amount": "50% of cost, up to $1,700 (electric-heated home) or $1,400 (gas-heated). Two-measure Home Comfort Duo (air sealing + insulation): up to $1,000 electric / $800 gas.",
+      "whoQualifies": "Georgia Power residential customers. A Program Installer is required, existing attic insulation must be below R-19, and most ducts must be in unconditioned space.",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Power HEIP: attic insulation",
+      "runBy": "Georgia Power",
+      "category": "insulation-air-sealing",
+      "amount": "50% of cost, up to $300 (electric-heated home) or $200 (gas-heated)",
+      "whoQualifies": "Existing attic insulation must be below R-19. Add R-49 or more across the whole attic. Self-install is allowed for non-air-sealing insulation types. Radiant barriers don't qualify.",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Power HEIP: air sealing and duct repair/sealing",
+      "runBy": "Georgia Power",
+      "category": "insulation-air-sealing",
+      "amount": "Air sealing: 50% up to $400 (electric) / $300 (gas). Duct repair and sealing: 50% up to $600 (electric) / $500 (gas).",
+      "whoQualifies": "Air sealing needs a Program Installer, test-in/test-out and at least a 20% CFM50 reduction. Duct sealing needs at least a 30% CFM25 reduction by a Program Installer or DET verifier. Homes with combustion appliances must pass combustion safety testing.",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Power HEIP: heat pump water heater",
+      "runBy": "Georgia Power",
+      "category": "appliances",
+      "amount": "50% of cost, up to $800",
+      "whoQualifies": "ENERGY STAR certified unit, installed by a licensed plumber, a Program Installer, or the homeowner. No rebate if a midstream incentive was already received for the same unit.",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Georgia Power HEIP: smart thermostat (Georgia Power Marketplace)",
+      "runBy": "Georgia Power",
+      "category": "appliances",
+      "amount": "50% of cost, up to $150 (up to two per account per year)",
+      "whoQualifies": "Georgia Power residential customers with a ducted central heating and air system. Buy through georgiapowermarketplace.com. Self-install or use an installer.",
+      "status": "open (current terms effective 2026-08-01, valid through 2028-12-31; rebates capped at $2,500 per customer per year)",
+      "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Atlanta Gas Light energy efficiency rebates (gas furnace and water heater)",
+      "runBy": "Atlanta Gas Light",
+      "category": "appliances",
+      "amount": "Furnace: $300 (92-94.9% AFUE) or $400 (95%+ AFUE). Water heater: $200 (tank, UEF 0.82+, or condensing tank, TE 0.90+); $300 (tankless, UEF 0.87+).",
+      "whoQualifies": "You must have an active account in good standing with a Georgia certified marketer in AGL territory and be replacing existing natural gas equipment in an existing home (not new construction), installed by a licensed Georgia contractor. Limits: two furnace rebates and one water heater rebate per address per 10 years. Dual-fuel systems are excluded. Claim online within 45 days of installation.",
+      "status": "open (program runs 2026-01-01 to 2026-12-31; 'valid while funds are available')",
+      "url": "https://www.atlantagaslight.com/submit-your-efficiency-rebate.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Atlanta Gas Light conversion rebates (switching electric or propane appliances to natural gas)",
+      "runBy": "Atlanta Gas Light",
+      "category": "other",
+      "amount": "Tank water heater $400; tankless $500; furnace $1,000 (new customer, electric to gas) or $500 (existing customer, electric to gas, or propane to gas); dryer $200. Cap: $3,000 per residential address per year.",
+      "whoQualifies": "Active account with a certified marketer in AGL territory. The new-customer furnace rebate requires no gas at the premise in the past 36 months. Dual-fuel systems and new construction are excluded. Claim within 45 days.",
+      "status": "open (program runs 2026-01-01 to 2026-12-31)",
+      "url": "https://www.atlantagaslight.com/submit-your-rebate.html",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "partly open: HER (HOMES) open; HEAR paused since 2026-08-14, with a limited reopening announced for October 2026",
+    "programName": "Georgia's Home Energy Rebates: Home Efficiency Rebates (HER, Georgia's name for federal HOMES) and Home Electrification and Appliance Rebates (HEAR)",
+    "administrator": "Georgia Environmental Finance Authority (GEFA), funded by U.S. DOE",
+    "summary": "The program fully launched in spring 2025. GEFA reported on Aug. 12, 2026 that more than $50 million had been issued to more than 3,500 households, with an average rebate of $12,104 and estimated savings of $1,407 a year. HER (open): under 80% AMI up to 98% of cost, max $10,000 (20-34% modeled savings) or $16,000 (35%+); 80% AMI and up, up to 50%, max $2,000 or $4,000. A program-approved contractor is required. HEAR has been paused since Aug. 14, 2026. GEFA says it will reopen in October 2026 with limited funding, for single-family homes only and only for electrical wiring and panel upgrades alongside an HER project. There is no multifamily pathway. Program-update webinar: Oct. 14, 2026. Contact center: 877-348-5237.",
+    "url": "https://energyrebates.georgia.gov/",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program (WAP), metro Atlanta providers",
+      "runBy": "GEFA (state administrator) through local Community Action Agencies",
+      "summary": "Free whole-house weatherization for households at or below 200% of the federal poverty level. Priority goes to elderly people, people with disabilities and families with children. An energy auditor visits first. Measures can include air and duct sealing, wall/floor/attic insulation, HVAC improvements, water-heater work and water-saving devices. Some counties have waiting lists. Providers by county: Tallatoona Community Action Partnership (Cobb, Fulton, Bartow, Paulding, Haralson); Area Committee to Improve Opportunities Now (ACTION) (DeKalb, Gwinnett, Rockdale, Newton, Walton, Barrow, Morgan); Clayton County Community Services Authority (Clayton, Fayette, Henry); Community Action for Improvement (Carroll, Coweta, Douglas, Heard, Meriwether); Ninth District Opportunity (Dawson, Forsyth, Lumpkin); North Georgia Community Action (Cherokee, Pickens); Middle Georgia Community Action Agency (Butts, Pike, Spalding); Overview Inc. (Jasper).",
+      "url": "https://gefa.georgia.gov/locations/community-action-agency"
+    },
+    {
+      "name": "Georgia Power EASE (Energy Assistance for Savings and Efficiency)",
+      "runBy": "Georgia Power",
+      "summary": "Free energy-saving improvements installed by a program contractor, up to $5,000 in total value: duct sealing, HVAC service, insulation, smart thermostat, water-saving devices, air purifiers and power strips. It does not cover windows or doors. Household income must be at or below 300% of federal poverty guidelines (2026: $47,880 for 1 person, $64,920 for 2, $81,960 for 3, $99,000 for 4). Renters need landlord consent. Health and safety problems must be fixed first. Apply at gpcresidentialease.customerapplication.com or call 1-877-310-5607.",
+      "url": "https://www.georgiapower.com/residential/assistance/ease.html"
+    },
+    {
+      "name": "Georgia Power EASE for Seniors",
+      "runBy": "Georgia Power",
+      "summary": "Completely free efficiency upgrades (duct sealing, HVAC service, insulation, smart thermostat, water-saving devices) for customers aged 60 or older who own and live in the home, with household income at or below 200% of federal poverty guidelines. Renters are not eligible.",
+      "url": "https://www.georgiapower.com/residential/assistance/seniors.html"
+    },
+    {
+      "name": "Georgia Power EASE for Manufactured Homes",
+      "runBy": "Georgia Power with Utility Energy Services (UES)",
+      "summary": "Free direct-installed items (advanced power strips, faucet aerators, low-flow showerheads, smart thermostats) for Georgia Power customers in prefab or mobile homes, owners or renters. Book through UES.",
+      "url": "https://www.georgiapower.com/residential/assistance/manufactured-homes.html"
+    },
+    {
+      "name": "Georgia HER for households under 80% AMI",
+      "runBy": "GEFA",
+      "summary": "Up to 98% of project cost (max $10,000 or $16,000 depending on modeled savings) through a program-approved contractor. Categorical eligibility via SNAP, Medicaid or LIHEAP benefit letters.",
+      "url": "https://energyrebates.georgia.gov/eligibility"
+    },
+    {
+      "name": "SCANA Energy, Regulated Provider (natural gas supply)",
+      "runBy": "SCANA Energy, designated by the Georgia PSC",
+      "summary": "This is gas supply and billing help, not an efficiency program. The PSC approved SCANA Energy to serve low-income consumers and customers who cannot get gas service from another marketer, with qualification through Community Action Agencies.",
+      "url": "https://psc.ga.gov/about-the-psc/consumer-corner/natural-gas/general-information/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "City of Atlanta Commercial Buildings Energy Efficiency Ordinance (Ordinance 15-O-1101, 2015)",
+      "appliesTo": "Large buildings only: private commercial and multifamily buildings of 25,000 sq ft or more, and city-owned buildings of 10,000 sq ft or more (phased in 2015-2017). It does not apply to single-family homes or ordinary homeowners.",
+      "summary": "Owners must benchmark energy use every year in ENERGY STAR Portfolio Manager and report it to the City. Data is published, except for buildings scoring under 55. An energy audit comparable to ASHRAE Level II is required every 10 years (IMT lists commercial 50,000+ sq ft and multifamily/public 25,000+ sq ft for audits), with exemptions for high performers. Penalty: warning, then a $1,000 fine, plus $1,000 for each additional year of non-compliance.",
+      "url": "https://www.buildingrating.org/jurisdiction/Atlanta"
+    }
+  ],
+  "notes": "MSA: CBSA 12060 (OMB July 2023 delineation), 29 counties. Georgia Power HEIP amounts are taken from the 2026 'Precondition and Improvement Requirements' PDF (rebates effective Aug. 1, 2026, valid through Dec. 31, 2028; capped at $2,500 per customer per year). The HEIP web page shows older or inconsistent figures, for example a 'Home Comfort Trio' up to $1,850 and a 'Basic Comfort Duo' up to $1,150, and attic insulation at $300 in one table and $200 in another. The PDF separates electric-heated and gas-heated homes, which explains some of the differences. The precondition for attic insulation also differs: the web page says existing insulation must be 'at or below R-38', while the Aug. 1, 2026 PDF says 'less than R-19'. Use the PDF and re-check before publishing. Georgia's HER offers up to 98% of cost (not 100%) for under-80%-AMI households, and its caps ($10,000/$16,000) are higher than the base federal HOMES amounts. Most of the metro outside Georgia Power territory is served by EMCs and city utilities whose programs were not researched. Gas marketers' own offers and EMC programs are not covered here. The City of Atlanta website (atlantaga.gov) returned errors to automated fetches, so the benchmarking ordinance facts come from IMT's buildingrating.org and the IMT matrices rather than the City's own page. No Georgia state rule requiring home energy audits or energy disclosure at sale was found, but this was not exhaustively searched. The research tool's web-search budget ran out partway through, so some leads (EMC programs, marketer rebates) were not followed up. Federal tax credits: the IRS says the Energy Efficient Home Improvement Credit (25C) can be claimed for improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) 'is not available for any property placed in service after December 31, 2025.' Do not list either as a current incentive. Federal rule change for the IRA rebates: DOE Program Notices 26-1 (HOMES) and 26-2 (HEAR/HEEHR), effective May 29, 2026, removed fuel-switching (gas/propane-to-electric) from HEAR so it now covers only electric-to-electric upgrades, and generally require insulation/air sealing to be addressed before heating and cooling upgrades. Launched states had to comply within three months; per NASEO's August 2026 FAQ, reservations made on or after September 1, 2026 must follow the new notices and DOE is extending award periods to September 30, 2031.",
+  "sources": [
+    {
+      "label": "Georgia's Home Energy Rebates - home",
+      "href": "https://energyrebates.georgia.gov/"
+    },
+    {
+      "label": "Georgia HEAR program updates (paused Aug. 14, 2026)",
+      "href": "https://energyrebates.georgia.gov/hear-program-updates"
+    },
+    {
+      "label": "Georgia HEAR program update notice",
+      "href": "https://energyrebates.georgia.gov/node/1241"
+    },
+    {
+      "label": "Georgia HEAR program page",
+      "href": "https://energyrebates.georgia.gov/home-electrification-and-appliance-rebates"
+    },
+    {
+      "label": "Georgia Home Efficiency Rebates (HER) page",
+      "href": "https://energyrebates.georgia.gov/home-efficiency-rebates"
+    },
+    {
+      "label": "Georgia HER/HEAR eligibility",
+      "href": "https://energyrebates.georgia.gov/eligibility"
+    },
+    {
+      "label": "GEFA press release, Aug. 12, 2026 ($50M milestone)",
+      "href": "https://gefa.georgia.gov/node/14556"
+    },
+    {
+      "label": "GEFA - Weatherization Assistance Program",
+      "href": "https://gefa.georgia.gov/node/47"
+    },
+    {
+      "label": "GEFA - Community Action Agencies (WAP providers by county)",
+      "href": "https://gefa.georgia.gov/locations/community-action-agency"
+    },
+    {
+      "label": "Georgia Power - Home Solutions",
+      "href": "https://www.georgiapower.com/residential/solutions/home-solutions.html"
+    },
+    {
+      "label": "Georgia Power - Free In-Home Energy Audit",
+      "href": "https://www.georgiapower.com/residential/solutions/home-solutions/in-home-audit.html"
+    },
+    {
+      "label": "Georgia Power - Home Energy Improvement Program (web page)",
+      "href": "https://www.georgiapower.com/residential/solutions/home-solutions/heip.html"
+    },
+    {
+      "label": "Georgia Power - HEIP Precondition and Improvement Requirements 2026 (PDF)",
+      "href": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf"
+    },
+    {
+      "label": "Georgia Power - EASE",
+      "href": "https://www.georgiapower.com/residential/assistance/ease.html"
+    },
+    {
+      "label": "Georgia Power - EASE for Seniors",
+      "href": "https://www.georgiapower.com/residential/assistance/seniors.html"
+    },
+    {
+      "label": "Georgia Power - EASE for Manufactured Homes",
+      "href": "https://www.georgiapower.com/residential/assistance/manufactured-homes.html"
+    },
+    {
+      "label": "Atlanta Gas Light - About us",
+      "href": "https://atlantagaslight.com/company/about-us.html"
+    },
+    {
+      "label": "Atlanta Gas Light - Energy efficiency rebates (2026)",
+      "href": "https://www.atlantagaslight.com/submit-your-efficiency-rebate.html"
+    },
+    {
+      "label": "Atlanta Gas Light - Residential rebates overview",
+      "href": "https://www.atlantagaslight.com/residential/Rebates"
+    },
+    {
+      "label": "Atlanta Gas Light - Conversion rebates (2026)",
+      "href": "https://www.atlantagaslight.com/submit-your-rebate.html"
+    },
+    {
+      "label": "Georgia PSC - Certified natural gas marketers",
+      "href": "https://psc.ga.gov/utilities/natural-gas/list-of-certified-marketers-and-contact-information/"
+    },
+    {
+      "label": "Georgia PSC - Natural gas general information (Regulated Provider)",
+      "href": "https://psc.ga.gov/about-the-psc/consumer-corner/natural-gas/general-information/"
+    },
+    {
+      "label": "Georgia PSC - Selecting a natural gas marketer",
+      "href": "https://psc.ga.gov/about-the-psc/consumer-corner/natural-gas/general-information/selecting-a-natural-gas-marketer/"
+    },
+    {
+      "label": "Georgia PSC - Electric utilities overview",
+      "href": "https://psc.ga.gov/utilities/electric/"
+    },
+    {
+      "label": "Jackson EMC - Facts and service area",
+      "href": "https://www.jacksonemc.com/my-cooperative/about-jackson-emc/facts-service-area"
+    },
+    {
+      "label": "IMT buildingrating.org - Atlanta",
+      "href": "https://www.buildingrating.org/jurisdiction/Atlanta"
+    },
+    {
+      "label": "IMT - Comparison of U.S. Commercial Building Energy Benchmarking and Transparency Policies (January 2026)",
+      "href": "https://cityenergyproject.org/wp-content/uploads/2015/09/Benchmarking-Matrix-June-2026.pdf"
+    },
+    {
+      "label": "IMT - Audit and Retuning Policy Matrix (August 2024)",
+      "href": "https://www.cityenergyproject.org/wp-content/uploads/2023/07/IMT-Audit-and-Retuning-Matrix-August-2024.pdf"
+    },
+    {
+      "label": "IRS - Energy Efficient Home Improvement Credit (25C)",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS - Residential Clean Energy Credit (25D)",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    },
+    {
+      "label": "U.S. DOE - Program Notice 26-2 (HEEHR/HEAR), effective May 29, 2026",
+      "href": "https://www.energy.gov/documents/program-notice-26-2"
+    },
+    {
+      "label": "NASEO - Home Energy Rebates FAQ, August 2026",
+      "href": "https://wwww.naseo.org/Data/Sites/1/media/tknaseo/home-energy-rebates_faq-august-2026_final_8.31.2026.pdf"
+    },
+    {
+      "label": "U.S. Census Bureau - CBSA delineation file (OMB, July 2023)",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    }
+  ]
+}

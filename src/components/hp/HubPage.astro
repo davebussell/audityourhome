@@ -1,0 +1,458 @@
+---
+/**
+ * /ca/heat-pumps/ and /us/heat-pumps/: the comparison guide's hub. Every number on it comes from
+ * the ENERGY STAR certified heat pump list (estar.json) or the October 19, 2026 brand and rebate
+ * research (brands.json, rebates-*.json).
+ */
+import Base from '../../layouts/Base.astro';
+import ModelTable from './ModelTable.astro';
+import QuoteForm from './QuoteForm.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import {
+  type Market, totals, leaders, brandsBySize, brandInfo, statsFor, brandHref, FAMILIES, ESTAR, ESTAR_URL, AHRI_URL,
+  NRCAN_LIST_URL, NRCAN_HOW_LISTED_URL, HP_CHECKED, fmtInt, fmtPct, fmtCop, fmt1, tierLabel, warrantyHeadline,
+  registrationNote, channelLabel, at5, CA_REGIONS, US_METROS, metroName, metroState, REBATES_CA, REBATES_US, usRebates,
+  statusChipHP, fmtDate, caRebates, usClimateKind,
+} from '../../lib/heatpumps';
+import '../../styles/hp.css';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const T = totals(market);
+const L = leaders(market);
+const slugs = brandsBySize(market);
+const country = isCA ? 'Canada' : 'the US';
+const t5 = at5(market);
+const updated = fmtDate(ESTAR.datasetUpdated, market);
+
+// picks by need, straight from the leaderboards
+const firstBrands = (rows: { slug: string | null; brand: string }[], n = 3) => {
+  const out: { slug: string | null; brand: string }[] = [];
+  for (const r of rows) {
+    if (out.some((o) => o.brand === r.brand)) continue;
+    out.push(r);
+    if (out.length >= n) break;
+  }
+  return out;
+};
+const longWarranty = slugs.filter((s) => {
+  const w = brandInfo(s).warranty?.[market];
+  return w && Math.max(w.parts ?? 0, w.compressor ?? 0) >= 12;
+});
+const budget = slugs.filter((s) => brandInfo(s).priceTier === 'budget');
+const premium = slugs.filter((s) => brandInfo(s).priceTier === 'premium');
+const coldLeadDl = L.coldDuctless[0];
+const coldLeadDu = L.coldDucted[0];
+const twins = [...L.coldDuctless, ...L.coldDucted, ...L.coolDucted, ...L.coolDuctless].filter((r) => r.alsoAs.length > 0).length;
+
+const picks = [
+  {
+    title: 'Coldest winters, room by room',
+    why: `Highest efficiency at ${t5} among certified mini-splits on current refrigerants.`,
+    brands: firstBrands(L.coldDuctless),
+    href: '#cold',
+  },
+  {
+    title: 'Whole-home heat through ducts',
+    why: `Best COP at ${t5} for central systems of 2 tons and up, on current refrigerants.`,
+    brands: firstBrands(L.coldDucted),
+    href: '#cold',
+  },
+  {
+    title: isCA ? 'Most cooling per dollar of power' : 'Hot summers',
+    why: 'Highest SEER2 for central systems of 2 tons and up.',
+    brands: firstBrands(L.coolDucted),
+    href: '#cooling',
+  },
+  {
+    title: 'Longest registered warranty',
+    why: `At least 12 years on parts or compressor in ${country} when you register on time.`,
+    brands: longWarranty.map((s) => ({ slug: s, brand: brandInfo(s).name })),
+    href: '#compare',
+  },
+  {
+    title: 'Budget brands',
+    why: 'Value lines and makers our research rated budget. Check installer support before you buy.',
+    brands: budget.map((s) => ({ slug: s, brand: brandInfo(s).name })),
+    href: '#compare',
+  },
+  {
+    title: 'Premium brands',
+    why: 'Makers that position themselves at the top of the market, with contractor programs to match.',
+    brands: premium.map((s) => ({ slug: s, brand: brandInfo(s).name })),
+    href: '#compare',
+  },
+];
+
+// rebates overview
+const es = REBATES_CA.energyStar ?? {};
+const fed = REBATES_CA.canada?.federalList ?? {};
+const usFed = REBATES_US.federal ?? {};
+const caRows = CA_REGIONS.map((r) => {
+  const progs = caRebates(r);
+  const open = progs.filter((p) => ['Open', 'Open · limits apply'].includes(statusChipHP(p.status).label));
+  return { r, progs, open };
+});
+const usRows = US_METROS.map((m) => {
+  const progs = usRebates(m.slug);
+  const open = progs.filter((p) => ['Open', 'Open · limits apply'].includes(statusChipHP(p.status).label));
+  return { m, progs, open };
+});
+
+const title = isCA
+  ? `Heat pump comparison: every brand sold in Canada (${new Date().getFullYear()}) | AuditYourHome`
+  : `Heat pump comparison: every brand sold in the US (${new Date().getFullYear()}) | AuditYourHome`;
+const description = isCA
+  ? `${fmtInt(T.outdoorModels)} certified heat pump models from ${T.brands} brands, compared on cold-climate performance at −15°C, warranty, price tier and the rebates in every province.`
+  : `${fmtInt(T.outdoorModels, 'us')} certified heat pump models from ${T.brands} brands, compared on cold-weather performance at 5°F, cooling efficiency, warranty, price tier and the rebates in the 26 largest metros.`;
+
+const faqs = [
+  {
+    q: isCA ? 'Which heat pump brand is best for Canadian winters?' : 'Which heat pump brand is best for cold climates?',
+    a: `On ENERGY STAR's certified ratings, the most efficient cold-climate mini-split at ${t5} on a current refrigerant is ${coldLeadDl ? `${coldLeadDl.brand}'s ${coldLeadDl.outdoor} (COP ${fmtCop(coldLeadDl.cop5)})` : 'listed in the table below'}, and the best central system of 2 tons or more is ${coldLeadDu ? `${coldLeadDu.brand}'s ${coldLeadDu.outdoor} (COP ${fmtCop(coldLeadDu.cop5)})` : 'listed below'}. Most major brands now sell a cold-climate line, so the installer's sizing and the model's capacity at your design temperature matter more than the badge. Ask for a room-by-room heat-loss calculation and the AHRI certificate for the exact pairing quoted.`,
+  },
+  {
+    q: 'Are the cheaper brands the same equipment as the expensive ones?',
+    a: `Often, yes. ENERGY STAR shows identical certified ratings under several names: ${twins} of the systems in our leaderboards are also listed under another brand. Carrier, Bryant and the ICP brands (Heil, Tempstar, Comfortmaker${isCA ? ', KeepRite' : ''}) share many models; Daikin, Goodman and Amana share platforms; Trane and American Standard sell the same units. The differences are usually the warranty terms, the dealer network and the price.`,
+  },
+  {
+    q: 'What does a heat pump warranty actually cover?',
+    a: 'Parts and the compressor, almost never labour. Most makers give 10 years only if you register within 60 or 90 days of installation; miss it and many drop to 5 years on parts. Several (Daikin, Goodman, Amana, Fujitsu, LG) also void the warranty on equipment bought online unless a licensed contractor installs it. Each brand page lists the exact terms we found.',
+  },
+  {
+    q: isCA ? 'Does the heat pump have to be on a list to get a rebate?' : 'Does the heat pump have to be certified to get a rebate?',
+    a: isCA
+      ? `Usually. Ontario, Manitoba, New Brunswick, Yukon and Newfoundland and Labrador use NRCan's Eligible Products List of cold-climate heat pumps (COP of at least 1.8 at −15°C at maximum capacity, at least 70% of rated capacity, a variable-speed compressor). Quebec's LogisVert uses ENERGY STAR, paying more for ENERGY STAR Cold Climate models. BC uses its own qualified list. The federal National Heat Pump Rebate, opening in early 2027, will use the federal Eligible Products List. Check the exact model pairing before you sign.`
+      : `Usually. The federal Home Electrification and Appliance Rebates (where your state runs them) require an ENERGY STAR certified heat pump, and many utilities add a cold-climate or efficiency rule (ENERGY STAR Cold Climate, the NEEP cold-climate list, or SEER2/HSPF2 minimums). The 25C tax credit ended for heat pumps placed in service after December 31, 2025. Each metro page lists the rule for every program we found.`,
+  },
+  {
+    q: 'Should I avoid R-410A?',
+    a: `New systems mostly use R-454B or R-32 now: in ${country}, ${fmtPct(T.a2lShare)} of certified systems on ENERGY STAR's list use one of them. US rules ended R-410A in most new split systems from 2025, with a limited exception for units built before 2025. R-410A equipment still works, but service refrigerant will get scarcer and dearer, so ask which refrigerant a quote uses.`,
+  },
+  {
+    q: 'How do I check the exact model a contractor quotes?',
+    a: `Ask for the AHRI reference number for the outdoor and indoor pairing. Look it up in the AHRI Directory, and search the outdoor model in ENERGY STAR's product finder${isCA ? " and NRCan's Eligible Products List" : ''}. The model tables on these pages include AHRI numbers so you can compare like with like.`,
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: `/${market}/` },
+    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
+  ]),
+  faqSchema(faqs),
+];
+const jump: [string, string][] = [
+  ['picks', 'Picks by need'],
+  ['compare', 'Compare brands'],
+  ['cold', 'Cold-weather leaders'],
+  ['cooling', 'Cooling leaders'],
+  ['owners', 'Who owns whom'],
+  ['numbers', 'Reading the numbers'],
+  ['rebates', 'Rebates'],
+  ['regions', isCA ? 'By province' : 'By metro'],
+  ['faq', 'FAQ'],
+  ['quote', 'Get quotes'],
+];
+const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premium: 3 };
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/${market}/`}>Home</a> <span aria-hidden="true">/</span> <span>Heat pumps</span></nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Heat pump comparison guide · checked {HP_CHECKED}</p>
+        <h1>{isCA ? 'Every heat pump brand sold in Canada, compared' : 'Every heat pump brand sold in the US, compared'}</h1>
+        <p class="lede measure">
+          We pulled all {fmtInt(T.systems, market)} system pairings certified for {country} from ENERGY STAR's list (updated {updated}), then read each
+          maker's warranty, cold-weather claims and ownership, and lined them up with the {isCA ? 'rebates in every province and territory' : 'rebates in the 26 largest metros'}.
+        </p>
+      </div>
+    </div>
+
+    <div class="keys">
+      <div class="key card">
+        <span class="k">Certified for {country}</span>
+        <span class="kv-big">{fmtInt(T.outdoorModels, market)} <small>outdoor models</small></span>
+        <span class="kv-sub">{fmtInt(T.systems, market)} certified outdoor/indoor pairings</span>
+      </div>
+      <div class="key card">
+        <span class="k">Brands</span>
+        <span class="kv-big">{T.brands} <small>names</small></span>
+        <span class="kv-sub">{slugs.length} with full pages here; the rest are in the <a href={`/${market}/heat-pumps/brands/`}>brand directory</a></span>
+      </div>
+      <div class="key card">
+        <span class="k">{isCA ? 'Cold-climate' : 'Cold-climate certified'}</span>
+        <span class="kv-big">{fmtInt(T.coldOutdoorModels, market)} <small>models</small></span>
+        <span class="kv-sub">
+          {isCA
+            ? `meet ENERGY STAR Cold Climate; ${fmtInt(T.nrcanLikeOutdoorModels)} meet NRCan's −15°C rebate thresholds on paper`
+            : `meet ENERGY STAR's Cold Climate test (COP of at least 1.75 at 5°F)`}
+        </span>
+      </div>
+      <div class="key card">
+        <span class="k">Newer refrigerants</span>
+        <span class="kv-big">{fmtPct(T.a2lShare)} <small>of pairings</small></span>
+        <span class="kv-sub">use R-454B or R-32; the rest are older R-410A designs</span>
+      </div>
+    </div>
+
+    <nav class="jump" aria-label="On this page">
+      {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+
+    <section id="picks" class="sec">
+      <h2>Picks by need</h2>
+      <p class="sec-intro">Shortlists from the data below. A brand on a shortlist still needs a good installer and the right size for your home.</p>
+      <div class="cards">
+        {picks.filter((p) => p.brands.length).map((p) => (
+          <article class="card c">
+            <h3>{p.title}</h3>
+            <p class="muted">{p.why}</p>
+            <div class="pills">
+              {p.brands.slice(0, 8).map((b) => (b.slug && statsFor(market, b.slug) ? <a href={brandHref(market, b.slug)}>{b.brand}</a> : <span>{b.brand}</span>))}
+            </div>
+            <p class="meta"><a href={p.href}>See the data</a></p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="compare" class="sec">
+      <h2>Compare the main brands</h2>
+      <p class="sec-intro">
+        Counts and ratings are for systems certified for {country}. Warranty is the maker's registered term in {country}; "best" figures are the top
+        certified pairing, not a typical one. Select a heading to sort.
+      </p>
+      <div class="tablewrap card">
+        <table class="stack dt sortable" id="brand-table">
+          <caption class="sr-only">Heat pump brands sold in {country}, compared</caption>
+          <thead>
+            <tr>
+              <th scope="col"><button class="sort" type="button" data-k="name">Brand</button></th>
+              <th scope="col"><button class="sort" type="button" data-k="tier">Price tier</button></th>
+              <th scope="col">Warranty</th>
+              <th scope="col" class="num"><button class="sort" type="button" data-k="models" data-num>Models</button></th>
+              <th scope="col" class="num"><button class="sort" type="button" data-k="cold" data-num>Cold-climate</button></th>
+              <th scope="col" class="num"><button class="sort" type="button" data-k="cop" data-num>Best COP at {t5}</button></th>
+              <th scope="col" class="num"><button class="sort" type="button" data-k="hspf" data-num>Best HSPF2</button></th>
+              <th scope="col" class="num"><button class="sort" type="button" data-k="seer" data-num>Best SEER2</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            {slugs.map((s) => {
+              const b = brandInfo(s);
+              const st = statsFor(market, s)!;
+              const w = b.warranty?.[market];
+              return (
+                <tr data-name={b.name.toLowerCase()} data-tier={tierRank[b.priceTier ?? ''] ?? 0} data-models={st.outdoorModels} data-cold={st.coldOutdoorModels} data-cop={st.bestCop5 ?? 0} data-hspf={st.bestHspf2 ?? 0} data-seer={st.bestSeer2 ?? 0}>
+                  <td class="brand-cell"><a href={brandHref(market, s)}>{b.name}</a><span class="sub">{channelLabel(b.channel)}</span></td>
+                  <td data-label="Price tier">{tierLabel(b.priceTier)}</td>
+                  <td data-label="Warranty">{warrantyHeadline(w)}{registrationNote(w) && <span class="sub">{registrationNote(w)}</span>}</td>
+                  <td class="num" data-label="Certified outdoor models">{fmtInt(st.outdoorModels, market)}</td>
+                  <td class="num" data-label="Cold-climate models">{fmtInt(st.coldOutdoorModels, market)}</td>
+                  <td class="num" data-label={`Best COP at ${t5}`}>{fmtCop(st.bestCop5)}</td>
+                  <td class="num" data-label="Best HSPF2">{fmt1(st.bestHspf2)}</td>
+                  <td class="num" data-label="Best SEER2">{fmt1(st.bestSeer2)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">
+        Models = outdoor units certified for {country}. Cold-climate = models with at least one pairing that meets ENERGY STAR's Cold Climate test.
+        Source: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a>, updated {updated}. Every other brand is in the
+        <a href={`/${market}/heat-pumps/brands/`}>directory of all {T.brands} names</a>.
+      </p>
+    </section>
+
+    <section id="cold" class="sec">
+      <h2>Cold-weather leaders</h2>
+      <p class="sec-intro">
+        The certified systems that heat most efficiently at {t5}, on R-454B or R-32. "Heat at {t5}" is the maximum output there and the share of the
+        unit's rated output it keeps. At most two systems per brand family; identical rebadged ratings share a row.
+      </p>
+      <h3 class="sub-h">Mini-splits and multi-splits</h3>
+      <ModelTable rows={L.coldDuctless.slice(0, 10)} market={market} caption={`Most efficient cold-climate mini-splits at ${t5}`} showBrand />
+      <h3 class="sub-h">Central systems, 2 tons and up</h3>
+      <ModelTable rows={L.coldDucted.slice(0, 10)} market={market} caption={`Most efficient cold-climate central heat pumps at ${t5}`} showBrand />
+    </section>
+
+    <section id="cooling" class="sec">
+      <h2>Cooling leaders</h2>
+      <p class="sec-intro">Highest SEER2 among certified systems on current refrigerants. In hot, humid places also look at EER2, the efficiency at peak heat.</p>
+      <h3 class="sub-h">Central systems, 2 tons and up</h3>
+      <ModelTable rows={L.coolDucted.slice(0, 8)} market={market} caption="Highest-SEER2 central heat pumps" showBrand cooling />
+      <h3 class="sub-h">Mini-splits</h3>
+      <ModelTable rows={L.coolDuctless.slice(0, 8)} market={market} caption="Highest-SEER2 mini-splits" showBrand cooling />
+    </section>
+
+    <section id="owners" class="sec">
+      <h2>Who owns whom</h2>
+      <p class="sec-intro">A few companies own most of the names on the market, and several changed hands in 2024 and 2025. Brands in the same family often share equipment.</p>
+      <div class="family">
+        {FAMILIES.map((f) => {
+          const here = f.slugs.filter((s) => statsFor(market, s));
+          if (!here.length) return null;
+          return (
+            <div class="card">
+              <h3>{f.owner}</h3>
+              <div class="pills">
+                {here.map((s) => <a href={brandHref(market, s)}>{brandInfo(s).name}</a>)}
+                {(f.others ?? []).map((o) => <span>{o}</span>)}
+              </div>
+              <p>{f.note}</p>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <section id="numbers" class="sec">
+      <h2>How to read the numbers</h2>
+      <dl class="defs">
+        <div class="card"><dt>Size</dt><dd>The rated heating output at {isCA ? '8.3°C (47°F)' : '47°F'}, in BTU per hour. Tons are nominal cooling tons (12,000 BTU/h each), the size installers quote. The right size comes from a room-by-room load calculation, not from the old system.</dd></div>
+        <div class="card"><dt>COP at {t5}</dt><dd>Heat out divided by electricity in, measured at {t5}. A COP of 2 gives two units of heat for each unit of power. Electric baseboards are 1.</dd></div>
+        <div class="card"><dt>Heat at {t5}</dt><dd>The most heat the system can make at {t5}, and the share of its rated output that is. Above 100% means it can push harder in the cold than its rating at {isCA ? '8.3°C' : '47°F'}.</dd></div>
+        <div class="card"><dt>HSPF2</dt><dd>Seasonal heating efficiency in a US test climate (Region IV). Higher is better; ENERGY STAR needs at least 7.8 for split systems. {isCA ? "Canadian programs often quote HSPF2 for Region V, a colder test with lower numbers." : ''}</dd></div>
+        <div class="card"><dt>SEER2 and EER2</dt><dd>Seasonal and peak-heat cooling efficiency. ENERGY STAR needs SEER2 of at least 15.2 for split systems.</dd></div>
+        <div class="card"><dt>ENERGY STAR Cold Climate</dt><dd>{es.coldClimateCriteria ? "A COP of at least 1.75 at 5°F (−15°C), at least 70% of rated capacity there, and a test proving the unit's own controls deliver it (spec version 6.2)." : "ENERGY STAR's optional cold-climate designation."}</dd></div>
+        {isCA ? (
+          <div class="card"><dt>NRCan's Eligible Products List</dt><dd>The cold-climate list most provincial rebates use: COP of at least 1.8 at −15°C at maximum capacity, at least 70% capacity, a variable-speed compressor. Tables here flag models that meet those numbers on paper; the list is what counts. <a href={NRCAN_HOW_LISTED_URL} rel="noopener" target="_blank">How NRCan lists products&nbsp;↗</a></dd></div>
+        ) : (
+          <div class="card"><dt>NEEP cold-climate list</dt><dd>Some Northeast and Midwest utility programs require a model on the Northeast Energy Efficiency Partnerships' cold-climate air-source heat pump list, which publishes performance down to 5°F and below.</dd></div>
+        )}
+        <div class="card"><dt>AHRI number</dt><dd>The certificate for one exact outdoor and indoor pairing. Rebates are paid on that pairing, so get it on your quote and check it in the <a href={AHRI_URL} rel="noopener" target="_blank">AHRI Directory&nbsp;↗</a>.</dd></div>
+        <div class="card"><dt>Refrigerant</dt><dd>R-454B and R-32 are the newer, lower-impact refrigerants. R-410A systems are older designs; servicing them will get dearer over time.</dd></div>
+      </dl>
+    </section>
+
+    <section id="rebates" class="sec">
+      <h2>Rebates and what they require</h2>
+      {isCA ? (
+        <>
+          <p class="sec-intro">
+            {fed.nationalHeatPumpRebateEquipment ? 'The federal National Heat Pump Rebate, announced October 8, 2026, is expected to open in early 2027: $2,000, or up to $10,000 for households below the median income, for a cold-climate heat pump on the federal Eligible Products List. ' : ''}
+            Provincial programs set their own equipment rules. Open counts are from our check on {HP_CHECKED}.
+          </p>
+          <div class="tablewrap card">
+            <table class="stack dt">
+              <caption class="sr-only">Heat pump programs by province and territory</caption>
+              <thead><tr><th scope="col">Province or territory</th><th scope="col" class="num">Programs open</th><th scope="col">Main heat pump offer</th></tr></thead>
+              <tbody>
+                {caRows.map(({ r, progs, open }) => (
+                  <tr>
+                    <td class="brand-cell"><a href={`/ca/heat-pumps/${r.slug}/`}>{r.name}</a></td>
+                    <td class="num" data-label="Programs open">{open.length} of {progs.length}</td>
+                    <td data-label="Main heat pump offer">{(open[0] ?? progs[0])?.name ?? 'No heat pump program found'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="tnote">Check a model on <a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan's Eligible Products List&nbsp;↗</a> before you sign. Full program guides: <a href="/ca/programs/">rebates and programs</a>.</p>
+        </>
+      ) : (
+        <>
+          <p class="sec-intro">
+            The federal 25C tax credit ended for heat pumps placed in service after December 31, 2025. The federal Home Electrification and Appliance
+            Rebates, where a state runs them, require an ENERGY STAR certified heat pump. Utilities and cities add their own rules. Open counts are from our
+            check on {HP_CHECKED}.
+          </p>
+          <div class="tablewrap card">
+            <table class="stack dt">
+              <caption class="sr-only">Heat pump programs by metro</caption>
+              <thead><tr><th scope="col">Metro</th><th scope="col" class="num">Programs open</th><th scope="col">First open offer</th></tr></thead>
+              <tbody>
+                {usRows.map(({ m, progs, open }) => (
+                  <tr>
+                    <td class="brand-cell"><a href={`/us/heat-pumps/${m.slug}/`}>{metroName(m)}</a><span class="sub">{metroState(m)}</span></td>
+                    <td class="num" data-label="Programs open">{open.length} of {progs.length}</td>
+                    <td data-label="First open offer">{open[0]?.name ?? 'None open now'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="tnote">{usFed['25CUrl'] && <a href={usFed['25CUrl']} rel="noopener" target="_blank">IRS on the 25C credit&nbsp;↗</a>} · Full state-by-state guide: <a href="/us/programs/states/">home energy rebates in all 50 states</a>.</p>
+        </>
+      )}
+    </section>
+
+    <section id="regions" class="sec">
+      <h2>{isCA ? 'Heat pumps by province and territory' : 'Heat pumps by metro'}</h2>
+      <p class="sec-intro">Local climate, what heat costs with each fuel at today's prices, the rebates and their equipment rules, and the systems that suit the weather.</p>
+      <div class="nb">
+        {isCA
+          ? CA_REGIONS.map((r) => <a href={`/ca/heat-pumps/${r.slug}/`}>{r.name}</a>)
+          : US_METROS.map((m) => <a href={`/us/heat-pumps/${m.slug}/`}>{metroName(m)} <span class="st">{usClimateKind(m)}</span></a>)}
+      </div>
+      <h3 class="sub-h">Other kinds of heat pump</h3>
+      <div class="cards">
+        <article class="card c"><h3><a href={`/${market}/heat-pumps/geothermal/`}>Geothermal (ground-source)</a></h3><p class="muted">The makers, what they warrant, and the rebates that cover drilling and loops.</p></article>
+        <article class="card c"><h3><a href={`/${market}/heat-pumps/geothermal/#window`}>Window and no-outdoor-unit heat pumps</a></h3><p class="muted">Saddle-style window units and wall units with no outdoor box, for apartments and rooms.</p></article>
+      </div>
+    </section>
+
+    <section id="faq" class="sec">
+      <h2>Questions people ask</h2>
+      <div class="faq">
+        {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+      </div>
+    </section>
+
+    <div class="lf-wrap">
+      <QuoteForm market={market} context="hub" />
+    </div>
+
+    <section class="sec">
+      <div class="card srcs card-pad">
+        <h2>Method and sources</h2>
+        <p class="small">
+          Model data: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a> ({fmtInt(ESTAR.rows, market)} pairings,
+          updated {updated}), filtered to pairings certified for {country}. We leave out listings with physically impossible ratings and placeholder
+          entries. Leaderboards use R-454B and R-32 systems only. Brand facts and rebate rules were researched from makers' and programs' own pages on
+          {HP_CHECKED}; each brand page lists its sources. Running-cost comparisons on the {isCA ? 'province' : 'metro'} pages use
+          {isCA ? ' the provincial energy prices from our calculators and seasonal COP planning values from Dunsky/CCI (2024), adjusted for field studies.' : ' EIA state energy prices and the same seasonal COP planning values used on our Canadian pages, by heating degree days.'}
+        </p>
+        <ul>
+          <li><a href={ESTAR_URL} rel="noopener" target="_blank">ENERGY STAR product finder: certified heat pumps</a></li>
+          <li><a href={AHRI_URL} rel="noopener" target="_blank">AHRI Directory of Certified Product Performance</a></li>
+          {isCA && <li><a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan Eligible Products List: air-source and cold-climate heat pumps</a></li>}
+          {es.coldClimateUrl && <li><a href={es.coldClimateUrl} rel="noopener" target="_blank">ENERGY STAR heat pump specification (cold climate criteria)</a></li>}
+          {!isCA && usFed.HEARUrl && <li><a href={usFed.HEARUrl} rel="noopener" target="_blank">DOE: Home Electrification and Appliance Rebates</a></li>}
+        </ul>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const table = document.getElementById('brand-table');
+  if (table) {
+    const tbody = table.querySelector('tbody')!;
+    table.querySelectorAll<HTMLButtonElement>('button.sort').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const th = btn.closest('th')!;
+        const key = btn.dataset.k!;
+        const numeric = 'num' in btn.dataset;
+        const asc = th.getAttribute('aria-sort') !== 'ascending' && (!numeric || th.getAttribute('aria-sort') === 'descending');
+        table.querySelectorAll('th').forEach((h) => h.removeAttribute('aria-sort'));
+        th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+        const rows = Array.from(tbody.querySelectorAll<HTMLTableRowElement>('tr'));
+        rows.sort((a, b) => {
+          const va = a.dataset[key] ?? '';
+          const vb = b.dataset[key] ?? '';
+          const cmp = numeric ? Number(va) - Number(vb) : va.localeCompare(vb);
+          return asc ? cmp : -cmp;
+        });
+        rows.forEach((r) => tbody.appendChild(r));
+      });
+    });
+  }
+</script>

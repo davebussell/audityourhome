@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 import { SITE, ACCOUNTS, ACCOUNTS_ENABLED } from '../config/site';
 
 const title = 'Privacy | AuditYourHome';
-const description = 'What AuditYourHome collects, why, where it is stored, who sees it, and how to download or delete it. Plain language, updated October 12, 2026.';
-const updated = 'October 12, 2026';
+const description = 'What AuditYourHome collects, why, where it is stored, who sees it, and how to download or delete it. Plain language, updated October 20, 2026.';
+const updated = 'October 20, 2026';
 const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
 ---
 
@@ -74,14 +74,19 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
         </Fragment>
       ) : (
         <Fragment>
-          <h2>Match requests</h2>
+          <h2>Requests and questions</h2>
           <p>
-            If you email us to be matched, we use your details to connect you with one registered service
-            organization serving your area, and for no other purpose. Participating organizations pay us a referral
-            fee for these introductions; you pay nothing. We don’t sell contact lists, and we never share your request
-            with more than one company.
+            If you send us a request through a form on this site, or by email, to be matched, we use your details to
+            connect you with one registered service organization or contractor serving your area, and for no other
+            purpose. Participating companies pay us a referral fee for these introductions; you pay nothing. We don’t
+            sell contact lists, and we never share your request with more than one company. US questions are only
+            answered by email; we don’t pass them to anyone.
           </p>
-          <p>If you email us, we have your email address; we use it to reply.</p>
+          <p>
+            Forms are handled by Netlify, the company that hosts this site. It stores what you submit in the United
+            States and emails it to us, and we keep it only as long as we need to deal with your request. If you email
+            us, we have your email address; we use it to reply.
+          </p>
         </Fragment>
       )}
 

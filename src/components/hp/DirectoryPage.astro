@@ -1,0 +1,128 @@
+---
+/** /ca/heat-pumps/brands/ and /us/heat-pumps/brands/: every name on ENERGY STAR's list for the country. */
+import Base from '../../layouts/Base.astro';
+import QuoteForm from './QuoteForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import {
+  type Market, totals, directory, brandsBySize, brandInfo, statsFor, brandHref, ESTAR, HP_CHECKED, fmtInt, fmtCop, fmt1, fmtDate, at5,
+  tierLabel,
+} from '../../lib/heatpumps';
+import '../../styles/hp.css';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const country = isCA ? 'Canada' : 'the US';
+const T = totals(market);
+const rows = directory(market);
+const pages = brandsBySize(market);
+const t5 = at5(market);
+const updated = fmtDate(ESTAR.datasetUpdated, market);
+const title = `All ${T.brands} heat pump brands certified for ${isCA ? 'Canada' : 'the US'} | AuditYourHome`;
+const description = `Every heat pump brand name on ENERGY STAR's list for ${country}, with the company that certifies it, how many models, cold-climate counts and best ratings. ${pages.length} have full brand pages.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: `/${market}/` },
+    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
+    { name: 'All brands', path: `/${market}/heat-pumps/brands/` },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/${market}/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span> <span>All brands</span></nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Brand directory · ENERGY STAR data updated {updated}</p>
+        <h1>All {T.brands} heat pump brands certified for {country}</h1>
+        <p class="lede measure">
+          Every name on ENERGY STAR's certified heat pump list for {country}, with the company that certifies it. Many are the same equipment under
+          another badge: the certifying company tells you whose system it is.
+        </p>
+      </div>
+    </div>
+
+    <section class="sec" id="pages">
+      <h2>Brands with full pages</h2>
+      <p class="sec-intro">Owner, product lines, warranty, price tier, top certified models and the rebates they fit.</p>
+      <div class="nb">
+        {pages.map((s) => <a href={brandHref(market, s)}>{brandInfo(s).name} <span class="st">{fmtInt(statsFor(market, s)!.outdoorModels, market)}</span></a>)}
+      </div>
+      <p class="tnote">Number = outdoor models certified for {country}. Price tiers: {['budget', 'mid', 'premium', 'mixed'].map((t) => tierLabel(t)).join(', ')}.</p>
+    </section>
+
+    <section class="sec" id="all">
+      <h2>Every certified name</h2>
+      <div class="filter">
+        <label class="sr-only" for="dir-q">Filter brands</label>
+        <input id="dir-q" type="search" placeholder="Filter by brand or company" autocomplete="off" />
+        <span class="count" id="dir-count">{rows.length} names</span>
+      </div>
+      <div class="tablewrap card">
+        <table class="stack dt" id="dir-table">
+          <caption class="sr-only">Heat pump brand names certified for {country}</caption>
+          <thead>
+            <tr>
+              <th scope="col">Brand name</th>
+              <th scope="col">Certified by</th>
+              <th scope="col" class="num">Models</th>
+              <th scope="col" class="num">Cold-climate</th>
+              {isCA && <th scope="col" class="num">Meet NRCan −15°C thresholds</th>}
+              <th scope="col" class="num">Best COP at {t5}</th>
+              <th scope="col" class="num">Best HSPF2</th>
+              <th scope="col">Types</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr data-q={`${r.name} ${r.company}`.toLowerCase()}>
+                <td class="brand-cell">{r.page && statsFor(market, r.page) && brandInfo(r.page)?.soldIn?.[market] !== false ? <a href={brandHref(market, r.page)}>{r.name}</a> : r.name}</td>
+                <td data-label="Certified by">{r.company}</td>
+                <td class="num" data-label="Models">{fmtInt(r.outdoorModels, market)}</td>
+                <td class="num" data-label="Cold-climate models">{fmtInt(r.coldOutdoorModels, market)}</td>
+                {isCA && <td class="num" data-label="Meet NRCan −15°C thresholds">{fmtInt(r.nrcanLikeOutdoorModels)}</td>}
+                <td class="num" data-label={`Best COP at ${t5}`}>{fmtCop(r.bestCop5)}</td>
+                <td class="num" data-label="Best HSPF2">{fmt1(r.bestHspf2)}</td>
+                <td data-label="Types">{r.types.map((t) => (t === 'ducted' ? 'central' : 'mini-split')).join(', ')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">
+        Source: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a>, updated {updated}, read {HP_CHECKED}. "Certified by" is
+        the ENERGY STAR partner that listed the model. {isCA ? "The NRCan column counts models whose ENERGY STAR ratings meet NRCan's published cold-climate thresholds (COP of at least 1.8 and 70% capacity at −15°C, variable-speed compressor, SEER2 15.2); check NRCan's own list before you rely on it." : ''}
+      </p>
+    </section>
+
+    <div class="lf-wrap">
+      <QuoteForm market={market} context="brand-directory" />
+    </div>
+    <section class="related">
+      <h2>Keep comparing</h2>
+      <div class="nb">
+        <a href={`/${market}/heat-pumps/`} class="all">The heat pump comparison guide →</a>
+        <a href={`/${market}/heat-pumps/geothermal/`}>Geothermal makers</a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const q = document.getElementById('dir-q') as HTMLInputElement | null;
+  const rows = Array.from(document.querySelectorAll<HTMLTableRowElement>('#dir-table tbody tr'));
+  const count = document.getElementById('dir-count');
+  q?.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase();
+    let n = 0;
+    rows.forEach((r) => {
+      const show = !v || (r.dataset.q ?? '').includes(v);
+      r.hidden = !show;
+      if (show) n++;
+    });
+    if (count) count.textContent = `${n} name${n === 1 ? '' : 's'}`;
+  });
+</script>

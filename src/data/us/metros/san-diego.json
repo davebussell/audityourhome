@@ -1,0 +1,306 @@
+{
+  "slug": "san-diego",
+  "name": "San Diego",
+  "metroName": "San Diego-Chula Vista-Carlsbad, CA Metropolitan Statistical Area",
+  "states": [
+    "CA"
+  ],
+  "principalCity": "San Diego",
+  "utilities": {
+    "electric": [
+      {
+        "name": "San Diego Gas & Electric (SDG&E)",
+        "serves": "San Diego and southern Orange counties: 3.7 million people, 4,100 sq mi, 27 cities; delivers electricity and gas and runs IOU programs",
+        "url": "https://www.sdge.com/more-information/our-company/about-us"
+      },
+      {
+        "name": "San Diego Community Power (community choice aggregator)",
+        "serves": "Cities of San Diego, Chula Vista, Encinitas, Imperial Beach, La Mesa and National City plus unincorporated San Diego County; its homepage headline (September 24, 2026) says Coronado has formally joined",
+        "url": "https://sdcommunitypower.org/our-community/"
+      },
+      {
+        "name": "Clean Energy Alliance (community choice aggregator)",
+        "serves": "Default provider for Carlsbad, Del Mar, Escondido, Oceanside, San Marcos, Solana Beach and Vista",
+        "url": "https://thecleanenergyalliance.org/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "San Diego Gas & Electric (SDG&E)",
+        "serves": "Natural gas across its service area (905,000 gas meters)",
+        "url": "https://www.sdge.com/more-information/our-company/about-us"
+      }
+    ],
+    "notes": "SDG&E delivers electricity and gas across its San Diego County service area; in member cities the power supply comes from San Diego Community Power or Clean Energy Alliance, which add their own limited programs."
+  },
+  "auditPrograms": [
+    {
+      "name": "SDREN Home Energy Savings",
+      "runBy": "San Diego Regional Energy Network (administered by San Diego Community Power and the County of San Diego; ratepayer-funded under the CPUC)",
+      "cost": "Advice and assessment offered through the program; 'low- to no-cost energy upgrades for eligible homes' and 'some customers qualify for no-cost energy upgrades' (no prices or income limits published)",
+      "whoQualifies": "Homeowners and renters (with owner approval) of a detached single-family home, duplex or manufactured/mobile home in San Diego County built before January 1, 2020",
+      "whatYouGet": "One-on-one bill review with a home energy advisor, a home energy assessment by a qualified contractor, a report of recommended upgrades, and installation of eligible weatherization, water heating, heating/cooling and appliance upgrades (contractor scheduled within one to two weeks for eligible installs)",
+      "howToBook": "Complete the online interest form (SDREN says it responds within two business days) or call 833-205-7384",
+      "url": "https://sdren.org/home-energy-savings/",
+      "status": "open (interest list and interest form active)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Energy Score California (statewide)",
+      "runBy": "Bay Area Regional Energy Network (BayREN) and Earth Advantage; funded by PG&E, SDG&E, SoCalGas and SCE ratepayers under the CPUC",
+      "cost": "Cost varies by assessor (BayREN says it depends on factors such as location and home size); the program FAQ says customers who get gas and/or electricity from a CCA or investor-owned utility are eligible for a $250 rebate toward it (Berkeley residents excepted because of BESO)",
+      "whoQualifies": "California homeowners can hire a certified assessor; the $250 rebate is for customers who receive gas and/or electric service from an investor-owned utility (such as PG&E, SCE, SoCalGas or SDG&E) or a community choice aggregator",
+      "whatYouGet": "Certified assessor walk-through (most take 45-90 minutes, including attic and crawlspace), a U.S. DOE 1-10 Home Energy Score, a report with energy-use, cost and emissions estimates, and prioritized upgrade recommendations",
+      "howToBook": "Find a certified assessor on homescoreca.org and ask for a score through the HES California program; confirm rebate eligibility and cost with the assessor",
+      "url": "https://www.homescoreca.org/faq",
+      "status": "open (statewide program page live; no closing date stated)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Equitable Building Decarbonization (EBD) Direct Install - Southern California",
+      "runBy": "County of Los Angeles as Southern Region administrator for the California Energy Commission; supported locally by San Diego Community Power",
+      "cost": "No cost to eligible households",
+      "whoQualifies": "Households up to 80% AMI in fossil-fuel-heated homes built before 2020 in initial focus areas; San Diego County focus areas are Chula Vista, El Cajon, Escondido, Oceanside, Ramona and San Marcos/Vista",
+      "whatYouGet": "Home assessment and no-cost heat pump and/or heat pump water heater with possible insulation, air sealing, duct sealing, induction cooking and panel work",
+      "howToBook": "Interest form at socalebd.org or 1-424-285-6602",
+      "url": "https://socalebd.org/",
+      "status": "accepting interest forms in select communities; CEC notes early 'rapid start' retrofits included multifamily affordable housing in San Diego",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Solana Beach Heat Pump Water Heater Rebate",
+      "runBy": "City of Solana Beach",
+      "category": "heat-pump",
+      "amount": "Residents: $500 standard or $1,000 income-qualified for a heat pump water heater, plus $500 for a service panel upgrade; contractors: $500 per HPWH installed (one per address)",
+      "whoQualifies": "Solana Beach residents replacing a gas water heater; water heater permits submitted after January 1, 2026; stackable with other incentives",
+      "status": "open (applications opened January 5, 2026; first come, first served)",
+      "url": "https://www.cityofsolanabeach.ca.gov/en/heatpump-rebate",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SDREN Home Energy Savings upgrades",
+      "runBy": "San Diego Regional Energy Network",
+      "category": "whole-home",
+      "amount": "Not published: page offers 'low- to no-cost energy upgrades' and 'incentives for additional upgrades'",
+      "whoQualifies": "Single-family, duplex and manufactured homes in San Diego County built before 2020",
+      "status": "open (interest form)",
+      "url": "https://sdren.org/home-energy-savings/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Golden State Rebates (instant retail rebate coupons)",
+      "runBy": "CLEAResult under a contract awarded by SDG&E, supported by PG&E, SoCalGas and SCE",
+      "category": "appliances",
+      "amount": null,
+      "whoQualifies": "California IOU customers buying qualifying products at participating retailers",
+      "status": "ended: SDG&E's rebates page states 'The Golden State Rebates Program's retail rebate offerings have ended' (goldenstaterebates.com returned 404 on 2026-10-12); some utility and county pages still list it",
+      "url": "https://www.sdge.com/rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "HEEHRA Phase I heat pump rebates (California's IRA Home Electrification and Appliance Rebates)",
+      "runBy": "California Energy Commission, delivered through TECH Clean California",
+      "category": "income-qualified",
+      "amount": "Single-family: up to $8,000 (household income under 80% AMI) or up to $4,000 (80-150% AMI) for a qualifying heat pump HVAC system; multifamily up to $14,000 per unit",
+      "whoQualifies": "Income-qualified owners (or landlords renting to income-qualified households) replacing a non-heat-pump heating system; only through HEEHRA-trained, TECH-certified contractors with a pre-approved reservation",
+      "status": "closed to new applicants: single-family rebates fully reserved statewide since February 24, 2026 (unapproved requests waitlisted; no new income verifications); multifamily fully reserved since September 1, 2026 per TECH",
+      "url": "https://techcleanca.com/incentives/heehrarebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "TECH Clean California single-family heat pump HVAC and heat pump water heater incentives",
+      "runBy": "TECH Clean California (Energy Solutions, under contract with SCE on behalf of California utilities, CPUC oversight)",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "California single-family homes through enrolled contractors",
+      "status": "fully reserved since November 14, 2025; not accepting new reservations",
+      "url": "https://techcleanca.com/incentives/single-family-incentives/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "GoGreen Home Energy Financing",
+      "runBy": "State of California GoGreen Financing program (the page links to the State Treasurer's residential portal); utilities named do not lend",
+      "category": "financing",
+      "amount": "Loan amounts and rates not stated on the page; it advertises below-market rates, extended terms, no property lien, up to 30% of financing for other improvements, and 0% financing for heat pump heating, cooling and water heating in qualifying communities",
+      "whoQualifies": "Owners (and tenants with owner permission) of single-family homes, townhomes, condos, 2-4 unit buildings and manufactured homes on a site-built foundation who are customers of PG&E, SDG&E, SCE, SoCalGas or City of Palo Alto Utilities; customers of other publicly owned utilities 'may finance most measures'",
+      "status": "open (page modified October 6, 2026)",
+      "url": "https://gogreenfinancing.com/residential",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "closed to new applicants (waitlist only): HEEHRA Phase I single-family fully reserved statewide since 2026-02-24 and multifamily since 2026-09-01 (per TECH); HEEHRA Phase II not yet available; HOMES not available as rebates (some HOMES funds pay for no-cost EBD Direct Install retrofits in selected low-income communities)",
+    "programName": "HEEHRA (Home Electrification and Appliance Rebates) and HOMES (Home Owner Managing Energy Savings)",
+    "administrator": "California Energy Commission (HEEHRA Phase I delivered by TECH Clean California; EBD Direct Install run by three regional administrators)",
+    "summary": "California received $590 million in total for Home Energy Rebates ($290 million HEEHRA awarded June 2024; $291 million HOMES approved January 2025). HEEHRA Phase I paid up to $8,000 (under 80% AMI) or $4,000 (80-150% AMI) toward a heat pump HVAC system through TECH-certified contractors; it launched October 2024, paused February 2025, resumed March 2025, was fully reserved in June 2025, reopened October 2025 and was fully reserved again on February 24, 2026. The HOMES award is split between EBD Direct Install ($130.3 million, no-cost retrofits for low-income households, projects must model at least 20% savings) and a statewide Pay for Performance program ($90.8 million) that has not launched (solicitation concept workshop held August 8, 2025). Note: the CEC Q&A still says multifamily HEEHRA rebates are available, but TECH's incentives page says they were fully reserved as of September 1, 2026.",
+    "url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program / LIHEAP - San Diego County",
+      "runBy": "CSD local providers Metropolitan Area Advisory Committee (MAAC, 619-434-3829) and Campesinos Unidos, Inc. (619-391-9790); SDG&E says LIHEAP is managed by two agencies assigned by ZIP code",
+      "summary": "Home weatherization, bill payment help and energy-crisis assistance for income-eligible households.",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "SDG&E Energy Savings Assistance (ESA)",
+      "runBy": "SDG&E (outreach and assessment contractor Richard Heath & Associates, 1-619-387-4757 or 1-866-597-0597)",
+      "summary": "No-cost upgrades for renters and owners in single-family or mobile homes (1-4 units) who qualify by public assistance or income (250% of federal poverty guidelines, e.g., $82,500 for 4 people, June 1, 2026-May 31, 2027). 'ESA Basic' (self-certify) covers smart thermostat, low-flow fixtures, LEDs and power strips; 'ESA Basic Plus' (documentation required) can include refrigerator, whole-house fan, furnace repair/replacement, duct sealing, air sealing, attic insulation, heat pump water heater and minor home repair.",
+      "url": "https://www.sdge.com/residential/pay-bill/get-payment-bill-assistance/assistance-programs/no-cost-energy-efficient-home-improvements"
+    },
+    {
+      "name": "CARE and FERA bill discounts",
+      "runBy": "SDG&E",
+      "summary": "CARE saves 30% or more on monthly bills; FERA saves 18% on electric bills for qualifying households.",
+      "url": "https://www.sdge.com/residential/pay-bill/get-payment-bill-assistance"
+    },
+    {
+      "name": "Farmworker housing energy efficiency and solar",
+      "runBy": "La Cooperativa Campesina de California & MAROMA Energy Services (CSD provider for San Diego and Riverside counties), 833-367-5497",
+      "summary": "Efficiency and weatherization upgrades, rooftop solar and solar water heating for farmworker housing.",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "Equitable Building Decarbonization Direct Install (Southern California)",
+      "runBy": "County of Los Angeles for the California Energy Commission, supported by San Diego Community Power",
+      "summary": "No-cost retrofits for households up to 80% AMI in Chula Vista, El Cajon, Escondido, Oceanside, Ramona and San Marcos/Vista focus areas.",
+      "url": "https://socalebd.org/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "City of San Diego Building Energy Benchmarking Ordinance",
+      "appliesTo": "Large buildings only: commercial buildings over 50,000 sq ft and multifamily/mixed-use buildings over 50,000 sq ft with 17 or more residential accounts. Does not affect ordinary homeowners.",
+      "summary": "Owners submit energy data through ENERGY STAR Portfolio Manager by June 1 each year (passed February 2019).",
+      "url": "https://www.sandiego.gov/planning/climate-action/benchmarking"
+    },
+    {
+      "name": "California Building Energy Benchmarking Program (AB 802)",
+      "appliesTo": "Large buildings only: commercial buildings over 50,000 sq ft with no residential utility accounts, and multifamily buildings over 50,000 sq ft with 17 or more utility accounts. Does not affect ordinary homeowners.",
+      "summary": "Owners report energy use to the California Energy Commission by June 1 every year.",
+      "url": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    }
+  ],
+  "notes": "San Diego has the thinnest market-rate rebate picture of the six metros: SDG&E's rebates page now says Golden State Rebates' retail offerings have ended and lists no other residential efficiency rebates; SDG&E's remaining home-efficiency help is the income-qualified ESA program. San Diego Community Power's rebates page lists program categories (home battery storage, smart-device demand response, EV charging, EBD, SDREN) without amounts or status; its 'For Your Home' rebates are mostly pointers to other programs. The City of San Diego's 'Cost-Saving Energy Standards' page still tells homeowners that TECH Clean California and SDG&E offer heat pump rebates of '$1,000-$4,000+', but TECH single-family incentives have been fully reserved since November 14, 2025. No time-of-sale energy disclosure rule for homes was found on City of San Diego pages reviewed; the city plans to adopt the 2028 California Building Standards Code in early 2029. Chula Vista's Building Energy Saving Ordinance could not be verified (chulavistaca.gov blocked automated access on 2026-10-12), so it is not listed under localRules. Federal home-efficiency tax credits are over: the IRS says the Energy Efficient Home Improvement Credit (25C) covered improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) is not available for property placed in service after December 31, 2025.",
+  "sources": [
+    {
+      "label": "Census Bureau July 2023 CBSA delineation file",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    },
+    {
+      "label": "SDG&E About Us",
+      "href": "https://www.sdge.com/more-information/our-company/about-us"
+    },
+    {
+      "label": "SDG&E Energy Savings Assistance",
+      "href": "https://www.sdge.com/residential/pay-bill/get-payment-bill-assistance/assistance-programs/no-cost-energy-efficient-home-improvements"
+    },
+    {
+      "label": "SDG&E rebates (Golden State Rebates ended)",
+      "href": "https://www.sdge.com/rebates"
+    },
+    {
+      "label": "SDG&E financial assistance programs",
+      "href": "https://www.sdge.com/residential/pay-bill/get-payment-bill-assistance"
+    },
+    {
+      "label": "SDG&E Simple Steps",
+      "href": "https://www.sdge.com/simple-steps"
+    },
+    {
+      "label": "San Diego Community Power homepage (Coronado headline)",
+      "href": "https://sdcommunitypower.org/"
+    },
+    {
+      "label": "San Diego Community Power - Our Community",
+      "href": "https://sdcommunitypower.org/our-community/"
+    },
+    {
+      "label": "San Diego Community Power rebates, incentives & offers",
+      "href": "https://sdcommunitypower.org/rebates-incentives-offers/"
+    },
+    {
+      "label": "Clean Energy Alliance",
+      "href": "https://thecleanenergyalliance.org/"
+    },
+    {
+      "label": "SDREN homepage",
+      "href": "https://www.sdren.org/"
+    },
+    {
+      "label": "SDREN Home Energy Savings",
+      "href": "https://sdren.org/home-energy-savings/"
+    },
+    {
+      "label": "City of Solana Beach HPWH rebate",
+      "href": "https://www.cityofsolanabeach.ca.gov/en/heatpump-rebate"
+    },
+    {
+      "label": "City of San Diego benchmarking",
+      "href": "https://www.sandiego.gov/planning/climate-action/benchmarking"
+    },
+    {
+      "label": "City of San Diego Cost-Saving Energy Standards",
+      "href": "https://www.sandiego.gov/planning/work/energy-efficiency-requirements"
+    },
+    {
+      "label": "Home Energy Score California FAQ",
+      "href": "https://www.homescoreca.org/faq"
+    },
+    {
+      "label": "SoCal EBD",
+      "href": "https://socalebd.org/"
+    },
+    {
+      "label": "CEC EBD Statewide Direct Install",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/equitable-building-decarbonization-program/ebd-statewide-direct"
+    },
+    {
+      "label": "LA County ISD EBD release",
+      "href": "https://isd.lacounty.gov/no-cost-home-energy-upgrades/"
+    },
+    {
+      "label": "CEC IRA residential energy rebate programs",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs"
+    },
+    {
+      "label": "TECH Clean California HEEHRA",
+      "href": "https://techcleanca.com/incentives/heehrarebates/"
+    },
+    {
+      "label": "TECH Clean California incentives updates",
+      "href": "https://techcleanca.com/incentives/"
+    },
+    {
+      "label": "TECH Clean California single-family incentives",
+      "href": "https://techcleanca.com/incentives/single-family-incentives/"
+    },
+    {
+      "label": "GoGreen Home Energy Financing",
+      "href": "https://gogreenfinancing.com/residential"
+    },
+    {
+      "label": "CSD Weatherization Assistance Program",
+      "href": "https://csd.ca.gov/Pages/Residential-Energy-Efficiency.aspx"
+    },
+    {
+      "label": "CSD Directory of Service Providers (CSV)",
+      "href": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "label": "CEC Building Energy Benchmarking Program",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    },
+    {
+      "label": "IRS 25C credit",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS 25D credit",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    }
+  ]
+}

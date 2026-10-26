@@ -57,7 +57,7 @@ const statusLabel: Record<string, string> = { open: 'Open', closed: 'Closed', wa
               {e.amount}
               {e.conditions && <><br /><span class="small">Conditions: {e.conditions}</span></>}
               {e.deadline && <><br /><span class="small">Deadline: {e.deadline}</span></>}
-              <br /><span class="small">{e.slug && <><a href={`/programs/${e.slug}/`}>Program details</a> · </>}<a href={e.source} rel="noopener">official page ↗</a> · checked {longDate(e.checked ?? '')}</span>
+              <br /><span class="small">{e.slug && <><a href={`/ca/programs/${e.slug}/`}>Program details</a> · </>}<a href={e.source} rel="noopener">official page ↗</a> · checked {longDate(e.checked ?? '')}</span>
             </p>
           ))}
           {list.length > 0 && note && <p class="small">{note}</p>}

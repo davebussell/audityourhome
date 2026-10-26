@@ -1,0 +1,293 @@
+---
+/**
+ * US home. Facts come from src/data/us/ (federal.json, tests.json and the 26 metro records),
+ * verified against official sources on October 12, 2026.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import MetroCard from '../../components/us/MetroCard.astro';
+import FaqList from '../../components/us/FaqList.astro';
+import LeadFormUS from '../../components/us/LeadFormUS.astro';
+import { organizationSchema, faqSchema } from '../../lib/schema';
+import { METROS, FEDERAL, US_VERIFIED, STATE_NAMES } from '../../lib/us/data';
+import { hasFreeVisitForAll, andList } from '../../lib/us/metro-view';
+import { STATES } from '../../lib/us/programs';
+
+const title = 'AuditYourHome: find a certified home energy auditor in the United States';
+const description = `Find a certified home energy auditor, see what audits cost in the ${METROS.length} largest U.S. metro areas and check which rebates are open after the 2026 changes. Every fact links to its official source, verified ${US_VERIFIED}.`;
+
+// ---------------------------------------------------------------- 2026 changes, from federal.json
+const credits = FEDERAL.taxCredits as any[];
+const c25c = credits.find((c) => c.id === '25C');
+const irs25c = c25c?.sources?.find((s: any) => /irs\.gov\/credits-deductions\/energy-efficient/.test(s.href));
+const her = FEDERAL.homeEnergyRebates.overview;
+const herSummary: string = her.summary;
+// the same per-state reading the program tracker uses, so the two pages always agree
+const TAKING = STATES.filter((st) => st.taking);
+const OPEN_STATES = TAKING.filter((st) => st.code !== 'DC').map((st) => st.name);
+const openCount = String(OPEN_STATES.length);
+const dcTaking = TAKING.some((st) => st.code === 'DC');
+const bpaCount = herSummary.match(/counts (\w+) states plus DC as launched/)?.[1] ?? null;
+const azNote = false;
+const pn262 = (her.sources as any[]).find((s) => /program-notice-26-2/.test(s.href));
+const doeHer = (her.sources as any[]).find((s) => /home-energy-rebates-program$/.test(s.href));
+
+// ---------------------------------------------------------------- metro stats
+const n = METROS.length;
+const freeVisit = METROS.filter(hasFreeVisitForAll).length;
+const withIncome = METROS.filter((m) => (m.data.incomeQualified ?? []).length > 0).length;
+
+const faqs = [
+  {
+    q: 'Can I still get a federal tax credit for a home energy audit?',
+    a: 'Not for an audit done in 2026. The credit of up to $150 a year for a home energy audit was part of the Energy Efficient Home Improvement Credit (25C). Public Law 119-21, signed July 4, 2025, ended 25C for property placed in service after December 31, 2025, and the IRS says the audit credit can’t be claimed for audits paid for or done after that date. The Residential Clean Energy Credit (25D) also ended for expenditures after December 31, 2025. An audit done in 2025 is claimed on the 2025 return with Form 5695.',
+  },
+  {
+    q: 'Are the federal Home Energy Rebates open in my state?',
+    a: `It depends on the state, because each state runs its own program. Checking state pages on ${US_VERIFIED}, we found at least one rebate pathway taking applications in ${openCount} states${dcTaking ? ' plus DC' : ''}: ${andList(OPEN_STATES)}, often with income limits, waitlists or only some measures. The Building Performance Association’s June 2026 map counts ${bpaCount ?? 'twelve'} states plus DC as launched.${azNote ? ' Arizona’s page couldn’t be checked in that pass, but our Phoenix research found Efficiency Arizona accepting applications under the new rules.' : ''} DOE no longer publishes a current state-by-state list, and it rewrote the program rules effective May 29, 2026, so check your state’s own page before you buy anything.`,
+  },
+  {
+    q: 'What does a home energy audit cost?',
+    a: `No DOE, EPA or HUD page gives a national typical price, and DOE says Home Energy Score fees vary across the country. Utility and state programs often pay for most or all of an assessment: in our research, ${freeVisit} of the ${n} largest metros have a free in-person utility or state assessment open to all incomes. Where a fee is published it is modest, for example $49 for an SRP in-home assessment in Phoenix, $70 or $100 for a Home Energy Squad visit in Minnesota and $100 for a Home Performance with ENERGY STAR audit from BGE or Pepco in Maryland. For a private audit, Nicor Gas says an energy audit may cost between $100 and $500 or more, and Austin Energy estimates about $200–$300 for the audit Austin requires at most home sales (a typical home of 1,800 sq ft or less).`,
+  },
+  {
+    q: 'Who is qualified to do a home energy audit?',
+    a: 'Look for a recognized credential: a RESNET HERS Rater, a Building Performance Institute (BPI) Building Analyst Professional or Home Energy Professional Energy Auditor, or a DOE Home Energy Score Certified Assessor. Each has an official directory or verification page. Utility programs use their own trained staff or participating contractors, and some, like SRP’s audit discount in Phoenix, require a BPI-certified contractor.',
+  },
+  {
+    q: 'Is there free help for lower-income households?',
+    a: `Yes. The federal Weatherization Assistance Program, run through state agencies and local providers, pays for an energy audit and cost-effective upgrades for eligible households; under federal rules that includes households at or below 200% of the federal poverty guidelines ($66,000 a year for a family of four under the 2026 guidelines, as Pennsylvania’s program publishes it). The Program Year 2026 average spending limit is $8,813 per home. ${withIncome === n ? `All ${n}` : `${withIncome} of our ${n}`} metro guides also list utility, city or state programs for income-qualified households, many with free assessments.`,
+  },
+];
+
+const schema = [organizationSchema(), faqSchema(faqs)];
+
+const tests = [
+  { slug: 'blower-door', photo: 'blower-door-test', name: 'Blower door test', note: 'Airtightness measured at 50 pascals' },
+  { slug: 'thermal-imaging', photo: 'thermal-imaging', name: 'Infrared scan', note: 'Finds missing or damaged insulation' },
+  { slug: 'combustion-safety', photo: 'combustion-safety-test', name: 'Combustion safety', note: 'Venting and CO checks on gas appliances' },
+  { slug: 'duct-leakage', photo: 'duct-leakage-testing', name: 'Duct leakage', note: 'Leaks measured at 25 pascals' },
+  { slug: 'radon', photo: 'radon-testing', name: 'Radon', note: 'EPA: fix at 4 pCi/L or more', hud: 'Short-term test · pCi/L' },
+  { slug: 'carbon-monoxide', photo: 'carbon-monoxide-testing', name: 'Carbon monoxide', note: 'Alarms on every level' },
+  { slug: 'lead-paint', photo: 'lead-paint-testing', name: 'Lead paint', note: 'Homes built before 1978', hud: 'Pre-1978 paint' },
+  { slug: 'well-water', photo: 'well-water-testing', name: 'Well water', note: 'EPA: test every year', hud: 'Coliform · nitrates · pH' },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">United States · audit-first home energy upgrades</p>
+        <h1>Know your home before you spend on it.</h1>
+        <p class="lede">
+          Find a <strong>certified</strong> home energy auditor, see what an audit <strong>costs</strong> where you live and
+          check which rebates are <strong>actually open</strong> after this year’s federal changes, across the {n} largest
+          U.S. metro areas.
+        </p>
+        <ul class="trust-list">
+          <li>Every program, price and status links to its official source, checked {US_VERIFIED}</li>
+          <li>Utility and state audit programs first: in {freeVisit} of {n} metros there’s a free in-person one open to all incomes</li>
+          <li>Credentials explained: RESNET, BPI and DOE certifications, and where to look each pro up</li>
+        </ul>
+      </div>
+
+      <form class="card hero-form" action="/us/plan/" method="GET" aria-label="Start your home energy plan">
+        <h2>Start your home energy plan</h2>
+        <p class="small">Enter your ZIP code to see the programs, rebates and tests that matter for your area.</p>
+        <div class="field">
+          <label for="h-zip">ZIP code</label>
+          <input id="h-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 60614" autocomplete="postal-code" required title="Five-digit ZIP code" />
+        </div>
+        <button class="btn btn-primary" type="submit">Build my plan →</button>
+        <p class="meta">Or browse <a href="/us/cities/">the {n} metro guides</a>.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- WHAT CHANGED IN 2026 -->
+  <section class="band-dark changed">
+    <div class="container">
+      <p class="eyebrow">What changed in 2026</p>
+      <h2>Three federal changes to plan around</h2>
+      <div class="chg-grid">
+        <article class="chg">
+          <span class="chip chip-closed">Ended</span>
+          <h3>Federal tax credits are over</h3>
+          <p>
+            The 25C home improvement credit, including its $150 audit credit, and the 25D clean energy credit don’t apply to
+            work after December 31, 2025. Public Law 119-21, signed July 4, 2025, moved their end dates up from 2032 and 2034.
+          </p>
+          <p class="links">
+            <a href="/us/programs/federal-tax-credits/">What ended and when</a>
+            {irs25c && <span> · <a href={irs25c.href} rel="noopener" target="_blank">IRS&nbsp;↗</a></span>}
+          </p>
+        </article>
+        <article class="chg">
+          <span class="chip chip-limited">Rewritten</span>
+          <h3>Rebate rules rewritten May 29, 2026</h3>
+          <p>
+            DOE’s new program notices for the Home Energy Rebates removed federal rebates for switching from gas, oil or
+            propane to electric equipment, and put insulation and air sealing before heating and cooling upgrades.
+            Programs already running had about three months to comply.
+          </p>
+          <p class="links">
+            <a href="/us/programs/home-energy-rebates/">How the rebates work now</a>
+            {pn262 && <span> · <a href={pn262.href} rel="noopener" target="_blank">DOE notice&nbsp;↗</a></span>}
+          </p>
+        </article>
+        <article class="chg">
+          <span class="chip chip-info">{openCount} states{dcTaking ? ' + DC' : ''}</span>
+          <h3>Most states aren’t paying yet</h3>
+          <p>
+            On {US_VERIFIED}, at least one federal rebate pathway was taking applications in {openCount} states{dcTaking ? ' plus DC' : ''}:
+            {andList(OPEN_STATES)}, often with income limits or only some measures. Elsewhere they’re paused, closed or not launched.
+          </p>
+          <p class="links">
+            <a href="/us/programs/states/">Your state’s status</a>
+            {doeHer && <span> · <a href={doeHer.href} rel="noopener" target="_blank">DOE&nbsp;↗</a></span>}
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- METROS -->
+  <section class="metros">
+    <div class="container">
+      <p class="eyebrow">{n} metro areas</p>
+      <h2>Where to start in your metro</h2>
+      <p class="lede measure">
+        The audit program most homeowners in each metro can start with, and what it costs. Each metro guide adds the other
+        programs, the rebates open now, local rules and energy prices.
+      </p>
+      <ul class="mgrid">
+        {METROS.map((m) => <li><MetroCard m={m} variant="main" /></li>)}
+      </ul>
+      <p class="more"><a class="btn btn-ghost" href="/us/cities/">Compare all {n} metros →</a></p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="tight how">
+    <div class="container">
+      <p class="eyebrow">How an audit works</p>
+      <h2>Three steps, measured not guessed</h2>
+      <div class="grid-3 steps">
+        <div class="step-card">
+          <Photo name="energy-bill-analysis" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">1</span>
+            <h3>Start with your utility</h3>
+            <p>Most of the {n} metros have a utility or state assessment, often free. Many rebates require one first.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="blower-door-test" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">2</span>
+            <h3>The house gets tested</h3>
+            <p>A full diagnostic audit adds a blower door test, an infrared scan and combustion safety checks on gas appliances.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">3</span>
+            <h3>You get a plan, then rebates</h3>
+            <p>The report ranks upgrades for your house. Take it to the program’s contractors and rebates.</p>
+          </div>
+        </div>
+      </div>
+      <p class="more"><a class="btn btn-ghost" href="/us/how-it-works/">What happens in an audit →</a> <a class="btn btn-ghost" href="/us/cost/">What it costs →</a></p>
+    </div>
+  </section>
+
+  <!-- TESTING GUIDE -->
+  <section class="upclose">
+    <div class="container">
+      <p class="eyebrow">The testing guide</p>
+      <h2>What gets tested, and what to test yourself</h2>
+      <p class="lede measure">
+        An auditor’s tests find where the energy goes. Radon, carbon monoxide, lead and well water are about health, and some
+        you can start yourself.
+      </p>
+      <div class="uc-row">
+        {tests.map((t) => (
+          <a class="pcard-link uc" href={`/us/tests/${t.slug}/`}>
+            <Photo name={t.photo} hud={t.hud ?? true} sizes="(max-width: 700px) 70vw, 300px" />
+            <div class="pcard-body">
+              <h3>{t.name}</h3>
+              <p>{t.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="more">
+        <a class="btn btn-ghost" href="/us/tests/">The complete testing guide →</a>
+        <a class="btn btn-ghost" href="/us/tests/screener/">Which tests does my home need? →</a>
+      </p>
+    </div>
+  </section>
+
+  <div class="container">
+    <FaqList faqs={faqs} heading="Straight answers" />
+    <div class="lf-wrap">
+      <LeadFormUS />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero { padding: 64px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } .hero { padding: 40px 0 44px; } }
+  .trust-list { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; }
+  .trust-list li { padding-left: 26px; position: relative; font-size: 15px; }
+  .trust-list li::before { content: "✓"; position: absolute; left: 0; color: var(--pine); font-weight: 700; }
+  .hero-form { padding: 26px 28px; border-top: 4px solid var(--heat); }
+  .hero-form h2 { font-size: 21px; margin-bottom: 4px; }
+  .hero-form .meta { margin: 12px 0 0; }
+  .hero-form .meta a { color: var(--steel); }
+
+  .changed { padding: 56px 0; }
+  .changed .eyebrow { color: #F08246; }
+  .chg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
+  @media (max-width: 900px) { .chg-grid { grid-template-columns: 1fr; } }
+  .chg { border: 1px solid var(--navy-line); border-radius: var(--radius-lg); padding: 20px 22px; display: grid; gap: 10px; align-content: start; background: rgba(255, 255, 255, 0.03); }
+  .chg .chip { justify-self: start; }
+  .chg h3 { margin: 0; font-size: 19px; }
+  .chg p { margin: 0; font-size: 15px; }
+  .chg .links { font-size: 14px; }
+  .chg .links a { color: #fff; }
+
+  .metros { padding: 60px 0 40px; }
+  .mgrid { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .more { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .how { padding: 40px 0 30px; background: #F3EFE7; }
+  .steps { align-items: stretch; margin-top: 24px; }
+  .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .step-card :global(.frame) { border-radius: 0; box-shadow: none; }
+  .step-body { position: relative; padding: 26px 26px 24px; }
+  .step-no {
+    position: absolute; top: -18px; left: 24px;
+    display: inline-flex; width: 36px; height: 36px; border-radius: 50%;
+    background: var(--heat); color: #fff; font-family: var(--display); font-weight: 800;
+    align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--card);
+  }
+  .step-card h3 { margin-bottom: 6px; }
+  .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
+
+  .upclose { padding: 60px 0 30px; }
+  .uc-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+  .uc .pcard-body h3 { font-size: 15.5px; }
+  .uc .pcard-body p { font-size: 13.5px; }
+  @media (max-width: 1000px) { .uc-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 700px) {
+    .uc-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .uc-row .uc { flex: 0 0 68%; scroll-snap-align: start; }
+  }
+  .lf-wrap { margin: 30px 0 48px; }
+</style>

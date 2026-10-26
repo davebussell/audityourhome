@@ -1,0 +1,8 @@
+# audityourhome.com on Netlify. Redirect rules (country auto-select for "/" and 301s for the
+# old pre-/ca/ addresses) are written to dist/_redirects by tools/country/postbuild.mjs.
+[build]
+  command = "npm run build"
+  publish = "dist"
+  # FORMS=netlify renders the site's forms as Netlify Forms (form detection is on for this site);
+  # submissions are emailed to dave@clickshift.ca by the form notification set in the Netlify UI.
+  environment = { NODE_VERSION = "22", FORMS = "netlify" }

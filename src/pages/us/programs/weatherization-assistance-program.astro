@@ -1,0 +1,340 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../components/us/ProgramStyles.astro';
+import ProgramStatus from '../../../components/us/ProgramStatus.astro';
+import ProgramFaq from '../../../components/us/ProgramFaq.astro';
+import ProgramSources from '../../../components/us/ProgramSources.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { statusChip } from '../../../lib/us/data';
+import { WAP, LIHEAP, METROS, weatherizationFor, metroName, metroStates, src, dedupe, clean, VERIFIED } from '../../../lib/us/programs';
+
+const S = {
+  wap: src(/scep\/wap\/weatherization-assistance-program$/),
+  apply: { label: 'DOE — How to Apply for Weatherization Assistance', href: WAP.findUrl },
+  wpn261: src(/wap-wpn-26-1\.pdf/),
+  wpn262: src(/wap-wpn-26-2\.pdf/),
+  cfr: src(/section-440\.22$/),
+  pa: src(/dced\.pa\.gov\/housing-and-development\/weatherization\/income-eligibility/),
+  liheap: src(/acf\.gov\/ocs\/programs\/liheap$/),
+  liheapFirst: src(/first-block-grant-funding-release-2026/),
+  liheapFinal: src(/final-block-grant-funding-release-ffy-2026/),
+  statute: src(/uscode\/text\/42\/8624$/),
+  neada: src(/neada\.org\/press\/liheap-under-threat/),
+};
+
+const local = METROS.map((m) => ({ m, ...weatherizationFor(m) })).filter((x) => x.wap.length + x.other.length > 0);
+
+const title = 'Weatherization Assistance Program (WAP) 2026: who qualifies and how to apply | AuditYourHome';
+const description = 'Who qualifies for DOE’s Weatherization Assistance Program (200% of poverty guidelines), its 2026 funding, LIHEAP, and local agencies in 26 metro areas.';
+
+const faqs = [
+  {
+    q: 'Who qualifies for the Weatherization Assistance Program?',
+    a: 'Under the federal rule (10 CFR 440.22), households with income at or below 200% of the federal poverty guidelines, households with a member who received TANF, SSI or other cash assistance under Social Security Act Title IV or XVI in the previous 12 months, or, if the state chooses, households eligible for LIHEAP. Under the 2026 guidelines, 200% is $31,920 for one person and $66,000 for four in the 48 contiguous states and DC, as Pennsylvania’s program publishes them.',
+  },
+  {
+    q: 'How much can the program spend on my home?',
+    a: 'The Program Year 2026 average spending limit is $8,813 per home, with renewable measures up to $4,436 within that average. Work must be cost-effective and match the energy audit. A separate Weatherization Readiness Fund pays for structural, health and safety repairs that would otherwise put a home on hold.',
+  },
+  {
+    q: 'Is the Weatherization Assistance Program still funded?',
+    a: 'Yes. Public Law 119-74, signed January 23, 2026, funded it for FY2026, and DOE’s Program Year 2026 allocations total $369 million. FY2027 began October 1, 2026 under a continuing resolution that funds programs at FY2026 rates through December 11, 2026.',
+  },
+  {
+    q: 'What is the difference between weatherization and LIHEAP?',
+    a: 'WAP pays for efficiency work in your home, starting with an energy audit. LIHEAP helps pay heating and cooling bills, avoid shutoffs and make energy-related repairs; states may spend up to 15% of LIHEAP money (25% with a waiver) on low-cost weatherization.',
+  },
+];
+
+const sources = dedupe([...WAP.sources, ...LIHEAP.sources]);
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Weatherization Assistance Program', path: '/us/programs/weatherization-assistance-program/' },
+  ]),
+  faqSchema(faqs),
+];
+const open = statusChip('open');
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
+  <ProgramStyles />
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Weatherization Assistance Program</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Federal program · income-qualified</p>
+        <h1>Weatherization Assistance Program</h1>
+        <p class="lede measure">
+          DOE’s Weatherization Assistance Program (WAP) pays for energy-efficiency work in the homes of
+          income-qualified households, through state agencies and local providers. The work starts with an energy
+          audit of your home, and the program was funded for FY2026.
+        </p>
+        <ProgramStatus
+          chip={open}
+          text="Funded, not eliminated: FY2026 money from Public Law 119-74 (signed Jan. 23, 2026). FY2027 runs on a continuing resolution through Dec. 11, 2026. Apply through your state’s weatherization agency."
+        />
+        <p class="up-meta up-hero-meta">
+          <a href={S.wap.href} rel="noopener" target="_blank">DOE WAP&nbsp;↗</a> ·
+          <a href={S.apply.href} rel="noopener" target="_blank">How to apply&nbsp;↗</a> · verified {VERIFIED}
+        </p>
+      </div>
+      <Photo name="blower-door-test" eager />
+    </div>
+
+    <div class="up-figs">
+      <div class="up-fig"><span class="v">$8,813</span><span class="l">Program Year 2026 average spending limit per home</span></div>
+      <div class="up-fig"><span class="v">$369 million</span><span class="l">Program Year 2026 allocations: Retrofit, training and the Readiness Fund</span></div>
+      <div class="up-fig"><span class="v">200%</span><span class="l">of federal poverty guidelines: the usual income limit</span></div>
+      <div class="up-fig"><span class="v">About 32,000</span><span class="l">homes served a year with DOE funds, according to DOE</span></div>
+    </div>
+    <p class="up-meta">
+      <a href={S.wpn262.href} rel="noopener" target="_blank">DOE WPN 26-2&nbsp;↗</a> ·
+      <a href={S.wap.href} rel="noopener" target="_blank">DOE WAP&nbsp;↗</a> · verified {VERIFIED}
+    </p>
+
+    <section class="up-s" id="qualify" aria-labelledby="q-h">
+      <h2 class="up-sec" id="q-h">Who qualifies</h2>
+      <div class="up-two">
+        <div class="up-prose">
+          <p>Under the federal rule (10 CFR 440.22), your household qualifies if any of these is true:</p>
+          <ul class="up-list">
+            <li>Household income is at or below 200% of the federal poverty guidelines.</li>
+            <li>A household member received cash assistance under Social Security Act Title IV or XVI, such as TANF or SSI, in the previous 12 months.</li>
+            <li>Your state chooses to accept LIHEAP eligibility, which can use 60% of state median income, as long as its standard is at least 200% of poverty.</li>
+          </ul>
+          <p style="margin-top:14px">
+            The program’s stated purpose gives special attention to older people, people with disabilities and
+            children. Many local agencies serve renters as well as homeowners.
+          </p>
+        </div>
+        <div class="card card-pad up-note side">
+          <h3>2026 income limits at 200%</h3>
+          <dl class="up-kv">
+            <dt>1 person</dt><dd><span class="money">$31,920</span></dd>
+            <dt>4 people</dt><dd><span class="money">$66,000</span></dd>
+          </dl>
+          <p class="small" style="margin-top:12px">
+            From the HHS poverty guidelines effective January 13, 2026 ($15,960 for one person, $33,000 for four in
+            the 48 contiguous states and DC), as Pennsylvania’s program publishes them. DOE’s own income page still
+            shows the 2025 figures ($31,300 and $64,300 at 200%). Some states set other limits; check your local agency.
+          </p>
+          <p class="up-meta">
+            <a href={S.cfr.href} rel="noopener" target="_blank">10 CFR 440.22&nbsp;↗</a> ·
+            <a href={S.pa.href} rel="noopener" target="_blank">Pennsylvania DCED&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="up-s" id="covers" aria-labelledby="c-h">
+      <h2 class="up-sec" id="c-h">What it pays for</h2>
+      <div class="up-three">
+        <article class="card card-pad pt">
+          <h3>An energy audit first</h3>
+          <p>Every job follows an energy audit. DOE requires that only cost-effective measures consistent with the audit are installed, that health and safety problems are treated, and that every unit is inspected (WPN 26-1).</p>
+        </article>
+        <article class="card card-pad pt">
+          <h3>Efficiency work</h3>
+          <p>Local agencies list measures such as air sealing, attic and wall insulation, and heating system repair or replacement. Renewable measures are capped at $4,436 within the $8,813 average, and no renewable electricity-generation technology is approved.</p>
+        </article>
+        <article class="card card-pad pt">
+          <h3>Repairs that hold a home back</h3>
+          <p>The $30 million Weatherization Readiness Fund pays for structural, health and safety repairs that would otherwise force a provider to put a home on hold.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="up-s" id="funding" aria-labelledby="f-h">
+      <h2 class="up-sec" id="f-h">Funding in 2026</h2>
+      <ul class="up-list measure">
+        <li>
+          <strong>FY2026:</strong> Public Law 119-74 (H.R. 6938, signed January 23, 2026). DOE’s Weatherization Program
+          Notice 26-2 (July 9, 2026) lists $329,000,000 for the Retrofit program, $10,000,000 for training and
+          technical assistance and $30,000,000 for the Weatherization Readiness Fund, a total of $369,000,000, with
+          Program Year 2026 state allocations.
+        </li>
+        <li>
+          <strong>Two notices disagree.</strong> WPN 26-1, issued the same day, gives the Retrofit figure as $328 million,
+          and the two differ on how long FY2026 money is available: through September 30, 2026 in WPN 26-2, through
+          September 30, 2027 in WPN 26-1.
+        </li>
+        <li>
+          <strong>FY2027:</strong> began October 1, 2026 under a continuing resolution (Public Law 119-103, signed
+          September 2, 2026) that funds programs at FY2026 rates through December 11, 2026.
+        </li>
+        <li>
+          <strong>July 2025:</strong> DOE released $325 million in WAP funds plus $30 million for the Readiness Fund, and
+          rescinded WPN 22-10, which had required counting the social cost of carbon and other non-energy benefits in
+          cost-effectiveness tests.
+        </li>
+      </ul>
+      <p class="up-meta" style="margin-top:12px">
+        <a href={S.wpn262.href} rel="noopener" target="_blank">WPN 26-2&nbsp;↗</a> ·
+        <a href={S.wpn261.href} rel="noopener" target="_blank">WPN 26-1&nbsp;↗</a> · verified {VERIFIED}
+      </p>
+    </section>
+
+    <section class="up-s" id="apply" aria-labelledby="a-h">
+      <h2 class="up-sec" id="a-h">How to apply</h2>
+      <p class="up-intro">DOE: “To apply for WAP assistance, first identify your state weatherization administrator and reach out to them.”</p>
+      <ol class="up-steps measure">
+        <li><p><strong>Check eligibility</strong> against the income limits above, or your state’s own limits.</p></li>
+        <li><p><strong>Find your local provider.</strong> Your state weatherization administrator points you to the agency for your county; <a href="#local">our metro list below</a> names them for 26 metro areas.</p></li>
+        <li><p><strong>Complete the provider’s application,</strong> usually with income documents. Some agencies ask for more, such as proof of ownership.</p></li>
+        <li><p><strong>Prepare for the work:</strong> an energy audit, then installation by a crew or contractor, then a quality-control inspection.</p></li>
+      </ol>
+      <div class="card card-pad up-warn">
+        <h3>Expect a wait</h3>
+        <p>
+          Local agencies report waitlists: Fort Worth (Tarrant County) is taking applications but warns of very long
+          waits, Travis County gives a timeline of 9 months to a year, Multnomah County warned of up to 4 weeks just
+          for a pre-screen response, and DC says its WAP openings are delayed this fiscal year. Apply early.
+        </p>
+      </div>
+      <p class="up-meta"><a href={S.apply.href} rel="noopener" target="_blank">DOE: How to apply&nbsp;↗</a> · verified {VERIFIED}</p>
+    </section>
+
+    <section class="up-s" id="local" aria-labelledby="l-h">
+      <h2 class="up-sec" id="l-h">Weatherization agencies in {local.length} metro areas</h2>
+      <p class="up-intro">
+        The agencies named in our metro research, with the contacts their pages list, checked {VERIFIED}. Open a
+        metro to see them; each metro guide has the full set of local programs.
+      </p>
+      <div class="loc">
+        {local.map(({ m, wap, other }) => (
+          <details class="card loc-m">
+            <summary>
+              <span class="ln">{metroName(m)}</span>
+              <span class="ls">{metroStates(m)}</span>
+              <span class="lc">{wap.length} WAP {wap.length === 1 ? 'agency' : 'agencies'}{other.length > 0 && ` · ${other.length} other`}</span>
+            </summary>
+            <div class="loc-b">
+              {wap.length > 0 && <p class="loc-h">Weatherization Assistance Program</p>}
+              {wap.map((x) => (
+                <div class="loc-e">
+                  <p class="loc-n"><a href={x.url} rel="noopener" target="_blank">{x.name}&nbsp;↗</a></p>
+                  <p class="loc-r">{clean(x.runBy)}</p>
+                  <p class="loc-s">{clean(x.summary)}</p>
+                </div>
+              ))}
+              {other.length > 0 && <p class="loc-h">Other weatherization help (utility and local programs)</p>}
+              {other.map((x) => (
+                <div class="loc-e">
+                  <p class="loc-n"><a href={x.url} rel="noopener" target="_blank">{x.name}&nbsp;↗</a></p>
+                  <p class="loc-r">{clean(x.runBy)}</p>
+                  <p class="loc-s">{clean(x.summary)}</p>
+                </div>
+              ))}
+              <p class="loc-f"><a href={`/us/cities/${m.slug}/`}>{metroName(m)} guide: all local programs →</a></p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="up-s" id="liheap" aria-labelledby="li-h">
+      <h2 class="up-sec" id="li-h">LIHEAP: help with energy bills</h2>
+      <div class="up-two">
+        <div class="up-prose">
+          <ProgramStatus
+            chip={open}
+            text="Funded for FY2026: HHS released $3,713,859,933 on Nov. 28, 2025 and a final $421,540,067 on Apr. 17, 2026. FY2027 runs on a continuing resolution through Dec. 11, 2026."
+          />
+          <p style="margin-top:14px">
+            The Low Income Home Energy Assistance Program (LIHEAP, run by HHS’s Administration for Children and
+            Families) helps low-income households pay heating and cooling bills, avoid shutoffs and make
+            energy-related repairs. States may spend up to 15% of it (25% with a waiver) on low-cost weatherization.
+          </p>
+          <p>
+            <strong>Who qualifies:</strong> households receiving TANF, SSI, SNAP or certain veterans’ benefits, or with
+            income no higher than the greater of 150% of the poverty level or 60% of state median income. States set
+            the exact limits, but can’t exclude households below 110% of poverty.
+          </p>
+          <p>
+            <strong>How to apply:</strong> through your state or local LIHEAP office. ACF points to energyhelp.us and the
+            National Energy Assistance Referral line, <span class="up-nw">1-866-674-6327</span>. LIHEAP doesn’t give
+            grants directly to individuals and doesn’t charge a fee; ACF says to report such offers to the HHS fraud
+            hotline, <span class="up-nw">1-800-447-8477</span>.
+          </p>
+        </div>
+        <div class="card card-pad up-note side">
+          <h3>What changed</h3>
+          <ul class="up-list">
+            <li>FY2026 was funded despite a proposal to eliminate LIHEAP. The final release came under the Consolidated Appropriations Act, 2026 (H.R. 7148). NEADA describes the FY2026 total as $4.045 billion, $20 million more than the year before.</li>
+            <li>HHS laid off the entire federal LIHEAP staff on April 1, 2025; NEADA reported in February 2026 that they had not been rehired.</li>
+            <li>The FY2027 budget again proposed ending LIHEAP.</li>
+            <li>Public Law 119-21 (Sec. 10103) now limits the SNAP standard utility allowance that receiving energy assistance triggers to households with an older or disabled member.</li>
+          </ul>
+          <p class="up-meta" style="margin-top:12px">
+            <a href={S.liheap.href} rel="noopener" target="_blank">HHS ACF&nbsp;↗</a> ·
+            <a href={S.liheapFinal.href} rel="noopener" target="_blank">FY2026 final release&nbsp;↗</a> ·
+            <a href={S.statute.href} rel="noopener" target="_blank">42 U.S.C. 8624&nbsp;↗</a> ·
+            <a href={S.neada.href} rel="noopener" target="_blank">NEADA&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <ProgramFaq faqs={faqs} />
+
+    <div class="up-lf">
+      <LeadFormUS context="us-weatherization" />
+    </div>
+
+    <ProgramSources sources={sources} verified={VERIFIED} />
+
+    <p class="up-related">
+      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">Home Energy Rebates</a>
+      <a class="btn btn-ghost" href="/us/programs/states/">Rebates by state</a>
+      <a class="btn btn-ghost" href="/us/cities/">All metro guides</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .up-s { padding: 0; }
+  .hero-text :global(.pstat) { margin-top: 4px; }
+  .side { margin: 0; }
+  .side h3 { font-size: 18px; }
+  .pt { display: flex; flex-direction: column; gap: 6px; }
+  .pt h3 { margin: 0; font-size: 18px; }
+  .pt p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .up-two .up-warn { margin: 0; }
+
+  .loc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: start; margin-top: 12px; }
+  @media (max-width: 760px) { .loc { grid-template-columns: 1fr; } }
+  .loc-m { padding: 0; }
+  .loc-m[open] { grid-column: 1 / -1; }
+  .loc-m summary {
+    list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px;
+    padding: 13px 16px; align-items: baseline;
+  }
+  .loc-m summary::-webkit-details-marker { display: none; }
+  .loc-m summary::after { content: "+"; font-family: var(--mono); color: var(--heat); font-size: 18px; grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+  .loc-m[open] summary::after { content: "–"; }
+  .ln { font-family: var(--display); font-weight: 700; font-size: 16.5px; }
+  .ls, .lc { font-family: var(--mono); font-size: 11.5px; color: var(--muted); grid-column: 1; }
+  .lc { color: var(--faint); }
+  .loc-b { padding: 4px 16px 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; }
+  @media (max-width: 760px) { .loc-b { grid-template-columns: 1fr; } }
+  .loc-h { grid-column: 1 / -1; margin: 10px 0 0; font-family: var(--display); font-weight: 700; font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .loc-e { display: grid; gap: 4px; min-width: 0; }
+  .loc-e p { margin: 0; overflow-wrap: anywhere; }
+  .loc-n { font-weight: 700; font-size: 15px; }
+  .loc-n a { color: var(--ink); text-decoration: none; }
+  .loc-n a:hover { color: var(--heat-deep); text-decoration: underline; }
+  .loc-r { font-size: 13.5px; color: var(--ink); }
+  .loc-s { font-size: 13.5px; color: var(--muted); }
+  .loc-f { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--display); font-weight: 700; font-size: 15px; }
+  .loc-f a { color: var(--heat-deep); text-decoration: none; }
+</style>

@@ -1,0 +1,264 @@
+---
+/**
+ * Heat pumps in one province or territory: design temperatures and seasonal COP by city, what heat
+ * costs with each fuel at the calculators' prices, the heat pump rebates and their equipment rules
+ * (researched October 19, 2026), and the certified systems that suit the climate.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import ModelTable from '../../../components/hp/ModelTable.astro';
+import CostTable from '../../../components/hp/CostTable.astro';
+import RebateCard from '../../../components/hp/RebateCard.astro';
+import QuoteForm from '../../../components/hp/QuoteForm.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { PROV_SLUG_PHOTO, ogFor } from '../../../lib/photos';
+import {
+  CA_REGIONS, type CARegion, citiesIn, costsCA, caRebates, caProgramGuides, federalHeatPumpPrograms, leaders, brandsBySize, brandInfo,
+  statsFor, brandHref, HP_CHECKED, PRICES_CA_AS_OF, fmtInt, fmtDate, statusChipHP, NRCAN_LIST_URL, COP_NOTE, caShortName, tierLabel, fmt1,
+} from '../../../lib/heatpumps';
+import '../../../styles/hp.css';
+
+export function getStaticPaths() {
+  return CA_REGIONS.map((r) => ({ params: { region: r.slug }, props: { r } }));
+}
+interface Props {
+  r: CARegion;
+}
+const { r } = Astro.props;
+const place = caShortName(r);
+const cities = citiesIn(r.slug);
+const main = cities[0];
+const costs = main ? costsCA(main.prov, main.hdd18 ?? 4500) : null;
+const byCity = cities.slice(0, 12).map((c) => ({ c, k: costsCA(c.prov, c.hdd18 ?? 4500) }));
+const temps = cities.map((c) => c.designHeat).filter((t): t is number => t != null);
+const coldest = temps.length ? Math.min(...temps) : null;
+const mildest = temps.length ? Math.max(...temps) : null;
+const progs = caRebates(r);
+const openProgs = progs.filter((p) => ['Open', 'Open · limits apply'].includes(statusChipHP(p.status).label));
+const unconfirmed = progs.filter((p) => statusChipHP(p.status).label === 'Unconfirmed').length;
+const guides = caProgramGuides(r.slug);
+const fed = federalHeatPumpPrograms();
+const L = leaders('ca');
+const usesNrcan = ['ontario', 'manitoba', 'new-brunswick', 'north', 'newfoundland-labrador'].includes(r.slug);
+const ranked = brandsBySize('ca')
+  .map((s) => ({ s, st: statsFor('ca', s)! }))
+  .sort((a, b) => (usesNrcan ? b.st.nrcanLikeOutdoorModels - a.st.nrcanLikeOutdoorModels : b.st.coldOutdoorModels - a.st.coldOutdoorModels))
+  .slice(0, 12);
+const gasCost = costs?.rows.find((x) => x.key === 'gas');
+const hpCost = costs?.rows.find((x) => x.key === 'hp-cold');
+const oilCost = costs?.rows.find((x) => x.key === 'oil');
+const breakEven = costs?.elecPerGJ && costs.gasPerGJ ? costs.elecPerGJ / costs.gasPerGJ : null;
+const ccCop = costs?.band.coldClimate ?? null;
+const gasWins = breakEven != null && ccCop != null && breakEven > ccCop;
+const breakEvenKey = breakEven == null ? 'no piped gas in our price data'
+  : gasWins ? `gas costs less to run here; a heat pump would need a seasonal COP of ${breakEven.toFixed(1)} to match it`
+  : `a heat pump beats gas here above a seasonal COP of ${breakEven.toFixed(1)}`;
+const breakEvenLine = breakEven == null ? ''
+  : gasWins ? ` Here a heat pump would need a seasonal COP above ${breakEven.toFixed(1)} to match a 95% gas furnace, so at these prices gas stays cheaper to run; the case for a heat pump rests on adding air conditioning, replacing an old furnace or AC, cutting emissions, or the rebates.`
+  : ` Here a heat pump costs less to run than a 95% gas furnace whenever its seasonal COP is above ${breakEven.toFixed(1)}, which a cold-climate system reaches in this climate.`;
+const heatPhoto = PROV_SLUG_PHOTO[r.slug];
+const fmtT = (t: number | null) => (t == null ? '—' : `${t.toFixed(1).replace('-', '−')}°C`);
+
+const title = `Heat pumps in ${r.name}: costs, rebates and cold-climate picks | AuditYourHome`;
+const description = `What a heat pump costs to run in ${place} against gas, oil and baseboards, the ${progs.length} heat pump programs and their equipment rules, design temperatures by city and the certified systems that suit them.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Heat pumps', path: '/ca/heat-pumps/' },
+    { name: r.name, path: `/ca/heat-pumps/${r.slug}/` },
+  ]),
+];
+const jump: [string, string][] = [
+  ['climate', 'Climate and sizing'],
+  ['costs', 'Running costs'],
+  ['rebates', 'Rebates'],
+  ['systems', 'Systems that suit'],
+  ['brands', 'Brands'],
+  ['quote', 'Get quotes'],
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heatPhoto)}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{r.name}</span></nav>
+    <div class:list={['page-hero', { 'has-photo': heatPhoto }]}>
+      <div class="hero-text">
+        <p class="eyebrow">Heat pumps by province · checked {HP_CHECKED}</p>
+        <h1>Heat pumps in {r.name}</h1>
+        <p class="lede measure">
+          {main && coldest != null
+            ? `${place === 'the North' ? 'Northern' : r.name} homes need heat down to ${fmtT(mildest)}${coldest !== mildest ? ` to ${fmtT(coldest)}` : ''} on a design day. `
+            : ''}
+          {hpCost && main
+            ? `At today's prices a cold-climate heat pump in ${main.name} delivers heat for about $${hpCost.cost.toFixed(2)} a GJ${gasCost ? `, against $${gasCost.cost.toFixed(2)} for a high-efficiency gas furnace` : oilCost ? `, against $${oilCost.cost.toFixed(2)} for an oil furnace` : ''}.`
+            : ''}
+        </p>
+      </div>
+      {heatPhoto && <Photo name={heatPhoto} eager />}
+    </div>
+
+    <div class="keys">
+      <div class="key card">
+        <span class="k">Design temperature</span>
+        <span class="kv-big">{fmtT(coldest)}</span>
+        <span class="kv-sub">{cities.length > 1 ? `coldest of ${cities.length} cities we cover; mildest ${fmtT(mildest)}` : main ? main.name : ''}</span>
+      </div>
+      <div class="key card">
+        <span class="k">Cold-climate heat pump</span>
+        <span class="kv-big">${hpCost ? hpCost.cost.toFixed(2) : '—'} <small>per GJ</small></span>
+        <span class="kv-sub">{main ? `${main.name}, seasonal COP ${fmt1(costs!.band.coldClimate)}` : ''}</span>
+      </div>
+      <div class="key card">
+        <span class="k">{gasCost ? 'Gas furnace (95%)' : oilCost ? 'Oil furnace (85%)' : 'Electric baseboards'}</span>
+        <span class="kv-big">${(gasCost ?? oilCost ?? costs?.rows.find((x) => x.key === 'elec'))?.cost.toFixed(2) ?? '—'} <small>per GJ</small></span>
+        <span class="kv-sub">{breakEvenKey}</span>
+      </div>
+      <div class="key card">
+        <span class="k">Heat pump programs</span>
+        <span class="kv-big">{openProgs.length} <small>of {progs.length} open</small></span>
+        <span class="kv-sub">{unconfirmed > 0 && `${unconfirmed} unconfirmed · `}<a href="#rebates">Amounts and equipment rules</a></span>
+      </div>
+    </div>
+
+    <nav class="jump" aria-label="On this page">
+      {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+
+    <section id="climate" class="sec">
+      <h2>Climate and sizing</h2>
+      <p class="sec-intro">
+        A heat pump is sized to the design temperature: the cold that a home must handle on all but the coldest 1% of winter hours. Below that, most
+        systems keep heating at reduced output, and a backup (electric strips or the old furnace) covers the gap. The seasonal COP is a planning
+        value for the whole winter, backup and defrost included.
+      </p>
+      <div class="tablewrap card">
+        <table class="stack dt">
+          <caption class="sr-only">Heating climate by city in {r.name}</caption>
+          <thead>
+            <tr>
+              <th scope="col">City</th>
+              <th scope="col" class="num">Design temperature</th>
+              <th scope="col" class="num">Heating degree days</th>
+              <th scope="col" class="num">Nights below −20°C</th>
+              <th scope="col" class="num">Seasonal COP, cold-climate</th>
+              <th scope="col" class="num">Heat pump cost per GJ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {byCity.map(({ c, k }) => (
+              <tr>
+                <td><a href={`/ca/cities/${c.slug}/`}>{c.name}</a></td>
+                <td class="num" data-label="Design temperature">{fmtT(c.designHeat)}</td>
+                <td class="num" data-label="Heating degree days">{fmtInt(c.hdd18)}</td>
+                <td class="num" data-label="Nights below −20°C">{c.nightsBelowMinus20 == null ? '—' : c.nightsBelowMinus20.toFixed(1)}</td>
+                <td class="num" data-label="Seasonal COP, cold-climate">{fmt1(k.band.coldClimate)} <span class="sub">standard {fmt1(k.band.standard)}</span></td>
+                <td class="num" data-label="Heat pump cost per GJ">{k.elecPerGJ ? `$${(k.elecPerGJ / k.band.coldClimate).toFixed(2)}` : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote">
+        Design temperatures: HOT2000 weather files (NRCan). Degree days and cold nights: Environment and Climate Change Canada 1991–2020 normals.
+        Seasonal COP: {COP_NOTE}
+      </p>
+    </section>
+
+    <section id="costs" class="sec">
+      <h2>What heat costs to run{main ? ` in ${main.name}` : ''}</h2>
+      {costs && main ? (
+        <>
+          <p class="sec-intro">
+            Cost per gigajoule of heat delivered into the house, at prices current on {fmtDate(PRICES_CA_AS_OF)}, using the marginal price of
+            electricity an electrically heated home pays in winter. A typical older house in a cold province uses 60 to 120 GJ of heat a year.
+            {breakEvenLine}
+          </p>
+          <CostTable rows={costs.rows} market="ca" caption={`Delivered heat cost by fuel in ${main.name}`} />
+          <p class="tnote">Prices and their sources are on our <a href="/ca/calculators/energy-costs/">energy cost calculator</a>, which works the numbers for your own home.</p>
+        </>
+      ) : (
+        <p>We don't have price data for this region yet.</p>
+      )}
+    </section>
+
+    <section id="rebates" class="sec">
+      <h2>Heat pump rebates in {place}</h2>
+      <p class="sec-intro">
+        Every heat pump program we found, with the equipment rule that decides which models qualify. Checked against each program's own page on {HP_CHECKED}.
+        {usesNrcan ? " Most rebates here use NRCan's Eligible Products List: check the exact pairing there before you sign." : ''}
+      </p>
+      {progs.length ? (
+        <div class="cards">{progs.map((p) => <RebateCard p={p} />)}</div>
+      ) : (
+        <p>No heat pump program found in our check.</p>
+      )}
+      <h3 class="sub-h">Federal programs</h3>
+      <div class="cards">
+        {fed.map((p) => (
+          <article class="card c">
+            <h3><a href={`/ca/programs/${p.slug}/`}>{p.name}</a></h3>
+            <p class="muted">{(p as any).headline}</p>
+          </article>
+        ))}
+      </div>
+      {guides.length > 0 && (
+        <>
+          <h3 class="sub-h">Our full program guides</h3>
+          <div class="pills">{guides.map((g) => <a href={`/ca/programs/${g.slug}/`}>{g.name}</a>)}</div>
+        </>
+      )}
+      <p class="tnote"><a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan's Eligible Products List&nbsp;↗</a></p>
+    </section>
+
+    <section id="systems" class="sec">
+      <h2>Systems that suit {place === 'the North' ? 'northern' : `${r.name}`} winters</h2>
+      <p class="sec-intro">
+        The certified systems that heat most efficiently at −15°C (5°F) on current refrigerants, from ENERGY STAR's Canadian listings. Rows marked
+        "Meets NRCan's −15°C thresholds" are the ones to check on NRCan's list for {usesNrcan ? 'the rebates here' : 'federal and most provincial rebates'}.
+        {coldest != null && coldest < -25 ? ` With design temperatures near ${fmtT(coldest)}, ask for the maker's capacity tables below −15°C and plan the backup heat.` : ''}
+      </p>
+      <h3 class="sub-h">Mini-splits and multi-splits</h3>
+      <ModelTable rows={L.coldDuctless.slice(0, 8)} market="ca" caption={`Cold-climate mini-splits for ${r.name}`} showBrand />
+      <h3 class="sub-h">Central systems, 2 tons and up</h3>
+      <ModelTable rows={L.coldDucted.slice(0, 8)} market="ca" caption={`Cold-climate central heat pumps for ${r.name}`} showBrand />
+    </section>
+
+    <section id="brands" class="sec">
+      <h2>Brands with the most {usesNrcan ? 'rebate-ready' : 'cold-climate'} models</h2>
+      <p class="sec-intro">
+        {usesNrcan
+          ? "Outdoor models whose ENERGY STAR ratings meet NRCan's −15°C thresholds, by brand."
+          : 'Outdoor models that meet ENERGY STAR Cold Climate, by brand.'} Each brand page has the warranty, lines and best models.
+      </p>
+      <div class="tablewrap card">
+        <table class="stack dt">
+          <caption class="sr-only">Brands by cold-climate model count</caption>
+          <thead><tr><th scope="col">Brand</th><th scope="col" class="num">{usesNrcan ? 'Meet NRCan thresholds' : 'ENERGY STAR Cold Climate'}</th><th scope="col" class="num">All certified models</th><th scope="col">Price tier</th></tr></thead>
+          <tbody>
+            {ranked.map(({ s, st }) => (
+              <tr>
+                <td class="brand-cell"><a href={brandHref('ca', s)}>{brandInfo(s).name}</a></td>
+                <td class="num" data-label={usesNrcan ? 'Meet NRCan thresholds' : 'ENERGY STAR Cold Climate'}>{fmtInt(usesNrcan ? st.nrcanLikeOutdoorModels : st.coldOutdoorModels)}</td>
+                <td class="num" data-label="All certified models">{fmtInt(st.outdoorModels)}</td>
+                <td data-label="Price tier">{tierLabel(brandInfo(s).priceTier)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote"><a href="/ca/heat-pumps/">Compare every brand</a> · <a href="/ca/heat-pumps/brands/">All {fmtInt(brandsBySize('ca').length)} brand pages and every certified name</a></p>
+    </section>
+
+    <div class="lf-wrap">
+      <QuoteForm market="ca" region={r.slug === 'ontario' ? 'ontario' : r.slug} context={`region-${r.slug}`} heading={`Get heat pump quotes in ${place}`} />
+    </div>
+
+    <section class="related">
+      <h2>Other provinces and territories</h2>
+      <div class="nb">
+        {CA_REGIONS.filter((x) => x.slug !== r.slug).map((x) => <a href={`/ca/heat-pumps/${x.slug}/`}>{x.name}</a>)}
+        <a class="all" href={`/ca/provinces/${r.slug}/`}>Everything else in {place} →</a>
+      </div>
+    </section>
+  </div>
+</Base>

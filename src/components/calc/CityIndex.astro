@@ -13,7 +13,7 @@ const groups = citiesByProvince();
       <h3>{g.provName}</h3>
       <ul>
         {g.cities.map((c) => (
-          <li><a href={`/calculators/${calc}/${c.slug}/`} aria-current={c.slug === current ? 'page' : undefined}>{cityName(c)}</a></li>
+          <li><a href={`/ca/calculators/${calc}/${c.slug}/`} aria-current={c.slug === current ? 'page' : undefined}>{cityName(c)}</a></li>
         ))}
       </ul>
     </div>

@@ -1,0 +1,148 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import TestStateTable from '../../../components/us/TestStateTable.astro';
+import TestGear from '../../../components/us/TestGear.astro';
+import { S, moldStateRows, otherMoldStates } from '../../../lib/us/tests';
+
+const src = {
+  epa: S('mold', 'Brief Guide'),
+  eli: S('mold', 'Mold Excerpt'),
+  tx: S('mold', 'Mold FAQ'),
+  fl: S('mold', 'Mold-Related Services'),
+  ny: S('mold', 'Mold Program'),
+  la: S('mold', 'LSLBC'),
+  dc: S('mold', 'Mold Professional Licensing'),
+};
+
+const rows = moldStateRows();
+const licensed = rows.filter((r) => r.status === 'yes').length;
+
+const faqs = [
+  {
+    q: 'Should I get a mold test?',
+    a: 'Usually not, if you can see the mold. EPA says sampling is usually unnecessary when mold is visible, and because there are no federal limits for mold or spores, a sample can’t show that your home meets any standard. Surface sampling can help confirm an area was cleaned, and should be done by experienced professionals.',
+    src: [src.epa],
+  },
+  {
+    q: 'Can I clean up mold myself?',
+    a: 'If the moldy area is less than about 10 square feet (roughly 3 feet by 3 feet), EPA says you can usually handle it yourself. For larger areas or significant water damage, follow EPA’s guide “Mold Remediation in Schools and Commercial Buildings.”',
+    src: [src.epa],
+  },
+  {
+    q: 'Can I paint or caulk over mold?',
+    a: 'No. EPA says not to paint or caulk over mold. Fix the water problem, dry everything, scrub hard surfaces with detergent and water, and throw out porous materials such as ceiling tiles or carpet that stay moldy.',
+    src: [src.epa],
+  },
+  {
+    q: 'Do I need a licensed mold company?',
+    a: 'It depends on the state. Texas, Florida, New York, Louisiana and DC license mold professionals in some form; Virginia and New Hampshire require national certifications for certain work; Connecticut and Tennessee cover remediation under general contractor rules. We found no mold licensing law in the other jurisdictions we checked. See the table on this page.',
+    src: [src.eli],
+  },
+  {
+    q: 'Can the company that tests for mold also fix it?',
+    a: 'Not in every state. In Texas, one licensee may not do both assessment and remediation on the same project; New York and Louisiana bar the same person or contractor from doing both on one property.',
+    src: [src.tx, src.ny, src.la],
+  },
+];
+
+const sources = [src.epa, src.eli, src.tx, src.fl, src.ny, src.la, src.dc];
+---
+
+<TestPage
+  slug="mold-iaq"
+  title="Mold testing in US homes: why EPA says fix the moisture first | AuditYourHome"
+  description="There are no federal limits for mold, and EPA says sampling is usually unnecessary when you can see it. Cleanup steps, the 10 sq ft guide and state licensing rules."
+  heroTitle="Mold: fix the water first, then decide whether testing tells you anything"
+  glance={[
+    { k: 'Federal mold limit', v: 'None', src: src.epa, srcLabel: 'EPA' },
+    { k: 'Usually DIY if under', v: 'About 10 sq ft', src: src.epa, srcLabel: 'EPA' },
+    { k: 'Sampling visible mold', v: 'Usually unnecessary', src: src.epa, srcLabel: 'EPA' },
+    { k: 'State license laws', v: `${licensed} of ${rows.length} jurisdictions checked`, src: src.eli, srcLabel: 'ELI database' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Chasing a damp or musty problem?"
+  leadSub="Email us your ZIP code and what you’re seeing. A person reads every message and replies with the certified auditors and, where your state licenses them, mold professionals who serve your area."
+>
+  <Fragment slot="lede">
+    EPA doesn’t regulate mold in indoor air, and there are no federal limits for mold or spores, so a
+    mold test can’t tell you whether your home “passes.” What matters is the water problem feeding
+    it, and the cleanup.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="what-h">
+    <h2 id="what-h">What testing can and can’t tell you</h2>
+    <p>
+      Because there are no federal limits, sampling can’t show that a home meets any federal standard.
+      EPA says sampling is usually unnecessary when mold is visible. Surface sampling can help confirm
+      that an area was cleaned, and should be done by experienced professionals.
+    </p>
+    <TestCite src={src.epa} labels={['EPA, mold, moisture and your home (updated Feb 18, 2026)']} />
+  </section>
+
+  <section class="sec" aria-labelledby="clean-h">
+    <h2 id="clean-h">Cleanup, the EPA way</h2>
+    <ol class="steps">
+      <li>
+        <h3>Fix the water problem</h3>
+        <p>Stop the leak or the source of dampness before anything else.</p>
+      </li>
+      <li>
+        <h3>Dry everything</h3>
+        <p>Get wet materials and the area dry before cleaning.</p>
+      </li>
+      <li>
+        <h3>Scrub hard surfaces, toss what stays moldy</h3>
+        <p>Use detergent and water on hard surfaces. Throw out porous materials such as ceiling tiles or carpet that stay moldy.</p>
+      </li>
+      <li>
+        <h3>Don’t paint or caulk over it</h3>
+        <p>EPA says not to paint or caulk over mold.</p>
+      </li>
+      <li>
+        <h3>Know when it’s too big for DIY</h3>
+        <p>Under about 10 sq ft (roughly 3 ft by 3 ft), you can usually handle it yourself. For larger areas or significant water damage, follow EPA’s “Mold Remediation in Schools and Commercial Buildings.”</p>
+      </li>
+    </ol>
+    <TestCite src={src.epa} labels={['EPA, mold, moisture and your home']} />
+  </section>
+
+  <section class="sec" aria-labelledby="state-h">
+    <h2 id="state-h">State licensing</h2>
+    <p class="small measure">
+      Does the state require a license or a named credential to assess or remediate mold? Illinois has a
+      law authorizing a registration program, but none was confirmed operating, so it isn’t counted.
+      Kentucky sets minimum practices for remediation companies but has no license.
+    </p>
+    <TestStateTable
+      rows={rows}
+      caption="Mold licensing, 20 jurisdictions"
+      statusHead="Credential required?"
+      statusLabels={{ yes: 'Required', no: 'None found' }}
+      id="state-rules"
+    />
+    <h3>Other states with mold rules</h3>
+    <TestStateTable rows={otherMoldStates()} caption="Mold rules found outside the 20" />
+    <TestCite src={src.eli} labels={['ELI state mold law database (laws through June 2026)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="help-h">
+    <h2 id="help-h">Getting help, and what it costs</h2>
+    <ul>
+      <li>In a state that licenses mold work, use licensed assessors and remediators. Texas assessors must give clients a Consumer Mold Information Sheet.</li>
+      <li>In DC rentals, landlords must use licensed assessors and remediators for mold areas of 10 sq ft or more.</li>
+      <li>Where no license exists, ask what standard the remediator follows. Virginia’s law names EPA’s “Mold Remediation in Schools and Commercial Buildings” and ANSI/IICRC S520.</li>
+      <li>No official source publishes typical prices for mold assessment or remediation, so we don’t quote one.</li>
+    </ul>
+    <TestCite src={[src.tx, src.dc, S('mold', '59.1-200')]} labels={['Texas TDLR mold FAQ', 'DC DOEE mold licensing', 'Va. Code 59.1-200(A)(81)']} />
+  </section>
+
+  <TestGear
+    cats={[
+      { slug: 'dehumidifiers-hygrometers', label: 'Dehumidifiers & hygrometers' },
+      { slug: 'air-quality-monitors', label: 'Indoor air quality monitors' },
+      { slug: 'air-purifiers', label: 'Air purifiers (HEPA)' },
+    ]}
+  />
+</TestPage>

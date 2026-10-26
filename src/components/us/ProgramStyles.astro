@@ -1,0 +1,91 @@
+---
+/**
+ * Layout pieces shared by the /us/programs/ pages. Global so every page and component in the
+ * section can use them; only pages that render this component load it, and every class is
+ * prefixed "up-" so nothing else on the site is affected.
+ */
+---
+
+<style is:global>
+  .up-sec { margin: 38px 0 12px; font-size: 25px; }
+  .up-sub { margin: 26px 0 10px; font-size: 19px; }
+  .up-grp { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin: 40px 0 10px; font-size: 22px; }
+  .up-grp .n { font-family: var(--mono); font-size: 14px; color: var(--faint); font-weight: 600; }
+  .up-intro { font-size: 15.5px; color: var(--muted); margin: 0 0 16px; max-width: 70ch; }
+  .up-prose p { font-size: 16px; }
+  .up-prose p:last-child { margin-bottom: 0; }
+
+  .up-note { border-left: 4px solid var(--steel); margin: 18px 0; }
+  .up-note h3, .up-note h4 { margin-bottom: 8px; }
+  .up-note p { font-size: 15px; }
+  .up-note p:last-child, .up-warn p:last-child { margin-bottom: 0; }
+  .up-warn { border-left: 4px solid var(--warn); margin: 18px 0; }
+  .up-warn h3 { margin-bottom: 10px; }
+  .up-note .up-meta, .up-warn .up-meta, .up-prose .up-meta { font-size: 12px; }
+  .up-ext, .up-nw { white-space: nowrap; }
+
+  .up-list { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+  .up-list li { padding-left: 2px; }
+  .up-list .meta a, .up-ext, .up-meta a { color: var(--heat-deep); text-decoration: none; }
+  .up-list .meta a:hover, .up-ext:hover, .up-meta a:hover { text-decoration: underline; }
+  .up-meta { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: 0.02em; margin: 0; }
+
+  .up-steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 10px; }
+  .up-steps li { position: relative; padding: 13px 16px 13px 56px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .up-steps li::before {
+    counter-increment: s; content: counter(s); position: absolute; left: 15px; top: 12px; width: 27px; height: 27px;
+    border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600;
+    display: grid; place-items: center; font-size: 13.5px;
+  }
+  .up-steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .up-steps strong { color: var(--ink); }
+
+  /* dated list of changes */
+  .up-tl { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line-strong); }
+  .up-tl li { position: relative; padding: 0 0 18px 22px; display: grid; grid-template-columns: 158px minmax(0, 1fr); gap: 2px 18px; }
+  .up-tl li:last-child { padding-bottom: 2px; }
+  .up-tl li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--heat); }
+  .up-tl .d { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--heat-deep); padding-top: 3px; }
+  .up-tl .t { font-size: 15px; color: var(--ink); }
+  .up-tl .t .up-ext { white-space: nowrap; }
+  @media (max-width: 640px) { .up-tl li { grid-template-columns: 1fr; } }
+
+  /* key facts as label/value rows */
+  .up-kv { display: grid; grid-template-columns: minmax(96px, max-content) minmax(0, 1fr); gap: 8px 16px; margin: 0; font-size: 14.5px; }
+  .up-kv dt { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .up-kv dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+  @media (max-width: 520px) { .up-kv { grid-template-columns: 1fr; gap: 2px; } .up-kv dd { margin-bottom: 8px; } }
+
+  .up-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 14px 0 6px; }
+  .up-fig { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+  .up-fig .v { font-family: var(--display); font-weight: 800; font-size: 24px; color: var(--pine); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .up-fig .l { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+
+  .up-related { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 26px; }
+  .up-also { font-size: 13.5px; color: var(--muted); margin: 18px 0 26px; line-height: 1.9; }
+  .up-counts { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 6px 0 16px; font-size: 14px; color: var(--muted); }
+  .up-counts a { color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 7px; }
+  .up-counts a:hover { color: var(--ink); }
+
+  .up-metros { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 14px 0 8px; }
+  .up-metro { display: grid; gap: 2px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .up-metro:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .up-metro .n { font-family: var(--display); font-weight: 700; font-size: 16px; }
+  .up-metro .s { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  @media (max-width: 640px) {
+    .up-metros { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .up-metro { padding: 10px 12px; }
+    .up-metro .n { font-size: 15px; line-height: 1.25; }
+  }
+
+  .up-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .up-two { grid-template-columns: 1fr; } }
+  .up-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  @media (max-width: 960px) { .up-three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .up-three { grid-template-columns: 1fr; } }
+
+  .up-hero-meta { margin-top: 4px; }
+  .up-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .up-lf { margin: 34px 0 10px; }
+  @media (max-width: 640px) { .up-sec { font-size: 22px; } .up-grp { font-size: 19px; } }
+</style>

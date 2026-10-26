@@ -1,0 +1,136 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  j: S('loadCalculation', 'Manual J Residential Load Calculation'),
+  s: S('loadCalculation', 'Manual S'),
+  d: S('loadCalculation', 'Manual D'),
+  code: S('loadCalculation', '2018 Model Code References'),
+  field: S('loadCalculation', 'Field Study'),
+};
+
+const faqs = [
+  {
+    q: 'Is a Manual J required when I replace my furnace, heat pump or AC?',
+    a: 'It depends on what your jurisdiction has adopted. As quoted by ACCA from the 2018 codes, IRC M1401.3 and IECC R403.7 (IRC N1103.7) require heating and cooling equipment to be sized per Manual S based on Manual J loads, or by another approved method, and DOE’s 2021 IECC field-study checklist confirms R403.7 carries into the 2021 IECC. These apply only where the codes are adopted, and local amendments may change them. Your local building department can tell you what applies.',
+    src: [src.code, src.field],
+  },
+  {
+    q: 'What’s the difference between Manual J, S and D?',
+    a: 'Manual J calculates the home’s heating and cooling loads. Manual S uses those loads to select and size the equipment. Manual D designs the duct system to deliver the air.',
+    src: [src.j, src.s, src.d],
+  },
+  {
+    q: 'What’s new in Manual S?',
+    a: 'The current Manual S is the 3rd Edition, Version 1.02 (ANSI/ACCA 3 Manual S-2023, with Addenda A and B from 2024). It’s new since 2023 and covers heating, cooling, dehumidification and humidification equipment.',
+    src: [src.s],
+  },
+  {
+    q: 'What does a Manual J calculation cost?',
+    a: 'No official source publishes a price, so we don’t quote one. Ask HVAC contractors whether a Manual J report comes with the quote.',
+  },
+];
+
+const sources = [src.j, src.s, src.d, src.code, src.field];
+---
+
+<TestPage
+  slug="heat-loss-calc"
+  title="Manual J load calculation: sizing heating and cooling the ACCA way | AuditYourHome"
+  description="ACCA Manual J calculates a home’s heating and cooling loads, Manual S picks the equipment and Manual D designs the ducts. What each covers and when US codes require them."
+  heroTitle="Manual J, S and D: the math behind a right-sized heating and cooling system"
+  glance={[
+    { k: 'Loads', v: 'ACCA Manual J, 8th Ed.', src: src.j, srcLabel: 'ACCA' },
+    { k: 'Equipment', v: 'Manual S (2023)', src: src.s, srcLabel: 'ACCA' },
+    { k: 'Ducts', v: 'Manual D (2016)', src: src.d, srcLabel: 'ACCA' },
+    { k: 'Code section', v: 'IECC R403.7', src: src.code, srcLabel: 'ACCA code references' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Getting quotes for new heating or cooling?"
+  leadSub="Email us your ZIP code and what you’re replacing. A person reads every message and replies with certified auditors and programs that serve your area."
+>
+  <Fragment slot="lede">
+    Before anyone sizes a new furnace, heat pump or air conditioner, there’s a standard way to work out
+    how much heating and cooling the house needs. ACCA Manual J calculates the loads, Manual S picks
+    equipment to match them, and Manual D designs the ducts. Where the model codes are adopted, they
+    require the sizing to follow Manual S and Manual J, or another approved method.
+  </Fragment>
+
+  <section class="sec" aria-labelledby="three-h">
+    <h2 id="three-h">Three manuals, three jobs</h2>
+    <div class="std-grid">
+      <div class="std heat">
+        <p class="sv">Manual J</p>
+        <p class="sl">Heating and cooling loads</p>
+        <p>8th Edition (ANSI/ACCA 2 Manual J-2016), the ANSI-recognized method for residential loads. ACCA says codes and most state and local jurisdictions require a Manual J load calculation.</p>
+        <TestCite src={src.j} labels={['ACCA Manual J']} />
+      </div>
+      <div class="std">
+        <p class="sv">Manual S</p>
+        <p class="sl">Choosing and sizing equipment</p>
+        <p>3rd Edition, Version 1.02 (ANSI/ACCA 3 Manual S-2023, with Addenda A and B 2024), new since 2023. Covers heating, cooling, dehumidification and humidification equipment.</p>
+        <TestCite src={src.s} labels={['ACCA Manual S']} />
+      </div>
+      <div class="std pine">
+        <p class="sv">Manual D</p>
+        <p class="sl">Duct design</p>
+        <p>3rd Edition (ANSI/ACCA 1 Manual D-2016), for designing the duct system.</p>
+        <TestCite src={src.d} labels={['ACCA Manual D']} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec prose" aria-labelledby="code-h">
+    <h2 id="code-h">When codes require it</h2>
+    <p>As quoted by ACCA from the 2018 model codes:</p>
+    <ul>
+      <li><strong>IRC M1401.3 and IECC R403.7 / IRC N1103.7 (mandatory):</strong> heating and cooling equipment sized per Manual S based on Manual J loads, or other approved methods.</li>
+      <li><strong>IRC M1601.1:</strong> duct systems built per Manual D, the manufacturer’s instructions or other approved methods.</li>
+    </ul>
+    <p>
+      DOE’s 2021 IECC field-study checklist confirms R403.7 carries into the 2021 IECC. The 2021 IRC
+      text wasn’t opened, so the M1401.3 and M1601.1 wording above is the 2018 version. All of this
+      applies only where a jurisdiction has adopted these codes, and local amendments may change it.
+    </p>
+    <TestCite src={[src.code, src.field]} labels={['ACCA 2018 model code references', 'DOE 2021 IECC field-study forms']} />
+  </section>
+
+  <section class="sec" aria-labelledby="get-h">
+    <h2 id="get-h">How to get it done</h2>
+    <ol class="steps">
+      <li>
+        <h3>Ask for the calculation with the quote</h3>
+        <p>Ask each HVAC contractor for the Manual J load report, the Manual S equipment selection and, if ducts are changing, the Manual D design.</p>
+      </li>
+      <li>
+        <h3>Compare the equipment to the load</h3>
+        <p>Manual S selects equipment from the Manual J loads, so the quoted capacity should trace back to the calculation.</p>
+      </li>
+      <li>
+        <h3>Do envelope work first, or tell them about it</h3>
+        <p>If air sealing or insulation is planned, ask for the calculation to reflect the house as it will be, since the loads set the equipment size.</p>
+      </li>
+    </ol>
+    <p class="measure">
+      What it costs: no official source publishes a price for a Manual J calculation, so we don’t
+      quote one.
+    </p>
+    <ul class="linkrow">
+      <li><a href="/us/find/">Find a certified auditor</a></li>
+      <li><a href="/us/programs/">Rebates and programs</a></li>
+    </ul>
+    <TestCite src={[src.j, src.s, src.d]} labels={['ACCA Manual J', 'ACCA Manual S', 'ACCA Manual D']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If the quote and the calculation don’t line up</h2>
+    <ul>
+      <li>Ask the contractor to show how the equipment was selected from the loads under Manual S.</li>
+      <li>If the ducts are part of the job, ask whether they were designed to Manual D; leaky ducts are a separate problem a <a href="/us/tests/duct-leakage/">duct leakage test</a> measures.</li>
+      <li>Get a second quote with its own load calculation if the answers don’t hold up.</li>
+    </ul>
+  </section>
+</TestPage>

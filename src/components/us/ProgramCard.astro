@@ -1,0 +1,53 @@
+---
+/**
+ * A federal program on the US tracker: status chip with its wording, a short body (slot), the
+ * official sources and the date they were checked.
+ */
+import type { Chip, Source } from '../../lib/us/programs';
+import ProgramStatus from './ProgramStatus.astro';
+
+interface Props {
+  title: string;
+  /** our guide page for this program, if there is one */
+  href?: string;
+  cta?: string;
+  chip: Chip;
+  /** status wording shown beside the chip */
+  status: string;
+  /** official sources, with short labels */
+  sources: Source[];
+  verified: string;
+  id?: string;
+}
+const { title, href, cta = 'Full guide', chip, status, sources, verified, id } = Astro.props;
+---
+
+<article class={`card card-pad fpc s-${chip.status}`} id={id}>
+  <h3>{href ? <a href={href}>{title}</a> : title}</h3>
+  <ProgramStatus text={status} chip={chip} />
+  <div class="fbody"><slot /></div>
+  <p class="up-meta fmeta">
+    {sources.map((s, i) => (
+      <>{i > 0 && ' · '}<a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></>
+    ))}
+    <span> · verified {verified}</span>
+  </p>
+  {href && <a class="fmore" href={href}>{cta} →</a>}
+</article>
+
+<style>
+  .fpc { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .fpc.s-open { border-left: 4px solid var(--pine); }
+  .fpc.s-limited { border-left: 4px solid var(--warn); }
+  .fpc.s-closed { border-left: 4px solid var(--dead); }
+  .fpc.s-not-open, .fpc.s-unknown { border-left: 4px solid var(--steel); }
+  h3 { margin: 0; font-size: 18.5px; }
+  h3 a { color: var(--ink); text-decoration: none; }
+  h3 a:hover { color: var(--heat-deep); }
+  .fbody :global(p) { margin: 0 0 8px; font-size: 14.5px; color: var(--ink); }
+  .fbody :global(p:last-child) { margin-bottom: 0; }
+  .fbody :global(ul) { margin: 0; padding-left: 18px; font-size: 14.5px; display: grid; gap: 4px; }
+  .fmeta { margin-top: auto; padding-top: 4px; line-height: 1.7; }
+  .fmore { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--heat-deep); text-decoration: none; }
+  .fmore:hover { text-decoration: underline; }
+</style>

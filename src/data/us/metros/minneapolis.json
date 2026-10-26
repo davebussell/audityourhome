@@ -1,0 +1,336 @@
+{
+  "slug": "minneapolis",
+  "name": "Minneapolis–St. Paul",
+  "metroName": "Minneapolis-St. Paul-Bloomington, MN-WI Metropolitan Statistical Area",
+  "states": [
+    "MN",
+    "WI"
+  ],
+  "principalCity": "Minneapolis, MN",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Xcel Energy (Minnesota)",
+        "serves": "Electric service for Minneapolis, St. Paul and much of the metro. Xcel's Minnesota programs list service providers for both 'the St. Paul area' and 'Minneapolis'.",
+        "url": "https://mn.my.xcelenergy.com/s/billing-payment/energy-assistance/income-qualified-home-energy-savings"
+      }
+    ],
+    "gas": [
+      {
+        "name": "CenterPoint Energy (Minnesota gas)",
+        "serves": "The main natural gas utility for Minneapolis and much of the metro. CenterPoint's Minnesota rebates are 'for Minnesota gas customers'.",
+        "url": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency"
+      },
+      {
+        "name": "Xcel Energy (natural gas)",
+        "serves": "Natural gas in parts of the metro. Xcel's Minnesota gas rebates require 'residential natural gas service with Xcel Energy'. The gas utility varies by address, so check your bill.",
+        "url": "https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/24-01-506_MN-Res_HVAC_OpenPrgms_app.pdf"
+      }
+    ],
+    "notes": "Rebate eligibility depends on which utility supplies your heating fuel. Xcel insulation rebates pay the highest tier only to customers who heat with Xcel electricity or Xcel gas; Xcel-electric homes with central AC that heat with another utility's gas get a much smaller cooling-only tier. Home Energy Squad is open to anyone in Minnesota with a CenterPoint or Xcel account. Electric co-ops and municipal utilities serve some suburbs (the state benchmarking rule refers to buildings 'served by an investor-owned utility'); they were not checked individually. On the Wisconsin side (Pierce and St. Croix counties), utilities were not checked."
+  },
+  "auditPrograms": [
+    {
+      "name": "Home Energy Squad (Energy Planner and Energy Saver visits)",
+      "runBy": "Xcel Energy and CenterPoint Energy, delivered by Center for Energy and Environment (CEE) in Hennepin, Ramsey, Washington and Dakota (without CenterPoint gas) counties and by ICF elsewhere",
+      "cost": "The Energy Planner visit (homes built before 2000) costs $100. The Energy Saver visit (homes built in 2000 or later, mobile homes, condos, renters) costs $70. Energy Saver visits are free for income-qualified households below 80% AMI; CEE's limits are $73,650 for 1 person, $105,200 for 4 and $138,900 for 8. Some cities pay part or all of the fee. 'Minneapolis pays the full cost of HES visits for all households while funds last.' Edina pays for households under $100,000, and Minnetonka and St. Louis Park pay for households under 80% AMI. Hopkins' free-visit offer ran only 'through September 30, 2026'. Saint Paul is not on CEE's reduced-cost city list.",
+      "whoQualifies": "'Any resident of Minnesota with a CenterPoint Energy or Xcel Energy account', owners or renters.",
+      "whatYouGet": "A 2-3 hour visit. The crew installs energy-saving materials: LED bulbs (Xcel electric customers), door and attic-hatch weather-stripping, a programmable or smart thermostat if compatible, and efficient showerheads and aerators. They check and adjust the water heater temperature and inspect attic and wall insulation. The Energy Planner visit adds blower-door air-leak measurement and a safety test of the heating system and water heater. Afterward a free CEE Energy Advisor helps with contractors, rebates and financing. Virtual visits are also offered.",
+      "howToBook": "Book online at mncee.org/home-energy-squad, call 651-328-6220, or email HESScheduling@mncee.org.",
+      "url": "https://www.mncee.org/home-energy-squad",
+      "status": "Open year-round as of 2026-10-12. Minneapolis's free-visit funding is 'while funds last'.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Xcel Energy Income-Qualified Home Energy Savings Program",
+      "runBy": "Xcel Energy, delivered by Sustainable Resources Center (Minneapolis and greater Minnesota) and Energy CENTS Coalition (St. Paul area)",
+      "cost": "Free",
+      "whoQualifies": "Income-qualified Xcel electric or natural gas customers, homeowners or renters, in 1-4 unit buildings, with household income at or below 80% AMI per HUD limits",
+      "whatYouGet": "Free advice from energy experts and free improvements, including weatherization and replacement of older appliances",
+      "howToBook": "Minneapolis and greater Minnesota: Sustainable Resources Center, 612-870-4255. St. Paul area: Energy CENTS Coalition, 651-774-9010 or 888-774-9070. Xcel's page lists which provider serves which city.",
+      "url": "https://mn.my.xcelenergy.com/s/billing-payment/energy-assistance/income-qualified-home-energy-savings",
+      "status": "Listed as available as of 2026-10-12. No dates are given.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "CenterPoint Energy HERO (Homeowner Efficiency Redo Opportunity)",
+      "runBy": "CenterPoint Energy",
+      "cost": "The energy review is free. 'CenterPoint will pay at least 50% of the cost of recommended improvements.'",
+      "whoQualifies": "Owner-occupied single-family homes in CenterPoint's Minnesota service area with household income at or below 80% AMI",
+      "whatYouGet": "A free energy review (detailed attic evaluation, carbon monoxide leak check, thermal imaging and infrared scanning), then at least 50% of the cost of recommended insulation and heating repairs or replacements",
+      "howToBook": "Online at mn-hero.com, call 833-202-3656, or email info@CenterPointHERO.com.",
+      "url": "https://www.mn-hero.com/",
+      "status": "Accepting sign-ups as of 2026-10-12. No dates are given.",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Xcel Energy insulation and air sealing rebates (Minnesota)",
+      "runBy": "Xcel Energy",
+      "category": "insulation-air-sealing",
+      "amount": "For customers who heat with Xcel electricity or gas: air sealing 40% of cost up to $600 (at least a 15% CFM50 reduction); attic insulation 40% up to $1,200 (from R-19 or less to R-49 or more); wall insulation 40% up to $1,200 (empty cavity to R-11 or more). Cooling-only customers get up to $45, $120 and $75 for the same measures. A $600 bonus applies when qualifying insulation and air sealing and a qualifying space-heating heat pump are installed within 2 years of each other.",
+      "whoQualifies": "Existing 1-4 unit homes, including rentals. Work must be done by a participating contractor with blower-door tests before and after; self-installs don't qualify.",
+      "status": "Open. Applications are due by September 30 of the year after the work is done. One attic, wall and air-sealing rebate per calendar year.",
+      "url": "https://mn.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "CenterPoint Energy air sealing and insulation rebates (Minnesota)",
+      "runBy": "CenterPoint Energy",
+      "category": "insulation-air-sealing",
+      "amount": "Attic air sealing only $750. Attic air sealing plus attic insulation (from R-30 or lower to R-49 or higher) $1,300. Wall insulation (from R-5 or less to R-11 or more) $1,500. Rim joist $200, only as an add-on. Combined rebates up to $3,000.",
+      "whoQualifies": "Minnesota CenterPoint gas customers. A rebate-eligible installer must do the work, with blower-door testing before and after. Attic insulation alone earns no rebate.",
+      "status": "Open. Rebates must be submitted by December 31 of the year of installation.",
+      "url": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/air-sealing-insulation",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Xcel Energy heat pump rebates (Minnesota)",
+      "runBy": "Xcel Energy",
+      "category": "heat-pump",
+      "amount": "From Xcel's Minnesota 2025-2026 Rebate Summary (form 26-04-601, 'Effective Jan. 1, 2025'). Ducted or mixed-ducted air-source heat pump at 15.2 SEER2, 9.6 EER2 and 7.8 HSPF2: $1,600 for Xcel combination or natural-gas-only customers, $500 for Xcel electric-only customers. Ducted cold-climate heat pump (COP of 1.75 or more at 5°F): $2,000 for combination or gas-only customers, $900 for electric-only. Mini-split: $1,600. Cold-climate mini-split: $2,000. Ground-source: $500 per heating ton. Electrical panel upgrade (higher amperage, certified electrician): up to $1,500.",
+      "whoQualifies": "Minnesota residential Xcel electric and/or gas customers in single-family homes, duplexes and four-plexes. Ducted systems need a Trade Partner Network contractor; mini-splits may be self-installed with AHRI and NEEP documentation. A home with CenterPoint gas counts as 'electric only' for Xcel, so it gets the lower Xcel amount but can add CenterPoint's $1,100 hybrid rebate.",
+      "status": "Open for 2026. 'Invoices and installations must be completed by Dec. 31, 2026, but applications for rebates will be accepted through Sept. 30, 2027.'",
+      "url": "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000A6W2f/n3Pt0UyBVKUXs_OoLdTt0myfgOCAQ_NV3f0MMGXy5To",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "CenterPoint Energy ducted air-source heat pump rebate (hybrid with gas furnace)",
+      "runBy": "CenterPoint Energy",
+      "category": "heat-pump",
+      "amount": "$1,100 in an existing home. The heat pump must be HSPF2 7.8 or higher and paired with a gas furnace of 92% AFUE or more. New construction gets $400.",
+      "whoQualifies": "Minnesota residential heating customers with CenterPoint gas service. The heat pump must be programmed to switch over at 40°F or lower.",
+      "status": "Open. Applications are due by December 31 of the installation year.",
+      "url": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/ducted-air-source-heat-pump",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "CenterPoint Energy furnace and boiler rebates (Minnesota)",
+      "runBy": "CenterPoint Energy",
+      "category": "appliances",
+      "amount": "Replacement furnace: $1,000 at 97% AFUE or more, $400 at 96-96.9%, $200 at 92-95.9%. Condensing boiler at 91% or more: $500. Standard boiler at 85% or more: $300. Combination boiler, or furnace rated as a combination system, at 91-92% or more: $1,000. New-construction amounts are lower.",
+      "whoQualifies": "CenterPoint natural gas customers. Equipment must be AHRI or ENERGY STAR listed with verified AFUE.",
+      "status": "Open for equipment installed January 1-December 31, 2026. Apply in the same calendar year as installation.",
+      "url": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/heating-systems",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Xcel Energy gas furnace, boiler, water heater and smart thermostat rebates (Minnesota)",
+      "runBy": "Xcel Energy",
+      "category": "appliances",
+      "amount": "Gas furnace in an existing home: $200 at 95%+ AFUE, $300 at 96%+, $400 at 97%+. Gas boiler at 95%+: $400. Gas tankless water heater: $250. Gas storage water heater: $75. Heat pump water heater: $400, or $500 if eligible for demand management. Smart thermostat: $50, plus a $100 bill credit and $25 a year for enrolling in AC Rewards.",
+      "whoQualifies": "Furnace, boiler and gas water heater rebates need Xcel residential gas service. Heat pump and heat pump water heater rebates need Xcel residential electric service.",
+      "status": "Open. Amounts match Xcel's MN 2025-2026 Rebate Summary and the MN HVAC rebate application. Applications are due by September 30 of the year after installation.",
+      "url": "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000A6W2f/n3Pt0UyBVKUXs_OoLdTt0myfgOCAQ_NV3f0MMGXy5To",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Minneapolis Bonus Rebate (Green Cost Share, administered by CEE)",
+      "runBy": "City of Minneapolis Green Cost Share (Climate Legacy Initiative), administered by Center for Energy and Environment",
+      "category": "whole-home",
+      "amount": "Bonus on top of utility rebates, up to $20,000 per property in Green Zones and $6,000 elsewhere (per CEE's current page). Examples, Green Zone vs. elsewhere: attic insulation and air sealing $3,000 vs. $1,300; wall insulation $3,000 vs. $1,500; cold-climate mini-split $5,000 vs. $1,000; heat pump water heater $1,500 vs. $400; panel upgrade $3,000 vs. $800. The City's own page still says 'up to $14,000 if you live in a Green Zone and up to $5,000 if you don't'; this conflicts with CEE and needs confirming.",
+      "whoQualifies": "Owner-occupied or absentee-owned 1-4 unit properties in Minneapolis, including townhomes and condos. Co-ops, manufactured homes and new construction are excluded. The project must qualify for an Xcel or CenterPoint rebate, and a licensed contractor must do the work.",
+      "status": "Open, first come first served, for projects completed after December 15, 2025. Apply after the work is complete.",
+      "url": "https://www.mncee.org/minneapolis-bonus-rebate-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Minneapolis 0% APR energy efficiency loan",
+      "runBy": "City of Minneapolis Green Cost Share partner program (CEE)",
+      "category": "financing",
+      "amount": "0% APR, up to $20,000, terms up to 10 years",
+      "whoQualifies": "Owner-occupied single-family and 2-4 unit properties in Minneapolis with household income under 150% AMI. It covers insulation, air-source heat pumps, heat pump water heaters, gas furnaces or boilers paired with a heat pump, and health and safety fixes that block weatherization.",
+      "status": "Listed as available as of 2026-10-12",
+      "url": "https://www.minneapolismn.gov/government/programs-initiatives/environmental-programs/green-cost-share/energy-efficiency/funding/residential-partners/",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "not launched (as of 2026-10-12). Commerce update dated 6/12/2026: waiting on DOE approval with 'no estimated program launch date'. Wisconsin side of the metro: open (Focus on Energy HOMES and HEAR 'NOW AVAILABLE').",
+    "programName": "Save Energy Minnesota, the umbrella for IRA HEAR, IRA HOMES, the state Residential Heat Pump Rebate and Electrical Panel Upgrade grants",
+    "administrator": "Minnesota Department of Commerce",
+    "summary": "Commerce's page reads: 'Current update (6/12/2026): Save Energy Minnesota has not launched yet. Minnesota is waiting for formal approval from the federal Department of Energy to launch the program. There is no estimated program launch date.' It adds that 'DOE recently issued new program rules and requirements that change how the HEAR & HOMES rebates will work in Minnesota.' Timeline: DOE approved and funded HEAR in late 2024; it partially approved HOMES but awarded no funds; Commerce submitted all pre-launch documents in September 2025. HOMES is described as $2,000 to $8,000 or more per home. The state heat pump rebate (lowest of cost, $4,000, or cost minus other rebates) will launch with Save Energy Minnesota. It requires an energy audit within 18 months, prior HEAR approval, and an approved contractor; there are no retroactive rebates. Eligibility uses 80% and 150% AMI by county. On the Wisconsin side of the metro, Focus on Energy says Wisconsin's HOMES and HEAR are 'NOW AVAILABLE'.",
+    "url": "https://mn.gov/commerce/energy/consumer/energy-programs/save-energy-mn.jsp",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program (WAP)",
+      "runBy": "Minnesota Department of Commerce through local providers. Hennepin (including Minneapolis): Sustainable Resources Center, 612-870-4255. Ramsey (including St. Paul), Washington and Anoka: Community Action Partnership of Ramsey and Washington Counties, 651-482-8260. Dakota, Scott and Carver: Dakota County Community Development Agency, 651-675-4400. Wright: Wright County Community Action, 320-963-6500. Sherburne: Tri-County Action Programs, 320-251-1612. Chisago and Isanti: Lakes and Pines Community Action Council, 320-679-1800.",
+      "summary": "Free upgrades for income-eligible homeowners and renters: wall and attic insulation, air-leak reduction, and furnace, boiler or water heater repair or replacement, starting with a free home energy assessment. Income limit is 200% of federal poverty guidelines (effective January 13, 2026) or LIHEAP eligibility, whichever is greater: $37,439 for 1 person, $71,999 for 4. Apply through the local provider or the joint Energy Assistance/Weatherization application. Help line: 800-657-3710.",
+      "url": "https://mn.gov/commerce/energy/consumer-assistance/wap/"
+    },
+    {
+      "name": "City of Minneapolis Healthy Homes Weatherization",
+      "runBy": "Minneapolis Health Department",
+      "summary": "City-funded insulation, air sealing, furnace, boiler and water heater repair or replacement, bath fans, knob-and-tube and asbestos remediation, based on an energy assessment. As of 2026-10-12: 'Application closed for 2026... The Healthy Homes Weatherization application will reopen in early 2027.' Heating emergencies: 612-916-8121.",
+      "url": "https://www.minneapolismn.gov/resident-services/property-housing/housing/healthy-homes/weatherization-application/"
+    },
+    {
+      "name": "Xcel Energy Income-Qualified Home Energy Savings Program",
+      "runBy": "Xcel Energy with Sustainable Resources Center and Energy CENTS Coalition",
+      "summary": "Free assessment, weatherization and appliance replacement for Xcel customers at or below 80% AMI in 1-4 unit homes.",
+      "url": "https://mn.my.xcelenergy.com/s/billing-payment/energy-assistance/income-qualified-home-energy-savings"
+    },
+    {
+      "name": "CenterPoint Energy HERO",
+      "runBy": "CenterPoint Energy",
+      "summary": "Free energy review plus at least 50% of the cost of recommended weatherization and heating upgrades, for owner-occupied single-family homes at or below 80% AMI.",
+      "url": "https://www.mn-hero.com/"
+    },
+    {
+      "name": "Minneapolis Low Income Rental Efficiency (LIRE)",
+      "runBy": "City of Minneapolis Green Cost Share with CenterPoint Energy",
+      "summary": "For rental property owners. It covers 90% of project cost (50% from CenterPoint, 40% from the City), paid to the contractor, with free energy assessments by Frontier Energy and a free renter efficiency kit.",
+      "url": "https://www.minneapolismn.gov/government/programs-initiatives/environmental-programs/green-cost-share/energy-efficiency/funding/residential-partners/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Minneapolis Truth in Sale of Housing (TISH) energy disclosure",
+      "appliesTo": "Ordinary homeowners selling in Minneapolis: single-family houses, duplexes, townhouses and first-time condo conversions",
+      "summary": "A TISH evaluation is required before you sell ('You must have a full Truth in Housing report before you can show a property'). It includes an energy disclosure report that gives the home a 0-100 energy score based on attic insulation, wall insulation, single-pane windows without storms, and the heating system. 'This report does not require repairs.' Sellers can appeal a wall-insulation check.",
+      "url": "https://www.minneapolismn.gov/resident-services/property-housing/buying-selling/tish/energy-disclosure-report/"
+    },
+    {
+      "name": "Minneapolis Energy Benchmarking",
+      "appliesTo": "Large buildings only: commercial and multifamily properties of 50,000 sq ft or more. Ordinary homeowners are not affected.",
+      "summary": "Owners on the City's 'must comply' lists submit ENERGY STAR Portfolio Manager data by June 1 each year, with a $200 fine for missing the deadline. Low-performing buildings must get an energy evaluation, which the City offers free.",
+      "url": "https://www.minneapolismn.gov/government/programs-initiatives/environmental-programs/energy-benchmarking/must-comply-lists/"
+    },
+    {
+      "name": "Minnesota Large Building Energy Benchmarking (state); Saint Paul's ordinance retired",
+      "appliesTo": "Large buildings only: 50,000 sq ft or more, served by an investor-owned utility in Anoka, Carver, Dakota, Hennepin, Ramsey, Scott or Washington County, plus large cities elsewhere. Multifamily buildings with fewer than 5 units are exempt. Ordinary homeowners are not affected.",
+      "summary": "Owners report whole-building energy use to the State every year. Saint Paul 'discontinued its ordinance in 2025' and lets the State enforce compliance.",
+      "url": "https://www.stpaul.gov/departments/mayors-office/climate-action/energize-saint-paul"
+    }
+  ],
+  "notes": "As of 2026-10-12: (1) Minnesota's IRA rebates (Save Energy Minnesota) have not launched. The 6/12/2026 update says they are waiting on DOE approval with no launch date, and the state heat pump rebate waits with them. Wisconsin's IRA rebates are live through Focus on Energy, which matters only for the metro's Pierce and St. Croix counties. (2) Minneapolis pays the full Home Energy Squad fee for all households while funds last, so Minneapolis is the only core city here where a diagnostic audit is free regardless of income. St. Paul residents pay $70-$100 unless income-qualified. (3) The Minneapolis bonus rebate cap differs between CEE ($20,000 Green Zone / $6,000 elsewhere) and the City page ($14,000 / $5,000). (4) Minneapolis Healthy Homes Weatherization is closed until early 2027. (5) Xcel's web pages tell customers to get heat pump amounts from their contractor. The amounts here come from Xcel's linked Minnesota Rebate Summary PDF (form 26-04-601). mn.gov blocked direct downloads, so the Commerce pages were read through WebFetch only. City of Saint Paul home-energy programs beyond benchmarking weren't found. Saint Paul's climate dashboard points residents to Home Energy Squad. Federal 25C/25D credits ended for property placed in service after 2025 (CEE notes 25C 'was discontinued on December 31, 2025').",
+  "sources": [
+    {
+      "label": "OMB Bulletin 23-01 (July 21, 2023): MSA delineations",
+      "href": "https://www.whitehouse.gov/wp-content/uploads/2023/07/OMB-Bulletin-23-01.pdf"
+    },
+    {
+      "label": "CEE: Home Energy Squad (costs, cities with reduced costs, FAQs)",
+      "href": "https://www.mncee.org/home-energy-squad"
+    },
+    {
+      "label": "Xcel Energy MN: Home Energy Squad",
+      "href": "https://mn.my.xcelenergy.com/s/residential/home-services/home-energy-squad"
+    },
+    {
+      "label": "Xcel Energy MN: Heat Pumps",
+      "href": "https://mn.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps"
+    },
+    {
+      "label": "Xcel Energy MN: Insulation and Air Sealing",
+      "href": "https://mn.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing"
+    },
+    {
+      "label": "Xcel Energy MN: HVAC rebate application form 24-01-506 (PDF)",
+      "href": "https://www.xcelenergy.com/staticfiles/xe-responsive/Programs%20and%20Rebates/Residential/24-01-506_MN-Res_HVAC_OpenPrgms_app.pdf"
+    },
+    {
+      "label": "Xcel Energy MN: 2025-2026 Rebate Summary information sheet (form 26-04-601, PDF)",
+      "href": "https://xcelnew.my.salesforce.com/sfc/p/1U0000011ttV/a/R300000A6W2f/n3Pt0UyBVKUXs_OoLdTt0myfgOCAQ_NV3f0MMGXy5To"
+    },
+    {
+      "label": "Xcel Energy MN: Income-Qualified Home Energy Savings Program",
+      "href": "https://mn.my.xcelenergy.com/s/billing-payment/energy-assistance/income-qualified-home-energy-savings"
+    },
+    {
+      "label": "Xcel Energy MN: Weatherization Assistance",
+      "href": "https://mn.my.xcelenergy.com/s/billing-payment/energy-assistance/weatherization-assistance"
+    },
+    {
+      "label": "CenterPoint Energy: Energy efficiency programs (Minnesota)",
+      "href": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency"
+    },
+    {
+      "label": "CenterPoint Energy: Air sealing and insulation rebates",
+      "href": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/air-sealing-insulation"
+    },
+    {
+      "label": "CenterPoint Energy: Heating rebates",
+      "href": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/heating-systems"
+    },
+    {
+      "label": "CenterPoint Energy: Ducted Air Source Heat Pump rebate",
+      "href": "https://www.centerpointenergy.com/en-us/savings-solutions/energy-efficiency/ducted-air-source-heat-pump"
+    },
+    {
+      "label": "CenterPoint Energy HERO",
+      "href": "https://www.mn-hero.com/"
+    },
+    {
+      "label": "MN Commerce: Save Energy Minnesota",
+      "href": "https://mn.gov/commerce/energy/consumer/energy-programs/save-energy-mn.jsp"
+    },
+    {
+      "label": "MN Commerce: Residential Heat Pump Rebates",
+      "href": "https://mn.gov/commerce/energy/consumer/energy-programs/heat-pump.jsp"
+    },
+    {
+      "label": "MN Commerce: Weatherization Assistance Program",
+      "href": "https://mn.gov/commerce/energy/consumer-assistance/wap/"
+    },
+    {
+      "label": "MN Commerce: WAP service providers",
+      "href": "https://mn.gov/commerce/energy/consumer-assistance/wap-providers/index.jsp"
+    },
+    {
+      "label": "MN Commerce: Large Building Energy Benchmarking",
+      "href": "https://mn.gov/commerce/energy/industry-government/benchmarking/large-building-energy-benchmarking.jsp"
+    },
+    {
+      "label": "City of Minneapolis: Weatherize your home",
+      "href": "https://www.minneapolismn.gov/resident-services/property-housing/housing/healthy-homes/weatherize-your-home/"
+    },
+    {
+      "label": "City of Minneapolis: Weatherization application (closed for 2026)",
+      "href": "https://www.minneapolismn.gov/resident-services/property-housing/housing/healthy-homes/weatherization-application/"
+    },
+    {
+      "label": "City of Minneapolis: Green Cost Share residential partners",
+      "href": "https://www.minneapolismn.gov/government/programs-initiatives/environmental-programs/green-cost-share/energy-efficiency/funding/residential-partners/"
+    },
+    {
+      "label": "City of Minneapolis: Residential energy efficiency rebates",
+      "href": "https://www.minneapolismn.gov/government/programs-initiatives/environmental-programs/green-cost-share/energy-efficiency/energy-rebates/"
+    },
+    {
+      "label": "CEE: Minneapolis Bonus Rebate Program",
+      "href": "https://www.mncee.org/minneapolis-bonus-rebate-program"
+    },
+    {
+      "label": "City of Minneapolis: Truth in Sale of Housing",
+      "href": "https://www.minneapolismn.gov/resident-services/property-housing/buying-selling/tish/"
+    },
+    {
+      "label": "City of Minneapolis: Energy disclosure report",
+      "href": "https://www.minneapolismn.gov/resident-services/property-housing/buying-selling/tish/energy-disclosure-report/"
+    },
+    {
+      "label": "City of Minneapolis: Energy benchmarking must-comply lists",
+      "href": "https://www.minneapolismn.gov/government/programs-initiatives/environmental-programs/energy-benchmarking/must-comply-lists/"
+    },
+    {
+      "label": "City of Saint Paul: Energize Saint Paul (benchmarking moved to State)",
+      "href": "https://www.stpaul.gov/departments/mayors-office/climate-action/energize-saint-paul"
+    },
+    {
+      "label": "Saint Paul Climate Dashboard: Residential energy",
+      "href": "https://climateaction.stpaul.gov/category/residential-energy"
+    },
+    {
+      "label": "Electrify Everything MN (CEE): Additional incentives",
+      "href": "https://www.electrifyeverythingmn.org/additional-incentives"
+    },
+    {
+      "label": "Focus on Energy (WI): IRA Home Energy Rebates",
+      "href": "https://focusonenergy.com/home-energy-rebates"
+    }
+  ]
+}

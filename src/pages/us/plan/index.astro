@@ -1,0 +1,665 @@
+---
+/**
+ * US Home Energy Planner (/us/plan/). Target of every "Check my home" button on the US site and
+ * of the ZIP form on /us/ (/us/plan/?zip=12345). The planner runs entirely in the browser
+ * (src/lib/us/plan-client.ts) on a payload built here from the US research files; analytics are
+ * off on this page so nothing a visitor enters leaves the browser.
+ */
+import Base from '../../../layouts/Base.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { buildPlanPayload, NATIONAL, PRICE_PERIODS } from '../../../lib/us/plan-payload';
+import { METROS, US_VERIFIED, POPULATION_SOURCE } from '../../../lib/us/data';
+import { VINTAGES, ERAS, SYMPTOMS, GOALS } from '../../../lib/us/plan-content';
+import { eraAssumptions, REF_HDD65, WINDOW_LABEL_US, SQFT_PER_M2 } from '../../../lib/us/plan-model';
+import { MODEL } from '../../../lib/calc/engine';
+import pricesJson from '../../../data/us/prices.json';
+import climateJson from '../../../data/us/climate.json';
+import testsJson from '../../../data/us/tests.json';
+import zip3Json from '../../../data/us/zip3.json';
+
+const title = 'US Home Energy Planner: what your home needs and what it saves | AuditYourHome';
+const description =
+  'Answer six quick questions about your home. Get an upgrade sequence with conservative savings for your climate and state energy prices, the tests worth asking for, and which rebates and assessment programs are open where you live. Nothing you enter leaves your browser.';
+
+const payload = buildPlanPayload();
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Home Energy Planner', path: '/us/plan/' },
+  ]),
+];
+
+// ---- assumptions tables (the same numbers the planner reads)
+const int = (n: number) => Math.round(n).toLocaleString('en-US');
+const eraRows = VINTAGES.map((v) => ({ v, label: ERAS[v].label, ...eraAssumptions(v) }));
+const sizeSqft = Object.values(MODEL.demand.sizeBandM2).map((m2) => Math.round((m2 * SQFT_PER_M2) / 100) * 100);
+const P = pricesJson as any;
+const states = payload.states as Record<string, { n: string; p: { e: number; g: number | null; gy: string | null; o: number | null; pr: number | null } }>;
+const priceRows = Object.values(states).sort((a, b) => a.n.localeCompare(b.n));
+const metroRows = [...METROS].sort((a, b) => (b.climate?.hdd65 ?? 0) - (a.climate?.hdd65 ?? 0));
+const usd = (n: number) => `$${n.toFixed(2)}`;
+const insulation = payload.insulation;
+const noaa = (climateJson as any).sources?.find((s: any) => /NOAA/.test(s.label)) ?? null;
+const estarSrc = (testsJson as any).energyTests?.insulation?.sources?.[0] ?? null;
+const zipSources = ((zip3Json as any).meta?.sources ?? []) as { label: string; href: string }[];
+const wh = MODEL.water;
+const gallonsPerPerson = Math.round(wh.litresPerPerson / 3.785411784);
+const deliveryF = Math.round(wh.deliveryC * 1.8 + 32);
+const bands = MODEL.ashpCopBands;
+---
+
+<Base title={title} description={description} schema={schema} analytics={false}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">US Home Energy Planner</p>
+      <h1>What does <em>your</em> home need?</h1>
+      <p class="lede">
+        Six quick questions, no email. You’ll get the likely story behind your walls, an upgrade plan
+        with conservative savings for your climate and state energy prices, the tests worth asking
+        for, and which programs are open where you live.
+      </p>
+      <p class="privacy-line">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 4 5v4.6c0 3.6 2.5 6.7 6 7.9 3.5-1.2 6-4.3 6-7.9V5l-6-2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m7.4 10 1.9 1.9 3.4-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        The planner runs in your browser. Nothing you enter is stored or sent anywhere.
+      </p>
+    </div>
+
+    <div class="planner card" id="planner">
+      <ol class="steps-nav" id="stepsNav" aria-label="Planner steps">
+        <li data-step="1" class="on" aria-current="step">Location</li>
+        <li data-step="2">Your home</li>
+        <li data-step="3">Heating</li>
+        <li data-step="4">Symptoms</li>
+        <li data-step="5">Goals</li>
+        <li data-step="6">Bills</li>
+      </ol>
+
+      <form id="plannerForm" novalidate>
+        <!-- STEP 1 -->
+        <fieldset class="step on" data-step="1">
+          <legend><h2>Where’s the house?</h2></legend>
+          <div class="field narrow">
+            <label for="zip">ZIP code</label>
+            <input id="zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="e.g. 60614" maxlength="10" aria-describedby="zipHint zipFeedback" />
+            <p class="small hint" id="zipHint">Sets your climate, energy prices and programs. The lookup runs in your browser.</p>
+          </div>
+          <div id="zipFeedback" class="zip-feedback" aria-live="polite"></div>
+          <div class="field clim-field" id="climField" hidden>
+            <label for="climPick" id="climLabel">Climate stand-in for dollar estimates (optional)</label>
+            <select id="climPick" name="clim"></select>
+            <p class="small hint">Metros are listed coldest first, with their yearly heating and cooling degree days (°F). Pick the one whose winters and summers are most like yours.</p>
+          </div>
+        </fieldset>
+
+        <!-- STEP 2 -->
+        <fieldset class="step" data-step="2">
+          <legend><h2>Tell us about the house</h2></legend>
+          <div class="field">
+            <span class="lbl" id="ageLbl">When was it built? <span class="hint-inline">(a rough guess is fine)</span></span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="ageLbl">
+              {VINTAGES.map((v) => (
+                <label class="radio-pill"><input type="radio" name="age" value={v} /><span>{ERAS[v].label}</span></label>
+              ))}
+            </div>
+            <p class="small hint" id="eraHint"></p>
+          </div>
+          <div class="field">
+            <span class="lbl" id="htypeLbl">Home type</span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="htypeLbl">
+              <label class="radio-pill"><input type="radio" name="htype" value="detached" checked /><span>Detached house</span></label>
+              <label class="radio-pill"><input type="radio" name="htype" value="semi" /><span>Townhouse, rowhouse or duplex</span></label>
+              <label class="radio-pill"><input type="radio" name="htype" value="condo" /><span>Condo or apartment</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="sizeLbl">Rough size</span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="sizeLbl">
+              <label class="radio-pill"><input type="radio" name="size" value="small" /><span>Under 1,200 sq ft</span></label>
+              <label class="radio-pill"><input type="radio" name="size" value="medium" checked /><span>1,200–2,000</span></label>
+              <label class="radio-pill"><input type="radio" name="size" value="large" /><span>2,000–3,000</span></label>
+              <label class="radio-pill"><input type="radio" name="size" value="xlarge" /><span>Over 3,000</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="foundLbl">Foundation</span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="foundLbl">
+              <label class="radio-pill"><input type="radio" name="found" value="basement" /><span>Basement</span></label>
+              <label class="radio-pill"><input type="radio" name="found" value="crawl" /><span>Crawlspace</span></label>
+              <label class="radio-pill"><input type="radio" name="found" value="slab" /><span>Slab on grade</span></label>
+              <label class="radio-pill"><input type="radio" name="found" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="waterLbl">Water source <span class="hint-inline">(flags well-water testing)</span></span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="waterLbl">
+              <label class="radio-pill"><input type="radio" name="water" value="municipal" checked /><span>Public water system</span></label>
+              <label class="radio-pill"><input type="radio" name="water" value="well" /><span>Private well</span></label>
+              <label class="radio-pill"><input type="radio" name="water" value="unsure" /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="winLbl">Most of the windows are… <span class="hint-inline">(window age changes the math)</span></span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="winLbl">
+              <label class="radio-pill"><input type="radio" name="win" value="single" /><span>Single-pane</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="singlestorm" /><span>Single-pane + storm windows</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="double-old" /><span>Double-pane, before 2000</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="double-new" /><span>Double-pane, 2000 or later</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="triple" /><span>Triple-pane or recent ENERGY STAR</span></label>
+              <label class="radio-pill"><input type="radio" name="win" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="prevLbl">Has the house had a professional energy audit before? <span class="hint-inline">(including a HERS rating or Home Energy Score)</span></span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="prevLbl">
+              <label class="radio-pill"><input type="radio" name="prev" value="no" checked /><span>No</span></label>
+              <label class="radio-pill"><input type="radio" name="prev" value="recent" /><span>Yes, in the last 3 years</span></label>
+              <label class="radio-pill"><input type="radio" name="prev" value="older" /><span>Yes, longer ago</span></label>
+              <label class="radio-pill"><input type="radio" name="prev" value="unsure" /><span>Not sure</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 3 -->
+        <fieldset class="step" data-step="3">
+          <legend><h2>Heating, hot water and cooling</h2></legend>
+          <div class="field">
+            <span class="lbl" id="heatLbl">Main heating</span>
+            <div class="radio-row wrap" role="radiogroup" aria-labelledby="heatLbl">
+              <label class="radio-pill"><input type="radio" name="heat" value="gas" checked /><span>Natural gas furnace</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="gasboiler" /><span>Natural gas boiler (radiators or in-floor)</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="electric" /><span>Electric baseboard</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="elecfurnace" /><span>Electric furnace or boiler</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="heatpump" /><span>Air-source heat pump</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="geothermal" /><span>Geothermal heat pump</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="oil" /><span>Heating oil furnace or boiler</span></label>
+              <label class="radio-pill"><input type="radio" name="heat" value="propane" /><span>Propane furnace or boiler</span></label>
+            </div>
+          </div>
+          <div class="field" id="heatAgeField">
+            <span class="lbl" id="hageLbl">How old is it?</span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="hageLbl">
+              <label class="radio-pill"><input type="radio" name="hage" value="new" /><span>Under 15 years</span></label>
+              <label class="radio-pill"><input type="radio" name="hage" value="old" /><span>15 years or more</span></label>
+              <label class="radio-pill"><input type="radio" name="hage" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="secLbl">Also heated by… <span class="hint-inline">(optional)</span></span>
+            <div class="radio-row wrap" role="group" aria-labelledby="secLbl">
+              <label class="radio-pill"><input type="checkbox" name="sec" value="woodstove" /><span>Wood stove or fireplace</span></label>
+              <label class="radio-pill"><input type="checkbox" name="sec" value="spaceheaters" /><span>Electric space heaters</span></label>
+              <label class="radio-pill"><input type="checkbox" name="sec" value="solar" /><span>Lots of sunny south-facing windows</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="whLbl">Water heater</span>
+            <div class="radio-row wrap" role="radiogroup" aria-labelledby="whLbl">
+              <label class="radio-pill"><input type="radio" name="wh" value="gastank" /><span>Gas tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="gastankless" /><span>Gas tankless (on-demand)</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="electric" /><span>Electric tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="heatpump" /><span>Heat pump water heater</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="oil" /><span>Oil-fired tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="propane" /><span>Propane tank</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="boiler" /><span>From the boiler (combi)</span></label>
+              <label class="radio-pill"><input type="radio" name="wh" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="acLbl">Cooling</span>
+            <div class="radio-row wrap" role="radiogroup" aria-labelledby="acLbl">
+              <label class="radio-pill"><input type="radio" name="ac" value="none" /><span>No air conditioning</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="central-new" /><span>Central AC, under 10 years</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="central-old" /><span>Central AC, 10+ years</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="room" /><span>Window or portable units</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="heatpump" /><span>The heat pump cools</span></label>
+              <label class="radio-pill"><input type="radio" name="ac" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4 -->
+        <fieldset class="step" data-step="4">
+          <legend><h2>Anything bugging you about the house?</h2></legend>
+          <p class="small">Pick everything that applies; it tunes your plan.</p>
+          <div class="field">
+            <div class="radio-row wrap" role="group" aria-label="Symptoms">
+              {SYMPTOMS.map((s) => (
+                <label class="radio-pill"><input type="checkbox" name="sym" value={s.value} /><span>{s.label}</span></label>
+              ))}
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 5 -->
+        <fieldset class="step" data-step="5">
+          <legend><h2>What are you hoping to do?</h2></legend>
+          <div class="field">
+            <div class="radio-row wrap" role="group" aria-label="Goals">
+              {GOALS.map((g) => (
+                <label class="radio-pill"><input type="checkbox" name="goal" value={g.value} checked={g.value === 'bills'} /><span>{g.label}</span></label>
+              ))}
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 6 -->
+        <fieldset class="step" data-step="6">
+          <legend><h2>Add your heating bill for dollar estimates <span class="hint-inline">(optional)</span></h2></legend>
+          <div class="field" id="billFuel">
+            <p class="small">
+              We’ve pre-set this to a typical home of your size and era. Drag it to match your real
+              bills (a typical month across the year), or leave it as is and we’ll use the typical figure.
+            </p>
+            <div class="sliders">
+              <div class="slider-field">
+                <label for="fuelBill"><span id="fuelBillLabel">Average monthly natural gas bill</span> <output id="fuelOut" for="fuelBill">$0</output></label>
+                <input id="fuelBill" name="fuelBill" type="range" min="0" max="400" step="5" value="0" />
+                <p class="meta slider-hint" id="fuelHint"></p>
+              </div>
+            </div>
+            <p class="small bill-note">
+              Why we ask: a “typical” house can be far from yours. With your bill, every heating
+              saving below is scaled to how much energy your house actually uses.
+            </p>
+          </div>
+          <div class="field" id="billElec" hidden>
+            <p class="small measure">
+              For homes heated with electricity we don’t use bills: one electric bill mixes heating,
+              air conditioning, hot water and appliances, and we can’t split it reliably. Your plan
+              uses a typical house like yours. Press <b>See my plan</b>.
+            </p>
+          </div>
+          <div class="field" id="billNoClim" hidden>
+            <p class="small measure">
+              Scaling to a bill needs climate numbers, and there aren’t any for your ZIP code unless
+              you pick a climate stand-in on the first step. Press <b>See my plan</b>; you can pick
+              one from the results too.
+            </p>
+          </div>
+        </fieldset>
+
+        <div class="wizard-actions">
+          <button type="button" class="btn btn-ghost" id="backBtn" hidden>Back</button>
+          <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results" hidden>
+      <div class="results-head">
+        <p class="eyebrow">Your plan</p>
+        <h2 id="rTitle">Your home’s energy plan</h2>
+        <p class="small" id="rSub"></p>
+      </div>
+
+      <div id="rArea"></div>
+      <div id="rBenchmark"></div>
+      <div class="grid-2 profile-grid">
+        <div class="card card-pad" id="rWalls"></div>
+        <div class="card card-pad" id="rWatch"></div>
+      </div>
+      <div id="rSequence"></div>
+      <div id="rCompare"></div>
+      <div id="rSystems"></div>
+      <div id="rMethod"></div>
+      <div id="rTests"></div>
+      <div id="rPrograms"></div>
+      <div id="rFind"></div>
+      <div id="rResources"></div>
+
+      <div class="card card-pad audit-cta">
+        <h3>Estimates end where the audit begins</h3>
+        <p>
+          Everything above is based on how homes like yours typically perform (scaled to your bill if
+          you entered one), not a model of your actual house. A home energy audit, with a blower door
+          test, an infrared scan, combustion safety checks and, for new equipment, a load
+          calculation, turns these ranges into numbers for <em>your</em> address. The federal $150
+          audit tax credit ended with 2025, but utility and state programs commonly pay for most or all
+          of an assessment.
+        </p>
+        <p class="cta-links"><a href="/us/find/">Find a certified auditor →</a> <a href="/us/how-it-works/">How an audit works →</a> <a href="/us/cost/">What an audit costs →</a></p>
+      </div>
+
+      <LeadFormUS
+        heading="Want help with the next step?"
+        sub="Email us your ZIP code, the kind of home you have and what you’re planning. A person reads every message and replies with the certified auditors and utility programs that serve your area. Your plan stays on this page unless you choose to send it."
+        context="us-planner"
+      />
+
+      <p class="small disclaimer">
+        Estimates are ranges based on how similar homes perform (using our Canadian model’s
+        building-science assumptions), your area’s climate (NOAA) and your state’s energy prices
+        (EIA), with the assumptions <a href="#assumptions">listed below</a>. They are deliberately
+        conservative and are not a guarantee of savings. Program details change, so confirm on
+        official pages before spending. Nothing you enter here is stored or sent anywhere: the planner
+        runs entirely in your browser, and this page loads no analytics. Your answers sit only in this
+        page’s address, so a link you copy carries them.
+      </p>
+      <div class="wizard-actions">
+        <button type="button" class="btn btn-ghost" id="restartBtn">Start over</button>
+        <button type="button" class="btn btn-ghost" id="copyLink">Copy link to this plan</button>
+      </div>
+    </div>
+
+    <section class="assumptions" id="assumptions">
+      <h2>How the planner estimates, and the assumptions behind it</h2>
+      <p class="small measure">
+        The first three digits of your ZIP code place the home in a state and, where we cover it, one
+        of the 26 largest metro areas, using Census Bureau ZIP code areas, population and the 2023
+        metro definitions. The metro sets the climate: heating and cooling degree days from NOAA’s
+        1991–2020 normals at its main airport. Outside those metros the planner uses the nearest
+        covered metro in your state, or a stand-in you pick, and says so. Energy prices are your
+        state’s averages from the U.S. Energy Information Administration (EIA). If you enter a gas,
+        oil or propane bill, the heating estimate is scaled to it (within 0.5× to 1.6× of a typical
+        house) and every saving is scaled the same way. An energy audit replaces all of this with
+        measurements. Program and price data were checked on {US_VERIFIED}.
+      </p>
+
+      <div class="tablewrap card">
+        <table class="stack era-table">
+          <caption>A typical house of each era, as the model starts it</caption>
+          <thead><tr><th>Built</th><th>Heat needed</th><th>Attic</th><th>Walls</th><th>Basement walls</th><th>Windows</th></tr></thead>
+          <tbody>
+            {eraRows.map((r) => (
+              <tr>
+                <td data-label="Built">{r.label}</td>
+                <td data-label="Heat needed">{r.intensity.toFixed(0)} kBtu per sq ft a year at {int(REF_HDD65)}&nbsp;°F degree days</td>
+                <td data-label="Attic">R-{r.atticR}</td>
+                <td data-label="Walls">R-{r.wallR}</td>
+                <td data-label="Basement walls">R-{r.basementR}</td>
+                <td data-label="Windows">{WINDOW_LABEL_US[r.window]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small measure">
+        These starting points are the same as our Canadian model’s, which built them from Canadian
+        housing data; they are planning assumptions, not survey results for US homes. Heat needed is
+        scaled to your climate’s degree days. Townhouses, rowhouses and duplexes use 90% of the
+        detached figure, and the four size bands are modeled as about {sizeSqft.map((s) => s.toLocaleString('en-US')).join(', ')} sq ft.
+      </p>
+
+      <div class="grid-2 same-diff">
+        <div class="card card-pad">
+          <h3>The same as our Canadian model</h3>
+          <ul class="small">
+            <li>Heating need per square foot by era, house sizes and the starting insulation levels and windows above.</li>
+            <li>Upgrade physics: the R-value, window U-factor and air-leakage formulas, multiplied by {MODEL.envelope.F.aboveGrade} above grade and {MODEL.envelope.F.basement} for basement walls; no single upgrade credited with more than {Math.round(MODEL.envelope.capSingle * 100)}% of heating, and all together with no more than {Math.round(MODEL.envelope.capTotal * 100)}%. Air sealing is credited with a {Math.round(MODEL.envelope.air.reductionDefault * 100)}% cut in leakage, which is taken as {Math.round(MODEL.envelope.air.leakShareOfHeatLoss * 100)}% of heat loss.</li>
+            <li>Equipment efficiencies: gas furnaces 80% and 95%, gas boilers 82% and 89%, oil 60–85%, propane 82% and 93%, electric resistance 100%, geothermal heat pumps a seasonal COP of {(MODEL.systems.gshp as { eff: number }).eff}. Air-source heat pumps have a seasonal COP (backup heat included) that falls as winters get colder: cold-climate models {bands[0].coldClimate} below {int((bands[0].maxHdd ?? 0) * 1.8 + 1.8)}&nbsp;°F heating degree days, down to {bands[bands.length - 1].coldClimate} above {int(bands[bands.length - 1].minHdd * 1.8)}.</li>
+            <li>Hot water: about {gallonsPerPerson} gallons per person a day for a household of three, heated to {deliveryF}&nbsp;°F; the water heater efficiencies; and heat pump water heaters charged for the heat they take from the house in winter.</li>
+            <li>Thermostat setbacks save about {Math.round(MODEL.setback.perDegPer8h * 100)}% of heating per degree Celsius (1.8&nbsp;°F) held for 8 hours; heat pumps limited to about 4&nbsp;°F.</li>
+            <li>Energy content of heating oil and propane (converted to gallons) and of electricity.</li>
+          </ul>
+        </div>
+        <div class="card card-pad">
+          <h3>Different for the US</h3>
+          <ul class="small">
+            <li>Climate: NOAA 65&nbsp;°F degree days, divided by 1.8 for the model’s Celsius degree days. The yearly average temperature, which sets the cold-water temperature, is worked out from the degree days.</li>
+            <li>Prices: EIA state averages, shown with the month or week they cover, and U.S. averages, labeled national, where EIA has no state figure. Savings are valued at these averages; the Canadian model uses the lower price of one more unit.</li>
+            <li>Units: therms (natural gas converted at EIA’s {PRICE_PERIODS.btuPerCf.toLocaleString('en-US')} Btu per cubic foot), gallons, kilowatt-hours and US dollars.</li>
+            <li>Attic target: ENERGY STAR’s retrofit figure for an uninsulated attic in your IECC climate zone: R-{insulation.attic['1']} in zone 1, R-{insulation.attic['2']} in zones 2–3 and R-{insulation.attic['4']} in zones 4–8.</li>
+            <li>Bills: only a gas, oil or propane bill is used, split between heating and a same-fuel water heater in the model’s proportions for your climate (the Canadian model uses a fixed 80%). Electric bills aren’t used.</li>
+            <li>Propane water heaters are given the model’s gas tank efficiency.</li>
+            <li>Left out: air-conditioning energy (we have no US design temperatures), crawlspace savings, and installed costs and paybacks (no verified US prices yet).</li>
+          </ul>
+        </div>
+      </div>
+
+      <details class="card data-details">
+        <summary><strong>Energy prices by state</strong> <span class="small">(EIA, as used by the planner)</span></summary>
+        <div class="tablewrap">
+          <table class="stack">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Electricity, {PRICE_PERIODS.elecMonth}</th>
+                <th>Natural gas, {PRICE_PERIODS.gasYear} average</th>
+                <th>Heating oil, week of {PRICE_PERIODS.oilWeek}</th>
+                <th>Propane, week of {PRICE_PERIODS.propaneWeek}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {priceRows.map((s) => (
+                <tr>
+                  <td data-label="State">{s.n}</td>
+                  <td data-label={`Electricity, ${PRICE_PERIODS.elecMonth}`}>{s.p.e.toFixed(1)}¢/kWh</td>
+                  <td data-label={`Natural gas, ${PRICE_PERIODS.gasYear} average`}>{s.p.g !== null ? `${usd(s.p.g)}/therm${s.p.gy ? ` (${s.p.gy} average; no ${PRICE_PERIODS.gasYear} figure)` : ''}` : `U.S. ${usd(NATIONAL.gasPerTherm)}/therm used`}</td>
+                  <td data-label="Heating oil">{s.p.o !== null ? `${usd(s.p.o)}/gal` : `none published; U.S. ${usd(NATIONAL.oilPerGal)} used`}</td>
+                  <td data-label="Propane">{s.p.pr !== null ? `${usd(s.p.pr)}/gal` : `none published; U.S. ${usd(NATIONAL.propanePerGal)} used`}</td>
+                </tr>
+              ))}
+              <tr class="us-row">
+                <td data-label="State">United States (national)</td>
+                <td data-label={`Electricity, ${PRICE_PERIODS.elecMonth}`}>{NATIONAL.elecCents.toFixed(1)}¢/kWh</td>
+                <td data-label={`Natural gas, ${PRICE_PERIODS.gasYear} average`}>{usd(NATIONAL.gasPerTherm)}/therm</td>
+                <td data-label="Heating oil">{usd(NATIONAL.oilPerGal)}/gal</td>
+                <td data-label="Propane">{usd(NATIONAL.propanePerGal)}/gal</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small data-note">
+          Electricity: EIA Electric Power Monthly, residential average for {PRICE_PERIODS.elecMonth} (released {PRICE_PERIODS.elecReleased}).
+          Natural gas: EIA residential price, {PRICE_PERIODS.gasYear} annual average, which is steadier than a summer month; EIA calls it inclusive of taxes and delivery charges.
+          Heating oil and propane: EIA weekly residential prices for the week of {PRICE_PERIODS.oilWeek}, excluding taxes; EIA publishes them for some states only.
+        </p>
+      </details>
+
+      <details class="card data-details">
+        <summary><strong>Climate in the 26 metro areas</strong> <span class="small">(NOAA 1991–2020 normals)</span></summary>
+        <div class="tablewrap">
+          <table class="stack">
+            <thead><tr><th>Metro area</th><th>Heating degree days</th><th>Cooling degree days</th><th>IECC zone</th><th>Station</th></tr></thead>
+            <tbody>
+              {metroRows.map((m) => (
+                <tr>
+                  <td data-label="Metro area"><a href={`/us/cities/${m.slug}/`}>{m.data.name}</a></td>
+                  <td data-label="Heating degree days">{int(m.climate?.hdd65 ?? 0)}</td>
+                  <td data-label="Cooling degree days">{int(m.climate?.cdd65 ?? 0)}</td>
+                  <td data-label="IECC zone">{m.climate?.iecc2021ClimateZone ?? '—'}</td>
+                  <td data-label="Station" class="mono">{m.climate?.station?.name ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="small data-note">Degree days are base 65&nbsp;°F. Metros are listed coldest first.</p>
+      </details>
+
+      <h3 class="src-h">Sources</h3>
+      <ul class="small src-list">
+        {noaa && <li><a href={noaa.href} rel="noopener" target="_blank">NOAA NCEI U.S. Climate Normals 1991–2020</a>: heating and cooling degree days</li>}
+        <li><a href={POPULATION_SOURCE.href} rel="noopener" target="_blank">{POPULATION_SOURCE.label}</a>: the 26 metro areas</li>
+        <li><a href={P.electricity.url} rel="noopener" target="_blank">EIA Electric Power Monthly, Table 5.6.A</a> · <a href={P.naturalGas.annualUrl} rel="noopener" target="_blank">EIA residential natural gas prices (annual)</a> · <a href={P.naturalGas.heatContent?.url} rel="noopener" target="_blank">EIA heat content of natural gas</a> · <a href={P.heatingOil.url} rel="noopener" target="_blank">EIA Heating Oil and Propane Update</a></li>
+        {estarSrc && <li><a href={estarSrc.href} rel="noopener" target="_blank">{estarSrc.label}</a>: attic and floor targets by climate zone</li>}
+        {zipSources.map((s) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
+      </ul>
+    </section>
+  </div>
+
+  <script type="application/json" id="planner-data" set:html={JSON.stringify(payload)} />
+</Base>
+
+<style>
+  .page-hero h1 em { font-style: normal; color: var(--heat); }
+  .privacy-line { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font-size: 14.5px; font-weight: 600; color: var(--pine); }
+  .privacy-line svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .planner { padding: 30px 34px 34px; margin-bottom: 24px; }
+  .steps-nav {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    list-style: none; margin: 0 0 26px; padding: 0 0 18px;
+    border-bottom: 1px solid var(--line);
+    counter-reset: step;
+  }
+  .steps-nav li {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
+    counter-increment: step;
+  }
+  .steps-nav li::before { content: counter(step) " · "; }
+  .steps-nav li.on { color: var(--heat-deep); }
+  .steps-nav li.done { color: var(--pine); }
+  fieldset.step { border: none; margin: 0; padding: 0; display: none; min-width: 0; }
+  fieldset.step.on { display: block; }
+  legend { padding: 0; }
+  legend h2 { font-size: 24px; margin-bottom: 14px; }
+  .lbl { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
+  .hint-inline { font-weight: 400; color: var(--faint); font-size: 0.85em; }
+  .hint { margin-top: 6px; }
+  .narrow { max-width: 340px; }
+  .radio-row.wrap { max-width: 680px; }
+  .clim-field { max-width: 560px; margin-top: 4px; }
+  .wizard-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .results-head { margin: 40px 0 18px; }
+  .profile-grid { margin: 18px 0; }
+  .audit-cta { border-left: 4px solid var(--heat); margin: 26px 0; }
+  .audit-cta .cta-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; font-weight: 600; }
+  .disclaimer { max-width: 80ch; margin: 18px 0; color: var(--faint); }
+  .assumptions { margin: 40px 0 10px; padding: 40px 0 0; border-top: 1px solid var(--line); }
+  .assumptions h2 { font-size: 24px; }
+  .assumptions .tablewrap.card { margin: 16px 0; }
+  .assumptions caption { text-align: left; font-weight: 700; padding: 14px 14px 4px; font-family: var(--display); }
+  .same-diff { margin: 22px 0; }
+  .same-diff h3 { font-size: 18px; }
+  .same-diff ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+  .data-details { margin: 16px 0; }
+  .data-details > summary { cursor: pointer; padding: 16px 20px; }
+  .data-details .tablewrap { border-top: 1px solid var(--line); }
+  .data-details .data-note { padding: 0 20px 16px; margin: 12px 0 0; }
+  .data-details .us-row td { font-weight: 700; background: #FBF9F4; }
+  .data-details td.mono { font-family: var(--mono); font-size: 12.5px; }
+  .src-h { margin-top: 28px; font-size: 18px; }
+  .src-list { padding-left: 18px; display: grid; gap: 6px; }
+  .src-list a { overflow-wrap: anywhere; }
+  @media (max-width: 640px) {
+    .era-table.stack tr { display: flex; flex-wrap: wrap; column-gap: 14px; }
+    .era-table.stack td { flex: 1 1 100%; }
+    .era-table.stack td:nth-child(3), .era-table.stack td:nth-child(4), .era-table.stack td:nth-child(5) { flex: 1 1 0; width: auto; }
+    .planner { padding: 22px 18px 24px; }
+    legend h2 { font-size: 21px; }
+    .page-hero { padding: 36px 0 26px; }
+    .assumptions table.stack td { font-size: 14.5px; }
+  }
+</style>
+
+<style is:global>
+  /* result blocks are rendered by the client script, so these rules are unscoped */
+  #results, #planner, #rPrograms, #assumptions { scroll-margin-top: 84px; }
+  #planner .zip-feedback p { margin: 4px 0 12px; font-size: 14.5px; max-width: 62ch; }
+  #planner .zip-ok { color: var(--ink); padding-left: 24px; position: relative; }
+  #planner .zip-ok::before { content: "✓"; position: absolute; left: 4px; color: var(--pine); font-weight: 700; }
+  .field-error { color: var(--dead); font-size: 13.5px; margin-top: 8px; font-weight: 600; }
+  .sliders { max-width: 560px; display: grid; gap: 22px; }
+  .slider-field label { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; font-size: 15px; }
+  .slider-field output { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--heat-deep); font-variant-numeric: tabular-nums; }
+  .slider-hint { margin: 6px 0 0; }
+  .bill-note { margin-top: 14px; max-width: 70ch; }
+  #planner input[type='range'] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: var(--line-strong); border-radius: 999px; outline: none; margin-top: 10px; }
+  #planner input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--heat); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(26,36,48,0.3); cursor: pointer; }
+  #planner input[type='range']::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--heat); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(26,36,48,0.3); cursor: pointer; }
+  #planner input[type='range']:focus-visible { outline: 2.5px solid var(--heat); outline-offset: 4px; }
+
+  #results .area-card { border-left: 4px solid var(--steel); margin-bottom: 18px; }
+  #results .area-card h3 { margin-bottom: 6px; }
+  #results .area-card .src { color: var(--muted); }
+  #results .area-card .meta { margin: 14px 0 0; }
+  #results .clim-inline { margin-top: 16px; max-width: 560px; }
+  #results .clim-inline label { font-size: 14px; }
+  #results .bench-card { border-left: 4px solid var(--steel); padding: 22px 26px; margin-bottom: 18px; }
+  #results .bench-card .figures { display: flex; flex-wrap: wrap; gap: 14px 28px; margin: 10px 0 6px; }
+  #results .bench-card .fig .n { font-family: var(--display); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; }
+  #results .bench-card .fig .l { font-size: 13px; color: var(--muted); max-width: 32ch; }
+  #results .bench-up { color: var(--heat-deep); }
+  #results .bench-ok { color: var(--pine); }
+  #results .kv { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+  #results .kv li { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 12px; font-size: 14.5px; }
+  #results .kv li > span:last-child { overflow-wrap: anywhere; }
+  #results .kv .k { font-family: var(--mono); font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); padding-top: 2px; }
+  #results .watch-item { padding: 10px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+  #results .watch-item:first-of-type { border-top: none; padding-top: 4px; }
+  #results .watch-item b { display: block; }
+  #results .watch-item.safety b::before { content: "⚠ "; color: var(--dead); }
+  #results .rsec { margin: 26px 0; }
+  #results .rsec > h3 { margin-bottom: 4px; }
+  #results .rsec > .sub { color: var(--muted); font-size: 14.5px; margin-bottom: 10px; max-width: 80ch; }
+  #results .seq { counter-reset: seq; display: grid; gap: 12px; margin: 16px 0; }
+  #results .seq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px 18px 58px; position: relative; }
+  #results .seq-item::before {
+    counter-increment: seq; content: counter(seq);
+    position: absolute; left: 18px; top: 18px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--heat); color: #fff;
+    font-family: var(--display); font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #results .seq-item h4 { margin: 0 0 4px; font-size: 16.5px; }
+  #results .seq-item .why { margin: 0; font-size: 14.5px; color: var(--muted); }
+  #results .seq-item .nums { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; font-size: 14px; align-items: center; }
+  #results .seq-item .save { font-weight: 700; color: var(--pine); font-variant-numeric: tabular-nums; }
+  #results .save-range { font-weight: 400; color: var(--muted); }
+  #results .save-neg { color: var(--heat-deep); font-weight: 600; }
+  #results .save-small { color: var(--muted); font-weight: 400; }
+  #results .tax-note { border-left: 3px solid var(--line-strong); padding-left: 12px; max-width: 80ch; }
+  #results table.compare td .block { display: block; margin-top: 2px; }
+  #results table.compare tr.is-current { background: var(--heat-tint); }
+  #results .tablewrap.card { margin: 12px 0; }
+  #results .sys-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+  #results .sys-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  #results .sys-card h4 { margin: 0 0 6px; font-size: 16px; }
+  #results .sys-card p:last-child { margin-bottom: 0; }
+  #results .sys-card.prev { border-left: 4px solid var(--steel); }
+  #results .method { margin: 18px 0; }
+  #results .method summary { cursor: pointer; }
+  #results .method p { margin: 10px 0 0; }
+  #results .test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  @media (max-width: 800px) { #results .test-grid { grid-template-columns: 1fr; } }
+  #results .test-card { display: flex; gap: 14px; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; min-width: 0; }
+  #results .test-card > div { min-width: 0; }
+  #results .test-card.health { background: var(--warn-tint); border-color: var(--warn-tint); }
+  #results .ticon { flex-shrink: 0; width: 38px; height: 38px; border-radius: 9px; background: var(--heat-tint); color: var(--heat-deep); display: flex; align-items: center; justify-content: center; }
+  #results .test-card.health .ticon { background: rgba(255,255,255,0.7); color: var(--warn); }
+  #results .ticon svg { width: 22px; height: 22px; }
+  #results .test-card h4 { margin: 0 0 4px; font-size: 15.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  #results .test-card .tname { color: inherit; text-decoration: none; border-bottom: 1.5px dashed var(--line-strong); }
+  #results .test-card .tname:hover { color: var(--heat-deep); border-bottom-color: var(--heat); }
+  #results .test-card .tw { margin: 0 0 6px; font-size: 14px; }
+  #results .test-card .test-est { margin: 0; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+  #results .spec-h { margin-top: 26px; }
+  #results .prog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; align-items: start; }
+  @media (max-width: 860px) { #results .prog-grid { grid-template-columns: 1fr; } }
+  #results .prog-card { min-width: 0; }
+  #results .prog-card h4 { margin: 0 0 6px; font-size: 16.5px; }
+  #results .prog-card > p:last-child { margin-bottom: 0; }
+  #results .prog-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+  #results .prog-row .pname { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+  #results .prog-row .pname a { color: var(--ink); text-decoration: none; }
+  #results .prog-row .pname a:hover { color: var(--heat-deep); text-decoration: underline; }
+  #results .prog-row .hl { color: var(--muted); font-size: 13.5px; flex: 1 1 100%; overflow-wrap: anywhere; }
+  #results .prog-row .hl + .hl { margin-top: -4px; }
+  #results .prog-row .hl-link { font-size: 13.5px; }
+  #results .nothing-open { margin: 12px 0; padding: 10px 14px; background: var(--warn-tint); border-radius: 8px; font-size: 14.5px; }
+  #results .res-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
+  #results .res-list li { font-size: 15px; padding-left: 22px; position: relative; overflow-wrap: anywhere; }
+  #results .res-list li::before { content: "→"; position: absolute; left: 0; color: var(--heat); font-weight: 700; }
+  #results .res-list .small { display: block; }
+  @media (max-width: 640px) {
+    #results table.compare.stack tr { display: flex; flex-wrap: wrap; column-gap: 14px; }
+    #results table.compare.stack td { flex: 1 1 100%; }
+    #results table.compare.stack td:not(:first-child) { flex: 1 1 0; width: auto; }
+    #results table.compare.stack td:first-child::before { display: none; }
+    #results .seq-item { padding: 16px 16px 16px 52px; }
+    #results .seq-item::before { left: 14px; top: 16px; }
+    #results .kv li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    #results .bench-card { padding: 18px 18px; }
+    #results .card-pad { padding: 20px 18px; }
+  }
+</style>
+
+<script>
+  import { startPlanner } from '../../../lib/us/plan-client';
+  startPlanner();
+</script>

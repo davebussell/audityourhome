@@ -1,0 +1,172 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  home: S('asbestos', 'Exposures to Asbestos'),
+  verm: S('asbestos', 'Vermiculite'),
+  pros: S('asbestos', 'Asbestos Professionals'),
+  states: S('asbestos', 'State Asbestos Contacts'),
+  ban: S('asbestos', 'Chrysotile'),
+};
+
+const faqs = [
+  {
+    q: 'Can I take a sample myself to save money?',
+    a: 'EPA says no. Sampling can release fibers, so a professional should take samples. EPA also suggests using different firms for inspection and for any repair or removal, to avoid a conflict of interest.',
+    src: [src.home],
+  },
+  {
+    q: 'I have vermiculite in my attic. Do I need to remove it?',
+    a: 'EPA’s advice is to leave it undisturbed, limit trips into the attic and not try to remove it yourself. If a renovation would disturb it, hire a professional asbestos contractor.',
+    src: [src.verm],
+  },
+  {
+    q: 'Should I have the vermiculite tested?',
+    a: 'EPA says to assume vermiculite insulation may contain asbestos. It warns that testing an attic can be expensive and, depending on the method, may give erroneous results, and it does not recommend opening walls to look for vermiculite.',
+    src: [src.verm],
+  },
+  {
+    q: 'Does federal law require a licensed asbestos contractor for my house?',
+    a: 'Federal law does not require accreditation for most work in detached single-family homes, but some states and localities do. Check your state’s rules before any work; EPA keeps a directory of state asbestos contacts. Either way, EPA says repair or removal should be done only by trained and accredited professionals.',
+    src: [src.home, src.states],
+  },
+  {
+    q: 'Does the 2024 asbestos ban affect my house?',
+    a: 'No. EPA’s 2024 rule bans ongoing uses of chrysotile asbestos on staged deadlines, but it does not address asbestos already in homes.',
+    src: [src.ban],
+  },
+];
+
+const sources = [src.home, src.verm, src.pros, src.states, src.ban];
+---
+
+<TestPage
+  slug="asbestos-vermiculite"
+  title="Asbestos and vermiculite in US homes: what EPA says to do, and not do | AuditYourHome"
+  description="EPA: leave asbestos in good shape alone, don’t sample it yourself, and assume vermiculite may contain asbestos. Who’s accredited, lab rules and when to call a pro."
+  heroTitle="Asbestos and vermiculite: when to leave it alone and when to call a pro"
+  glance={[
+    { k: 'In good shape, undisturbed', v: 'Leave it alone', src: src.home, srcLabel: 'EPA' },
+    { k: 'Vermiculite insulation', v: 'Assume it may contain asbestos', src: src.verm, srcLabel: 'EPA' },
+    { k: 'Who takes samples', v: 'A professional, not you', src: src.home, srcLabel: 'EPA' },
+    { k: 'Lab accreditation', v: 'NIST NVLAP', src: src.pros, srcLabel: 'EPA' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Planning attic or renovation work in an older home?"
+  leadSub="Email us your ZIP code, the year the home was built and what you’re planning. A person reads every message and replies with where to find accredited asbestos professionals in your state."
+>
+  <Fragment slot="lede">
+    EPA’s first piece of advice is to leave asbestos material alone if it’s in good condition and
+    won’t be disturbed. The risk comes with damage, remodeling and do-it-yourself sampling, which can
+    release fibers. Vermiculite attic insulation gets its own warning: EPA says to assume it may
+    contain asbestos.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="verm-h">
+    <h2 id="verm-h">Why vermiculite gets its own warning</h2>
+    <p>
+      A mine near Libby, Montana supplied <strong>more than 70 percent</strong> of all vermiculite sold
+      in the U.S. from 1919 to 1990, and that vermiculite was contaminated with asbestos. If you have
+      vermiculite attic or wall insulation, EPA says to:
+    </p>
+    <ul>
+      <li>assume it may contain asbestos;</li>
+      <li>leave it undisturbed and limit trips into the attic;</li>
+      <li>not try to remove it yourself;</li>
+      <li>hire a professional asbestos contractor for any renovation that would disturb it.</li>
+    </ul>
+    <p>
+      EPA warns that testing an attic can be expensive and, depending on the method, may give
+      erroneous results. It does not recommend opening walls to look for vermiculite.
+    </p>
+    <TestCite src={src.verm} labels={['EPA, vermiculite insulation (updated Apr 17, 2026)']} />
+  </section>
+
+  <section class="sec" aria-labelledby="leave-h">
+    <h2 id="leave-h">Leave it, assess it, or remove it</h2>
+    <div class="std-grid">
+      <div class="std pine">
+        <p class="sv">Good condition</p>
+        <p class="sl">Leave it alone</p>
+        <p>Material that’s in good shape and won’t be disturbed can stay where it is.</p>
+      </div>
+      <div class="std warn">
+        <p class="sv">Damaged, or in the way</p>
+        <p class="sl">Have it assessed</p>
+        <p>If it’s damaged, or remodeling will disturb it, have a trained and accredited asbestos professional assess it first.</p>
+      </div>
+      <div class="std heat">
+        <p class="sv">Repair or removal</p>
+        <p class="sl">Accredited professionals only</p>
+        <p>Use a different firm from the one that inspected, to avoid a conflict of interest.</p>
+      </div>
+    </div>
+    <TestCite src={src.home} labels={['EPA, protect your family from asbestos (updated Jun 25, 2026)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="who-h">
+    <h2 id="who-h">Who’s qualified, and where to find them</h2>
+    <p>
+      EPA’s Asbestos Model Accreditation Plan sets training for five disciplines: worker,
+      contractor/supervisor, inspector, management planner and project designer. States must meet at
+      least those minimums. Some states accredit people directly and others approve training
+      providers, so <strong>your state agency is the source for who may work there</strong>.
+    </p>
+    <p>
+      Labs that analyze asbestos samples are accredited through NIST’s National Voluntary Laboratory
+      Accreditation Program (NVLAP); EPA recommends NVLAP or an equivalent lab for home samples.
+    </p>
+    <ul class="linkrow">
+      <li><a href={src.states.href} rel="noopener">EPA directory of state asbestos contacts&nbsp;↗</a></li>
+      <li><a href={src.pros.href} rel="noopener">EPA, asbestos professionals&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.pros, src.states]} labels={['EPA asbestos professionals', 'EPA state asbestos contacts (updated Oct 1, 2026)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="cost-h">
+    <h2 id="cost-h">What it costs</h2>
+    <p>
+      No EPA or state page we checked publishes typical prices for asbestos inspection or abatement,
+      so we don’t quote one. Ask for written quotes, and remember EPA’s advice to keep the inspecting
+      firm and the removal firm separate.
+    </p>
+  </section>
+
+  <section class="sec prose" aria-labelledby="state-h">
+    <h2 id="state-h">State and local rules</h2>
+    <div class="card card-pad callout steel" id="state-rules">
+      <p>
+        Federal law does not require accreditation for most asbestos work in detached single-family
+        homes, but some states and localities do. Check your state and local rules before any work:
+        EPA’s <a href={src.states.href} rel="noopener">directory of state asbestos contacts&nbsp;↗</a>
+        lists the agency for each state.
+      </p>
+      <TestCite src={[src.home, src.states]} labels={['EPA', 'EPA state asbestos contacts']} />
+    </div>
+  </section>
+
+  <section class="sec prose" aria-labelledby="ban-h">
+    <h2 id="ban-h">The 2024 chrysotile ban, and why it doesn’t change your attic</h2>
+    <p>
+      EPA’s Part 1 rule under the Toxic Substances Control Act, final March 28, 2024, bans ongoing uses
+      of chrysotile asbestos on staged deadlines: imports for chlor-alkali use right away, aftermarket
+      brakes, linings and some gaskets after 6 months, and most sheet gaskets after 2 years. It does
+      not address asbestos already in homes.
+    </p>
+    <TestCite src={src.ban} labels={['EPA chrysotile rule (updated May 5, 2026)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="energy-h">
+    <h2 id="energy-h">Before energy upgrades</h2>
+    <p>
+      If insulation or air-sealing work is planned for an attic with vermiculite, follow EPA’s advice
+      above before anyone works up there, and talk to a professional asbestos contractor before
+      planning anything that would disturb it. The <a href="/us/tests/attic-inspection/">attic insulation
+      guide</a> covers the R-values to aim for once that’s settled.
+    </p>
+    <TestCite src={src.verm} labels={['EPA, vermiculite insulation']} />
+  </section>
+</TestPage>

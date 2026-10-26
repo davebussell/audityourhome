@@ -1,0 +1,272 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../components/us/ProgramStyles.astro';
+import ProgramStatus from '../../../components/us/ProgramStatus.astro';
+import ProgramFaq from '../../../components/us/ProgramFaq.astro';
+import ProgramSources from '../../../components/us/ProgramSources.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { statusChip, metroBySlug } from '../../../lib/us/data';
+import { TAX, src, dedupe, clean, takingPhrase, VERIFIED } from '../../../lib/us/programs';
+
+const C = TAX['25C'];
+const D = TAX['25D'];
+const L = TAX['45L'];
+const taking = takingPhrase();
+
+const S = {
+  irs25c: src(/energy-efficient-home-improvement-credit$/),
+  irs25d: src(/residential-clean-energy-credit$/),
+  irs45l: src(/credit-for-builders-of-energy-efficient-homes/),
+  fs: src(/faqs-for-modification-of-sections-25c/),
+  i5695: src(/irs\.gov\/instructions\/i5695$/),
+  i5695draft: src(/i5695--dft\.pdf/),
+  pl21: src(/PLAW-119publ21/),
+  doeQcp: src(/qualified-certification-programs$/),
+  rebateFinder: src(/energystar\.gov\/rebate-finder/),
+};
+
+// A state credit that reaches homeowners as a contractor discount (Denver research record).
+const denver = metroBySlug('denver');
+const coCredit = (denver?.data.rebates ?? []).find((x: any) => /Heat Pump Tax Credit/.test(x.name));
+
+const credits = [
+  {
+    id: '25c',
+    code: '25C',
+    rec: C,
+    short: 'Efficiency upgrades and the $150 audit credit',
+    sources: [{ label: 'IRS 25C page', href: S.irs25c.href }, { label: 'IRS FS-2025-05', href: S.fs.href }, { label: 'Public Law 119-21', href: S.pl21.href }],
+  },
+  {
+    id: '25d',
+    code: '25D',
+    rec: D,
+    short: 'Solar, batteries, geothermal and other clean-energy systems',
+    sources: [{ label: 'IRS 25D page', href: S.irs25d.href }, { label: 'IRS FS-2025-05', href: S.fs.href }, { label: 'Public Law 119-21', href: S.pl21.href }],
+  },
+  {
+    id: '45l',
+    code: '45L',
+    rec: L,
+    short: 'Paid to builders of efficient new homes',
+    sources: [{ label: 'IRS 45L page', href: S.irs45l.href }, { label: 'Public Law 119-21', href: S.pl21.href }],
+  },
+];
+
+const title = 'Federal energy tax credits ended: 25C, 25D and 45L in 2026 | AuditYourHome';
+const description = '25C and 25D, including the $150 audit credit, ended for work after December 31, 2025; 45L ended June 30, 2026. What you can still claim on a 2025 return.';
+
+const faqs = [
+  {
+    q: 'Can I still claim the Energy Efficient Home Improvement Credit (25C) in 2026?',
+    a: 'No. Public Law 119-21 ended 25C for property placed in service after December 31, 2025. Improvements placed in service in 2025 are claimed on your 2025 return with IRS Form 5695.',
+  },
+  {
+    q: 'Is there still a tax credit for a home energy audit?',
+    a: 'Not for audits paid for or done after December 31, 2025. A 2025 audit of your main home can be claimed on the 2025 return, up to $150, if a qualified home energy auditor certified through a DOE-recognized program did it (or supervised it) and gave you a signed written report with the auditor’s name and EIN or TIN, an attestation of certification and the certification program’s name.',
+  },
+  {
+    q: 'I paid for solar panels in 2025, but they were installed in 2026. Do I get the 25D credit?',
+    a: 'No. The IRS says an expenditure is made when original installation is completed, so paying in 2025 for a system installed in 2026 does not qualify (IRS FS-2025-05, question 7).',
+  },
+  {
+    q: 'Did the heat pump tax credit end too?',
+    a: 'Yes. The separate $2,000 annual cap for heat pumps, heat pump water heaters, biomass stoves and boilers was part of 25C and ended with it. Geothermal heat pumps were covered by 25D, which also ended.',
+  },
+  {
+    q: 'Does the end of 45L affect homebuyers?',
+    a: 'Only indirectly. Builders, not homeowners, claimed 45L, up to $5,000 per home, for qualifying homes acquired through June 30, 2026.',
+  },
+  {
+    q: 'What replaced the federal home energy credits?',
+    a: `No new federal credit. The help that remains comes from state-run Home Energy Rebates (taking applications in ${taking} as of ${VERIFIED}), utility programs and the Weatherization Assistance Program for income-qualified households.`,
+  },
+];
+
+const sources = dedupe([...C.sources, ...D.sources, ...L.sources, S.rebateFinder]);
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Federal tax credits', path: '/us/programs/federal-tax-credits/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
+  <ProgramStyles />
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Federal tax credits</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Federal tax credits</p>
+        <h1>Federal home energy tax credits ended after 2025</h1>
+        <p class="lede measure">
+          The 25C and 25D credits paid 30% of efficiency upgrades and clean-energy systems. Public Law 119-21,
+          signed July 4, 2025, ended both for work after December 31, 2025, seven and nine years early. Work done
+          in 2025 is still claimed on your 2025 return with IRS Form 5695.
+        </p>
+        <ProgramStatus chip={statusChip(C.status)} text={`25C: ${C.status}.`} />
+        <ProgramStatus chip={statusChip(D.status)} text={`25D: ${D.status}.`} />
+        <p class="up-meta up-hero-meta">
+          <a href={S.fs.href} rel="noopener" target="_blank">IRS FS-2025-05&nbsp;↗</a> · verified {VERIFIED}
+        </p>
+      </div>
+      <Photo name="home-energy-audit" hud={false} eager />
+    </div>
+
+    <section class="up-s" aria-labelledby="ended-h">
+      <h2 class="up-sec" id="ended-h">What ended, and when</h2>
+      <div class="crs">
+        {credits.map((c) => (
+          <article class="card card-pad cr" id={c.id}>
+            <div class="cr-a">
+              <p class="eyebrow">{c.code} · {c.short}</p>
+              <h3>{c.rec.name}</h3>
+              <ProgramStatus chip={statusChip(c.rec.status)} text={c.rec.status} />
+              <p class="up-meta">
+                {c.sources.map((s, i) => (<>{i > 0 && ' · '}<a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></>))}
+                {' · '}verified {VERIFIED}
+              </p>
+            </div>
+            <dl class="up-kv cr-b">
+              <dt>Last eligible</dt><dd>{clean(c.rec.lastEligible)}</dd>
+              <dt>Paid when open</dt><dd>{clean(c.rec.amountsWhenAvailable)}</dd>
+              <dt>What changed</dt><dd>{clean(c.rec.whatChanged)}</dd>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="up-s" id="audit-credit" aria-labelledby="audit-h">
+      <h2 class="up-sec" id="audit-h">The $150 home energy audit credit</h2>
+      <div class="up-two">
+        <div class="up-prose">
+          <p>
+            25C included up to $150 a year for a home energy audit of your main home, within the $1,200 annual cap.
+            From 2024, the audit had to be done by, or under the supervision of, a qualified home energy auditor
+            certified through a DOE-recognized program, with a signed written report giving the auditor’s name and
+            EIN or TIN, an attestation of certification and the program’s name (IRS Notice 2023-59).
+          </p>
+          <p>
+            It doesn’t apply to audits paid for or done after December 31, 2025. The IRS instructions for 2025 and
+            the draft 2026 Form 5695 say the credit can’t be claimed for expenditures or property placed in service
+            after that date. An audit done in 2025 is claimed on the 2025 return.
+          </p>
+        </div>
+        <div class="card card-pad up-note side">
+          <h3>Audits still pay off in other programs</h3>
+          <p>
+            Utility and state efficiency programs often pay for most or all of an assessment. Mass Save in
+            Massachusetts offers a no-cost assessment; Energize Connecticut’s visit has a $40 copay (no cost below
+            60% of state median income); Minnesota’s Home Energy Squad charges $100 or $70, free for income-qualified
+            households under 80% of area median income. HOMES rebates also start with an energy assessment.
+          </p>
+          <p class="up-meta">
+            <a href={S.doeQcp.href} rel="noopener" target="_blank">DOE qualified certification programs&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+          <p class="side-links"><a href="/us/cost/">What an audit costs →</a> <a href="/us/find/">Find a certified auditor →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="up-s" id="claim-2025" aria-labelledby="claim-h">
+      <h2 class="up-sec" id="claim-h">What you can still claim on a 2025 return</h2>
+      <ol class="up-steps measure">
+        <li><p><strong>25C improvements placed in service on or before December 31, 2025.</strong> 30% of qualified costs, up to $1,200 a year plus up to $2,000 for heat pumps, heat pump water heaters, biomass stoves and boilers. Property placed in service in 2025 needed the manufacturer’s QMID on the return. The credit is nonrefundable.</p></li>
+        <li><p><strong>A home energy audit done in 2025,</strong> up to $150, with the qualified auditor’s signed written report.</p></li>
+        <li><p><strong>25D systems whose installation was completed by December 31, 2025.</strong> 30% of the cost, with no annual or lifetime dollar limit. Paying in 2025 for a system installed in 2026 doesn’t qualify. For new construction or reconstruction, the expenditure counts when original use of the structure begins.</p></li>
+        <li><p><strong>File with IRS Form 5695.</strong> The 2025 instructions were revised April 30, 2026. Check with a tax preparer for your situation.</p></li>
+      </ol>
+      <p class="up-meta">
+        <a href={S.i5695.href} rel="noopener" target="_blank">IRS Form 5695 instructions (2025)&nbsp;↗</a> ·
+        <a href={S.i5695draft.href} rel="noopener" target="_blank">Draft 2026 instructions&nbsp;↗</a> · verified {VERIFIED}
+      </p>
+    </section>
+
+    <section class="up-s" id="left" aria-labelledby="left-h">
+      <h2 class="up-sec" id="left-h">What’s left: state and utility programs, not federal credits</h2>
+      <div class="up-two">
+        <article class="card card-pad lft">
+          <h3><a href="/us/programs/home-energy-rebates/">Home Energy Rebates (HOMES and HEEHR)</a></h3>
+          <p>Federal money, run by states. Taking applications in {taking}; HEEHR no longer pays to replace gas or other fuel-burning equipment.</p>
+          <p class="lk"><a href="/us/programs/states/">Your state’s status →</a></p>
+        </article>
+        <article class="card card-pad lft">
+          <h3><a href="/us/cities/">Utility rebates and audits</a></h3>
+          <p>Our 26 metro guides list utility audit offers and rebates, each with its status as checked on {VERIFIED}.</p>
+          <p class="lk"><a href="/us/cities/">Find your metro →</a></p>
+        </article>
+        <article class="card card-pad lft">
+          <h3><a href="/us/programs/weatherization-assistance-program/">Weatherization Assistance Program</a></h3>
+          <p>Pays for efficiency work for households at or below 200% of federal poverty guidelines, through state and local agencies. Funded for FY2026.</p>
+          <p class="lk"><a href="/us/programs/weatherization-assistance-program/">Who qualifies →</a></p>
+        </article>
+        <article class="card card-pad lft">
+          <h3>State credits and rebate finders</h3>
+          {coCredit && (
+            <p>
+              Some states run their own. Colorado’s heat pump tax credit is claimed by registered contractors, who
+              show it as a discount on your invoice: for installs from January 1, 2026, the air-source heat pump
+              credit is $1,000, with at least $333 discounted to the customer.
+              <a class="up-ext" href={coCredit.url} rel="noopener" target="_blank">Colorado Energy Office&nbsp;↗</a>
+              <a class="up-ext" href="/us/cities/denver/">Denver guide →</a>
+            </p>
+          )}
+          <p>
+            ENERGY STAR’s Rebate Finder searches offers on certified products by ZIP code.
+            <a class="up-ext" href={S.rebateFinder.href} rel="noopener" target="_blank">Rebate Finder&nbsp;↗</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <ProgramFaq faqs={faqs} />
+
+    <div class="up-lf">
+      <LeadFormUS context="us-federal-tax-credits" />
+    </div>
+
+    <ProgramSources sources={sources} verified={VERIFIED} />
+
+    <p class="up-related">
+      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">Home Energy Rebates</a>
+      <a class="btn btn-ghost" href="/us/programs/states/">Rebates by state</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .up-s { padding: 0; }
+  .hero-text :global(.pstat) { margin-top: 6px; }
+  .crs { display: grid; gap: 16px; }
+  .cr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr); gap: 16px 36px; min-width: 0; }
+  @media (max-width: 860px) { .cr { grid-template-columns: 1fr; } }
+  .cr-a { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .cr .eyebrow { margin: 0; }
+  .cr h3 { margin: 0; font-size: 20px; }
+  .cr-a .up-meta { line-height: 1.7; }
+  .cr-b { grid-template-columns: minmax(120px, max-content) minmax(0, 1fr); font-size: 14.5px; }
+  .cr-b dd { color: var(--muted); }
+  @media (max-width: 520px) { .cr-b { grid-template-columns: 1fr; } }
+  .side { margin: 0; }
+  .side-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 10px 0 0; font-family: var(--display); font-weight: 700; font-size: 15px; }
+  .side-links a { color: var(--heat-deep); text-decoration: none; }
+  .lft { display: flex; flex-direction: column; gap: 8px; }
+  .lft h3 { margin: 0; font-size: 18px; }
+  .lft h3 a { color: var(--ink); text-decoration: none; }
+  .lft h3 a:hover { color: var(--heat-deep); }
+  .lft p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .lft .lk { margin-top: auto; font-family: var(--display); font-weight: 700; font-size: 15px; }
+  .lft .lk a { color: var(--heat-deep); text-decoration: none; }
+</style>

@@ -1,0 +1,90 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import productsData from '../../../data/us/products.json';
+
+const updated = productsData.meta.updated;
+
+const title = 'Home monitoring & testing gear for US homes | AuditYourHome';
+const description =
+  'The monitors, alarms and test kits worth owning in a US home: radon monitors and kits, air quality monitors, HEPA purifiers, UL 2034 CO alarms, dehumidifiers and water test kits. Three picks per category, with the EPA and CPSC guidance behind them.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Gear guides', path: '/us/products/' },
+  ]),
+];
+
+const ELEMENT_LABEL: Record<string, string> = {
+  air: 'Air',
+  water: 'Water & moisture',
+  energy: 'Heat & energy',
+};
+
+// Social card: the shared radon card has "Bq/m³" baked into the image and the default card names
+// NRCan, so the US index uses the moisture card (its label holds up in the US).
+const ogImage = ogFor('mold-testing');
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogImage}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Gear guides</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+      <p class="eyebrow">Gear guides · updated {updated}</p>
+      <h1>Monitor it before you fix it</h1>
+      <p class="lede measure">
+        Radon kits and monitors, air quality sensors, CO alarms, hygrometers and water test kits
+        measure what is going on in your home; purifiers and dehumidifiers act on what they find.
+        Here are three picks per category, what each one is for, and the buying notes nobody puts
+        on the box, tied to EPA and CPSC guidance. The <a href="/us/tests/">testing guide</a>
+        covers which tests your home needs.
+      </p>
+      </div>
+      <Photo name={'radon-testing'} hud="Radon · pCi/L" eager />
+    </div>
+
+    <div class="cat-grid">
+      {productsData.categories.map((c) => (
+        <a class="card card-pad cat" href={`/us/products/${c.slug}/`}>
+          <p class="el">{ELEMENT_LABEL[c.element] ?? c.element}</p>
+          <h2>{c.name}</h2>
+          <p class="short">{c.short}</p>
+          <p class="picks">{c.picks.map((p) => p.name).join(' · ')}</p>
+          <p class="go">See the picks →</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="card card-pad how">
+      <h3>How these lists are made</h3>
+      <p class="mb-0">
+        Picks are widely sold models and kit types that cover each job, chosen on features, running
+        costs and the US guidance they help you follow. Where a price appears, it is the maker's US
+        list price, checked {updated}; we left prices off where we couldn't confirm one.
+        Measurement comes first: every category links to the <a href="/us/tests/">testing guide</a>
+        page that tells you whether you need it at all, and a
+        <a href="/us/find/">certified auditor</a> can tell you which matter most in your home.
+      </p>
+    </div>
+
+    <AffiliateDisclosure />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(310px, 100%), 1fr)); gap: 16px; margin-bottom: 26px; }
+  .cat { text-decoration: none; display: grid; gap: 6px; align-content: start; }
+  .cat:hover { border-color: var(--steel); }
+  .cat .el { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); margin: 0; font-weight: 600; }
+  .cat h2 { font-size: 20px; margin: 0; color: var(--ink); }
+  .cat .short { color: var(--muted); font-size: 14.5px; margin: 0; }
+  .cat .picks { font-size: 13px; color: var(--faint); margin: 2px 0 0; }
+  .cat .go { color: var(--heat-deep); font-weight: 600; font-size: 14px; margin: 4px 0 0; }
+  .how { border-left: 4px solid var(--pine); margin-bottom: 8px; }
+</style>

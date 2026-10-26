@@ -1,0 +1,349 @@
+{
+  "slug": "seattle",
+  "name": "Seattle",
+  "metroName": "Seattle-Tacoma-Bellevue, WA Metropolitan Statistical Area",
+  "states": [
+    "WA"
+  ],
+  "principalCity": "Seattle",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Seattle City Light",
+        "serves": "Community-owned utility serving Seattle and some customers outside city limits (HomeWise notes City Light customers living outside Seattle)",
+        "url": "https://www.seattle.gov/city-light/about-us"
+      },
+      {
+        "name": "Puget Sound Energy (PSE)",
+        "serves": "Electricity and natural gas across a 6,000 sq mi service area primarily in the Puget Sound region of Western Washington (1.26 million electric customers)",
+        "url": "https://www.pse.com/en/about-us"
+      },
+      {
+        "name": "Tacoma Power (Tacoma Public Utilities)",
+        "serves": "Tacoma Power customers in the Tacoma area",
+        "url": "https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/"
+      },
+      {
+        "name": "Snohomish County PUD",
+        "serves": "Snohomish County Public Utility District No. 1 customers",
+        "url": "https://www.snopud.com/save-energy/residential/rebates/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Puget Sound Energy (PSE)",
+        "serves": "Nearly 900,000 natural gas customers in Western Washington",
+        "url": "https://www.pse.com/en/about-us"
+      }
+    ],
+    "notes": "Seattle homes get electricity from Seattle City Light; PSE provides natural gas within its Western Washington service area. Elsewhere in King, Pierce and Snohomish counties electricity may come from PSE, Tacoma Power or Snohomish PUD, so check your bill."
+  },
+  "auditPrograms": [
+    {
+      "name": "PSE In-Home Energy Assessment",
+      "runBy": "Puget Sound Energy",
+      "cost": "Free ('offered at no cost to eligible customers')",
+      "whoQualifies": "Customers with an active PSE electric, gas or combined account in existing single-family homes or attached housing of up to four units sharing a roofline (site-built, manufactured or mobile); not available if the home had a PSE Home Energy Assessment or Home Electrification Assessment in the past five years",
+      "whatYouGet": "Full walkthrough by a trained PSE Energy Guide (attic, crawlspace and everything in between), a custom report with prioritized recommendations, referrals to PSE Recommended Energy Professionals, and guidance on rebates and bill programs",
+      "howToBook": "PSE's online scheduler; questions to HEA@PSE.franklinenergy.com or 425-523-9228",
+      "url": "https://www.pse.com/en/rebates/home-energy-assessment",
+      "status": "open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PSE Online Home Energy Assessment",
+      "runBy": "Puget Sound Energy",
+      "cost": "Free",
+      "whoQualifies": "PSE customers with a myPSE account",
+      "whatYouGet": "5-7 minute online questionnaire with personalized insights and savings tips, tracked against usage graphs",
+      "howToBook": "Complete the online assessment in myPSE",
+      "url": "https://www.pse.com/en/rebates/home-energy-assessment",
+      "status": "open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Seattle HomeWise Weatherization (energy audit for income-qualified households)",
+      "runBy": "City of Seattle Office of Housing",
+      "cost": "Free to eligible households",
+      "whoQualifies": "Income-qualified homeowners and renters in Seattle city limits (thresholds vary by heating fuel and owner/renter status); income-eligible Seattle City Light customers outside the city with electrically heated homes; renters in 2-4 unit buildings where more than half of tenants qualify",
+      "whatYouGet": "Comprehensive home energy audit by a certified Property Rehabilitation Specialist, then city-managed contractors install measures such as insulation, duct and air sealing, ductless heat pumps (electric-heated homes), failing water heater replacement, furnace repair/replacement, fans, refrigerators and oil-to-heat-pump conversion",
+      "howToBook": "Apply online through CiviForm or mail the weatherization application to Seattle Office of Housing, PO Box 94725, Seattle, WA 98124-4725; HomeWise team 206-684-0244, Healthyhome@seattle.gov",
+      "url": "https://www.seattle.gov/housing/homeowners/weatherization",
+      "status": "open (no deadline listed)",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Seattle Clean Heat Program (oil to heat pump)",
+      "runBy": "Seattle Office of Sustainability and Environment; bonus funded by Washington's state HEAR program (Climate Commitment Act)",
+      "category": "heat-pump",
+      "amount": "$2,000 instant rebate when converting from oil heat to a qualified Mitsubishi Electric heat pump through a participating contractor, plus a $4,000 bonus for moderate-income households (81%-150% of area median income, e.g., $116,650-$246,600 for 4 people) - up to $6,000",
+      "whoQualifies": "Seattle households heating with oil; bonus for 81-150% AMI; households below the lower limit may get a free conversion through the Office of Housing; oil tank must be decommissioned per Seattle Fire Department rules",
+      "status": "open; bonus rebates available for installations completed by May 30, 2027",
+      "url": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/seattles-clean-heat-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Seattle City Light heat pump water heater rebate",
+      "runBy": "Seattle City Light",
+      "category": "heat-pump",
+      "amount": "$750 per home via contractor instant discount, $750 instant coupon at Puget Sound-area Home Depot or Lowe's stores, or $750 post-purchase rebate (Tier 3 or 4 NEEA-qualified, ENERGY STAR models)",
+      "whoQualifies": "Seattle City Light residential customers; DIY rebate form due within 93 days of purchase",
+      "status": "open",
+      "url": "https://www.seattle.gov/city-light/residential-services/home-energy-solutions",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Seattle City Light heat pump instant contractor discounts",
+      "runBy": "Seattle City Light (through participating distributors)",
+      "category": "heat-pump",
+      "amount": "Air-source heat pumps under 5.4 tons: SEER2 15.2 with HSPF2 8.1+ $300; HSPF2 8.5+ $400; SEER2 16.0 with HSPF2 9.5+ $600 (instant discount passed through the contractor's bid)",
+      "whoQualifies": "City Light customers using a contractor who buys from a participating distributor; DIY installs not eligible",
+      "status": "open",
+      "url": "https://www.seattle.gov/city-light/residential-services/home-energy-solutions",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PSE heat pump rebate (electric resistance to heat pump)",
+      "runBy": "Puget Sound Energy",
+      "category": "heat-pump",
+      "amount": "$1,500 when replacing electric resistance heat with a qualifying ducted or ductless air-source heat pump; $2,400 for Efficiency Boost (income-qualified) customers",
+      "whoQualifies": "PSE single-family residential electric customers whose primary heat is PSE-supplied electric resistance; must use a PSE Recommended Energy Professional or Trade Ally",
+      "status": "open",
+      "url": "https://www.pse.com/en/rebates/heating/electric-resistance-to-air-source-heat-pump-conversion-rebate",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PSE Moderate-Income Fuel-Switching Heat Pump Program",
+      "runBy": "Puget Sound Energy",
+      "category": "income-qualified",
+      "amount": "$4,000 rebate on a heat pump system",
+      "whoQualifies": "Income-qualified PSE customers currently heating with natural gas (eligibility checked by household size, income and county)",
+      "status": "open",
+      "url": "https://www.pse.com/en/rebates/heating/mi-heatpump",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PSE heat pump water heater rebate",
+      "runBy": "Puget Sound Energy",
+      "category": "heat-pump",
+      "amount": "$1,000 for qualifying Tier 3 or Tier 4 heat pump water heaters; $1,100 through Efficiency Boost",
+      "whoQualifies": "PSE electric customers in existing single-family homes (instant via participating retailers or installers, or post-purchase form)",
+      "status": "open",
+      "url": "https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PSE weatherization rebates (insulation, air and duct sealing, windows) and Efficiency Boost",
+      "runBy": "Puget Sound Energy",
+      "category": "insulation-air-sealing",
+      "amount": null,
+      "whoQualifies": "PSE customers using PSE-approved contractors; PSE says about 50% of its customers qualify for higher Efficiency Boost amounts",
+      "status": "open (rebate amounts are loaded dynamically and were not visible in the page text on 2026-10-12)",
+      "url": "https://www.pse.com/en/rebates/insulation",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Washington State HEAR rebates through local administrators",
+      "runBy": "Washington State Department of Commerce (Climate Commitment Act funds) via local administrators including City of Seattle ($1,616,516 award), King County ($3,775,416), City of Shoreline ($600,000), City of Tacoma ($637,000), Pierce County ($500,000), Energy Smart Eastside, Seattle 2030 District and Spark Northwest",
+      "category": "income-qualified",
+      "amount": "Varies by local administrator; eligible equipment includes heat pumps, induction cooking, heat pump water heaters, heat pump dryers, and panel/wiring upgrades",
+      "whoQualifies": "Households at or below 150% of area median income (plus small businesses and adult family homes); not all administrators serve every group",
+      "status": "operating through local administrators (Commerce awarded $39,323,876 to 40 administrators; page updated September 8, 2026)",
+      "url": "https://www.commerce.wa.gov/energy-incentives/hear/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Tacoma Power home heating and cooling rebates",
+      "runBy": "Tacoma Power",
+      "category": "heat-pump",
+      "amount": "Heat pumps replacing zonal or electric forced-air heat: ductless $1,000 (up to 4 units) or $650 (5+ units); air-source $1,000; variable-speed $2,000 when replacing an electric forced-air furnace. A variable-speed heat pump replacing non-electric heat or an existing heat pump: $1,000. Homes with existing electric heat can also get 7-year 0% loans up to $20,000. Amounts for insulation, windows, duct sealing and thermostats were not checked.",
+      "whoQualifies": "Tacoma Power customers; heat pumps, insulation, windows, duct sealing and thermostats; income-qualified customers may get deferred loans and rebates. Heat pumps must be AHRI-certified, rated at least HSPF2 7.5 and SEER2 14.3, and installed by a Tacoma Power Participating Contractor (DIY installs are not eligible); ductless units must be in the main area of the home",
+      "status": "open; Tacoma Power says program requirements and incentive amounts are 'subject to change without notice'",
+      "url": "https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/heat-pump/",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Snohomish County PUD instant rebates",
+      "runBy": "Snohomish County PUD",
+      "category": "heat-pump",
+      "amount": "Heat pumps, as an instant rebate off the registered contractor's bill: ducted conversion $1,800 (minimum 7.5 HSPF2 / 13.8 SEER2); ducted inverter-driven $2,500 (minimum 8.5 HSPF2 / 13.8 SEER2). Amounts for windows, insulation and water heaters were not checked.",
+      "whoQualifies": "PUD customers working with a PUD-registered contractor (heat pumps, windows, insulation, water heaters); post-purchase rebates for thermostats, heat pump water heaters, washers and dryers within 90 days. Heat pump rebates are for homes where electric heat is the primary heat source: single-family homes, manufactured homes, and units in buildings of up to four attached homes",
+      "status": "open; no end date given",
+      "url": "https://www.snopud.com/save-energy/residential/rebates/heating/",
+      "checked": "2026-10-19"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "not launched: Commerce says it is 'in the final stage of getting U.S. Department of Energy authorization for program launch'; DOE released updated guidance (program notices 26-1 and 26-2) on June 1 and Commerce is evaluating the changes",
+    "programName": "Home Appliance Rebate Program (HARP, Washington's IRA HEAR) and Whole Home Efficiency Rebates (HOMES)",
+    "administrator": "Washington State Department of Commerce; Guidehouse selected as third-party rebate administrator (announced September 16, 2025)",
+    "summary": "Rebates will cover electric wiring and panels, insulation, air sealing, ventilation, appliances and heat pumps for households at or below 150% AMI (renters, homeowners and multifamily owners). Rebates are not retroactive; you must be approved before buying. A Qualified Contractor Network is enrolling and training contractors. Separately, the state-funded (Climate Commitment Act) HEAR program is already running through local administrators.",
+    "url": "https://www.commerce.wa.gov/energy-incentives/ira-home-energy-rebates/",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program - local agencies",
+      "runBy": "Washington Commerce through local agencies: Seattle Office of Housing (King County within Seattle, 206-684-0244); King County Housing Authority (King County outside Seattle, 206-214-1240); MDC (Pierce County within Tacoma, 253-593-2336); Pierce County Human Services (outside Tacoma, 253-798-4445); Snohomish County Human Services (425-388-7205)",
+      "summary": "Free insulation, air sealing, ventilation and related repairs for households up to 200% of the federal poverty level, 60% of state median income or 80% of area median income.",
+      "url": "https://www.commerce.wa.gov/weatherization/"
+    },
+    {
+      "name": "Seattle HomeWise Weatherization and free oil-to-electric (Clean Heat) conversions",
+      "runBy": "City of Seattle Office of Housing",
+      "summary": "Free audit and upgrades (average one-time savings listed as up to $18,000 for weatherization and up to $24,000 for oil-to-electric conversions); renters can participate with landlord agreement (3-year rent covenant for heat pump installs).",
+      "url": "https://www.seattle.gov/housing/homeowners/weatherization/oil-to-electric-program"
+    },
+    {
+      "name": "PSE Efficiency Boost",
+      "runBy": "Puget Sound Energy",
+      "summary": "Higher rebates for income-qualified customers on heat pumps, insulation, windows, water heaters, appliances and thermostats; PSE says about half its customers qualify.",
+      "url": "https://www.pse.com/en/rebates/efficiency-boost"
+    },
+    {
+      "name": "Seattle Utility Discount Program (as described by OSE)",
+      "runBy": "City of Seattle",
+      "summary": "Income-qualified households get a 60% discount on electric heating costs if they switch from oil to electric heat, plus 50% off water and sewer.",
+      "url": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/seattles-clean-heat-program"
+    },
+    {
+      "name": "Washington State HEAR (local administrators)",
+      "runBy": "Washington Commerce and local administrators (City of Seattle, King County, Pierce County, City of Tacoma, City of Shoreline and others)",
+      "summary": "Rebates for heat pumps and electric appliances for households at or below 150% AMI.",
+      "url": "https://www.commerce.wa.gov/energy-incentives/hear/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Seattle Energy Benchmarking (SMC 22.920)",
+      "appliesTo": "Non-residential and multifamily buildings over 20,000 sq ft. Does not affect single-family homeowners.",
+      "summary": "Owners track energy performance and report each calendar year's data by June 1 of the following year; data is published.",
+      "url": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/energy-benchmarking"
+    },
+    {
+      "name": "Seattle Building Emissions Performance Standard (BEPS)",
+      "appliesTo": "Non-residential and multifamily buildings over 20,000 sq ft. Does not affect single-family homeowners.",
+      "summary": "Benchmarking verification and greenhouse gas reports due 2027-2030 depending on size; initial emissions targets 2031-2035; net-zero emissions by 2041-2050.",
+      "url": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/building-emissions-performance-standard"
+    },
+    {
+      "name": "Washington Clean Buildings Performance Standard",
+      "appliesTo": "Large buildings only: Tier 1 covered buildings over 50,000 sq ft; Tier 2 buildings over 20,000 sq ft up to 50,000 sq ft and all multifamily residential buildings over 20,000 sq ft. Not single-family homes.",
+      "summary": "Tier 1 reporting deadlines June 1, 2026 (over 220,000 sq ft), June 1, 2027 (90,001-220,000) and June 1, 2028 (50,001-90,000); Tier 2 reporting due July 1, 2027.",
+      "url": "https://www.commerce.wa.gov/cbps/"
+    }
+  ],
+  "notes": "No time-of-sale or rental energy disclosure requirement for single-family homes was found on the Seattle or Washington Commerce pages reviewed. Seattle's Clean Heat page still says federal IRA HEAR rebates 'are not yet available' while promoting a $4,000 bonus funded by the separate state HEAR program, so two different 'HEAR' programs are in play: the state Climate Commitment Act program (running) and the federal IRA program (not launched). Seattle's goal is to transition all remaining oil-heated homes (estimated 8,000-10,000, down from about 18,000 in 2018) by 2030 through rebates and free conversions; this is a program goal, not a mandate stated on the page. PSE publishes some rebate amounts only in dynamic page elements, so several amounts are recorded as null. Federal home-efficiency tax credits are over: the IRS says 25C covered improvements made through December 31, 2025, and 25D is not available for property placed in service after December 31, 2025.",
+  "sources": [
+    {
+      "label": "Census Bureau July 2023 CBSA delineation file",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    },
+    {
+      "label": "Seattle City Light Home Energy Solutions",
+      "href": "https://www.seattle.gov/city-light/residential-services/home-energy-solutions"
+    },
+    {
+      "label": "Seattle City Light About Us",
+      "href": "https://www.seattle.gov/city-light/about-us"
+    },
+    {
+      "label": "Seattle OSE Clean Heat Program",
+      "href": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/seattles-clean-heat-program"
+    },
+    {
+      "label": "Seattle Office of Housing Weatherization (HomeWise)",
+      "href": "https://www.seattle.gov/housing/homeowners/weatherization"
+    },
+    {
+      "label": "Seattle Office of Housing Oil-to-Electric program",
+      "href": "https://www.seattle.gov/housing/homeowners/weatherization/oil-to-electric-program"
+    },
+    {
+      "label": "Seattle Energy Benchmarking",
+      "href": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/energy-benchmarking"
+    },
+    {
+      "label": "Seattle BEPS",
+      "href": "https://www.seattle.gov/environment/climate-change/buildings-and-energy/building-emissions-performance-standard"
+    },
+    {
+      "label": "WA Commerce IRA Home Energy Rebates",
+      "href": "https://www.commerce.wa.gov/energy-incentives/ira-home-energy-rebates/"
+    },
+    {
+      "label": "WA Commerce Qualified Contractor Network",
+      "href": "https://www.commerce.wa.gov/energy-incentives/qcn/"
+    },
+    {
+      "label": "WA Commerce State HEAR program",
+      "href": "https://www.commerce.wa.gov/energy-incentives/hear/"
+    },
+    {
+      "label": "WA Commerce Weatherization program (local agencies)",
+      "href": "https://www.commerce.wa.gov/weatherization/"
+    },
+    {
+      "label": "WA Commerce Clean Buildings Performance Standard",
+      "href": "https://www.commerce.wa.gov/cbps/"
+    },
+    {
+      "label": "PSE About Us",
+      "href": "https://www.pse.com/en/about-us"
+    },
+    {
+      "label": "PSE Home Energy Assessments",
+      "href": "https://www.pse.com/en/rebates/home-energy-assessment"
+    },
+    {
+      "label": "PSE heating rebates",
+      "href": "https://www.pse.com/en/rebates/heating"
+    },
+    {
+      "label": "PSE heat pump rebate",
+      "href": "https://www.pse.com/en/rebates/heating/electric-resistance-to-air-source-heat-pump-conversion-rebate"
+    },
+    {
+      "label": "PSE moderate-income fuel-switching heat pump",
+      "href": "https://www.pse.com/en/rebates/heating/mi-heatpump"
+    },
+    {
+      "label": "PSE heat pump water heater rebate",
+      "href": "https://www.pse.com/en/rebates/water-heating/heat-pump-water-heater-rebate"
+    },
+    {
+      "label": "PSE Efficiency Boost",
+      "href": "https://www.pse.com/en/rebates/efficiency-boost"
+    },
+    {
+      "label": "PSE weatherization rebates",
+      "href": "https://www.pse.com/en/rebates/insulation"
+    },
+    {
+      "label": "Tacoma Power heating & cooling rebates",
+      "href": "https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/"
+    },
+    {
+      "label": "Tacoma Power heat pump rebates",
+      "href": "https://www.mytpu.org/ways-to-save/for-my-home/heating-cooling/heat-pump/"
+    },
+    {
+      "label": "Snohomish PUD residential rebates",
+      "href": "https://www.snopud.com/save-energy/residential/rebates/"
+    },
+    {
+      "label": "Snohomish PUD heating rebates",
+      "href": "https://www.snopud.com/save-energy/residential/rebates/heating/"
+    },
+    {
+      "label": "IRS 25C credit",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS 25D credit",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    }
+  ]
+}

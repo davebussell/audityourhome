@@ -1,0 +1,435 @@
+{
+  "slug": "san-francisco",
+  "name": "San Francisco",
+  "metroName": "San Francisco-Oakland-Fremont, CA Metropolitan Statistical Area",
+  "states": [
+    "CA"
+  ],
+  "principalCity": "San Francisco",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Pacific Gas and Electric Company (PG&E)",
+        "serves": "Delivers electricity and gas across the metro; about 16 million people in a 70,000 sq mi service area in northern and central California",
+        "url": "https://www.pge.com/en/about/company-information/company-profile.html"
+      },
+      {
+        "name": "CleanPowerSF (community choice aggregator)",
+        "serves": "San Francisco; 'powered by the San Francisco Public Utilities Commission' (PG&E still delivers)",
+        "url": "https://www.cleanpowersf.org/programs-and-rebates-for-residents"
+      },
+      {
+        "name": "Ava Community Energy (community choice aggregator)",
+        "serves": "Default electricity provider for most of Alameda County (and San Joaquin County)",
+        "url": "https://avaenergy.org/community/who-we-serve/"
+      },
+      {
+        "name": "WestLight Energy (formerly Peninsula Clean Energy; community choice aggregator)",
+        "serves": "San Mateo County (launched as Peninsula Clean Energy; renamed WestLight Energy in 2026)",
+        "url": "https://www.westlightenergy.org/about-us/our-story/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Pacific Gas and Electric Company (PG&E)",
+        "serves": "Natural gas across the metro (4.5 million gas customer accounts systemwide)",
+        "url": "https://www.pge.com/en/about/company-information/company-profile.html"
+      }
+    ],
+    "notes": "In community choice aggregator areas (CleanPowerSF, Ava, WestLight, MCE) the CCA buys the power while PG&E delivers electricity and gas and runs the IOU programs. MCE's service area and programs could not be verified: its website blocked automated access on 2026-10-12. Peninsula Clean Energy's website now redirects to WestLight Energy."
+  },
+  "auditPrograms": [
+    {
+      "name": "Home Energy Score California / BayREN Home Energy Score rebate",
+      "runBy": "Bay Area Regional Energy Network (BayREN) and Earth Advantage; funded by PG&E, SDG&E, SoCalGas and SCE ratepayers under the CPUC",
+      "cost": "Cost varies by assessor (BayREN says it depends on factors such as location and home size); the program FAQ says customers who get gas and/or electricity from a CCA or investor-owned utility are eligible for a $250 rebate toward it (Berkeley residents excepted because of BESO)",
+      "whoQualifies": "Any homeowner can hire an assessor; the $250 rebate is for customers whose gas and/or electricity comes from PG&E or a community choice aggregator, except Berkeley residents (BESO already requires scores at sale)",
+      "whatYouGet": "Certified assessor walk-through (most take 45-90 minutes, including attic and crawlspace), a U.S. DOE 1-10 Home Energy Score, a report with energy-use, cost and emissions estimates, and prioritized upgrade recommendations",
+      "howToBook": "Find a certified assessor through BayREN's or homescoreca.org's directory, ask about the $250 rebate (assessors bring the rebate form to the appointment)",
+      "url": "https://www.bayren.org/hes",
+      "status": "open (statewide program page live; no closing date stated)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BayREN EASE Home (Efficiency and Sustainable Energy) program",
+      "runBy": "Bay Area Regional Energy Network (BayREN)",
+      "cost": "Complimentary in-home site visit; for the upgrades BayREN covers 80% of essential weatherization costs and the homeowner co-pay is capped at 20% of the project cost",
+      "whoQualifies": "PG&E customers in a single-family home (4 or fewer units) built before 2010 with household income at or under 120% of area median income; tenants need owner permission; the project must include insulation, duct work or induction cooking",
+      "whatYouGet": "Site visit and dedicated Energy Advisor, fixed-price weatherization (insulation, duct sealing or replacement, air sealing), smart thermostat, weatherstripping, induction cooking upgrades (replacing gas) and required health-and-safety work; 1-year installation warranty",
+      "howToBook": "Check eligibility with BayREN's online income tool and apply at bayren.org/ease-home",
+      "url": "https://www.bayren.org/ease-home",
+      "status": "open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PG&E HomeIntel (free online energy analysis and energy coach)",
+      "runBy": "HEA, administered through PG&E under CPUC oversight",
+      "cost": "Free for eligible PG&E customers",
+      "whoQualifies": "Residential customers with a PG&E electric smart meter, including CCA customers; gas-only PG&E customers are not eligible",
+      "whatYouGet": "Smart-meter-based online energy analysis, custom recommendations, a personal energy coach by email and phone, and monthly progress reports (not an in-home audit)",
+      "howToBook": "Sign up with name, email and ZIP code at join.hea.com",
+      "url": "https://join.hea.com/",
+      "status": "open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PG&E Empower My Home (pilot)",
+      "runBy": "PG&E",
+      "cost": "Free for households under the free-tier income limits (e.g., $80,375 or less for 4 people); reduced cost up to $128,600 for 4 people, with PG&E covering up to 50% (cooking/drying), 80% (space and water heating) or 90% (whole-home electrification)",
+      "whoQualifies": "Income-qualified PG&E customers in select areas; BayREN lists the pilot in select neighborhoods of Oakland and San Francisco (plus Stockton, Fresno and Bakersfield)",
+      "whatYouGet": "Home energy assessment, a contractor-prepared upgrade plan, and installation of heat pump water heater, heat pump HVAC, induction stove, dryer, insulation, duct sealing and panel upgrades as eligible",
+      "howToBook": "Apply online through the Empower My Home site's eligibility form",
+      "url": "https://empower-myhome.com/",
+      "status": "open in pilot areas only",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Equitable Building Decarbonization (EBD) Direct Install - Northern California",
+      "runBy": "Association for Energy Affordability (AEA) as Northern Region administrator for the California Energy Commission",
+      "cost": "No cost to eligible households",
+      "whoQualifies": "Households up to 80% AMI in fossil-fuel-heated homes built before 2020 in initial focus areas; metro focus areas include East and West Oakland, Richmond, the Contra Costa Refinery Corridor, East San Francisco and East Palo Alto",
+      "whatYouGet": "Home assessment and no-cost heat pump and/or heat pump water heater plus possible insulation, air sealing and other electrification measures",
+      "howToBook": "AEA property eligibility form (aea.us.org/ebd-northern), (510) 831-6820 or ebd@aeacleanenergy.org",
+      "url": "https://aea.us.org/ebd-northern/",
+      "status": "AEA invites property reviews; CEC expected first focus-area retrofits in Summer 2026 and a community application process in late 2026",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "CleanPowerSF Electrify Your Home bill credits",
+      "runBy": "CleanPowerSF (San Francisco Public Utilities Commission)",
+      "category": "heat-pump",
+      "amount": "$50/month bill credits: heat pump water heater up to $1,200 (24 months); heat pump heating up to $1,200 (24 months); electric cooking up to $150; electric dryer up to $300; extra $600 (12 more months) for CARE/FERA customers upgrading water or space heating; extra $300 for removing the gas meter after full electrification",
+      "whoQualifies": "CleanPowerSF residential customers; heat pump water heaters installed on or after March 15, 2025, other appliances and meter removal on or after April 14, 2026; DBI permits; water and space heating credits require an electrification rate such as EV2-A or E-ELEC",
+      "status": "open",
+      "url": "https://www.cleanpowersf.org/electrify-your-home",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BayREN EASE Home weatherization subsidy",
+      "runBy": "BayREN",
+      "category": "insulation-air-sealing",
+      "amount": "BayREN covers 80% of essential weatherization upgrades; homeowner pays at most 20% of project cost (fixed pricing)",
+      "whoQualifies": "PG&E customers, homes of 4 or fewer units built before 2010, income at or under 120% AMI",
+      "status": "open",
+      "url": "https://www.bayren.org/ease-home",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "WestLight Energy 0% electrification loan and rebates (San Mateo County)",
+      "runBy": "WestLight Energy (formerly Peninsula Clean Energy)",
+      "category": "financing",
+      "amount": "0% APR loans up to $10,000, no fees, no credit check, 2-5 year terms repaid on the electric bill; separate exclusive rebates for heat pump water heaters and heat pump HVAC (amounts not shown on the page text)",
+      "whoQualifies": "Active WestLight residential customers who own the home, have the PG&E bill in their name with no past-due balance on the last three bills, and use a loan-approved contractor for a heat pump water heater, heat pump HVAC or panel upgrade",
+      "status": "open",
+      "url": "https://www.westlightenergy.org/residential/financing/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BAAQMD Clean HEET (wood stove to heat pump)",
+      "runBy": "Bay Area Air District",
+      "category": "heat-pump",
+      "amount": "$3,000-$10,500 for one wood stove or insert; $6,000-$13,500 for two",
+      "whoQualifies": "Bay Area homeowners replacing operational freestanding wood stoves or wood-burning inserts with electric heat pumps",
+      "status": "closed: application period closed July 14, 2026 (per BayREN, updated July 2026)",
+      "url": "https://www.bayren.org/homeowners/income-qualified-programs",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SF Climate Equity Hub free heat pump water heater",
+      "runBy": "SF Environment Department with Bay View Hunters Point Community Advocates",
+      "category": "income-qualified",
+      "amount": "Full cost of replacing a gas water heater with a heat pump water heater",
+      "whoQualifies": "San Francisco single-family homes or buildings of 4 units or less, household income at or below 80% AMI (e.g., under $124,700 for 4 people), gas water heater more than 8 years old",
+      "status": "paused: the program is 'currently paused as we work to secure additional funding' and the sign-up form is closed; staff still offer technical assistance",
+      "url": "https://www.sfenvironment.org/campaigns/welcome-climate-equity-hub",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Electrify Marin rebates",
+      "runBy": "County of Marin",
+      "category": "appliances",
+      "amount": null,
+      "whoQualifies": "Marin County residents",
+      "status": "closed: 'the Electrify Marin Rebate Program is now closed and will not accept new applications' (page updated July 28, 2026)",
+      "url": "https://www.marincounty.gov/departments/executive/climate-and-sustainability/sustainability/electrify-marin/find-rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "HEEHRA Phase I heat pump rebates (California's IRA Home Electrification and Appliance Rebates)",
+      "runBy": "California Energy Commission, delivered through TECH Clean California",
+      "category": "income-qualified",
+      "amount": "Single-family: up to $8,000 (household income under 80% AMI) or up to $4,000 (80-150% AMI) for a qualifying heat pump HVAC system; multifamily up to $14,000 per unit",
+      "whoQualifies": "Income-qualified owners (or landlords renting to income-qualified households) replacing a non-heat-pump heating system; only through HEEHRA-trained, TECH-certified contractors with a pre-approved reservation",
+      "status": "closed to new applicants: single-family rebates fully reserved statewide since February 24, 2026 (unapproved requests waitlisted; no new income verifications); multifamily fully reserved since September 1, 2026 per TECH",
+      "url": "https://techcleanca.com/incentives/heehrarebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "TECH Clean California single-family heat pump HVAC and heat pump water heater incentives",
+      "runBy": "TECH Clean California (Energy Solutions, under contract with SCE on behalf of California utilities, CPUC oversight)",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "California single-family homes through enrolled contractors",
+      "status": "fully reserved since November 14, 2025; not accepting new reservations",
+      "url": "https://techcleanca.com/incentives/single-family-incentives/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Golden State Rebates (instant retail rebate coupons)",
+      "runBy": "CLEAResult under a contract awarded by SDG&E, supported by PG&E, SoCalGas and SCE",
+      "category": "appliances",
+      "amount": null,
+      "whoQualifies": "California IOU customers buying qualifying products at participating retailers",
+      "status": "ended: SDG&E's rebates page states 'The Golden State Rebates Program's retail rebate offerings have ended' (goldenstaterebates.com returned 404 on 2026-10-12); some utility and county pages still list it",
+      "url": "https://www.sdge.com/rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "GoGreen Home Energy Financing",
+      "runBy": "State of California GoGreen Financing program (the page links to the State Treasurer's residential portal); utilities named do not lend",
+      "category": "financing",
+      "amount": "Loan amounts and rates not stated on the page; it advertises below-market rates, extended terms, no property lien, up to 30% of financing for other improvements, and 0% financing for heat pump heating, cooling and water heating in qualifying communities",
+      "whoQualifies": "Owners (and tenants with owner permission) of single-family homes, townhomes, condos, 2-4 unit buildings and manufactured homes on a site-built foundation who are customers of PG&E, SDG&E, SCE, SoCalGas or City of Palo Alto Utilities; customers of other publicly owned utilities 'may finance most measures'",
+      "status": "open (page modified October 6, 2026)",
+      "url": "https://gogreenfinancing.com/residential",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "closed to new applicants (waitlist only): HEEHRA Phase I single-family fully reserved statewide since 2026-02-24 and multifamily since 2026-09-01 (per TECH); HEEHRA Phase II not yet available; HOMES not available as rebates (some HOMES funds pay for no-cost EBD Direct Install retrofits in selected low-income communities)",
+    "programName": "HEEHRA (Home Electrification and Appliance Rebates) and HOMES (Home Owner Managing Energy Savings)",
+    "administrator": "California Energy Commission (HEEHRA Phase I delivered by TECH Clean California; EBD Direct Install run by three regional administrators)",
+    "summary": "California received $590 million in total for Home Energy Rebates ($290 million HEEHRA awarded June 2024; $291 million HOMES approved January 2025). HEEHRA Phase I paid up to $8,000 (under 80% AMI) or $4,000 (80-150% AMI) toward a heat pump HVAC system through TECH-certified contractors; it launched October 2024, paused February 2025, resumed March 2025, was fully reserved in June 2025, reopened October 2025 and was fully reserved again on February 24, 2026. The HOMES award is split between EBD Direct Install ($130.3 million, no-cost retrofits for low-income households, projects must model at least 20% savings) and a statewide Pay for Performance program ($90.8 million) that has not launched (solicitation concept workshop held August 8, 2025). Note: the CEC Q&A still says multifamily HEEHRA rebates are available, but TECH's incentives page says they were fully reserved as of September 1, 2026.",
+    "url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program / LIHEAP (by county)",
+      "runBy": "CSD local providers: San Francisco Peninsula Energy Programs (San Francisco, 415-416-6660 ext. 402); Spectrum Community Services (Alameda County, 510-881-0300); Contra Costa Employment & Human Services Department Community Services Bureau (925-267-6624); Central Coast Energy Services (San Mateo County, 888-728-3637); Community Action Marin (415-526-7550, listed by CSD for bill and crisis assistance only)",
+      "summary": "Free weatherization (sealing, insulation, window, heating and water heater repair or replacement) and bill assistance for income-eligible owners and renters. CSD's directory lists no weatherization service for Community Action Marin, so Marin weatherization availability is unconfirmed.",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "PG&E Energy Savings Assistance (ESA)",
+      "runBy": "PG&E",
+      "summary": "No-charge upgrades and repairs (heat pump water heaters, furnaces, lighting, refrigerators and more) after an in-home assessment; home must be at least five years old; income guidelines valid through May 31, 2027, or enrollment in programs such as CalFresh, Medi-Cal, LIHEAP or SSI. Call 1-800-933-9555.",
+      "url": "https://www.pge.com/en/save-energy-and-money/energy-saving-programs/energy-savings-assistance-program.html"
+    },
+    {
+      "name": "PG&E Empower My Home (pilot neighborhoods)",
+      "runBy": "PG&E",
+      "summary": "Free or reduced-cost electrification with a home energy assessment for income-qualified customers in select Oakland and San Francisco neighborhoods.",
+      "url": "https://empower-myhome.com/"
+    },
+    {
+      "name": "Equitable Building Decarbonization Direct Install (Northern California)",
+      "runBy": "Association for Energy Affordability for the California Energy Commission",
+      "summary": "No-cost retrofits for households up to 80% AMI in East/West Oakland, Richmond, Contra Costa Refinery Corridor, East San Francisco and East Palo Alto focus areas.",
+      "url": "https://www.energy.ca.gov/programs-and-topics/programs/equitable-building-decarbonization-program/ebd-statewide-direct"
+    },
+    {
+      "name": "CleanPowerSF CARE/FERA bonus",
+      "runBy": "CleanPowerSF",
+      "summary": "CARE or FERA customers get 12 extra months ($600) of bill credits when they electrify water or space heating.",
+      "url": "https://www.cleanpowersf.org/electrify-your-home"
+    },
+    {
+      "name": "SF Climate Equity Hub (paused)",
+      "runBy": "SF Environment Department",
+      "summary": "Free heat pump water heater for San Francisco households at or below 80% AMI; paused pending funding.",
+      "url": "https://www.sfenvironment.org/campaigns/welcome-climate-equity-hub"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Berkeley Building Emissions Saving Ordinance (BESO) - time of sale, small residential",
+      "appliesTo": "Ordinary homeowners selling in Berkeley: single-family homes and duplexes since January 1, 2026; triplexes and fourplexes from January 1, 2028 (assessment-only until then); condos and ADUs excluded",
+      "summary": "Before listing, sellers must get a Home Energy Score from a registered BESO assessor, post it in the MLS listing and include the report in disclosures ($500 fee for non-compliance; reports valid 5 years). Before closing, sellers must either complete upgrades earning six 'Resilience Standard' credits ($150 filing fee), qualify for a heat pump exemption, or defer upgrades to the buyer by depositing $5,000 with the City ($2,500 each from seller and buyer), refunded to the buyer after upgrades are completed within two years. All-electric homes and income-qualified first-time buyers can be exempt. Larger buildings face assessments, benchmarking or both depending on size.",
+      "url": "https://berkeleyca.gov/construction-development/green-building/building-emissions-saving-ordinance-beso/time-sale-energy"
+    },
+    {
+      "name": "Bay Area Air District Rules 9-4 and 9-6 (zero-NOx furnaces and water heaters)",
+      "appliesTo": "Ordinary homeowners when an existing gas furnace or water heater burns out and is replaced; equipment manufactured after the dates must meet the standard",
+      "summary": "Adopted March 15, 2023: zero-NOx emission standards phase in from 2027, 2029 and 2031 depending on size and equipment type, applying only on burnout of current equipment. On November 4, 2026 the Air District Board will consider amendments to Rule 9-6 (small water heaters under 75,000 BTU/hour) that would add some exemptions and extend the compliance date; public comment closes November 1 at 6 PM.",
+      "url": "https://www.baaqmd.gov/rules-and-compliance/rule-development/building-appliances"
+    },
+    {
+      "name": "San Francisco Existing Buildings Energy Ordinance (Environment Code)",
+      "appliesTo": "Large buildings only: non-residential buildings with 10,000 sq ft or more of conditioned space and multifamily buildings with 50,000 sq ft or more. Does not affect ordinary homeowners.",
+      "summary": "Annual ENERGY STAR Portfolio Manager benchmark due May 1 (the 2025 benchmark was due May 1, 2026); commercial buildings also need an energy audit every 5 years; one San Francisco report also satisfies state AB 802.",
+      "url": "https://www.sfenvironment.org/san-franciscos-existing-buildings-ordinance"
+    },
+    {
+      "name": "California Building Energy Benchmarking Program (AB 802)",
+      "appliesTo": "Large buildings only: commercial buildings over 50,000 sq ft with no residential utility accounts, and multifamily buildings over 50,000 sq ft with 17 or more utility accounts. Does not affect ordinary homeowners.",
+      "summary": "Owners report energy use to the California Energy Commission by June 1 every year.",
+      "url": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    }
+  ],
+  "notes": "PG&E's own residential rebates page now lists no home-efficiency rebates (only backup power, EVs and clean-energy incentives); PG&E's listed energy-saving programs include ESA, HomeIntel, Home Energy Checkup (online), AC upgrade financing and GoGreen financing, plus the Empower My Home pilot. BayREN Home+ no longer appears on BayREN's residential pages, and bayren.org/homeplus and /home-plus returned 404 on 2026-10-12; BayREN's current single-family offers are the Home Energy Score rebate, EASE Home, an energy efficiency kit and county contacts. San Francisco's Residential Energy Conservation Ordinance (RECO) could not be verified: sfdbi.org now redirects to the DBI department page on sf.gov, which has no RECO page, so its current status is unconfirmed (null). City of Oakland program pages (oaklandca.gov) and MCE's website blocked automated access, so Oakland-specific city programs and MCE rebates are not verified; Oakland residents can look to the EBD focus areas (East and West Oakland), Empower My Home pilot neighborhoods, Ava, BayREN and the Alameda County WAP provider. Marin County's page still lists Golden State Rebates ($400-$700 for gas-to-heat-pump water heaters), but SDG&E, which holds that contract, says the retail offerings have ended. Federal home-efficiency tax credits are over: the IRS says the Energy Efficient Home Improvement Credit (25C) covered improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) is not available for property placed in service after December 31, 2025.",
+  "sources": [
+    {
+      "label": "Census Bureau July 2023 CBSA delineation file",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    },
+    {
+      "label": "PG&E company profile",
+      "href": "https://www.pge.com/en/about/company-information/company-profile.html"
+    },
+    {
+      "label": "PG&E rebates & incentives",
+      "href": "https://www.pge.com/en/save-energy-and-money/rebates-and-incentives.html"
+    },
+    {
+      "label": "PG&E energy-saving programs",
+      "href": "https://www.pge.com/en/save-energy-and-money/energy-saving-programs.html"
+    },
+    {
+      "label": "PG&E Energy Savings Assistance",
+      "href": "https://www.pge.com/en/save-energy-and-money/energy-saving-programs/energy-savings-assistance-program.html"
+    },
+    {
+      "label": "HomeIntel (HEA for PG&E)",
+      "href": "https://join.hea.com/"
+    },
+    {
+      "label": "Empower My Home (PG&E)",
+      "href": "https://empower-myhome.com/"
+    },
+    {
+      "label": "BayREN single-family residents",
+      "href": "https://www.bayren.org/residential"
+    },
+    {
+      "label": "BayREN EASE Home",
+      "href": "https://www.bayren.org/ease-home"
+    },
+    {
+      "label": "BayREN Home Energy Score rebate",
+      "href": "https://www.bayren.org/hes"
+    },
+    {
+      "label": "BayREN income-qualified programs (Clean HEET status, Empower My Home)",
+      "href": "https://www.bayren.org/homeowners/income-qualified-programs"
+    },
+    {
+      "label": "Home Energy Score California FAQ",
+      "href": "https://www.homescoreca.org/faq"
+    },
+    {
+      "label": "CleanPowerSF Electrify Your Home",
+      "href": "https://www.cleanpowersf.org/electrify-your-home"
+    },
+    {
+      "label": "CleanPowerSF programs for residents",
+      "href": "https://www.cleanpowersf.org/programs-and-rebates-for-residents"
+    },
+    {
+      "label": "SF Climate Equity Hub",
+      "href": "https://www.sfenvironment.org/campaigns/welcome-climate-equity-hub"
+    },
+    {
+      "label": "SF Existing Buildings Energy Ordinance",
+      "href": "https://www.sfenvironment.org/existing-buildings-energy-performance-ordinance"
+    },
+    {
+      "label": "SF Existing Buildings Ordinance overview",
+      "href": "https://www.sfenvironment.org/san-franciscos-existing-buildings-ordinance"
+    },
+    {
+      "label": "SF Department of Building Inspection (sfdbi.org redirect target)",
+      "href": "https://www.sf.gov/departments--department-building-inspection"
+    },
+    {
+      "label": "Berkeley BESO overview",
+      "href": "https://berkeleyca.gov/construction-development/green-building/building-emissions-saving-ordinance-beso"
+    },
+    {
+      "label": "Berkeley BESO time-of-sale requirements",
+      "href": "https://berkeleyca.gov/construction-development/green-building/building-emissions-saving-ordinance-beso/time-sale-energy"
+    },
+    {
+      "label": "Bay Area Air District Rules 9-4 and 9-6",
+      "href": "https://www.baaqmd.gov/rules-and-compliance/rule-development/building-appliances"
+    },
+    {
+      "label": "Ava Community Energy - Who We Serve",
+      "href": "https://avaenergy.org/community/who-we-serve/"
+    },
+    {
+      "label": "Ava incentive finder",
+      "href": "https://avaenergy.org/go-electric/savings-incentives/"
+    },
+    {
+      "label": "WestLight Energy financing",
+      "href": "https://www.westlightenergy.org/residential/financing/"
+    },
+    {
+      "label": "WestLight Energy rebates & offers",
+      "href": "https://www.westlightenergy.org/residential/rebates-offers/"
+    },
+    {
+      "label": "WestLight Energy - Our Story (PCE renamed 2026)",
+      "href": "https://www.westlightenergy.org/about-us/our-story/"
+    },
+    {
+      "label": "County of Marin - Electrify Marin find rebates",
+      "href": "https://www.marincounty.gov/departments/executive/climate-and-sustainability/sustainability/electrify-marin/find-rebates"
+    },
+    {
+      "label": "SDG&E rebates (Golden State Rebates ended)",
+      "href": "https://www.sdge.com/rebates"
+    },
+    {
+      "label": "AEA EBD Northern California",
+      "href": "https://aea.us.org/ebd-northern/"
+    },
+    {
+      "label": "CEC EBD Statewide Direct Install",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/equitable-building-decarbonization-program/ebd-statewide-direct"
+    },
+    {
+      "label": "CEC IRA residential energy rebate programs",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs"
+    },
+    {
+      "label": "TECH Clean California HEEHRA",
+      "href": "https://techcleanca.com/incentives/heehrarebates/"
+    },
+    {
+      "label": "TECH Clean California incentives updates",
+      "href": "https://techcleanca.com/incentives/"
+    },
+    {
+      "label": "TECH Clean California single-family incentives",
+      "href": "https://techcleanca.com/incentives/single-family-incentives/"
+    },
+    {
+      "label": "GoGreen Home Energy Financing",
+      "href": "https://gogreenfinancing.com/residential"
+    },
+    {
+      "label": "CSD Weatherization Assistance Program",
+      "href": "https://csd.ca.gov/Pages/Residential-Energy-Efficiency.aspx"
+    },
+    {
+      "label": "CSD Directory of Service Providers (CSV)",
+      "href": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "label": "CEC Building Energy Benchmarking Program",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    },
+    {
+      "label": "IRS 25C credit",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS 25D credit",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    }
+  ]
+}

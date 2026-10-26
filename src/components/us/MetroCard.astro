@@ -1,0 +1,66 @@
+---
+/**
+ * Metro card for the US home page grid ("main": the program most residents would start with) and
+ * the city index ("cheapest": the lowest published audit price, plus utilities and the federal
+ * Home Energy Rebates status).
+ */
+import type { Metro } from '../../lib/us/data';
+import { mainAudit, cheapestAudit, auditTags, mainUtilities, herStatus } from '../../lib/us/metro-view';
+
+interface Props {
+  m: Metro;
+  variant?: 'main' | 'cheapest';
+}
+const { m, variant = 'main' } = Astro.props;
+const audit = variant === 'main' ? mainAudit(m) : cheapestAudit(m) ?? mainAudit(m);
+const tags = audit ? auditTags(audit) : [];
+const states = (m.data.states ?? []) as string[];
+const her = variant === 'cheapest' ? herStatus(m) : null;
+const utils = variant === 'cheapest' ? mainUtilities(m, 3) : [];
+---
+
+<a class:list={['mc', `mc-${variant}`]} href={`/us/cities/${m.slug}/`}>
+  <span class="mc-top">
+    <span class="mc-name">{m.data.name}</span>
+    <span class="mc-rank" title="Rank by 2025 Census population estimate">#{m.rank}</span>
+  </span>
+  <span class="mc-st">{states.join(' · ')}</span>
+  {utils.length > 0 && <span class="mc-utils"><span class="k">Utilities</span> {utils.join(' · ')}</span>}
+  {audit ? (
+    <span class="mc-audit">
+      <span class="k">{variant === 'main' ? 'Main audit program' : 'Lowest published audit cost'}</span>
+      <span class:list={['mc-cost', { free: audit.cost.kind === 'free' }]}>{audit.cost.label}</span>
+      <span class="mc-prog">{audit.name}{tags.length > 0 && <span class="mc-tags"> · {tags.join(' · ')}</span>}</span>
+    </span>
+  ) : (
+    <span class="mc-audit"><span class="k">Audit program</span> <span class="mc-prog">None open in our research</span></span>
+  )}
+  {her && (
+    <span class="mc-her">
+      <span class="k">Federal Home Energy Rebates</span>
+      <span class={`chip ${her.chip.cls}`}>{her.chip.label}</span>
+    </span>
+  )}
+</a>
+
+<style>
+  .mc {
+    display: grid; gap: 8px; align-content: start; height: 100%;
+    padding: 14px 16px 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    text-decoration: none; color: var(--ink); min-width: 0;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .mc:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .mc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .mc-name { font-family: var(--display); font-weight: 800; font-size: 17px; line-height: 1.2; }
+  .mc-rank { font-family: var(--mono); font-size: 11.5px; color: var(--faint); flex-shrink: 0; }
+  .mc-st { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--heat-deep); margin-top: -4px; }
+  .k { display: block; font-family: var(--display); font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); margin-bottom: 1px; }
+  .mc-utils { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+  .mc-audit { display: grid; gap: 2px; }
+  .mc-cost { font-family: var(--display); font-weight: 800; font-size: 16px; line-height: 1.25; color: var(--ink); }
+  .mc-cost.free { color: var(--pine); }
+  .mc-prog { font-size: 13.5px; line-height: 1.45; color: var(--muted); overflow-wrap: anywhere; }
+  .mc-tags { font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em; color: var(--faint); }
+  .mc-her { display: grid; gap: 3px; justify-items: start; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 2px; }
+</style>

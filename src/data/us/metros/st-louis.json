@@ -1,0 +1,290 @@
+{
+  "slug": "st-louis",
+  "name": "St. Louis",
+  "metroName": "St. Louis, MO-IL Metropolitan Statistical Area",
+  "states": [
+    "MO",
+    "IL"
+  ],
+  "principalCity": "St. Louis, MO",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Ameren Missouri",
+        "serves": "Electric service on the Missouri side, including St. Louis City. Ameren calls itself 'the largest electric power provider in Missouri', and the City's 2025 climate plan names 'the investor-owned utilities Ameren and Spire' as the city's suppliers.",
+        "url": "https://www.ameren.com/missouri/residential/energy-efficiency"
+      },
+      {
+        "name": "Ameren Illinois",
+        "serves": "Ameren's Illinois utility, the main electric and gas provider on the Illinois side of the metro. Its programs run through AmerenIllinoisSavings.com. County-level boundaries were not checked.",
+        "url": "https://amerenillinoissavings.com/residential/energy-efficiency-home-upgrades/single-family-homeowners/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Spire (Spire Missouri, 'Eastern Missouri' region)",
+        "serves": "Natural gas for St. Louis City and County. Spire's site maps ZIP codes beginning 630-639 to its 'Eastern Missouri' region.",
+        "url": "https://www.spireenergy.com/rebates"
+      },
+      {
+        "name": "Ameren Illinois (gas)",
+        "serves": "Natural gas on the Illinois side of the metro. Ameren Illinois 'ranks as Illinois' third largest natural gas distribution operation'.",
+        "url": "https://www.ameren.com/about-ameren"
+      }
+    ],
+    "notes": "Most St. Louis-area homes on the Missouri side have Ameren Missouri electricity and Spire gas, and the two run the income-qualified CommunitySavers program together. Ameren Missouri's electric programs (PAYS, HVAC PAYS) don't apply in Illinois; Illinois-side homes use AmerenIllinoisSavings.com instead. Cooperative and municipal utilities in the outer counties were not checked."
+  },
+  "auditPrograms": [
+    {
+      "name": "Ameren Missouri Pay As You Save (PAYS) free home energy assessment",
+      "runBy": "Ameren Missouri",
+      "cost": "Free and 'no-obligation'. Upgrades are paid off through a fixed monthly charge on the electric bill, which includes 3% interest and a small close-out fee. Ameren says 'This is not a loan'. There is no credit check, the charge stays with the meter, and it must be no more than 80% of estimated monthly savings, or a copay is offered.",
+      "whoQualifies": "All Ameren Missouri residential electric customers. Renters need written owner consent. Mobile homes must be on a permanent foundation and no more than 35 years old. Not available to Illinois customers.",
+      "whatYouGet": "A visit from a trained energy expert who recommends upgrades. Typical upgrades are HVAC, attic insulation, duct sealing, air sealing and LED lighting, installed with little or no upfront cost.",
+      "howToBook": "Complete the PAYS interest form linked from the Ameren PAYS page. Ameren then calls to schedule. The phone number for questions is 1.800.563.2105.",
+      "url": "https://www.ameren.com/efficiency/programs/pays",
+      "status": "Closed for 2026. Ameren Missouri says 'Whole Home PAYS and FastTrack HVAC PAYS are no longer accepting enrollments for 2026' and that the program 'has been fully subscribed for 2026.' No reopening date is given.",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Ameren Missouri CommunitySavers single-family (income-eligible), with Spire",
+      "runBy": "Ameren Missouri in partnership with Spire",
+      "cost": "Free",
+      "whoQualifies": "Active Ameren Missouri electric account in a building with four or fewer units. The household must also (1) be in subsidized housing, (2) have income at or below 80% AMI or 200% of the federal poverty level, or (3) live in an area Ameren designates as high need.",
+      "whatYouGet": "An Energy Advisor assessment (about 2 hours) with immediate installs, and possibly later upgrades taking half a day to two days. Items can include HVAC upgrades, efficient showerheads and aerators, ENERGY STAR refrigerators, LED lighting and attic insulation.",
+      "howToBook": "Use the inquiry form on the Ameren CommunitySavers page or call 1.877.215.5752.",
+      "url": "https://www.ameren.com/efficiency/programs/singlefamily",
+      "status": "Open. 'The program operates through December 31, 2026; however, incentives are dependent on available funds.'",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Ameren Illinois Home Energy Assessment (Illinois side of the metro)",
+      "runBy": "Ameren Illinois Energy Efficiency Program",
+      "cost": "Free for eligible income-qualified households. Other customers get the assessment through a Program Ally contractor; Ameren's page does not state that price.",
+      "whoQualifies": "Free track: single-family homes heated with Ameren Illinois gas or electricity (or Ameren electric customers heating with propane) who meet income limits. Renters in single-family homes or duplexes need owner consent.",
+      "whatYouGet": "An Energy Advisor assessment with free install of LEDs, faucet aerators and an advanced power strip. Insulation, air sealing and ventilation upgrades may follow at little or no cost.",
+      "howToBook": "Check eligibility online at il-aleet.com or use the printable application from AmerenIllinoisSavings.com.",
+      "url": "https://amerenillinoissavings.com/residential/energy-efficiency-home-upgrades/single-family-homeowners/",
+      "status": "Open as of 2026-10-12. The printable application is labeled 2026.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Missouri Certified Home Energy Auditor directory",
+      "runBy": "Missouri Department of Natural Resources, Division of Energy",
+      "cost": "Set by each auditor (private service)",
+      "whoQualifies": "Any Missouri homeowner. Listed auditors 'may provide services anywhere in Missouri.'",
+      "whatYouGet": "A state list of all Missouri Certified Home Energy Auditors. Inclusion is not an endorsement.",
+      "howToBook": "Contact auditors directly from the DNR directory",
+      "url": "https://dnr.mo.gov/energy/efficiency/home-audits/find-auditor",
+      "status": "Directory published as of 2026-10-12",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Ameren Missouri PAYS heating and cooling rebates (2026)",
+      "runBy": "Ameren Missouri",
+      "category": "heat-pump",
+      "amount": "Air-source heat pump at 15.2+ SEER2 (replacing a heat pump, replacing electric resistance, or where there's no central system): $2,000 per system. Dual-fuel air-source heat pump at 15.2+ SEER2: $2,000 per system. Ground-source heat pump at 23+ EER: $5,000 per system. Mini-split AC or heat pump at 19+ SEER2: $500 per ton. Central AC at 15.2+ SEER2: $1,000 per system. Smart thermostat: $250.",
+      "whoQualifies": "Ameren Missouri electric customers enrolled in 'tier 4 of the PAYS program' who have lived in the home for the past 12 months. Homes with existing non-electric heat 'must maintain that heat source (as primary or backup)', and Ameren 'does not promote fuel switching'. No new construction. AC replacements must meet failure, age or 14-SEER-or-less conditions.",
+      "status": "Closed for 2026. Ameren Missouri says 'Whole Home PAYS and FastTrack HVAC PAYS are no longer accepting enrollments for 2026' and that the program 'has been fully subscribed for 2026.' No reopening date is given.",
+      "url": "https://www.ameren.com/efficiency/programs/pays",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Spire Missouri (Eastern Missouri) natural gas appliance and insulation rebates",
+      "runBy": "Spire",
+      "category": "appliances",
+      "amount": "Gas furnace: $300 at 96%+ AFUE, $200 at 92% to under 96%. Gas boiler at 90%+: $300. Combined space and water heating at 90%+: $450. Tankless water heater (0.80+ UEF): $300. Storage water heater: $200 for 20-55 gal (0.64+ UEF), $350 for 55-100 gal (0.76+ UEF). Attic, ceiling or floor insulation to R38 or more: $0.40 per sq ft up to $750. Programmable thermostat: $25 or 50% of cost, whichever is lower. Smart or Wi-Fi thermostat: $75.",
+      "whoQualifies": "Residences with an active Spire account. A licensed HVAC or plumbing contractor must install the equipment; only thermostats may be self-installed. Rebates are paid as a prepaid card.",
+      "status": "Open as of 2026-10-12. The Missouri form dated 10/2025 says a rebate 'can be obtained up to one year after the purchase and installation'.",
+      "url": "https://www.spireenergy.com/location_aware_panel/5946/Eastern%20Missouri",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Ameren Illinois insulation discounts (Illinois side)",
+      "runBy": "Ameren Illinois Energy Efficiency Program",
+      "category": "insulation-air-sealing",
+      "amount": "2026 discount rates: attic insulation $1.10 per sq ft, wall insulation $1.10 per sq ft, rim joist insulation $2.00 per linear ft",
+      "whoQualifies": "Eligible Ameren Illinois customers. Work goes through a Program Ally contractor after a Home Energy Assessment.",
+      "status": "Open for 2026",
+      "url": "https://amerenillinoissavings.com/residential/home-energy-audit/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Illinois Energy Efficiency Loan Program: Ameren Illinois on-bill financing (Illinois side)",
+      "runBy": "Energy Finance Solutions with Ameren Illinois",
+      "category": "financing",
+      "amount": "$500-$20,000 unsecured at 7.49% fixed for 1-10 years (7- and 10-year terms need loans over $8,000), repaid on the utility bill",
+      "whoQualifies": "Ameren Illinois customers in 1-4 unit homes, condos and mobile homes whose accounts meet utility eligibility standards",
+      "status": "Listed as available as of 2026-10-12. The ComEd shutdown notice on the same site does not apply to Ameren.",
+      "url": "https://www.ilenergyloan.com/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Missouri Show Me Green Sales Tax Holiday",
+      "runBy": "Missouri Department of Revenue",
+      "category": "appliances",
+      "amount": "Qualifying ENERGY STAR certified new appliances are exempt from 'all state and local sales and use taxes' during the holiday",
+      "whoQualifies": "Purchases in Missouri during the holiday window",
+      "status": "Annual, 'begins April 19 and continues through April 25'. The 2026 window has passed; the next is April 19-25, 2027.",
+      "url": "https://dor.mo.gov/business/sales/taxholiday/green/",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "not launched (as of 2026-10-12). Missouri says rebates 'may not be made available until 2027 at the earliest and potentially as late as 2028'. Illinois side also not launched (pending USDOE approval).",
+    "programName": "Missouri IRA Home Energy Rebates: HOMES and HEEHR/HEAR (Sections 50121 and 50122)",
+    "administrator": "Missouri Department of Natural Resources, Division of Energy, with the Environmental Improvement and Energy Resources Authority (EIERA) procuring an implementer",
+    "summary": "Missouri expects $76 million for HOMES and $75 million for HEEHR. DNR submitted its application to DOE on November 22, 2024. DNR says details 'are not finalized', it 'cannot provide an estimate as to when rebates will be available', and 'The rebates may not be made available until 2027 at the earliest and potentially as late as 2028.' Rebates are expected to stack with utility rebates. On the Illinois side, Illinois EPA's HOMES and HEAR also have not launched ('The program launch is pending USDOE approval').",
+    "url": "https://dnr.mo.gov/energy/what-were-doing/inflation-reduction-act-home-energy-rebates-program",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Missouri Low-Income Weatherization Assistance Program",
+      "runBy": "Missouri DNR Division of Energy through 18 local agencies. St. Louis City: Urban League of Metropolitan St. Louis, 314-615-3600. St. Louis County: Community Action Agency of St. Louis County, 314-863-0015. St. Charles, Lincoln and Warren: North East Community Action Corp. (NECAC), 573-324-2231. Franklin and Jefferson: Jefferson-Franklin Community Action Corp., 636-789-2686.",
+      "summary": "Free cost-effective efficiency work for eligible low-income households. You apply to your local agency with income documents, an agency auditor does an energy audit, a crew or contractor installs the measures, and a quality-control inspection follows. DNR points to DOE poverty guidelines for income limits.",
+      "url": "https://dnr.mo.gov/energy/weatherization/local-agencies"
+    },
+    {
+      "name": "CommunitySavers (Ameren Missouri and Spire)",
+      "runBy": "Ameren Missouri and Spire",
+      "summary": "Single-family: free assessment and upgrades for households at or below 80% AMI or 200% FPL, in subsidized housing, or in high-need areas (runs through December 31, 2026, subject to funds). Multifamily (3+ units, Spire gas plus Ameren Missouri electric, natural-gas heating or water heating): free programmable thermostats, aerators, showerheads, pipe wrap, and furnace check-ups and cleanings.",
+      "url": "https://www.spireenergy.com/location_aware_panel/11496/Eastern%20Missouri"
+    },
+    {
+      "name": "Illinois Home Weatherization Assistance Program (Metro East)",
+      "runBy": "Illinois DCEO through local agencies. Madison County: Madison County Community Development. St. Clair County: St. Clair County Community Action Agency. Monroe: Western Egyptian Economic Opportunity Council. Jersey, Macoupin and Calhoun: Illinois Valley Economic Development Corporation. Clinton and Bond: BCMW Community Services.",
+      "summary": "Free weatherization up to $20,000 per home for households at or below 200% of the federal poverty level (see the Chicago entry for IHWAP details).",
+      "url": "https://dceo.illinois.gov/communityservices/homeweatherization/communityactionagencies.html"
+    },
+    {
+      "name": "Ameren Illinois income-qualified Home Energy Assessment and upgrades",
+      "runBy": "Ameren Illinois",
+      "summary": "Free assessment, free installed products, and insulation, air sealing and ventilation upgrades at little or no cost for income-qualified single-family households. Work is done by Program Allies.",
+      "url": "https://amerenillinoissavings.com/residential/energy-efficiency-home-upgrades/single-family-homeowners/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "City of St. Louis Building Energy Awareness Ordinance (benchmarking, Ord. 70474, 2017)",
+      "appliesTo": "Large buildings only: 50,000 sq ft and above. Ordinary homeowners are not affected.",
+      "summary": "Requires 'buildings that are 50,000 square feet and above to report energy and water data annually to the City'. The City's 2025 Sustainability and Climate Plan proposes extending benchmarking to buildings of 25,000 sq ft by 2031 and 10,000 sq ft by 2036. That is a plan strategy, not law yet.",
+      "url": "https://www.stlouis-mo.gov/government/departments/planning/sustainability/Sustainable-Policies-and-Ordinances.cfm"
+    },
+    {
+      "name": "City of St. Louis Building Energy Performance Standard (BEPS, Ord. 71132)",
+      "appliesTo": "Large commercial, multifamily, institutional and municipal buildings of 50,000 sq ft and above. Ordinary homeowners are not affected.",
+      "summary": "Passed 26-0. Ordinance 71132 took effect June 4, 2020. Covered buildings must cut energy use to meet performance standards by building type (first compliance 'by May 2025'), reviewed every four years and tracked in ENERGY STAR Portfolio Manager.",
+      "url": "https://www.stlouis-mo.gov/government/city-laws/board-bills/boardbill.cfm?bbDetail=true&BBId=13504"
+    }
+  ],
+  "notes": "As of 2026-10-12: (1) Missouri's IRA rebates won't arrive before 2027 'at the earliest', possibly 2028, and Illinois' are also unlaunched, so neither side of the metro has state IRA rebates. (2) Ameren Missouri's PAYS assessment is free to all residential electric customers with no income test, unlike ComEd in Chicago. Its 2026 heat pump rebates are large ($2,000 air-source, $5,000 ground-source) but tied to PAYS tier 4, and gas-heated homes must keep gas heat as backup. Ameren says PAYS is fully subscribed for 2026 and no longer accepting enrollments. (3) CommunitySavers runs only through December 31, 2026 as published. Ameren's site blocks scripted downloads, so Ameren Missouri pages and the PAYS rebate PDF were read through WebFetch. Spire's region-specific rebate tables load dynamically and were read from Spire's 'Eastern Missouri' location panel. St. Louis County (outside the City) energy rules were not checked. Federal 25C/25D credits ended for property placed in service after 2025 (IRS).",
+  "sources": [
+    {
+      "label": "OMB Bulletin 23-01 (July 21, 2023): MSA delineations",
+      "href": "https://www.whitehouse.gov/wp-content/uploads/2023/07/OMB-Bulletin-23-01.pdf"
+    },
+    {
+      "label": "Ameren Missouri: Residential energy efficiency",
+      "href": "https://www.ameren.com/missouri/residential/energy-efficiency"
+    },
+    {
+      "label": "Ameren Missouri: Pay As You Save (PAYS)",
+      "href": "https://www.ameren.com/efficiency/programs/pays"
+    },
+    {
+      "label": "Ameren Missouri: HVAC PAYS",
+      "href": "https://www.ameren.com/efficiency/programs/hvac-pays"
+    },
+    {
+      "label": "Ameren Missouri: PAYS rebates sheet, valid Jan 1-Dec 31, 2026",
+      "href": "https://www.ameren.com/-/media/files/save-money-energy/energy-efficiency/hvac-pays-incentives.ashx"
+    },
+    {
+      "label": "Ameren Missouri: CommunitySavers single family",
+      "href": "https://www.ameren.com/efficiency/programs/singlefamily"
+    },
+    {
+      "label": "Ameren: About Ameren",
+      "href": "https://www.ameren.com/about-ameren"
+    },
+    {
+      "label": "Spire: Residential rebates",
+      "href": "https://www.spireenergy.com/rebates"
+    },
+    {
+      "label": "Spire: Eastern Missouri rebate panel",
+      "href": "https://www.spireenergy.com/location_aware_panel/5946/Eastern%20Missouri"
+    },
+    {
+      "label": "Spire: Missouri East rebate form (10/2025, PDF)",
+      "href": "https://www.spireenergy.com/sites/default/files/2025-10/25-SR-MOERebateForm_1003.pdf"
+    },
+    {
+      "label": "Spire: Rebate partner programs (CommunitySavers), Eastern Missouri panel",
+      "href": "https://www.spireenergy.com/location_aware_panel/11496/Eastern%20Missouri"
+    },
+    {
+      "label": "Missouri DNR: IRA Home Energy Rebates Program",
+      "href": "https://dnr.mo.gov/energy/what-were-doing/inflation-reduction-act-home-energy-rebates-program"
+    },
+    {
+      "label": "Missouri DNR: Local Weatherization Agencies",
+      "href": "https://dnr.mo.gov/energy/weatherization/local-agencies"
+    },
+    {
+      "label": "Missouri DNR: Low-income Weatherization Assistance",
+      "href": "https://dnr.mo.gov/energy/weatherization/low-income-assistance"
+    },
+    {
+      "label": "Missouri DNR: Find an Energy Auditor",
+      "href": "https://dnr.mo.gov/energy/efficiency/home-audits/find-auditor"
+    },
+    {
+      "label": "Missouri DNR: Energy Financial Assistance Opportunities",
+      "href": "https://dnr.mo.gov/energy/financial-assistance-opportunities"
+    },
+    {
+      "label": "Missouri DOR: Show Me Green Sales Tax Holiday",
+      "href": "https://dor.mo.gov/business/sales/taxholiday/green/"
+    },
+    {
+      "label": "Ameren Illinois: Energy-saving home upgrades (single-family)",
+      "href": "https://amerenillinoissavings.com/residential/energy-efficiency-home-upgrades/single-family-homeowners/"
+    },
+    {
+      "label": "Ameren Illinois: Savings for home insulation upgrades",
+      "href": "https://amerenillinoissavings.com/residential/home-energy-audit/"
+    },
+    {
+      "label": "Illinois EPA: Energy Rebates (IRA HOMES/HEAR)",
+      "href": "https://epa.illinois.gov/topics/energy/residential/energy-rebates.html"
+    },
+    {
+      "label": "Illinois DCEO: Community Action Agencies / LAAs",
+      "href": "https://dceo.illinois.gov/communityservices/homeweatherization/communityactionagencies.html"
+    },
+    {
+      "label": "Illinois Energy Efficiency Loan Program",
+      "href": "https://www.ilenergyloan.com/"
+    },
+    {
+      "label": "City of St. Louis: Sustainable policies and ordinances",
+      "href": "https://www.stlouis-mo.gov/government/departments/planning/sustainability/Sustainable-Policies-and-Ordinances.cfm"
+    },
+    {
+      "label": "City of St. Louis: Board Bill 219 (BEPS), Ordinance 71132",
+      "href": "https://www.stlouis-mo.gov/government/city-laws/board-bills/boardbill.cfm?bbDetail=true&BBId=13504"
+    },
+    {
+      "label": "City of St. Louis: 2025 Sustainability and Climate Plan",
+      "href": "https://www.stlouis-mo.gov/government/departments/planning/sustainability/documents/2025-sustainability-and-climate-plan.cfm"
+    },
+    {
+      "label": "IRS: Energy Efficient Home Improvement Credit (25C)",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    }
+  ]
+}

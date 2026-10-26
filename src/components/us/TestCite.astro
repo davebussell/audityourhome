@@ -1,0 +1,26 @@
+---
+/**
+ * Source line for a threshold, standard, law or price on the US testing pages:
+ * "Source: EPA action level ↗ · verified October 12, 2026".
+ */
+import { US_VERIFIED } from '../../lib/us/data';
+import { shortLabel, type Src } from '../../lib/us/tests';
+
+interface Props {
+  src: Src | Src[];
+  /** Display names, one per source (default: the publisher part of each label) */
+  labels?: string[];
+  /** Render as a <span> inside running text */
+  inline?: boolean;
+  prefix?: string;
+}
+
+const { src, labels, inline = false, prefix = 'Source' } = Astro.props;
+const list = Array.isArray(src) ? src : [src];
+const names = list.map((s, i) => labels?.[i] ?? shortLabel(s.label));
+const Tag = inline ? 'span' : 'p';
+---
+
+<Tag class="cite">{list.length > 1 ? `${prefix}s` : prefix}: {list.map((s, i) => (
+  <Fragment>{i > 0 && ', '}<a href={s.href} rel="noopener" title={s.label}>{names[i]}&nbsp;↗</a></Fragment>
+))} · verified {US_VERIFIED}</Tag>

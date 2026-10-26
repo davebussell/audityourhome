@@ -1,0 +1,51 @@
+---
+/**
+ * US gear strip: points a US page (for example a /us/tests/<slug>/ guide) at the matching
+ * /us/products/ gear guides. Mirrors src/components/GearStrip.astro, which serves the Canadian
+ * pages, but reads src/data/us/products.json and links only to /us/ pages.
+ *
+ * Usage: <GearStripUS categories={['radon-monitors']} heading="Radon gear worth owning" />
+ * Category slugs: radon-monitors, air-quality-monitors, air-purifiers, co-alarms,
+ * dehumidifiers-hygrometers, water-testing.
+ */
+import productsData from '../../data/us/products.json';
+
+interface Props {
+  /** product category slugs to feature */
+  categories: string[];
+  heading?: string;
+}
+const { categories, heading = 'Gear that helps' } = Astro.props;
+const cats = categories
+  .map((slug) => productsData.categories.find((c) => c.slug === slug))
+  .filter(Boolean) as (typeof productsData.categories)[number][];
+---
+
+{cats.length > 0 && (
+  <aside class="gearstrip card" aria-label={heading}>
+    <p class="gs-head">{heading}</p>
+    <div class="gs-row">
+      {cats.map((c) => (
+        <a href={`/us/products/${c.slug}/`} class="gs-item">
+          <strong>{c.name}</strong>
+          <span>{c.short}</span>
+          <em>Compare picks →</em>
+        </a>
+      ))}
+    </div>
+    <p class="gs-note">Independent picks · affiliate-supported · <a href="/us/products/">all gear guides</a></p>
+  </aside>
+)}
+
+<style>
+  .gearstrip { padding: 20px 22px; margin: 26px 0; border-top: 4px solid var(--steel); }
+  .gs-head { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); margin-bottom: 12px; font-weight: 600; }
+  .gs-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 14px; }
+  .gs-item { display: grid; gap: 4px; text-decoration: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; background: var(--paper); }
+  .gs-item:hover { border-color: var(--steel); }
+  .gs-item strong { color: var(--ink); font-size: 15px; }
+  .gs-item span { color: var(--muted); font-size: 13.5px; }
+  .gs-item em { color: var(--heat-deep); font-style: normal; font-weight: 600; font-size: 13.5px; }
+  .gs-note { margin: 12px 0 0; font-size: 12.5px; color: var(--faint); }
+  .gs-note a { color: var(--muted); }
+</style>

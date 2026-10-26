@@ -1,0 +1,44 @@
+---
+/**
+ * A status chip with the source's own status wording beside it (the wording carries the dates and
+ * caveats the chip can't), plus the official link and the date it was checked.
+ */
+import { statusChip } from '../../lib/us/data';
+import { fmtISO, sameAsChip } from '../../lib/us/metro-text';
+
+interface Props {
+  /** the record's status text, as published */
+  text: string | null | undefined;
+  /** ISO date the status was checked */
+  checked?: string | null;
+  href?: string | null;
+  srcLabel?: string;
+  /** override the chip (e.g. a fallback chip computed elsewhere) */
+  chip?: { cls: string; label: string };
+  /** hide the wording (when it's shown elsewhere) */
+  bare?: boolean;
+}
+const { text, checked, href, srcLabel = 'Official page', chip: given, bare = false } = Astro.props;
+const chip = given ?? statusChip(text);
+const showWords = !bare && !sameAsChip(text, chip.label);
+---
+
+<div class="status-line">
+  <span class={`chip ${chip.cls}`}>{chip.label}</span>
+  {showWords && <span class="sl-words">{text ? text : 'The source gives no status.'}</span>}
+  {(href || checked) && (
+    <span class="sl-meta">
+      {href && <a href={href} rel="noopener" target="_blank">{srcLabel}&nbsp;↗</a>}
+      {href && checked && <span aria-hidden="true"> · </span>}
+      {checked && <span>verified {fmtISO(checked)}</span>}
+    </span>
+  )}
+</div>
+
+<style>
+  .status-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+  .status-line .chip { flex-shrink: 0; transform: translateY(-1px); }
+  .sl-words { flex: 1 1 260px; min-width: 0; }
+  .sl-meta { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .sl-meta a { color: var(--steel); overflow-wrap: anywhere; }
+</style>

@@ -16,7 +16,7 @@ const typeLabel =
 
 <article class="card card-pad pcard">
   <div class="top">
-    <h3 class="name"><a href={`/providers/${p.slug}/`}>{p.name}</a></h3>
+    <h3 class="name"><a href={`/ca/providers/${p.slug}/`}>{p.name}</a></h3>
     <span class="chip chip-neutral">{typeLabel}</span>
   </div>
 
@@ -30,9 +30,9 @@ const typeLabel =
 
   <p class="hrs">
     {p.hrsApproved ? (
-      <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
+      <a class="chip chip-active" href="/ca/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
     ) : (
-      <a class="chip chip-neutral" href="/programs/home-renovation-savings-assessment/" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments don't qualify for the $600 rebate">HRSP-approved: No</a>
+      <a class="chip chip-neutral" href="/ca/programs/home-renovation-savings-assessment/" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments don't qualify for the $600 rebate">HRSP-approved: No</a>
     )}
   </p>
 
@@ -57,7 +57,7 @@ const typeLabel =
   </p>
 
   <div class="actions">
-    <a class="btn btn-primary btn-sm" href={`/providers/${p.slug}/`}>Details</a>
+    <a class="btn btn-primary btn-sm" href={`/ca/providers/${p.slug}/`}>Details</a>
     {p.website && (
       <a class="btn btn-ghost btn-sm" href={p.website} rel="noopener nofollow" target="_blank">
         Website

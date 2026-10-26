@@ -1,5 +1,6 @@
 ---
 import { SITE, ACCOUNTS_ENABLED } from '../config/site';
+import { NETLIFY_FORMS, FORM_NAMES } from '../config/forms';
 import { regions } from '../lib/data';
 import { SERVICES, TIMELINES, BUILDINGS, MATCH_CONSENT } from '../lib/account/catalog';
 
@@ -18,7 +19,10 @@ const {
   context = 'general',
 } = Astro.props;
 
-const hasEndpoint = SITE.formEndpoint.length > 0;
+// On Netlify builds the form posts to Netlify Forms (emailed to dave@clickshift.ca); a custom endpoint
+// still works if one is set; otherwise people get the email fallback.
+const netlifyForm = NETLIFY_FORMS;
+const hasEndpoint = netlifyForm || SITE.formEndpoint.length > 0;
 const mailtoFallback = `mailto:${SITE.contactEmail}?subject=Audit%20request%20(${encodeURIComponent(context)})`;
 
 /** Pick the most likely service from the page the form sits on. */
@@ -142,26 +146,37 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
       </div>
     </div>
   ) : hasEndpoint ? (
-    <form method="POST" action={SITE.formEndpoint}>
+    <form
+      method="POST"
+      action={netlifyForm ? '/ca/thanks/' : SITE.formEndpoint}
+      name={netlifyForm ? FORM_NAMES.auditRequest : undefined}
+      data-netlify={netlifyForm ? 'true' : undefined}
+      netlify-honeypot={netlifyForm ? 'bot-field' : undefined}
+      class="lf-netlify"
+      data-context={context}
+    >
+      {netlifyForm && <input type="hidden" name="form-name" value={FORM_NAMES.auditRequest} />}
       <input type="hidden" name="context" value={context} />
+      {netlifyForm && <input type="hidden" name="subject" value={`Audit request (${context})`} />}
+      {netlifyForm && <p class="lf-hide"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>}
       <div class="grid-2">
         <div class="field">
-          <label for="lf-name">Name</label>
-          <input id="lf-name" name="name" type="text" autocomplete="name" required />
+          <label for={`${uid}-f-name`}>Name</label>
+          <input id={`${uid}-f-name`} name="name" type="text" autocomplete="name" maxlength="120" required />
         </div>
         <div class="field">
-          <label for="lf-email">Email</label>
-          <input id="lf-email" name="email" type="email" autocomplete="email" required />
+          <label for={`${uid}-f-email`}>Email</label>
+          <input id={`${uid}-f-email`} name="email" type="email" autocomplete="email" maxlength="200" required />
         </div>
       </div>
       <div class="grid-2">
         <div class="field">
-          <label for="lf-postal">Postal code</label>
-          <input id="lf-postal" name="postal" type="text" autocomplete="postal-code" required />
+          <label for={`${uid}-f-postal`}>Postal code</label>
+          <input id={`${uid}-f-postal`} name="postal" type="text" autocomplete="postal-code" maxlength="7" required />
         </div>
         <div class="field">
-          <label for="lf-region">Area</label>
-          <select id="lf-region" name="region">
+          <label for={`${uid}-f-region`}>Area</label>
+          <select id={`${uid}-f-region`} name="region">
             <option value="">Choose your area…</option>
             {regions.map((r) => (
               <option value={r.slug} selected={r.slug === region}>{r.name}</option>
@@ -171,8 +186,8 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         </div>
       </div>
       <div class="field">
-        <label for="lf-building">Type of building</label>
-        <select id="lf-building" name="building">
+        <label for={`${uid}-f-building`}>Type of building</label>
+        <select id={`${uid}-f-building`} name="building">
           <option value="house">House (detached, semi, row or town)</option>
           <option value="duplex-triplex">Duplex or triplex</option>
           <option value="multi-unit">Multi-unit building (4 or more units)</option>
@@ -181,8 +196,12 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         </select>
       </div>
       <div class="field">
-        <label for="lf-message">What are you planning? <span class="optional">(optional)</span></label>
-        <textarea id="lf-message" name="message" rows="3" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
+        <label for={`${uid}-f-phone`}>Phone <span class="optional">(optional)</span></label>
+        <input id={`${uid}-f-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
+      </div>
+      <div class="field">
+        <label for={`${uid}-f-message`}>What are you planning? <span class="optional">(optional)</span></label>
+        <textarea id={`${uid}-f-message`} name="message" rows="3" maxlength="4000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want the HRSP rebates"></textarea>
       </div>
       <button class="btn btn-primary" type="submit">Request my match</button>
       <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory. See our <a href="/privacy/">privacy note</a>.</p>
@@ -201,6 +220,18 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
 </div>
 
 <script>
+  // Netlify form: record the lead in analytics without any personal details.
+  document.querySelectorAll<HTMLFormElement>('form.lf-netlify').forEach((f) => {
+    f.addEventListener('submit', () => {
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+      try {
+        w.gtag?.('event', 'generate_lead', { form_name: 'audit_request', country: 'ca', page_context: f.dataset.context });
+      } catch {
+        /* analytics is optional */
+      }
+    });
+  });
+
   // Account-backed lead form: hold the request, confirm the email with a code,
   // then release it. The account code loads only when someone submits.
   const AREA_PROVINCE: Record<string, string> = {
@@ -306,6 +337,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   .leadform h3 { margin-bottom: 4px; }
   .optional { font-weight: 400; color: var(--faint); }
   .consent { margin-top: 12px; }
+  .lf-hide { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .fallback { display: grid; gap: 10px; justify-items: start; }
   .leadform input[type='tel'] {
     width: 100%; font-family: var(--body); font-size: 16px; color: var(--ink); background: #fff;

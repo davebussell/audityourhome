@@ -1,0 +1,126 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  yardstick: S('billAnalysis', 'former Home Energy Yardstick'),
+  saveAtHome: S('billAnalysis', 'Energy Savings at Home'),
+  gb: S('billAnalysis', 'DOE - Green Button'),
+  gba: S('billAnalysis', 'Green Button Alliance'),
+  bpi: S('billAnalysis', 'BPI - Standards'),
+  irs: S('hersIndex', 'IRS'),
+};
+
+const faqs = [
+  {
+    q: 'Is ENERGY STAR’s Home Energy Yardstick still available?',
+    a: 'It appears to be gone. Its former address now redirects to ENERGY STAR’s general “Energy Savings at Home” page, which doesn’t mention the Yardstick. We found no official retirement notice.',
+    src: [src.yardstick, src.saveAtHome],
+  },
+  {
+    q: 'What is Green Button?',
+    a: 'An industry-led effort, launched in January 2012, that lets utility customers download their own usage data in a standard format (“Download My Data”) or authorize automatic transfer to third parties with opt-in consent (“Connect My Data”). It’s based on NAESB’s Energy Services Provider Interface (ESPI) standard.',
+    src: [src.gb],
+  },
+  {
+    q: 'How can I tell whether a savings estimate is realistic?',
+    a: 'Ask whether it was calibrated to your actual bills. BPI-2400-S-2015 v.2 is BPI’s standard for calibrating savings predictions to past bills.',
+    src: [src.bpi],
+  },
+  {
+    q: 'Can I still claim the federal tax credit for an energy audit?',
+    a: 'Probably not for a 2026 audit. The IRS page says the Energy Efficient Home Improvement Credit (30% of qualified costs, up to $150 for a home energy audit of your main home) is allowed for qualifying property placed in service on or after January 1, 2023 and before December 31, 2025. That 2026 audits don’t qualify is our reading; the IRS page doesn’t address them directly.',
+    src: [src.irs],
+  },
+];
+
+const sources = [src.yardstick, src.saveAtHome, src.gb, src.gba, src.bpi, src.irs];
+---
+
+<TestPage
+  slug="bill-analysis"
+  title="Utility bill analysis: Green Button data, BPI-2400 and the Home Energy Yardstick | AuditYourHome"
+  description="Your past bills show how your home really uses energy. Downloading usage with Green Button, what BPI-2400 is for, and what happened to the Home Energy Yardstick."
+  heroTitle="Bill analysis: start with the energy you already paid for"
+  glance={[
+    { k: 'Data format', v: 'Green Button (ESPI)', src: src.gb, srcLabel: 'DOE' },
+    { k: 'Early commitments', v: '50+ utilities, 60M+ customers', src: src.gb, srcLabel: 'DOE' },
+    { k: 'Savings calibration', v: 'BPI-2400-S-2015 v.2', src: src.bpi, srcLabel: 'BPI' },
+    { k: 'Home Energy Yardstick', v: 'Appears retired', src: src.yardstick, srcLabel: 'ENERGY STAR' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Bills higher than they should be?"
+  leadSub="Email us your ZIP code and a rough idea of your monthly bills. A person reads every message and replies with certified auditors and utility programs that serve your area."
+>
+  <Fragment slot="lede">
+    Your utility bills are a record of how your home actually uses energy, month by month. They’re what
+    savings predictions should be checked against, and Green Button lets customers of participating
+    utilities download that history in a standard format.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="yard-h">
+    <h2 id="yard-h">What happened to the Home Energy Yardstick</h2>
+    <div class="card card-pad callout">
+      <p class="mb-0">
+        <strong>ENERGY STAR’s Home Energy Yardstick appears to be retired.</strong> Its former address
+        now sends an HTTP 302 redirect to ENERGY STAR’s general “Energy Savings at Home” page, which
+        doesn’t mention the Yardstick. We found no official retirement notice.
+      </p>
+      <TestCite src={[src.yardstick, src.saveAtHome]} labels={['Former Yardstick address', 'ENERGY STAR, energy savings at home']} />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="gb-h">
+    <h2 id="gb-h">Get your data with Green Button</h2>
+    <p class="measure">
+      Green Button is an industry-led effort launched in January 2012, based on NAESB’s Energy Services
+      Provider Interface (ESPI) standard. DOE’s page still cites early commitments from more than 50
+      utilities covering over 60 million homes and businesses, and the Green Button Alliance offers
+      certification testing for Green Button platforms.
+    </p>
+    <ol class="steps">
+      <li>
+        <h3>Look for Green Button in your utility account</h3>
+        <p>“Download My Data” gives you a file of your usage in a standard format. “Connect My Data” lets you authorize automatic transfer to a third party, with your opt-in consent.</p>
+      </li>
+      <li>
+        <h3>Get a full year</h3>
+        <p>A full year of bills, for electricity and any gas, oil or propane, covers every season the house goes through.</p>
+      </li>
+      <li>
+        <h3>Share it with your auditor</h3>
+        <p>Ask that savings estimates be calibrated to it; BPI-2400 is BPI’s standard for doing that.</p>
+      </li>
+    </ol>
+    <TestCite src={[src.gb, src.gba, src.bpi]} labels={['DOE Green Button (updated May 14, 2026)', 'Green Button Alliance', 'BPI standards']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="read-h">
+    <h2 id="read-h">What to look for</h2>
+    <ul>
+      <li>How usage rises and falls with the seasons, against the months when you barely heat or cool.</li>
+      <li>Big jumps from one year to the next with no change in how you live in the house.</li>
+      <li>Whether any savings estimate you’re given was calibrated to these bills.</li>
+    </ul>
+    <p>
+      No official source publishes a price for a bill analysis, so we don’t quote one. The
+      <a href="/us/plan/">Home Energy Planner</a> and <a href="/us/programs/">rebates and programs</a>
+      pages pick up from here.
+    </p>
+    <TestCite src={src.bpi} labels={['BPI standards']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="next-h">
+    <h2 id="next-h">If the bills look high</h2>
+    <ul>
+      <li>Book an assessment with a <a href="/us/tests/blower-door/">blower door test</a> and an <a href="/us/tests/thermal-imaging/">infrared scan</a> to find where the energy goes.</li>
+      <li>Replacing heating or cooling? Ask for a <a href="/us/tests/heat-loss-calc/">Manual J load calculation</a> first.</li>
+    </ul>
+    <ul class="linkrow">
+      <li><a href="/us/find/">Find a certified auditor</a></li>
+      <li><a href="/us/cost/">What an audit costs</a></li>
+    </ul>
+  </section>
+</TestPage>

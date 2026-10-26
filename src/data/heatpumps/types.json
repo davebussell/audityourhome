@@ -1,0 +1,539 @@
+{
+ "checked": "2026-10-19",
+ "types": {
+  "window-heat-pumps": {
+   "slug": "window-heat-pumps",
+   "name": "Window and saddle heat pumps",
+   "parent": "Category entry: maker and owner shown in each line",
+   "sisterBrands": [],
+   "headquarters": null,
+   "manufacturing": null,
+   "soldIn": {
+    "ca": null,
+    "us": true,
+    "evidence": "US: Gradient (to building owners, https://gradientcomfort.com/platform/services), Midea (through distributors, https://www.fastcompany.com/91448042/midea-heat-pump-review), Friedrich Kühl+ (https://www.friedrich.com/consumer/products/kuhl?hsLang=en), Comfort-Aire RAH (https://www.comfort-aire.com/wps/portal/product-info/window-heat-pumps); CA: no cold-climate window heat pump confirmed on sale to Canadian consumers. Gradient's warranty is continental-US only, and Midea had only announced a Canadian pilot (Dec 2025)."
+   },
+   "channel": "dealer and online",
+   "productTypes": [
+    "window or no outdoor unit"
+   ],
+   "lines": [
+    {
+     "name": "Gradient All-Weather 120V (Gradient)",
+     "type": "window or no outdoor unit",
+     "coldClimate": true,
+     "claim": "\"Operates -13 °F to 115 °F\"; 7,026 BTU/hr heating at -13°F (-25°C)",
+     "refrigerant": null,
+     "url": "https://gradientcomfort.com/platform/hardware"
+    },
+    {
+     "name": "Midea window heat pump, PWHP (Midea)",
+     "type": "window or no outdoor unit",
+     "coldClimate": true,
+     "claim": null,
+     "refrigerant": null,
+     "url": "https://www.fastcompany.com/91448042/midea-heat-pump-review"
+    },
+    {
+     "name": "Friedrich Kühl+ heat pump window units (Friedrich, a Rheem company)",
+     "type": "window or no outdoor unit",
+     "coldClimate": false,
+     "claim": "Kühl+ units \"heat effectively down to 45 degrees\" (unit not stated, presumably °F); 230-volt models add backup electric heat",
+     "refrigerant": "R-32",
+     "url": "https://www.friedrich.com/consumer/products/kuhl?hsLang=en"
+    },
+    {
+     "name": "Comfort-Aire RAH-123 / RAH-183, 230V (Heat Controller)",
+     "type": "window or no outdoor unit",
+     "coldClimate": false,
+     "claim": null,
+     "refrigerant": null,
+     "url": "https://www.comfort-aire.com/wps/portal/product-info/window-heat-pumps"
+    }
+   ],
+   "warranty": null,
+   "priceTier": "mixed",
+   "priceNote": "Midea PWHP: US$2,800-3,000 through Midea distributors (Fast Company, Dec 2025). Gradient: no public price; the Boston pilot costs about US$5,400 per apartment including installation and a smart thermostat (WBUR, Feb 2026). Friedrich and Comfort-Aire don't publish prices on their sites.",
+   "strengths": [
+    "Plug-in 120V option (Gradient) with no refrigerant work and about a 30-minute install",
+    "Cold-climate models (Gradient, Midea) keep heating well below 0°F",
+    "Works for renters and apartments where mini-split outdoor units aren't allowed"
+   ],
+   "watchouts": [
+    "Most need up-and-down (sash) windows; Gradient needs at least 26 in of width and weighs 140 lb",
+    "Conventional window heat pumps (e.g., Friedrich Kühl+) stop heating efficiently around 45 degrees and fall back to electric resistance heat",
+    "Limited availability in 2026: Gradient sells only to building owners, Midea's unit goes through distributors and installers, and Canadian availability is minimal",
+    "Small capacities (about 7,000-14,000 BTU/h heating), so plan one unit per room"
+   ],
+   "recentNews": [
+    {
+     "date": "2025-12",
+     "text": "Midea's window heat pump (PWHP) launches commercially in the US through distributors at about $2,800-3,000; a Canadian pilot is announced",
+     "url": "https://www.fastcompany.com/91448042/midea-heat-pump-review"
+    },
+    {
+     "date": "2025-12",
+     "text": "California regulators approve a $115M, six-year CalMTA plan to bring plug-in heat pumps and 120V induction stoves to market (approved late Nov 2025)",
+     "url": "https://www.canarymedia.com/articles/electrification/california-plug-in-heat-pumps-induction-stoves"
+    },
+    {
+     "date": "2026-02",
+     "text": "Gradient launches Nexus fleet controls for building owners",
+     "url": "https://www.engineering.com/gradient-launches-nexus-platform-for-window-heat-pump-fleets/"
+    },
+    {
+     "date": "2026-02",
+     "text": "WBUR: Boston pilots Gradient units; Gradient doesn't sell to consumers, and a US distributor has started selling Midea's window heat pump",
+     "url": "https://www.wbur.org/news/2026/02/10/window-heat-pump-gradient-boston-housing-authority-decarbonization"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Gradient hardware specs",
+     "url": "https://gradientcomfort.com/platform/hardware"
+    },
+    {
+     "title": "Gradient warranty (continental US only)",
+     "url": "https://gradientcomfort.com/warranty"
+    },
+    {
+     "title": "Fast Company: Midea window heat pump review (Dec 2025)",
+     "url": "https://www.fastcompany.com/91448042/midea-heat-pump-review"
+    },
+    {
+     "title": "WBUR: Boston window heat pump pilot (Feb 2026)",
+     "url": "https://www.wbur.org/news/2026/02/10/window-heat-pump-gradient-boston-housing-authority-decarbonization"
+    },
+    {
+     "title": "Canary Media: California plug-in heat pump plan (Dec 2025)",
+     "url": "https://www.canarymedia.com/articles/electrification/california-plug-in-heat-pumps-induction-stoves"
+    },
+    {
+     "title": "Friedrich Kühl (Kühl+ heat pump models)",
+     "url": "https://www.friedrich.com/consumer/products/kuhl?hsLang=en"
+    },
+    {
+     "title": "Friedrich window air conditioners",
+     "url": "https://www.friedrich.com/consumer/products/window-air-conditioners"
+    },
+    {
+     "title": "Comfort-Aire window heat pumps",
+     "url": "https://www.comfort-aire.com/wps/portal/product-info/window-heat-pumps"
+    }
+   ],
+   "notes": "Midea's own HVAC site (mideacomfort.com) blocks automated fetching and midea.com/us lists no window heat pump, so the Midea line rests on press reporting. Fast Company reports Midea's unit is 'designed to heat efficiently' down to -22°F; claim is null because the maker's wording couldn't be checked. A GE Profile window heat pump couldn't be verified: GE Appliances' room air conditioner pages list no heat pump models, and listings may be script-rendered. Canary Media says Gradient and Midea built their units for New York's Clean Heat for All Challenge (NYCHA). Comfort-Aire RAH units are conventional 230V window heat pumps (10,200 and 14,300 BTUH heating); their low-temperature limit and refrigerant couldn't be loaded. Friedrich's Kühl page doesn't give the unit for its '45 degrees' figure. The warranty is null for this category; see the separate Gradient entry for its warranty."
+  },
+  "geothermal": {
+   "slug": "geothermal",
+   "name": "Geothermal (ground-source) heat pump makers",
+   "parent": "Category entry: maker and owner shown in each line",
+   "sisterBrands": [],
+   "headquarters": null,
+   "manufacturing": null,
+   "soldIn": {
+    "ca": true,
+    "us": true,
+    "evidence": "US and CA: ClimateMaster's warranty covers installations 'in the United States of America or Canada' (http://files.climatemaster.com/RP851-climatemaster-residential-standard-warranty.pdf); WaterFurnace runs US and Canada sites (https://www.waterfurnace.com/); Nordic units are made by Maritime Geothermal in Petitcodiac, NB (https://www.nordicghp.com/)"
+   },
+   "channel": "dealer-installed",
+   "productTypes": [
+    "geothermal"
+   ],
+   "lines": [
+    {
+     "name": "WaterFurnace (NIBE)",
+     "type": "geothermal",
+     "coldClimate": true,
+     "claim": "Standard warranty: all parts 10 years with a 5-year labor allowance (7 Series); optional 10-year parts and 10-year labor allowance, depending on the dealer",
+     "refrigerant": "R-454B",
+     "url": "https://www.waterfurnace.com/residential/products/geothermal-heat-pumps/700a11"
+    },
+    {
+     "name": "ClimateMaster (NIBE, via Climate Control Group)",
+     "type": "geothermal",
+     "coldClimate": true,
+     "claim": "\"Standard 10-year limited warranty on all parts\"; 5-year labor allowance; optional warranty extends the labor allowance to 10 years (US and Canada; not transferable)",
+     "refrigerant": null,
+     "url": "https://www.climatemaster.com/homeowner/footer-links/owners-area"
+    },
+    {
+     "name": "GeoComfort / Enertech (Enertech Global, LLC)",
+     "type": "geothermal",
+     "coldClimate": true,
+     "claim": "10-year warranty on all unit components; 5-year labor allowance credit (transferable); optional 'Peace of Mind' one-time compressor and air-coil replacement up to 18 years after installation",
+     "refrigerant": null,
+     "url": "https://geocomfort.com/warranty"
+    },
+    {
+     "name": "Nordic (Maritime Geothermal Ltd.)",
+     "type": "geothermal",
+     "coldClimate": true,
+     "claim": "10-year limited warranty on the compressor and major refrigerant-circuit components, 5 years on other components; 5-year labour allowance on major parts; start-up record due within 90 days",
+     "refrigerant": null,
+     "url": "https://www.nordicghp.com/residential-warranty/"
+    },
+    {
+     "name": "Bosch (Bosch Home Comfort, including FHP water-source)",
+     "type": "geothermal",
+     "coldClimate": true,
+     "claim": null,
+     "refrigerant": null,
+     "url": "https://www.bosch-homecomfort.com/us/en/residential/service/product-warranty-library/heat-pump-geothermal-warranty-documents/"
+    },
+    {
+     "name": "Comfort-Aire / Century geothermal (Heat Controller)",
+     "type": "geothermal",
+     "coldClimate": true,
+     "claim": null,
+     "refrigerant": null,
+     "url": "https://www.comfort-aire.com/wps/portal/product-info/geothermal"
+    }
+   ],
+   "warranty": null,
+   "priceTier": "premium",
+   "priceNote": "None of these makers publish prices; installed cost is quoted by dealers and depends mostly on the ground loop (drilling or trenching).",
+   "strengths": [
+    "Heating capacity doesn't drop with outdoor air temperature, so ground-source suits the coldest regions",
+    "Highest efficiencies of any heat pumps (WaterFurnace 7 Series up to 47.0 EER / 5.2 COP; ClimateMaster Trilogy 45 QE 45.1 EER part-load)",
+    "Most makers include 10-year parts coverage plus labor allowances",
+    "Some units also make domestic hot water (e.g., ClimateMaster Q-Mode)"
+   ],
+   "watchouts": [
+    "'Labor allowances' follow capped schedules and may not cover the full labour bill",
+    "Coverage depends on dealer paperwork (e.g., Nordic start-up record within 90 days; WaterFurnace warranty options depend on the dealer)",
+    "Needs a ground loop and a specialist dealer, and loop quality largely determines performance",
+    "ClimateMaster's standard residential warranty isn't transferable to a new owner"
+   ],
+   "recentNews": [],
+   "sources": [
+    {
+     "title": "WaterFurnace residential geothermal heat pumps",
+     "url": "https://www.waterfurnace.com/residential/products/geothermal-heat-pumps/"
+    },
+    {
+     "title": "WaterFurnace 7 Series 700A11",
+     "url": "https://www.waterfurnace.com/residential/products/geothermal-heat-pumps/700a11"
+    },
+    {
+     "title": "WaterFurnace warranties overview",
+     "url": "https://www.waterfurnace.com/residential/why-waterfurnace/warranties"
+    },
+    {
+     "title": "ClimateMaster home (subsidiary of Climate Control Group, a NIBE company)",
+     "url": "https://www.climatemaster.com/"
+    },
+    {
+     "title": "ClimateMaster residential standard warranty RP851 (PDF)",
+     "url": "http://files.climatemaster.com/RP851-climatemaster-residential-standard-warranty.pdf"
+    },
+    {
+     "title": "ClimateMaster Trilogy 45 QE",
+     "url": "https://www.climatemaster.com/homeowner/side-links/products/product-details/trilogy-variable-speed-packaged-systems/trilogy-qe"
+    },
+    {
+     "title": "GeoComfort (Enertech Global) home",
+     "url": "https://www.geocomfort.com/"
+    },
+    {
+     "title": "GeoComfort warranty",
+     "url": "https://geocomfort.com/warranty"
+    },
+    {
+     "title": "Nordic Heat Pumps (Maritime Geothermal)",
+     "url": "https://www.nordicghp.com/"
+    },
+    {
+     "title": "Nordic residential warranty",
+     "url": "https://www.nordicghp.com/residential-warranty/"
+    },
+    {
+     "title": "Bosch geothermal and heat pump warranty documents",
+     "url": "https://www.bosch-homecomfort.com/us/en/residential/service/product-warranty-library/heat-pump-geothermal-warranty-documents/"
+    },
+    {
+     "title": "Comfort-Aire geothermal",
+     "url": "https://www.comfort-aire.com/wps/portal/product-info/geothermal"
+    }
+   ],
+   "notes": "coldClimate is true for every line because ground-source capacity doesn't depend on outdoor air temperature, not because of a cold-climate certification. WaterFurnace's NIBE ownership (as given in the brief) couldn't be confirmed on a WaterFurnace or NIBE page in this pass because of fetch rate limits; ClimateMaster's site does say 'a NIBE company'. Bosch's 2024 residential geothermal warranty PDF (filename 'bosch_wshp_residential_10yr_warranty_01.2024') and its residential water-to-air product page couldn't be read (fetch proxy rate limit), so its claim and refrigerant are null. Carrier and Bryant geothermal pages couldn't be checked for the same reason and aren't listed. Refrigerant is null where the maker page didn't name it; ClimateMaster's product URLs mention 'LGWP' (low-GWP) Tranquility systems. Canadian makers also worth checking before publishing: Hydron Module and GeoSmart Energy (not verified here)."
+  },
+  "gradient": {
+   "slug": "gradient",
+   "name": "Gradient",
+   "parent": "Gradient, a privately held startup (founder and CTO Vince Romanin). No change of control found.",
+   "sisterBrands": [],
+   "headquarters": "San Francisco, California, USA",
+   "manufacturing": null,
+   "soldIn": {
+    "ca": false,
+    "us": true,
+    "evidence": "US: sold to building owners through Gradient sales, with deployments in Boston, Detroit, Washington DC, New York (NYCHA) and Providence RI (https://www.engineering.com/gradient-launches-nexus-platform-for-window-heat-pump-fleets/ , https://gradientcomfort.com/platform/services); CA: the warranty is 'valid only in the Continental United States' (https://gradientcomfort.com/warranty)"
+   },
+   "channel": "dealer-installed",
+   "productTypes": [
+    "window or no outdoor unit"
+   ],
+   "lines": [
+    {
+     "name": "Gradient All-Weather 120V Window Heat Pump",
+     "type": "window or no outdoor unit",
+     "coldClimate": true,
+     "claim": "\"All-season comfort: Operates -13 °F to 115 °F\"; heating 9,000 BTU/hr at 47-17°F, 7,200 BTU/hr at 5°F (-15°C), 7,026 BTU/hr at -13°F (-25°C), COP 1.59 at -13°F",
+     "refrigerant": null,
+     "url": "https://gradientcomfort.com/platform/hardware"
+    }
+   ],
+   "warranty": {
+    "us": {
+     "parts": 5,
+     "compressor": null,
+     "registrationRequired": false,
+     "ifNotRegistered": "No registration is mentioned; claims need the serial number and proof of ownership. Coverage starts at installation or 90 days after shipment, whichever is earlier.",
+     "labour": "Year 1 only ('One year parts and labor', then 'Four additional years of parts coverage')",
+     "url": "https://gradientcomfort.com/warranty"
+    },
+    "ca": null
+   },
+   "priceTier": "mid",
+   "priceNote": "No public price; the shop page says 'Contact sales' and Gradient quotes per building. The Boston Housing Authority pilot costs about US$5,400 per apartment, including the unit, installation and a smart thermostat (WBUR, Feb 2026). Tier is an estimate.",
+   "strengths": [
+    "Plugs into a standard 120V outlet; no refrigerant work, drilling or permits, and about a 30-minute install",
+    "Rated to operate down to -13 °F, with 7,026 BTU/h at -13 °F",
+    "Proven in public housing (NYCHA, Boston Housing Authority), with Nexus fleet-control software (Feb 2026)"
+   ],
+   "watchouts": [
+    "Not sold to individual consumers ('Gradient doesn't sell directly to consumers', WBUR Feb 2026); only building owners can buy",
+    "Fits only up-and-down (sash) windows at least 26 in wide; the unit weighs 140 lb",
+    "Warranty: 1 year parts and labour, then parts only to year 5; continental US only",
+    "Single ~9,000 BTU/h size; Gradient recommends about one unit per major room"
+   ],
+   "recentNews": [
+    {
+     "date": "2025-10",
+     "text": "Boston Housing Authority pilots Gradient window heat pumps at a 100-unit Mattapan complex",
+     "url": "https://www.canarymedia.com/articles/heat-pumps/boston-gradient-window-heat-pump-public-housing"
+    },
+    {
+     "date": "2026-02",
+     "text": "Gradient launches Nexus, a control platform for fleets of its window heat pumps (200+ units in Boston, Detroit and Washington DC)",
+     "url": "https://www.engineering.com/gradient-launches-nexus-platform-for-window-heat-pump-fleets/"
+    },
+    {
+     "date": "2026-02",
+     "text": "TechCrunch: Gradient focuses on multifamily retrofits; NYCHA installations cited",
+     "url": "https://techcrunch.com/2026/02/03/gradients-heat-pumps-get-new-smarts-to-enable-old-building-retrofits/"
+    },
+    {
+     "date": "2026-04",
+     "text": "Providence senior apartment building installs 277 Gradient heat pumps in 12 days (Fast Company, via Gradient's media page)",
+     "url": "https://www.fastcompany.com/91528250/this-providence-apartment-building-installed-277-heat-pumps-in-just-12-days"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Gradient hardware specs",
+     "url": "https://gradientcomfort.com/platform/hardware"
+    },
+    {
+     "title": "Gradient services (installation partners, contact sales)",
+     "url": "https://gradientcomfort.com/platform/services"
+    },
+    {
+     "title": "Gradient warranty",
+     "url": "https://gradientcomfort.com/warranty"
+    },
+    {
+     "title": "Gradient shop product page (no price; contact sales)",
+     "url": "https://shop.gradientcomfort.com/products/gradient-all-weather-120v-window-heat-pump"
+    },
+    {
+     "title": "Gradient media coverage",
+     "url": "https://gradientcomfort.com/media-coverage"
+    },
+    {
+     "title": "WBUR: Boston pilots Gradient window heat pumps (Feb 10, 2026)",
+     "url": "https://www.wbur.org/news/2026/02/10/window-heat-pump-gradient-boston-housing-authority-decarbonization"
+    },
+    {
+     "title": "Engineering.com: Gradient launches Nexus (Feb 4, 2026)",
+     "url": "https://www.engineering.com/gradient-launches-nexus-platform-for-window-heat-pump-fleets/"
+    },
+    {
+     "title": "TechCrunch: Gradient's heat pumps get new smarts (Feb 3, 2026)",
+     "url": "https://techcrunch.com/2026/02/03/gradients-heat-pumps-get-new-smarts-to-enable-old-building-retrofits/"
+    }
+   ],
+   "notes": "Gradient has pivoted to B2B multifamily, education and institutional customers. Its shop still lists filters and remotes but no heat pump price, and WBUR reported in Feb 2026 that it doesn't sell to consumers. A House Digest article gives a $3,800 price and a -15°F claim; neither appears on Gradient's own pages, so they aren't used. The refrigerant isn't named ('planet-friendlier refrigerant'). 'dealer-installed' is the closest channel value: Gradient sells directly to building owners, and installation is done by its partner network or the building's own staff. A separate compressor term isn't stated (5-year parts coverage)."
+  }
+ },
+ "notListed": {
+  "toshiba": {
+   "slug": "toshiba",
+   "name": "Toshiba (Toshiba Carrier)",
+   "parent": "Carrier Global Corporation (US). Toshiba Carrier Corporation became part of Carrier in July 2022 and was renamed Carrier Japan Corporation on May 1, 2024 (headquarters moved to Shinagawa, Tokyo); it said it would keep using the Toshiba and Toshiba Carrier brands.",
+   "sisterBrands": [
+    "Carrier",
+    "Bryant",
+    "Payne",
+    "Day & Night",
+    "Heil",
+    "Tempstar",
+    "Comfortmaker",
+    "Arcoaire",
+    "KeepRite",
+    "Viessmann"
+   ],
+   "headquarters": "Palm Beach Gardens, Florida, US (Carrier Global); Carrier Japan Corporation in Tokyo, Japan",
+   "manufacturing": null,
+   "soldIn": {
+    "ca": null,
+    "us": true,
+    "evidence": "US: Carrier Japan's distributor list names Carrier Corporation, Ductless & VRF (Atlanta) for the USA (https://www.toshiba-carrier.co.jp/global/distributors/america.htm), and Carrier markets Toshiba Carrier VRF (http://www.carrier.com/commercial/en/us/products/variable-refrigerant-flow/toshiba-carrier-vrf-products/). Canada: ENERGY STAR marks Toshiba Carrier units for the US and Canada, but the distributor list names no Canadian distributor"
+   },
+   "channel": "dealer-installed",
+   "productTypes": [
+    "ductless mini-split",
+    "multi-zone"
+   ],
+   "lines": [
+    {
+     "name": "Toshiba Carrier mini-VRF ('Toshiba Mini', MCY-MUB 3-5 ton outdoor units)",
+     "type": "multi-zone",
+     "coldClimate": true,
+     "claim": null,
+     "refrigerant": "R-454B",
+     "url": "https://www.energystar.gov/productfinder/product/certified-heat-pumps/results"
+    },
+    {
+     "name": "Toshiba Carrier RAV-BP light-commercial single split (12K-42K)",
+     "type": "ductless mini-split",
+     "coldClimate": true,
+     "claim": null,
+     "refrigerant": "R-454B",
+     "url": "https://www.energystar.gov/productfinder/product/certified-heat-pumps/results"
+    }
+   ],
+   "warranty": {
+    "us": {
+     "parts": null,
+     "compressor": null,
+     "registrationRequired": null,
+     "ifNotRegistered": null,
+     "labour": null,
+     "url": null
+    },
+    "ca": null
+   },
+   "priceTier": null,
+   "priceNote": "Not assessed: no Toshiba-branded residential line with published pricing or positioning was found for the US or Canada.",
+   "strengths": [
+    "Backed by Carrier, which distributes Toshiba Carrier ductless and VRF in the US (Carrier Japan distributor list)",
+    "Current ENERGY STAR-listed Toshiba Carrier units use R-454B (RAV-BP and mini-VRF, certified 2025-2026)"
+   ],
+   "watchouts": [
+    "No Toshiba-branded residential wall-mount ductless line was found for the US or Canada in 2026; the US offer is VRF and light-commercial ductless through Carrier's commercial channel",
+    "Carrier Japan lists no Canadian distributor",
+    "Toshiba is now only a product brand: the company has been Carrier Japan Corporation since May 2024"
+   ],
+   "recentNews": [
+    {
+     "date": "2024-05",
+     "text": "Toshiba Carrier Corporation renamed Carrier Japan Corporation (announced Jan 22, 2024; effective May 1, 2024)",
+     "url": "https://www.toshiba-carrier.co.jp/global/news/pdf/Press_Release_en_20240122.pdf"
+    },
+    {
+     "date": "2025-11",
+     "text": "R-454B Toshiba Carrier 'Toshiba Mini' (MCY-MUB) mini-VRF units certified to ENERGY STAR for the US and Canada (Nov 2025-Jun 2026)",
+     "url": "https://www.energystar.gov/productfinder/product/certified-heat-pumps/results"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Carrier Japan: Toshiba Carrier to be renamed Carrier Japan Corporation (Jan 22, 2024)",
+     "url": "https://www.toshiba-carrier.co.jp/global/news/pdf/Press_Release_en_20240122.pdf"
+    },
+    {
+     "title": "Carrier Japan distributors: Americas",
+     "url": "https://www.toshiba-carrier.co.jp/global/distributors/america.htm"
+    },
+    {
+     "title": "Carrier Japan affiliates",
+     "url": "https://www.toshiba-carrier.co.jp/global/about/affiliates.htm"
+    },
+    {
+     "title": "Carrier Japan global residential products",
+     "url": "https://www.toshiba-carrier.co.jp/global/products/residential/index.htm"
+    },
+    {
+     "title": "Carrier: Toshiba Carrier VRF products (US)",
+     "url": "http://www.carrier.com/commercial/en/us/products/variable-refrigerant-flow/toshiba-carrier-vrf-products/"
+    },
+    {
+     "title": "ENERGY STAR heat pump product finder",
+     "url": "https://www.energystar.gov/productfinder/product/certified-heat-pumps/results"
+    },
+    {
+     "title": "ENERGY STAR Certified Heat Pumps dataset (rows updated 2026-10-19)",
+     "url": "https://data.energystar.gov/resource/83eb-xbyy.csv"
+    }
+   ],
+   "notes": "Answer to the brief: Toshiba Carrier-branded ductless and VRF are sold in the US through Carrier Corporation's Ductless & VRF business. The only Toshiba-branded heat pumps in ENERGY STAR are light-commercial single splits (RAV-BP) and mini-VRF (MCY-MUB 'Toshiba Mini', plus older R-410A MCY-MAP), and no residential wall-mount line appears. Carrier's US Toshiba Carrier page covers VRF only, and Carrier Japan's global residential page says products 'may not be available in your country'. Canadian availability is unconfirmed: ENERGY STAR market flags include Canada, but no Canadian distributor is named. Carrier's ownership percentage was not verified (Carrier Japan says only that it 'became a part of Carrier in July 2022'). Any Toshiba-branded room air conditioners sold at retail in North America would come under a separate consumer-brand licence; that was not researched. No warranty terms were found. Cold-climate flags come from ENERGY STAR listings."
+  },
+  "mitsubishi-heavy-industries": {
+   "slug": "mitsubishi-heavy-industries",
+   "name": "Mitsubishi Heavy Industries (MHI)",
+   "parent": "Mitsubishi Heavy Industries, Ltd. (Japan); air conditioners are made by its subsidiary Mitsubishi Heavy Industries Thermal Systems, Ltd. No 2024-2026 ownership change was verified.",
+   "sisterBrands": [],
+   "headquarters": "Tokyo, Japan",
+   "manufacturing": null,
+   "soldIn": {
+    "ca": null,
+    "us": null,
+    "evidence": "Not verified. No MHI-branded heat pumps appear in the ENERGY STAR certified heat pump list for the US/Canada (rows updated 2026-10-19; https://www.energystar.gov/productfinder/product/certified-heat-pumps/results). MHI's North American group-company directory lists no HVAC sales company (https://www.mhi.com/network/area/north_america.html). A US HVAC site (mhiaa.com) exists but blocks automated access, and MHI Thermal Systems' site (mhi-mth.co.jp) was unreachable."
+   },
+   "channel": null,
+   "productTypes": [],
+   "lines": [],
+   "warranty": {
+    "us": null,
+    "ca": null
+   },
+   "priceTier": null,
+   "priceNote": "Not assessed: current US/Canadian residential availability could not be verified.",
+   "strengths": [],
+   "watchouts": [
+    "No current residential distribution, warranty terms or service network for MHI ductless could be verified in the US or Canada, and no MHI models are in the ENERGY STAR heat pump list; treat any quote as needing proof of local parts and warranty support"
+   ],
+   "recentNews": [
+    {
+     "date": "2026-10",
+     "text": "MHI announced an ETL-listed, AHRI-certified 10MW-class centrifugal chiller for North American AI data centers (commercial, not residential)",
+     "url": "https://www.mhi.com/news/261019.html"
+    }
+   ],
+   "sources": [
+    {
+     "title": "MHI group companies: North America",
+     "url": "https://www.mhi.com/network/area/north_america.html"
+    },
+    {
+     "title": "MHI in the Americas",
+     "url": "https://www.mhi.com/company/regions/amer"
+    },
+    {
+     "title": "MHI news: 10MW-class centrifugal chiller for North America (Oct 19, 2026)",
+     "url": "https://www.mhi.com/news/261019.html"
+    },
+    {
+     "title": "ENERGY STAR heat pump product finder",
+     "url": "https://www.energystar.gov/productfinder/product/certified-heat-pumps/results"
+    },
+    {
+     "title": "ENERGY STAR Certified Heat Pumps dataset (rows updated 2026-10-19)",
+     "url": "https://data.energystar.gov/resource/83eb-xbyy.csv"
+    }
+   ],
+   "notes": "Answer to the brief: residential ductless sales in Canada or the US in 2026 could not be confirmed either way. Evidence against an active line: MHI has no models in the ENERGY STAR heat pump list for the US or Canada, and MHI's North American directory shows only automotive and energy-related divisions. Evidence of some North American presence: mhiaa.com, apparently an MHI air-conditioning site for the Americas, exists but its robots rules block automated fetching, which we did not bypass. mhi-mth.co.jp returned server errors and then the fetch proxy rate-limited further requests; mhi.com's product network page was also rate-limited. Check AHRI listings or call MHI before publishing a definitive answer."
+  }
+ }
+}

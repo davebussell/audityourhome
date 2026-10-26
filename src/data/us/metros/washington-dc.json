@@ -1,0 +1,265 @@
+{
+  "slug": "washington-dc",
+  "name": "Washington, DC",
+  "metroName": "Washington-Arlington-Alexandria, DC-VA-MD-WV Metropolitan Statistical Area",
+  "states": ["DC", "VA", "MD", "WV"],
+  "principalCity": "Washington, DC",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Pepco (Potomac Electric Power Company, an Exelon company)",
+        "serves": "District of Columbia (regulated by the DC PSC, which has a pending Pepco multiyear rate case) and Pepco's Maryland customers in the suburbs, who get EmPOWER Maryland programs. Exact Maryland county coverage was not verified.",
+        "url": "https://dcpsc.org/"
+      },
+      {
+        "name": "Dominion Energy Virginia",
+        "serves": "Virginia service territory, including Northern Virginia suburbs. County-level coverage was not verified; other NoVA areas are served by cooperatives that were not researched.",
+        "url": "https://www.dominionenergy.com/virginia/save-energy"
+      },
+      {
+        "name": "Other Maryland EmPOWER electric utilities (Potomac Edison/FirstEnergy, SMECO)",
+        "serves": "Some Maryland parts of the MSA. Which counties they serve was not verified. The MEA lists SMECO among EmPOWER utilities, and DHCD lists FirstEnergy and SMECO as participating companies.",
+        "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/empower"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Washington Gas (WGL)",
+        "serves": "Natural gas in DC, Maryland and Virginia. It runs separate efficiency offers by state.",
+        "url": "https://wgsmartsavings.com/"
+      }
+    ],
+    "notes": "DC and Maryland have retail choice. The DC PSC runs 'Choose an Energy Supplier', and the MD PSC runs Electric Choice and Gas Choice supplier portals. Virginia retail choice was not researched. In DC, efficiency programs are run by the DC Sustainable Energy Utility (DCSEU) under contract with DOEE, not by Pepco. In Maryland, they run through utilities under EmPOWER Maryland. Sources: https://dcpsc.org/ , https://psc.maryland.gov/regulated-utilities/electricity/ , https://doee.dc.gov/service/federal-home-energy-rebates-and-healthy-homes-act-2024"
+  },
+  "auditPrograms": [
+    {
+      "name": "Free one-on-one home energy coaching (Electrify DC)",
+      "runBy": "Electrify DC, promoted by DC DOEE",
+      "cost": "Free",
+      "whoQualifies": "District homeowners",
+      "whatYouGet": "One-on-one coaching or events to 'ask specific questions about their home energy audit or energy upgrade'. This is coaching, not an on-site diagnostic audit.",
+      "howToBook": "Sign up at electrifydc.org/get-help/ or register for an Electrify DC event",
+      "url": "https://doee.dc.gov/service/federal-home-energy-rebates-and-healthy-homes-act-2024",
+      "status": "Open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Quick Home Energy Check-up (Maryland suburbs)",
+      "runBy": "Pepco (EmPOWER Maryland)",
+      "cost": "No additional cost",
+      "whoQualifies": "Pepco Maryland residential customers, once every 5 years per address",
+      "whatYouGet": "About an hour-long walk-through by a certified Energy Analyst (insulation, air leakage, HVAC, windows and doors, lighting, water heating). It may include no-cost installs (LEDs, showerheads, aerators, smart power strips, weatherstripping, possibly a smart thermostat) and a customized report. A virtual option is offered.",
+      "howToBook": "Request online or call 866-353-5798",
+      "url": "https://homeenergysavings.pepco.com/md/residential/quick-home-energy-check-up-program",
+      "status": "Open but winding down. 'Pepco is awaiting a decision by the Maryland Public Service Commission about extending our energy efficiency programs into 2027. The last day to request a QHEC appointment for 2026 will be on November 06, 2026.'",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Performance with ENERGY STAR assessment (Maryland suburbs)",
+      "runBy": "Pepco (EmPOWER Maryland), through Participating Contractors",
+      "cost": "$100 ('a $400 value') for homes up to 3,000 sq ft with a single combustion appliance zone; larger or multi-zone homes may cost more. No cost for qualifying moderate-income customers.",
+      "whoQualifies": "Active Pepco Maryland residential electric account holders in a single-family residence (not a condo or apartment), once every 5 years per address",
+      "whatYouGet": "Comprehensive evaluation (air sealing and insulation, HVAC and more) with a customized report, leading to rebates (see rebates)",
+      "howToBook": "Request an assessment or pick a Participating Contractor on Pepco's site",
+      "url": "https://homeenergysavings.pepco.com/md/residential/home-performance-with-energy-star-program",
+      "status": "Open. The limited-time electrification offer requires contractors to reserve rebates by December 31, 2026, and the 2027 program extension is pending at the MD PSC.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Energy Evaluation (Virginia suburbs)",
+      "runBy": "Dominion Energy Virginia, through participating contractors",
+      "cost": null,
+      "whoQualifies": "Dominion Energy Virginia residential customers",
+      "whatYouGet": "An in-home energy assessment to identify savings. Dominion reports participants saved an average of $538 on upgrades and 1,325 kWh a year. An online questionnaire option ships a no-cost kit of efficiency products.",
+      "howToBook": "Schedule with a participating contractor from Dominion's save-energy page",
+      "url": "https://www.dominionenergy.com/virginia/save-energy",
+      "status": "Open. The assessment price is not stated on the page.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Online Home Energy Profile (DC, MD, VA gas customers)",
+      "runBy": "Washington Gas",
+      "cost": "Free",
+      "whoQualifies": "Washington Gas residential customers",
+      "whatYouGet": "An online survey with energy-saving education. Customers may get a free Energy Conservation Kit depending on their answers.",
+      "howToBook": "Online via Washington Gas",
+      "url": "https://wgsmartsavings.com/programs-rebates/home/dc",
+      "status": "Open",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "DCSEU Residential Electrification Rebates",
+      "runBy": "DC Sustainable Energy Utility (locally funded, not the federal DOE rebates)",
+      "category": "heat-pump",
+      "amount": "Shown as electric-to-electric / gas-to-electric. Ducted ASHP or ductless mini-split, ENERGY STAR: $1,000 / $4,000. ENERGY STAR Most Efficient: $1,500 / $5,000. HPWH, NEEA Tier 1–2: $750 / $1,200; Tier 3–4: $1,000 / $1,600. Heat pump dryer $400 / $600. Electric range $400 / $600. Induction range $600 / $800. Heavy-up to 200 A: $2,000. Circuit upgrade or addition: $400 per circuit (up to 3). The page headline is 'up to $5,000 off'.",
+      "whoQualifies": "'All DC residents, regardless of income', in homes of 4 units or fewer (including individual condo and co-op units). Heavy-up and circuit rebates apply only when replacing gas or oil equipment. Limit one product type per utility account per fiscal year. A DOB permit is required for HVAC and HPWH. Apply within 30 days of installation through the Online Rebate Center.",
+      "status": "Open for FY2027: 'Offer is valid on technologies installed after 10/1/2026'. 'Rebates for products installed after 09/30/27 are subject to change.' The page also still says documents must be 'postmarked by 09/30/26', which appears to be a leftover FY2026 line, so confirm with DCSEU.",
+      "url": "https://www.dcseu.com/residential-rebates/electrify",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Affordable Home Electrification (AHEP), single-family",
+      "runBy": "DCSEU under contract with DC DOEE, using federal DOE Home Energy Rebates funds",
+      "category": "income-qualified",
+      "amount": "No cost. Covers a ducted or ductless heat pump, heat pump water heater, induction stove, heat pump dryer and thermostat, replacing gas furnaces, boilers, water heaters, dryers and stoves. Gas lines are capped. Households that fully electrify are prioritized.",
+      "whoQualifies": "District homeowners or tenants in homes of 4 units or fewer, plus income-qualified owners of condo and co-op units. Eligibility is by participation in SNAP, TANF, SSI, LIHEAP, Solar for All or WAP, or by income up to $132,900 for a household of 4 ($93,050 for 1). DOEE approves every project, and projects can be cancelled before installation.",
+      "status": "Open for sign-ups per DCSEU; no waitlist or closure is stated. The program pays for gas-to-electric switching, while DOE Program Notice 26-2 (effective May 29, 2026) bars federal HEEHR rebates for replacing non-electric appliances and gave launched programs three months to conform. Neither DOEE nor DCSEU mentions this, so the federally funded scope may change.",
+      "url": "https://www.dcseu.com/affordable-home-electrification",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Performance with ENERGY STAR rebates (Maryland suburbs)",
+      "runBy": "Pepco (EmPOWER Maryland)",
+      "category": "whole-home",
+      "amount": "Up to $10,000 for eligible upgrades, and up to $15,000 for eligible electrification upgrades. A 'New Limited Time Offer' gives larger rebates when the project converts fossil-fueled water heating and/or HVAC to electric.",
+      "whoQualifies": "Pepco Maryland single-family residential customers who complete the assessment",
+      "status": "Open. Contractors must reserve rebates by December 31, 2026, with work done within 90 days of reservation approval. Continuation into 2027 is pending at the MD PSC.",
+      "url": "https://homeenergysavings.pepco.com/md/residential/home-performance-with-energy-star-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Washington Gas EmPOWER Maryland rebates (Maryland suburbs)",
+      "runBy": "Washington Gas",
+      "category": "appliances",
+      "amount": "Up to $900 on select ENERGY STAR boilers and furnaces; up to $450 on water heaters; $100 heating tune-up; up to $100 on ENERGY STAR dryers; free conservation kit",
+      "whoQualifies": "Washington Gas Maryland residential customers",
+      "status": "Ending. 'The Washington Gas EmPOWER Maryland programs will end on December 31, 2026, as required by Maryland House Bill 1532.' Submit applications by December 1. MEA says HB 1532 (2025) 'removes EmPOWER incentives for natural gas'.",
+      "url": "https://wgsmartsavings.com/programs-rebates/home/md",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Washington Gas Virginia residential rebates",
+      "runBy": "Washington Gas",
+      "category": "appliances",
+      "amount": "Up to $2,000 on select ENERGY STAR boilers and furnaces; up to $400 on water heaters; up to $2.50/sq ft on eligible windows and sun shades; $100 smart thermostat; $100 heating tune-up; $50 gas fireplace tune-up",
+      "whoQualifies": "Washington Gas Virginia residential customers",
+      "status": "Open. 'Programs remain available in VA.'",
+      "url": "https://wgsmartsavings.com/programs-rebates/home/va",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Dominion Energy Virginia heat pump water heater rebate",
+      "runBy": "Dominion Energy Virginia",
+      "category": "appliances",
+      "amount": "Up to $500 on eligible heat pump water heaters (and up to $300 on variable-speed pool pumps). Instant rebates on smart thermostats and Marketplace products.",
+      "whoQualifies": "Dominion Energy Virginia residential customers",
+      "status": "Open",
+      "url": "https://www.dominionenergy.com/virginia/save-energy",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BeSMART Home Loan (Maryland)",
+      "runBy": "Maryland Department of Housing and Community Development",
+      "category": "financing",
+      "amount": "6.99% APR, $5,000 to $30,000, terms up to 10 years, unsecured. Up to 25% can go to related health and safety work.",
+      "whoQualifies": "Maryland homeowners with credit score ≥640 and debt-to-income ≤50%. No financing for work already purchased or completed.",
+      "status": "Open ('Application status: Open')",
+      "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/besmart-home-loan-program",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "DC: launched, low-income only. Federal funds expand two DCSEU programs, AHEP (single-family) and AHRA (multifamily), and 'Federally funded rebates will not be available outside of participation in AHRA or AHEP.' Maryland: not launched. On 9/30/26 MEA resubmitted applications to DOE under the new guidance, and launch depends on DOE approval. Virginia: not launched. Virginia Energy is updating its application to the May 29, 2026 DOE notices and 'cannot provide an estimated date'.",
+    "programName": "DC: Affordable Home Electrification Program (AHEP) and Affordable Housing Retrofit Accelerator (AHRA). MD: IRA Home Energy Rebate Programs (HOMES and HEEHR). VA: Home Efficiency Rebates and High Efficiency Appliance Rebates.",
+    "administrator": "DC: Department of Energy and Environment (DOEE), delivered by DCSEU. MD: Maryland Energy Administration. VA: Virginia Department of Energy.",
+    "summary": "DC is also implementing the local Healthy Homes and Residential Electrification Amendment Act of 2024, which directs DOEE to provide no-cost electrification retrofits to low-income households and qualifying multifamily buildings, built on its federal rebate applications. Virginia's allocation is $188,334,635 ($94,347,205 Home Efficiency; $93,987,430 High Efficiency Appliance). Its FAQ notes that under federal law the appliance rebates 'cannot be used to help pay for replacement of a non-electric appliance'. That reflects DOE Program Notice 26-2 (effective May 29, 2026), which ended fuel-switching rebates and requires insulation and air sealing first, with three months for launched programs like DC's to conform.",
+    "url": "https://doee.dc.gov/service/federal-home-energy-rebates-and-healthy-homes-act-2024",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program (DC)",
+      "runBy": "DC Department of Energy and Environment (DOEE), with nonprofits and contractors",
+      "summary": "Free energy audit and audit-recommended efficiency and water measures. For households below 60% of State Median Income (FY26: $118,926 for 4) or with a TANF or SSI recipient. DOEE says: 'Our WAP and LRP program openings are delayed this fiscal year due to unexpected external circumstances', and it will contact waitlisted applicants. The Emergency Mechanical Systems (EMS) replacement program is open and contacting its waitlist first-come, first-served. Questions: 202-299-3316.",
+      "url": "https://doee.dc.gov/service/weatherization-assistance-program-wap"
+    },
+    {
+      "name": "DCSEU Zero-Cost Upgrades and Affordable Home Electrification",
+      "runBy": "DC Sustainable Energy Utility",
+      "summary": "Income-qualifying DC residents can get select DCSEU services free or at reduced cost. AHEP provides no-cost heat pumps and electric appliances for households up to $132,900 (4 people). Call (202) 479-2222.",
+      "url": "https://www.dcseu.com/homeowners-renters/qualify"
+    },
+    {
+      "name": "EmPOWER Maryland Limited Income Energy Efficiency Program (LIEEP)",
+      "runBy": "Maryland Department of Housing and Community Development",
+      "summary": "No-charge insulation, hot-water improvements, lighting, furnace tune and safety repairs, and limited health and safety work. For customers of BGE, Delmarva, FirstEnergy, Pepco, SMECO or Washington Gas. Income limit is $106,800 for a household of 4 (updated 07/14/2026). Application status is Open. Call 1-855-583-8976.",
+      "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/empower"
+    },
+    {
+      "name": "Maryland Weatherization Assistance Program (Montgomery and Prince George's)",
+      "runBy": "MD DHCD through local weatherization agencies. For Prince George's and Montgomery: Housing Initiative Partnership (Hyattsville, 301-699-3870) and Building Change (Beltsville, 410-231-3284).",
+      "summary": "Application status is Open. Income limit is 60% SMI / 200% FPL ($92,470 for a household of 4). SSI, TANF or MEAP recipients are automatically eligible.",
+      "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/weatherization-assistance-program-wap"
+    },
+    {
+      "name": "Income and Age Qualifying Energy Savings Program (Virginia)",
+      "runBy": "Dominion Energy Virginia, delivered by local weatherization providers that work with Virginia DHCD",
+      "summary": "No-cost in-home assessment and installed measures. The FAQ lists LEDs, showerheads, aerators and pipe wrap, and weatherization such as attic insulation and duct sealing where eligible. For households ≤80% of local median income or ≤60% of state median income, whichever is greater, or age 60+ at ≤120% of state median income. Call 888-366-8280, option 2.",
+      "url": "https://www.dominionenergy.com/virginia/save-energy"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "DC energy benchmarking",
+      "appliesTo": "'All buildings >10,000 ft²'. Single-family homes are not covered.",
+      "summary": "Annual energy and water reporting through ENERGY STAR Portfolio Manager by May 1. The next third-party verification is due in 2027 (2026 data), then every six years. First-time reporters in 2026 are buildings newly covered at the 10,000 ft² threshold.",
+      "url": "https://dc.beam-portal.org/helpdesk/kb/"
+    },
+    {
+      "name": "DC Building Energy Performance Standard (BEPS)",
+      "appliesTo": "Period 1: private buildings ≥50,000 ft². Period 2: ≥25,000 ft². Period 3: ≥10,000 ft². DC-owned buildings ≥10,000 ft² in all periods. Does not affect ordinary homeowners.",
+      "summary": "Created by the Clean Energy DC Omnibus Act of 2018. Buildings below the standard enter a compliance cycle with performance or prescriptive pathways.",
+      "url": "https://dc.beam-portal.org/helpdesk/kb/BEPS/3/"
+    },
+    {
+      "name": "Montgomery County (MD) benchmarking and BEPS",
+      "appliesTo": "Most commercial and multifamily buildings of 25,000 gross sq ft or more. Not homeowners.",
+      "summary": "Benchmark annually by June 1, with verification every 3 years. Site-EUI performance standards have interim and final evaluation years by group, for example 2028/2033 for non-residential 50k–250k sq ft and 2031/2036 for multifamily 25k–250k sq ft.",
+      "url": "https://www.montgomerycountymd.gov/department-environmental-protection/energy/energy-commercial-multifamily/building-energy-performance-standards"
+    },
+    {
+      "name": "Maryland Building Energy Performance Standards (statewide)",
+      "appliesTo": "Most buildings 35,000 sq ft and larger (with exclusions). Not homeowners.",
+      "summary": "Per BGE's summary: benchmarking to MDE by September 2025, direct GHG compliance from 2030, net-zero building emissions by 2040, about 9,000 buildings covered. MDE's own BEPS page could not be loaded, so confirm current details there.",
+      "url": "https://bgesmartenergy.com/business/building-energy-performance-standards"
+    }
+  ],
+  "notes": "Maryland's EmPOWER cycle (PSC Case No. 9705) covers 2024–2026, and Pepco says it is 'awaiting a decision by the Maryland Public Service Commission about extending our energy efficiency programs into 2027'. The last Pepco Quick Check-up requests are due November 6, 2026, and Home Performance rebate reservations by December 31, 2026. Separately, Maryland HB 1532 (2025) removes EmPOWER gas incentives, so Washington Gas's Maryland rebates end December 31, 2026. Virginia offers through Washington Gas continue. DC's federally funded electrification program (AHEP) explicitly covers gas-to-electric conversions, which DOE's May 29, 2026 notice no longer allows for federal HEEHR funds; DC sources do not yet address this. DCSEU's locally funded rebates are unaffected because they are not federal money (DOEE). Federal 25C/25D credits ended with 2025 installs (IRS; DCSEU also notes many IRA tax credits ended December 2025). Not verified: Pepco or Washington Gas efficiency offers specific to DC beyond the referrals to DCSEU; the Dominion assessment price; Virginia county-level utility coverage and any NoVA local rules; West Virginia (Jefferson County); DC's building energy code for new homes.",
+  "sources": [
+    { "label": "Census Bureau – OMB July 2023 CBSA delineation file (List 1)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "DC PSC – home page (Pepco, Washington Gas, energy supplier choice)", "href": "https://dcpsc.org/" },
+    { "label": "DOEE – Federal Home Energy Rebates and the Healthy Homes Act of 2024", "href": "https://doee.dc.gov/service/federal-home-energy-rebates-and-healthy-homes-act-2024" },
+    { "label": "DOEE – Weatherization Assistance Program", "href": "https://doee.dc.gov/service/weatherization-assistance-program-wap" },
+    { "label": "DOEE BEAM helpdesk – benchmarking", "href": "https://dc.beam-portal.org/helpdesk/kb/" },
+    { "label": "DOEE BEAM helpdesk – Is my building subject to BEPS?", "href": "https://dc.beam-portal.org/helpdesk/kb/BEPS/3/" },
+    { "label": "DCSEU – home", "href": "https://www.dcseu.com/" },
+    { "label": "DCSEU – programs and services", "href": "https://www.dcseu.com/programs-services" },
+    { "label": "DCSEU – residential rebates", "href": "https://www.dcseu.com/residential-rebates" },
+    { "label": "DCSEU – electrification rebates", "href": "https://www.dcseu.com/residential-rebates/electrify" },
+    { "label": "DCSEU – Affordable Home Electrification", "href": "https://www.dcseu.com/affordable-home-electrification" },
+    { "label": "Pepco (MD) – Quick Home Energy Check-up", "href": "https://homeenergysavings.pepco.com/md/residential/quick-home-energy-check-up-program" },
+    { "label": "Pepco (MD) – Home Performance with ENERGY STAR", "href": "https://homeenergysavings.pepco.com/md/residential/home-performance-with-energy-star-program" },
+    { "label": "Washington Gas – Smart Savings (DC/MD/VA)", "href": "https://wgsmartsavings.com/" },
+    { "label": "Washington Gas – DC residential", "href": "https://wgsmartsavings.com/programs-rebates/home/dc" },
+    { "label": "Washington Gas – MD residential (programs end Dec 31, 2026)", "href": "https://wgsmartsavings.com/programs-rebates/home/md" },
+    { "label": "Washington Gas – VA residential", "href": "https://wgsmartsavings.com/programs-rebates/home/va" },
+    { "label": "Dominion Energy Virginia – Save Energy", "href": "https://www.dominionenergy.com/virginia/save-energy" },
+    { "label": "Virginia Energy – Home Energy Rebates FAQ", "href": "https://energy.virginia.gov/energy-efficiency/HomeEnergyRebatesFrequentlyAskedQuestions.shtml" },
+    { "label": "Maryland Energy Administration – IRA Home Energy Rebate Programs (status 9/30/26)", "href": "https://energy.maryland.gov/Pages/IRArebates.aspx" },
+    { "label": "Maryland Energy Administration – EmPOWER facts (HB 864, HB 1532)", "href": "https://energy.maryland.gov/pages/facts/empower.aspx" },
+    { "label": "MD PSC – Energy Efficiency and EmPOWER Maryland (Case No. 9705)", "href": "https://psc.maryland.gov/regulated-utilities/electricity/energy-efficiency-and-empower-maryland/" },
+    { "label": "MD PSC – electricity (retail choice portals)", "href": "https://psc.maryland.gov/regulated-utilities/electricity/" },
+    { "label": "MD DHCD – EmPOWER Limited Income Energy Efficiency Program", "href": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/empower" },
+    { "label": "MD DHCD – Weatherization Assistance Program", "href": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/weatherization-assistance-program-wap" },
+    { "label": "MD DHCD – Local Weatherization Agencies (PDF)", "href": "https://dhcd.maryland.gov/media/702" },
+    { "label": "MD DHCD – BeSMART Home Loan", "href": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/besmart-home-loan-program" },
+    { "label": "Montgomery County DEP – BEPS", "href": "https://www.montgomerycountymd.gov/department-environmental-protection/energy/energy-commercial-multifamily/building-energy-performance-standards" },
+    { "label": "Montgomery County DEP – benchmarking", "href": "https://www.montgomerycountymd.gov/department-environmental-protection/energy/energy-commercial-multifamily/energy-benchmarking" },
+    { "label": "BGE – Maryland BEPS summary", "href": "https://bgesmartenergy.com/business/building-energy-performance-standards" },
+    { "label": "DOE – Program Notice 26-2 (effective May 29, 2026)", "href": "https://www.energy.gov/documents/program-notice-26-2" },
+    { "label": "IRS – Energy Efficient Home Improvement Credit (25C)", "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" },
+    { "label": "IRS – Residential Clean Energy Credit (25D)", "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit" }
+  ]
+}

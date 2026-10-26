@@ -1,0 +1,307 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../components/us/ProgramStyles.astro';
+import ProgramStatus from '../../../components/us/ProgramStatus.astro';
+import ProgramFaq from '../../../components/us/ProgramFaq.astro';
+import ProgramSources from '../../../components/us/ProgramSources.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { statusChip, metroBySlug, METROS } from '../../../lib/us/data';
+import { HES, src, dedupe, clean, metroName, VERIFIED, type Source } from '../../../lib/us/programs';
+
+const find = (slug: string, sec: 'localRules' | 'auditPrograms', re: RegExp) => {
+  const m = metroBySlug(slug);
+  const x = ((m?.data[sec] ?? []) as any[]).find((r) => re.test(r.name));
+  if (!m || !x) throw new Error(`home-energy-score: no ${sec} entry ${re} in ${slug}`);
+  return x;
+};
+
+/** Research "appliesTo" fields open with "Ordinary homeowners: …"; drop that label for display. */
+const who = (s: string) => {
+  const t = clean(s).replace(/^Ordinary homeowners( selling in [A-Za-z ]+)?:\s*/, '');
+  return t.charAt(0).toUpperCase() + t.slice(1);
+};
+
+const pdxRule = find('portland', 'localRules', /^Portland Home Energy Score ordinance/);
+const pdxProg = find('portland', 'auditPrograms', /^Portland Home Energy Score/);
+const milwaukie = find('portland', 'localRules', /Milwaukie/);
+const beso = find('san-francisco', 'localRules', /BESO/);
+const hesCa = find('los-angeles', 'auditPrograms', /Home Energy Score California/);
+const hesCaMetros = METROS.filter((m) => ((m.data.auditPrograms ?? []) as any[]).some((x) => /Home Energy Score California/.test(x.name)));
+const ecad = find('austin', 'localRules', /ECAD.*homes at sale/);
+const tish = find('minneapolis', 'localRules', /Truth in Sale of Housing/);
+const nyHeat = find('new-york', 'localRules', /Truth in Heating/);
+const flAct = find('miami', 'localRules', /553\.996/);
+const flMetros = METROS.filter((m) => ((m.data.localRules ?? []) as any[]).some((x) => /553\.996/.test(x.name)));
+
+const S = {
+  hes: src(/betterbuildingssolutioncenter\.energy\.gov\/home-energy-score$/),
+  faq: src(/home-energy-score-faqs$/),
+  assessor: src(/home-energy-score\/become-assessor$/),
+  map: src(/home-energy-score\/home-energy-score-map$/),
+  partners: src(/partner-list-home-energy-score$/),
+  pdxAbout: src(/pdxhes\/about-home-energy-score$/),
+  annArbor: src(/ann-arbor-ordinance-requires-home-sellers/),
+  freddie: src(/greenchoice-mortgages$/),
+};
+
+const title = 'DOE Home Energy Score: the 1–10 rating and where it’s required (2026) | AuditYourHome';
+const description = 'DOE’s 1–10 Home Energy Score: how it works, who can give one, and where it’s required, including Portland, Oregon and Berkeley, California. Checked October 12, 2026.';
+
+const faqs = [
+  {
+    q: 'What is a good Home Energy Score?',
+    a: 'A 5 means the home is expected to use about as much energy as the average US home; a 10 puts it in the top 10%. The score rates the house itself (its envelope, systems and size), not how the people living there use energy.',
+  },
+  {
+    q: 'How much does a Home Energy Score cost?',
+    a: 'DOE does not set fees, so prices vary, and the score is often bundled with an energy audit or home inspection. In California, customers of an investor-owned utility or community choice aggregator can get a $250 rebate toward one (Berkeley residents excepted). Portland offers free scores to sellers at or below 80% of area median income.',
+  },
+  {
+    q: 'Where is a Home Energy Score required?',
+    a: 'Portland, Oregon requires sellers of most homes publicly advertised for sale to get a score before listing, and Berkeley, California requires one before listing single-family homes and duplexes (since January 1, 2026). Portland’s page says Milwaukie, Oregon also has requirements, which we did not confirm on Milwaukie’s own pages.',
+  },
+  {
+    q: 'Who can give a Home Energy Score?',
+    a: 'A DOE Home Energy Score Certified Assessor. Assessors must already hold an accepted credential, such as BPI, RESNET HERS Rater, ASHI Certified Inspector or InterNACHI Home Energy Inspector, work through a DOE partner, pass 8 to 12 hours of simulation training and an exam, and score a first home with a mentor. DOE re-scores 5% of homes for quality assurance.',
+  },
+];
+
+const sources: Source[] = dedupe([
+  ...HES.sources,
+  { label: 'City of Portland — Home Energy Score program', href: pdxRule.url },
+  { label: 'City of Berkeley — BESO time-of-sale requirements', href: beso.url },
+  { label: 'Home Energy Score California — FAQ ($250 rebate)', href: hesCa.url },
+  { label: 'Austin Energy — ECAD for home sellers', href: ecad.url },
+  { label: 'City of Minneapolis — TISH energy disclosure report', href: tish.url },
+  { label: 'New York Energy Law §17-103 (Truth in Heating)', href: nyHeat.url },
+  { label: 'Florida Statutes s. 553.996', href: flAct.url },
+]);
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Home Energy Score', path: '/us/programs/home-energy-score/' },
+  ]),
+  faqSchema(faqs),
+];
+const open = statusChip('open');
+const ext = { rel: 'noopener', target: '_blank' };
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('heat-loss-calculation')}>
+  <ProgramStyles />
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Home Energy Score</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">DOE rating · 1 to 10</p>
+        <h1>DOE Home Energy Score</h1>
+        <p class="lede measure">
+          The Home Energy Score rates a home’s expected energy use from 1 to 10, like a miles-per-gallon rating for
+          houses, from a walk-through of under an hour. Portland, Oregon and Berkeley, California require one before
+          many homes are listed for sale.
+        </p>
+        <ProgramStatus
+          chip={open}
+          text="Continues on DOE’s Better Buildings Solution Center (homeenergyscore.gov redirects there), with a ZIP-code Find an Assessor tool and 22 listed partners."
+        />
+        <p class="up-meta up-hero-meta">
+          <a href={S.hes.href} {...ext}>DOE Home Energy Score&nbsp;↗</a> ·
+          <a href={S.map.href} {...ext}>Find an assessor&nbsp;↗</a> · verified {VERIFIED}
+        </p>
+      </div>
+      <Photo name="heat-loss-calculation" hud={false} eager />
+    </div>
+
+    <div class="up-figs">
+      <div class="up-fig"><span class="v">1–10</span><span class="l">5 is the average US home; 10 is the top 10%</span></div>
+      <div class="up-fig"><span class="v">About 40</span><span class="l">data points on the envelope, systems and size</span></div>
+      <div class="up-fig"><span class="v">Under 1 hour</span><span class="l">for the walk-through</span></div>
+      <div class="up-fig"><span class="v">10 years</span><span class="l">or less: payback on the upgrades it recommends</span></div>
+    </div>
+
+    <section class="up-s" id="how" aria-labelledby="how-h">
+      <h2 class="up-sec" id="how-h">How it works</h2>
+      <div class="up-two">
+        <div class="up-prose">
+          <p>
+            Developed by DOE and its national laboratories, the score is an asset rating: it rates the house, not how
+            the people in it use energy. An assessor collects about 40 data points on the envelope, heating and cooling
+            systems and size, then the report gives cost-effective upgrades (payback within 10 years) and a “score with
+            improvements.”
+          </p>
+          <p>
+            Single-family homes, townhouses and duplexes can be scored; multifamily buildings and mobile homes cannot.
+            DOE does not set fees, so prices vary, and the score is often bundled with an energy audit or a home
+            inspection.
+          </p>
+        </div>
+        <div class="card card-pad up-note side">
+          <h3>Who can score your home</h3>
+          <p>
+            A Home Energy Score Certified Assessor. Assessors must already hold an accepted credential (for example
+            BPI, RESNET HERS Rater, ASHI Certified Inspector, InterNACHI Home Energy Inspector, AEE, an ICC residential
+            inspector, LEED, NATE, or CalCERTS and CHEERS raters), work through a DOE partner, pass 8 to 12 hours of
+            simulation training and an exam, and score a first home with a mentor. DOE re-scores 5% of homes.
+          </p>
+          <p class="up-meta">
+            <a href={S.assessor.href} {...ext}>DOE: become an assessor&nbsp;↗</a> ·
+            <a href={S.faq.href} {...ext}>DOE FAQ&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+          <p class="side-links"><a href="/us/find/">Find a certified auditor →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="up-s" id="required" aria-labelledby="req-h">
+      <h2 class="up-sec" id="req-h">Where it’s required or paid for</h2>
+      <div class="up-two">
+        <article class="card card-pad rq">
+          <p class="eyebrow">Required at listing</p>
+          <h3>Portland, Oregon</h3>
+          <ProgramStatus text={pdxProg.status} />
+          <p><strong>Who:</strong> {who(pdxRule.appliesTo)}.</p>
+          <p>{clean(pdxRule.summary)} The ordinance was adopted December 14, 2016 (City Code 17.108), and sellers at or below 80% of area median income can get free scores.</p>
+          <p><strong>Cost:</strong> {clean(pdxProg.cost)}.</p>
+          <p class="up-meta">
+            <a href={pdxRule.url} {...ext}>City of Portland&nbsp;↗</a> ·
+            <a href={S.pdxAbout.href} {...ext}>Policy history&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+          <p class="lk"><a href="/us/cities/portland/">Portland guide →</a></p>
+        </article>
+
+        <article class="card card-pad rq">
+          <p class="eyebrow">Required at listing</p>
+          <h3>Berkeley, California (BESO)</h3>
+          <p><strong>Who:</strong> {who(beso.appliesTo)}.</p>
+          <p>{clean(beso.summary)}</p>
+          <p class="up-meta">
+            <a href={beso.url} {...ext}>City of Berkeley&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+          <p class="lk"><a href="/us/cities/san-francisco/">San Francisco Bay Area guide →</a></p>
+        </article>
+
+        <article class="card card-pad rq">
+          <p class="eyebrow">$250 toward a score</p>
+          <h3>California statewide</h3>
+          <ProgramStatus text={hesCa.status} />
+          <p><strong>Who:</strong> {clean(hesCa.whoQualifies)}.</p>
+          <p><strong>Cost:</strong> {clean(hesCa.cost)}.</p>
+          <p class="up-meta">
+            <a href={hesCa.url} {...ext}>Home Energy Score California&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+          <p class="lk">
+            {hesCaMetros.map((m, i) => (<>{i > 0 && ' · '}<a href={`/us/cities/${m.slug}/`}>{metroName(m)}</a></>))}
+          </p>
+        </article>
+
+        <article class="card card-pad rq">
+          <p class="eyebrow">Not confirmed</p>
+          <h3>Milwaukie, Oregon and Ann Arbor, Michigan</h3>
+          <ProgramStatus text={null} empty="Not confirmed on either city’s own pages in our check." />
+          <p>{clean(milwaukie.summary)}</p>
+          <p>
+            Ann Arbor adopted a Home Energy Rating Disclosure ordinance for home sellers, reported in effect from March
+            12, 2024 with a $500 fine and free city assessments (CBS Detroit, 2024). We didn’t confirm its current status.
+          </p>
+          <p class="up-meta">
+            <a href={milwaukie.url} {...ext}>City of Portland (Milwaukie note)&nbsp;↗</a> ·
+            <a href={S.annArbor.href} {...ext}>CBS Detroit, 2024&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+        </article>
+      </div>
+
+      <div class="card card-pad up-note">
+        <h3>Offered voluntarily, and in mortgages</h3>
+        <p>
+          Utilities and agencies such as Energize Connecticut, Focus on Energy (Wisconsin), PSEG Long Island, Columbia
+          Water &amp; Light (Missouri), EWEB (Oregon) and Fort Collins’ Epic Homes offer the score voluntarily. DOE’s
+          22 listed partners include ASHI, BPI, InterNACHI, Earth Advantage, Pearl Certification, the Oregon Department
+          of Energy, the City of Portland, New Jersey Natural Gas, the South Carolina Energy Office and StopWaste.
+        </p>
+        <p>
+          Freddie Mac’s GreenCHOICE mortgage requires a HERS report, a DOE Home Energy Score report or a comparable
+          audit when energy or water improvements exceed $6,500. DOE says Fannie Mae and FHA products also reference
+          the score.
+        </p>
+        <p class="up-meta">
+          <a href={S.partners.href} {...ext}>DOE partner list&nbsp;↗</a> ·
+          <a href={S.freddie.href} {...ext}>Freddie Mac GreenCHOICE&nbsp;↗</a> · verified {VERIFIED}
+        </p>
+      </div>
+    </section>
+
+    <section class="up-s" id="other-rules" aria-labelledby="or-h">
+      <h2 class="up-sec" id="or-h">Other energy rules at sale (not the DOE score)</h2>
+      <p class="up-intro">Selling elsewhere? These local rules ask for an audit, a different score or energy information instead.</p>
+      <div class="up-two">
+        <article class="card card-pad orl">
+          <h3><a href="/us/cities/austin/">Austin, Texas: ECAD audit</a></h3>
+          <p>
+            Sellers of homes 10 or more years old inside Austin city limits and served by Austin Energy must give the
+            buyer an ECAD home energy audit from a registered Energy Professional, or show qualifying Austin Energy
+            program participation in the past 10 years. An audit is valid 10 years.
+          </p>
+          <p class="up-meta"><a href={ecad.url} {...ext}>Austin Energy&nbsp;↗</a> · verified {VERIFIED}</p>
+        </article>
+        <article class="card card-pad orl">
+          <h3><a href="/us/cities/minneapolis/">Minneapolis: TISH energy disclosure</a></h3>
+          <p>{clean(tish.summary)}</p>
+          <p class="up-meta"><a href={tish.url} {...ext}>City of Minneapolis&nbsp;↗</a> · verified {VERIFIED}</p>
+        </article>
+        <article class="card card-pad orl">
+          <h3><a href="/us/cities/new-york/">New York State: Truth in Heating</a></h3>
+          <p>{clean(nyHeat.summary)}</p>
+          <p class="up-meta"><a href={nyHeat.url} {...ext}>NY Energy Law §17-103&nbsp;↗</a> · verified {VERIFIED}</p>
+        </article>
+        <article class="card card-pad orl">
+          <h3>Florida: energy rating disclosure</h3>
+          <p>{clean(flAct.summary)}</p>
+          <p class="up-meta"><a href={flAct.url} {...ext}>Florida Statutes s. 553.996&nbsp;↗</a> · verified {VERIFIED}</p>
+          <p class="lk">{flMetros.map((m, i) => (<>{i > 0 && ' · '}<a href={`/us/cities/${m.slug}/`}>{metroName(m)}</a></>))}</p>
+        </article>
+      </div>
+    </section>
+
+    <ProgramFaq faqs={faqs} />
+
+    <div class="up-lf">
+      <LeadFormUS context="us-home-energy-score" />
+    </div>
+
+    <ProgramSources sources={sources} verified={VERIFIED} />
+
+    <p class="up-related">
+      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/us/tests/">Home tests explained</a>
+      <a class="btn btn-ghost" href="/us/cost/">What an audit costs</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .up-s { padding: 0; }
+  .hero-text :global(.pstat) { margin-top: 4px; }
+  .side { margin: 0; }
+  .side h3 { font-size: 18px; }
+  .side-links { margin: 10px 0 0; font-family: var(--display); font-weight: 700; font-size: 15px; }
+  .side-links a { color: var(--heat-deep); text-decoration: none; }
+  .rq, .orl { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .rq .eyebrow { margin: 0; }
+  .rq h3, .orl h3 { margin: 0; font-size: 19px; }
+  .orl h3 a { color: var(--ink); text-decoration: none; }
+  .orl h3 a:hover { color: var(--heat-deep); }
+  .rq p, .orl p { margin: 0; }
+  .rq p:not(.up-meta), .orl p:not(.up-meta) { font-size: 14.5px; }
+  .rq .up-meta, .orl .up-meta { margin-top: auto; padding-top: 4px; line-height: 1.7; }
+  .lk { font-family: var(--display); font-weight: 700; font-size: 15px; }
+  .lk a { color: var(--heat-deep); text-decoration: none; }
+  .lk a:hover { text-decoration: underline; }
+</style>

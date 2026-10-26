@@ -1,0 +1,109 @@
+---
+/**
+ * States with their HEEHR and HOMES status chips, each linking to the state page.
+ * compact: chips only; stays a three-column table on phones (chips wrap), optionally split into
+ *          two side-by-side tables on wide screens.
+ * wording: chips plus the source's own status wording; rows stack into cards on phones.
+ */
+import type { StateView } from '../../lib/us/programs';
+import ProgramStatus from './ProgramStatus.astro';
+
+interface Props {
+  states: StateView[];
+  wording?: boolean;
+  /** compact only: two tables side by side on wide screens */
+  split?: boolean;
+  caption: string;
+}
+const { states, wording = false, split = false, caption } = Astro.props;
+const half = Math.ceil(states.length / 2);
+const parts = !wording && split && states.length > 8 ? [states.slice(0, half), states.slice(half)] : [states];
+const href = (s: StateView) => `/us/programs/states/${s.slug}/`;
+---
+
+{wording ? (
+  <div class="tablewrap card stw">
+    {/* aria-label, not a hidden <caption>: the global table.stack rule gives captions full width on phones */}
+    <table class="stack" aria-label={caption}>
+      <thead>
+        <tr>
+          <th scope="col">State</th>
+          <th scope="col">HEEHR · electric appliances</th>
+          <th scope="col">HOMES · whole-home upgrades</th>
+        </tr>
+      </thead>
+      <tbody>
+        {states.map((s) => (
+          <tr>
+            <td class="stn"><a href={href(s)}>{s.name}</a></td>
+            <td data-label="HEEHR · electric appliances"><ProgramStatus text={s.hear.status} chip={s.hear.chip} /></td>
+            <td data-label="HOMES · whole-home upgrades"><ProgramStatus text={s.homes.status} chip={s.homes.chip} /></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <div class:list={['stc-wrap', { split: parts.length > 1 }]}>
+    {parts.map((part, i) => (
+      <div class="tablewrap card stc">
+        <table>
+          <caption class="sr-only">{parts.length > 1 ? `${caption} (part ${i + 1} of ${parts.length})` : caption}</caption>
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col"><span class="long">HEEHR · appliances</span><span class="short">HEEHR</span></th>
+              <th scope="col"><span class="long">HOMES · whole home</span><span class="short">HOMES</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {part.map((s) => (
+              <tr>
+                <th scope="row"><a href={href(s)}>{s.name}</a></th>
+                <td><span class={`chip ${s.hear.chip.cls}`}>{s.hear.chip.label}</span></td>
+                <td><span class={`chip ${s.homes.chip.cls}`}>{s.homes.chip.label}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+  </div>
+)}
+
+<style>
+  /* compact */
+  .stc-wrap { display: grid; gap: 18px; margin: 12px 0 8px; }
+  @media (min-width: 980px) { .stc-wrap.split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
+  .stc table { table-layout: fixed; font-size: 14.5px; }
+  .stc th, .stc td { padding: 8px 12px; vertical-align: middle; }
+  .stc thead th { padding-top: 12px; }
+  .stc thead th:first-child { width: 31%; }
+  .stc tbody th { font-family: var(--body); font-size: 14.5px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink); border-bottom: 1px solid var(--line); }
+  .stc tbody th a { color: var(--ink); text-decoration: none; }
+  .stc tbody th a:hover { color: var(--heat-deep); text-decoration: underline; }
+  .stc tbody tr:last-child th, .stc tbody tr:last-child td { border-bottom: 0; }
+  .stc .chip { white-space: normal; line-height: 1.3; text-align: left; }
+  .stc .short { display: none; }
+  @media (max-width: 640px) {
+    .stc th, .stc td { padding: 8px 6px; }
+    .stc thead th:first-child { width: 34%; }
+    .stc .long { display: none; }
+    .stc .short { display: inline; }
+    .stc tbody th { font-size: 14px; }
+    .stc .chip { font-size: 10.5px; padding: 2px 8px; letter-spacing: 0.03em; }
+  }
+
+  /* with wording */
+  .stw { margin: 12px 0 8px; }
+  .stw table { font-size: 14.5px; table-layout: fixed; }
+  .stw thead th:first-child { width: 18%; }
+  .stw thead th:not(:first-child) { width: 41%; }
+  .stw .stn a { font-weight: 700; color: var(--ink); text-decoration: none; }
+  .stw .stn a:hover { color: var(--heat-deep); text-decoration: underline; }
+  .stw tbody tr:last-child td { border-bottom: 0; }
+  @media (max-width: 640px) {
+    .stw tbody tr:last-child td { border-bottom: 0; }
+    .stw .stn { margin-bottom: 2px; }
+  }
+</style>

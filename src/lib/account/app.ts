@@ -354,13 +354,13 @@ function homeSummary(home: Row | null) {
 }
 
 function plannerLink(home: Row | null) {
-  if (!home) return '/plan/';
-  if (home.planner_query && String(home.planner_query).startsWith('?')) return `/plan/${home.planner_query}`;
+  if (!home) return '/ca/plan/';
+  if (home.planner_query && String(home.planner_query).startsWith('?')) return `/ca/plan/${home.planner_query}`;
   const p = new URLSearchParams();
   const map: Record<string, string> = { postal_code: 'postal', era: 'age', home_type: 'htype', size_band: 'size', heating: 'heat', heating_age: 'hage', water_heater: 'wh', cooling: 'ac', windows: 'win', prev_audit: 'prev', water_supply: 'water' };
   for (const [k, q] of Object.entries(map)) if (home[k]) p.set(q, String(home[k]));
   if (home.secondary?.length) p.set('sec', home.secondary.join(','));
-  return `/plan/?${p.toString()}`;
+  return `/ca/plan/?${p.toString()}`;
 }
 
 // ----- overview --------------------------------------------------------------
@@ -512,7 +512,7 @@ function secHome() {
     field('Notes', textarea('notes', v('notes'), { maxlength: 2000, placeholder: 'Anything you want to remember: renovations, quirks, contractor names…' })),
     h('div', { class: 'row-actions' },
       saveBtn,
-      home ? h('a', { class: 'btn btn-ghost', href: plannerLink(home) }, 'Open the planner with these answers') : h('a', { class: 'btn btn-ghost', href: '/plan/' }, 'Or start with the planner'),
+      home ? h('a', { class: 'btn btn-ghost', href: plannerLink(home) }, 'Open the planner with these answers') : h('a', { class: 'btn btn-ghost', href: '/ca/plan/' }, 'Or start with the planner'),
       home && !readonly ? h('button', { type: 'button', class: 'linkish', on: { click: async () => {
         const label = prompt('Name for the new home (e.g. "Cottage")', 'Cottage');
         if (label === null) return;
@@ -580,7 +580,7 @@ function secRecords() {
   const items = list.map((a) => {
     const insights: Node[] = [];
     if (a.kind === 'radon-test' && a.radon_bq !== null && a.radon_bq !== undefined) {
-      if (Number(a.radon_bq) > 200) insights.push(h('p', { class: 'insight warn' }, `${a.radon_bq} Bq/m³ is above Health Canada’s 200 Bq/m³ guideline. Health Canada recommends fixing it within a year, sooner the higher it is. `, h('a', { href: '/tests/radon/' }, 'Radon mitigation →')));
+      if (Number(a.radon_bq) > 200) insights.push(h('p', { class: 'insight warn' }, `${a.radon_bq} Bq/m³ is above Health Canada’s 200 Bq/m³ guideline. Health Canada recommends fixing it within a year, sooner the higher it is. `, h('a', { href: '/ca/tests/radon/' }, 'Radon mitigation →')));
       else insights.push(h('p', { class: 'insight ok' }, `Below Health Canada’s 200 Bq/m³ guideline. Retest after major renovations.`));
     }
     if (a.kind === 'energuide-pre' && !S.audits.some((x) => x.kind === 'energuide-post')) {
@@ -836,7 +836,7 @@ function secAlerts() {
         u.url ? h('a', { href: u.url }, u.title) : h('strong', null, u.title),
         h('p', { class: 'small' }, u.summary),
       ))),
-      h('p', { class: 'small' }, h('a', { href: '/updates/' }, 'All program changes →')),
+      h('p', { class: 'small' }, h('a', { href: '/ca/updates/' }, 'All program changes →')),
     ) : null,
   );
 }

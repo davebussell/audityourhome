@@ -1,0 +1,228 @@
+{
+  "slug": "boston",
+  "name": "Boston",
+  "metroName": "Boston-Cambridge-Newton, MA-NH Metropolitan Statistical Area",
+  "states": ["MA", "NH"],
+  "principalCity": "Boston, MA",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Eversource Energy",
+        "serves": "City of Boston, plus Cambridge, Somerville, Brookline, Newton, Waltham, Framingham, Lexington, Arlington, Watertown, Dedham, Milton, Chelsea, Needham, Woburn, Burlington, Natick and Plymouth, per the MA DPU electric service map",
+        "url": "https://massgov.github.io/DPU/Web/EPD/EPDMap/"
+      },
+      {
+        "name": "National Grid",
+        "serves": "Electric in Quincy, Malden, Medford, Lynn, Lowell, Everett, Revere, Salem, Brockton, Weymouth, Haverhill, Methuen and Andover, per the MA DPU map",
+        "url": "https://massgov.github.io/DPU/Web/EPD/EPDMap/"
+      },
+      {
+        "name": "Municipal Light Plants (e.g., Wellesley, Belmont, Braintree, Peabody)",
+        "serves": "These towns are served by municipal utilities, which are not part of Mass Save. Mass Save's own page says so.",
+        "url": "https://massgov.github.io/DPU/Web/EPD/EPDMap/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "National Grid (Boston Gas)",
+        "serves": "Most inner-core suburbs, including Brookline, Newton, Quincy, Malden, Medford, Waltham, Lynn, Lexington, Arlington, Watertown, Milton, Everett, Chelsea, Revere, Weymouth and Braintree. The DPU gas map shows the City of Boston itself as 'Multiple Providers'.",
+        "url": "https://massgov.github.io/DPU/Web/Gas/GasMap/"
+      },
+      {
+        "name": "Eversource Energy (NSTAR Gas and EGMA)",
+        "serves": "NSTAR Gas: Cambridge, Framingham, Dedham, Needham, Plymouth. EGMA: Brockton, Methuen, Andover. Boston and Somerville are listed as 'Multiple Providers'.",
+        "url": "https://massgov.github.io/DPU/Web/Gas/GasMap/"
+      }
+    ],
+    "notes": "Massachusetts has retail electric choice (state EnergySwitch site) and municipal aggregation. Boston Community Choice Electricity (BCCE) buys supply in bulk for over 200,000 enrolled Boston households and businesses. Its three plans have rates valid through December 2027, and from February 2021 to December 2025 it saved households an average of $150 a year versus Eversource Basic Service. Residents can opt out anytime without fees. Delivery, and therefore Mass Save eligibility, stays with the utility. Sources: https://www.boston.gov/departments/environment/community-choice-electricity and https://www.mass.gov/energy-programs-for-individuals"
+  },
+  "auditPrograms": [
+    {
+      "name": "Mass Save Home Energy Assessment (virtual or in-person)",
+      "runBy": "Sponsors of Mass Save (in Boston, Eversource and National Grid), delivered by lead vendors or participating Home Performance Contractors",
+      "cost": "No cost",
+      "whoQualifies": "Residents of 1–4 unit homes served by a Mass Save sponsor. Renters and landlords are also eligible, and 5+ unit buildings go through a multifamily assessment. Municipal-utility customers are not covered.",
+      "whatYouGet": "An Energy Specialist reviews the home and recommends upgrades, and you get a Decarbonization Report listing the rebates you qualify for. Typical results are 75–100% off approved insulation, no-cost targeted air sealing, equipment rebates based on assessment findings, and access to the 0% HEAT Loan.",
+      "howToBook": "Call 866-527-SAVE (7283), schedule online after entering zip code and heating fuel at masssave.com, or choose a participating Home Performance Contractor. Customers can also skip the assessment and use a Direct Weatherization contractor.",
+      "url": "https://www.masssave.com/residential/rebates-offers-services/home-energy-assessments",
+      "status": "Open. Offers are 'subject to change or cancellation'. This is part of the 2025–2027 Three-Year Plan; the 2028–2030 plan is in public listening sessions in November 2026.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Mass Save Income Eligible Home Energy Assessment (Community Action Programs)",
+      "runBy": "Sponsors of Mass Save through local Community Action Program agencies. ABCD serves Boston, Brookline, Newton and the Mystic Valley communities.",
+      "cost": "No cost",
+      "whoQualifies": "Income-eligible households in 1–4 unit homes. The 2026–2027 Income Eligible limit shown by Mass Save is ≤ $103,049 for a household of 4, and limits may vary by zip code.",
+      "whatYouGet": "Assessment plus no-cost insulation and air sealing, replacement of inefficient appliances (refrigerators, freezers, dehumidifiers, window ACs, washers), thermostats, LEDs, water-saving devices and eligible window replacement",
+      "howToBook": "Call 866-537-7267 or contact your local Community Action Program",
+      "url": "https://www.masssave.com/residential/rebates-offers-services/income-based-offers/income-eligible-programs",
+      "status": "Open",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Mass Save air-source heat pump rebates (2026)",
+      "runBy": "Sponsors of Mass Save (Eversource and National Grid in the Boston area)",
+      "category": "heat-pump",
+      "amount": "Whole-home: $2,650 per ton, up to $8,500. Partial-home: $1,125 per ton, up to $8,500, plus a $500 weatherization bonus and a $500 sizing bonus where eligible. Basic: $250 per ton, up to $2,500. Income-based enhanced: 'Up to $16,000 or up to no cost through Turnkey Services'. Mass Save has announced lower rates for 2027 installs: whole-home $2,350 per ton and partial-home $1,000 per ton, each up to $7,500.",
+      "whoQualifies": "Residential customers replacing oil, propane or electric resistance heat (electric-account sponsors) or natural gas heat (gas-account sponsors). Equipment must be ENERGY STAR Cold Climate, installed by a Heat Pump Installer Network contractor between January 1 and December 31, 2026. Paperwork is due by February 28, 2027. Whole-home requires sufficient weatherization, and partial-home requires integrated controls. The sizing bonus requires equipment sized to 90–120% of the home's heating load at the outdoor design temperature, using an ACCA Manual J calculation. Enhanced tier requires prior oil, propane or electric resistance heat.",
+      "status": "Open for 2026 installs. From October 1, 2026, applications must include the serial number and a nameplate photo of each outdoor unit.",
+      "url": "https://www.masssave.com/residential/rebates-and-incentives/heating-and-cooling/heat-pumps/air-source-heat-pumps",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Mass Save insulation and air sealing (standard, Designated Equity Community, Enhanced)",
+      "runBy": "Sponsors of Mass Save",
+      "category": "insulation-air-sealing",
+      "amount": "Standard: 75–100% off approved insulation and no-cost targeted air sealing. Designated Equity Communities: 100% off insulation and air sealing with no income verification. Enhanced (income-verified, 1–4 units): 100% off recommended insulation.",
+      "whoQualifies": "Mass Save customers in 1–4 unit homes, with recommendations from a Home Energy Assessment. The Enhanced tier for a household of 4 is $103,050–$137,399 (2026–2027 season; zip-specific limits may differ).",
+      "status": "Open",
+      "url": "https://www.masssave.com/en/residential/rebates-offers-services/income-based-offers/designated-equity-communities",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Mass Save Enhanced turnkey services (moderate income)",
+      "runBy": "Sponsors of Mass Save",
+      "category": "income-qualified",
+      "amount": "No-cost weatherization, air-source heat pumps 'for up to no cost' (if heating with electricity, oil or propane), and up to 100% of electrical panel upgrades and pre-weatherization barrier removal",
+      "whoQualifies": "1–4 unit homes. The Mass Save table for 2026–2027 shows the Enhanced band at $103,050–$137,399 for a household of 4, while the page text says 'a family of four with a household income of $132,000 or less may qualify'. Projects are subject to cost-effectiveness screening.",
+      "status": "Open",
+      "url": "https://www.masssave.com/enhanced",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Mass Save HEAT Loan (0% financing)",
+      "runBy": "Sponsors of Mass Save with participating lenders",
+      "category": "financing",
+      "amount": "0% interest, up to $25,000 total over a customer's lifetime (the maximum effective January 1, 2025)",
+      "whoQualifies": "Mass Save customers financing weatherization, pre-weatherization barriers, ENERGY STAR windows (only alongside completed weatherization), ConnectedSolutions batteries, heat pumps and heat pump water heaters. A Home Energy Assessment is required for certain measures, and lender approval is required.",
+      "status": "Open",
+      "url": "https://www.masssave.com/residential/rebates-offers-services/financing",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "New England Heat Pump Accelerator point-of-sale incentives",
+      "runBy": "State-led regional initiative funded by a federal grant (not Mass Save)",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "Mass Save says instant incentives 'may also be available through distributors and contractors at the point of sale'. Amounts were not verified.",
+      "status": "Referenced as available on Mass Save's 2026 heat pump page; details not verified at NEHPA.org",
+      "url": "https://www.masssave.com/residential/rebates-and-incentives/heating-and-cooling/heat-pumps/air-source-heat-pumps",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Boston Home Center Home Repair and Improvement Loan",
+      "runBy": "City of Boston (Mayor's Office of Housing / Boston Home Center)",
+      "category": "financing",
+      "amount": "Deferred, interest-free loans up to $50,000 with no monthly payments, due on sale, transfer or refinance. One-third is forgiven after 10 years of owner-occupancy. Covers repairs plus 'energy efficiency, weatherization, and decarbonization improvements'.",
+      "whoQualifies": "Boston owner-occupants of 1–4 family homes or condos in associations of 6 units or fewer, with household income ≤135% AMI. Incomes from 120% to 135% AMI require a 50/50 cost share. Financial assets must be under $100,000, though seniors 60+ are exempt from the asset limit.",
+      "status": "Open (page updated 9/23/26)",
+      "url": "https://www.boston.gov/departments/housing/home-repair-and-improvement-loan-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Seniors Save: heating system repair or replacement",
+      "runBy": "City of Boston (Boston Home Center)",
+      "category": "income-qualified",
+      "amount": "Up to $12,000 in grants plus in-house contractor support, with 0% deferred loans for remaining costs",
+      "whoQualifies": "Boston homeowners aged 60+ who own and occupy a 1–4 family home, with household income ≤80% AMI (120% in Allston or Brighton), and who are current on property taxes, mortgage and water bills. Not a reimbursement program: already-replaced systems are ineligible.",
+      "status": "Open (page updated 8/27/26)",
+      "url": "https://www.boston.gov/departments/housing/seniors-save-update-your-heating-system",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "DOER MLP Z-Loan (municipal-utility towns only)",
+      "runBy": "Massachusetts Department of Energy Resources",
+      "category": "financing",
+      "amount": "Interest-free loans up to $25,000 per homeowner, repaid over up to five years ($9.7 million program)",
+      "whoQualifies": "Homeowners served by a municipal light plant who are not eligible for Mass Save (in this metro, e.g., Wellesley, Belmont, Braintree, Peabody electric customers). A qualifying home energy assessment through Energy New England or NextZero is required first.",
+      "status": "Launched (press release September 3, 2026); apply at myz-loan.com",
+      "url": "https://www.mass.gov/news/healey-driscoll-administration-launches-interest-free-loans-for-home-energy-upgrades",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": null,
+    "programName": null,
+    "administrator": "Massachusetts Department of Energy Resources (DOER) would be the state energy office. The administrator of the IRA rebates was not confirmed.",
+    "summary": "Could not verify. None of the DOER, mass.gov or Mass Save pages opened (energy programs for individuals, Building Decarbonization and Energy Efficiency, Energy Efficiency Programs, The Mass Save Program page updated June 10, 2026) mentions IRA Home Efficiency Rebates or HEAR/HEEHR. mass.gov blocks scripted requests, and a guessed IRA page URL failed. The only federally funded heat pump incentive referenced is the New England Heat Pump Accelerator, which is a separate federal grant. Whatever Massachusetts does is subject to DOE Program Notice 26-2 (effective May 29, 2026): no federal rebates for fuel switching, insulation and air sealing first, and launched programs must conform within three months.",
+    "url": "https://www.mass.gov/energy-efficiency-programs",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program, HEARTWAP heating repair and Fuel Assistance (Boston)",
+      "runBy": "Action for Boston Community Development (ABCD), serving Boston, Brookline, Newton, Malden, Medford, Everett, Melrose, Stoneham, Winchester and Woburn",
+      "summary": "WAP provides attic and wall insulation, weather stripping and air sealing at no cost. HEARTWAP repairs or replaces heating systems, provides no-heat emergency response, and does tune-ups. ABCD administers HEAP fuel assistance, which also unlocks discounted utility rates. Conservation services with Eversource cover LEDs, water measures and replacement of inefficient appliances. All are for income-eligible residents.",
+      "url": "https://bostonabcd.org/service_categories/energy/"
+    },
+    {
+      "name": "Mass Save Income Eligible program",
+      "runBy": "Sponsors of Mass Save through Community Action Program agencies",
+      "summary": "No-cost assessment, weatherization, appliance replacement and heating help. The 2026–2027 table shows households of 4 at ≤ $103,049. The income-eligible page still shows a 2025–2026 table. Call 866-537-7267.",
+      "url": "https://www.masssave.com/residential/rebates-offers-services/income-based-offers/income-eligible-programs"
+    },
+    {
+      "name": "Mass Save Enhanced (moderate income) turnkey offers",
+      "runBy": "Sponsors of Mass Save",
+      "summary": "For households above the income-eligible limit up to $137,399 for 4 (2026–2027): 100% off recommended insulation, heat pumps up to no cost if heating with electricity, oil or propane, and panel and barrier-removal help. Income verification at 888-714-3990.",
+      "url": "https://www.masssave.com/enhanced"
+    },
+    {
+      "name": "Boston Home Center: Seniors Save and Home Repair and Improvement Loan",
+      "runBy": "City of Boston",
+      "summary": "Heating-system grants up to $12,000 for seniors (≤80% AMI), and deferred 0% loans up to $50,000 for owner-occupants (≤135% AMI) that can fund weatherization and decarbonization. Call 617-635-4663.",
+      "url": "https://www.boston.gov/departments/housing/boston-home-center"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Boston BERDO (Building Emissions Reduction and Disclosure Ordinance)",
+      "appliesTo": "Residential buildings with 15 or more units, non-residential buildings of 20,000 sq ft or more, and tax parcels whose buildings sum to 20,000 sq ft or 15 units. Owners of single-family homes and small multifamily buildings are not covered. Condo owners in 15+ unit buildings are affected through their association.",
+      "summary": "Annual energy and water reporting to the City, third-party verification, and emissions standards starting in 2025 or 2030 depending on size, declining to net zero by 2050. 2026 deadlines: October 15 for annual reporting with approved extensions, and October 31 to buy MA Class I RECs through the City's REC Connector.",
+      "url": "https://www.boston.gov/departments/environment/berdo"
+    },
+    {
+      "name": "Massachusetts Large Building Energy Reporting (LBER)",
+      "appliesTo": "'All buildings in the Commonwealth over 20,000 square feet'. Not ordinary homeowners.",
+      "summary": "Annual reporting under DOER's LBER program. DOER warns that third-party vendors have been sending misleading letters.",
+      "url": "https://www.mass.gov/large-building-energy-reporting-in-massachusetts"
+    },
+    {
+      "name": "Massachusetts building energy codes (base, stretch, specialized opt-in)",
+      "appliesTo": "New construction and permitted work, so it matters to homeowners who build or significantly renovate. Which tier Boston has adopted was not verified.",
+      "summary": "There are three tiers: Base Code (IECC 2021 with MA amendments, 780 CMR), opt-in Stretch Code (225 CMR 22/23), and opt-in Specialized Code (Stretch plus Appendix RC/CC). Municipal adoption is shown on a DOER map that could not be read.",
+      "url": "https://www.mass.gov/info-details/massachusetts-building-energy-codes"
+    }
+  ],
+  "notes": "Mass Save's 2026 heat pump rebates are paid per ton ($2,650/ton whole-home, capped at $8,500). The income-based enhanced tier is up to $16,000. Earlier years' amounts were not checked, so no before/after comparison is made here. Installs must be in calendar 2026 with paperwork by February 28, 2027, and serial-number photos are required from October 1, 2026. Mass Save has announced lower rates for 2027 installs: $2,350/ton whole-home and $1,000/ton partial-home, each capped at $7,500. The 2025–2027 plan is in effect, and DOER/EEAC listening sessions for the 2028–2030 plan are scheduled for November 10 and 12, 2026, so expect changes for 2028. Federal 25C/25D tax credits ended with 2025 installs (IRS). Not verified: Massachusetts' IRA Home Energy Rebate status (no official page found), Mass Save heat pump water heater amounts, NEHPA instant-incentive amounts, Boston's energy-code tier, and the state WAP administrator (ABCD confirms local delivery). The New Hampshire part of the MSA (Rockingham and Strafford counties) was not researched. Boston's gas territory is split ('Multiple Providers' on the DPU map), so confirm the gas sponsor by address before routing Mass Save gas-account rebates.",
+  "sources": [
+    { "label": "Census Bureau – OMB July 2023 CBSA delineation file (List 1)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "MA DPU – electric service territory map", "href": "https://massgov.github.io/DPU/Web/EPD/EPDMap/" },
+    { "label": "MA DPU – gas service territory map", "href": "https://massgov.github.io/DPU/Web/Gas/GasMap/" },
+    { "label": "Mass Save – Home Energy Assessments", "href": "https://www.masssave.com/residential/rebates-offers-services/home-energy-assessments" },
+    { "label": "Mass Save – Air Source Heat Pumps (2026 rebates)", "href": "https://www.masssave.com/residential/rebates-and-incentives/heating-and-cooling/heat-pumps/air-source-heat-pumps" },
+    { "label": "Mass Save – Enhanced residential offers (2026–2027 income table)", "href": "https://www.masssave.com/enhanced" },
+    { "label": "Mass Save – Enhanced weatherization incentive", "href": "https://www.masssave.com/en/residential/rebates-offers-services/income-based-offers/save-with-enhanced-incentives/enhanced-weatherization-incentive" },
+    { "label": "Mass Save – Designated Equity Communities", "href": "https://www.masssave.com/en/residential/rebates-offers-services/income-based-offers/designated-equity-communities" },
+    { "label": "Mass Save – Income Eligible programs", "href": "https://www.masssave.com/residential/rebates-offers-services/income-based-offers/income-eligible-programs" },
+    { "label": "Mass Save – 0% HEAT Loan", "href": "https://www.masssave.com/residential/rebates-offers-services/financing" },
+    { "label": "mass.gov – Energy programs for individuals", "href": "https://www.mass.gov/energy-programs-for-individuals" },
+    { "label": "mass.gov – Energy efficiency programs", "href": "https://www.mass.gov/energy-efficiency-programs" },
+    { "label": "mass.gov – The Mass Save Program (updated June 10, 2026)", "href": "https://www.mass.gov/info-details/the-mass-save-program" },
+    { "label": "mass.gov – DOER MLP Z-Loan launch (Sept 3, 2026)", "href": "https://www.mass.gov/news/healey-driscoll-administration-launches-interest-free-loans-for-home-energy-upgrades" },
+    { "label": "mass.gov – DOER organization page (2028–2030 plan sessions)", "href": "https://www.mass.gov/orgs/massachusetts-department-of-energy-resources" },
+    { "label": "mass.gov – Large Building Energy Reporting", "href": "https://www.mass.gov/large-building-energy-reporting-in-massachusetts" },
+    { "label": "mass.gov – Massachusetts building energy codes", "href": "https://www.mass.gov/info-details/massachusetts-building-energy-codes" },
+    { "label": "City of Boston – BERDO", "href": "https://www.boston.gov/departments/environment/berdo" },
+    { "label": "City of Boston – Community Choice Electricity", "href": "https://www.boston.gov/departments/environment/community-choice-electricity" },
+    { "label": "City of Boston – Boston Home Center", "href": "https://www.boston.gov/departments/housing/boston-home-center" },
+    { "label": "City of Boston – Home Repair and Improvement Loan Program", "href": "https://www.boston.gov/departments/housing/home-repair-and-improvement-loan-program" },
+    { "label": "City of Boston – Seniors Save", "href": "https://www.boston.gov/departments/housing/seniors-save-update-your-heating-system" },
+    { "label": "ABCD – Energy services", "href": "https://bostonabcd.org/service_categories/energy/" },
+    { "label": "DOE – Program Notice 26-2 (effective May 29, 2026)", "href": "https://www.energy.gov/documents/program-notice-26-2" },
+    { "label": "IRS – Energy Efficient Home Improvement Credit (25C)", "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" },
+    { "label": "IRS – Residential Clean Energy Credit (25D)", "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit" }
+  ]
+}

@@ -247,7 +247,7 @@ function updatesSection() {
   },
     field('Title', input('title', '', { maxlength: 160, placeholder: 'e.g. Ontario: new heat pump rebate amounts from January 1' })),
     field('Summary (2 or 3 sentences, plain facts)', textarea('summary', '', { maxlength: 1200, rows: 3 })),
-    field('Link (official page or our program page)', input('url', '', { type: 'url', placeholder: 'https://audityourhome.com/programs/…' })),
+    field('Link (official page or our program page)', input('url', '', { type: 'url', placeholder: 'https://audityourhome.com/ca/programs/…' })),
     h('fieldset', null, h('legend', null, 'Provinces (leave all unticked for all of Canada)'), provBoxes),
     btn,
   );

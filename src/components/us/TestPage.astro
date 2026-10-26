@@ -1,0 +1,127 @@
+---
+/**
+ * Shell for one US test guide (/us/tests/<slug>/): breadcrumb, hero with photo, at-a-glance
+ * tiles, the page body (default slot), then FAQ (with FAQPage schema), sources, related
+ * guides and the US contact card. Pass the lede in the "lede" slot.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../Photo.astro';
+import LeadFormUS from './LeadFormUS.astro';
+import TestStyles from './TestStyles.astro';
+import TestCite from './TestCite.astro';
+import { ogFor } from '../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { US_VERIFIED } from '../../lib/us/data';
+import { usTest, guideHref, uniqSources, shortLabel, type Src } from '../../lib/us/tests';
+
+export interface Glance {
+  k: string;
+  v: string;
+  src?: Src;
+  /** short name for the source link (default: publisher part of the label) */
+  srcLabel?: string;
+}
+
+export interface Faq {
+  q: string;
+  a: string;
+  src?: Src[];
+}
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  heroTitle: string;
+  glance?: Glance[];
+  faqs: Faq[];
+  sources: Src[];
+  leadHeading: string;
+  leadSub: string;
+}
+
+const { slug, title, description, heroTitle, glance = [], faqs, sources, leadHeading, leadSub } = Astro.props;
+const t = usTest(slug);
+const related = t.related.map((r) => usTest(r));
+const kind = t.group === 'health' ? 'Home health test guide' : 'Energy test guide';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Testing guide', path: '/us/tests/' },
+    { name: t.crumb, path: guideHref(slug) },
+  ]),
+  faqSchema(faqs.map((f) => ({ q: f.q, a: f.a }))),
+];
+const srcList = uniqSources(sources);
+/** "EPA - Health Risk of Radon (…)" reads better as "EPA: Health Risk of Radon (…)" */
+const displayLabel = (l: string) => l.replace(' - ', ': ');
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(t.photo)}>
+  <TestStyles />
+  <div class="container ust">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>{t.crumb}</span>
+    </nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{kind} · verified {US_VERIFIED}</p>
+        <h1>{heroTitle}</h1>
+        <p class="lede measure"><slot name="lede" /></p>
+      </div>
+      <Photo name={t.photo} hud={t.hud} eager />
+    </div>
+
+    {glance.length > 0 && (
+      <div class="glance">
+        {glance.map((g) => (
+          <div class="g">
+            <p class="k">{g.k}</p>
+            <p class="v">{g.v}</p>
+            {g.src && (
+              <p class="gs"><a href={g.src.href} rel="noopener" title={g.src.label}>{g.srcLabel ?? shortLabel(g.src.label)}&nbsp;↗</a></p>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
+
+    <slot />
+
+    <section class="sec faqs" aria-labelledby="faq-h">
+      <h2 id="faq-h">Common questions</h2>
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body">
+            <p class="mb-0">{f.a}</p>
+            {f.src && f.src.length > 0 && <TestCite src={f.src} />}
+          </div>
+        </details>
+      ))}
+    </section>
+
+    <section class="card card-pad srcs" aria-labelledby="src-h">
+      <h2 id="src-h">Sources</h2>
+      <p class="small mb-0">Every source below was opened and checked on {US_VERIFIED}. A date in a source’s name is the “last updated” date shown on that page.</p>
+      <ul>
+        {srcList.map((s) => (
+          <li><a href={s.href} rel="noopener">{displayLabel(s.label)}&nbsp;↗</a> <span class="meta">verified {US_VERIFIED}</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="related">
+      <a class="btn btn-ghost" href="/us/tests/screener/">Which tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/us/tests/">All tests</a>
+      {related.map((r) => (
+        <a class="btn btn-ghost" href={guideHref(r.slug)}>Related: {r.name}</a>
+      ))}
+    </div>
+
+    <div class="lead-wrap">
+      <LeadFormUS heading={leadHeading} sub={leadSub} context={`us-test-${slug}`} />
+    </div>
+  </div>
+</Base>

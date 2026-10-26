@@ -1,0 +1,274 @@
+{
+  "slug": "phoenix",
+  "name": "Phoenix",
+  "metroName": "Phoenix-Mesa-Chandler, AZ Metropolitan Statistical Area (CBSA 38060; OMB July 2023 delineation: Maricopa and Pinal counties)",
+  "states": ["AZ"],
+  "principalCity": "Phoenix",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Arizona Public Service (APS)",
+        "serves": "Investor-owned utility (subsidiary of Pinnacle West Capital Corp.) serving 'approximately 1.4 million customers in Arizona' across a statewide territory. It serves part of the Phoenix metro. Regulated by the Arizona Corporation Commission (ACC).",
+        "url": "https://www.aps.com/en/About/Our-Company/About-us"
+      },
+      {
+        "name": "SRP (Salt River Project)",
+        "serves": "'A community-based, not-for-profit' utility that 'serves more than 1.2 million electric customers in central Arizona' and 'provides water and energy throughout the Valley.' It serves much of the Phoenix metro and runs its own rebate programs.",
+        "url": "https://www.srpnet.com/about"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Southwest Gas",
+        "serves": "Natural gas utility for 'Arizona, Nevada, and portions of California' (more than 2 million customers). The City of Phoenix's weatherization program lists Southwest Gas ('SWG') among its funders.",
+        "url": "https://www.swgas.com/en/residential-rebates-and-promotions"
+      }
+    ],
+    "notes": "Phoenix-area homes get electricity from either APS or SRP depending on address; both fund the City of Phoenix's weatherization program. Their programs differ sharply, so audityourhome.com should ask which utility is on the bill. Smaller utilities and co-ops in outlying Maricopa and Pinal areas were not researched. SRP still runs a broad residential rebate menu (A/C, insulation, ducts, shade screens, windows, heat pump water heaters), with current terms requiring installation before April 30, 2027. APS's website no longer lists residential HVAC, duct or whole-home rebates. APS's Demand Side Management Adjustment Charge, which recovers 'Commission-approved programs ... to meet compliance with Arizona's Energy Efficiency Standard,' now cites only Limited Income Weatherization and smart-thermostat Cool Rewards as examples. That charge was cut to $0.000754/kWh effective January 1, 2026 (ACC Decision No. 81584), a decrease of $0.001639/kWh. Southwest Gas's 2026 Arizona residential rebates are small and do not cover furnaces or water heaters."
+  },
+  "auditPrograms": [
+    {
+      "name": "SRP Home Energy Assessment (virtual or in-home)",
+      "runBy": "SRP (Energy Ambassadors)",
+      "cost": "Virtual: free. In-home: free for income-qualified customers in listed assistance programs; otherwise a $49 fee added to the SRP bill. SRP calls it 'free* in many cases.'",
+      "whoQualifies": "SRP residential customers: homeowners, and renters in single-family homes or communities of fewer than five units with property manager approval. Renters in 5+ unit communities are referred to SRP's Multifamily Solutions Program.",
+      "whatYouGet": "About 90 minutes reviewing heating/cooling, thermostats, lighting, safety monitors, water heating and appliances. A customized energy report. Free products worth up to $250 (LEDs, efficient showerheads, aerators), mailed for virtual visits or installed in person. Access to appliance rebates (ENERGY STAR refrigerators, heat pumps, water heaters, washers/dryers, dishwashers) within six months. Income-qualified customers with older refrigerators may get a free new one.",
+      "howToBook": "Through SRP's online scheduling portal linked from the page.",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/home-energy-savings-audit",
+      "status": "Available (page presents it as current on 2026-10-12; SRP 'reserves the right to change or cancel' promotions).",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Home Energy Audit discount (BPI-certified contractor)",
+      "runBy": "SRP, through participating BPI-certified contractors",
+      "cost": "$100 off an in-person audit, shown on the contractor's invoice. The contractor sets the base price.",
+      "whoQualifies": "SRP residential electric customers in single-family or apartment/condo homes. Not new construction or mobile homes.",
+      "whatYouGet": "An in-person audit by a participating BPI-certified contractor.",
+      "howToBook": "Find a participating contractor via SRP's contractor finder.",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/home-energy-savings-audit",
+      "status": "Listed as current on 2026-10-12.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "City of Phoenix Weatherization Assistance Program (includes home energy efficiency assessment)",
+      "runBy": "City of Phoenix Neighborhood Services Department, delivered through the Arizona Department of Housing. Funders listed: DOE, LIHEAP, APS, SRP, SWG.",
+      "cost": "Free ('free, grant-funded program').",
+      "whoQualifies": "Eligible Phoenix homeowners and renters with annual household income up to $31,920 (1 person), $43,280 (2), $54,640 (3), $66,000 (4), $77,360 (5), plus $11,360 per additional member.",
+      "whatYouGet": "Home energy efficiency assessment; air sealing; efficient lighting; high-efficiency appliances; CO detectors; attic insulation and ventilation; heating/cooling repair or replacement; health and safety repairs.",
+      "howToBook": "Phone 602-534-4444, email rehab.nsd@phoenix.gov, or 200 W. Washington St., 4th Floor; the page links an eligibility questionnaire.",
+      "url": "https://www.phoenix.gov/administration/departments/nsd/housing-repairs/weatherization.html",
+      "status": "Unverified. The page does not say whether applications are open or whether there is a waitlist.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "AllThrive365 Weatherization (Maricopa County outside Phoenix and Mesa)",
+      "runBy": "AllThrive365 (formerly Foundation for Senior Living), funded through the Arizona Department of Housing (DOE, LIHEAP, APS, SRP, SWG, TEP)",
+      "cost": "Free for eligible low-income residents.",
+      "whoQualifies": "Homeowners (renters 'may qualify upon review') in Maricopa County excluding Phoenix and Mesa, with gross household income at or below 200% FPL ($31,920 for 1 person; $66,000 for 4). Not weatherized in the last 15 years.",
+      "whatYouGet": "LED bulbs, CO/smoke detectors, shade screens, A/C and water heater repairs, insulation, duct sealing.",
+      "howToBook": "Online 'Inquire Here' eligibility form; questions to mcwap@allthrive365.org.",
+      "url": "https://allthrive365.org/housing/energy-efficiency/",
+      "status": "Active and accepting inquiries; no funding or waitlist information posted.",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "SRP Cool Cash A/C and Heat Pump Rebate",
+      "runBy": "SRP",
+      "category": "heat-pump",
+      "amount": "Per ton, for 15.2+ SEER2 equipment: single-stage $75; multi-stage $150; variable-capacity $225; inverter-driven mini-split heat pump $225. 'up to $1,125 back.'",
+      "whoQualifies": "Permanent SRP residential electric customers (single-family, mobile home, apartment/condo) replacing or supplementing an existing central A/C or heat pump. New construction, window units and garages are excluded. Split systems need both indoor and outdoor units replaced, installed by an Arizona-licensed contractor. Manual J is required for single-stage. Up to five rebates per customer.",
+      "status": "Open. Install 'before April 30, 2027'; 'REBATE MUST BE SUBMITTED WITHIN 6 MONTHS OF INSTALLATION.'",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/air-conditioner",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Insulation Rebate",
+      "runBy": "SRP, through participating BPI-certified insulation contractors",
+      "category": "insulation-air-sealing",
+      "amount": "'Save up to 75% on professionally installed attic insulation – up to $600.' Applied instantly on the participating contractor's invoice.",
+      "whoQualifies": "SRP residential electric customers in single-family, apartment or condo homes. Excluded: new construction, mobile homes, and attics over unconditioned space. Existing insulation below R-19 brought to R-38 (above R-19 needs documentation). Must be combined with air sealing unless documented unnecessary.",
+      "status": "Listed as current. No end date shown on the page; other SRP rebates require installation before April 30, 2027.",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/insulation",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Duct Test and Repair Rebate",
+      "runBy": "SRP, through participating BPI-certified contractors",
+      "category": "insulation-air-sealing",
+      "amount": "Covers '75% of repair costs or up to $400.' Single-family detached up to $400; mobile/manufactured homes, apartments, condos and townhouses up to $300.",
+      "whoQualifies": "Permanent SRP residential customers with central A/C or heat pump. Test-in and test-out results are required. Excluded: new construction and evaporative coolers.",
+      "status": "Open. Repairs must be completed by April 30, 2027; submit within 6 months of repairs.",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/duct-test-repair",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Heat Pump Water Heater Rebate",
+      "runBy": "SRP",
+      "category": "heat-pump",
+      "amount": "$500 per ENERGY STAR heat pump water heater (UEF 2.8+).",
+      "whoQualifies": "Permanent SRP residential customers whose home has had SRP service for more than a year. The unit must replace the current water heater and be installed by an Arizona-licensed plumbing contractor. One rebate every 10 years; installs before July 1, 2023 are excluded.",
+      "status": "Open. Install 'before April 30, 2027'; submit within 6 months.",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/heat-pump-water-heater",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Shade Screen / Window Film Rebate",
+      "runBy": "SRP",
+      "category": "other",
+      "amount": "$1 per square foot.",
+      "whoQualifies": "Permanent SRP residential customers. Screens must block 80%+ of solar heat gain on west-, south- or east-facing windows of air-conditioned space. Film SHGC max 0.45 on double-pane and 0.40 on single-pane windows. DIY allowed.",
+      "status": "Open. Install by April 30, 2027; submit within 6 months.",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/shade-screen",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Window Replacement Rebate",
+      "runBy": "SRP",
+      "category": "other",
+      "amount": "'a rebate of $3 per square foot ... on professionally installed ENERGY STAR® rated replacement windows.'",
+      "whoQualifies": "SRP homeowners (per SRP's rebate listing); professional installation required.",
+      "status": "Listed on SRP's residential rebates page on 2026-10-12 (detail page not opened).",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/residential-rebates",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SRP Bring Your Own Thermostat (BYOT)",
+      "runBy": "SRP",
+      "category": "other",
+      "amount": "$50 SRP bill credit per thermostat enrolled (max 2, so up to $100), plus $25 per eligible thermostat each year enrolled. SRP Marketplace also shows instant rebates (e.g., Nest Thermostat from '$0-$49.99' vs $129.99 list).",
+      "whoQualifies": "SRP residential electric customers with an eligible internet-connected thermostat controlling central A/C.",
+      "status": "Enrollment open (no end date stated).",
+      "url": "https://www.srpnet.com/energy-savings-rebates/home/rebates/smart-thermostat",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "APS Cool Rewards (smart thermostat demand response)",
+      "runBy": "APS (enrollment via EnergyHub)",
+      "category": "other",
+      "amount": "'up to $85 the first year': a $50 one-time enrollment credit per smart thermostat plus a $35 participation credit per thermostat per event season (June 1–Sept 30), paid annually while enrolled. APS Marketplace buyers get the $85 at checkout.",
+      "whoQualifies": "APS residential customers with an eligible internet-connected thermostat controlling central A/C. Rooftop-solar customers may join.",
+      "status": "Enrollment open (apscoolrewards.com).",
+      "url": "https://www.aps.com/en/About/Sustainability-and-Innovation/Technology-and-Innovation/Cool-Rewards",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Southwest Gas 2026 Arizona Residential Rebates",
+      "runBy": "Southwest Gas",
+      "category": "appliances",
+      "amount": "ENERGY STAR front-load clothes washer $50/unit and WaterSense low-flow showerhead (≤1.5 gpm) $5/unit, both requiring gas water heating. ENERGY STAR windows $1.00/sq ft, capped at 75% of cost and requiring gas space heating. Max two units per equipment type.",
+      "whoQualifies": "Southwest Gas Arizona residential customers or property owners with an active meter on a rate that includes the DSM surcharge (homeowners, renters, builders, individually metered multifamily).",
+      "status": "Open for purchases Jan 1–Dec 31, 2026, first-come, first-served while funds last. Applications due (postmarked or online) by Jan 31, 2027.",
+      "url": "https://www.swgas.com/1409208977813/SWG_2026_AZ_RES_Rebate_Application.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Maricopa County Emergency Home Repair (incl. A/C and heating replacement)",
+      "runBy": "Maricopa County Human Services",
+      "category": "income-qualified",
+      "amount": "Repairs including 'Air conditioning and heating repairs and replacement,' water heater replacement and minor electrical/plumbing work. Lifetime assistance capped at $25,000.",
+      "whoQualifies": "Owner-occupants (1+ year) at or below 80% AMI ($62,950 for 1 person, effective June 1, 2026), liquid assets under $12,000, current on taxes, mortgage and HOA. Countywide except cities with their own programs (including Phoenix and Mesa); county islands remain eligible.",
+      "status": "Online application available; 'This is not a first-come, first-served program'. Priority for non-functioning A/C or heat in extreme temperatures, people 62+, disability, or a child under 6.",
+      "url": "https://www.maricopa.gov/5214/Home-Improvement-Programs",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "Open with restrictions (HEAR). Efficiency Arizona says 'Applications are still being accepted, but must meet the new program guidelines.' New guidelines took effect September 1, 2026 under a DOE Home Energy Rebates Program Notice: no more gas-to-electric fuel switching, only electric-to-electric replacements. August 28, 2026 was the last day to reserve under the old rules. The program launched in August 2024, was paused at one point 'Due to Federal Grant Funding Uncertainty', then 'restarted ... on a limited basis'. A program announcement 'As of April 30' (year not shown; site footer © 2026) reported 1,076 rebates issued. No HOMES (whole-home) program was found.",
+    "programName": "Efficiency Arizona (Arizona's IRA Home Electrification and Appliance Rebates, HEAR; its posted consumer protection plan is filed under IRA section 50122)",
+    "administrator": "Arizona Governor's Office of Resiliency",
+    "summary": "Rebates 'up to $14,000 per household, depending on income level.' Per-item caps: heat pump for heating/cooling up to $8,000; heat pump water heater $1,750; electric stove/cooktop/range/oven $840; heat pump dryer $840; insulation, air sealing and ventilation $1,600; electric load service center (panel) $4,000; wiring and other building materials $2,500. Panel and wiring work qualifies only with a paired appliance. Households above 150% AMI are not eligible; categorical eligibility via SNAP, AHCCCS/Medicaid, LIHEAP, Lifeline, Head Start or public housing. Currently for homeowners who live in the home; renters and multifamily owners are 'not at this time'. Completed projects don't qualify. Contractor pathway (qualified contractor network) or retail coupon pathway (HPWH, heat pump dryer, electric cooking). Phone (480) 866-7788. Efficiency Arizona says 'Funding is anticipated to be available through 2029.'",
+    "url": "https://efficiencyarizona.com/",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "City of Phoenix Weatherization Assistance Program",
+      "runBy": "City of Phoenix Neighborhood Services Department (via Arizona Department of Housing)",
+      "summary": "Free assessment, sealing, insulation, HVAC repair/replacement and safety measures for Phoenix homeowners and renters at or below $31,920 (1 person) to $77,360 (5 people). Phone 602-534-4444.",
+      "url": "https://www.phoenix.gov/administration/departments/nsd/housing-repairs/weatherization.html"
+    },
+    {
+      "name": "AllThrive365 Weatherization and Healthy Homes AC Program",
+      "runBy": "AllThrive365 (formerly Foundation for Senior Living)",
+      "summary": "WAP for Maricopa County outside Phoenix and Mesa (≤200% FPL, not weatherized in 15 years). A separate Healthy Homes AC Program serves owner-occupied homes with no cooling in La Paz, Maricopa, Pinal, Yavapai and Yuma counties. APS also refers limited-income homeowners to AllThrive365 and Wildfire for A/C repair or replacement.",
+      "url": "https://allthrive365.org/housing/energy-efficiency/"
+    },
+    {
+      "name": "Efficiency Arizona (HEAR) for households at or below 150% AMI",
+      "runBy": "Arizona Governor's Office of Resiliency",
+      "summary": "Up to $14,000 per owner-occupied household for qualifying electric-to-electric heat pump, HPWH, insulation/air sealing and electrical upgrades. Rules since Sept 1, 2026 bar gas-to-electric switching.",
+      "url": "https://efficiencyarizona.com/eligibility/"
+    },
+    {
+      "name": "APS Energy Support Program (bill discount)",
+      "runBy": "APS",
+      "summary": "Income-based 25% (up to $95/month) or 60% (up to $165/month) bill discount; 35% or 60% with the medical add-on. Guidelines effective July 1, 2026. APS's assistance page points to the state Weatherization program for free efficiency improvements.",
+      "url": "https://www.aps.com/en/Residential/Account/Assistance-Programs/Energy-Support-Program"
+    },
+    {
+      "name": "City of Phoenix Housing Repairs Program",
+      "runBy": "City of Phoenix Neighborhood Services Department",
+      "summary": "Repairs to vital systems (plumbing, electrical, structural) for owner-occupied homes inside Phoenix, with HUD income limits. Start with a household assessment.",
+      "url": "https://www.phoenix.gov/administration/departments/nsd/housing-repairs.html"
+    },
+    {
+      "name": "Maricopa County Emergency Home Repair",
+      "runBy": "Maricopa County Human Services",
+      "summary": "A/C and heating repair or replacement and other emergency repairs (lifetime cap $25,000) for owner-occupants at or below 80% AMI outside Phoenix, Mesa and other self-serving cities.",
+      "url": "https://www.maricopa.gov/5214/Home-Improvement-Programs"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "No energy audit, disclosure-at-sale or benchmarking mandate in Phoenix",
+      "appliesTo": "Not applicable to homeowners.",
+      "summary": "No City of Phoenix requirement for home energy audits, disclosure at sale or private-building benchmarking was found. ACEEE's State & Local Policy Database (non-government; existing-building section last updated Sept 2023) says Phoenix had been working on a benchmarking ordinance for larger commercial buildings, but 'The city is prohibited by state law to require mandatory benchmarking or energy action requirements.' It now supports only voluntary benchmarking (BOMA's Kilowatt-hour Krackdown). The underlying Arizona statute was not independently verified.",
+      "url": "https://database.aceee.org/city/phoenix-az"
+    }
+  ],
+  "notes": "Phoenix is the only metro in this batch with a live state IRA rebate. Efficiency Arizona (HEAR) is accepting applications, but since Sept 1, 2026 only for electric-to-electric replacements; a household replacing a gas furnace or gas water heater no longer qualifies. This change came from a DOE notice and may also shape Texas's program design. Surprising: APS, Arizona's largest utility, no longer lists residential HVAC, duct or whole-home rebates on aps.com. Its efficiency surcharge was cut in January 2026, and it now points customers to Cool Rewards, the APS Marketplace and limited-income weatherization. SRP still pays meaningful rebates through April 30, 2027 (A/C up to $1,125, insulation up to $600, ducts up to $400, HPWH $500). APS customers in the same metro get far less, so a utility lookup matters. A January 2023 APS article mentioned a Home Performance with ENERGY STAR checkup 'starting at $99' and a free virtual checkup; neither appears on APS's current site, so they are treated as discontinued or unverified. Federal 25C/25D credits ended after Dec 31, 2025. Access limits: the Arizona Department of Housing WAP page (housing.az.gov) and the Governor's Office of Resiliency news pages blocked automated access. SRP pages were read via WebFetch only (direct requests were denied). Unverified: Pinal County WAP provider; Arizona HOMES status; exact date of the Efficiency Arizona pause and restart; whether APS still offers any audit.",
+  "sources": [
+    { "label": "Census Bureau / OMB July 2023 CBSA delineation file (list1_2023.xlsx)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "APS: About us", "href": "https://www.aps.com/en/About/Our-Company/About-us" },
+    { "label": "APS: Bill adjustors (DSMAC)", "href": "https://www.aps.com/en/Utility/Regulatory-and-Legal/Rates-Schedules-and-Adjustors/Bill-Adjustors" },
+    { "label": "APS: DSMAC-1 rate schedule (effective Jan 1, 2026, Decision No. 81584)", "href": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/DSMAC_DemandSideManagementCharge.pdf?sc_lang=en&hash=4988E68DB931DCD84040CBD1270255B0" },
+    { "label": "APS: Cool Rewards", "href": "https://www.aps.com/en/About/Sustainability-and-Innovation/Technology-and-Innovation/Cool-Rewards" },
+    { "label": "APS: Find Qualified Installers", "href": "https://www.aps.com/en/Residential/Save-Money-and-Energy/Find-Qualified-Installers" },
+    { "label": "APS: How can I save (Your Energy, Your Options)", "href": "https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options" },
+    { "label": "APS: Assistance programs", "href": "https://www.aps.com/en/Residential/Account/Assistance-Programs" },
+    { "label": "APS: Energy Support Program", "href": "https://www.aps.com/en/Residential/Account/Assistance-Programs/Energy-Support-Program" },
+    { "label": "APS newsroom: Lower Your Costs Without Changing Your Lifestyle (Apr 14, 2026)", "href": "https://www.aps.com/en/About/Our-Company/Newsroom/Articles/Lower_Your_Costs_Without_Changing_Your_Lifestyle" },
+    { "label": "APS newsroom: National Cut Your Energy Costs Day (Jan 9, 2023)", "href": "https://www.aps.com/en/About/Our-Company/Newsroom/Articles/National-Cut-Your-Energy-Costs-Day" },
+    { "label": "APS sitemap (checked for rebate pages)", "href": "https://www.aps.com/sitemap.xml" },
+    { "label": "SRP: About", "href": "https://www.srpnet.com/about" },
+    { "label": "SRP: Residential rebates", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/residential-rebates" },
+    { "label": "SRP: Cool Cash A/C rebate", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/air-conditioner" },
+    { "label": "SRP: Insulation rebate", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/insulation" },
+    { "label": "SRP: Duct test and repair rebate", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/duct-test-repair" },
+    { "label": "SRP: Heat pump water heater rebate", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/heat-pump-water-heater" },
+    { "label": "SRP: Shade screen / window film rebate", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/shade-screen" },
+    { "label": "SRP: Smart thermostat / BYOT", "href": "https://www.srpnet.com/energy-savings-rebates/home/rebates/smart-thermostat" },
+    { "label": "SRP: Home energy assessment", "href": "https://www.srpnet.com/energy-savings-rebates/home/home-energy-savings-audit" },
+    { "label": "SRP Marketplace", "href": "https://marketplace.srpnet.com/" },
+    { "label": "Southwest Gas: About us", "href": "https://www.swgas.com/en/about-us" },
+    { "label": "Southwest Gas: Residential rebates and promotions", "href": "https://www.swgas.com/en/residential-rebates-and-promotions" },
+    { "label": "Southwest Gas: 2026 Arizona Residential Rebates Application", "href": "https://www.swgas.com/1409208977813/SWG_2026_AZ_RES_Rebate_Application.pdf" },
+    { "label": "Efficiency Arizona (home)", "href": "https://efficiencyarizona.com/" },
+    { "label": "Efficiency Arizona: Significant changes due to federal government notice", "href": "https://efficiencyarizona.com/significant-changes-coming-to-the-efficiency-arizona-program-due-to-federal-government-notice/" },
+    { "label": "Efficiency Arizona: Eligibility", "href": "https://efficiencyarizona.com/eligibility/" },
+    { "label": "Efficiency Arizona: FAQ", "href": "https://efficiencyarizona.com/frequently-asked-questions/" },
+    { "label": "Efficiency Arizona: News & resources", "href": "https://efficiencyarizona.com/news-resources/" },
+    { "label": "Efficiency Arizona: 1,000th rebate announcement", "href": "https://efficiencyarizona.com/efficiency-arizona-issues-1000th-rebate-adds-new-participating-retailer-to-program/" },
+    { "label": "Arizona Governor: Efficiency Arizona first phase launch (Aug 30, 2024)", "href": "https://azgovernor.gov/office-arizona-governor/news/2024/08/governors-office-resiliency-launches-first-phase-efficiency" },
+    { "label": "AZFamily: Program offers up to $14K in federal rebates (Mar 18, 2026)", "href": "https://www.azfamily.com/2026/03/18/program-offers-up-14k-federal-rebates-home-energy-upgrades-arizonans/" },
+    { "label": "City of Phoenix: Housing repairs", "href": "https://www.phoenix.gov/administration/departments/nsd/housing-repairs.html" },
+    { "label": "City of Phoenix: Weatherization Assistance Program", "href": "https://www.phoenix.gov/administration/departments/nsd/housing-repairs/weatherization.html" },
+    { "label": "AllThrive365: Energy efficiency / weatherization", "href": "https://allthrive365.org/housing/energy-efficiency/" },
+    { "label": "Maricopa County: Human Services", "href": "https://www.maricopa.gov/5270/Human-Services" },
+    { "label": "Maricopa County: Home Improvement Programs (Emergency Home Repair)", "href": "https://www.maricopa.gov/5214/Home-Improvement-Programs" },
+    { "label": "ACEEE State & Local Policy Database: Phoenix", "href": "https://database.aceee.org/city/phoenix-az" },
+    { "label": "IRS FAQs on OBBB changes to 25C/25D (FS-2025-05)", "href": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb" }
+  ]
+}

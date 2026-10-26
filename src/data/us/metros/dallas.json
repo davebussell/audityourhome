@@ -1,0 +1,218 @@
+{
+  "slug": "dallas",
+  "name": "Dallas–Fort Worth",
+  "metroName": "Dallas-Fort Worth-Arlington, TX Metropolitan Statistical Area (CBSA 19100; OMB July 2023 delineation: Collin, Dallas, Denton, Ellis, Hunt, Johnson, Kaufman, Parker, Rockwall, Tarrant and Wise counties)",
+  "states": ["TX"],
+  "principalCity": "Dallas",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Oncor Electric Delivery",
+        "serves": "Regulated transmission and distribution utility (TDU) headquartered in Dallas, 'delivering electricity to more than 4.1 million homes and businesses' in Texas. Its 2026 efficiency manual shows its territory includes the seven-county Metroplex (Collin, Dallas, Denton, Ellis, Johnson, Rockwall, Tarrant). Oncor describes itself as a delivery business; electricity is sold by retail electric providers. It runs the state-required energy efficiency programs (branded 'Take A Load Off Texas').",
+        "url": "https://www.oncor.com/takealoadofftexas/"
+      },
+      {
+        "name": "Retail electric providers (REPs), chosen by the customer",
+        "serves": "In Oncor's competitive area, households buy electricity from a retail electric provider they choose. Plans can be compared on Power to Choose, the PUCT's official electric choice website.",
+        "url": "https://www.powertochoose.org/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Atmos Energy (Mid-Tex Division)",
+        "serves": "Natural gas distribution utility. Atmos says its Mid-Tex Division 'serves the Dallas and Fort Worth area.'",
+        "url": "https://www.atmosenergy.com/ways-to-save/mid-tex-appliance-rebate-program"
+      }
+    ],
+    "notes": "Texas retail electric choice applies here. Oncor is the wires utility that delivers power and runs the efficiency programs required by PUCT rule 16 TAC §25.181. It pays incentives only to registered third-party service providers (contractors, REPs, energy service companies), never directly to homeowners: the homeowner picks a participating provider and the incentive reduces that provider's price. REPs sell the electricity. Municipally owned utilities and electric cooperatives decide for themselves whether to join retail choice. A home served by one of those (for example in some DFW suburbs or rural fringe counties) is not in Oncor's programs and should check its own utility. Individual DFW municipal utilities and co-ops were not researched for this file."
+  },
+  "auditPrograms": [
+    {
+      "name": "Dallas County Weatherization Assistance Program (energy audit + weatherization)",
+      "runBy": "Dallas County Department of Health and Human Services (TDHCA's WAP subrecipient for Dallas County)",
+      "cost": null,
+      "whoQualifies": "Low-income residents of Dallas County. The county page does not publish the income limit and refers to a 'WAP General Information' PDF. Service is available 'once every 15 years.' The county flyer gives priority to qualifying elderly people, people with disabilities and families with children.",
+      "whatYouGet": "Per the county flyer, 'Each dwelling will be assessed and audited before any work begins.' Measures can include draft sealing, insulation, door and window repair or replacement, solar screens, heating/cooling unit repair or retrofit, and duct work.",
+      "howToBook": "Apply online (dchhs.shahsoftwareservice.com, linked from the county page), or download the WAP application and mail it or walk it in to Dallas County HHS, ATTN: WAP, 2377 N. Stemmons Fwy, Suite 336, Dallas, TX 75207-2710. Appointments: (214) 819-1976. General WAP questions: (214) 819-1909. Email: WAPassistance@dallascounty.org.",
+      "url": "https://www.dallascounty.org/departments/dchhs/human-services/wap.php",
+      "status": "Unverified. The county page links an active online application but says nothing about whether applications are open or whether there is a waitlist.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Fort Worth Weatherization Assistance Program (Tarrant County)",
+      "runBy": "City of Fort Worth Neighborhood Services Department (TDHCA's WAP subrecipient for Tarrant County)",
+      "cost": "Free: 'This is a grant funded program so there is no cost to the homeowner.'",
+      "whoQualifies": "Tarrant County residents ('some assistance is available only in certain cities within the county'). Household income must meet Federal Income Guidelines for the program; the page gives no dollar limit. Applicants need picture ID, proof of income for all adults, a current utility bill and proof of residence.",
+      "whatYouGet": "Technicians first complete an energy assessment. Typical upgrades are insulation, air sealing, duct sealing, A/C and heater repair or replacement, and minor repairs.",
+      "howToBook": "Apply online through the city's Neighborly Software portal (linked from the page). Phone 817-392-7554.",
+      "url": "https://www.fortworthtexas.gov/departments/neighborhoods/weatherization",
+      "status": "Open: the page says it is accepting applications, but wait times are 'VERY LONG'. The program now prioritizes by need and vulnerability, and funding for some programs 'may be limited or unavailable.'",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Oncor Home Energy Efficiency Program (HEE Standard Offer Program)",
+      "runBy": "Oncor Electric Delivery, through registered third-party service providers",
+      "category": "whole-home",
+      "amount": "Incentives go to the participating service provider and 'may cover all or some of the project costs.' The 2026 per-system HVAC replacement incentive caps are: 2 tons $2,000; 2.5 tons $2,200; 3 tons $2,600; 3.5 tons $2,900; 4 tons $3,200; 5 tons $3,400. Measures completed outside the seven-county Metroplex (Collin, Dallas, Denton, Ellis, Johnson, Rockwall, Tarrant) earn an extra 15% geographic adjustment. Other incentives are paid per kW and kWh saved; per-measure rates are not published.",
+      "whoQualifies": "Homes with Oncor as the electric delivery provider. Homeowners can take part, and so can renters with the owner's permission. Eligible single-family measures: air infiltration (sealing), ENERGY STAR windows, high-efficiency central A/C, central/ground-source/mini-split heat pumps, ceiling/floor/wall insulation and radiant barriers. Ceiling insulation must be brought to R-38 where the existing level is R-22 or less.",
+      "status": "Closed for 2026. Oncor's page says 'Due to high demand, funding for 2026 has been fully exhausted' and to 'check back in January 2027.'",
+      "url": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/home-efficiency.html",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Oncor Low-Income Weatherization",
+      "runBy": "Oncor Electric Delivery, through approved third-party service providers",
+      "category": "income-qualified",
+      "amount": "'Low- to no-cost energy-saving upgrades, such as insulation, heating and cooling upgrades.'",
+      "whoQualifies": "Oncor-delivered homes with household income at or below 200% of the federal poverty guidelines. 2026 limits (Feb 1, 2026 to Jan 31, 2027): 1 person $31,920; 2 $43,280; 3 $54,640; 4 $66,000; 5 $77,360; 6 $88,720; 7 $100,080; 8 $111,440; add $11,360 for each additional person.",
+      "status": "Closed for 2026. Oncor's page says 'Due to high demand, funding for 2026 has been fully exhausted' and to 'check back in January 2027.'",
+      "url": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/weatherization.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Atmos Energy Mid-Tex Appliance Rebate Program",
+      "runBy": "Atmos Energy (online portal operated by P3 Enertrek; questions handled at atmosenergyrebates@frontierenergy.com)",
+      "category": "appliances",
+      "amount": "Gas furnace 90%+ AFUE ENERGY STAR $300; 95%+ AFUE ENERGY STAR $350. Smart thermostat (ENERGY STAR) $75. Gas storage water heater: 0.68+ UEF $100, 0.86+ UEF ENERGY STAR $150, 0.90+ UEF ENERGY STAR $200. Gas tankless water heater: 0.87+ UEF $200, 0.95+ UEF ENERGY STAR $300. ENERGY STAR gas clothes dryer $75.",
+      "whoQualifies": "Current Atmos Energy residential or business customers in the Mid-Tex Division. One rebate per appliance, paid to either the builder or the homeowner. The application needs a recent Atmos bill and a receipt or contractor invoice.",
+      "status": "Open for program year July 1, 2026 to June 30, 2027, while funds last. Apply within 12 months of purchase or installation.",
+      "url": "https://www.atmosenergy.com/ways-to-save/mid-tex-appliance-rebate-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Oncor Retail Products Program (ENERGY STAR discounts)",
+      "runBy": "Oncor Electric Delivery (online marketplace run by CLEAResult; in-store discounts at participating retailers)",
+      "category": "appliances",
+      "amount": "Discounts on qualifying ENERGY STAR products; Oncor's page states no dollar amounts. Online marketplace: advanced power strips, air purifiers, smart plugs, smart thermostats, plus reserved retailer coupons for clothes dryers, clothes washers and heat pump water heaters. In-store (Dollar Tree, Home Depot, Lowe's): power strips, pipe insulation, room air purifiers, room A/Cs, smart plugs, smart thermostats.",
+      "whoQualifies": "Homes served by Oncor for electric delivery; homeowners, or renters with the owner's permission.",
+      "status": "Not stated. The page has no 2026-specific status, and Oncor says most programs run January–November each year.",
+      "url": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/retail-products.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Oncor Residential Solar Program",
+      "runBy": "Oncor Electric Delivery, through approved solar service providers",
+      "category": "other",
+      "amount": "Incentive depends on 'the size, azimuth and other factors of the installed system'. It is paid to the service provider, and no dollar figure is published.",
+      "whoQualifies": "Oncor-delivered homes with a new system that includes an energy storage back-up system. Sites with existing solar arrays are not eligible. Maximum 15 kW DC. Requires an Oncor Interconnection Agreement.",
+      "status": "Not stated. The page has no 2026 status notice.",
+      "url": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/residentialsolar.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "City of Dallas Home Improvement & Preservation Program (HIPP): Major Systems Repair Program",
+      "runBy": "City of Dallas Department of Housing, administered by Volunteers of America (VOA) Texas since February 2026",
+      "category": "income-qualified",
+      "amount": "Interest-free, forgivable, self-amortizing loan 'not to exceed $24,000.00' for systems repairs: HVAC replace/repair, roofing replace/repair, electrical, plumbing, water heaters, gas pipes, structural code items, lead/asbestos treatment, accessibility.",
+      "whoQualifies": "City of Dallas homeowners with income at or below 80% of Area Median Income. The home must be the primary residence, owned at least six months, with clear title and property taxes current or on a payment plan. Applicants must be a U.S. citizen or lawful permanent resident. Priority goes to first-time participants.",
+      "status": "Application window Oct 5–16, 2026 (City bulletin dated Oct 6, 2026). Apply via the VOA Texas portal (portal.neighborlysoftware.com/VOATX/Participant), by email to HIPP@voatx.org, or in person at 3560 S. Camp Wisdom, Suite 200. Questions: 817-494-0980.",
+      "url": "https://dallascityhall.com/departments/housing-and-homelessness/Pages/Repair-Programs.aspx",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "City of Dallas HIPP: Emergency Home Rehabilitation",
+      "runBy": "City of Dallas, administered by Volunteers of America Texas",
+      "category": "income-qualified",
+      "amount": "Grant up to $10,000 for emergency repairs posing 'an immediate life or health and safety concern' (emergency must have occurred within the four days before applying).",
+      "whoQualifies": "Same HIPP rules: Dallas homeowner-occupants at or below 80% AMI.",
+      "status": "Year-round; 'Applications will be reviewed if funding is available.'",
+      "url": "https://dallascityhall.com/departments/housing-and-homelessness/Pages/Repair-Programs.aspx",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "Not launched. SECO says 'Rebates are not currently available.' The programs are being designed during fall 2026, and 'A launch date has not been set and will depend on DOE approval of the final program design.' Texas cannot yet accept receipts for reimbursement.",
+    "programName": "Texas HOMES and HEAR Rebate programs (Home Efficiency Rebates, HOMES; Home Electrification and Appliance Rebates, HEAR)",
+    "administrator": "Texas Comptroller of Public Accounts, State Energy Conservation Office (SECO). Implementer: APTIM Federal Services, LLC, hired April 2026.",
+    "summary": "DOE allocated $690 million to Texas. HOMES (whole-home efficiency) will be open to all income levels, single-family and multifamily; renters can take part with landlord permission. HEAR is limited to low-income (<80% AMI) and moderate-income (80–150% AMI) households, and HEAR appliances must be ENERGY STAR. Rebate amounts are not set; 'Recommended rebate levels for the Texas HOMES program are currently under review by the DOE.' Projects completed before launch are unlikely to qualify. Texas must spend its allocation by Sept 30, 2031. The FAQ (modified 2026-09-02) said the public comment form was open through the end of September.",
+    "url": "https://comptroller.texas.gov/programs/seco/funding/ira/faq.php",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program, Dallas County",
+      "runBy": "Dallas County Department of Health and Human Services",
+      "summary": "Free-standing WAP for low-income Dallas County residents: pre-work energy audit, then sealing, insulation, door/window, solar screen, HVAC and duct work. Available once every 15 years. The same department is the county's CEAP (Comprehensive Energy Assistance Program, utility bill help) provider. Phone (214) 819-1909.",
+      "url": "https://www.dallascounty.org/departments/dchhs/human-services/wap.php"
+    },
+    {
+      "name": "Weatherization Assistance Program, Tarrant County",
+      "runBy": "City of Fort Worth Neighborhood Services Department",
+      "summary": "Free energy assessment plus insulation, air/duct sealing and HVAC repair/replacement for income-eligible Tarrant County residents. Accepting applications, with very long waits. Phone 817-392-7554.",
+      "url": "https://www.fortworthtexas.gov/departments/neighborhoods/weatherization"
+    },
+    {
+      "name": "Weatherization Assistance Program, Collin, Denton, Rockwall and Hunt counties",
+      "runBy": "Texoma Council of Governments (Sherman), per TDHCA's subrecipient list updated 2/2/2026",
+      "summary": "TDHCA routes WAP for these DFW counties through Texoma COG, phone (903) 893-2161. Other fringe counties per the same list: Ellis and Johnson go to Economic Opportunities Advancement Corporation (Waco), Kaufman to Greater East Texas Community Action Program, and Parker to Rolling Plains Management Corporation.",
+      "url": "https://www.tdhca.texas.gov/sites/default/files/community-affairs/docs/CA-SubRecip.pdf"
+    },
+    {
+      "name": "Oncor Low-Income Weatherization (Hard-to-Reach)",
+      "runBy": "Oncor Electric Delivery, via approved service providers",
+      "summary": "Low- to no-cost insulation and HVAC upgrades for Oncor customers at or below 200% of federal poverty guidelines. 2026 funding is fully exhausted; Oncor says to check back January 2027.",
+      "url": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/weatherization.html"
+    },
+    {
+      "name": "City of Dallas Home Improvement & Preservation Program (HIPP)",
+      "runBy": "City of Dallas Housing, administered by Volunteers of America Texas",
+      "summary": "Up to $24,000 forgivable loan for major systems (HVAC, roof, water heater, plumbing, electrical). Emergency grants up to $10,000. For Dallas homeowners at or below 80% AMI. The current application window is Oct 5–16, 2026.",
+      "url": "https://content.govdelivery.com/accounts/TXDALLAS/bulletins/42e292d"
+    },
+    {
+      "name": "Texas Weatherization Assistance Program (statewide framework)",
+      "runBy": "Texas Department of Housing and Community Affairs (TDHCA), DOE and LIHEAP funds, delivered by local subrecipients in all 254 counties",
+      "summary": "WAP includes an energy audit, then measures such as caulking, weather-stripping, ceiling/wall/floor insulation, duct work and HVAC tune-up/repair/replacement. TDHCA's 2025 DOE WAP State Plan was approved 9/30/25.",
+      "url": "https://www.tdhca.texas.gov/weatherization-assistance-program"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "No energy audit, disclosure-at-sale, benchmarking or building performance standard for private buildings in Dallas",
+      "appliesTo": "Not applicable to homeowners. No requirement was found for existing private homes or buildings.",
+      "summary": "No City of Dallas ordinance requiring energy audits, energy disclosure at sale, or benchmarking of private buildings was found. ACEEE's State & Local Policy Database (a non-government source; Dallas scorecard updated 05/2024) says Dallas 'runs a 2030 District to encourage voluntary benchmarking' and benchmarks city facilities only. Ordinary Dallas homeowners have no energy audit or disclosure obligation when selling.",
+      "url": "https://database.aceee.org/node/90"
+    },
+    {
+      "name": "Dallas Green Building Program (green building ordinance)",
+      "appliesTo": "New construction and additions (single-family and duplex on the residential side) and first-time tenant finish-outs. It does not apply to existing homes, renovations or remodels.",
+      "summary": "New residential projects must meet City prescriptive green requirements (stormwater, water efficiency, energy efficiency, heat island, indoor air quality) or an approved path such as Green Built Texas, LEED for Homes or ICC 700, with third-party plan review and inspection. The City's own overview states: 'Green Building code DOES NOT apply to Renovations / Remodels.'",
+      "url": "https://dallas.gov/departments/sustainabledevelopment/DCH%20documents/presentations/2023/OVERVIEW_GREEN_BUILDING_PROGRAM_09.14.23.pdf"
+    }
+  ],
+  "notes": "Federal tax credits for home efficiency have ended. The IRS says the 25C Energy Efficient Home Improvement Credit (which also covered up to $150 for a home energy audit) 'will not be allowed for any property placed in service after December 31, 2025', and the 25D Residential Clean Energy Credit is not allowed for expenditures after Dec 31, 2025. Texas's IRA rebates (HOMES/HEAR) have not launched, so in 2026 DFW homeowners rely on Oncor's contractor-delivered incentives, Atmos gas appliance rebates and income-qualified programs. Oncor says 2026 funding for both its Home Energy Efficiency and Low-Income Weatherization programs is fully exhausted, and to check back in January 2027. Oncor runs no stand-alone home energy audit program: its incentives flow through participating service providers, and the Find a Provider tool shows providers only while programs are open. A homeowner wanting a full audit outside WAP must hire a private auditor at their own cost. No local government audit offer for market-rate homeowners was found. Whole Home Dallas (wholehomedallas.com, run by the City's Office of Environmental Quality & Sustainability) is a navigation site that points homeowners to weatherization, efficiency and renewable programs; it does not fund upgrades itself. A 2024 City-sponsored UTA 'Green Warriors' pilot weatherized eight South Dallas homes (about $3,750 each) and is described as complete, not an ongoing program. Unverified items: the Dallas County WAP income limit and whether it currently has a waitlist; Oncor Retail Products discount amounts.",
+  "sources": [
+    { "label": "Census Bureau / OMB July 2023 CBSA delineation file (list1_2023.xlsx)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "Oncor: About Oncor boilerplate (Q2 2026 results release, Aug 6, 2026)", "href": "https://www.oncor.com/content/oncorwww/wire/en/home/newsroom/oncor-reports-second-quarter-2026-results.html" },
+    { "label": "Oncor Take A Load Off Texas (customer efficiency programs)", "href": "https://www.oncor.com/takealoadofftexas/" },
+    { "label": "Oncor Home Energy Efficiency (customer page)", "href": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/home-efficiency.html" },
+    { "label": "Oncor 2026 HEE Standard Offer Program Manual (dated Jan 14, 2026)", "href": "https://www.oncor.com/content/dam/oncorwww/eepm/documents/residential-resources/2026/2026%20HEE%20SOP%20Program%20Manual%20final.pdf.coredownload.pdf" },
+    { "label": "Oncor 2026 Hard-to-Reach SOP Program Manual", "href": "https://www.oncor.com/content/dam/oncorwww/eepm/documents/residential-resources/2026/2026%20HTR%20SOP%20Program%20Manual.pdf.coredownload.pdf" },
+    { "label": "Oncor Low-Income Weatherization (2026 funding exhausted notice)", "href": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/weatherization.html" },
+    { "label": "Oncor Retail Products", "href": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/retail-products.html" },
+    { "label": "Oncor Residential Solar", "href": "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/residential/residentialsolar.html" },
+    { "label": "Oncor residential service-provider programs page", "href": "https://www.oncor.com/content/oncorwww/us/en/home/partners/eepm-home/residential-provider.html" },
+    { "label": "Atmos Energy Mid-Tex Appliance Rebate Program", "href": "https://www.atmosenergy.com/ways-to-save/mid-tex-appliance-rebate-program" },
+    { "label": "Atmos Energy: West Texas and Mid-Tex Division highlights", "href": "https://atmosphere.atmosenergy.com/pipeline-projects/texas-service-territory/" },
+    { "label": "PUCT Power to Choose (official electric choice site)", "href": "https://www.powertochoose.org/" },
+    { "label": "PUCT fact sheet: energy efficiency programs", "href": "https://ftp.puc.texas.gov/public/puct-info/consumer/facts/factsheets/elecfacts/efficient.pdf" },
+    { "label": "PUCT FAQ: municipally owned utilities and co-ops and customer choice", "href": "https://puc.texas.gov/consumer/facts/faq/muni" },
+    { "label": "Texas Comptroller SECO: IRA Home Energy Rebates", "href": "https://comptroller.texas.gov/programs/seco/funding/ira/" },
+    { "label": "Texas Comptroller SECO: IRA Home Energy Rebates FAQ", "href": "https://comptroller.texas.gov/programs/seco/funding/ira/faq.php" },
+    { "label": "TDHCA Weatherization Assistance Program", "href": "https://www.tdhca.texas.gov/weatherization-assistance-program" },
+    { "label": "TDHCA Community Affairs subrecipient contact list (updated 2/2/2026)", "href": "https://www.tdhca.texas.gov/sites/default/files/community-affairs/docs/CA-SubRecip.pdf" },
+    { "label": "Dallas County HHS Weatherization Assistance Program", "href": "https://www.dallascounty.org/departments/dchhs/human-services/wap.php" },
+    { "label": "Dallas County weatherization flyer (2023)", "href": "https://www.dallascounty.org/Assets/uploads/docs/hhs/human-services/Weatherization-Flyer-English-2023.pdf" },
+    { "label": "City of Fort Worth Weatherization Program", "href": "https://www.fortworthtexas.gov/departments/neighborhoods/weatherization" },
+    { "label": "City of Dallas Repair Programs (HIPP)", "href": "https://dallascityhall.com/departments/housing-and-homelessness/Pages/Repair-Programs.aspx" },
+    { "label": "City of Dallas bulletin: HIPP applications Oct 5–16, 2026", "href": "https://content.govdelivery.com/accounts/TXDALLAS/bulletins/42e292d" },
+    { "label": "Whole Home Dallas (City of Dallas OEQS)", "href": "https://www.wholehomedallas.com/" },
+    { "label": "UTA news: Small fixes, big savings (Aug 17, 2026)", "href": "https://www.uta.edu/news/news-releases/2026/08/17/small-fixes-big-savings" },
+    { "label": "City of Dallas Green Building Program overview (Sept 14, 2023)", "href": "https://dallas.gov/departments/sustainabledevelopment/DCH%20documents/presentations/2023/OVERVIEW_GREEN_BUILDING_PROGRAM_09.14.23.pdf" },
+    { "label": "ACEEE State & Local Policy Database: Dallas", "href": "https://database.aceee.org/node/90" },
+    { "label": "IRS: Energy Efficient Home Improvement Credit", "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" },
+    { "label": "IRS FAQs on OBBB changes to 25C/25D (FS-2025-05, Aug 21, 2025)", "href": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb" }
+  ]
+}

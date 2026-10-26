@@ -1,0 +1,262 @@
+{
+  "slug": "philadelphia",
+  "name": "Philadelphia",
+  "metroName": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD Metropolitan Statistical Area",
+  "states": ["PA", "NJ", "DE", "MD"],
+  "principalCity": "Philadelphia, PA",
+  "utilities": {
+    "electric": [
+      {
+        "name": "PECO (PECO Energy Company, an Exelon company)",
+        "serves": "Electric distribution for Philadelphia and its Pennsylvania suburbs. PECO's Act 129 Phase V plan counts about 1,400,000 residential customers. PECO's website blocks automated readers, so its own territory description was not checked.",
+        "url": "https://www.puc.pa.gov/electricity/electric-companies-suppliers/"
+      },
+      {
+        "name": "PSE&G",
+        "serves": "New Jersey side. PSE&G's assessment scheduler includes Burlington, Camden and Gloucester counties.",
+        "url": "https://homeenergy.pseg.com/WHAssessment"
+      },
+      {
+        "name": "Atlantic City Electric (ACE, an Exelon company)",
+        "serves": "New Jersey side (South Jersey). It is one of the four NJ electric utilities listed by the NJ Board of Public Utilities.",
+        "url": "https://www.nj.gov/bpu/commercial/shopping.html"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Philadelphia Gas Works (PGW)",
+        "serves": "City of Philadelphia. PGW is 'the largest municipally owned gas utility in the country', with about 500,000 customers.",
+        "url": "https://www.pgworks.com/about-us"
+      },
+      {
+        "name": "PECO Gas",
+        "serves": "Listed by the PA PUC as a natural gas distribution company. It serves suburban Pennsylvania counties, not the City of Philadelphia, but no PECO page confirming the territory could be opened.",
+        "url": "https://www.puc.pa.gov/natural-gas/natural-gas-companies-suppliers/"
+      },
+      {
+        "name": "South Jersey Gas, PSE&G (gas), Elizabethtown Gas, New Jersey Natural Gas",
+        "serves": "New Jersey gas utilities as listed by the NJ BPU. South Jersey Gas is the main one on the Camden side.",
+        "url": "https://www.nj.gov/bpu/commercial/shopping.html"
+      }
+    ],
+    "notes": "Pennsylvania has electric retail choice: customers can pick a supplier through the PUC's PAPowerSwitch site, and the utility still delivers. PGW runs a 'Gas Choice' program. New Jersey's supply is open to third-party suppliers. Efficiency programs follow the delivery utility. Pennsylvania's electric efficiency programs are mandated by Act 129. Phase V runs five years from June 1, 2026, and the PUC approved PECO's Phase V plan by order entered March 26, 2026. Sources: https://www.puc.pa.gov/electricity/retail-markets/ , https://www.puc.pa.gov/filing-resources/issues-laws-regulations/act-129/energy-efficiency-and-conservation-eec-program/ , https://www.puc.pa.gov/docket/M-2025-3057328"
+  },
+  "auditPrograms": [
+    {
+      "name": "PECO In-Home Energy Assessments: Energy Assessment and Energy Assessment Plus",
+      "runBy": "PECO (Act 129 Residential program, delivered by a conservation service provider)",
+      "cost": null,
+      "whoQualifies": "PECO residential electric customers, both single-family and individually metered multifamily units",
+      "whatYouGet": "Per PECO's PUC-approved Phase V plan, the Energy Assessment is an in-depth walkthrough with whole-house recommendations and installation of energy-saving products. The Energy Assessment Plus follows BPI standards and adds diagnostics such as building tightness (blower-door) testing and infrared thermography, plus a detailed summary report with available incentives. The plan describes the component as 'no-cost and low-cost in-home energy assessments'.",
+      "howToBook": null,
+      "url": "https://www.puc.pa.gov/pcdocs/1926991.pdf",
+      "status": "Phase V began June 1, 2026 (PUC order entered March 26, 2026; revised plan filed May 1, 2026). Whether bookings are currently open, and the customer price, could not be checked: peco.com blocks automated requests and renders client-side.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PECO Free Energy Checkup / Free Energy Check Up Plus (low-income)",
+      "runBy": "PECO (Act 129 Residential Low-Income subprogram)",
+      "cost": "Free",
+      "whoQualifies": "Low-income PECO customers. The BPI-standard 'Check Up Plus' (air-flow diagnostics, infrared, combustion safety) is limited to low-income customers with permanently installed electric systems. All other low-income customers get the standard Free Energy Checkup.",
+      "whatYouGet": "In-depth home inspection, energy-use analysis, direct-install measures, energy education and a customer report",
+      "howToBook": null,
+      "url": "https://www.puc.pa.gov/pcdocs/1926991.pdf",
+      "status": "Included in the approved Phase V plan from June 1, 2026. Live enrollment details are unverified because PECO's site could not be read.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Whole Home Energy Assessment (NJ side)",
+      "runBy": "PSE&G",
+      "cost": "Free",
+      "whoQualifies": "PSE&G residential gas and/or electric customers in a single-family home or a building with fewer than five units. Covers Burlington, Camden and Gloucester counties. Limited to one per year per account and residence.",
+      "whatYouGet": "About a one-hour walkthrough, a customized report, and no-cost installs (smart thermostat, LEDs, aerators, door sweeps, attic hatch insulation and similar)",
+      "howToBook": "Online portal, or 1-855-846-2895 for Burlington, Camden and Gloucester counties",
+      "url": "https://homeenergy.pseg.com/WHAssessment",
+      "status": "Open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Whole Home Energy Assessment (NJ side)",
+      "runBy": "Atlantic City Electric",
+      "cost": "'At no additional cost to you'",
+      "whoQualifies": "Atlantic City Electric residential customers",
+      "whatYouGet": "A certified Energy Analyst walks through the home (insulation, air leakage, HVAC, windows and doors, lighting, appliances, water heating) and may install energy-saving products at no additional cost",
+      "howToBook": "Request an appointment online or call 1-866-353-0007",
+      "url": "https://homeenergysavings.atlanticcityelectric.com/residential/energy-assessments/quick-home-energy-check-up-program",
+      "status": "Open",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "PECO Home Rebates: heat pumps, heat pump water heaters, insulation, air sealing",
+      "runBy": "PECO (Act 129 Phase V)",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "PECO residential customers. Customers or contractors apply, and some HVAC rebates may be paid on invoices through trade allies and distributors. The plan sets a 180-day maximum to submit an application.",
+      "status": "Phase V started June 1, 2026. The plan lists eligible measures, including ASHP, ductless mini-split, HPWH, air sealing and attic, wall, floor and rim-joist insulation, but gives only incentive ranges up to incremental cost (e.g., ASHP '$0.00 - $2,192.34' per unit), not the customer-facing rebate amounts.",
+      "url": "https://www.puc.pa.gov/pcdocs/1926991.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PGW EnergySense residential equipment rebates",
+      "runBy": "Philadelphia Gas Works",
+      "category": "appliances",
+      "amount": "First unit (additional units in parentheses): furnace, 95% AFUE, $400 ($250); boiler, 94% AFUE, $1,000 ($700); combi boiler, 94% AFUE, $1,400 ($1,000); ENERGY STAR tankless water heater $400 ($350). 'Affordable EnergySense' first-unit amounts: furnace $800, boiler $1,400, combi $2,000, tankless $700. pgworks.com separately summarizes these as 'up to $500 on furnaces and $1,500 on boilers'.",
+      "whoQualifies": "PGW residential customers who are current on their bills. The Affordable tier requires, within the last year, CRP enrollment, a Hardship Fund grant, or a LIHEAP grant assigned to PGW.",
+      "status": "Open. Rebates run 09/01/2024 to 08/31/2027, first-come first-served and subject to funds. The site notes that 'rebate check processing is currently delayed'.",
+      "url": "https://pgwenergysense.com/residential-rebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PGW EnergySense residential air sealing and insulation",
+      "runBy": "Philadelphia Gas Works",
+      "category": "insulation-air-sealing",
+      "amount": "Roof insulation to R-49 or better: $0.65/sq ft with air sealing, $0.60/sq ft without (Affordable tier $0.95 and $0.90). To R-38 or better: $0.35/sq ft with air sealing, $0.30/sq ft without (Affordable $0.50 and $0.40).",
+      "whoQualifies": "PGW residential customers heating with natural gas. Retrofits only (no gut rehabs or new construction). Work must be done by a BPI-certified contractor after 9/1/2024.",
+      "status": "Open through 08/31/2027, subject to funds",
+      "url": "https://pgwenergysense.com/residential-rebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "PGW smart thermostat instant rebate",
+      "runBy": "Philadelphia Gas Works",
+      "category": "appliances",
+      "amount": "$70 instant rebate on PGW Marketplace (limit three per account)",
+      "whoQualifies": "PGW residential customers who heat with PGW natural gas",
+      "status": "Open",
+      "url": "https://www.pgworks.com/customer-care/efficiency",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Building Decarbonization heat pump rebates (NJ side)",
+      "runBy": "PSE&G",
+      "category": "heat-pump",
+      "amount": "PSE&G's current page advertises 'up to $1,050 in instant savings', plus 'an additional $300 per eligible measure' for low- to moderate-income customers. The amounts PSE&G listed in early October 2026 could not be re-confirmed there: full displacement with a cold-climate ASHP, lesser of $10,000 or 50% of project cost (low/moderate income: lesser of $12,000 or 60%), plus up to $2,000 for decommissioning, $2,000 for re-ducting, and $2,000 per additional ccASHP; dual-fuel, lesser of $5,000 or 50% (LMI $6,000 or 60%); interest-free on-bill repayment up to $50,000 for decarbonization.",
+      "whoQualifies": "PSE&G residential electric customers who own 1–4 unit homes, working through a participating contractor",
+      "status": "Open",
+      "url": "https://myhomeenergy.pseg.com/appliance-offers/heatingandcooling",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Whole Home Energy Solutions (NJ side)",
+      "runBy": "Atlantic City Electric; PSE&G",
+      "category": "whole-home",
+      "amount": "ACE: rebates 'up to $7,500', based on energy savings achieved and not exceeding 50% of project cost, with 0% interest financing. PSE&G: up to $7,500 in rebates plus up to $25,000 in interest-free on-bill repayment. Contractor assessment fees vary.",
+      "whoQualifies": "ACE: active residential account holders in a single-family residence (not a condo or apartment). PSE&G: residential customers using BPI-certified participating contractors.",
+      "status": "Open. ACE says it is 'actively working on increasing the number of Participating Contractors in this new program'.",
+      "url": "https://homeenergysavings.atlanticcityelectric.com/residential/energy-assessments/home-performance-with-energy-star-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Financing referenced by PGW: Keystone HELP and Philadelphia Home Improvement Loan (PHIL)",
+      "runBy": "Third-party lenders, as described by PGW",
+      "category": "financing",
+      "amount": "Per PGW: Keystone HELP loans 'currently starting as low as 0.99% with terms of up to 20 years'. PHIL has 'low fixed rates (3-5%), terms of up to 20 years, no equity or appraisal requirements and no fees'.",
+      "whoQualifies": "Homeowners. Lender criteria apply.",
+      "status": "Unverified on the lenders' own sites; rates are as quoted on PGW's page",
+      "url": "https://www.pgworks.com/customer-care/efficiency",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "Pennsylvania: not launched. DEP says: 'As of September 2026, DEP is awaiting final DOE approval to launch the Home Energy Rebate programs.' New Jersey: not launched. Its programs are 'currently in development and are not yet open for applications.'",
+    "programName": "PA: Penn Energy Savers (HOMES and HEEHR). NJ: Home Efficiency Rebates (HER) and Home Electrification and Appliance Rebates (HEAR).",
+    "administrator": "PA: Department of Environmental Protection, Energy Programs Office. NJ: NJ Board of Public Utilities (NJ Clean Energy Program).",
+    "summary": "Penn Energy Savers will offer point-of-sale rebates for low- and moderate-income households. Below 80% of AMI, rebates can cover up to 100% of project costs up to the maximum; at 81–150% of AMI they cover 50%. Multifamily buildings qualify if at least 50% of residents meet the income limits. DEP says that after DOE's June 1, 2026 guidance it is 'working to understand these changes, make the necessary changes to program design to be in compliance, and launch the program'. Residents can only sign up for updates. That guidance (Program Notice 26-2, effective May 29, 2026) removes federal rebates for switching from fossil fuels and requires insulation and air sealing first. PECO's revised Phase V plan says its heat pump and HPWH rebates can be 'braided' with HEAR once available.",
+    "url": "https://www.pa.gov/agencies/dep/residents/saving-energy/inflation-reduction-act",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program (Philadelphia)",
+      "runBy": "Philadelphia Housing Development Corporation (PHDC), the City's WAP provider. Statewide, WAP is run by the PA Department of Community & Economic Development (DCED).",
+      "summary": "Free energy audit and weatherization for income-eligible owner-occupied homes and tenant-occupied rental units in Philadelphia: air sealing, roof insulation, heating-system repair, water heater and refrigerator replacement, thermostats and energy education. Income limit is $66,000 for a household of 4. A property can be served once every 15 years. Intake is by email to phdc.intake@phdc.phila.gov or the WAP Hotline at 215-448-2130. The page says applicants are served 'when additional funding is received and it is your turn', which effectively means a queue.",
+      "url": "https://phdcphila.org/weatherization/"
+    },
+    {
+      "name": "Basic Systems Repair Program (BSRP) and Heater Hotline",
+      "runBy": "PHDC for the City of Philadelphia",
+      "summary": "Free emergency repairs (electrical, plumbing, heating, roofing, limited structural) for owner-occupants of single-family Philadelphia homes who own no other city property and are current on taxes and water bills. Income limit is $122,700 for a household of 4. Apply through the One Philly Front Door portal or call 215-448-2160. For heater repairs only, call the Heater Hotline at 215-568-7190.",
+      "url": "https://phdcphila.org/repair/basic-systems-repair-program/"
+    },
+    {
+      "name": "Built to Last",
+      "runBy": "Philadelphia Energy Authority (independent municipal authority)",
+      "summary": "Coordinated whole-home repairs, health and safety work and energy upgrades for underserved low-income homeowners. PEA is an ENERGY STAR Home Upgrade partner. Eligibility is screened through One Philly Front Door.",
+      "url": "https://philaenergy.org/programs/residents-communities/built-to-last/"
+    },
+    {
+      "name": "PECO low-income efficiency: Act 129 Low-Income subprogram and LIURP",
+      "runBy": "PECO",
+      "summary": "Free Energy Checkups and direct-install measures under Act 129 Phase V. PECO's plan says these coordinate with its Low-Income Usage Reduction Program (LIURP), its Customer Assistance Program (CAP), LIHEAP, WAP and the City's Basic Systems Repair Program. Details on PECO's site could not be verified.",
+      "url": "https://www.puc.pa.gov/pcdocs/1926991.pdf"
+    },
+    {
+      "name": "PGW Customer Responsibility Program (CRP) and Affordable EnergySense",
+      "runBy": "Philadelphia Gas Works",
+      "summary": "CRP is a bill discount based on household size, income and average gas bill. CRP enrollment, a Hardship Fund grant, or a LIHEAP grant assigned to PGW unlocks higher 'Affordable EnergySense' equipment and insulation rebates. PGW's low-income weatherization (LIURP) was not found on the pages checked.",
+      "url": "https://www.pgworks.com/customer-care/crp"
+    },
+    {
+      "name": "Comfort Partners and NJ WAP (NJ side)",
+      "runBy": "NJ BPU with the utilities (Comfort Partners); NJ DCA through county agencies (WAP)",
+      "summary": "Comfort Partners provides a free assessment and all recommended measures for NJ households at or below 250% of federal poverty guidelines, or receiving TANF, Section 8, SNAP, SSI or GA. Registration is open and rolling; call 866-378-4345. Oil, propane and kerosene-heated homes go to the DCA Office of Weatherization (800-510-3102).",
+      "url": "https://cleanenergy.nj.gov/programs/energy-efficiency/comfort-partners"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Philadelphia Building Energy Benchmarking",
+      "appliesTo": "Commercial and multifamily buildings of 50,000 sq ft and larger. Does not affect ordinary homeowners.",
+      "summary": "Annual energy and water reporting through ENERGY STAR Portfolio Manager, due June 30 for the previous calendar year. The fine is $300 after 30 days late, then $100 per day.",
+      "url": "https://www.phila.gov/programs/building-energy-programs/building-energy-benchmarking-program/"
+    },
+    {
+      "name": "Philadelphia Building Energy Performance Policy (BEPP, 'building tune-ups')",
+      "appliesTo": "Non-residential buildings of 50,000 sq ft or more. Does not affect homeowners.",
+      "summary": "Owners must complete a tune-up by an approved specialist, certify as high-performance, or get an exemption, and repeat every five years. The fine is $2,000, then $500 per day after the first 30 days past the deadline.",
+      "url": "https://www.phila.gov/programs/building-energy-programs/building-energy-performance-program/"
+    },
+    {
+      "name": "New Jersey energy and water benchmarking (NJ side)",
+      "appliesTo": "Commercial buildings over 25,000 sq ft. Does not affect homeowners.",
+      "summary": "Annual benchmarking; the first submissions were due October 1, 2023",
+      "url": "https://nj.gov/bpu/newsroom/2022/approved/20220907.html"
+    }
+  ],
+  "notes": "PECO: peco.com could not be read (a WAF block for scripted requests and an empty client-side shell for WebFetch), so customer-facing rebate amounts, assessment prices and booking links are null. PECO facts here come from its Act 129 Phase V plan as approved by the PA PUC (order entered March 26, 2026) and revised May 1, 2026. Phase V runs June 1, 2026 to May 31, 2031. The plan lists incentive ranges, not the exact offers on PECO's website, so check those before publishing amounts. PECO Gas (suburban counties) efficiency offers were not checked. Federal tax credits: the IRS says 25C covers improvements made through December 31, 2025 and 25D is not available for property placed in service after December 31, 2025. Pennsylvania's IRA rebates (Penn Energy Savers) were still not launched as of DEP's September 2026 update, now reworked for DOE's May 29, 2026 rules, which remove federal rebates for switching from gas or oil to heat pumps. The Delaware (New Castle County) and Maryland (Cecil County) parts of this MSA were not researched; Maryland programs are covered in the baltimore and washington-dc files.",
+  "sources": [
+    { "label": "Census Bureau – OMB July 2023 CBSA delineation file (List 1)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "PA PUC – Act 129 EE&C program (Phase V begins June 1, 2026)", "href": "https://www.puc.pa.gov/filing-resources/issues-laws-regulations/act-129/energy-efficiency-and-conservation-eec-program/" },
+    { "label": "PA PUC – PECO Phase V docket M-2025-3057328", "href": "https://www.puc.pa.gov/docket/M-2025-3057328" },
+    { "label": "PECO – Revised Act 129 Phase V EE&C Plan (filed April 30 / posted May 1, 2026)", "href": "https://www.puc.pa.gov/pcdocs/1926991.pdf" },
+    { "label": "PA PUC – electric companies", "href": "https://www.puc.pa.gov/electricity/electric-companies-suppliers/" },
+    { "label": "PA PUC – natural gas companies", "href": "https://www.puc.pa.gov/natural-gas/natural-gas-companies-suppliers/" },
+    { "label": "PA PUC – retail markets / PAPowerSwitch", "href": "https://www.puc.pa.gov/electricity/retail-markets/" },
+    { "label": "PGW – about us", "href": "https://www.pgworks.com/about-us" },
+    { "label": "PGW – Efficiencies & Incentives", "href": "https://www.pgworks.com/customer-care/efficiency" },
+    { "label": "PGW EnergySense – home", "href": "https://pgwenergysense.com/" },
+    { "label": "PGW EnergySense – residential rebates", "href": "https://pgwenergysense.com/residential-rebates/" },
+    { "label": "PGW – Customer Responsibility Program", "href": "https://www.pgworks.com/customer-care/crp" },
+    { "label": "PA DEP – Inflation Reduction Act (Home Energy Rebates status)", "href": "https://www.pa.gov/agencies/dep/residents/saving-energy/inflation-reduction-act" },
+    { "label": "Penn Energy Savers", "href": "https://www.pennenergysavers.com/" },
+    { "label": "PHDC – Weatherization Assistance Program", "href": "https://phdcphila.org/weatherization/" },
+    { "label": "PHDC – Basic Systems Repair Program", "href": "https://phdcphila.org/repair/basic-systems-repair-program/" },
+    { "label": "Philadelphia Energy Authority – Built to Last", "href": "https://philaenergy.org/programs/residents-communities/built-to-last/" },
+    { "label": "City of Philadelphia – Building Energy Benchmarking", "href": "https://www.phila.gov/programs/building-energy-programs/building-energy-benchmarking-program/" },
+    { "label": "City of Philadelphia – Building Energy Performance Program", "href": "https://www.phila.gov/programs/building-energy-programs/building-energy-performance-program/" },
+    { "label": "PSE&G – Whole Home Energy Assessment", "href": "https://homeenergy.pseg.com/WHAssessment" },
+    { "label": "PSE&G – HVAC Instant Rebates / building decarbonization", "href": "https://myhomeenergy.pseg.com/appliance-offers/heatingandcooling" },
+    { "label": "Atlantic City Electric – Whole Home Energy Assessment", "href": "https://homeenergysavings.atlanticcityelectric.com/residential/energy-assessments/quick-home-energy-check-up-program" },
+    { "label": "Atlantic City Electric – Whole Home Energy Solutions", "href": "https://homeenergysavings.atlanticcityelectric.com/residential/energy-assessments/home-performance-with-energy-star-program" },
+    { "label": "NJ Clean Energy Program – utility-run programs for homeowners", "href": "https://cleanenergy.nj.gov/programs/energy-efficiency/utility-run-programs-for-homeowners" },
+    { "label": "NJ Clean Energy Program – Comfort Partners", "href": "https://cleanenergy.nj.gov/programs/energy-efficiency/comfort-partners" },
+    { "label": "NJ Clean Energy Program – IRA Home Energy Rebates in NJ", "href": "https://cleanenergy.nj.gov/programs/energy-efficiency/inflation-reduction-act-home-energy-rebates-in-new-jersey" },
+    { "label": "NJ BPU – shop for energy suppliers", "href": "https://www.nj.gov/bpu/commercial/shopping.html" },
+    { "label": "NJ BPU – benchmarking requirement", "href": "https://nj.gov/bpu/newsroom/2022/approved/20220907.html" },
+    { "label": "DOE – Program Notice 26-2 (effective May 29, 2026)", "href": "https://www.energy.gov/documents/program-notice-26-2" },
+    { "label": "IRS – Energy Efficient Home Improvement Credit (25C)", "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" },
+    { "label": "IRS – Residential Clean Energy Credit (25D)", "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit" }
+  ]
+}

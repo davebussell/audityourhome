@@ -83,7 +83,7 @@ export const SERVICE_LINKS: Record<CalcSlug, { slug: string; label: string }[]> 
 export function otherCalcs(calc: CalcSlug, city: CalcCity) {
   return (Object.keys(CALC_META) as CalcSlug[])
     .filter((c) => c !== calc)
-    .map((c) => ({ href: `/calculators/${c}/${city.slug}/`, label: `${CALC_META[c].short} in ${cityName(city)}`, blurb: CALC_META[c].blurb }));
+    .map((c) => ({ href: `/ca/calculators/${c}/${city.slug}/`, label: `${CALC_META[c].short} in ${cityName(city)}`, blurb: CALC_META[c].blurb }));
 }
 
 /** "about $1,350" style for prose */

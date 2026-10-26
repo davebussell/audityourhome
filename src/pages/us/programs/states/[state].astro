@@ -1,0 +1,311 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import LeadFormUS from '../../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../../components/us/ProgramStyles.astro';
+import ProgramStatus from '../../../../components/us/ProgramStatus.astro';
+import ProgramFaq from '../../../../components/us/ProgramFaq.astro';
+import ProgramSources from '../../../../components/us/ProgramSources.astro';
+import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
+import { statusChip } from '../../../../lib/us/data';
+import {
+  STATES, stateBySlug, stateLede, baselineNote, metroProgramsFor, metroName, nameIn, NameStart,
+  PROG_LABEL, TAX, BPA_SOURCE, src, dedupe, clean, fmtISO, VERIFIED, type ProgView,
+} from '../../../../lib/us/programs';
+
+export function getStaticPaths() {
+  return STATES.map((s) => ({ params: { state: s.slug } }));
+}
+
+const s = stateBySlug(Astro.params.state!)!;
+const progs: ProgView[] = [s.hear, s.homes];
+const viaProgs = progs.filter((p) => p.via);
+const lede = stateLede(s);
+const checked = fmtISO(s.hear.checked);
+
+const title = `${s.name} home energy rebates (2026): HOMES and HEEHR status | AuditYourHome`;
+const description = lede.length > 120 ? `${lede} Checked ${VERIFIED}.` : `${lede} Program names, amounts and official links, checked ${VERIFIED}.`;
+
+const metros = s.metros
+  .map((m) => metroProgramsFor(m, s.code))
+  .sort((a, b) => Number(b.primary) - Number(a.primary));
+
+// Home Energy Score rules recorded in this state's metro records (Portland's listing requirement, Berkeley's BESO).
+const hesRules = s.metros.filter((m) => (m.data.states ?? [])[0] === s.code).flatMap((m) =>
+  ((m.data.localRules ?? []) as any[])
+    .filter((r) => /Home Energy Score/.test(`${r.name} ${r.summary}`) && /^(Portland Home Energy Score ordinance|Berkeley)/.test(r.name))
+    .map((r) => ({ metro: m, rule: r })),
+);
+
+const S = {
+  fs: src(/faqs-for-modification-of-sections-25c/),
+  wap: src(/how-apply-weatherization-assistance/),
+  rebateFinder: src(/energystar\.gov\/rebate-finder/),
+};
+
+const words = (p: ProgView) => (p.status ? clean(p.status).replace(/\.$/, '') : 'no status stated on any state page we could check');
+const admins = [...new Set(progs.map((p) => p.administrator).filter(Boolean))] as string[];
+const faqs = [
+  {
+    q: `Are Home Energy Rebates available in ${nameIn(s)} right now?`,
+    a: `${lede} As checked on ${checked}, HEEHR: ${words(s.hear)}. HOMES: ${words(s.homes)}.${s.mapOnly ? ` ${baselineNote(s)}` : ''}`,
+  },
+  {
+    q: `Who runs Home Energy Rebates in ${nameIn(s)}?`,
+    a:
+      admins.length === 0
+        ? `No administrator is named on any ${s.name} page we could check.`
+        : admins.length === 1
+          ? `${clean(admins[0])}.`
+          : `HEEHR: ${clean(s.hear.administrator)}. HOMES: ${clean(s.homes.administrator)}.`,
+  },
+  {
+    q: `Can I still get a federal tax credit for energy upgrades in ${nameIn(s)}?`,
+    a: 'No. The federal 25C and 25D credits ended for work after December 31, 2025, under Public Law 119-21, in every state. Work done in 2025 is claimed on 2025 returns with IRS Form 5695. Income-qualified households can still apply for the Weatherization Assistance Program.',
+  },
+];
+
+const sources = dedupe([...s.sources, BPA_SOURCE]);
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Rebates by state', path: '/us/programs/states/' },
+    { name: s.name, path: `/us/programs/states/${s.slug}/` },
+  ]),
+  faqSchema(faqs),
+];
+const closed = statusChip(TAX['25C'].status);
+const open = statusChip('open');
+const others = STATES.filter((x) => x.code !== s.code);
+const anchor = (p: ProgView) => (p.key === 'hear' ? 'heehr' : 'homes');
+---
+
+<Base title={title} description={description} schema={schema}>
+  <ProgramStyles />
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
+      <a href="/us/programs/states/">States</a> <span aria-hidden="true">/</span>
+      <span>{s.name}</span>
+    </nav>
+
+    <div class="page-hero st-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Home Energy Rebates · {s.code}</p>
+        <h1>{s.name} home energy rebates (2026)</h1>
+        <p class="lede measure">
+          {lede} Federal tax credits for home energy upgrades ended after 2025; income-qualified households can still
+          apply for weatherization.
+        </p>
+        <p class="up-meta">Checked against {nameIn(s)}’s own pages on {checked}</p>
+      </div>
+      <aside class="card card-pad glance" aria-label={`${s.name} at a glance`}>
+        <p class="g-h">At a glance</p>
+        {progs.map((p) => (
+          <a class="g-row" href={`#${anchor(p)}`}>
+            <span class="g-k">{p.short} · {PROG_LABEL[p.key].what}</span>
+            <span class={`chip ${p.chip.cls}`}>{p.chip.label}</span>
+          </a>
+        ))}
+        <a class="g-row" href="/us/programs/federal-tax-credits/">
+          <span class="g-k">Federal tax credits (25C, 25D)<small>Ended for work after Dec. 31, 2025</small></span>
+          <span class={`chip ${closed.cls}`}>{closed.label}</span>
+        </a>
+        <a class="g-row" href="/us/programs/weatherization-assistance-program/">
+          <span class="g-k">Weatherization Assistance<small>Funded for FY2026, income-qualified</small></span>
+          <span class={`chip ${open.cls}`}>{open.label}</span>
+        </a>
+      </aside>
+    </div>
+
+    <div class="up-two">
+      {progs.map((p) => (
+        <article class={`card card-pad spc s-${p.chip.status}`} id={anchor(p)}>
+          <p class="eyebrow">{p.short} · {PROG_LABEL[p.key].what}</p>
+          <h2 class="spc-h">{p.programName ? clean(p.programName) : 'No program page found'}</h2>
+          <ProgramStatus text={p.status} chip={p.chip} />
+          <dl class="up-kv">
+            {p.administrator && <><dt>Run by</dt><dd>{clean(p.administrator)}</dd></>}
+            {p.launched && <><dt>Launched</dt><dd>{clean(p.launched)}</dd></>}
+            {p.amounts && <><dt>Amounts</dt><dd>{clean(p.amounts)}</dd></>}
+          </dl>
+          {p.via && <p class="via">{p.via.note}</p>}
+          <p class="up-meta">
+            {p.url ? <a href={p.url} rel="noopener" target="_blank">Official page&nbsp;↗</a> : <span>No official program page found</span>}
+            {p.via && p.via.sources.length > 0 && p.via.sources.map((v) => <> · <a href={v.href} rel="noopener" target="_blank">{v.label}&nbsp;↗</a></>)}
+            {' · '}verified {fmtISO(p.checked)}
+          </p>
+        </article>
+      ))}
+    </div>
+
+    <div class="card card-pad up-note">
+      <h3>What {nameIn(s)}’s pages say</h3>
+      <p>{s.notes}</p>
+      {viaProgs.length > 0 && (
+        <p class="small">
+          <strong>Note:</strong> the {viaProgs.map((p) => p.short).join(' and ')} {viaProgs.length > 1 ? 'statuses' : 'status'} above
+          {' '}{viaProgs.length > 1 ? 'come' : 'comes'} from our {[...new Set(viaProgs.map((p) => metroName(p.via!.metro)))].join(' and ')} research,
+          as explained on {viaProgs.length > 1 ? 'those cards' : 'that card'}; the paragraph above is from our state-by-state check.
+        </p>
+      )}
+      <p class="small">{baselineNote(s)}</p>
+    </div>
+
+    {metros.length > 0 && (
+      <section class="up-s" id="metros" aria-labelledby="metros-h">
+        <h2 class="up-sec" id="metros-h">Local programs in {nameIn(s)}</h2>
+        <p class="up-intro">
+          Utility and local programs from our metro research that are open now, each linked to its official page.
+          Terms, limits and weatherization agencies are on each metro guide.
+        </p>
+        <div class="mcs">
+          {metros.map((mp) => (
+            <article class="card card-pad mc">
+              <h3><a href={`/us/cities/${mp.metro.slug}/`}>{metroName(mp.metro)}</a></h3>
+              <p class="mc-s">{mp.metro.msa}{!mp.primary && ` · the ${s.name} side`}</p>
+              {(mp.electric.length > 0 || mp.gas.length > 0) && (
+                <p class="mc-u">
+                  {mp.electric.length > 0 && <><strong>Electric:</strong> {mp.electric.join('; ')}</>}
+                  {mp.electric.length > 0 && mp.gas.length > 0 && <br />}
+                  {mp.gas.length > 0 && <><strong>Gas:</strong> {mp.gas.join('; ')}</>}
+                </p>
+              )}
+              {mp.localRebates && (
+                <div class="mc-r">
+                  <p class="mc-lh">Home Energy Rebates in this metro</p>
+                  <ProgramStatus text={mp.localRebates.status} chip={mp.localRebates.chip} />
+                </div>
+              )}
+              {mp.open.length > 0 ? (
+                <>
+                  <p class="mc-lh">Open programs</p>
+                  <ul class="mc-l">
+                    {mp.open.slice(0, 8).map((x) => (
+                      <li><a href={x.url} rel="noopener" target="_blank">{x.name}{x.by && ` (${clean(x.by)})`}&nbsp;↗</a></li>
+                    ))}
+                  </ul>
+                  {mp.open.length > 8 && <p class="small">Plus {mp.open.length - 8} more open {mp.open.length - 8 === 1 ? 'program' : 'programs'} on the {metroName(mp.metro)} guide.</p>}
+                </>
+              ) : (
+                <p class="small">
+                  {mp.primary
+                    ? `Our ${metroName(mp.metro)} research lists no programs with an open status.`
+                    : `Part of the ${metroName(mp.metro)} metro area reaches into ${nameIn(s)}. None of the programs in our ${metroName(mp.metro)} research are specific to ${nameIn(s)}.`}
+                </p>
+              )}
+              {mp.notOpen > 0 && <p class="small">{mp.notOpen} more listed for this area {mp.notOpen === 1 ? 'is' : 'are'} closed, paused or unconfirmed.</p>}
+              <p class="up-meta mc-f">Status checked {VERIFIED} · <a href={`/us/cities/${mp.metro.slug}/`}>{metroName(mp.metro)} guide →</a></p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="up-s" id="federal" aria-labelledby="fed-h">
+      <h2 class="up-sec" id="fed-h">Federal programs in {nameIn(s)}</h2>
+      <div class="card card-pad fed">
+        <p class="fed-line">
+          <span class={`chip ${closed.cls}`}>{closed.label}</span>
+          <strong>Federal tax credits (25C and 25D):</strong> ended for work after December 31, 2025 (Public Law 119-21).
+          2025 work is claimed on 2025 returns with IRS Form 5695.
+          {' '}<a href="/us/programs/federal-tax-credits/">What ended →</a> <a href={S.fs.href} rel="noopener" target="_blank">IRS&nbsp;↗</a>
+        </p>
+        <p class="fed-line">
+          <span class={`chip ${open.cls}`}>{open.label}</span>
+          <strong>Weatherization Assistance Program:</strong> funded for FY2026; pays for efficiency work, starting with an
+          energy audit, for households at or below 200% of federal poverty guidelines. Apply through {nameIn(s)}’s
+          weatherization agency.
+          {' '}<a href="/us/programs/weatherization-assistance-program/">Who qualifies →</a> <a href={S.wap.href} rel="noopener" target="_blank">DOE&nbsp;↗</a>
+        </p>
+        <p class="fed-line">
+          <span class={`chip ${open.cls}`}>{open.label}</span>
+          <strong>LIHEAP:</strong> funded for FY2026; helps pay heating and cooling bills through {nameIn(s)}’s LIHEAP
+          office. <a href="/us/programs/weatherization-assistance-program/#liheap">LIHEAP →</a>
+        </p>
+        {hesRules.map(({ rule }) => (
+          <p class="fed-line">
+            <strong>Local rule · {rule.name}:</strong> {clean(rule.summary).split('. ')[0].replace(/\.$/, '')}.
+            {' '}<a href="/us/programs/home-energy-score/">Home Energy Score →</a> <a href={rule.url} rel="noopener" target="_blank">Official&nbsp;↗</a>
+          </p>
+        ))}
+        <p class="fed-line">
+          <span class={`chip ${open.cls}`}>{open.label}</span>
+          <strong>ENERGY STAR Rebate Finder:</strong> searches offers on certified products by ZIP code.
+          {' '}<a href={S.rebateFinder.href} rel="noopener" target="_blank">Rebate Finder&nbsp;↗</a>
+        </p>
+        <p class="up-meta">All verified {VERIFIED}</p>
+      </div>
+    </section>
+
+    <ProgramFaq faqs={faqs} />
+
+    <div class="up-lf">
+      <LeadFormUS
+        heading={`Planning upgrades in ${nameIn(s)}?`}
+        context={`us-state-${s.code.toLowerCase()}`}
+      />
+    </div>
+
+    <ProgramSources sources={sources} verified={checked} />
+
+    <p class="up-related">
+      <a class="btn btn-ghost" href="/us/programs/states/">All states</a>
+      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">How HOMES and HEEHR work</a>
+      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+    </p>
+
+    <p class="up-also">
+      Other states:
+      {others.map((o, i) => (<>{i > 0 && ' · '}<a href={`/us/programs/states/${o.slug}/`}>{o.name}</a></>))}
+    </p>
+  </div>
+</Base>
+
+<style>
+  .up-s { padding: 0; }
+  .st-hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px 48px; align-items: center; }
+  @media (max-width: 860px) { .st-hero { grid-template-columns: 1fr; padding-top: 32px; } }
+  .st-hero h1 { font-size: clamp(32px, 4.6vw, 50px); }
+  .glance { display: grid; gap: 4px; }
+  .g-h { margin: 0 0 4px; font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .g-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .g-row:hover .g-k { color: var(--heat-deep); }
+  .g-k { display: grid; font-size: 14.5px; font-weight: 600; line-height: 1.35; }
+  .g-k small { font-size: 12.5px; font-weight: 400; color: var(--muted); }
+  .g-row .chip { flex-shrink: 0; }
+
+  .spc { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .spc.s-open { border-left: 4px solid var(--pine); }
+  .spc.s-limited { border-left: 4px solid var(--warn); }
+  .spc.s-closed { border-left: 4px solid var(--dead); }
+  .spc.s-not-open, .spc.s-unknown { border-left: 4px solid var(--steel); }
+  .spc .eyebrow { margin: 0; }
+  .spc-h { margin: 0; font-size: 19px; line-height: 1.25; }
+  .via { margin: 0; font-size: 13.5px; color: var(--muted); padding: 10px 12px; background: var(--paper); border-radius: 8px; }
+  .spc .up-meta { margin-top: auto; line-height: 1.7; }
+
+  .mcs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 20px; }
+  .mc { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .mc h3 { margin: 0; font-size: 19px; }
+  .mc h3 a { color: var(--ink); text-decoration: none; }
+  .mc h3 a:hover { color: var(--heat-deep); }
+  .mc p { margin: 0; }
+  .mc-s { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .mc-u { font-size: 14px; }
+  .mc-lh { font-family: var(--display); font-weight: 700; font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 4px !important; }
+  .mc-l { margin: 0; padding-left: 18px; font-size: 14px; columns: 2 320px; column-gap: 36px; }
+  .mc-l li { break-inside: avoid; margin-bottom: 4px; }
+  .mc-l a { color: var(--ink); text-decoration-color: var(--line-strong); }
+  .mc-l a:hover { color: var(--heat-deep); }
+  .mc-f { margin-top: auto !important; padding-top: 4px; }
+  .mc-r { display: grid; gap: 4px; padding: 10px 12px; background: var(--paper); border-radius: 8px; }
+  .mc-r .mc-lh { margin-top: 0 !important; }
+
+  .fed { border-left: 4px solid var(--steel); display: grid; gap: 12px; }
+  .fed-line { font-size: 14px; color: var(--muted); margin: 0; }
+  .fed-line .chip { margin-right: 6px; vertical-align: 1px; }
+  .fed-line strong { color: var(--ink); }
+  .fed-line a { color: var(--heat-deep); text-decoration: none; margin-right: 6px; }
+  .fed-line a:hover { text-decoration: underline; }
+</style>

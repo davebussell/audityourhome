@@ -1,0 +1,37 @@
+---
+/** Delivered heat cost by fuel for one place, cheapest first. */
+import type { FuelCost, Market } from '../../lib/heatpumps';
+
+interface Props {
+  rows: FuelCost[];
+  market: Market;
+  caption: string;
+}
+const { rows, market, caption } = Astro.props;
+const unit = market === 'ca' ? 'GJ' : 'million Btu';
+const cheapest = rows[0]?.cost ?? 0;
+---
+
+<div class="tablewrap card">
+  <table class="stack dt">
+    <caption class="sr-only">{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Heating system</th>
+        <th scope="col" class="num">Cost per {unit} of heat</th>
+        <th scope="col" class="num">vs cheapest</th>
+        <th scope="col">Based on</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td>{r.label}</td>
+          <td class="num" data-label={`Cost per ${unit} of heat`}><strong>${r.cost.toFixed(2)}</strong></td>
+          <td class="num" data-label="vs cheapest">{r.cost === cheapest ? 'cheapest' : `+${Math.round((r.cost / cheapest - 1) * 100)}%`}</td>
+          <td data-label="Based on" class="muted">{r.note}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,44 @@
+---
+/** Where the Canadian audit-request form lands after a Netlify submission. Not indexed. */
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Request received | AuditYourHome" description="Your request reached us." indexable={false}>
+  <div class="container thanks">
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Request received</p>
+        <h1>Thanks. Your request reached us.</h1>
+        <p class="lede measure">
+          A person reads every request, usually within one business day, and introduces you to one registered service organization that serves
+          your area. The reply comes from dave@clickshift.ca.
+        </p>
+      </div>
+    </div>
+    <div class="steps">
+      <article class="card card-pad">
+        <h2>While you wait</h2>
+        <p>Find your last 12 months of energy bills and note the rooms that run cold, drafty or damp. Advisors use both.</p>
+      </article>
+      <article class="card card-pad">
+        <h2>Rebates first</h2>
+        <p>Many rebates need an evaluation before you start work. Check what your province offers before you sign a contract.</p>
+        <p><a href="/ca/programs/">Rebates and programs</a></p>
+      </article>
+      <article class="card card-pad">
+        <h2>Plan the rest</h2>
+        <p>The planner shows which tests your home is likely to need and what they cost where you live.</p>
+        <p><a href="/ca/plan/">Open the planner</a></p>
+      </article>
+    </div>
+    <p class="back"><a class="btn btn-ghost" href="/ca/">Back to the home page</a></p>
+  </div>
+</Base>
+
+<style>
+  .thanks { padding-bottom: 48px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+  .steps h2 { font-size: 18px; margin: 0 0 6px; }
+  .steps p { margin: 0 0 6px; color: var(--muted); }
+  .back { margin-top: 22px; }
+</style>

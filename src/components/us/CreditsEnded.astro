@@ -1,0 +1,43 @@
+---
+/**
+ * The federal 25C/25D tax credits ended for work after December 31, 2025. Facts and links come
+ * from federal.json (taxCredits), verified October 12, 2026.
+ */
+import { FEDERAL, US_VERIFIED } from '../../lib/us/data';
+
+interface Props {
+  /** "card" is a bordered card; "inline" drops the card chrome for use inside another block */
+  variant?: 'card' | 'inline';
+}
+const { variant = 'card' } = Astro.props;
+const credits = FEDERAL.taxCredits as any[];
+const c25c = credits.find((c) => c.id === '25C');
+const c25d = credits.find((c) => c.id === '25D');
+const irs25c = c25c?.sources?.find((s: any) => /irs\.gov\/credits-deductions\/energy-efficient/.test(s.href)) ?? c25c?.sources?.[0];
+const irs25d = c25d?.sources?.find((s: any) => /irs\.gov\/credits-deductions\/residential-clean/.test(s.href)) ?? c25d?.sources?.[0];
+---
+
+<aside class:list={['credits', variant === 'card' && 'card card-pad']}>
+  <p class="cr-head"><span class="chip chip-closed">Ended</span> <strong>Federal tax credits for home energy work</strong></p>
+  <p class="cr-body">
+    Public Law 119-21, signed July 4, 2025, ended the Energy Efficient Home Improvement Credit (25C) for property
+    placed in service after December 31, 2025, and its credit of up to $150 for a home energy audit doesn’t apply to
+    audits paid for or done after that date. The Residential Clean Energy Credit (25D) ended for expenditures made
+    after December 31, 2025. Work done in 2025 is still claimed on a 2025 return (Form 5695).
+  </p>
+  <p class="cr-src">
+    {irs25c && <a href={irs25c.href} rel="noopener" target="_blank">IRS: 25C&nbsp;↗</a>}
+    {irs25d && <span> · <a href={irs25d.href} rel="noopener" target="_blank">IRS: 25D&nbsp;↗</a></span>}
+    <span> · verified {US_VERIFIED}</span>
+  </p>
+</aside>
+
+<style>
+  .credits { border-left: 4px solid var(--dead); }
+  .credits.card { box-shadow: none; }
+  .cr-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 0 0 8px; }
+  .cr-body { margin: 0 0 8px; font-size: 15px; color: var(--muted); max-width: 75ch; }
+  .cr-src { margin: 0; font-size: 13.5px; color: var(--faint); }
+  .cr-src a { color: var(--steel); }
+  .credits:not(.card) { padding-left: 16px; }
+</style>

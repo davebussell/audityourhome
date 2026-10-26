@@ -1,0 +1,280 @@
+---
+/**
+ * One brand (or brand family) in one country: owner, lines, certified models, warranty, rebate fit.
+ * Numbers: ENERGY STAR (estar.json). Facts: brands.json, researched October 19, 2026.
+ */
+import Base from '../../layouts/Base.astro';
+import ModelTable from './ModelTable.astro';
+import QuoteForm from './QuoteForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import {
+  type Market, type Warranty, brandInfo, statsFor, brandHref, brandSlugs, FAMILIES, ESTAR, ESTAR_URL, AHRI_URL, NRCAN_LIST_URL,
+  HP_CHECKED, fmtInt, fmtPct, fmtCop, fmt1, fmtDate, tierLabel, channelLabel, warrantyHeadline, registrationNote, at5, TYPE_LABEL,
+  CA_REGIONS, US_METROS, metroName, hostOf,
+} from '../../lib/heatpumps';
+import '../../styles/hp.css';
+
+interface Props {
+  market: Market;
+  slug: string;
+}
+const { market, slug } = Astro.props;
+const isCA = market === 'ca';
+const country = isCA ? 'Canada' : 'the US';
+const b = brandInfo(slug);
+const st = statsFor(market, slug)!;
+const t5 = at5(market);
+const updated = fmtDate(ESTAR.datasetUpdated, market);
+const w = b.warranty?.[market] ?? null;
+const otherW = b.warranty?.[isCA ? 'us' : 'ca'] ?? null;
+const family = FAMILIES.find((f) => f.slugs.includes(slug));
+const owner = family?.owner ?? b.parent.split(/[.(;]/)[0].trim();
+const types = Object.keys(st.top).sort((a, x) => (a === 'ductless' ? -1 : 1) - (x === 'ductless' ? -1 : 1));
+const r = st.refrigerants;
+const a2l = (r['R-454B'] ?? 0) + (r['R-32'] ?? 0);
+const coldLines = b.lines.filter((l) => l.coldClimate);
+const name = b.name;
+
+// compare-with: family first, then same tier
+const pool = brandSlugs(market).filter((s) => s !== slug);
+const fam = (family?.slugs ?? []).filter((s) => pool.includes(s));
+const sameTier = pool.filter((s) => !fam.includes(s) && brandInfo(s).priceTier === b.priceTier).slice(0, 6 - fam.length);
+const compare = [...fam, ...sameTier].slice(0, 6);
+
+const firstClause = b.parent.split(/\.\s|;\s/)[0].replace(/\.$/, '');
+const ownerLine = family && family.slugs.length > 1 ? `part of the ${family.owner} family` : `made by ${firstClause}`;
+const lede = [
+  `${name} is ${ownerLine}.`,
+  `ENERGY STAR lists ${fmtInt(st.outdoorModels, market)} ${name} outdoor model${st.outdoorModels === 1 ? '' : 's'} certified for ${country}, ${fmtInt(st.coldOutdoorModels, market)} of them cold-climate${st.bestCop5 ? `, and its best certified pairing heats at a COP of ${fmtCop(st.bestCop5)} at ${t5}` : ''}.`,
+].join(' ');
+
+const title = `${name} heat pumps: models, cold-climate ratings and warranty (${isCA ? 'Canada' : 'US'}) | AuditYourHome`;
+const description = `${name} heat pumps in ${country}: ${fmtInt(st.outdoorModels, market)} certified models, ${fmtInt(st.coldOutdoorModels, market)} cold-climate, best COP ${fmtCop(st.bestCop5)} at ${t5}. Owner, product lines, ${warrantyHeadline(w).toLowerCase()} warranty and the rebates they fit.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: `/${market}/` },
+    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
+    { name: 'Brands', path: `/${market}/heat-pumps/brands/` },
+    { name, path: brandHref(market, slug) },
+  ]),
+];
+const jump: [string, string][] = [
+  ['glance', 'At a glance'],
+  ['lines', 'Product lines'],
+  ['models', 'Certified models'],
+  ['warranty', 'Warranty'],
+  ['verdict', 'Strengths and watch-outs'],
+  ['rebates', 'Rebate fit'],
+  ...(b.recentNews.length ? ([['news', 'News']] as [string, string][]) : []),
+  ['quote', 'Get quotes'],
+];
+const wCard = (label: string, x: Warranty | null) => ({ label, x });
+const warrantyCards = b.warrantyVariants?.length
+  ? b.warrantyVariants.map((v) => wCard(v.label, v[market])).filter((c) => c.x)
+  : [wCard(`In ${country}`, w)];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={`/${market}/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span>
+      <a href={`/${market}/heat-pumps/brands/`}>Brands</a> <span aria-hidden="true">/</span> <span>{name}</span>
+    </nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Brand guide · {isCA ? 'Canada' : 'United States'} · checked {HP_CHECKED}</p>
+        <h1>{name} heat pumps</h1>
+        <p class="lede measure">{lede}</p>
+      </div>
+    </div>
+
+    <div class="keys">
+      <div class="key card">
+        <span class="k">Certified for {country}</span>
+        <span class="kv-big">{fmtInt(st.outdoorModels, market)} <small>outdoor models</small></span>
+        <span class="kv-sub">{fmtInt(st.systems, market)} certified pairings</span>
+      </div>
+      <div class="key card">
+        <span class="k">Cold-climate</span>
+        <span class="kv-big">{fmtInt(st.coldOutdoorModels, market)} <small>models</small></span>
+        <span class="kv-sub">{isCA ? `meet ENERGY STAR Cold Climate; ${fmtInt(st.nrcanLikeOutdoorModels)} meet NRCan's −15°C numbers on paper` : 'meet ENERGY STAR Cold Climate'}</span>
+      </div>
+      <div class="key card">
+        <span class="k">Best COP at {t5}</span>
+        <span class="kv-big">{fmtCop(st.bestCop5)}</span>
+        <span class="kv-sub">best HSPF2 {fmt1(st.bestHspf2)} · best SEER2 {fmt1(st.bestSeer2)}</span>
+      </div>
+      <div class="key card">
+        <span class="k">Warranty in {country}</span>
+        <span class="kv-big" style="font-size:19px">{warrantyHeadline(w)}</span>
+        <span class="kv-sub">{registrationNote(w) || 'see terms below'}</span>
+      </div>
+    </div>
+
+    <nav class="jump" aria-label="On this page">
+      {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+
+    <section id="glance" class="sec">
+      <h2>{name} at a glance</h2>
+      <dl class="glance card">
+        <div><dt>Who owns it</dt><dd>{b.parent}</dd></div>
+        {b.sisterBrands.length > 0 && <div><dt>Sister brands</dt><dd>{b.sisterBrands.join(', ')}</dd></div>}
+        {b.headquarters && <div><dt>Headquarters</dt><dd>{b.headquarters}</dd></div>}
+        {b.manufacturing && <div><dt>Where it's made</dt><dd>{b.manufacturing}</dd></div>}
+        <div><dt>How it's sold</dt><dd>{channelLabel(b.channel)}</dd></div>
+        <div><dt>Price tier</dt><dd><strong>{tierLabel(b.priceTier)}.</strong> {b.priceNote}</dd></div>
+        <div><dt>What it makes</dt><dd>{b.productTypes.join(', ')}</dd></div>
+        <div><dt>Names on ENERGY STAR's list</dt><dd>{st.names.join(', ')} <span class="muted">(certified by {st.partners.join('; ')})</span></dd></div>
+      </dl>
+    </section>
+
+    <section id="lines" class="sec">
+      <h2>Product lines</h2>
+      <p class="sec-intro">The current residential heat pump lines we found on {name}'s own pages, with the low-temperature claim in the maker's words.{coldLines.length ? ` ${coldLines.length} of ${b.lines.length} are sold as cold-climate.` : ''}</p>
+      <div class="tablewrap card">
+        <table class="stack dt lines-t">
+          <caption class="sr-only">{name} heat pump lines</caption>
+          <thead><tr><th scope="col">Line</th><th scope="col">Type</th><th scope="col">Cold-climate</th><th scope="col">Maker's low-temperature claim</th><th scope="col">Refrigerant</th></tr></thead>
+          <tbody>
+            {b.lines.map((l) => (
+              <tr>
+                <td>{l.url ? <a href={l.url} rel="noopener" target="_blank">{l.name}</a> : l.name}</td>
+                <td data-label="Type">{l.type}</td>
+                <td data-label="Cold-climate">{l.coldClimate ? <span class="yes">Yes</span> : <span class="no">No</span>}</td>
+                <td data-label="Maker's claim">{l.claim ?? 'No low-temperature figure published'}</td>
+                <td data-label="Refrigerant">{l.refrigerant ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="models" class="sec">
+      <h2>Certified models with the best cold-weather numbers</h2>
+      <p class="sec-intro">
+        From ENERGY STAR's list for {country} (updated {updated}): each row is one outdoor unit with its best certified pairing.
+        {a2l > 0 ? ` ${fmtInt(a2l, market)} of ${fmtInt(r.models, market)} ${name} outdoor models use R-454B or R-32; the tables show those.` : ` All ${fmtInt(r.models, market)} listed ${name} outdoor models use R-410A.`}
+      </p>
+      {types.map((t) => (
+        <>
+          <h3 class="sub-h">{TYPE_LABEL[t] ?? t} <span class="muted small">({fmtInt(st.byType[t]?.outdoorModels, market)} models)</span></h3>
+          {!st.topA2L[t] && <p class="tnote">No {TYPE_LABEL[t]?.toLowerCase()} on R-454B or R-32 are listed for {name}, so these use R-410A.</p>}
+          <ModelTable rows={st.top[t]} market={market} caption={`${name} ${TYPE_LABEL[t] ?? t} with the best ratings at ${t5}`} />
+        </>
+      ))}
+      {st.topCooling.length > 0 && (
+        <>
+          <h3 class="sub-h">Most efficient for cooling</h3>
+          <ModelTable rows={st.topCooling} market={market} caption={`${name} systems with the highest SEER2`} cooling />
+        </>
+      )}
+      <p class="tnote">
+        Look up any pairing by its AHRI number in the <a href={AHRI_URL} rel="noopener" target="_blank">AHRI Directory&nbsp;↗</a> or search the model in
+        <a href={ESTAR_URL} rel="noopener" target="_blank">ENERGY STAR's product finder&nbsp;↗</a>. Ratings are for the exact indoor and outdoor pairing shown.
+      </p>
+    </section>
+
+    <section id="warranty" class="sec">
+      <h2>Warranty</h2>
+      <div class="wty">
+        {warrantyCards.map(({ label, x }) => (
+          <div class="card">
+            <span class="lbl">{label}</span>
+            <span class="big">{warrantyHeadline(x)}</span>
+            {x?.ifNotRegistered && <p><strong>Registration:</strong> {x.ifNotRegistered}</p>}
+            {x?.labour && <p><strong>Labour:</strong> {x.labour}</p>}
+            {x?.url && <p class="meta"><a href={x.url} rel="noopener" target="_blank">Warranty terms ({hostOf(x.url)})&nbsp;↗</a></p>}
+          </div>
+        ))}
+        {!b.warrantyVariants?.length && otherW && (
+          <div class="card">
+            <span class="lbl">For comparison: {isCA ? 'in the US' : 'in Canada'}</span>
+            <span class="big">{warrantyHeadline(otherW)}</span>
+            {otherW.ifNotRegistered && <p class="muted">{otherW.ifNotRegistered}</p>}
+          </div>
+        )}
+      </div>
+      {!w && !b.warrantyVariants?.length && <p class="callout warn card">{name} didn't publish warranty terms for {country} on any page we could read on {HP_CHECKED}. Get the warranty in writing with your quote.</p>}
+    </section>
+
+    <section id="verdict" class="sec">
+      <h2>Strengths and watch-outs</h2>
+      <div class="pros">
+        <div class="card good">
+          <h3>Strengths</h3>
+          <ul>{b.strengths.map((s) => <li>{s}</li>)}</ul>
+        </div>
+        <div class="card watch">
+          <h3>Watch-outs</h3>
+          <ul>{b.watchouts.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="rebates" class="sec">
+      <h2>Which rebates {name} models fit</h2>
+      {isCA ? (
+        <div class="callout card">
+          <p>
+            <strong>{fmtInt(st.nrcanLikeOutdoorModels)} {name} outdoor models</strong> meet the cold-climate numbers NRCan publishes for its Eligible
+            Products List (COP of at least 1.8 at −15°C at full output, 70% of rated capacity, a variable-speed compressor) on their ENERGY STAR ratings.
+            That list decides Ontario's Home Renovation Savings rebate, Manitoba's, New Brunswick's, Yukon's and Newfoundland and Labrador's, and the
+            federal National Heat Pump Rebate expected in early 2027. Check the exact pairing on <a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan's list&nbsp;↗</a>.
+          </p>
+          <p>
+            <strong>{fmtInt(st.coldOutdoorModels)} models</strong> meet ENERGY STAR Cold Climate, which earns Quebec's higher LogisVert rate. BC uses its own
+            qualified list. Rebate rules by province:
+          </p>
+          <div class="pills">{CA_REGIONS.map((x) => <a href={`/ca/heat-pumps/${x.slug}/`}>{x.name}</a>)}</div>
+        </div>
+      ) : (
+        <div class="callout card">
+          <p>
+            Every model in these tables is ENERGY STAR certified, which is the federal equipment rule for the Home Electrification and Appliance Rebates where
+            your state runs them. <strong>{fmtInt(st.coldOutdoorModels, 'us')} {name} outdoor models</strong> also meet ENERGY STAR Cold Climate, which
+            several utility programs require. The 25C tax credit ended for heat pumps placed in service after December 31, 2025.
+          </p>
+          <p>Rebate rules by metro:</p>
+          <div class="pills">{US_METROS.map((m) => <a href={`/us/heat-pumps/${m.slug}/`}>{metroName(m)}</a>)}</div>
+        </div>
+      )}
+    </section>
+
+    {b.recentNews.length > 0 && (
+      <section id="news" class="sec">
+        <h2>Recent news</h2>
+        <ul class="news">
+          {b.recentNews.slice().sort((x, y) => (x.date < y.date ? 1 : -1)).slice(0, 8).map((n) => (
+            <li><time>{n.date}</time><span>{n.text}{n.url && <> <a href={n.url} rel="noopener" target="_blank">{hostOf(n.url)}&nbsp;↗</a></>}</span></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <div class="lf-wrap">
+      <QuoteForm market={market} context={`brand-${slug}`} brand={name} heading={`Get quotes for ${name} or a comparable heat pump`} />
+    </div>
+
+    {compare.length > 0 && (
+      <section class="related">
+        <h2>Compare with</h2>
+        <div class="nb">
+          {compare.map((s) => <a href={brandHref(market, s)}>{brandInfo(s).name} <span class="st">{fam.includes(s) ? 'same owner' : tierLabel(brandInfo(s).priceTier).toLowerCase()}</span></a>)}
+          <a class="all" href={`/${market}/heat-pumps/`}>All brands compared →</a>
+        </div>
+      </section>
+    )}
+
+    <section class="sec" style="padding-bottom:40px">
+      <div class="card srcs card-pad">
+        <h2>Sources</h2>
+        <p class="small">Model counts and ratings: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a>, updated {updated}. Brand facts checked {HP_CHECKED} on:</p>
+        <ul>
+          {b.sources.slice(0, 24).map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.title || hostOf(s.url)}</a></li>)}
+        </ul>
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,363 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProgramCard from '../../components/ProgramCard.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import Photo from '../../components/Photo.astro';
+import ThermalCompare from '../../components/ThermalCompare.astro';
+import EraBar from '../../components/EraBar.astro';
+import { localIndex, citiesByProvince } from '../../lib/local';
+import { SITE, ACCOUNTS_ENABLED } from '../../config/site';
+import { organizationSchema, faqSchema } from '../../lib/schema';
+import { programs, providers, regions } from '../../lib/data';
+
+const title = 'AuditYourHome — find a certified home energy auditor in Canada';
+const description = SITE.description;
+
+const featured = programs.filter((p) => ['hrsp-assessment', 'hrsp-no-assessment', 'toronto-help'].includes(p.id));
+const featuredProviders = providers.filter((p) => ['windfall-ecology-centre', 'the-energuy', 'reep-green-solutions'].includes(p.slug));
+
+const faqs = [
+  {
+    q: 'What does a home energy audit cost in Ontario?',
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies, and NRCan puts the two visits together at $600–$1,000 on average. Ontario’s Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. With one of those, the rebate covers most of a typical two-visit bill; with any other provider, you pay the full price. The follow-up has to be done by December 31, 2026.',
+  },
+  {
+    q: 'Is the audit actually required to get rebates?',
+    a: 'For the biggest ones, yes. The Home Renovation Savings assessment path (insulation up to $7,700, windows at $100 per opening) requires a pre- and post-retrofit EnerGuide assessment through one of the program’s seven approved service organizations. Toronto’s HELP loans require it for most projects too. Heat pump and solar rebates have a no-assessment stream.',
+  },
+  {
+    q: 'Who actually performs the audit?',
+    a: 'A registered energy advisor working under an NRCan-licensed service organization. Every provider listed on AuditYourHome is a licensed service organization — we link the registration source on each profile and we don’t list solar or HVAC sales reps as “auditors.”',
+  },
+  {
+    q: 'Is the Canada Greener Homes Grant still available?',
+    a: 'No — it closed to new applicants in February 2024, and the interest-free Greener Homes Loan closed October 1, 2025. Plenty of websites still advertise both. A new federal National Heat Pump Rebate ($2,000, or up to $10,000 below the median income, for cold-climate heat pumps) was announced October 8, 2026 and is expected to open early in 2027. The live money in Ontario right now is Home Renovation Savings, Toronto HELP, and the CMHC Eco premium refunds — see our program tracker for what’s verified as of ' + SITE.dataReviewDate + '.',
+  },
+];
+
+const schema = [organizationSchema(), faqSchema(faqs)];
+const upClose = [
+  { slug: 'blower-door-test', name: 'Blower door test', note: 'Your airtightness number' },
+  { slug: 'thermal-imaging', name: 'Infrared scan', note: 'Finds the empty walls' },
+  { slug: 'attic-insulation-inspection', name: 'Attic inspection', note: 'Depth, gaps and frost' },
+  { slug: 'radon-testing', name: 'Radon test', note: 'The one every home needs' },
+  { slug: 'combustion-safety-test', name: 'Combustion safety', note: 'Before tightening the house' },
+  { slug: 'well-water-testing', name: 'Well water', note: 'Bacteria, then chemistry' },
+];
+const regionsStrip = [
+  { photo: 'region-bc', label: 'British Columbia', href: '/ca/cities/#bc' },
+  { photo: 'region-alberta', label: 'Alberta', href: '/ca/cities/#ab' },
+  { photo: 'region-prairies', label: 'Saskatchewan & Manitoba', href: '/ca/cities/#sk' },
+  { photo: 'region-ontario', label: 'Ontario', href: '/ca/cities/#on' },
+  { photo: 'region-quebec', label: 'Quebec', href: '/ca/cities/#qc' },
+  { photo: 'region-atlantic', label: 'Atlantic Canada', href: '/ca/cities/#nb' },
+  { photo: 'region-north', label: 'The North', href: '/ca/cities/#yt' },
+];
+const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.population).slice(0, 12);
+---
+
+<Base title={title} description={description} schema={schema}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Canada-wide · audit-first home energy upgrades</p>
+        <h1>Know your home before you spend on it.</h1>
+        <p class="lede">
+          Find an <strong>NRCan-registered</strong> energy auditor, see <strong>real prices</strong>,
+          and get the rebates that are <strong>actually live</strong> in
+          <a href="/ca/provinces/">your province</a> — from Ontario's $600 assessment rebate and
+          heat pump rebates to BC's Improvement Bonus and Efficiency Manitoba.
+        </p>
+        <ul class="trust-list">
+          <li>Every provider is a licensed service organization — no sales-pitch "free audits"</li>
+          <li>Program data verified against official pages · last review {SITE.dataReviewDate}</li>
+          <li>Free planner: what your home needs, what it saves, before anyone visits</li>
+        </ul>
+      </div>
+
+      <form class="card hero-form" action="/ca/plan/" method="GET" aria-label="Start your home energy plan">
+        <h2>Get your free home energy plan</h2>
+        <p class="small">Six questions, ~90 seconds, no email required.</p>
+        <div class="field">
+          <label for="h-postal">Postal code</label>
+          <input id="h-postal" name="postal" type="text" placeholder="e.g. M4E 2V5" autocomplete="postal-code" />
+        </div>
+        <div class="field">
+          <span class="lbl-sm">When was your home built?</span>
+          <div class="radio-row">
+            <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Pre-1946</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>'46–'65</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1966-1980" /><span>'66–'80</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1981-1995" /><span>'81–'95</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1996-2010" /><span>'96–'10</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="2011-plus" /><span>2011+</span></label>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Build my plan →</button>
+        <p class="meta">{ACCOUNTS_ENABLED ? 'Runs in your browser. Nothing is stored unless you save your plan.' : 'Runs in your browser — nothing you enter is stored.'}</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="tight">
+    <div class="container">
+      <div class="grid-3 steps">
+        <div class="step-card">
+          <Photo name="attic-insulation-inspection" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">1</span>
+            <h3>Profile your home</h3>
+            <p>The planner reads your home's era, heating, and symptoms — and tells you what's likely behind the walls and what it's costing you.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="energy-bill-analysis" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">2</span>
+            <h3>See the real money</h3>
+            <p>Estimated savings per upgrade, typical costs, and the rebates that apply — verified against official program pages, not last year's blog posts.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">3</span>
+            <h3>Book a registered advisor</h3>
+            <p>Compare licensed service organizations serving your area — credentials shown, prices where published, no shared lead lists.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THERMAL DIAGRAM -->
+  <section class="thermal-band">
+    <div class="container thermal-grid">
+      <div class="thermal-copy">
+        <p class="eyebrow">Where houses actually leak</p>
+        <h2>Your home has a heat signature</h2>
+        <p>
+          Through an infrared camera, every house glows where it's failing — attic bypasses,
+          empty wall cavities, rim joists, bare foundation walls. The planner predicts your
+          home's pattern from its era; the audit's <strong>blower door</strong> and
+          <strong> thermal scan</strong> measure it exactly. Drag across the photo to see what the
+          camera sees.
+        </p>
+        <div class="test-chips">
+          <a href="/ca/tests/#blower-door">Blower door test</a>
+          <a href="/ca/tests/#thermal-imaging">Infrared scan</a>
+          <a href="/ca/tests/#heat-loss-calc">Heat-loss calc</a>
+          <a href="/ca/tests/#radon">Radon test</a>
+          <a href="/ca/tests/" class="all">All tests →</a>
+        </div>
+      </div>
+      <div class="thermal-art">
+        <ThermalCompare />
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTS, UP CLOSE -->
+  <section class="upclose">
+    <div class="container">
+      <p class="eyebrow">The tests, up close</p>
+      <h2>What an auditor actually does in your house</h2>
+      <p class="lede measure">Every test has a plain-language guide and a local page for each of our 70 cities: what it measures, what it costs where you live, and who does it.</p>
+      <div class="uc-row">
+        {upClose.map((t) => (
+          <a class="pcard-link uc" href={`/ca/services/${t.slug}/`}>
+            <Photo name={t.slug} sizes="(max-width: 700px) 70vw, 300px" />
+            <div class="pcard-body">
+              <h3>{t.name}</h3>
+              <p>{t.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="uc-more"><a class="btn btn-ghost" href="/ca/services/">All 16 services →</a></p>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section>
+    <div class="container">
+      <p class="eyebrow">Live in Ontario right now</p>
+      <h2>The rebates worth planning around</h2>
+      <p class="lede measure">
+        Rebate programs open and close with little warning — the federal Grant and Loan are both
+        gone, and half the internet hasn't noticed. The new federal
+        <a href="/ca/programs/national-heat-pump-rebate/">heat pump rebate</a> was announced October 8,
+        2026 but won't open until early 2027. We verify every program against its official page and
+        stamp the date.
+      </p>
+      <div class="grid-3" style="margin-top: 28px;">
+        {featured.map((p) => <ProgramCard program={p} />)}
+      </div>
+      <p style="margin-top: 20px;"><a class="btn btn-ghost" href="/ca/programs/">See the full tracker — including what's closed</a></p>
+    </div>
+  </section>
+
+  <!-- DIRECTORY PREVIEW -->
+  <section class="alt">
+    <div class="container">
+      <p class="eyebrow">The directory</p>
+      <h2>Registered advisors, on the record</h2>
+      <p class="lede measure">
+        Ontario's official "find an advisor" resource is a phone list. Ours shows who serves your
+        area, their registration, their published prices where they exist — and rewards the
+        providers transparent enough to post them.
+      </p>
+      <p class="small hrs-line">
+        Only assessments from the seven HRSP-approved organizations qualify for Ontario's $600
+        assessment rebate. Every card says whether the provider is one of them.
+        <a href="/ca/programs/home-renovation-savings-assessment/">See the seven</a>
+      </p>
+      <div class="grid-3">
+        {featuredProviders.map((p) => <ProviderCard provider={p} />)}
+      </div>
+      <div class="city-links">
+        <span class="small">Browse by area:</span>
+        {regions.map((r) => <a href={`/ca/find/${r.slug}/`}>{r.name}</a>)}
+      </div>
+      <p class="small guides-link">
+        Or go deeper: <a href="/ca/guides/"><strong>city-by-city home energy guides</strong></a> —
+        your region's housing stock, read like an auditor.
+      </p>
+    </div>
+  </section>
+
+  <!-- COAST TO COAST -->
+  <section class="c2c">
+    <div class="container">
+      <p class="eyebrow">Coast to coast</p>
+      <h2>{localIndex.cities.length} cities, each read like an auditor would</h2>
+      <p class="lede measure">
+        A 1912 Montréal plex, a 1962 Regina bungalow and a 2015 Calgary two-storey leak in different
+        places. Every city guide starts from its own Census housing data and climate.
+      </p>
+      <div class="rg-row">
+        {regionsStrip.map((r) => (
+          <a class="rg" href={r.href}>
+            <Photo name={r.photo} hud={false} sizes="(max-width: 700px) 60vw, 220px" ratio="3 / 4" />
+            <span>{r.label}</span>
+          </a>
+        ))}
+      </div>
+      <div class="bigcities">
+        {bigCities.map((c) => (
+          <a href={`/ca/cities/${c.slug}/`}><span class="bn">{c.name}</span><EraBar era={c.facts.era} name={c.name} /></a>
+        ))}
+        <a class="allc" href="/ca/cities/">All {localIndex.cities.length} cities →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <h2>Straight answers</h2>
+      <div class="measure">
+        {faqs.map((f) => (
+          <details class="faq">
+            <summary>{f.q}</summary>
+            <div class="faq-body"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PRO BAND -->
+  <section class="band-dark pro-band">
+    <div class="container pro-inner">
+      <div>
+        <h2>Run a service organization?</h2>
+        <p class="measure">
+          Verified listings are free. We send homeowners who already know their era profile, their
+          likely upgrades, and their rebate path — the most qualified audit lead there is.
+        </p>
+      </div>
+      <a class="btn btn-light" href="/ca/for-professionals/">Get listed →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 64px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .trust-list { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; }
+  .trust-list li { padding-left: 26px; position: relative; font-size: 15px; }
+  .trust-list li::before { content: "✓"; position: absolute; left: 0; color: var(--pine); font-weight: 700; }
+  .hero-form { padding: 26px 28px; border-top: 4px solid var(--heat); }
+  .hero-form h2 { font-size: 21px; margin-bottom: 4px; }
+  .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
+  .hero-form .meta { margin-top: 10px; }
+  .steps { align-items: stretch; }
+  .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .step-card :global(.frame) { border-radius: 0; box-shadow: none; }
+  .step-body { position: relative; padding: 26px 26px 24px; }
+  .step-no {
+    position: absolute; top: -18px; left: 24px;
+    display: inline-flex; width: 36px; height: 36px; border-radius: 50%;
+    background: var(--heat); color: #fff; font-family: var(--display); font-weight: 800;
+    align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--card);
+  }
+  .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
+  section.alt { background: #F3EFE7; }
+  .hrs-line { margin: 18px 0 18px; max-width: 70ch; }
+  .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }
+  .thermal-band h2 { color: #fff; }
+  .thermal-band p { color: var(--navy-muted); }
+  .thermal-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 880px) { .thermal-grid { grid-template-columns: 1fr; } }
+  .thermal-art { min-width: 0; }
+  .upclose { padding: 60px 0 40px; }
+  .uc-row {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 24px;
+  }
+  .uc .pcard-body h3 { font-size: 15.5px; }
+  .uc .pcard-body p { font-size: 13.5px; }
+  .uc :global(.hud) { display: none; }
+  @media (max-width: 1100px) { .uc-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 700px) {
+    .uc-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .uc-row .uc { flex: 0 0 68%; scroll-snap-align: start; }
+  }
+  .uc-more { margin-top: 20px; }
+  .c2c { padding: 56px 0 30px; background: #F3EFE7; }
+  .rg-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+  .rg { position: relative; display: block; text-decoration: none; }
+  .rg span {
+    position: absolute; left: 10px; right: 10px; bottom: 10px; color: #fff; font-family: var(--display);
+    font-weight: 700; font-size: 14px; line-height: 1.2; text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+  .rg :global(.frame) { box-shadow: var(--shadow-sm); }
+  .rg :global(.frame)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(14,22,32,0.7)); }
+  .rg:hover :global(img) { transform: scale(1.04); }
+  .rg :global(img) { transition: transform 0.4s ease; }
+  @media (max-width: 1000px) {
+    .rg-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .rg { flex: 0 0 42%; scroll-snap-align: start; }
+  }
+  @media (max-width: 560px) { .rg { flex-basis: 58%; } }
+  .bigcities { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 22px; }
+  .bigcities a { display: grid; gap: 6px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .bigcities a:hover { border-color: var(--heat); }
+  .bn { font-weight: 700; font-size: 14.5px; }
+  .bigcities a.allc { background: var(--ink); color: #fff; border-color: var(--ink); align-content: center; font-weight: 700; font-size: 14.5px; }
+  .test-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .test-chips a {
+    display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none;
+    color: var(--navy-ink); border: 1.5px solid var(--navy-line); border-radius: 999px; padding: 7px 15px;
+  }
+  .test-chips a:hover { border-color: #F08246; color: #fff; }
+  .test-chips a.all { background: var(--heat); border-color: var(--heat); color: #fff; }
+  .city-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; align-items: baseline; }
+  .city-links a { font-size: 14.5px; font-weight: 600; }
+  .guides-link { margin-top: 14px; }
+  .pro-band { padding: 48px 0; }
+  .pro-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+</style>

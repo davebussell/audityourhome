@@ -1,0 +1,200 @@
+---
+/**
+ * Heat pump quote request. On Netlify builds (FORMS=netlify, see src/config/forms.ts) it's a Netlify
+ * form ("heat-pump-quote") whose submissions are emailed to dave@clickshift.ca; anywhere else it falls
+ * back to a prefilled email so the request never dead-ends. Nothing personal goes into URLs or analytics.
+ */
+import { SITE } from '../../config/site';
+import { NETLIFY_FORMS } from '../../config/forms';
+import { CA_REGIONS, US_METROS, metroName, type Market } from '../../lib/heatpumps';
+
+interface Props {
+  market: Market;
+  /** Prefill: a brand the visitor is reading about */
+  brand?: string;
+  /** Prefill: region slug (Canadian province/territory or US metro) */
+  region?: string;
+  /** Short tag for where the form sits, e.g. "brand-daikin" */
+  context: string;
+  heading?: string;
+  sub?: string;
+}
+const { market, brand = '', region = '', context } = Astro.props;
+const isCA = market === 'ca';
+const heading = Astro.props.heading ?? 'Get heat pump quotes';
+const sub =
+  Astro.props.sub ??
+  (isCA
+    ? 'Tell us about your home and what you want to heat. We match you with one heating and cooling contractor or registered energy advisor who serves your area and knows the rebates.'
+    : 'Tell us about your home and what you want to heat. A person reads every request and replies with the contractors and rebate programs that serve your ZIP code.');
+const onNetlify = NETLIFY_FORMS;
+const action = `/${market}/heat-pumps/thanks/`;
+const uid = `hpq-${Math.random().toString(36).slice(2, 8)}`;
+const regionOptions: [string, string][] = isCA
+  ? [...CA_REGIONS.map((r) => [r.slug, r.name] as [string, string]), ['outside-canada', 'Outside Canada']]
+  : [...US_METROS.map((m) => [m.slug, metroName(m)] as [string, string]), ['elsewhere-us', 'Somewhere else in the US'], ['outside-us', 'Outside the US']];
+const subject = `Heat pump quote request (${context})`;
+const body = isCA
+  ? 'Postal code:\nType of home:\nHow it is heated now:\nDucts (yes/no/not sure):\nWhat I want (whole home, some rooms, replace AC, add to furnace):\nBrands I am considering:\nTimeline:\n'
+  : 'ZIP code:\nType of home:\nHow it is heated now:\nDucts (yes/no/not sure):\nWhat I want (whole home, some rooms, replace AC, add to furnace):\nBrands I am considering:\nTimeline:\n';
+const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const consent = isCA
+  ? 'Send my request to one heating and cooling contractor or registered energy advisor who serves my area. They pay AuditYourHome a referral fee; I pay nothing and I’m not obliged to buy.'
+  : 'AuditYourHome may reply to me by email about this request. My details aren’t shared with anyone without asking me first.';
+---
+
+<div class="card hpq" id="quote" data-clarity-mask="true">
+  <h2>{heading}</h2>
+  <p class="hpq-sub">{sub}</p>
+  {onNetlify ? (
+    <form
+      name="heat-pump-quote"
+      method="POST"
+      action={action}
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="hpq-form"
+      data-context={context}
+      data-country={market}
+    >
+      <input type="hidden" name="form-name" value="heat-pump-quote" />
+      <input type="hidden" name="country" value={market.toUpperCase()} />
+      <input type="hidden" name="context" value={context} />
+      <input type="hidden" name="subject" value={`Heat pump quote request (${market.toUpperCase()}, ${context})`} />
+      <p class="hpq-hide"><label>Leave this empty <input name="bot-field" /></label></p>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-name`}>Name</label>
+          <input id={`${uid}-name`} name="name" type="text" autocomplete="name" maxlength="120" required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-email`}>Email</label>
+          <input id={`${uid}-email`} name="email" type="email" autocomplete="email" maxlength="200" required />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-postal`}>{isCA ? 'Postal code' : 'ZIP code'}</label>
+          <input id={`${uid}-postal`} name="postal" type="text" autocomplete="postal-code" maxlength={isCA ? 7 : 10} required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-region`}>{isCA ? 'Province or territory' : 'Metro area'}</label>
+          <select id={`${uid}-region`} name="region">
+            <option value="">Choose…</option>
+            {regionOptions.map(([v, l]) => <option value={v} selected={v === region}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-home`}>Type of home</label>
+          <select id={`${uid}-home`} name="home">
+            <option value="detached">Detached house</option>
+            <option value="semi-row">Semi, row or townhouse</option>
+            <option value="duplex-triplex">Duplex or triplex</option>
+            <option value="condo">Condo or apartment unit</option>
+            <option value="multi-unit">Whole multi-unit building</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${uid}-heat`}>How it's heated now</label>
+          <select id={`${uid}-heat`} name="heating">
+            <option value="gas-furnace">Natural gas furnace</option>
+            <option value="gas-boiler">Gas boiler (radiators or in-floor)</option>
+            <option value="oil">Oil</option>
+            <option value="propane">Propane</option>
+            <option value="electric-baseboard">Electric baseboards</option>
+            <option value="electric-furnace">Electric furnace</option>
+            <option value="heat-pump">An old heat pump</option>
+            <option value="wood">Wood or pellets</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-ducts`}>Does the home have ducts?</label>
+          <select id={`${uid}-ducts`} name="ducts">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="not-sure">Not sure</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${uid}-want`}>What you want</label>
+          <select id={`${uid}-want`} name="project">
+            <option value="whole-home">Heat the whole home with a heat pump</option>
+            <option value="some-rooms">Heat or cool some rooms (mini-split)</option>
+            <option value="replace-ac">Replace my air conditioner with a heat pump</option>
+            <option value="dual-fuel">Add a heat pump to my furnace (dual fuel)</option>
+            <option value="geothermal">Geothermal (ground-source)</option>
+            <option value="not-sure">Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-brand`}>Brands you're considering <span class="optional">(optional)</span></label>
+          <input id={`${uid}-brand`} name="brands" type="text" maxlength="200" value={brand} />
+        </div>
+        <div class="field">
+          <label for={`${uid}-when`}>When</label>
+          <select id={`${uid}-when`} name="timeline">
+            <option value="asap">As soon as possible</option>
+            <option value="1-3-months" selected>In the next 1 to 3 months</option>
+            <option value="3-6-months">In 3 to 6 months</option>
+            <option value="researching">Just researching</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for={`${uid}-phone`}>Phone <span class="optional">(optional)</span></label>
+        <input id={`${uid}-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
+      </div>
+      <div class="field">
+        <label for={`${uid}-msg`}>Anything else? <span class="optional">(optional)</span></label>
+        <textarea id={`${uid}-msg`} name="message" rows="3" maxlength="2000" placeholder={isCA ? 'e.g. 1960s bungalow, electric baseboards, want to qualify for the provincial heat pump rebate' : 'e.g. 1980s two-story, gas furnace and an old AC, want a cold-climate heat pump'}></textarea>
+      </div>
+      <label class="hpq-check"><input type="checkbox" name="consent" value="yes" required /> <span>{consent}</span></label>
+      <button class="btn btn-primary" type="submit">Request quotes</button>
+      <p class="meta">We use these details only to answer this request. <a href="/privacy/">Privacy</a></p>
+    </form>
+  ) : (
+    <div class="hpq-fallback">
+      <p>
+        Email us your {isCA ? 'postal code' : 'ZIP code'}, the type of home, how it's heated now, whether it has ducts and what you
+        want to heat. A person reads every message and replies with {isCA ? 'a contractor or registered energy advisor who serves your area' : 'the contractors and programs that serve your area'}.
+      </p>
+      <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
+      <p class="meta">{isCA ? 'Participating contractors and advisors pay us a referral fee; you pay nothing.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/">Privacy</a></p>
+    </div>
+  )}
+</div>
+
+<style>
+  .hpq { padding: 22px 24px; display: grid; gap: 12px; }
+  .hpq h2 { margin: 0; font-size: 24px; }
+  .hpq-sub { margin: 0; color: var(--muted); max-width: 66ch; }
+  .hpq-form { display: grid; gap: 4px; }
+  .hpq-hide { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .hpq-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--muted); margin: 8px 0 12px; line-height: 1.5; }
+  .hpq-check input { margin-top: 3px; flex-shrink: 0; }
+  .hpq .btn { justify-self: start; }
+  .hpq .meta { margin: 8px 0 0; }
+  .hpq-fallback { display: grid; gap: 12px; justify-items: start; }
+  .hpq-fallback p { margin: 0; max-width: 66ch; }
+  @media (max-width: 560px) { .hpq { padding: 18px 16px; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form.hpq-form').forEach((f) => {
+    f.addEventListener('submit', () => {
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+      try {
+        w.gtag?.('event', 'generate_lead', { form_name: 'heat_pump_quote', country: f.dataset.country, page_context: f.dataset.context });
+      } catch {
+        /* analytics is optional */
+      }
+    });
+  });
+</script>

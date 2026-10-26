@@ -1,0 +1,140 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  bpi: S('combustionSafety', 'BPI - Standards'),
+  bpi1200: S('combustionSafety', 'BPI-1200-S-2017 Standard Practice'),
+  caz: S('combustionSafety', 'Combustion Appliance Zone'),
+  enclosure: S('combustionSafety', 'Enclosure Leakage Test'),
+  cpsc: S('carbonMonoxide', 'Questions and Answers'),
+};
+
+const faqs = [
+  {
+    q: 'When does a home need a combustion safety test?',
+    a: 'DOE’s Building America Solution Center calls for combustion appliance zone (CAZ) testing in homes with natural-draft furnaces, boilers or water heaters, especially during air sealing, when it should be done at the end of each workday.',
+    src: [src.caz],
+  },
+  {
+    q: 'My appliances are direct-vent. Is the test still useful?',
+    a: 'The standard test still measures carbon monoxide on direct-vent and vent-free equipment and on gas ovens. The spillage part applies to natural-draft and Category I appliances.',
+    src: [src.bpi1200],
+  },
+  {
+    q: 'What CO level is dangerous during an audit?',
+    a: 'BPI-1200 sets ambient CO action levels: 9 to 35 ppm, advise checking sources and ventilating; 36 to 69 ppm, ventilate and shut off sources; 70 ppm or more, stop, evacuate and call emergency services from outside.',
+    src: [src.bpi1200],
+  },
+  {
+    q: 'Is this the same as having a CO alarm?',
+    a: 'No. The test checks how your appliances vent under worst-case conditions on the day of the audit. CPSC recommends CO alarms on every level of the home and outside sleeping areas as well.',
+    src: [src.cpsc],
+  },
+  {
+    q: 'What does a combustion safety test cost?',
+    a: 'No official source publishes a price, so we don’t quote one.',
+  },
+];
+
+const sources = [src.bpi, src.bpi1200, src.caz, src.enclosure, src.cpsc];
+---
+
+<TestPage
+  slug="combustion-safety"
+  title="Combustion safety testing: BPI’s CO action levels and the worst-case draft test | AuditYourHome"
+  description="Auditors test fuel-burning appliances for spillage and carbon monoxide under worst-case conditions. What BPI-1200 requires, what CO readings mean and when DOE calls for it."
+  heroTitle="Combustion safety test: the check that belongs with air sealing"
+  glance={[
+    { k: 'Standard', v: 'ANSI/BPI-1200-S-2017', src: src.bpi, srcLabel: 'BPI' },
+    { k: 'Stop and evacuate at', v: '70 ppm CO or more', src: src.bpi1200, srcLabel: 'BPI-1200' },
+    { k: 'Gas check first', v: 'Below 10% of the LEL', src: src.bpi1200, srcLabel: 'BPI-1200' },
+    { k: 'Typical cost', v: 'Not published' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Air sealing a home with gas, oil or propane appliances?"
+  leadSub="Email us your ZIP code and what you’re planning. A person reads every message and replies with certified auditors who run combustion safety tests in your area."
+>
+  <Fragment slot="lede">
+    A combustion safety test checks whether furnaces, boilers and water heaters vent properly when the
+    space around them is under the most suction the house can create, and measures carbon monoxide
+    along the way. DOE’s Building America Solution Center calls for it in homes with natural-draft
+    appliances, especially during air sealing.
+  </Fragment>
+
+  <section class="sec" aria-labelledby="how-h">
+    <h2 id="how-h">What the test involves</h2>
+    <ol class="steps">
+      <li>
+        <h3>Safety checks first</h3>
+        <p>Before testing, the auditor confirms combustible gas is below 10% of the lower explosive limit and carbon monoxide in the air is below 70 ppm.</p>
+      </li>
+      <li>
+        <h3>Set up the worst case</h3>
+        <p>The auditor creates the greatest depressurization achievable in the combustion appliance zone (CAZ) for the conditions.</p>
+      </li>
+      <li>
+        <h3>Check spillage and CO on natural-draft appliances</h3>
+        <p>Spillage and CO are measured on natural-draft appliances (barometric draft control) and Category I appliances (draft hood or natural-draft vent).</p>
+      </li>
+      <li>
+        <h3>Measure CO on the rest</h3>
+        <p>CO is also measured on gas ovens and on direct-vent or vent-free equipment.</p>
+      </li>
+    </ol>
+    <TestCite src={src.bpi1200} labels={['ANSI/BPI-1200-S-2017']} />
+  </section>
+
+  <section class="sec" aria-labelledby="co-h">
+    <h2 id="co-h">What the CO readings mean</h2>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>BPI-1200 ambient carbon monoxide action levels</caption>
+        <thead><tr><th scope="col">CO in the air</th><th scope="col">What the auditor does</th></tr></thead>
+        <tbody>
+          <tr><td>9 to 35 ppm</td><td data-label="What the auditor does">Advises checking the sources and ventilating</td></tr>
+          <tr><td>36 to 69 ppm</td><td data-label="What the auditor does">Ventilates and shuts off the sources</td></tr>
+          <tr><td>70 ppm or more</td><td data-label="What the auditor does"><strong>Stops work, evacuates and calls emergency services from outside</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <TestCite src={src.bpi1200} labels={['ANSI/BPI-1200-S-2017']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="std-h">
+    <h2 id="std-h">The standards behind it</h2>
+    <ul>
+      <li><strong>ANSI/BPI-1200-S-2017</strong>, Standard Practice for Basic Analysis of Buildings, is still listed on BPI’s standards page. Its Section 7 adopts the combustion appliance inspection requirements of BPI-1100 Section 7 and adds to them.</li>
+      <li><strong>ANSI/BPI-1100-T-2023</strong>, the Home Energy Auditing Standard, is the current BPI-1100.</li>
+      <li>DOE’s Building America Solution Center cites <strong>NFPA 54</strong> for combustion air.</li>
+      <li>For ENERGY STAR homes that keep non-direct-vent appliances in climate zones 1–3, it cites RESNET Section 805 and ANSI/ACCA 12 QH-2014 Appendix A (a CO test and a CAZ depressurization test).</li>
+    </ul>
+    <TestCite src={[src.bpi, src.caz]} labels={['BPI standards', 'DOE BASC, CAZ testing']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="get-h">
+    <h2 id="get-h">How to get it done</h2>
+    <p>
+      Ask auditors whether their assessment follows BPI-1200, which includes the combustion appliance
+      inspection, and whether they’ll test at the end of each day of air sealing, as DOE describes.
+      What it costs: no official source publishes a price, so we don’t quote one.
+    </p>
+    <ul class="linkrow">
+      <li><a href="/us/find/">Find a certified auditor</a></li>
+      <li><a href={src.bpi.href} rel="noopener">BPI standards&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.bpi, src.caz]} labels={['BPI standards', 'DOE BASC, CAZ testing']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If an appliance fails</h2>
+    <ul>
+      <li>At 70 ppm or more in the air, everyone leaves and emergency services are called from outside, per BPI-1200.</li>
+      <li>If an appliance spills or produces high CO, have it serviced or replaced by a qualified technician and retested before more air sealing is done.</li>
+      <li>Make sure CO alarms are on every level and outside sleeping areas, as CPSC recommends. See the <a href="/us/tests/carbon-monoxide/">carbon monoxide guide</a>.</li>
+    </ul>
+    <TestCite src={[src.bpi1200, src.cpsc]} labels={['ANSI/BPI-1200-S-2017', 'CPSC CO questions and answers']} />
+  </section>
+</TestPage>

@@ -1,0 +1,85 @@
+---
+/**
+ * State residential energy prices from EIA (prices.json): electricity for the latest month,
+ * natural gas from the last full-year average converted to $/therm, heating oil and propane for
+ * the latest week. Blank cells mean EIA publishes no value for that state.
+ */
+import { priceRows, PRICE_INFO } from '../../lib/us/metro-view';
+import { fmtCents, fmtDollars } from '../../lib/us/data';
+
+interface Props {
+  states: string[];
+  caption?: string;
+}
+const { states, caption = 'Residential energy prices by state (EIA)' } = Astro.props;
+const rows = priceRows(states);
+const oddGas = rows.filter((r) => r.gasPerTherm != null && r.gasYear && r.gasYear !== PRICE_INFO.gasYear);
+const thermsPerMcf = (PRICE_INFO.btu * 1000) / 100000;
+const week = (w: string) => w.replace(/^(\w+) (\d+), (\d{4})$/, (_, m, d, y) => `${m.slice(0, 3)} ${d}, ${y}`);
+---
+
+<div class="pt">
+  <div class="tablewrap card">
+    <table class="stack" aria-label={caption}>
+      <thead>
+        <tr>
+          <th scope="col">State</th>
+          <th scope="col">Electricity<span class="u">¢ per kWh · {PRICE_INFO.elecMonth}</span></th>
+          <th scope="col">Natural gas<span class="u">$ per therm · {PRICE_INFO.gasYear} average</span></th>
+          <th scope="col">Heating oil<span class="u">$ per gallon · week of {week(PRICE_INFO.oilWeek)}</span></th>
+          <th scope="col">Propane<span class="u">$ per gallon · week of {week(PRICE_INFO.propaneWeek)}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td data-label="State"><strong>{r.state.name}</strong></td>
+            <td data-label={`Electricity, ¢/kWh (${PRICE_INFO.elecMonth})`} class="num">{fmtCents(r.elecCents)}</td>
+            <td data-label={`Natural gas, $/therm (${PRICE_INFO.gasYear} average)`} class="num">
+              {r.gasPerTherm != null ? (
+                <span>
+                  {fmtDollars(r.gasPerTherm)}{r.gasYear !== PRICE_INFO.gasYear && <sup>*</sup>}
+                  <span class="sub">${r.gasPerMcf?.toFixed(2)} per thousand cu ft</span>
+                </span>
+              ) : (
+                <span class="na">Not published</span>
+              )}
+            </td>
+            <td data-label={`Heating oil, $/gal (week of ${week(PRICE_INFO.oilWeek)})`} class="num">{r.oilPerGal != null ? fmtDollars(r.oilPerGal) : <span class="na">Not reported</span>}</td>
+            <td data-label={`Propane, $/gal (week of ${week(PRICE_INFO.propaneWeek)})`} class="num">{r.propanePerGal != null ? fmtDollars(r.propanePerGal) : <span class="na">Not reported</span>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <ul class="pt-notes small">
+    <li>
+      Electricity: EIA’s average residential price, {PRICE_INFO.elecMonth} (preliminary; released {PRICE_INFO.elecReleased}).
+      The U.S. average was {fmtCents(PRICE_INFO.usElec)} per kWh. <a href={PRICE_INFO.elecUrl} rel="noopener" target="_blank">EIA&nbsp;↗</a>
+    </li>
+    <li>
+      Natural gas: EIA’s {PRICE_INFO.gasYear} average residential price per thousand cubic feet, which EIA says includes taxes and delivery,
+      divided by {thermsPerMcf.toFixed(2)} therms per thousand cubic feet (EIA’s {PRICE_INFO.gasYear} average heat content of {PRICE_INFO.btu.toLocaleString('en-US')} Btu per cubic foot).
+      A full-year average is used because summer months run far higher. <a href={PRICE_INFO.gasUrl} rel="noopener" target="_blank">EIA&nbsp;↗</a>
+      {oddGas.map((r) => <span> <sup>*</sup>{r.state.name}: {r.gasYear} average; EIA published no {PRICE_INFO.gasYear} average.</span>)}
+    </li>
+    <li>
+      Heating oil and propane: EIA’s weekly residential prices, excluding taxes, for the week of {PRICE_INFO.oilWeek}. EIA surveys
+      them only in some states. <a href={PRICE_INFO.weeklyUrl} rel="noopener" target="_blank">EIA&nbsp;↗</a>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .pt .tablewrap { margin-bottom: 10px; }
+  .pt th { vertical-align: bottom; }
+  .pt th .u { display: block; font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; color: var(--faint); margin-top: 2px; }
+  .pt td.num { font-family: var(--mono); font-size: 14.5px; font-variant-numeric: tabular-nums; }
+  .pt .sub { display: block; font-size: 11.5px; color: var(--faint); }
+  .pt .na { font-family: var(--body); font-size: 13px; color: var(--faint); }
+  .pt-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; }
+  .pt-notes a { overflow-wrap: anywhere; }
+  @media (max-width: 640px) {
+    .pt td.num { font-size: 15px; }
+  }
+</style>

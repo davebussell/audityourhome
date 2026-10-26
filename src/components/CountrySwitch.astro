@@ -1,0 +1,66 @@
+---
+/**
+ * Canada / United States switcher. Links go to the same page in the other country when one
+ * exists (read at runtime from the page's hreflang alternates), otherwise to that country's home.
+ * Choosing a country remembers it in a cookie, which Netlify reads to send "/" there next time.
+ */
+import { COUNTRIES, type Country } from '../lib/country';
+
+interface Props {
+  current: Country | null;
+  variant?: 'desk' | 'mobile';
+}
+const { current, variant = 'desk' } = Astro.props;
+const list = [COUNTRIES.ca, COUNTRIES.us];
+---
+
+<div class:list={['ctry', variant]} role="group" aria-label="Country">
+  {variant === 'mobile' && <span class="ctry-t">Country</span>}
+  {list.map((c) => (
+    <a
+      href={c.home}
+      data-ctry={c.code}
+      data-locale={c.locale}
+      aria-current={current === c.code ? 'true' : undefined}
+      title={c.name}
+    >
+      <span class="ctry-short" aria-hidden="true">{c.short}</span>
+      <span class="ctry-name">{c.name}</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .ctry { display: inline-flex; align-items: center; gap: 2px; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 2px; background: var(--card); }
+  .ctry a {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 0.06em;
+    color: var(--steel); text-decoration: none; border-radius: 999px; padding: 5px 8px; line-height: 1;
+  }
+  .ctry a:hover { color: var(--heat-deep); }
+  .ctry a[aria-current='true'] { background: var(--navy); color: #fff; }
+  .ctry .ctry-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ctry.mobile { display: flex; width: 100%; border: none; padding: 0; gap: 8px; background: none; margin: 4px 0 10px; }
+  .ctry.mobile .ctry-t { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); font-weight: 600; margin-right: 4px; }
+  .ctry.mobile a { flex: 1; border: 1.5px solid var(--line-strong); padding: 10px 12px; font-family: var(--body); font-size: 14px; letter-spacing: 0; }
+  .ctry.mobile .ctry-short { display: none; }
+  .ctry.mobile .ctry-name { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+</style>
+
+<script>
+  const COOKIE = { ca: 'ayh_ca', us: 'ayh_us' } as const;
+  function remember(code: 'ca' | 'us') {
+    const other = code === 'ca' ? 'us' : 'ca';
+    document.cookie = `${COOKIE[code]}=1; path=/; max-age=31536000; samesite=lax`;
+    document.cookie = `${COOKIE[other]}=; path=/; max-age=0; samesite=lax`;
+  }
+  const alt: Record<string, string> = {};
+  document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]').forEach((l) => {
+    alt[l.hreflang.toLowerCase()] = new URL(l.href, location.href).pathname;
+  });
+  document.querySelectorAll<HTMLAnchorElement>('.ctry a[data-ctry]').forEach((a) => {
+    const locale = (a.dataset.locale || '').toLowerCase();
+    if (alt[locale]) a.href = alt[locale];
+    a.addEventListener('click', () => remember(a.dataset.ctry as 'ca' | 'us'));
+  });
+</script>

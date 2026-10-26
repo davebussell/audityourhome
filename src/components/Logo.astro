@@ -1,13 +1,18 @@
 ---
+import { countryOf, COUNTRIES } from '../lib/country';
+
 interface Props {
   /** Renders the wordmark light-on-dark (footer) */
   onDark?: boolean;
+  /** Where the logo links; defaults to the current country's home */
+  href?: string;
 }
-const { onDark = false } = Astro.props;
+const country = countryOf(Astro.url.pathname);
+const { onDark = false, href = country ? COUNTRIES[country].home : '/' } = Astro.props;
 /* Logo red = Canadian flag red, Pantone 032 (sRGB #EF3340) */
 ---
 
-<a href="/" class:list={['logo', { dark: onDark }]} aria-label="AuditYourHome — home">
+<a href={href} class:list={['logo', { dark: onDark }]} aria-label="AuditYourHome — home">
   <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
     <!-- house — flag red (PMS 032) -->
     <path

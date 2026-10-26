@@ -1,0 +1,30 @@
+---
+/** The official and secondary sources behind a /us/programs/ page, with the date they were checked. */
+import type { Source } from '../../lib/us/programs';
+
+interface Props {
+  sources: Source[];
+  verified: string;
+  heading?: string;
+  /** extra sentence after the date line */
+  note?: string;
+}
+const { sources, verified, heading = 'Sources', note } = Astro.props;
+---
+
+<div class="card card-pad psrcs">
+  <h3>{heading}</h3>
+  <p class="up-meta">Checked {verified}.{note ? ` ${note}` : ''}</p>
+  <ul>
+    {sources.map((s) => (
+      <li><a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .psrcs { border-left: 4px solid var(--steel); margin: 18px 0 22px; }
+  h3 { margin-bottom: 4px; }
+  ul { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  li { overflow-wrap: anywhere; }
+</style>

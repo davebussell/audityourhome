@@ -1,0 +1,180 @@
+{
+  "slug": "baltimore",
+  "name": "Baltimore",
+  "metroName": "Baltimore-Columbia-Towson, MD Metropolitan Statistical Area",
+  "states": ["MD"],
+  "principalCity": "Baltimore, MD",
+  "utilities": {
+    "electric": [
+      {
+        "name": "BGE (Baltimore Gas and Electric, an Exelon company)",
+        "serves": "The Baltimore-area electric utility. MEA lists BGE among the investor-owned utilities that pay into EmPOWER. Its exact territory (which counties and towns) was not verified on an official map.",
+        "url": "https://energy.maryland.gov/pages/facts/empower.aspx"
+      }
+    ],
+    "gas": [
+      {
+        "name": "BGE (gas)",
+        "serves": "Baltimore-area natural gas. BGE is a combined gas and electric utility, and MD DHCD lists BGE among the participating EmPOWER utilities. Its exact gas territory was not verified.",
+        "url": "https://bgesmartenergy.com/"
+      }
+    ],
+    "notes": "Maryland has electric and gas retail choice through the PSC's Electric Choice and Gas Choice supplier portals. BGE still delivers and runs the EmPOWER programs. EmPOWER's 2024–2026 cycle is PSC Case No. 9705, and BGE says it is 'awaiting a decision by the Maryland Public Service Commission about extending our energy efficiency programs into 2027'. Maryland HB 1532 (2025) 'removes EmPOWER incentives for natural gas' (MEA). Sources: https://psc.maryland.gov/regulated-utilities/electricity/ , https://psc.maryland.gov/regulated-utilities/electricity/energy-efficiency-and-empower-maryland/ , https://energy.maryland.gov/pages/facts/empower.aspx"
+  },
+  "auditPrograms": [
+    {
+      "name": "Quick Home Energy Check-up",
+      "runBy": "BGE (EmPOWER Maryland), through BGE-authorized contractors",
+      "cost": "No additional cost for BGE customers",
+      "whoQualifies": "BGE residential customers, once every 5 years per address, or again after moving to a new address",
+      "whatYouGet": "An hour-long walk-through, no-cost energy-saving products (possibly a smart thermostat) and a personalized report",
+      "howToBook": "Request through bgesmartenergy.com or call 1-877-685-SESP (7377)",
+      "url": "https://bgesmartenergy.com/residential/help-me-save/quick-home-energy-check",
+      "status": "Open until the 2026 cut-off: 'The last day to receive a Quick Home Energy Check-up for 2026 will be on November 30, 2026. Please request your appointment no later than November 6, 2026.' Continuation into 2027 awaits a PSC decision.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Performance with ENERGY STAR home energy audit",
+      "runBy": "BGE (EmPOWER Maryland), through Participating Contractors",
+      "cost": "$100 ('a $400 value'). A no-cost audit is available depending on income.",
+      "whoQualifies": "BGE residential customers. Income-qualified customers can get a no-cost audit and heavily discounted improvements.",
+      "whatYouGet": "A comprehensive audit by a participating contractor, then rebates for improvements. BGE says rebates average $3,000, and up to $15,000 is available for HVAC or HPWH replacements paired with air sealing and insulation.",
+      "howToBook": "Select a Participating Contractor at bgesmartenergy.com. Energy Coaches can help.",
+      "url": "https://bgesmartenergy.com/residential/help-me-save/home-performance",
+      "status": "Open. The 2027 continuation is pending at the MD PSC.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "EmPOWER Limited Income home energy audit (LIEEP)",
+      "runBy": "Maryland Department of Housing and Community Development, through local agencies",
+      "cost": "Free",
+      "whoQualifies": "Households under the EmPOWER income limit ($106,800 for 4) who are customers of BGE, Delmarva, FirstEnergy, Pepco, SMECO or Washington Gas, or who are enrolled in OHEP bill assistance, SNAP, TANF, SSI or HUD housing assistance",
+      "whatYouGet": "After approval, a local agency schedules a free in-home energy audit and an approved contractor installs the recommended measures at no charge",
+      "howToBook": "Apply online or by mail, or call 1-855-583-8976",
+      "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/empower",
+      "status": "Open ('Application status: Open'; income table updated 07/14/2026)",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "BGE heat pump water heater rebate and electrification home-prep incentive",
+      "runBy": "BGE (EmPOWER Maryland)",
+      "category": "heat-pump",
+      "amount": "Up to $1,600 on select ENERGY STAR heat pump water heaters. When switching from natural gas, oil or propane, BGE also covers 75% of home preparation costs, up to $1,500.",
+      "whoQualifies": "BGE customers. One HPWH rebate per address for purchases after January 2, 2024. Available through the Product Advisor, a Participating Contractor, a mail-in or online application, or an instant rebate at Lowe's or The Home Depot.",
+      "status": "Open, but the instant-rebate channel ends October 31, 2026: 'The last day to use your coupon and receive an instant rebate on eligible heat pump water heaters will be October 31, 2026.'",
+      "url": "https://bgesmartenergy.com/residential/rebates-and-discounts/heat-pump-water-heater",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BGE Home Performance with ENERGY STAR rebates",
+      "runBy": "BGE (EmPOWER Maryland)",
+      "category": "whole-home",
+      "amount": "Rebates averaging $3,000 after an audit, and up to $15,000 for heating and cooling or HPWH replacements when paired with air sealing and insulation",
+      "whoQualifies": "BGE residential customers who complete a $100 Home Performance audit with a Participating Contractor. Income-qualified customers get deeper discounts.",
+      "status": "Open. Continuation into 2027 is pending at the MD PSC.",
+      "url": "https://bgesmartenergy.com/residential/electrification",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BGE high-efficiency HVAC and heat pump rebates",
+      "runBy": "BGE (EmPOWER Maryland), through Participating HVAC Contractors",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "BGE customers installing qualifying air-source, cold-climate, ductless or geothermal heat pumps through a Participating Contractor, with extra incentives for switching from gas, oil or propane. Rebates are reflected in the contract price. BGE sets minimum ratings, for example 15.2 SEER2 and 7.5 HSPF2 for a Tier 1 split air-source heat pump, 15.2 SEER2 and 8.1 HSPF2 for a cold-climate one, and 18 SEER2 and 7.5 HSPF2 for a single-zone ductless one. 'All equipment must be AHRI rated.'",
+      "status": "Open for 2026 installs: equipment must be installed 'no later than December 31, 2026'. BGE is 'awaiting a decision by the Maryland Public Service Commission' on extending its programs into 2027. The page does not list dollar amounts, so ask a Participating Contractor.",
+      "url": "https://bgesmartenergy.com/residential/help-me-save/heating-cooling",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Maryland Clean Energy Advantage Loan and MEA geothermal grant (as referenced by BGE)",
+      "runBy": "Maryland Clean Energy Center (loan) and Maryland Energy Administration (grant), as referenced by BGE",
+      "category": "financing",
+      "amount": "Per BGE: 0% interest financing for 24 months (Clean Energy Advantage Loan), and MEA grants 'up to $3,000 for installing new geothermal systems'",
+      "whoQualifies": "Maryland homeowners. Details are set by the lender and MEA.",
+      "status": "Unverified at the source. MEA's FY27 General Notice of Upcoming Programs lists only the Residential Energy Equity and Residential Energy Equity Heat Pumps grants (paid to nonprofits and local governments, not homeowners) under residential, so the homeowner geothermal grant may no longer be offered.",
+      "url": "https://bgesmartenergy.com/residential/help-me-save/heating-cooling",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "BeSMART Home Loan",
+      "runBy": "Maryland Department of Housing and Community Development",
+      "category": "financing",
+      "amount": "6.99% APR, $5,000 to $30,000, terms up to 10 years, unsecured. Up to 25% can go to health and safety work tied to the energy improvements.",
+      "whoQualifies": "Maryland homeowners with credit score ≥640 and debt-to-income ≤50%. Projects already purchased or completed are not eligible.",
+      "status": "Open",
+      "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/besmart-home-loan-program",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "Not launched. MEA, 9/30/26: 'States that have not yet launched their programs, like Maryland, are required to revise and resubmit their applications... On 9/30/26, MEA submitted updated applications for both IRA Home Energy Rebate Programs to DOE. The timeline for program launch remains dependent on when DOE reviews and approves these applications.'",
+    "programName": "IRA Home Energy Rebate Programs: HOMES (Homeowners Managing Energy Savings) and HEEHR (High-Efficiency Electric Home Rebate)",
+    "administrator": "Maryland Energy Administration",
+    "summary": "No federal home energy rebates are available in Maryland yet. Under DOE Program Notice 26-2 (effective May 29, 2026), when Maryland does launch, HEEHR appliance rebates will exclude fuel switching and homes must do insulation and air sealing before heating and cooling upgrades. Separately, MEA's FY27 notice adds 'Residential Energy Equity Heat Pumps' funding for low- and moderate-income households, delivered through organizations rather than paid directly to residents.",
+    "url": "https://energy.maryland.gov/Pages/IRArebates.aspx",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization and Energy Efficiency (Baltimore City WAP), via the LIGHT program",
+      "runBy": "Baltimore City Department of Housing & Community Development (the State-designated local weatherization agency for Baltimore City)",
+      "summary": "Free energy audit, heating and cooling safety testing and repair, attic insulation, air sealing, water-heater measures, LEDs, CO and smoke alarms, and replacement of inoperable or inefficient appliances with ENERGY STAR models. Owner- and tenant-occupied homes qualify. Household-of-4 limits depend on the funding source: DOE WAP $92,470, EmPOWER $106,800, MEAP $66,000. Apply online or by pre-application to the LIGHT Intake & Assessment Unit, 417 E. Fayette St., Suite 1125, 410-396-3023.",
+      "url": "https://www.baltimorecity.gov/dhcd/resources-for-homeowners/weatherization-repairs"
+    },
+    {
+      "name": "LIGHT program (one-stop intake for home repair, energy and lead services)",
+      "runBy": "Baltimore City DHCD",
+      "summary": "LIGHT Coordinators connect Baltimore City residents to free or low-cost home repair (roofs, heating, plumbing, electrical), energy-efficiency and lead-hazard programs. Partners include the Baltimore Office of Sustainability and Civic Works. Call 410-396-3023.",
+      "url": "https://www.baltimorecity.gov/dhcd/resources-for-homeowners"
+    },
+    {
+      "name": "Maryland Weatherization Assistance Program: other local agencies serving the metro",
+      "runBy": "MD DHCD through local weatherization agencies: Green & Healthy Homes Initiative (Baltimore City, Baltimore County, Anne Arundel, Harford, Howard; 410-534-6447), Building Change (statewide list incl. Baltimore City and County, Anne Arundel, Carroll, Harford, Howard, Queen Anne's; 410-231-3284), and Community Action Council of Howard County (410-313-6318)",
+      "summary": "Application status is Open. Limit is 60% SMI / 200% FPL ($92,470 for 4). SSI, TANF and MEAP recipients are automatically eligible. Priority goes to seniors, people with disabilities, families with children and high-burden households.",
+      "url": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/weatherization-assistance-program-wap"
+    },
+    {
+      "name": "EmPOWER Maryland Limited Income Energy Efficiency Program (LIEEP)",
+      "runBy": "MD DHCD (BGE refers its income-qualified customers here)",
+      "summary": "No-charge insulation, hot-water improvements, furnace cleaning and safety repairs, refrigerator replacement and limited health and safety repairs. Income limit is $106,800 for 4. Call 1-855-583-8976 or email dhcd.wholehome@maryland.gov.",
+      "url": "https://bgesmartenergy.com/residential/help-me-save/limited-income"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Maryland Building Energy Performance Standards (BEPS)",
+      "appliesTo": "Most buildings 35,000 sq ft and larger, with certain exclusions; about 9,000 buildings statewide. Does not affect ordinary homeowners.",
+      "summary": "Per BGE's summary of the Climate Solutions Now Act: benchmark and report to MDE (first by September 2025), comply with direct-GHG standards starting 2030, and reach net-zero building emissions by 2040. MDE's own BEPS page could not be loaded, so verify current rules with MDE.",
+      "url": "https://bgesmartenergy.com/business/building-energy-performance-standards"
+    }
+  ],
+  "notes": "Timing is critical. BGE's 2026 EmPOWER offers are winding down pending a PSC decision on 2027: Quick Check-up requests are due by November 6, 2026 with the last visits November 30, 2026, and HPWH instant rebates end October 31, 2026. HB 1532 (2025) removes EmPOWER natural-gas incentives. Washington Gas states this ends its Maryland programs December 31, 2026; BGE's pages checked do not say when BGE gas-side incentives stop. Maryland's federal IRA rebates are not launched (resubmitted 9/30/26). Federal 25C/25D tax credits ended with 2025 installs (IRS). Not verified: dollar amounts for BGE heat pump and HVAC rebates (contractor-delivered, not listed); BGE's official territory map; any Baltimore City-specific energy disclosure or benchmarking ordinance (none found); county programs in Anne Arundel, Baltimore County, Howard, Harford, Carroll and Queen Anne's; and whether utilities other than BGE serve parts of the MSA. MDE's BEPS page failed to load, so the BEPS entry relies on BGE's summary.",
+  "sources": [
+    { "label": "Census Bureau – OMB July 2023 CBSA delineation file (List 1)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "BGE Smart Energy Savers – home", "href": "https://bgesmartenergy.com/" },
+    { "label": "BGE – Quick Home Energy Check-up", "href": "https://bgesmartenergy.com/residential/help-me-save/quick-home-energy-check" },
+    { "label": "BGE – Home Performance with ENERGY STAR", "href": "https://bgesmartenergy.com/residential/help-me-save/home-performance" },
+    { "label": "BGE – Making the switch to electric", "href": "https://bgesmartenergy.com/residential/electrification" },
+    { "label": "BGE – Heating and cooling", "href": "https://bgesmartenergy.com/residential/help-me-save/heating-cooling" },
+    { "label": "BGE – Heat pump water heater rebate", "href": "https://bgesmartenergy.com/residential/rebates-and-discounts/heat-pump-water-heater" },
+    { "label": "BGE – Limited income", "href": "https://bgesmartenergy.com/residential/help-me-save/limited-income" },
+    { "label": "BGE – Maryland BEPS summary", "href": "https://bgesmartenergy.com/business/building-energy-performance-standards" },
+    { "label": "Maryland Energy Administration – IRA Home Energy Rebate Programs (status 9/30/26)", "href": "https://energy.maryland.gov/Pages/IRArebates.aspx" },
+    { "label": "Maryland Energy Administration – EmPOWER facts", "href": "https://energy.maryland.gov/pages/facts/empower.aspx" },
+    { "label": "Maryland Energy Administration – Grants and incentives (FY27 notice)", "href": "https://energy.maryland.gov/Pages/all-incentives.aspx" },
+    { "label": "MD PSC – Energy Efficiency and EmPOWER Maryland", "href": "https://psc.maryland.gov/regulated-utilities/electricity/energy-efficiency-and-empower-maryland/" },
+    { "label": "MD PSC – electricity (choice portals)", "href": "https://psc.maryland.gov/regulated-utilities/electricity/" },
+    { "label": "MD DHCD – EmPOWER Limited Income Energy Efficiency Program", "href": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/empower" },
+    { "label": "MD DHCD – Weatherization Assistance Program", "href": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/weatherization-assistance-program-wap" },
+    { "label": "MD DHCD – Local Weatherization Agencies (PDF)", "href": "https://dhcd.maryland.gov/media/702" },
+    { "label": "MD DHCD – BeSMART Home Loan", "href": "https://dhcd.maryland.gov/energy-home-repair/energy-grants-and-loans-residents/besmart-home-loan-program" },
+    { "label": "Baltimore City DHCD – Resources for homeowners (LIGHT)", "href": "https://www.baltimorecity.gov/dhcd/resources-for-homeowners" },
+    { "label": "Baltimore City DHCD – Weatherization and Energy Efficiency", "href": "https://www.baltimorecity.gov/dhcd/resources-for-homeowners/weatherization-repairs" },
+    { "label": "Washington Gas – MD residential (HB 1532 end date)", "href": "https://wgsmartsavings.com/programs-rebates/home/md" },
+    { "label": "DOE – Program Notice 26-2 (effective May 29, 2026)", "href": "https://www.energy.gov/documents/program-notice-26-2" },
+    { "label": "IRS – Energy Efficient Home Improvement Credit (25C)", "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit" },
+    { "label": "IRS – Residential Clean Energy Credit (25D)", "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit" }
+  ]
+}

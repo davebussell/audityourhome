@@ -1,0 +1,26 @@
+---
+/** FAQ accordion (global details.faq styles). Pair with faqSchema() on the page using the same list. */
+interface Props {
+  faqs: { q: string; a: string }[];
+  heading?: string;
+  id?: string;
+}
+const { faqs, heading = 'Common questions', id = 'faq' } = Astro.props;
+---
+
+<section class="faq-sec" id={id}>
+  <h2>{heading}</h2>
+  <div class="measure">
+    {faqs.map((f) => (
+      <details class="faq">
+        <summary>{f.q}</summary>
+        <div class="faq-body"><p>{f.a}</p></div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-sec { padding: 40px 0 8px; }
+  .faq-sec h2 { font-size: clamp(24px, 3vw, 30px); }
+</style>

@@ -1,0 +1,294 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import LeadForm from '../../../components/LeadForm.astro';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+
+// Facts on this page were checked against the linked official pages on October 8, 2026.
+const VERIFIED = 'October 8, 2026';
+const title = 'Energy audit and energy management services in Toronto (2026): a guide for building owners | AuditYourHome';
+const description =
+  'Energy audits and energy management for Toronto commercial and multi-unit buildings: ASHRAE Standard 211 audit levels, who performs a mechanical engineering energy audit, monitoring and retro-commissioning, Ontario and City of Toronto reporting rules, and the Save on Energy, Enbridge and City programs that help pay.';
+
+const faqs = [
+  {
+    q: 'What are energy audit and energy management services?',
+    a: 'An energy audit is a one-time engineering study of where a building uses energy and what to fix. Energy management is the ongoing work that keeps the savings: benchmarking and reporting, monitoring with interval-meter data, retro-commissioning (tuning the systems a building already has) and, in larger organizations, a dedicated energy manager. In Toronto, buildings of 50,000 sq ft and up already report energy and water use every year to the Province and the City.',
+  },
+  {
+    q: 'What is a mechanical engineering energy audit?',
+    a: 'Usually an ASHRAE Level 2 or Level 3 audit of a building’s mechanical systems (heating, cooling, ventilation, hot water and controls) by an engineering firm, with costed recommendations. The City of Toronto’s retrofit loans ask for a facility description at ASHRAE Level 2 or equivalent and a feasibility study by a qualified third party such as a Professional Engineer or Certified Energy Manager. For a house, the comparable job is an EnerGuide evaluation plus a CSA F280 heat-loss calculation.',
+  },
+  {
+    q: 'Do Toronto buildings have to report their energy use?',
+    a: 'Buildings of 50,000 sq ft and larger report every year to Ontario (by July 1) and to the City of Toronto (by July 2) through ENERGY STAR Portfolio Manager. Under Toronto’s by-law, buildings of 10,000 to 49,999 sq ft start reporting to the City in 2027. Buildings of 100,000 sq ft and up need a certified professional to verify their data periodically.',
+  },
+  {
+    q: 'Who pays for an energy audit of a Toronto building?',
+    a: 'Enbridge Gas pays up to 50% of eligible audits and engineering studies (up to $10,000 per project for commercial customers, $20,000 for institutions) for customers using at least 100,000 m³ of gas a year, with pre-approval. Save on Energy funds retro-commissioning studies and pays for measured electricity savings, and the City offers free tune-up assessments for small non-profit, community and business buildings.',
+  },
+  {
+    q: 'What is the difference between ASHRAE Level 1, 2 and 3 audits?',
+    a: 'They are increasingly detailed. A Level 1 audit produces a list of recommended projects with estimated savings and costs. A Level 2 audit adds a savings and cost analysis of practical measures and operating changes, and flags major capital projects. A Level 3 audit analyzes those capital-intensive projects in depth.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Articles', path: '/ca/articles/' },
+    { name: 'Energy audit and energy management services in Toronto', path: '/ca/articles/energy-audit-services-toronto/' },
+  ]),
+  faqSchema(faqs),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Energy audit and energy management services in Toronto',
+    description,
+    dateModified: '2026-10-08',
+    mainEntityOfPage: `${SITE.url}/ca/articles/energy-audit-services-toronto/`,
+    author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  },
+];
+
+const SRC = {
+  ashrae: 'https://www.ashrae.org/technical-resources/standards-and-guidelines/read-only-versions-of-ashrae-standards',
+  pei: 'https://www.princeedwardisland.ca/en/information/energy/strategic-energy-solutions-for-business-commercial-and-community-buildings',
+  emb: 'https://efficiencymb.ca/business/commercial-energy-audit-program/',
+  erl: 'https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/energy-retrofit-loans/',
+  hiris: 'https://www.toronto.ca/community-people/community-partners/apartment-building-operators/tower-renewal/hi-ris/',
+  btu: 'https://www.toronto.ca/services-payments/water-environment/net-zero-homes-buildings/better-buildings-partnership/building-tune-up-program/',
+  ewrb: 'https://www.ontario.ca/page/report-energy-water-use-large-buildings',
+  toRep: 'https://www.toronto.ca/business-economy/business-operation-growth/green-your-business/energy-and-water-reporting-for-buildings/',
+  beps: 'https://www.toronto.ca/services-payments/water-environment/net-zero-homes-buildings/emissions-performance-standards/',
+  council: 'https://secure.toronto.ca/council/agenda-item.do?item=2025.IE26.3',
+  epp: 'https://saveonenergy.ca/For-Business-and-Industry/Programs-and-incentives/Energy-Performance-Program',
+  ebcx: 'https://saveonenergy.ca/en/For-Business-and-Industry/Programs-and-incentives/Existing-Building-Commissioning-Program',
+  eem: 'https://saveonenergy.ca/For-Business-and-Industry/Programs-and-incentives/Expanded-energy-management-program',
+  retrofit: 'https://saveonenergy.ca/For-Business-and-Industry/Programs-and-incentives/Retrofit-Program',
+  biz: 'https://saveonenergy.ca/For-Business-and-Industry/Programs-and-incentives/Local-Initiatives/BizEnergySaver',
+  enb: 'https://www.enbridgegas.com/ontario/business-industrial/incentives-conservation/programs-and-incentives/audits-studies-assessments/commercial-custom-audit',
+};
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audit and energy management in Toronto</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+      <p class="eyebrow">Toronto buildings · verified {VERIFIED}</p>
+      <h1>Energy audit and energy management services in Toronto</h1>
+      <p class="lede measure">
+        For a Toronto building owner, an <strong>energy audit</strong> is an engineering study of where
+        the building uses energy and what to fix; <strong>energy management</strong> is the ongoing work
+        that keeps the savings. Ontario and the City already require large buildings to report their
+        energy use every year, and Save on Energy, Enbridge Gas and the City help pay for audits,
+        tune-ups and retrofits. Here's how the pieces fit.
+      </p>
+      </div>
+      <Photo name={'commercial-energy-audit'} eager />
+    </div>
+
+    <div class="measure prose">
+      <h2>Building energy audits: the three ASHRAE levels</h2>
+      <p>
+        Building audits in Canada are described by the levels in ASHRAE Standard 211, the
+        <em>Standard for Commercial Building Energy Audits</em> (2018 edition, reaffirmed in 2023)
+        (<a href={SRC.ashrae} rel="noopener">ASHRAE ↗</a>). The levels build on each other:
+      </p>
+      <ul>
+        <li><strong>Level 1:</strong> a walk-through and bill review. efficiencyPEI, which arranges
+          Level 1 audits for businesses, says you get “a list of project recommendations along with
+          estimated savings and cost” (<a href={SRC.pei} rel="noopener">PEI ↗</a>).</li>
+        <li><strong>Level 2:</strong> a savings and cost analysis of practical efficiency measures,
+          possible changes to operation and maintenance, and the major capital upgrades that need
+          more engineering (<a href={SRC.emb} rel="noopener">Efficiency Manitoba ↗</a>). This is what
+          most people mean by a mechanical engineering energy audit.</li>
+        <li><strong>Level 3:</strong> everything in Level 2, plus in-depth analysis of the cost and
+          savings of those capital-intensive upgrades.</li>
+      </ul>
+      <p>
+        Toronto's funding programs ask for Level 2. The City's Energy Retrofit Loans need a facility
+        description at “ASHRAE Level 2 or equivalent” (<a href={SRC.erl} rel="noopener">toronto.ca ↗</a>),
+        and its Hi-RIS apartment loans an energy assessment report at ASHRAE Level 2 or above
+        (<a href={SRC.hiris} rel="noopener">toronto.ca ↗</a>).
+      </p>
+
+      <h2>Who performs them</h2>
+      <p>
+        Building audits are engineering work, delivered by mechanical engineering firms and energy
+        consultancies. The City's retrofit loans ask for a feasibility study by “a qualified third
+        party, such as a Professional Engineer (P.Eng), Certified Energy Manager (CEM) or equivalent”
+        (<a href={SRC.erl} rel="noopener">toronto.ca ↗</a>). When you request quotes, ask which ASHRAE
+        level the price covers, what the report will contain, who signs the recommendations, and
+        whether the firm will prepare any utility pre-approval the study needs.
+      </p>
+      <p>
+        Houses and small multi-unit buildings are rated under NRCan's EnerGuide system instead; see
+        <a href="/ca/articles/energy-audits-multi-unit-buildings/">energy audits for duplexes, triplexes
+        and apartment buildings</a>. Our <a href="/ca/services/commercial-energy-audit/">commercial energy
+        audit</a> page covers the service across Ontario.
+      </p>
+
+      <h2>Energy management: keeping the savings</h2>
+      <ul>
+        <li><strong>Benchmarking and reporting.</strong> Ontario and Toronto both collect annual
+          energy and water data through ENERGY STAR Portfolio Manager (<a href={SRC.ewrb} rel="noopener">ontario.ca ↗</a>).
+          A building that scores poorly against its peers is the one to audit first.</li>
+        <li><strong>Monitoring with interval data.</strong> Save on Energy's Energy Performance Program
+          builds a baseline from 12 months of hourly interval meter data and pays $0.30 per kWh saved in
+          summer peak hours and $0.08 per kWh otherwise, for three years, if you commit to at least 5%
+          savings within two years; applications must be approved by December 31, 2027
+          (<a href={SRC.epp} rel="noopener">Save on Energy ↗</a>).</li>
+        <li><strong>Retro-commissioning.</strong> The Existing Building Commissioning program pays up
+          to $0.06 per sq ft for the investigation (at most $50,000 or 75% of the cost), then $0.03 per
+          kWh of confirmed and persisting savings, for commercial and institutional buildings using at
+          least 750,000 kWh a year with no commissioning in the past two years
+          (<a href={SRC.ebcx} rel="noopener">Save on Energy ↗</a>).</li>
+        <li><strong>Energy managers.</strong> Save on Energy's Expanded Energy Management Program funds
+          up to 50% of a dedicated energy manager's salary, to $100,000 per facility a year, but its
+          commercial and institutional funding is fully subscribed; its EMIS (energy management
+          information system) funding is for industrial facilities only
+          (<a href={SRC.eem} rel="noopener">Save on Energy ↗</a>).</li>
+        <li><strong>Tune-ups for small buildings.</strong> The City's Building Tune-Up Program gives
+          non-profits, community and faith groups and small businesses (up to 50 employees) a free
+          on-site assessment that usually costs $5,000 or more, for buildings of about 10,000 to 30,000
+          sq ft (<a href={SRC.btu} rel="noopener">toronto.ca ↗</a>).</li>
+      </ul>
+
+      <h2>Reporting rules for Toronto buildings</h2>
+    </div>
+
+    <div class="tablewrap card">
+      <table class="stack">
+        <thead><tr><th>Rule</th><th>Who</th><th>Deadline</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="Rule">Ontario energy and water reporting (EWRB, O. Reg. 506/18)</td>
+            <td data-label="Who">Buildings of 50,000 sq ft and larger; publicly owned buildings are exempt</td>
+            <td data-label="Deadline">July 1 each year, for the previous year</td>
+            <td data-label="Details">Buildings of 100,000 sq ft and up need a certified professional to verify the data in the first reporting year and every five years after (<a href={SRC.ewrb} rel="noopener">ontario.ca ↗</a>)</td>
+          </tr>
+          <tr>
+            <td data-label="Rule">Toronto Energy and Water Reporting By-law (Municipal Code Chapter 367)</td>
+            <td data-label="Who">Buildings of 50,000 sq ft and larger since 2024; 10,000 to 49,999 sq ft from 2027</td>
+            <td data-label="Deadline">July 2 each year (2025 data was due July 2, 2026)</td>
+            <td data-label="Details">Council postponed the smaller buildings to 2027 in December 2025; buildings of 100,000 sq ft and up need verification once every five years (<a href={SRC.toRep} rel="noopener">toronto.ca ↗</a>)</td>
+          </tr>
+          <tr>
+            <td data-label="Rule">Toronto Building Emissions Performance Standards</td>
+            <td data-label="Who">Not adopted; low-rise residential buildings of up to three storeys will be exempt</td>
+            <td data-label="Deadline">None yet</td>
+            <td data-label="Details">Council directed staff in December 2025 to report back in the first quarter of 2027 (<a href={SRC.beps} rel="noopener">toronto.ca ↗</a>)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="measure prose">
+      <h2>Who pays: Enbridge, Save on Energy and the City</h2>
+      <ul>
+        <li><strong>Enbridge Gas audits and studies:</strong> up to 50% of eligible costs for energy
+          audits, engineering feasibility studies, steam trap surveys, air and water balancing and
+          metering, to $10,000 per project for commercial customers or $20,000 for institutions, with
+          lower caps for smaller gas users. You need at least 100,000 m³ of gas use in the previous year
+          and pre-approval before the work (<a href={SRC.enb} rel="noopener">Enbridge Gas ↗</a>).</li>
+        <li><strong>Save on Energy Retrofit Program:</strong> up to 50% of eligible project costs for
+          equipment and controls in commercial, institutional and multi-residential buildings, with
+          program changes that took effect June 30, 2026 (<a href={SRC.retrofit} rel="noopener">Save on Energy ↗</a>).</li>
+        <li><strong>BizEnergySaver:</strong> since July 23, 2026 it covers all of Toronto (every postal
+          code starting with M): a free on-site assessment, then direct installation and instant
+          discounts on LED lighting, controls, variable frequency drives and parking-garage exhaust fan
+          controls, for non-residential Toronto Hydro customers, multi-residential buildings included.
+          Installations must be finished by August 31, 2027 (<a href={SRC.biz} rel="noopener">Save on Energy ↗</a>).</li>
+        <li><strong>City of Toronto Energy Retrofit Loans:</strong> up to 100% of project costs at the
+          City's cost of borrowing, for terms up to 30 years, for commercial, industrial, multi-family,
+          condominium common areas, institutional and not-for-profit buildings. You need a feasibility
+          study, a decarbonization plan showing at least a 60% emissions cut by 2040, and two years of
+          audited financial statements (<a href={SRC.erl} rel="noopener">toronto.ca ↗</a>).</li>
+        <li><strong>Hi-RIS:</strong> loans for Toronto apartment buildings at least 20 years old with 7
+          or more units and 3 or more storeys, up to 10% of current value assessment or $2.5 million per
+          building, interest-free during construction (<a href={SRC.hiris} rel="noopener">toronto.ca ↗</a>).</li>
+      </ul>
+      <p>
+        Condo and apartment owners should also read our guide to
+        <a href="/ca/articles/energy-audits-multi-unit-buildings/">multi-unit building audits</a>, which
+        covers Enbridge's multi-residential incentives and CMHC MLI Select, and the Ontario-wide
+        <a href="/ca/articles/commercial-energy-audits-ontario/">commercial and industrial audit guide</a>.
+      </p>
+
+      <h2>Which service do you need?</h2>
+    </div>
+
+    <div class="tablewrap card">
+      <table class="stack">
+        <thead><tr><th>You have…</th><th>You need…</th><th>Performed by</th></tr></thead>
+        <tbody>
+          <tr><td data-label="You have">A house or townhome</td><td data-label="You need">EnerGuide home evaluation, plus add-on tests as symptoms warrant</td><td data-label="Performed by">NRCan-registered energy advisor — <a href="/ca/find/toronto/">Toronto directory</a></td></tr>
+          <tr><td data-label="You have">A duplex, triplex or small low-rise</td><td data-label="You need">EnerGuide evaluation for multi-unit buildings, or an engineering audit for larger buildings</td><td data-label="Performed by">An advisor registered for MURBs, or an engineering firm — <a href="/ca/articles/energy-audits-multi-unit-buildings/">how to tell</a></td></tr>
+          <tr><td data-label="You have">An office, store, plant or apartment tower</td><td data-label="You need">ASHRAE Level 1, 2 or 3 audit, as depth demands</td><td data-label="Performed by">Engineering firm with a P.Eng or Certified Energy Manager</td></tr>
+          <tr><td data-label="You have">A building of 50,000 sq ft or more</td><td data-label="You need">Annual reporting to Ontario and the City, then benchmarking</td><td data-label="Performed by">Owner or manager; a certified professional verifies data at 100,000 sq ft and up</td></tr>
+          <tr><td data-label="You have">Systems that have drifted from their design</td><td data-label="You need">Retro-commissioning or interval-data monitoring</td><td data-label="Performed by">Commissioning provider or energy manager; Save on Energy funds both</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="measure prose">
+      <h2>If you own a house</h2>
+      <p>
+        For a house, the service that counts is the EnerGuide home evaluation, the document behind
+        <a href="/ca/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebates and
+        most <a href="/ca/programs/toronto-home-energy-loan-program/">HELP loans</a>. Our
+        <a href="/ca/articles/home-energy-audit-ontario/">Ontario home energy assessment guide</a> covers
+        costs, deadlines and the seven approved organizations, and the
+        <a href="/ca/find/toronto/">Toronto directory</a> lists every licensed advisor.
+      </p>
+    </div>
+
+    <h2>Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href={SRC.ashrae} rel="noopener">ASHRAE — Standard 211-2018 (RA2023), commercial building energy audits</a></li>
+        <li><a href={SRC.pei} rel="noopener">efficiencyPEI — ASHRAE Level 1 commercial energy audits</a></li>
+        <li><a href={SRC.emb} rel="noopener">Efficiency Manitoba — ASHRAE Level 2 and 3 audits</a></li>
+        <li><a href={SRC.ewrb} rel="noopener">Ontario — energy and water reporting for large buildings (updated August 18, 2026)</a></li>
+        <li><a href={SRC.toRep} rel="noopener">City of Toronto — energy and water reporting for buildings</a></li>
+        <li><a href={SRC.beps} rel="noopener">City of Toronto — Building Emissions Performance Standards</a></li>
+        <li><a href={SRC.council} rel="noopener">Toronto City Council — item 2025.IE26.3 (December 16–17, 2025)</a></li>
+        <li><a href={SRC.enb} rel="noopener">Enbridge Gas — commercial audits and studies</a></li>
+        <li><a href={SRC.epp} rel="noopener">Save on Energy — Energy Performance Program</a></li>
+        <li><a href={SRC.ebcx} rel="noopener">Save on Energy — Existing Building Commissioning program</a></li>
+        <li><a href={SRC.eem} rel="noopener">Save on Energy — Expanded Energy Management Program</a></li>
+        <li><a href={SRC.retrofit} rel="noopener">Save on Energy — Retrofit Program</a></li>
+        <li><a href={SRC.biz} rel="noopener">Save on Energy — BizEnergySaver (all of Toronto since July 23, 2026)</a></li>
+        <li><a href={SRC.erl} rel="noopener">City of Toronto — Energy Retrofit Loans</a></li>
+        <li><a href={SRC.hiris} rel="noopener">City of Toronto — Hi-RIS apartment retrofit loans</a></li>
+        <li><a href={SRC.btu} rel="noopener">City of Toronto — Building Tune-Up Program</a></li>
+      </ul>
+      <p class="small mb-0">Checked against these pages on {VERIFIED}. Programs change — confirm on the official page before you spend.</p>
+    </div>
+
+    <LeadForm heading="Need a building audit or a home assessment in Toronto?" sub="Tell us whether it's a home or a building — we'll point you to the right kind of professional, matched to your area." region="toronto" context="article-toronto-services" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 26px 0 10px; }
+  .prose ul { padding-left: 22px; display: grid; gap: 8px; margin: 0 0 16px; }
+  .tablewrap { margin: 20px 0; }
+  .tablewrap table { font-size: 14.5px; }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>

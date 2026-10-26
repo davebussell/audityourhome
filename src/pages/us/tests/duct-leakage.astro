@@ -1,0 +1,125 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  basc: S('ductLeakage', 'Duct Leakage Tests'),
+  tsd21: S('ductLeakage', '2021 IECC Final Determination'),
+  tsd24: S('ductLeakage', '2024 IECC Determination TSD'),
+  slides21: S('ductLeakage', '2021 IECC Residential Webinar slides'),
+  transcript21: S('ductLeakage', 'Webinar transcript'),
+  web24: S('ductLeakage', '2024 IECC webinar'),
+  resnet: S('ductLeakage', 'RESNET-ANSI'),
+  hersFind: S('hersIndex', 'Find a HERS Rater'),
+  det: S('blowerDoor', 'Determinations'),
+};
+
+const faqs = [
+  {
+    q: 'How much leakage does the code allow for my house size?',
+    a: 'The 2021 IECC limit is 4.0 CFM25 per 100 sq ft of conditioned floor area, so a 2,000 sq ft home may leak up to 80 CFM25 in total. The limits are written for new construction, and the 2024 IECC adjusts them for some systems and home sizes.',
+    src: [src.basc, src.slides21],
+  },
+  {
+    q: 'Are ducts inside the house exempt from testing?',
+    a: 'Not since the 2021 IECC. Ducts and air handlers located entirely inside the thermal envelope must now test at 8.0 CFM25 per 100 sq ft or less, twice the standard rate.',
+    src: [src.slides21, src.tsd21],
+  },
+  {
+    q: 'What’s the difference between total leakage and leakage to outside?',
+    a: 'The IECC test measures total leakage with every register sealed: air escaping anywhere from the duct system. Leakage to outside counts only the air lost outside the home. In the 2024 IECC, leakage to outside may be used only on the performance and ERI paths.',
+    src: [src.web24, src.tsd24],
+  },
+  {
+    q: 'What does a duct leakage test cost?',
+    a: 'No official source publishes a price, so we don’t quote one.',
+  },
+];
+
+const sources = [src.basc, src.resnet, src.slides21, src.transcript21, src.tsd21, src.tsd24, src.web24, src.det, src.hersFind];
+---
+
+<TestPage
+  slug="duct-leakage"
+  title="Duct leakage testing: CFM25, the 2021 and 2024 IECC limits, and fixes | AuditYourHome"
+  description="A duct leakage test pressurizes the ducts to 25 pascals and measures what escapes. The IECC limits per 100 sq ft, what changed in 2021 and 2024, and how to test."
+  heroTitle="Duct leakage test: measuring the air your ducts lose"
+  glance={[
+    { k: 'Test pressure', v: '25 Pa (0.1 in. w.g.)', src: src.basc, srcLabel: 'DOE BASC' },
+    { k: '2021 IECC limit', v: '4.0 CFM25 per 100 sq ft', src: src.slides21, srcLabel: 'DOE' },
+    { k: 'Ducts inside the envelope', v: '8.0 CFM25 per 100 sq ft', src: src.slides21, srcLabel: 'DOE' },
+    { k: 'Typical cost', v: 'Not published' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Rooms that never get warm or cool?"
+  leadSub="Email us your ZIP code and what you’re noticing. A person reads every message and replies with certified auditors and HERS raters who test ducts in your area."
+>
+  <Fragment slot="lede">
+    A duct leakage test seals all the registers, pressurizes the duct system to 25 pascals, and measures how much air it takes to hold that pressure. The result, in CFM25, is
+    compared to the home’s conditioned floor area.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="num-h">
+    <h2 id="num-h">What the number means</h2>
+    <p>
+      The IECC limit is expressed per 100 sq ft of conditioned floor area, tested at 25 pascals
+      (0.1 inch water gauge) at rough-in or after construction, with all registers sealed.
+      ANSI/RESNET/ICC 380 also covers duct airtightness testing.
+    </p>
+    <div class="card card-pad callout steel">
+      <h3>Example</h3>
+      <p class="mb-0">
+        A 2,000 sq ft home has 20 units of 100 sq ft. At the 2021 IECC limit of 4.0 CFM25 per 100 sq
+        ft, its ducts may leak up to 4.0 × 20 = <strong>80 CFM25</strong> in total.
+      </p>
+    </div>
+    <TestCite src={[src.basc, src.resnet]} labels={['DOE BASC, duct leakage tests', 'RESNET standards']} />
+  </section>
+
+  <section class="sec" aria-labelledby="code-h">
+    <h2 id="code-h">The code limits for new homes</h2>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>2021 IECC total duct leakage, per 100 sq ft of conditioned floor area</caption>
+        <thead><tr><th scope="col">When it’s tested</th><th scope="col">Maximum</th></tr></thead>
+        <tbody>
+          <tr><td>After construction, or at rough-in with the air handler installed</td><td class="kv" data-label="Maximum"><strong>4.0 CFM25</strong></td></tr>
+          <tr><td>At rough-in without the air handler</td><td class="kv" data-label="Maximum"><strong>3.0 CFM25</strong></td></tr>
+          <tr><td>Ducts and air handler entirely inside the thermal envelope (new in 2021)</td><td class="kv" data-label="Maximum"><strong>8.0 CFM25</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="small measure">
+      <li>The 4.0 limit was unchanged from the 2012 through the 2021 IECC.</li>
+      <li>The 2024 IECC moves the limits into a new Table R403.3.6, allowing more leakage for systems with three or more ducted returns, for smaller homes, and for ducts in conditioned space without an air handler at rough-in (6 CFM per 100 sq ft, up from 3). Leakage to outside may be used only on the performance and ERI paths.</li>
+      <li>Which edition applies depends on local adoption. DOE issued its 2024 IECC determination on December 20, 2024; state certifications are due December 30, 2026.</li>
+    </ul>
+    <TestCite src={[src.slides21, src.tsd21, src.tsd24, src.det]} labels={['DOE 2021 IECC webinar slides', 'DOE 2021 determination analysis', 'DOE 2024 determination analysis', 'DOE determinations']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="get-h">
+    <h2 id="get-h">How to get it done</h2>
+    <p>
+      Ask for a duct leakage test by name when you book an energy assessment. HERS raters test ducts
+      under ANSI/RESNET/ICC 380. If new equipment or ducts are in the
+      plan, pair the test with a <a href="/us/tests/heat-loss-calc/">Manual J load calculation and
+      Manual D duct design</a>.
+    </p>
+    <p>What it costs: no official source publishes a price for a duct leakage test, so we don’t quote one.</p>
+    <ul class="linkrow">
+      <li><a href="/us/find/">Find a certified auditor</a></li>
+      <li><a href={src.hersFind.href} rel="noopener">RESNET: find a HERS rater&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={src.resnet} labels={['RESNET standards']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If the ducts leak</h2>
+    <ul>
+      <li>Have the leaks sealed, then retest so you know the number went down.</li>
+      <li>If you’re replacing equipment at the same time, make sure the duct work is part of the Manual D design rather than an afterthought.</li>
+    </ul>
+  </section>
+</TestPage>

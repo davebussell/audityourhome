@@ -1,0 +1,55 @@
+---
+/** One heat pump rebate program with its equipment rule, as researched on October 19, 2026. */
+import { statusChipHP, hostOf, fmtDate } from '../../lib/heatpumps';
+
+interface Props {
+  p: {
+    name: string;
+    runBy?: string;
+    status?: string;
+    heatPumpRebate?: string;
+    equipmentRule?: string;
+    otherConditions?: string;
+    contractorRule?: string;
+    url?: string;
+    checked?: string;
+  };
+  /** Our own guide to the program, if we have one */
+  guide?: string;
+}
+const { p, guide } = Astro.props;
+const chip = statusChipHP(p.status);
+const conditions = p.otherConditions ?? p.contractorRule;
+const checkedLabel = !p.checked ? '' : /^\d{4}-\d{2}-\d{2}/.test(p.checked) ? fmtDate(p.checked) : p.checked;
+const clip = (s: string | undefined, n = 520) => (!s ? '' : s.length > n ? `${s.slice(0, n).replace(/\s+\S*$/, '')}…` : s);
+---
+
+<article class="card c rb">
+  <div class="rb-head">
+    <h3>{p.name}</h3>
+    <span class={`chip ${chip.cls}`}>{chip.label}</span>
+  </div>
+  {p.runBy && <p class="muted rb-by">{p.runBy}</p>}
+  {p.heatPumpRebate && (
+    <p><span class="lbl">Heat pump amounts</span>{clip(p.heatPumpRebate)}</p>
+  )}
+  {p.equipmentRule && (
+    <p><span class="lbl">Equipment rule</span>{clip(p.equipmentRule)}</p>
+  )}
+  {conditions && (
+    <p class="muted"><span class="lbl">Other conditions</span>{clip(conditions, 380)}</p>
+  )}
+  {p.status && chip.label !== 'Open' && <p class="muted small"><span class="lbl">Status</span>{clip(p.status, 260)}</p>}
+  <p class="meta">
+    {guide && <><a href={guide}>Our guide to this program</a> · </>}
+    {p.url && <a href={p.url} rel="noopener" target="_blank">{hostOf(p.url)}&nbsp;↗</a>}
+    {checkedLabel && <> · checked {checkedLabel}</>}
+  </p>
+</article>
+
+<style>
+  .rb-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: flex-start; justify-content: space-between; }
+  .rb-head h3 { flex: 1 1 220px; }
+  .rb-by { font-size: 13.5px !important; }
+  .rb .lbl { margin-bottom: 2px; }
+</style>

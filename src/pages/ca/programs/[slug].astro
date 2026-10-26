@@ -1,0 +1,200 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor, PROV_SLUG_PHOTO } from '../../../lib/photos';
+import LeadForm from '../../../components/LeadForm.astro';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { programs, programBySlug } from '../../../lib/data';
+import provincesData from '../../../data/provinces.json';
+
+export function getStaticPaths() {
+  return programs.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const p = programBySlug(slug!)!;
+
+const statusLabel = p.status === 'active' ? 'Active' : p.status === 'active-limited' ? 'Active — limits apply' : p.status === 'announced' ? 'Announced — not open yet' : 'Closed';
+const statusCls = p.status === 'active' ? 'chip-active' : p.status === 'active-limited' ? 'chip-limited' : p.status === 'announced' ? 'chip-info' : 'chip-closed';
+
+const province = p.provinceSlug ? provincesData.provinces.find((x) => x.slug === p.provinceSlug) : null;
+const relatedProgs = (p.related ?? []).map((s) => programBySlug(s)).filter(Boolean);
+const isHeatPump = /heat pump/i.test(`${p.name} ${p.headline}`);
+
+// Optional search-facing title/description per program (programs.json: seoTitle, seoDescription).
+const seo = p as typeof p & { seoTitle?: string; seoDescription?: string };
+const title = seo.seoTitle
+  ? `${seo.seoTitle} | AuditYourHome`
+  : `${p.name} (2026): amounts, eligibility & how to apply — ${statusLabel.toLowerCase()} | AuditYourHome`;
+const description = seo.seoDescription
+  ?? `${p.headline}. Status, amounts, who qualifies, step-by-step application, and the gotchas — verified against the official page ${p.lastVerified}.`;
+
+const faqs = p.faq && p.faq.length > 0
+  ? p.faq
+  : [
+      { q: `Is ${p.shortName} still available?`, a: `${statusLabel}. ${p.headline}. Verified against the official page on ${p.lastVerified}.` },
+      { q: `Does ${p.shortName} require a home energy audit?`, a: p.auditRequirementNote },
+      { q: `Who runs ${p.shortName}?`, a: p.runBy },
+    ];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Rebates & programs', path: '/ca/programs/' },
+    { name: p.shortName, path: `/ca/programs/${p.slug}/` },
+  ]),
+  faqSchema(faqs),
+];
+const PROGRAM_PHOTO: Record<string, string> = {
+  'home-renovation-savings-assessment': 'attic-insulation-inspection',
+  'home-renovation-savings-direct': 'heat-loss-calculation',
+  'toronto-home-energy-loan-program': 'region-ontario',
+  'home-efficiency-rebate-plus': 'region-ontario',
+  'cmhc-eco-improvement': 'home-hero',
+  'canada-greener-homes-affordability-program': 'attic-insulation-inspection',
+  'canada-greener-homes-grant': 'home-energy-audit',
+  'canada-greener-homes-loan': 'home-energy-audit',
+  'oil-to-heat-pump-affordability': 'heat-loss-calculation',
+};
+const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.provinceSlug] : undefined) ?? 'home-hero';
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/ca/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
+      {province && <><a href={`/ca/provinces/${province.slug}/`}>{province.name}</a> <span aria-hidden="true">/</span></>}
+      <span>{p.shortName}</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+      <div class="headrow">
+        <h1>{p.name}</h1>
+        <span class={`chip ${statusCls}`}>{statusLabel}</span>
+      </div>
+      <p class="lede measure">{p.headline}</p>
+      <p class="meta">Run by {p.runBy} · verified against the official page {p.lastVerified}</p>
+      </div>
+      <Photo name={heroPhoto} eager />
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-pad">
+        <h3>{p.status === 'closed' ? 'What it offered' : 'What it pays'}</h3>
+        <ul class="amounts">
+          {p.amounts.map((a) => (
+            <li><span class="money">{a.value}</span><span>{a.label}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>The audit question</h3>
+        <p>
+          {p.auditRequired ? (
+            <span class="chip chip-info">Audit required</span>
+          ) : (
+            <span class="chip chip-neutral">No audit required</span>
+          )}
+        </p>
+        <p>{p.auditRequirementNote}</p>
+        <h3 style="margin-top:18px;">Who qualifies</h3>
+        <p class="mb-0">{p.whoQualifies}</p>
+      </div>
+    </div>
+
+    {p.howToApply && p.howToApply.length > 0 && (
+      <>
+        <h2 class="sec">{p.status === 'closed' ? 'What to do instead' : p.status === 'announced' ? 'How it will work' : 'How to apply, step by step'}</h2>
+        <ol class="steps measure">
+          {p.howToApply.map((s) => <li><p>{s}</p></li>)}
+        </ol>
+      </>
+    )}
+
+    {p.gotchas && p.gotchas.length > 0 && (
+      <div class="card card-pad gotchas">
+        <h3>The gotchas</h3>
+        <ul>
+          {p.gotchas.map((g) => <li>{g}</li>)}
+        </ul>
+      </div>
+    )}
+
+    {p.notes && (
+      <div class="card card-pad note">
+        <h4>Worth knowing</h4>
+        <p class="mb-0">{p.notes}</p>
+      </div>
+    )}
+
+    <h2 class="sec">Common questions</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <p class="official">
+      <a class="btn btn-ghost" href={p.officialUrl} rel="noopener" target="_blank">Official program page ↗</a>
+      <span class="small">Always confirm details there before spending — programs change faster than any tracker.</span>
+    </p>
+
+    {p.sources && p.sources.length > 0 && (
+      <div class="card card-pad srcs">
+        <h3>Sources</h3>
+        <ul>
+          {p.sources.map((s) => (
+            <li><a href={s.href} rel="noopener">{s.label} (verified {p.lastVerified})</a></li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="related">
+      {isHeatPump && (
+        <a class="btn btn-primary" href={province ? `/ca/heat-pumps/${province.slug}/` : '/ca/heat-pumps/'}>
+          {province ? `Heat pumps in ${province.name}: costs and qualifying systems →` : 'Compare the heat pumps that qualify →'}
+        </a>
+      )}
+      {province && <a class="btn btn-ghost" href={`/ca/provinces/${province.slug}/`}>All {province.name} programs &amp; guide →</a>}
+      {relatedProgs.map((r) => (
+        <a class="btn btn-ghost" href={`/ca/programs/${r!.slug}/`}>Related: {r!.shortName}</a>
+      ))}
+      <a class="btn btn-ghost" href="/ca/programs/">Full tracker</a>
+    </div>
+
+    {p.status !== 'closed' && p.auditRequired && (
+      <LeadForm
+        heading="Start with the required assessment"
+        sub={`${p.shortName} runs through a registered energy advisor. We'll match you with a licensed service organization for your area.`}
+        context={`program-${p.slug}`}
+      />
+    )}
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .headrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .headrow h1 { margin-bottom: 0; }
+  .amounts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  /* fit-content(45%) keeps long multi-tier values from squeezing the label into a one-word column on phones */
+  .amounts li { display: grid; grid-template-columns: fit-content(45%) 1fr; gap: 4px 12px; align-items: baseline; }
+  .amounts .money { font-size: 17px; overflow-wrap: anywhere; }
+  .sec { margin: 30px 0 12px; font-size: 23px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 10px; }
+  .steps li { position: relative; padding: 13px 16px 13px 56px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 15px; top: 12px; width: 27px; height: 27px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 13.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .gotchas { border-left: 4px solid var(--warn); margin: 22px 0 0; }
+  .gotchas ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .note { border-left: 4px solid var(--steel); margin: 18px 0; }
+  .note h4 { margin-bottom: 6px; }
+  .official { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 22px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 10px 0 18px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

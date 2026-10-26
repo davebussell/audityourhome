@@ -39,17 +39,17 @@ export function formatPostal(postal?: string | null): string {
 }
 
 export const SERVICES: (Opt & { who: string; guide?: string })[] = [
-  { value: 'energy-audit', label: 'Home energy audit (EnerGuide evaluation)', who: 'a registered energy advisor', guide: '/articles/what-is-a-home-energy-audit/', hint: 'The first step for most rebates: blower door test, rating and upgrade report.' },
-  { value: 'insulation', label: 'Insulation or air sealing', who: 'an insulation or air-sealing contractor', guide: '/learn/air-sealing/' },
-  { value: 'heat-pump', label: 'Heat pump, furnace or air conditioning', who: 'a heating and cooling contractor', guide: '/learn/heating-systems/' },
-  { value: 'windows-doors', label: 'Windows and doors', who: 'a window and door installer', guide: '/learn/windows-doors/' },
-  { value: 'water-heater', label: 'Water heater', who: 'a plumbing or water heater contractor', guide: '/learn/water-heaters/' },
-  { value: 'ventilation', label: 'Ventilation, HRV or humidity problems', who: 'a ventilation contractor', guide: '/learn/hrv-erv/' },
-  { value: 'radon', label: 'Radon test or mitigation', who: 'a C-NRPP certified radon professional', guide: '/tests/radon/' },
-  { value: 'mould-air', label: 'Mould or indoor air quality', who: 'an indoor air quality investigator', guide: '/tests/mold-iaq/' },
-  { value: 'wood-stove', label: 'Wood stove inspection (WETT)', who: 'a WETT-certified inspector', guide: '/tests/wood-burning-inspection/' },
-  { value: 'well-water', label: 'Well water testing or treatment', who: 'a water treatment specialist', guide: '/tests/well-water/' },
-  { value: 'asbestos-lead', label: 'Asbestos, vermiculite or lead paint', who: 'a hazardous materials testing firm', guide: '/tests/asbestos-vermiculite/' },
+  { value: 'energy-audit', label: 'Home energy audit (EnerGuide evaluation)', who: 'a registered energy advisor', guide: '/ca/articles/what-is-a-home-energy-audit/', hint: 'The first step for most rebates: blower door test, rating and upgrade report.' },
+  { value: 'insulation', label: 'Insulation or air sealing', who: 'an insulation or air-sealing contractor', guide: '/ca/learn/air-sealing/' },
+  { value: 'heat-pump', label: 'Heat pump, furnace or air conditioning', who: 'a heating and cooling contractor', guide: '/ca/learn/heating-systems/' },
+  { value: 'windows-doors', label: 'Windows and doors', who: 'a window and door installer', guide: '/ca/learn/windows-doors/' },
+  { value: 'water-heater', label: 'Water heater', who: 'a plumbing or water heater contractor', guide: '/ca/learn/water-heaters/' },
+  { value: 'ventilation', label: 'Ventilation, HRV or humidity problems', who: 'a ventilation contractor', guide: '/ca/learn/hrv-erv/' },
+  { value: 'radon', label: 'Radon test or mitigation', who: 'a C-NRPP certified radon professional', guide: '/ca/tests/radon/' },
+  { value: 'mould-air', label: 'Mould or indoor air quality', who: 'an indoor air quality investigator', guide: '/ca/tests/mold-iaq/' },
+  { value: 'wood-stove', label: 'Wood stove inspection (WETT)', who: 'a WETT-certified inspector', guide: '/ca/tests/wood-burning-inspection/' },
+  { value: 'well-water', label: 'Well water testing or treatment', who: 'a water treatment specialist', guide: '/ca/tests/well-water/' },
+  { value: 'asbestos-lead', label: 'Asbestos, vermiculite or lead paint', who: 'a hazardous materials testing firm', guide: '/ca/tests/asbestos-vermiculite/' },
   { value: 'other', label: 'Something else', who: 'the right company' },
 ];
 export const serviceLabel = (v?: string | null) => SERVICES.find((s) => s.value === v)?.label ?? v ?? '';

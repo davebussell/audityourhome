@@ -1,0 +1,269 @@
+{
+  "note": "Copy for the US testing guide (/us/tests/). Every fact here comes from src/data/us/tests.json (verified October 12, 2026). 'src' points at a source in that file: [section, a piece of the source label]. 'hud' is the small label drawn on the photo; keep it a real measurement convention.",
+  "groups": [
+    {
+      "id": "health",
+      "title": "Home health",
+      "chip": "Health & safety",
+      "intro": "A standard energy audit doesn't cover these. Each has its own federal guidance and, in many states, its own license or certification."
+    },
+    {
+      "id": "energy",
+      "title": "Energy performance",
+      "chip": "Energy",
+      "intro": "These measure how your home uses and loses energy. DOE says many professional assessments include a blower door test and an infrared scan; ask for the others by name."
+    }
+  ],
+  "tests": [
+    {
+      "slug": "radon",
+      "group": "health",
+      "name": "Radon test",
+      "crumb": "Radon",
+      "why": "EPA recommends fixing a home at 4 pCi/L or more and says every home should be tested, whatever its radon zone.",
+      "fact": "EPA action level: 4 pCi/L",
+      "src": [
+        "radon",
+        "Action Level"
+      ],
+      "photo": "radon-testing",
+      "hud": "Short-term test · pCi/L",
+      "related": [
+        "well-water",
+        "carbon-monoxide"
+      ],
+      "who": "You, with a short-term kit, or an NRPP- or NRSB-certified pro (state-licensed where required)"
+    },
+    {
+      "slug": "carbon-monoxide",
+      "group": "health",
+      "name": "Carbon monoxide alarms",
+      "crumb": "Carbon monoxide",
+      "why": "CPSC recommends a CO alarm on every level and outside sleeping areas. Most of the states we checked also require alarms in at least some homes.",
+      "fact": "Alarm standard: UL 2034",
+      "src": [
+        "carbonMonoxide",
+        "Questions and Answers"
+      ],
+      "photo": "carbon-monoxide-testing",
+      "hud": "CO alarm · ppm",
+      "related": [
+        "combustion-safety",
+        "radon"
+      ],
+      "who": "You install the alarms; auditors check CO in the air during an audit"
+    },
+    {
+      "slug": "lead-paint",
+      "group": "health",
+      "name": "Lead paint testing",
+      "crumb": "Lead paint",
+      "why": "Homes built before 1978 are more likely to have lead-based paint. Most paid work that disturbs paint in these homes must be done by a lead-safe certified firm.",
+      "fact": "Built before 1978",
+      "src": [
+        "lead",
+        "Protect Your Family from Sources of Lead"
+      ],
+      "photo": "lead-paint-testing",
+      "hud": "Pre-1978 paint",
+      "related": [
+        "asbestos-vermiculite",
+        "well-water"
+      ],
+      "who": "EPA- or state-certified inspectors and risk assessors; lead-safe certified firms for renovation"
+    },
+    {
+      "slug": "asbestos-vermiculite",
+      "group": "health",
+      "name": "Asbestos & vermiculite",
+      "crumb": "Asbestos & vermiculite",
+      "why": "More than 70% of the vermiculite sold in the U.S. from 1919 to 1990 came from a Libby, Montana mine contaminated with asbestos. Leave it alone and use accredited pros.",
+      "fact": "Don't sample it yourself",
+      "src": [
+        "asbestos",
+        "Vermiculite"
+      ],
+      "photo": "asbestos-testing",
+      "hud": "Leave it undisturbed",
+      "related": [
+        "attic-inspection",
+        "lead-paint"
+      ],
+      "who": "Trained, accredited asbestos professionals; your state agency says who may work there"
+    },
+    {
+      "slug": "mold-iaq",
+      "group": "health",
+      "name": "Mold & indoor air",
+      "crumb": "Mold & indoor air",
+      "why": "There are no federal limits for mold, so sampling can't show a pass or fail. Fixing the water problem is the job.",
+      "fact": "DIY cleanup: under about 10 sq ft",
+      "src": [
+        "mold",
+        "Brief Guide"
+      ],
+      "photo": "mold-testing",
+      "hud": "Moisture · % WME",
+      "related": [
+        "radon",
+        "carbon-monoxide"
+      ],
+      "who": "You, for small areas; licensed assessors and remediators in some states"
+    },
+    {
+      "slug": "well-water",
+      "group": "health",
+      "name": "Well water testing",
+      "crumb": "Well water",
+      "why": "Private wells fall outside the Safe Drinking Water Act. EPA says to test every year for coliform bacteria, nitrates, total dissolved solids and pH.",
+      "fact": "Test every year",
+      "src": [
+        "wellWater",
+        "Private Drinking Water Wells"
+      ],
+      "photo": "well-water-testing",
+      "hud": "Coliform · nitrate · pH",
+      "related": [
+        "radon",
+        "lead-paint"
+      ],
+      "who": "A lab certified for drinking-water testing; some local health departments test for free"
+    },
+    {
+      "slug": "blower-door",
+      "group": "energy",
+      "name": "Blower door test",
+      "crumb": "Blower door",
+      "why": "Measures whole-house air leakage at 50 pascals. The 2021 IECC caps new homes at 5.0 ACH50 in climate zones 0–2 and 3.0 ACH50 in zones 3–8.",
+      "fact": "Result: ACH50",
+      "src": [
+        "blowerDoor",
+        "2021 IECC Residential Webinar slides"
+      ],
+      "photo": "blower-door-test",
+      "hud": "Depressurized to 50 Pa",
+      "related": [
+        "thermal-imaging",
+        "combustion-safety",
+        "duct-leakage"
+      ],
+      "who": "Energy auditors and RESNET HERS raters"
+    },
+    {
+      "slug": "thermal-imaging",
+      "group": "energy",
+      "name": "Infrared (thermal) scan",
+      "crumb": "Infrared scan",
+      "why": "An infrared camera finds missing insulation and air leaks. ASTM's leak-detection practice says to pressurize or depressurize the house so the leaks show up.",
+      "fact": "ASTM C1060 and E1186",
+      "src": [
+        "infrared",
+        "E1186"
+      ],
+      "photo": "thermal-imaging",
+      "hud": "Infrared scan",
+      "related": [
+        "blower-door",
+        "attic-inspection"
+      ],
+      "who": "Energy auditors, ideally while the blower door holds the house under pressure"
+    },
+    {
+      "slug": "heat-loss-calc",
+      "group": "energy",
+      "name": "Manual J load calculation",
+      "crumb": "Manual J load calculation",
+      "why": "ACCA's ANSI-recognized method for a home's heating and cooling loads. Where the IECC or IRC is adopted, equipment must be sized per Manual S from Manual J loads, or another approved method.",
+      "fact": "ACCA Manual J, S and D",
+      "src": [
+        "loadCalculation",
+        "Manual J Residential Load Calculation"
+      ],
+      "photo": "heat-loss-calculation",
+      "hud": "Heating & cooling loads · Manual J",
+      "related": [
+        "duct-leakage",
+        "blower-door",
+        "bill-analysis"
+      ],
+      "who": "Whoever sizes your heating and cooling equipment"
+    },
+    {
+      "slug": "duct-leakage",
+      "group": "energy",
+      "name": "Duct leakage test",
+      "crumb": "Duct leakage",
+      "why": "Pressure-tests the ductwork at 25 pascals. The 2021 IECC allows new homes up to 4.0 CFM25 of total leakage per 100 sq ft of conditioned floor area.",
+      "fact": "Result: CFM25",
+      "src": [
+        "ductLeakage",
+        "Duct Leakage Tests"
+      ],
+      "photo": "duct-leakage-testing",
+      "hud": "Duct leakage at 25 Pa",
+      "related": [
+        "heat-loss-calc",
+        "blower-door"
+      ],
+      "who": "Energy auditors and RESNET HERS raters"
+    },
+    {
+      "slug": "combustion-safety",
+      "group": "energy",
+      "name": "Combustion safety test",
+      "crumb": "Combustion safety",
+      "why": "Checks furnaces, boilers and water heaters for spillage and carbon monoxide under worst-case conditions. DOE calls for it in homes with natural-draft appliances, especially during air sealing.",
+      "fact": "BPI-1200 and BPI-1100",
+      "src": [
+        "combustionSafety",
+        "Combustion Appliance Zone"
+      ],
+      "photo": "combustion-safety-test",
+      "hud": "Flue gas · CO ppm",
+      "related": [
+        "carbon-monoxide",
+        "blower-door"
+      ],
+      "who": "Energy auditors working to BPI-1200"
+    },
+    {
+      "slug": "attic-inspection",
+      "group": "energy",
+      "name": "Attic insulation check",
+      "crumb": "Attic insulation",
+      "why": "ENERGY STAR recommends R30 to R60 for an uninsulated attic, depending on your climate zone.",
+      "fact": "Attic target: R30 to R60",
+      "src": [
+        "insulation",
+        "Recommended Home Insulation R-Values"
+      ],
+      "photo": "attic-insulation-inspection",
+      "hud": "Depth check · R-value",
+      "related": [
+        "asbestos-vermiculite",
+        "thermal-imaging",
+        "blower-door"
+      ],
+      "who": "You can check the depth; an auditor can check the rest"
+    },
+    {
+      "slug": "bill-analysis",
+      "group": "energy",
+      "name": "Utility bill analysis",
+      "crumb": "Bill analysis",
+      "why": "Your past bills are what savings predictions get calibrated to (BPI-2400). Green Button lets you download your usage if your utility supports it.",
+      "fact": "Green Button data",
+      "src": [
+        "billAnalysis",
+        "DOE - Green Button"
+      ],
+      "photo": "energy-bill-analysis",
+      "hud": "Usage history · kWh, therms",
+      "related": [
+        "blower-door",
+        "heat-loss-calc"
+      ],
+      "who": "You, with your utility’s data, and your auditor"
+    }
+  ]
+}

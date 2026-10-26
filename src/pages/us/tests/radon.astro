@@ -1,0 +1,317 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import TestStateTable from '../../../components/us/TestStateTable.astro';
+import TestGear from '../../../components/us/TestGear.astro';
+import {
+  S, T, ZONE_SOURCES, radonStateRows, otherRadonStates, metrosByRadonZone, metroName, metroHref,
+  RADON_NOTICE_STATES, listStates, shortLabel,
+} from '../../../lib/us/tests';
+
+const R = T.radon;
+const src = {
+  action: S('radon', 'Action Level'),
+  risk: S('radon', 'Health Risk of Radon'),
+  citizen: S('radon', "Citizen's Guide"),
+  sales: S('radon', "Home Buyer's and Seller's Guide"),
+  zones: S('radon', 'EPA Map of Radon Zones (updated'),
+  zonesPdf: S('radon', 'Radon Zones Map PDF'),
+  zonesXls: S('radon', 'county list (XLS)'),
+  locator: S('radon', 'Find a Radon Test Kit'),
+  cost: S('radon', 'How much can a radon mitigation system cost'),
+  reduction: S('radon', "Consumer's Guide to Radon Reduction"),
+  nrpp: S('radon', 'NRPP - National Radon Proficiency Program'),
+  nrppFind: S('radon', 'NRPP - Find'),
+  nrsbFind: S('radon', 'NRSB - Find'),
+  nrps: S('radon', 'Installing Mitigation'),
+  mn: S('radon', 'Radon Mitigation (updated'),
+  eli: S('radon', 'laws through June 2026'),
+  aarst: S('radon', 'AARST - Homebuyer'),
+  il: S('radon', '420 ILCS 46'),
+  mnRe: S('radon', 'Radon in Real Estate'),
+  co: S('radon', 'SB 23-206'),
+  me: S('radon', 'LD 943'),
+  mo: S('radon', 'Missouri DHSS'),
+  ia: S('radon', 'Iowa Acts 2026'),
+};
+// discounted kits: URL given in the certification record of tests.json
+const kits = { label: 'National Radon Program Services (Kansas State Univ.) - Test kits', href: 'https://sosradon.org/test-kits' };
+
+const zones = metrosByRadonZone();
+const ZONE_TEXT: Record<number, string> = {
+  1: 'Zone 1 (red), highest potential: predicted average indoor level may be above 4 pCi/L',
+  2: 'Zone 2 (orange), moderate potential: predicted average 2 to 4 pCi/L',
+  3: 'Zone 3 (yellow), low potential: predicted average below 2 pCi/L',
+};
+
+const saleRules = [
+  { st: 'Illinois', rule: 'Radon Awareness Act (420 ILCS 46): sellers give buyers the IEMA pamphlet “Radon Testing Guidelines for Real Estate Transactions” and a signed “Disclosure of Information on Radon Hazards” before the buyer is obligated. No test is required; units on the third floor or higher are exempt.', src: src.il },
+  { st: 'Minnesota', rule: 'Radon Awareness Act: before a purchase agreement, sellers disclose known tests, the most current records, any mitigation system details, a radon warning statement and MDH’s “Radon in Real Estate Transactions.” Testing is not required.', src: src.mnRe },
+  { st: 'Colorado', rule: 'SB 23-206: sales contracts carry a bold radon warning; sellers disclose known results and mitigation and give the CDPHE radon brochure. Landlords make similar pre-lease disclosures. Tenants may void a lease if the landlord fails to disclose, or fails to make a reasonable effort to mitigate within 180 days of a reading of 4 pCi/L or more; from Jan 1, 2026 that right doesn’t apply to leases of one year or less.', src: src.co },
+  { st: 'Florida', rule: 'A radon notification statement must appear on at least one sale or rental document (F.S. 404.056).', src: src.eli },
+  { st: 'New Jersey', rule: 'Sellers give buyers copies of any radon test results on entering a contract (N.J.S.A. 26:2D-70 et seq., per ELI).', src: src.eli },
+  { st: 'Maine', rule: 'Residential rentals had to be tested for radon by 2012, with written notice of results to tenants and mitigation within six months when results are 4 pCi/L or higher.', src: src.me },
+  { st: 'North Dakota', rule: 'Sellers must disclose known radon information, test results and mitigation in writing (NDCC 47-10-02.2; newly listed in ELI’s June 2026 database).', src: src.eli },
+  { st: 'Missouri', rule: 'The state health department says radon professionals must be used for testing tied to legal transactions.', src: src.mo },
+  { st: 'Iowa', rule: 'HF 2297 (approved May 19, 2026) requires passive radon mitigation in new one- and two-family homes once the building code commissioner adopts the rule.', src: src.ia },
+];
+
+const faqs = [
+  {
+    q: 'My neighbor tested low. Do I still need to test?',
+    a: 'Yes. EPA says every home should be tested. High radon levels turn up in all three of EPA’s radon zones, and EPA says its zone map must not be used to decide whether to test a particular home.',
+    src: [src.zones],
+  },
+  {
+    q: 'Short-term or long-term test?',
+    a: 'EPA’s first step is a short-term test (2 to 90 days). If the result is 4 pCi/L or higher, follow up with a long-term test (more than 90 days, a better picture of the year-round average) or a second short-term test, which is faster. If the first result is more than twice 4 pCi/L, do the second short-term test right away.',
+    src: [src.citizen],
+  },
+  {
+    q: 'Is a reading of 3 pCi/L safe?',
+    a: 'EPA says there is no known safe level of radon exposure. It recommends fixing at 4 pCi/L or more and says to consider fixing between 2 and 4 pCi/L, noting that most homes today can be brought down to 2 pCi/L or below.',
+    src: [src.action],
+  },
+  {
+    q: 'What does radon mitigation cost?',
+    a: 'EPA doesn’t give a dollar figure; it says most homes can be fixed for about the same cost as other common home repairs, depending on the home’s size and design and the method needed. National Radon Program Services at Kansas State University (EPA-funded) puts typical contractor pricing at $800 to about $2,500, averaging about $1,200, an older figure. Minnesota’s health department warns against unlicensed installers and unusually low bids under $1,000.',
+    src: [src.cost, src.nrps, src.mn],
+  },
+  {
+    q: 'Do I have to disclose radon when I sell?',
+    a: `No federal radon disclosure rule (like the federal lead rule) appeared in the EPA materials we reviewed. AARST counted ten states with homebuyer radon awareness-notification laws as of June 2024: ${listStates(RADON_NOTICE_STATES)}. Several states add their own rules; see the table on this page.`,
+    src: [src.aarst],
+  },
+];
+
+const sources = [
+  src.action, src.risk, src.citizen, src.sales, src.zones, src.zonesPdf, src.zonesXls, ZONE_SOURCES.radon,
+  src.locator, kits, src.nrpp, src.nrppFind, src.nrsbFind, src.cost, src.reduction, src.nrps, src.mn,
+  src.eli, src.aarst, src.il, src.mnRe, src.co, src.me, src.mo, src.ia,
+];
+---
+
+<TestPage
+  slug="radon"
+  title="Radon testing in the US: EPA's 4 pCi/L action level, how to test, and fixes | AuditYourHome"
+  description="EPA recommends fixing a home at 4 pCi/L or more and says every home should be tested. How to test, what radon zones mean, certified pros, state rules and mitigation costs."
+  heroTitle="Radon: the test EPA says every home needs"
+  glance={[
+    { k: 'EPA action level', v: '4 pCi/L (150 Bq/m³)', src: src.action, srcLabel: 'EPA' },
+    { k: 'Consider fixing', v: '2 to 4 pCi/L', src: src.action, srcLabel: 'EPA' },
+    { k: 'Short-term test', v: '2 to 90 days', src: src.citizen, srcLabel: 'EPA' },
+    { k: 'Typical mitigation', v: '$800 to about $2,500', src: src.nrps, srcLabel: 'NRPS (older figure)' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Testing before a sale or a renovation?"
+  leadSub="Email us your ZIP code and what you’re planning. A person reads every message and replies with where to find certified radon testers and mitigators in your state."
+>
+  <Fragment slot="lede">
+    Radon is a radioactive gas that builds up indoors. EPA estimates about 21,000 radon-related
+    lung cancer deaths a year, and it says there is no known safe level. High
+    readings turn up in all three of EPA’s radon zones, so the only way to know your home’s
+    number is to test it.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="what-h">
+    <h2 id="what-h">What a radon test tells you</h2>
+    <p>
+      A radon test measures the concentration of radon in your home’s air, reported in picocuries
+      per liter (pCi/L). EPA puts the average indoor level at about <span class="num">1.3 pCi/L</span>
+      (50 Bq/m³) and outdoor air at about <span class="num">0.4 pCi/L</span> (15 Bq/m³). Your home can
+      be well above or below that, and EPA says even your county’s radon zone can’t tell you which.
+    </p>
+    <TestCite src={[src.action, src.risk]} labels={['EPA action level', 'EPA health risk']} />
+  </section>
+
+  <section class="sec" aria-labelledby="std-h">
+    <h2 id="std-h">The EPA numbers</h2>
+    <div class="std-grid">
+      <div class="std heat">
+        <p class="sv">4 pCi/L or more</p>
+        <p class="sl">Fix the home</p>
+        <p>EPA’s action level. EPA gives the equivalent as 150 Bq/m³; the exact conversion is 148, since 1 pCi/L = 37 Bq/m³.</p>
+        <TestCite src={src.action} labels={['EPA action level']} />
+      </div>
+      <div class="std warn">
+        <p class="sv">2 to 4 pCi/L</p>
+        <p class="sl">Consider fixing</p>
+        <p>75 to 150 Bq/m³. Levels below 4 pCi/L still carry some risk, and EPA says most homes today can be brought to 2 pCi/L or below.</p>
+        <TestCite src={src.action} labels={['EPA action level']} />
+      </div>
+      <div class="std">
+        <p class="sv">No known safe level</p>
+        <p class="sl">About 21,000 deaths a year</p>
+        <p>EPA’s estimate of radon-related lung cancer deaths each year.</p>
+        <TestCite src={src.risk} labels={['EPA health risk']} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="how-h">
+    <h2 id="how-h">How to test, step by step</h2>
+    <ol class="steps">
+      <li>
+        <h3>Start with a short-term test</h3>
+        <p>Short-term tests stay in the home 2 to 90 days: charcoal canisters, alpha track, electret ion chamber, continuous monitors and charcoal liquid scintillation. Long-term tests (alpha track, electret) stay more than 90 days and better reflect the year-round average.</p>
+      </li>
+      <li>
+        <h3>Put it in the right spot</h3>
+        <p>The lowest lived-in level, in a room you use regularly (not a kitchen or bathroom), at least 20 inches above the floor, away from drafts, heat, humidity and exterior walls.</p>
+        <p>For a 2- to 3-day test, keep windows and doors closed starting at least 12 hours before, and don’t run it during severe storms or high winds.</p>
+      </li>
+      <li>
+        <h3>At 4 pCi/L or higher, test again</h3>
+        <p>Follow up with a long-term test for a better year-round picture, or a second short-term test if you need the answer faster. If the first result was more than twice 4 pCi/L, do the second short-term test right away.</p>
+      </li>
+      <li>
+        <h3>Decide</h3>
+        <p>EPA says to fix the home if the long-term result is 4 pCi/L or more, or to consider fixing if the average of the two short-term tests is 4 pCi/L or more.</p>
+      </li>
+    </ol>
+    <TestCite src={src.citizen} labels={['EPA Citizen’s Guide to Radon']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="zone-h">
+    <h2 id="zone-h">What your radon zone means (and doesn’t)</h2>
+    <p>
+      EPA’s Map of Radon Zones, developed in 1993, gives every county a zone based on predicted
+      average indoor radon. It exists to help national, state and local organizations target
+      resources and adopt radon-resistant building codes. <strong>EPA says it must not be used to decide whether
+      to test a home:</strong> high levels turn up in all three zones.
+    </p>
+    <p class="small">The zone shown for each metro below is for its principal county; other counties in the same metro can differ. Check yours on <a href={src.zones.href} rel="noopener">EPA’s map page&nbsp;↗</a> or the <a href={src.zonesXls.href} rel="noopener">county list&nbsp;↗</a>.</p>
+    <div class="zonelist">
+      {zones.map((z) => (
+        <div class="zr">
+          <p class="zk mb-0">Zone {z.zone}<small>{ZONE_TEXT[z.zone]}</small></p>
+          <ul class="linkrow">
+            {z.metros.map((m) => (
+              <li><a href={metroHref(m)} title={`${m.climate?.principalCounty} is in EPA radon zone ${z.zone}`}>{metroName(m)} · {m.climate?.principalCounty}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <TestCite src={[src.zonesPdf, ZONE_SOURCES.radon]} labels={['EPA radon zone definitions', 'EPA county list']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="who-h">
+    <h2 id="who-h">Do it yourself, or hire a certified pro</h2>
+    <p>
+      You can run a short-term test yourself. EPA’s locator lists test kits and professionals;
+      National Radon Program Services at Kansas State University sells discounted kits, and some
+      states give kits away free or at a discount.
+    </p>
+    <p>
+      For a professional, two national programs certify radon measurement and mitigation pros:
+      the <strong>National Radon Proficiency Program (NRPP)</strong>, accredited by ANAB to ISO/IEC
+      17024 with renewal every two years, and the <strong>National Radon Safety Board (NRSB)</strong>.
+      EPA requires states that receive indoor radon grants to keep a public list of credentialed
+      providers. Where a state licenses radon work, the state list decides who may legally work there.
+    </p>
+    <ul class="linkrow">
+      <li><a href={src.nrppFind.href} rel="noopener">NRPP pro search&nbsp;↗</a></li>
+      <li><a href={src.nrsbFind.href} rel="noopener">NRSB find a pro&nbsp;↗</a></li>
+      <li><a href={src.locator.href} rel="noopener">EPA kit and pro locator&nbsp;↗</a></li>
+      <li><a href={kits.href} rel="noopener">Discounted kits (NRPS)&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.locator, src.nrpp]} labels={['EPA locator', 'NRPP']} />
+  </section>
+
+  <section class="sec" aria-labelledby="state-h">
+    <h2 id="state-h">State licensing rules</h2>
+    <p class="small measure">Does the state require a license, certification or a named national credential to test or mitigate? Twenty jurisdictions we checked in full:</p>
+    <TestStateTable
+      rows={radonStateRows()}
+      caption="Radon credential laws, 20 jurisdictions"
+      statusHead="Credential required?"
+      statusLabels={{ yes: 'Required', no: 'None found' }}
+      id="state-rules"
+    />
+    <h3>Other states with radon credential laws</h3>
+    <TestStateTable rows={otherRadonStates()} caption="Other states in the licensing review" />
+    <p class="small measure">
+      Not counted as licensing: Maryland (testing businesses must use EPA-listed analysis labs and give
+      written results, but there’s no state license), Montana (an EPA proficiency exam is needed only
+      to be publicly listed), North Carolina (voluntary approval of certifying bodies) and Delaware
+      (which says it doesn’t certify radon contractors). Missouri’s HB 2730 (2026), which would have
+      licensed radon professionals from 2027, did not pass.
+    </p>
+    <TestCite src={src.eli} labels={['ELI state radon law database (laws through June 2026)']} />
+  </section>
+
+  <section class="sec" aria-labelledby="sale-h">
+    <h2 id="sale-h">Buying or selling a home</h2>
+    <div class="prose">
+      <p>
+        EPA’s Home Buyer’s and Seller’s Guide (revised March 2024) accepts three short-term options:
+        two passive tests side by side for at least 48 hours, two back-to-back passive tests of at
+        least 48 hours each, or a continuous monitor for at least 48 hours. Fix the home if the
+        average is 4 pCi/L or more, and take steps to prevent or detect interference with the
+        devices.
+      </p>
+      <p>
+        Sellers: test before listing, and test the lowest level a buyer might use. Expect buyers to
+        ask for a new test if the last one is more than about two years old or the home has been
+        renovated.
+      </p>
+      <TestCite src={src.sales} labels={['EPA Home Buyer’s and Seller’s Guide']} />
+      <p>
+        No federal radon disclosure rule appeared in the EPA materials reviewed. AARST counted ten
+        states with homebuyer radon awareness-notification laws as of June 2024:
+        {' '}{listStates(RADON_NOTICE_STATES)}. Some state rules in more detail:
+      </p>
+    </div>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>Radon rules for sales and rentals, selected states</caption>
+        <thead><tr><th scope="col">State</th><th scope="col">Rule</th><th scope="col">Source</th></tr></thead>
+        <tbody>
+          {saleRules.map((r) => (
+            <tr>
+              <td class="st-name">{r.st}</td>
+              <td class="st-text">{r.rule}</td>
+              <td class="src-cell"><a href={r.src.href} rel="noopener" title={r.src.label}>{shortLabel(r.src.label)}&nbsp;↗</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <TestCite src={[src.aarst, src.eli]} labels={['AARST notification-law toolkit (June 2024)', 'ELI radon law database']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If your level is high</h2>
+    <p>
+      EPA doesn’t publish a price. It says most homes can be fixed for about the same cost as other
+      common home repairs, depending on the home’s size and design and the method needed, and
+      that you should get estimates from several qualified mitigators. A passive system installed
+      during construction costs much less to activate later.
+    </p>
+    <div class="std-grid">
+      <div class="std pine">
+        <p class="sv">$800 to about $2,500</p>
+        <p class="sl">Typical contractor pricing, averaging about $1,200</p>
+        <p>From National Radon Program Services (Kansas State University, EPA-funded). It’s an older figure, so treat it as a rough guide.</p>
+        <TestCite src={src.nrps} labels={['NRPS, Installing Mitigation']} />
+      </div>
+      <div class="std warn">
+        <p class="sv">Bids under $1,000</p>
+        <p class="sl">A warning sign in Minnesota</p>
+        <p>Minnesota’s health department warns against unlicensed installers and unusually low bids.</p>
+        <TestCite src={src.mn} labels={['Minnesota Dept. of Health']} />
+      </div>
+    </div>
+    <ul>
+      <li>Hire a mitigator certified by NRPP or NRSB, or licensed by your state where the table above says a credential is required. California, for example, also requires mitigators to hold a contractor license.</li>
+      <li>For how homes are fixed, see EPA’s <a href={src.reduction.href} rel="noopener">Consumer’s Guide to Radon Reduction&nbsp;↗</a>.</li>
+      <li>Keep every test report. Under EPA’s sales guidance, a buyer may ask for a new test if yours is more than about two years old or the home has been renovated since.</li>
+      <li>On a private well? EPA suggests testing well water for radon if your indoor air has radon or you live in a radon-rich area. See the <a href="/us/tests/well-water/">well water guide</a>.</li>
+    </ul>
+    <TestCite src={[src.cost, src.reduction]} labels={['EPA mitigation cost', 'EPA Consumer’s Guide to Radon Reduction']} />
+  </section>
+
+  <TestGear cats={[{ slug: 'radon-monitors', label: 'Radon monitors & test kits' }]} />
+</TestPage>

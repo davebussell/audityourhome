@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "updated": "October 12, 2026",
+    "updatedISO": "2026-10-12",
+    "scope": "US gear guides for audityourhome.com (/us/products/). Same categories, slugs and picks as the Canadian file (src/data/products.json), rewritten for US buyers.",
+    "method": "Health and safety guidance comes from src/data/us/tests.json (EPA, CPSC, UL, USGS and NCSL sources verified October 12, 2026) and from EPA's Guide to Air Cleaners in the Home (updated October 1, 2026), opened October 12, 2026. Product specs quoted in the text (Corentium Home 2 batteries and averages, View Plus sensors, Aranet4 Home sensor and battery life, Levoit Core 600S CADR and room size, RadonEye update interval, Tap Score lab certifications, Safe Home lab option) were read on the maker's own site on October 12, 2026. Bands are US list prices from the maker's own site on that date; picks whose current US price could not be confirmed carry no band.",
+    "priceSources": [
+      { "label": "Airthings US: Corentium Home 2 ($179.99)", "href": "https://www.airthings.com/en-us/corentium-home-2" },
+      { "label": "Airthings US: View Plus ($329.99)", "href": "https://www.airthings.com/en-us/view-plus" },
+      { "label": "Levoit: Core 600S ($299.99; CADR 391 CFM; 606 sq ft at 4.8 ACH)", "href": "https://levoit.com/products/core-600s-smart-true-hepa-air-purifier" },
+      { "label": "hOmeLabs: 50 Pint Wi-Fi Dehumidifier ($269.99) and 50 Pint with Pump ($309.99)", "href": "https://homelabs.com/" },
+      { "label": "Tap Score: Essential and Advanced city and well panels ($189 sale to $475 regular)", "href": "https://mytapscore.com/" }
+    ]
+  },
+  "pricesNote": "Prices are rough US list prices from each maker's own website, checked October 12, 2026. Where we couldn't confirm a current US price, we left it off rather than guess. Amazon prices move and often run below list, so check the live listing.",
+  "categories": [
+    {
+      "slug": "radon-monitors",
+      "element": "air",
+      "name": "Radon monitors & test kits",
+      "short": "Lab-analyzed kits and digital monitors for the test EPA says every home should have.",
+      "why": "EPA recommends fixing a home when radon is 4 pCi/L or more, and considering a fix between 2 and 4. A lab-analyzed kit gives you that number: a short-term test first, then a long-term test (more than 90 days) for the year-round picture. A continuous digital monitor adds the trend, so you can watch levels move with the seasons and with renovation work, and check that a mitigation system keeps working.",
+      "tests": [{ "slug": "radon", "name": "the radon testing guide" }],
+      "picks": [
+        {
+          "name": "Long-term alpha-track test kit",
+          "role": "The year-round test",
+          "why": "A passive detector you leave in place for more than 90 days, then mail to the lab. EPA says long-term results better reflect your year-round average, and a long-term result of 4 pCi/L or more is EPA's signal to fix. Choose a kit analyzed by a lab listed with NRPP or NRSB, the two national radon proficiency programs.",
+          "q": "long term radon test kit alpha track"
+        },
+        {
+          "name": "Airthings Corentium Home 2",
+          "role": "The battery monitor",
+          "why": "Runs on two AA batteries and shows 24-hour, 7-day, 30-day and long-term averages, so it moves easily from room to room. The first average appears after a full day. Watch the long-term number; daily swings are normal.",
+          "band": "$180 list",
+          "q": "Airthings Corentium Home 2 radon detector"
+        },
+        {
+          "name": "Ecosense RadonEye",
+          "role": "The fast reader",
+          "why": "Updates every 10 minutes, so it shows a change within hours rather than days. That makes it the tool for seeing what air sealing or a new mitigation fan did to your levels.",
+          "q": "Ecosense RadonEye radon monitor"
+        }
+      ],
+      "notes": [
+        "EPA's steps: take a short-term test (2 to 90 days). If it reads 4 pCi/L or more, follow up with a long-term test or a second short-term test. Fix the home if the long-term result, or the average of the two short-term tests, is 4 pCi/L or more.",
+        "Placement, per EPA: the lowest lived-in level, in a room you use regularly (not a kitchen or bathroom), at least 20 inches above the floor, away from drafts, heat, humidity and exterior walls.",
+        "Check for low-cost kits first: some states give free or discounted kits, and Kansas State University's EPA-funded National Radon Program Services sells discounted ones.",
+        "Buying or selling a home? Hire a certified radon tester. Many states license radon testers, and EPA's sales guidance calls for steps to prevent or detect interference with the test.",
+        "Confirmed at 4 pCi/L or more? The next step is a quote from an NRPP- or NRSB-certified (or state-licensed) mitigator, not a bigger monitor. After mitigation, a continuous monitor is cheap insurance that the fan keeps working."
+      ],
+      "sources": [
+        { "label": "EPA: What is EPA's action level for radon", "href": "https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean" },
+        { "label": "EPA: A Citizen's Guide to Radon", "href": "https://www.epa.gov/sites/default/files/2016-12/documents/2016_a_citizens_guide_to_radon.pdf" },
+        { "label": "EPA: Home Buyer's and Seller's Guide to Radon (2024)", "href": "https://www.epa.gov/system/files/documents/2024-11/2024-buying-a-new-home-how-to-protect-your-family-from-radon_0.pdf" },
+        { "label": "EPA: Find a radon test kit or professional", "href": "https://www.epa.gov/radon/find-radon-test-kit-or-measurement-and-mitigation-professional" },
+        { "label": "National Radon Program Services (Kansas State University): test kits", "href": "https://sosradon.org/test-kits" },
+        { "label": "NRPP: find a certified professional", "href": "https://nrpp.info/pro-search/" },
+        { "label": "NRSB: find a certified professional", "href": "https://nrsb.org/find-a-pro/" }
+      ]
+    },
+    {
+      "slug": "air-quality-monitors",
+      "element": "air",
+      "name": "Indoor air quality monitors",
+      "short": "PM2.5, CO₂ and humidity readings for the air you breathe at home, smoke days included.",
+      "why": "You can't manage what you don't measure. A particle (PM2.5) reading shows when wildfire smoke or cooking particles have built up indoors, and whether a purifier is keeping up. CO₂ shows whether the house is under-ventilated for the people in it, the same question an energy auditor answers with instruments. Humidity doubles as a mold early warning: EPA advises keeping indoor humidity below 60%, ideally between 30% and 50%.",
+      "tests": [{ "slug": "mold-iaq", "name": "the mold & indoor air guide" }],
+      "picks": [
+        {
+          "name": "Airthings View Plus",
+          "role": "The everything monitor",
+          "why": "Radon, PM2.5, CO₂, VOCs, humidity, temperature and air pressure on one display. One device gives you a whole-home baseline, radon included.",
+          "band": "$330 list",
+          "q": "Airthings View Plus air quality monitor"
+        },
+        {
+          "name": "Aranet4 Home",
+          "role": "The CO₂ meter",
+          "why": "An NDIR CO₂ sensor with an e-ink display and up to four years on a set of batteries (the maker's figure). Watch the number climb in a full room with the doors shut: readings that stay high make the case for better ventilation.",
+          "q": "Aranet4 Home CO2 monitor"
+        },
+        {
+          "name": "Amazon Smart Air Quality Monitor",
+          "role": "The budget particle counter",
+          "why": "PM2.5, VOCs, carbon monoxide, humidity and temperature at a low price: enough to see smoke getting in and to check where a purifier works. It has no CO₂ sensor, and its CO reading doesn't replace a UL 2034 CO alarm.",
+          "q": "Amazon Smart Air Quality Monitor"
+        }
+      ],
+      "notes": [
+        "On smoke days, watch indoor PM2.5 with the purifier running. If the number keeps climbing, the purifier is too small for the room or in the wrong spot.",
+        "At household levels, CO₂ is mainly a ventilation signal: it tells you when to air out a room and when mechanical ventilation would pay off.",
+        "EPA's humidity target is below 60%, ideally 30% to 50%. Basement readings that stay above that are the cue for a dehumidifier.",
+        "A monitor is not an alarm. Keep UL 2034-listed CO alarms on every level and outside sleeping areas, as CPSC recommends."
+      ],
+      "sources": [
+        { "label": "EPA: A Brief Guide to Mold, Moisture and Your Home", "href": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home" },
+        { "label": "CPSC: Carbon Monoxide Questions and Answers", "href": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center/Carbon-Monoxide-Questions-and-Answers" }
+      ]
+    },
+    {
+      "slug": "air-purifiers",
+      "element": "air",
+      "name": "Air purifiers (HEPA)",
+      "short": "True-HEPA units sized to the room: a practical defense on smoke days and during dusty projects.",
+      "why": "A true-HEPA purifier sized for the room works fast: it pulls wildfire-smoke particles, renovation dust and allergens out of the room you're in. It treats symptoms, not causes. Mold needs its moisture source fixed and radon needs mitigation, but on a smoke day or in the middle of a project, it's help you can plug in right away.",
+      "tests": [
+        { "slug": "mold-iaq", "name": "the mold & indoor air guide" },
+        { "slug": "lead-paint", "name": "the lead paint guide" }
+      ],
+      "picks": [
+        {
+          "name": "Coway AP-1512HH Mighty",
+          "role": "The benchmark",
+          "why": "A compact, long-selling unit: true HEPA, quiet on its low speeds, frugal on power, with filters that don't cost a fortune. Sized for bedrooms and home offices; check the room size on the box against your room.",
+          "q": "Coway AP-1512HH Mighty air purifier"
+        },
+        {
+          "name": "Winix 5500-2",
+          "role": "The smoke and odor pick",
+          "why": "True HEPA plus a washable carbon filter. The HEPA catches wildfire-smoke particles and the carbon takes on the smell, which a HEPA filter alone doesn't.",
+          "q": "Winix 5500-2 air purifier"
+        },
+        {
+          "name": "Levoit Core 600S",
+          "role": "The big-room unit",
+          "why": "Moves enough air for open-plan main floors and basements: Levoit lists a CADR of 391 and about 600 sq ft at 4.8 air changes an hour. App control, plus a particle sensor that drives auto mode.",
+          "band": "$300 list",
+          "q": "Levoit Core 600S air purifier"
+        }
+      ],
+      "notes": [
+        "Size by the room. EPA's guide says to choose a CADR large enough for the room and compare it with the maximum room size on the box. Its table runs from a CADR of 65 for 100 sq ft to 390 for 600 sq ft, with 8-foot ceilings. Buying above your room lets the unit clean on its quiet speeds.",
+        "\"True HEPA\" is the phrase that matters; \"HEPA-type\" filters are not the same thing.",
+        "The real cost is filters. Price a year of replacements before you choose, and keep a spare set on hand before wildfire season.",
+        "Renovating a pre-1978 home? A purifier adds to lead-safe work practices (containment, HEPA vacuuming, wet cleaning) and never replaces them, and paid work that disturbs paint there needs an EPA lead-safe certified firm. Leave suspected asbestos or vermiculite insulation undisturbed."
+      ],
+      "sources": [
+        { "label": "EPA: Guide to Air Cleaners in the Home", "href": "https://www.epa.gov/indoor-air-quality-iaq/guide-air-cleaners-home" },
+        { "label": "EPA: Lead-safe renovation (RRP) for consumers", "href": "https://www.epa.gov/lead/renovation-repair-and-painting-rrp-program-consumers" },
+        { "label": "EPA: Asbestos-contaminated vermiculite insulation", "href": "https://www.epa.gov/asbestos/protect-your-family-asbestos-contaminated-vermiculite-insulation" }
+      ]
+    },
+    {
+      "slug": "co-alarms",
+      "element": "air",
+      "name": "Carbon monoxide alarms",
+      "short": "UL 2034-listed alarms for every level and outside sleeping areas, as CPSC recommends. Many states require them.",
+      "why": "If your home burns gas, oil, propane or wood, or has an attached garage, CO alarms are the last line of defense behind yearly appliance servicing and an energy auditor's combustion safety test. CPSC recommends alarms on every level and outside sleeping areas, ideally interconnected so that when one sounds, they all sound. Many states require them in homes with fuel-burning appliances or attached garages; some apply the rule only at sale, in rentals or in new construction.",
+      "tests": [
+        { "slug": "carbon-monoxide", "name": "the carbon monoxide guide" },
+        { "slug": "combustion-safety", "name": "combustion safety testing" }
+      ],
+      "picks": [
+        {
+          "name": "First Alert CO615",
+          "role": "The plug-in with display",
+          "why": "Plugs into an outlet, keeps a battery backup and shows the CO level in ppm, which turns a mystery beep into information.",
+          "q": "First Alert CO615 carbon monoxide alarm plug in"
+        },
+        {
+          "name": "Kidde Nighthawk (digital display)",
+          "role": "The other benchmark",
+          "why": "Kidde's long-running equivalent: plug-in power, battery backup, a digital readout and a peak-level memory button that shows what happened while you were out.",
+          "q": "Kidde Nighthawk carbon monoxide alarm digital display"
+        },
+        {
+          "name": "First Alert combination smoke + CO",
+          "role": "The two-in-one",
+          "why": "If a smoke alarm is due for replacement anyway, a combination unit covers both jobs from one ceiling spot. Check that the box lists UL 217 for smoke and UL 2034 for carbon monoxide.",
+          "q": "First Alert combination smoke carbon monoxide alarm"
+        }
+      ],
+      "notes": [
+        "Look for UL 2034 on the package. It's the US standard CO alarms are tested to (Edition 5, revised in 2024), and CPSC says to install alarms that meet the current edition.",
+        "Placement, per CPSC: every level and outside sleeping areas, away from heating vents and anywhere furniture or drapes could cover them. CPSC does not recommend kitchens or spots right above fuel-burning appliances.",
+        "The test button checks the circuitry, not the sensor. Replace alarms at the age given in the product literature; CPSC sets no fixed number of years, so note the date on the back.",
+        "State rules differ. Some states require alarms in every home with a CO source, others only at sale, in rentals or in new construction, so check yours.",
+        "An alarm is the backstop, not the fix: yearly servicing of fuel-burning appliances and the auditor's combustion safety test come first."
+      ],
+      "sources": [
+        { "label": "CPSC: Carbon Monoxide Questions and Answers", "href": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center/Carbon-Monoxide-Questions-and-Answers" },
+        { "label": "UL Standards & Engagement: UL 2034, Edition 5", "href": "https://www.shopulstandards.com/ProductDetail.aspx?productId=UL2034" },
+        { "label": "NCSL: Carbon monoxide detector laws by state", "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations" }
+      ]
+    },
+    {
+      "slug": "dehumidifiers-hygrometers",
+      "element": "water",
+      "name": "Dehumidifiers & hygrometers",
+      "short": "Measure first with an inexpensive hygrometer, then dry out a damp basement. EPA's target: under 60% humidity, ideally 30–50%.",
+      "why": "Much of the musty-basement problem is seasonal: warm, humid summer air meets cool foundation walls. A hygrometer shows whether you have a humidity problem at all, and a dehumidifier sized for the space handles the summer side. Winter condensation on cold surfaces is different. It's an insulation and air-leakage problem that an energy audit diagnoses, and no dehumidifier fixes it.",
+      "tests": [
+        { "slug": "mold-iaq", "name": "the mold & indoor air guide" },
+        { "slug": "thermal-imaging", "name": "infrared scanning" }
+      ],
+      "picks": [
+        {
+          "name": "Govee hygrometer (2-pack)",
+          "role": "Measure before you buy",
+          "why": "Bluetooth thermo-hygrometers that log readings to your phone, sold in pairs: one upstairs, one in the basement. A week of data shows whether you need a dehumidifier at all.",
+          "q": "Govee bluetooth hygrometer thermometer 2 pack"
+        },
+        {
+          "name": "Midea Cube (35–50 pint)",
+          "role": "The compact pick",
+          "why": "A small footprint that nests down for storage, with app control and a washable filter. The 35-pint size suits a typical basement.",
+          "q": "Midea Cube 35 pint dehumidifier"
+        },
+        {
+          "name": "hOmeLabs 50-pint",
+          "role": "The big-basement unit",
+          "why": "High capacity for large or damp basements. Run it on a drain hose, or buy the version with a built-in pump, so you never empty a bucket.",
+          "band": "$270–$310 list",
+          "q": "hOmeLabs 50 pint dehumidifier"
+        }
+      ],
+      "notes": [
+        "EPA's guidance: keep indoor humidity below 60%, ideally between 30% and 50%.",
+        "Pint ratings changed in 2019, when DOE moved its test to cooler conditions, so the same machine now carries a smaller number than older listings. Compare ratings made under the same test.",
+        "Buy ENERGY STAR and use the drain hose: a full bucket is how dehumidifiers end up switched off by fall.",
+        "If humidity is fine but a cold corner still grows mold, that's a cold-surface problem, and an auditor's infrared scan finds it.",
+        "Mold already there? EPA says to fix the water problem first, dry everything, scrub hard surfaces with detergent and water, and get help for areas larger than about 10 square feet."
+      ],
+      "sources": [
+        { "label": "EPA: A Brief Guide to Mold, Moisture and Your Home", "href": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home" }
+      ]
+    },
+    {
+      "slug": "water-testing",
+      "element": "water",
+      "name": "Water test kits",
+      "short": "Lab panels and screening strips for private wells and older plumbing. EPA says to test a private well every year.",
+      "why": "Private wells aren't regulated under the federal Safe Drinking Water Act or by most states, so the owner is responsible for making sure the water is safe. EPA says to test every year for total coliform bacteria, nitrates, total dissolved solids and pH. Start with your local health department: some test private wells for free, and they know what's common in local groundwater. Paid lab panels earn their keep on what a basic test skips, such as arsenic and uranium, which occur naturally in some regions' groundwater, and lead from older plumbing.",
+      "tests": [{ "slug": "well-water", "name": "the well water guide" }],
+      "picks": [
+        {
+          "name": "Tap Score mail-in lab panel",
+          "role": "The lab-grade answer",
+          "why": "Mail-in kits analyzed by a lab, with a readable report. Choose a well panel (nitrates, metals, minerals) or a city panel (lead and other metals). Tap Score says it uses only ISO 17025, ELAP and NELAC certified labs; if a lender or a state program needs the result, confirm the lab is certified in your state.",
+          "band": "$190–$475 by panel",
+          "q": "Tap Score water test kit"
+        },
+        {
+          "name": "Health Metric well water kit",
+          "role": "The screening strips",
+          "why": "DIY strips for nitrate and nitrite, hardness, pH, iron and a bacteria presence test. A screen between lab tests, not a substitute for one.",
+          "q": "Health Metric well water test kit"
+        },
+        {
+          "name": "Safe Home lead-in-water test",
+          "role": "The lead question",
+          "why": "A single-issue kit for older homes: is there lead in this tap's water? Safe Home sells DIY and mail-in lab versions; the lab version gives you a number to act on.",
+          "q": "Safe Home lead in drinking water test kit"
+        }
+      ],
+      "notes": [
+        "EPA: test a private well every year for total coliform bacteria, nitrates, total dissolved solids and pH, and more often if young children, older adults, or someone pregnant or nursing lives there.",
+        "Test right away after flooding or nearby construction, after any well repair, or if the taste, odor or color changes.",
+        "Use a lab certified for drinking-water testing; EPA links each state's lab certification program. EPA itself doesn't test home water.",
+        "Add tests for what's nearby, per EPA: farms (nitrate, nitrite, pesticides, coliform), mining (metals, pH), gas drilling (chloride, sodium, barium, strontium), and landfills, gas stations, dry cleaners or a fuel smell (VOCs).",
+        "A TDS meter on its own isn't a safety test. It reads dissolved minerals, and water with bacteria or high nitrate can still read normal.",
+        "On city water? Under EPA's 2024 lead rule, most water systems must replace lead service lines within 10 years. Ask your utility whether your address has one."
+      ],
+      "sources": [
+        { "label": "EPA: Private drinking water wells", "href": "https://www.epa.gov/privatewells" },
+        { "label": "EPA: Protect your home's water", "href": "https://www.epa.gov/privatewells/protect-your-homes-water" },
+        { "label": "EPA: Potential well water contaminants", "href": "https://www.epa.gov/privatewells/potential-well-water-contaminants-and-their-impacts" },
+        { "label": "EPA: Certified drinking-water labs by state", "href": "https://www.epa.gov/dwlabcert/contact-information-certification-programs-and-certified-laboratories-drinking-water" },
+        { "label": "EPA: Lead and Copper Rule Improvements", "href": "https://www.epa.gov/ground-water-and-drinking-water/lead-and-copper-rule-improvements" },
+        { "label": "USGS: Arsenic and drinking water", "href": "https://www.usgs.gov/mission-areas/water-resources/science/arsenic-and-drinking-water" }
+      ]
+    }
+  ]
+}

@@ -49,13 +49,13 @@ test('every check has a source and a month', () => {
 });
 
 test('emails carry CASL identification and an unsubscribe link', () => {
-  const m = updateEmail(cfg, { title: 'Test <b>change</b>', summary: 'Summary', url: '/programs/renoclimat/', provinces: ['QC'] }, { provinces: ['QC'] }, '00000000-0000-4000-8000-000000000000');
+  const m = updateEmail(cfg, { title: 'Test <b>change</b>', summary: 'Summary', url: '/ca/programs/renoclimat/', provinces: ['QC'] }, { provinces: ['QC'] }, '00000000-0000-4000-8000-000000000000');
   assert.ok(m.html.includes('Test &lt;b&gt;change&lt;/b&gt;'), 'escaped');
   assert.ok(m.html.includes('1 Test Rd, Wakefield QC'), 'mailing address');
   assert.ok(m.html.includes('/account/unsubscribe/?t=00000000-0000-4000-8000-000000000000'), 'unsubscribe link');
   assert.ok(m.text.includes('Unsubscribe from all alerts: https://audityourhome.com/account/unsubscribe/?t='), 'text unsubscribe');
   assert.equal(m.headers['List-Unsubscribe'], '<https://audityourhome.com/account/unsubscribe/?t=00000000-0000-4000-8000-000000000000>');
-  assert.ok(m.html.includes('https://audityourhome.com/programs/renoclimat/'), 'absolute link');
+  assert.ok(m.html.includes('https://audityourhome.com/ca/programs/renoclimat/'), 'absolute link');
   const admin = layout(cfg, { title: 'x' });
   assert.ok(!admin.html.includes('Unsubscribe'), 'no unsubscribe without token');
   assert.equal(esc('"<&>\''), '&quot;&lt;&amp;&gt;&#39;');

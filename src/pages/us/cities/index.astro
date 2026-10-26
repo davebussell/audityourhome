@@ -1,0 +1,117 @@
+---
+/**
+ * Index of the 26 US metros, grouped by region and in Census rank order within each region.
+ * Card details come from each metro's research record (verified October 12, 2026).
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import MetroCard from '../../../components/us/MetroCard.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { METROS, US_VERIFIED, POPULATION_SOURCE } from '../../../lib/us/data';
+import { metrosByRegion, hasFreeVisitForAll, herStatus, isOpenChip } from '../../../lib/us/metro-view';
+
+const n = METROS.length;
+const groups = metrosByRegion();
+const freeVisit = METROS.filter(hasFreeVisitForAll).length;
+const herLive = METROS.filter((m) => isOpenChip(herStatus(m).chip)).length;
+
+const title = `Home energy audits in the ${n} largest U.S. metro areas (2026) | AuditYourHome`;
+const description = `Audit programs, prices, utilities and federal Home Energy Rebates status for the ${n} largest U.S. metro areas, from New York to Portland. Checked against official sources on ${US_VERIFIED}.`;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/us/' }, { name: 'Cities', path: '/us/cities/' }])];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>Cities</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{n} metro areas · verified {US_VERIFIED}</p>
+        <h1>Home energy audits in the {n} largest U.S. metros</h1>
+        <p class="lede">
+          Each metro page lists the audit programs that serve it, what they cost, the rebates open right now, local
+          energy rules and where the state stands on the federal Home Energy Rebates. Every fact links to the official
+          page it came from.
+        </p>
+      </div>
+      <Photo name="energy-bill-analysis" eager />
+    </div>
+
+    <div class="facts">
+      <div class="fact card">
+        <span class="big">{freeVisit} of {n}</span>
+        <span>metros have a free in-person audit open to all incomes on the metro’s main side, from a utility or state program.</span>
+      </div>
+      <div class="fact card">
+        <span class="big">{herLive} of {n}</span>
+        <span>metros have federal Home Energy Rebates taking applications, fully or in part. In the rest they’re paused, closed, unconfirmed or not launched.</span>
+      </div>
+      <div class="fact card">
+        <span class="big">$0</span>
+        <span>federal tax credit for a 2026 audit. The $150 audit credit (25C) ended with 2025. <a href="/us/cost/">What audits cost</a></span>
+      </div>
+    </div>
+
+    <p class="legend small">
+      Each card shows the lowest published audit price in the metro and the program it belongs to, the main utilities and
+      the federal rebate status.
+    </p>
+    <ul class="legend-chips small" aria-label="Status colors">
+      <li><span class="chip chip-active">Open</span></li>
+      <li><span class="chip chip-limited">Open · limits apply</span></li>
+      <li><span class="chip chip-limited">Partly open</span></li>
+      <li><span class="chip chip-limited">Paused</span></li>
+      <li><span class="chip chip-info">Not open yet</span></li>
+      <li><span class="chip chip-closed">Closed</span></li>
+      <li><span class="chip chip-neutral">Unconfirmed</span> no official status found</li>
+    </ul>
+
+    <nav class="jump" aria-label="Regions">
+      {groups.map((g) => <a href={`#${g.id}`}>{g.region} <span>{g.metros.length}</span></a>)}
+    </nav>
+
+    {groups.map((g) => (
+      <section class="region" id={g.id}>
+        <h2>{g.region}</h2>
+        <ul class="mgrid">
+          {g.metros.map((m) => (
+            <li><MetroCard m={m} variant="cheapest" /></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <p class="small src">
+      Metro areas and ranks: <a href={POPULATION_SOURCE.href} rel="noopener" target="_blank">{POPULATION_SOURCE.label}&nbsp;↗</a>.
+      Regions group metros by their principal city’s state. Program details: each metro page’s sources, checked {US_VERIFIED}.
+    </p>
+
+    <div class="lf-wrap">
+      <LeadFormUS heading="Live outside these metros?" context="us-cities" />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 0 18px; }
+  @media (max-width: 860px) { .facts { grid-template-columns: 1fr; } }
+  .fact { padding: 16px 18px; display: grid; gap: 4px; align-content: start; font-size: 14.5px; color: var(--muted); box-shadow: none; }
+  .fact .big { font-family: var(--display); font-weight: 800; font-size: 26px; line-height: 1.1; color: var(--ink); }
+  .legend { margin: 0 0 6px; }
+  .legend-chips { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+  .legend-chips li { display: inline-flex; align-items: center; gap: 6px; }
+  .jump { display: flex; gap: 8px; flex-wrap: wrap; padding: 8px 0 4px; }
+  .jump a { font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; background: var(--card); }
+  .jump a span { font-family: var(--mono); font-size: 12px; color: var(--faint); margin-left: 4px; }
+  .jump a:hover { border-color: var(--ink); }
+  .region { padding: 26px 0 6px; scroll-margin-top: 80px; }
+  .region h2 { font-size: 26px; margin-bottom: 14px; }
+  .mgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .src { margin-top: 26px; }
+  .src a { overflow-wrap: anywhere; }
+  .lf-wrap { margin: 26px 0 44px; }
+</style>

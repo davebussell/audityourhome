@@ -1,0 +1,177 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import TestStateTable from '../../../components/us/TestStateTable.astro';
+import TestGear from '../../../components/us/TestGear.astro';
+import { S, coStateRows } from '../../../lib/us/tests';
+
+const src = {
+  ul: S('carbonMonoxide', 'UL 2034'),
+  cpsc: S('carbonMonoxide', 'Questions and Answers'),
+  ncsl: S('carbonMonoxide', 'NCSL'),
+  bpi: S('carbonMonoxide', 'BPI-1200'),
+  wa: S('carbonMonoxide', 'RCW 19.27.530'),
+  or: S('carbonMonoxide', '105.836'),
+  ma: S('carbonMonoxide', '26F1/2'),
+  mn: S('carbonMonoxide', '299F.51'),
+  dc: S('carbonMonoxide', '6-751.02'),
+  fl: S('carbonMonoxide', '553.885'),
+  pa: S('carbonMonoxide', 'Act 121'),
+};
+
+const rows = coStateRows();
+const withLaw = rows.filter((r) => r.status === 'yes').length;
+
+const faqs = [
+  {
+    q: 'How many CO alarms do I need?',
+    a: 'CPSC recommends a CO alarm on every level of the home and outside sleeping areas, ideally interconnected so that when one sounds, they all sound. Some state laws are more specific: Illinois requires an alarm within 15 feet of every room used for sleeping, Minnesota within 10 feet of each sleeping room, and Florida within 10 feet of each sleeping room in buildings built on or after July 1, 2008 that have a fuel-burning appliance, fireplace, attached garage or other CO source.',
+    src: [src.cpsc, src.mn, src.fl],
+  },
+  {
+    q: 'Can I put a CO alarm in the kitchen or next to the furnace?',
+    a: 'CPSC does not recommend placing CO alarms in kitchens or above fuel-burning appliances. Keep them away from heating vents and anywhere furniture or drapes could block them.',
+    src: [src.cpsc],
+  },
+  {
+    q: 'How often should I replace a CO alarm?',
+    a: 'At the replacement age given in the product literature. CPSC doesn’t give a fixed number of years. Pressing the test button checks the alarm’s circuitry, not whether the sensor is still accurate.',
+    src: [src.cpsc],
+  },
+  {
+    q: 'My home is all-electric. Do I need a CO alarm?',
+    a: 'CPSC’s recommendation of an alarm on every level isn’t limited to homes with fuel-burning appliances. Most state laws we checked apply to homes with a fuel-burning appliance, a fireplace or an attached garage, but some are broader: Minnesota covers every single-family dwelling, and DC requires CO detectors in every new and existing occupied dwelling.',
+    src: [src.cpsc, src.mn, src.dc],
+  },
+  {
+    q: 'Do I need CO alarms to sell my home?',
+    a: 'In some states, yes. Oregon homes with a CO source can’t be sold or transferred without working alarms covering sleeping areas; in Washington, sellers of older owner-occupied homes must install alarms before the buyer moves in; Massachusetts fire departments inspect for compliance at sale; New Jersey requires detectors in one- and two-family homes at a change of occupancy. Pennsylvania sellers disclose CO detector information on the property disclosure statement. Check the table on this page for your state.',
+    src: [src.or, src.wa, src.ma, src.pa],
+  },
+];
+
+const sources = [src.cpsc, src.ul, src.bpi, src.ncsl];
+---
+
+<TestPage
+  slug="carbon-monoxide"
+  title="Carbon monoxide alarms in the US: CPSC placement, UL 2034 and state laws | AuditYourHome"
+  description="CPSC recommends a CO alarm on every level and outside sleeping areas. Placement, the UL 2034 standard, auditors’ CO action levels and alarm laws in 20 jurisdictions."
+  heroTitle="Carbon monoxide: an alarm on every level, and a check before you seal"
+  glance={[
+    { k: 'Where alarms go', v: 'Every level + outside sleeping areas', src: src.cpsc, srcLabel: 'CPSC' },
+    { k: 'Alarm standard', v: 'UL 2034, Edition 5 (2024)', src: src.ul, srcLabel: 'UL Standards' },
+    { k: 'Auditors stop work at', v: '70 ppm CO in the air', src: src.bpi, srcLabel: 'BPI-1200' },
+    { k: 'State alarm laws', v: `${withLaw} of ${rows.length} jurisdictions checked`, src: src.ncsl, srcLabel: 'NCSL + statutes' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Planning air sealing in a home with gas, oil or propane?"
+  leadSub="Email us your ZIP code and what you’re planning. A person reads every message and replies with certified auditors who can run the combustion safety test alongside the work."
+>
+  <Fragment slot="lede">
+    CPSC recommends a carbon monoxide alarm on every level of your home and outside sleeping areas,
+    ideally interconnected so that when one sounds, they all do. Most of the states we checked also
+    require alarms in at least some homes, usually those with a fuel-burning appliance, a fireplace
+    or an attached garage.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="what-h">
+    <h2 id="what-h">What a CO alarm is built to do</h2>
+    <p>
+      The standard for home CO alarms is <strong>UL 2034</strong>, and CPSC points consumers to it.
+      Its current edition, Edition 5, was published June 3, 2024 and last revised August 7, 2024. Alarms must sound before CO reaches levels that impair a person’s ability to
+      react, and must resist false alarms from long-term low-level or brief CO, such as air
+      pollution or properly working appliances.
+    </p>
+    <p>
+      Two limits to know: the test button checks the circuitry, not the accuracy of the sensor, and
+      alarms wear out. Replace yours at the age given in the product literature; CPSC doesn’t set a
+      fixed number of years.
+    </p>
+    <TestCite src={[src.ul, src.cpsc]} labels={['UL 2034 (Edition 5)', 'CPSC CO questions and answers']} />
+  </section>
+
+  <section class="sec" aria-labelledby="where-h">
+    <h2 id="where-h">Where to put alarms</h2>
+    <ol class="steps">
+      <li>
+        <h3>Every level, and outside sleeping areas</h3>
+        <p>Ideally interconnected, so that when one alarm sounds, all of them sound.</p>
+      </li>
+      <li>
+        <h3>Keep them clear</h3>
+        <p>Away from heating vents and anywhere furniture or drapes could block them.</p>
+      </li>
+      <li>
+        <h3>Not in the kitchen or over an appliance</h3>
+        <p>CPSC doesn’t recommend kitchens or spots above fuel-burning appliances.</p>
+      </li>
+      <li>
+        <h3>Pick a power source with a backup</h3>
+        <p>Battery-operated alarms, or plug-in or hard-wired alarms with battery backup.</p>
+      </li>
+    </ol>
+    <TestCite src={src.cpsc} labels={['CPSC CO questions and answers']} />
+  </section>
+
+  <section class="sec" aria-labelledby="audit-h">
+    <h2 id="audit-h">What an energy auditor measures</h2>
+    <p class="measure">
+      Auditors working to BPI’s standard check the air for carbon monoxide before they test anything,
+      and act on what they find:
+    </p>
+    <div class="std-grid">
+      <div class="std warn">
+        <p class="sv">9 to 35 ppm</p>
+        <p class="sl">Advise</p>
+        <p>The auditor advises checking the sources of CO and ventilating.</p>
+      </div>
+      <div class="std heat">
+        <p class="sv">36 to 69 ppm</p>
+        <p class="sl">Ventilate and shut off sources</p>
+        <p>Open the house up and turn off the appliances producing CO.</p>
+      </div>
+      <div class="std dead">
+        <p class="sv">70 ppm or more</p>
+        <p class="sl">Stop and evacuate</p>
+        <p>Work stops, everyone leaves, and emergency services are called from outside.</p>
+      </div>
+    </div>
+    <TestCite src={src.bpi} labels={['ANSI/BPI-1200-S-2017']} />
+    <p class="measure">
+      The appliance-by-appliance check, measuring spillage and CO under worst-case conditions, is a
+      separate test. See the <a href="/us/tests/combustion-safety/">combustion safety guide</a>.
+    </p>
+  </section>
+
+  <section class="sec" aria-labelledby="state-h">
+    <h2 id="state-h">State CO alarm laws</h2>
+    <p class="small measure">
+      A “statewide law” here means a state law requires CO alarms in at least some homes: all homes,
+      homes being sold, rentals or new construction. Florida, Georgia and Michigan rules apply mainly
+      to new construction, and Texas’s statute covers only child-care facilities. Some laws require
+      alarms listed to UL 2034 or UL 2075, including North Carolina’s rental law and Michigan’s.
+    </p>
+    <TestStateTable
+      rows={rows}
+      caption="Carbon monoxide alarm laws, 20 jurisdictions"
+      statusHead="Statewide law?"
+      statusLabels={{ yes: 'Yes', no: 'Not for homes', unknown: 'Not confirmed' }}
+      id="state-rules"
+    />
+    <TestCite src={src.ncsl} labels={['NCSL CO detector requirements (updated Sep 29, 2025)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If an alarm sounds</h2>
+    <ul>
+      <li><strong>Get everyone out to fresh air and call emergency services from outside.</strong> It’s the same response BPI’s standard requires of auditors when CO in the air reaches 70 ppm.</li>
+      <li>Have a qualified technician find the source before the appliances run again.</li>
+      <li>If your home has natural-draft gas, oil or propane appliances and you’re planning air sealing, ask for a <a href="/us/tests/combustion-safety/">combustion safety test</a> as part of the work.</li>
+    </ul>
+    <TestCite src={src.bpi} labels={['ANSI/BPI-1200-S-2017']} />
+  </section>
+
+  <TestGear cats={[{ slug: 'co-alarms', label: 'Carbon monoxide alarms' }, { slug: 'air-quality-monitors', label: 'Indoor air quality monitors' }]} />
+</TestPage>

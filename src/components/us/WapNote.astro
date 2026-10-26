@@ -1,0 +1,54 @@
+---
+/**
+ * The federal Weatherization Assistance Program in brief, from federal.json (weatherization),
+ * verified October 12, 2026.
+ */
+import { FEDERAL, US_VERIFIED } from '../../lib/us/data';
+
+interface Props {
+  heading?: string;
+}
+const { heading = 'Weatherization Assistance Program (federal, through your state)' } = Astro.props;
+const w = FEDERAL.weatherization;
+const doe = (w.sources as any[]).find((s) => /weatherization-assistance-program$/.test(s.href)) ?? w.sources[0];
+const pa = (w.sources as any[]).find((s) => /dced\.pa\.gov/.test(s.href));
+const cfr = (w.sources as any[]).find((s) => /440\.22/.test(s.href));
+---
+
+<aside class="card card-pad wap">
+  <h3>{heading}</h3>
+  <p>
+    The U.S. Department of Energy’s Weatherization Assistance Program pays for energy-efficiency work in lower-income
+    homes through state agencies and local providers. The work follows an energy audit, and only cost-effective
+    measures the audit supports are installed, along with health and safety fixes.
+  </p>
+  <ul>
+    <li>
+      <strong>Who qualifies:</strong> under federal rules, households with income at or below 200% of the federal poverty
+      guidelines, households where someone received TANF or SSI cash assistance in the past 12 months, or, where the state
+      chooses, households eligible for LIHEAP energy bill help. With the 2026 guidelines, 200% is $31,920 a year for one
+      person and $66,000 for a family of four (as Pennsylvania’s program publishes it).
+      {cfr && <a href={cfr.href} rel="noopener" target="_blank">10 CFR 440.22&nbsp;↗</a>}
+      {pa && <span> · <a href={pa.href} rel="noopener" target="_blank">Pennsylvania DCED&nbsp;↗</a></span>}
+    </li>
+    <li><strong>How much work:</strong> the Program Year 2026 average spending limit is $8,813 per home.</li>
+    <li>
+      <strong>How to apply:</strong> contact your state weatherization administrator, who points you to the local provider.
+      <a href={w.findUrl} rel="noopener" target="_blank">DOE: how to apply&nbsp;↗</a>
+    </li>
+  </ul>
+  <p class="small wap-src">
+    <a href={doe.href} rel="noopener" target="_blank">DOE: Weatherization Assistance Program&nbsp;↗</a> · verified {US_VERIFIED} ·
+    <a href="/us/programs/weatherization-assistance-program/">Our guide to the program</a>
+  </p>
+</aside>
+
+<style>
+  .wap { border-left: 4px solid var(--pine); box-shadow: none; }
+  .wap h3 { font-size: 18px; margin-bottom: 8px; }
+  .wap p { font-size: 15px; color: var(--muted); }
+  .wap ul { margin: 0 0 12px; padding-left: 18px; display: grid; gap: 6px; font-size: 14.5px; }
+  .wap a { overflow-wrap: anywhere; }
+  .wap .wap-src { margin: 0; font-size: 13.5px; color: var(--faint); }
+  .wap .wap-src a { color: var(--steel); }
+</style>

@@ -1,0 +1,37 @@
+---
+/**
+ * A status chip from statusChip() with the source's own wording beside it. The wording carries
+ * the dates and caveats a chip can't, so it is always shown.
+ */
+import { statusChip } from '../../lib/us/data';
+import { clean, type Chip } from '../../lib/us/programs';
+
+interface Props {
+  /** the source's status wording */
+  text: string | null;
+  /** chip computed elsewhere (defaults to statusChip(text)) */
+  chip?: Chip;
+  /** shown when the source stated no status */
+  empty?: string;
+  /** short label before the chip, e.g. "HEEHR" */
+  label?: string;
+  class?: string;
+}
+const { text, chip, empty = 'No status stated on any state page we could check.', label, class: cls } = Astro.props;
+const c = chip ?? statusChip(text);
+---
+
+<p class:list={['pstat', cls]}>
+  {label && <span class="plab">{label}</span>}
+  <span class={`chip ${c.cls}`}>{c.label}</span>
+  <span class="pwords">{text ? clean(text) : empty}</span>
+</p>
+
+<style>
+  .pstat { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); overflow-wrap: anywhere; }
+  .pstat .chip { margin-right: 8px; vertical-align: 1px; }
+  .plab {
+    font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink); margin-right: 8px;
+  }
+</style>

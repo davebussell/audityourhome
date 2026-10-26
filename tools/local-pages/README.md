@@ -1,6 +1,6 @@
 # Local service pages generator
 
-Builds the data behind `/services/<service>/<city>/`, `/services/<service>/` and `/cities/<city>/`
+Builds the data behind `/ca/services/<service>/<city>/`, `/ca/services/<service>/` and `/ca/cities/<city>/`
 (70 cities × 16 services) into `src/data/local/`.
 
 ```

@@ -1,0 +1,67 @@
+---
+/**
+ * One home energy audit program from a metro research record: price, status (chip plus the
+ * program's own wording), who qualifies, what you get, how to book, official link and check date.
+ * Two columns on wide screens (summary | details), stacked on phones.
+ */
+import type { AuditView } from '../../lib/us/metro-view';
+import { auditTags } from '../../lib/us/metro-view';
+import { fmtISO, trivialFreeText } from '../../lib/us/metro-text';
+import StatusLine from './StatusLine.astro';
+
+interface Props {
+  p: AuditView;
+  /** heading level for the program name */
+  level?: 'h3' | 'h4';
+}
+const { p, level = 'h3' } = Astro.props;
+const Tag = level;
+const tags = auditTags(p);
+const showCostText = !!p.costText && p.costText.trim() !== p.cost.label && !(p.cost.kind === 'free' && trivialFreeText(p.costText));
+const priceCls = p.cost.kind === 'free' ? 'free' : p.cost.kind === 'fee' ? 'fee' : 'other';
+---
+
+<article class:list={['card', 'ap', { 'ap-closed': p.status === 'closed' }]}>
+  <div class="ap-main">
+    <Tag class="ap-name">{p.name}</Tag>
+    {p.runBy && <p class="ap-by">{p.runBy}</p>}
+    <StatusLine text={p.statusText} chip={p.chip} />
+    <div class="ap-price">
+      <span class:list={['price', priceCls]}>{p.cost.label}</span>
+      {tags.map((t) => <span class="tag">{t}</span>)}
+    </div>
+    {showCostText && <p class="ap-costtext"><span class="lbl">Cost, as published</span> {p.costText}</p>}
+    <p class="meta ap-src">
+      {p.url ? <a href={p.url} rel="noopener" target="_blank">Official page&nbsp;↗</a> : <span>No official page given</span>}
+      {p.checked && <span> · verified {fmtISO(p.checked)}</span>}
+    </p>
+  </div>
+  <dl class="kv">
+    {p.whoQualifies && <div><dt>Who qualifies</dt><dd>{p.whoQualifies}</dd></div>}
+    {p.whatYouGet && <div><dt>What you get</dt><dd>{p.whatYouGet}</dd></div>}
+    {p.howToBook && <div><dt>How to book</dt><dd>{p.howToBook}</dd></div>}
+  </dl>
+</article>
+
+<style>
+  .ap { padding: 20px 22px; display: grid; gap: 14px; align-content: start; min-width: 0; box-shadow: none; }
+  @media (min-width: 980px) {
+    .ap { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 12px 32px; }
+  }
+  .ap-closed { background: #FBFAF7; }
+  .ap-main { display: grid; gap: 9px; align-content: start; min-width: 0; }
+  .ap-name { font-size: 18px; margin: 0; line-height: 1.25; }
+  .ap-by { margin: -3px 0 0; font-size: 13.5px; color: var(--faint); line-height: 1.45; }
+  .ap-price { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+  .price { font-family: var(--display); font-weight: 800; font-size: 19px; line-height: 1.25; }
+  .price.free { color: var(--pine); }
+  .price.fee { color: var(--ink); }
+  .price.other { color: var(--steel); font-size: 16.5px; }
+  .tag { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-strong); border-radius: 6px; padding: 1px 7px; white-space: nowrap; }
+  .ap-costtext { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; overflow-wrap: anywhere; }
+  .lbl, .kv dt { display: block; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .kv { margin: 0; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .kv dd { margin: 1px 0 0; font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; }
+  .ap-src { margin: 0; }
+  .ap-src a { color: var(--steel); }
+</style>

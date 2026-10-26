@@ -1,0 +1,44 @@
+---
+/** Where the US question form lands after a Netlify submission. Not indexed. */
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Message received | AuditYourHome" description="Your message reached us." indexable={false}>
+  <div class="container thanks">
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Message received</p>
+        <h1>Thanks. Your message reached us.</h1>
+        <p class="lede measure">
+          A person reads every message, usually within one business day, and replies by email from dave@clickshift.ca with the certified
+          auditors and utility programs that serve your ZIP code.
+        </p>
+      </div>
+    </div>
+    <div class="steps">
+      <article class="card card-pad">
+        <h2>While you wait</h2>
+        <p>Find your last 12 months of energy bills and note the rooms that run cold, hot, drafty or damp. Auditors use both.</p>
+      </article>
+      <article class="card card-pad">
+        <h2>Check your utility first</h2>
+        <p>Many utilities pay for most or all of a home energy assessment. Your metro page lists what's open now.</p>
+        <p><a href="/us/cities/">Programs by metro</a></p>
+      </article>
+      <article class="card card-pad">
+        <h2>Plan the rest</h2>
+        <p>The planner estimates what each upgrade could save in your climate and at your state's energy prices.</p>
+        <p><a href="/us/plan/">Open the planner</a></p>
+      </article>
+    </div>
+    <p class="back"><a class="btn btn-ghost" href="/us/">Back to the home page</a></p>
+  </div>
+</Base>
+
+<style>
+  .thanks { padding-bottom: 48px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+  .steps h2 { font-size: 18px; margin: 0 0 6px; }
+  .steps p { margin: 0 0 6px; color: var(--muted); }
+  .back { margin-top: 22px; }
+</style>

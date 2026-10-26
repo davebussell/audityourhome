@@ -1,0 +1,111 @@
+---
+/** Rebate and program changes across Canada, newest first (also feeds the alert emails). */
+import Base from '../../layouts/Base.astro';
+import { SITE, ACCOUNTS_ENABLED } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { PROVINCES, provinceName } from '../../lib/account/catalog';
+import updatesJson from '../../data/program-updates.json';
+
+type Update = { slug: string; date: string; provinces: string[]; title: string; summary: string; url: string; source: string };
+const items = [...(updatesJson.items as Update[])].sort((a, b) => b.date.localeCompare(a.date));
+const fmt = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+const latest = items[0]?.date ?? SITE.dataReviewDateISO;
+const usedProvinces = PROVINCES.filter((p) => items.some((u) => u.provinces.includes(p.value)));
+
+const title = 'Home energy rebate changes in Canada (2026) | AuditYourHome';
+const description = `What changed in home energy rebates and programs across Canada, newest first: ${items.slice(0, 3).map((u) => u.title.split(':')[0]).join(', ')} and more.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Rebates & programs', path: '/ca/programs/' },
+    { name: 'Program changes', path: '/ca/updates/' },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Home energy rebate and program changes in Canada',
+    description,
+    url: `${SITE.url}/ca/updates/`,
+    dateModified: latest,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: items.map((u, i) => ({ '@type': 'ListItem', position: i + 1, name: u.title, url: `${SITE.url}${u.url}` })),
+    },
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/programs/">Rebates &amp; programs</a> / Program changes</nav>
+    <div class="page-hero">
+      <p class="eyebrow">Latest change {fmt(latest)}</p>
+      <h1>Rebate and program changes</h1>
+      <p class="lede">
+        Home energy programs change often, and rarely with much notice. This is what changed recently,
+        province by province, with a link to our full guide and to the official page for each one.
+      </p>
+      {ACCOUNTS_ENABLED && (
+        <p><a class="btn btn-primary" href="/ca/alerts/">Email me when my province changes</a></p>
+      )}
+    </div>
+
+    <div class="upd-filter" role="group" aria-label="Filter by province">
+      <button type="button" class="pchip-btn is-on" data-prov="">All</button>
+      {usedProvinces.map((p) => <button type="button" class="pchip-btn" data-prov={p.value} title={p.label}>{p.label}</button>)}
+    </div>
+
+    <ol class="upd-list">
+      {items.map((u) => (
+        <li class="card upd" data-provinces={u.provinces.join(' ')} id={u.slug}>
+          <p class="upd-meta">
+            <time datetime={u.date}>{fmt(u.date)}</time>
+            {u.provinces.length ? u.provinces.map((p) => <span class="chip chip-neutral" title={provinceName(p)}>{provinceName(p)}</span>) : <span class="chip chip-neutral">All of Canada</span>}
+          </p>
+          <h2><a href={u.url}>{u.title}</a></h2>
+          <p>{u.summary}</p>
+          <p class="small upd-links"><a href={u.url}>Our guide →</a> · <a href={u.source} rel="noopener" target="_blank">Official page ↗</a></p>
+        </li>
+      ))}
+    </ol>
+
+    <section class="upd-foot card card-pad">
+      <h2>How we keep this list</h2>
+      <p class="small">
+        We re-check every program page we cover against the official source and record what changed and
+        when. Amounts and deadlines are as published by each program on the date shown; always confirm on
+        the official page before you spend money. Something we missed? Email
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+      <p class="small"><a href="/ca/programs/">All rebates and programs →</a></p>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.upd-filter .pchip-btn');
+  const rows = document.querySelectorAll<HTMLElement>('.upd');
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    buttons.forEach((x) => x.classList.toggle('is-on', x === b));
+    const p = b.dataset.prov;
+    rows.forEach((r) => { r.hidden = Boolean(p) && !(r.dataset.provinces ?? '').split(' ').includes(p!) && (r.dataset.provinces ?? '') !== ''; });
+  }));
+</script>
+
+<style>
+  .upd-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+  .pchip-btn { font-family: var(--body); font-weight: 600; font-size: 13.5px; padding: 7px 13px; border-radius: 999px; border: 1.5px solid var(--line-strong); background: #fff; color: var(--muted); cursor: pointer; }
+  .pchip-btn.is-on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .upd-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .upd { padding: 20px 24px; }
+  .upd-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin: 0 0 8px; font-family: var(--mono); font-size: 12.5px; color: var(--steel); }
+  .upd h2 { font-size: clamp(19px, 2.2vw, 22px); margin: 0 0 8px; line-height: 1.3; }
+  .upd h2 a { color: var(--ink); text-decoration: none; }
+  .upd h2 a:hover { color: var(--heat-deep); text-decoration: underline; }
+  .upd p { margin: 0 0 8px; }
+  .upd-links { margin: 0 !important; }
+  .upd-foot { margin: 28px 0 56px; }
+  .upd-foot h2 { font-size: 20px; }
+  @media (max-width: 560px) { .upd { padding: 16px 18px; } }
+</style>

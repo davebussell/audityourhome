@@ -1,0 +1,308 @@
+---
+/**
+ * "Keeping the heat in" topic page. Content: src/data/learn.json (15 topics in
+ * four groups). Section HTML is pre-sanitized research copy; tables use
+ * table.stack (global.css) so they stack into cards on phones.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadForm from '../../../components/LeadForm.astro';
+import { ogFor } from '../../../lib/photos';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import learnJson from '../../../data/learn.json';
+
+interface Stat { value: string; label: string; source: string; sourceName: string }
+interface LearnTopic {
+  slug: string;
+  group: string;
+  topic: string;
+  title: string;
+  h1: string;
+  description: string;
+  blurb: string;
+  lede: string;
+  stats: Stat[];
+  keyStat: number;
+  sections: { h2: string; html: string }[];
+  faq: { q: string; a: string }[];
+  sources: { href: string; label: string }[];
+  related: { href: string; label: string }[];
+  verified: string;
+  verifiedISO: string;
+}
+
+export function getStaticPaths() {
+  const all = learnJson as LearnTopic[];
+  return all.map((x) => {
+    const inGroup = all.filter((t) => t.group === x.group);
+    const i = inGroup.findIndex((t) => t.slug === x.slug);
+    return {
+      params: { slug: x.slug },
+      props: { x, prev: inGroup[i - 1] ?? null, next: inGroup[i + 1] ?? null },
+    };
+  });
+}
+
+const { x, prev, next } = Astro.props as { x: LearnTopic; prev: LearnTopic | null; next: LearnTopic | null };
+const path = `/ca/learn/${x.slug}/`;
+
+/** Hero photo per topic; no two neighbouring topics share one. */
+const LEARN_PHOTO: Record<string, string> = {
+  'foundations-basements': 'radon-testing',
+  walls: 'thermal-imaging',
+  'roofs-attics': 'attic-insulation-inspection',
+  'windows-doors': 'thermal-imaging',
+  'air-sealing': 'blower-door-test',
+  'moisture-control': 'mold-testing',
+  ventilation: 'carbon-monoxide-testing',
+  'hrv-erv': 'ventilation-assessment',
+  'heating-systems': 'heat-loss-calculation',
+  thermostats: 'home-hero',
+  'hvac-maintenance': 'combustion-safety-test',
+  'water-heaters': 'energy-bill-analysis',
+  'air-conditioning': 'region-ontario',
+  'energuide-ratings': 'home-energy-audit',
+  'previous-audit': 'energy-bill-analysis',
+};
+const heroPhoto = LEARN_PHOTO[x.slug] ?? 'home-energy-audit';
+const ogImage = ogFor(heroPhoto);
+
+/** Wrap each table in .tablewrap (global.css) so mid-width screens scroll the table, not the page. */
+const wrapTables = (h: string) =>
+  h.replace(/<table\b/g, '<div class="tablewrap"><table').replace(/<\/table>/g, '</table></div>');
+
+/** Envelope and air topics point to upgrade payback; systems and ratings to running costs. */
+const envelopeOrAir = x.group === 'The envelope' || x.group === 'Air and moisture';
+const calc = envelopeOrAir
+  ? {
+      href: '/ca/calculators/upgrade-payback/',
+      label: 'Upgrade payback calculator',
+      text: 'See what this kind of upgrade could pay back at your city’s energy prices, then put the work in a sensible order in your home plan.',
+    }
+  : {
+      href: '/ca/calculators/energy-costs/',
+      label: 'Energy cost calculator',
+      text: 'Compare what heating, cooling and hot water cost to run at your city’s energy prices, then put any upgrade in order in your home plan.',
+    };
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Learn', path: '/ca/learn/' },
+    { name: x.topic, path },
+  ]),
+  faqSchema(x.faq),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: x.h1,
+    description: x.description,
+    dateModified: x.verifiedISO,
+    mainEntityOfPage: `${SITE.url}${path}`,
+    ...(ogImage ? { image: `${SITE.url}${ogImage}` } : {}),
+    articleSection: x.group,
+    author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  },
+];
+---
+
+<Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema} ogImage={ogImage}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/learn/">Learn</a> <span aria-hidden="true">/</span> <span>{x.topic}</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{x.group} · verified {x.verified}</p>
+        <h1>{x.h1}</h1>
+        <p class="lede measure" set:html={x.lede} />
+      </div>
+      <Photo name={heroPhoto} eager />
+    </div>
+
+    <ul class="stats" aria-label="Key numbers">
+      {x.stats.map((s) => (
+        <li class="stat">
+          <span class="stat-value">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+          <a class="stat-src" href={s.source} rel="noopener">Source: {s.sourceName}{' '}↗</a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="prose">
+      {x.sections.map((s) => (
+        <>
+          <h2>{s.h2}</h2>
+          <Fragment set:html={wrapTables(s.html)} />
+        </>
+      ))}
+    </div>
+
+    <div class="card card-pad run">
+      <div class="run-text">
+        <h3>Run your numbers</h3>
+        <p class="mb-0">{calc.text}</p>
+      </div>
+      <div class="run-btns">
+        <a class="btn btn-primary" href={calc.href}>{calc.label} →</a>
+        <a class="btn btn-ghost" href="/ca/plan/">Build my plan</a>
+      </div>
+    </div>
+
+    <h2 class="sec">Common questions</h2>
+    <div class="measure">
+      {x.faq.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {x.sources.map((s) => (
+          <li><a href={s.href} rel="noopener">{s.label}{' '}↗</a></li>
+        ))}
+      </ul>
+      <p class="small mb-0">Figures checked against these pages on {x.verified}. Programs and prices change, so confirm on the official page before you spend.</p>
+    </div>
+
+    {(prev || next) && (
+      <nav class="pager" aria-label={`More in ${x.group}`}>
+        {prev ? (
+          <a class="card pg" href={`/ca/learn/${prev.slug}/`}>
+            <span class="pg-dir">← Previous topic</span>
+            <span class="pg-title">{prev.topic}</span>
+          </a>
+        ) : <span class="pg-empty" aria-hidden="true"></span>}
+        {next ? (
+          <a class="card pg pg-next" href={`/ca/learn/${next.slug}/`}>
+            <span class="pg-dir">Next topic →</span>
+            <span class="pg-title">{next.topic}</span>
+          </a>
+        ) : <span class="pg-empty" aria-hidden="true"></span>}
+      </nav>
+    )}
+
+    <div class="related">
+      <h2 class="rel-h">Related on AuditYourHome</h2>
+      <div class="rel-links">
+        {x.related.map((r) => <a class="btn btn-ghost btn-sm" href={r.href}>{r.label}</a>)}
+        <a class="btn btn-ghost btn-sm" href="/ca/learn/">All “Keeping the heat in” topics</a>
+      </div>
+    </div>
+
+    <LeadForm heading="Have your own house measured" context={`learn-${x.slug}`} />
+    <div class="after-form"></div>
+  </div>
+</Base>
+
+<style>
+  /* key numbers */
+  .stats {
+    list-style: none;
+    margin: 0 0 8px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--heat);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 18px 20px 16px;
+    min-width: 0;
+  }
+  .stat-value {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(26px, 3vw, 32px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label { font-size: 14.5px; line-height: 1.5; color: var(--muted); }
+  .stat-src {
+    margin-top: auto;
+    padding-top: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--steel);
+    text-decoration: none;
+  }
+  .stat-src:hover { text-decoration: underline; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: 1fr; gap: 12px; }
+    .stat { padding: 16px 18px 14px; }
+  }
+
+  /* article body: text keeps a reading measure; tables may run wider */
+  .prose > :global(*) { max-width: 68ch; }
+  .prose > :global(.tablewrap) { max-width: 920px; }
+  .prose :global(h2) { font-size: 25px; margin: 34px 0 10px; }
+  .prose :global(h3) { font-size: 18.5px; margin: 22px 0 8px; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 22px; display: grid; gap: 8px; margin: 0 0 16px; }
+  .prose :global(.tablewrap) { margin: 10px 0 18px; }
+  .prose :global(table) { font-size: 14.5px; }
+  .prose :global(td), .prose :global(th) { padding: 10px 12px; }
+  @media (max-width: 640px) {
+    .prose :global(.tablewrap) { margin: 6px 0 16px; }
+    .prose :global(table.stack) { border-top: 2px solid var(--line-strong); }
+    .prose :global(table.stack tr) { padding: 12px 2px 14px; }
+    .prose :global(table.stack td) { padding: 2px 0; }
+  }
+
+  /* calculator call-to-action */
+  .run {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+    border-top: 4px solid var(--pine);
+    margin: 34px 0 6px;
+  }
+  .run-text { flex: 1 1 340px; min-width: 0; }
+  .run h3 { margin-bottom: 4px; }
+  .run-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .sec { font-size: 25px; margin: 34px 0 6px; }
+
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
+  .srcs ul { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
+
+  /* previous / next within the group */
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 26px 0 8px; }
+  .pg {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+  .pg:hover { border-color: var(--heat); color: var(--ink); }
+  .pg-next { text-align: right; }
+  .pg-dir { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--muted); }
+  .pg-title { font-family: var(--display); font-weight: 700; font-size: 17.5px; line-height: 1.25; }
+  @media (max-width: 640px) {
+    .pager { grid-template-columns: 1fr; }
+    .pg-next { text-align: left; }
+    .pg-empty { display: none; }
+  }
+
+  .related { margin: 22px 0 28px; }
+  .rel-h { font-size: 19px; margin: 0 0 10px; }
+  .rel-links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .after-form { height: 40px; }
+</style>

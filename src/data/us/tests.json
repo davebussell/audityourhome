@@ -1,0 +1,1752 @@
+{
+  "meta": {
+    "retrieved": "2026-10-12",
+    "scope": "United States home-health and home-energy testing facts for audityourhome.com (/us/).",
+    "method": "Every cited source was opened on 2026-10-12, with WebFetch or with curl using a generic User-Agent and no email or personal identifier. curl was used for PDFs and data files and where WebFetch was blocked or failed. A few sources were opened only with curl: the TDLR mold pages, the PA Act 121 text, the Missouri House bill actions, the BPI standards page, the NJ DCA codes index and rule PDF, Va. Code 55.1-1220, the DOE 2021 IECC field-study zip, the 2021 IECC webinar transcript, the EPA radon-zone XLS, the EPA LCRI public fact sheet and the EPA Lead and Copper Rule page, Texas DSHS radon, and the ELI 2025 radon excerpt. Dates in source labels are the 'last updated' dates shown on those pages.",
+    "conventions": "null = not verified (see notes). stateSummary booleans: radonLicensing = state law requires a state license/certification/registration or a mandated credential (e.g., NRPP/NRSB) to test or mitigate; moldLicensing = same for mold assessment/remediation; coAlarmLaw = a statewide law requires CO alarms in at least some homes (all homes, sale/transfer, rentals, or new construction).",
+    "limitations": "The shared WebSearch budget ran out mid-research. After that, pages were found only by following links from official pages already opened, or by entering known URL patterns. Several official sites block automated readers (CDC, ICC codes, Colorado and Illinois legislature sites, leginfo.legislature.ca.gov). In those cases secondary compilations (NCSL, ELI) or official PDFs from DOE/PNNL are cited and flagged."
+  },
+  "radon": {
+    "actionLevel": "EPA recommends fixing a home if the radon level is 4 pCi/L or more; EPA gives the equivalent as 150 Bq/m3 (exact conversion is 148 Bq/m3 because 1 pCi/L = 37 Bq/m3; EPA rounds). EPA says there is no known safe level of radon exposure. Average indoor level is about 1.3 pCi/L (50 Bq/m3) and outdoor air about 0.4 pCi/L (15 Bq/m3). EPA's best estimate is about 21,000 radon-related lung cancer deaths a year.",
+    "considerFixing": "EPA says to consider fixing a home with levels between 2 and 4 pCi/L (75-150 Bq/m3). Levels below 4 pCi/L still carry some risk, and EPA says most homes today can be reduced to 2 pCi/L or below.",
+    "testTypes": "Short-term tests stay in the home 2 to 90 days (charcoal canisters, alpha track, electret ion chamber, continuous monitors, charcoal liquid scintillation); long-term tests stay more than 90 days (alpha track, electret) and better reflect the year-round average. EPA's steps: (1) take a short-term test; (2) if the result is 4 pCi/L or higher, follow up with a long-term test (better year-round picture) or a second short-term test (faster; do it immediately if the first result is more than twice 4 pCi/L); (3) fix the home if the long-term result is 4 pCi/L or more, or consider fixing if the average of the two short-term tests is 4 pCi/L or more. Place the test in the lowest lived-in level, in a regularly used room (not a kitchen or bathroom), at least 20 inches above the floor, away from drafts, heat, humidity and exterior walls; keep windows and doors closed (for 2-3 day tests, starting at least 12 hours before), and don't run 2-3 day tests during severe storms or high winds. For home sales, EPA's Home Buyer's and Seller's Guide (revised March 2024) accepts three short-term options: two passive tests side by side for at least 48 hours, two back-to-back passive tests of at least 48 hours each, or a continuous monitor for at least 48 hours; fix if the average is 4 pCi/L or more, and take steps to prevent or detect device interference.",
+    "zones": "EPA's Map of Radon Zones (developed in 1993) assigns each county a zone by predicted average indoor radon: Zone 1 (red) highest potential, average indoor levels may be greater than 4 pCi/L; Zone 2 (orange) moderate, 2-4 pCi/L; Zone 3 (yellow) low, less than 2 pCi/L. It exists to help national, state and local organizations target resources and adopt radon-resistant building codes. EPA says it must not be used to decide whether to test a home: high levels turn up in all three zones and every home should be tested. Map page: https://www.epa.gov/radon/epa-map-radon-zones ; PDF map: https://www.epa.gov/system/files/documents/2024-05/radon-zones-map_text_link.pdf ; county list (XLS): https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls . EPA's page does not link an interactive map.",
+    "certification": "EPA requires states that receive indoor radon grants to keep a public list of credentialed providers, credentialed either through a state process (such as a state license) or through one of two national proficiency programs. NRPP (National Radon Proficiency Program, accredited by ANAB to ISO/IEC 17024; renewal every two years): find a pro at https://nrpp.info/pro-search/ (search by certification type, last name or NRPP ID). NRSB (National Radon Safety Board): find a pro at https://nrsb.org/find-a-pro/ (search by state, ZIP and radius, name, certification type or company). Where a state licenses radon work, the state list governs who may legally work there. EPA's locator page: https://www.epa.gov/radon/find-radon-test-kit-or-measurement-and-mitigation-professional ; discounted test kits are sold by National Radon Program Services at Kansas State University (https://sosradon.org/test-kits), and some states give free or discounted kits.",
+    "stateLicensing": [
+      {
+        "state": "CA",
+        "requirement": "No one may provide radon measurement or mitigation services to the public unless they hold NRPP or NRSB certification and are on CDPH's certified list (Health & Safety Code 106750-106795; certificate copy submitted to CDPH, renewed every 2 years, no state fee). Mitigators must also hold a CSLB contractor license (B, C20, C36 or D64).",
+        "url": "https://www.cdph.ca.gov/Programs/CEH/DRSEM/Pages/EMB/Radon/Radon-Services-Certification.aspx"
+      },
+      {
+        "state": "CO",
+        "requirement": "State license (Division of Professions and Occupations, DORA) required for radon measurement and mitigation professionals since July 1, 2022 (C.R.S. 12-165-101 to -113); per AARST, private certification is required to qualify for and keep the license; work must follow ANSI/AARST standards. Exempt: people testing or mitigating a single-family home they own and occupy, or a unit they lease/occupy.",
+        "url": "https://dora.colorado.gov/press-release/radon-professional-licensure-now-required-in-colorado"
+      },
+      {
+        "state": "CT",
+        "requirement": "Radon mitigators must hold NRPP or NRSB certification and a Home Improvement Contractor registration from the Dept. of Consumer Protection (C.G.S. 20-419 to -420). No state credential for radon testers was found.",
+        "url": "https://portal.ct.gov/-/media/dph/radon-program/howtoformitprofs-factsheet_2024.pdf"
+      },
+      {
+        "state": "DC",
+        "requirement": "Anyone conducting radon screening, testing or mitigation for a fee must be listed as proficient by EPA or certified by a Mayor-approved organization (D.C. Code 28-4201); DOEE rules (20 DCMR 3250) require NRPP or NRSB certification.",
+        "url": "https://code.dccouncil.gov/us/dc/council/code/sections/28-4201"
+      },
+      {
+        "state": "FL",
+        "requirement": "State certification by the Florida Dept. of Health for radon measurement and mitigation businesses and individuals (technicians, specialists); all mitigation must be done by state-certified professionals (F.S. 404.056; F.A.C. 64E-5 Part XII).",
+        "url": "https://www.floridahealth.gov/licensing-regulations/regulated-professions/certification/"
+      },
+      {
+        "state": "IL",
+        "requirement": "IEMA-OHS license required to perform radon measurement or mitigation (professional and technician licenses; Radon Industry Licensing Act, 420 ILCS 44; 32 Ill. Adm. Code 422). Active mitigation systems in new homes must be installed by licensed radon contractors (Radon Resistant Construction Act, 420 ILCS 52).",
+        "url": "https://iemaohs.illinois.gov/nrs/radon/applylic.html"
+      },
+      {
+        "state": "IN",
+        "requirement": "Anyone doing radon testing, analysis or mitigation in homes must be certified by the Indiana Department of Health (410 IAC 5.1); tester categories: laboratory, primary, secondary; plus mitigator.",
+        "url": "https://www.in.gov/health/leadsafe/radon-information-contractors/indiana-certified-radon-testers-and-mitigators/"
+      },
+      {
+        "state": "IA",
+        "requirement": "Iowa HHS certifies radon measurement specialists and laboratories and credentials radon mitigation specialists (Iowa Code 136B; 641 IAC chapters 43 and 44).",
+        "url": "https://hhs.iowa.gov/radiological-health/radon/radon-testing-lab-certification-and-mitigation-credentialing"
+      },
+      {
+        "state": "KS",
+        "requirement": "All persons performing radon testing or mitigation must be certified by KDHE (Kansas Radon Certification Act, passed 2010, effective 2011): measurement technicians, mitigation technicians and measurement laboratories.",
+        "url": "https://www.kdhe.ks.gov/1087/Laws"
+      },
+      {
+        "state": "KY",
+        "requirement": "Radon measurement, mitigation and laboratory businesses/contractors must hold NRPP or NRSB certification (since June 2019) and register with the Kentucky Board of Radon Safety (KRS 309.430-.454; Board created July 2022).",
+        "url": "https://radon.ky.gov/Documents/Statutory%20Requirements%20Notification%20(ADA%20UPDATED).pdf"
+      },
+      {
+        "state": "ME",
+        "requirement": "Radon testers and mitigators must register with Maine DHHS (Radon Registration Act, 22 M.R.S. 771-784; 10-144 CMR ch. 224).",
+        "url": "https://www.maine.gov/dhhs/mecdc/environmental-health/rad/radon/pl-278-fact-sheet.htm"
+      },
+      {
+        "state": "MN",
+        "requirement": "MDH license required for measurement professionals, mitigation professionals, mitigation companies and radon analysis labs (Minnesota Radon Licensing Act, Minn. Stat. 144.4961, signed May 2015); installed systems get an MDH mitigation system tag.",
+        "url": "https://www.health.state.mn.us/communities/environment/air/radon/licensing.html"
+      },
+      {
+        "state": "NE",
+        "requirement": "Anyone working in a radon occupation must be licensed by DHHS (measurement and mitigation specialists), as must measurement and mitigation businesses (180 NAC 11; Radiation Control Act).",
+        "url": "https://dhhs.ne.gov/licensure/pages/radon-occupation-licensing.aspx"
+      },
+      {
+        "state": "NH",
+        "requirement": "Anyone designing or installing airborne radon mitigation systems must hold current NRPP or NRSB certification (RSA 310-A:189-a, effective Jan 1, 2015). No state credential for radon testers was found.",
+        "url": "https://gc.nh.gov/rsa/html/XXX/310-A/310-A-189-a.htm"
+      },
+      {
+        "state": "NJ",
+        "requirement": "All radon testing and mitigation businesses and individuals must be certified by NJDEP; only certified individuals or the homeowner may test or mitigate a home (N.J.S.A. 26:2D-70 to -80; N.J.A.C. 7:28-27). Labs are certified under N.J.A.C. 7:18.",
+        "url": "https://www.nj.gov/dep/rpp/radon/download/info_radon.pdf"
+      },
+      {
+        "state": "OH",
+        "requirement": "Ohio Department of Health licenses radon testers, mitigation specialists and mitigation contractors (ORC 3723.02); per ELI, laboratories are also licensed (ORC 3723; OAC 3701-69).",
+        "url": "https://codes.ohio.gov/ohio-revised-code/section-3723.02"
+      },
+      {
+        "state": "PA",
+        "requirement": "DEP certification required to place/retrieve radon test devices, to mitigate, and to analyze radon devices received from the public (25 Pa. Code ch. 240).",
+        "url": "https://www.pa.gov/agencies/dep/programs-and-services/radiation-protection/radon-division/radon-certification"
+      },
+      {
+        "state": "RI",
+        "requirement": "State certification or licensure of radon measurement and mitigation professionals and radon analytical services by RIDOH (R.I. Gen. Laws 23-61; 216-RICR-50-15-2).",
+        "url": "https://health.ri.gov/publications/factsheets/RIRadonFacts.pdf"
+      },
+      {
+        "state": "UT",
+        "requirement": "Installation, repair or replacement of a radon mitigation system must be done by a licensed Utah contractor (SB 163, effective May 12, 2009; Utah Code 58-55-305); DEQ advises also checking for NRPP certification. No testing credential. HB 563 (2026), which would have added radon mitigation training/certification, failed (per a third-party bill tracker).",
+        "url": "https://deq.utah.gov/waste-management-and-radiation-control/state-qualifications-radon-mitigation-professionals"
+      },
+      {
+        "state": "VA",
+        "requirement": "Radon testers and mitigators must hold current NRSB or NRPP certification to legally test or mitigate (Va. Code 32.1-229.01); per ELI, contractor licensing also has a radon mitigation specialty.",
+        "url": "https://www.vdh.virginia.gov/radiological-health/indoor-radon-program/radon-professionals/"
+      },
+      {
+        "state": "WV",
+        "requirement": "State licenses required for radon testers, mitigation specialists, mitigation contractors and radon laboratories (W. Va. Code 16-34-3). HB 5625 (2026), a Department of Health bill amending the licensing article, was reported from committee Feb 24, 2026; final status not verified.",
+        "url": "https://code.wvlegislature.gov/16-34-3/"
+      }
+    ],
+    "realEstate": "EPA's sales guidance points buyers to state or local disclosure rules, and no federal radon disclosure rule (like the federal lead rule) appeared in the EPA materials reviewed. EPA's sales guidance says to test before listing, test the lowest level a buyer might use, and expect buyers to ask for a new test if the last one is more than about two years old or the home has been renovated. EPA notes a buyer may also ask for a new test 'if your state or local government requires disclosure of radon information to buyers'. AARST counted ten states with homebuyer radon awareness-notification laws as of June 2024: CO, DE, FL, IL, IA, KS, MN, MT, NH and RI. Notable rules: Illinois Radon Awareness Act (420 ILCS 46) requires sellers to give buyers the IEMA pamphlet 'Radon Testing Guidelines for Real Estate Transactions' and a signed 'Disclosure of Information on Radon Hazards' before the buyer is obligated; no testing is required and units on the third floor or higher are exempt. Minnesota Radon Awareness Act: before a purchase agreement, sellers disclose known tests, the most current records, any mitigation system details, a radon warning statement and MDH's 'Radon in Real Estate Transactions'; testing is not required. Colorado SB 23-206 (C.R.S. 38-35.7-112 and 38-12-803): sales contracts must carry a bold radon warning, sellers disclose known test results and mitigation and give the CDPHE radon brochure, and landlords must make similar pre-lease disclosures. Tenants may void a lease if the landlord fails to disclose, or fails to make a reasonable effort to mitigate within 180 days of a 4 pCi/L-or-higher reading; from Jan 1, 2026 this voiding right does not apply to leases of one year or less. Florida requires a radon notification statement on at least one sale or rental document (F.S. 404.056). New Jersey sellers must give buyers copies of any radon test results on entering a contract (N.J.S.A. 26:2D-70 et seq., per ELI). Maine required radon testing of residential rentals by 2012, with written notice of results to tenants and mitigation within six months when results are 4 pCi/L or higher. North Dakota now requires written seller disclosure of known radon information, test results and mitigation (NDCC 47-10-02.2; newly listed in ELI's June 2026 database). Missouri DHSS says radon professionals must be used for testing tied to legal transactions. Changed in 2026: Iowa HF 2297 (approved May 19, 2026) requires passive radon mitigation in new one- and two-family homes once the building code commissioner adopts the rule.",
+    "mitigationCost": "EPA (page updated Sep 16, 2026) gives no dollar figure: 'Most homes can be fixed for about the same cost as other common home repairs', with costs depending on the home's size and design and the method needed; get estimates from several qualified mitigators. A passive system installed during construction costs much less to activate later. National Radon Program Services (Kansas State University, EPA-funded) puts typical contractor pricing at $800 to about $2,500, averaging about $1,200; this is an older figure. Minnesota's health department warns against unlicensed installers and unusually low bids (under $1,000).",
+    "notes": "The state licensing list combines ELI's state radon law database (laws enacted through June 2026) with each state's own program page or statute. Not counted as licensing: Maryland Environment 8-305, which requires radon testing businesses to have tests analyzed by facilities listed in EPA's National Radon Measurement Proficiency Program and to give written results, but sets up no state license; Montana, where radon professionals must pass an EPA proficiency exam only to be publicly listed; North Carolina, which voluntarily approves certifying bodies (final rule 10A NCAC 15.1801 took effect May 2025) and does not require individual certification; and Delaware, which says it does not certify radon contractors (2019 list). State agencies confirm no radon licensing in Texas, Michigan and Massachusetts. New York does not license mitigators, and no tester licensing was found. Georgia has no certification law for mitigators. Missouri HB 2730 (2026), which would have licensed radon professionals from 2027, was referred to committee on May 15, 2026 and did not pass. After the WebSearch budget ran out, state law changes after June 2026 were checked only where noted (MO, UT, WV, IA).",
+    "sources": [
+      {
+        "label": "EPA - What is EPA's Action Level for Radon (updated Nov 12, 2025)",
+        "href": "https://www.epa.gov/radon/what-epas-action-level-radon-and-what-does-it-mean"
+      },
+      {
+        "label": "EPA - Health Risk of Radon (updated Jun 24, 2026)",
+        "href": "https://www.epa.gov/radon/health-risk-radon"
+      },
+      {
+        "label": "EPA - A Citizen's Guide to Radon (EPA 402/K-12/002, Dec 2016)",
+        "href": "https://www.epa.gov/sites/default/files/2016-12/documents/2016_a_citizens_guide_to_radon.pdf"
+      },
+      {
+        "label": "EPA - Home Buyer's and Seller's Guide to Radon (EPA 402/K-24/001, revised Mar 2024)",
+        "href": "https://www.epa.gov/system/files/documents/2024-11/2024-buying-a-new-home-how-to-protect-your-family-from-radon_0.pdf"
+      },
+      {
+        "label": "EPA - EPA Map of Radon Zones (updated Aug 17, 2026)",
+        "href": "https://www.epa.gov/radon/epa-map-radon-zones"
+      },
+      {
+        "label": "EPA - Radon Zones Map PDF (zone definitions)",
+        "href": "https://www.epa.gov/system/files/documents/2024-05/radon-zones-map_text_link.pdf"
+      },
+      {
+        "label": "EPA - Radon zones county list (XLS)",
+        "href": "https://www.epa.gov/system/files/documents/2024-05/radon_zones-spreadsheet.xls"
+      },
+      {
+        "label": "EPA - Find a Radon Test Kit or Measurement and Mitigation Professional (updated Dec 30, 2025)",
+        "href": "https://www.epa.gov/radon/find-radon-test-kit-or-measurement-and-mitigation-professional"
+      },
+      {
+        "label": "EPA - How much can a radon mitigation system cost? (updated Sep 16, 2026)",
+        "href": "https://www.epa.gov/radon/how-much-can-radon-mitigation-system-cost"
+      },
+      {
+        "label": "EPA - Consumer's Guide to Radon Reduction (EPA 402/K-10/005, Dec 2016)",
+        "href": "https://www.epa.gov/sites/default/files/2016-12/documents/2016_consumers_guide_to_radon_reduction.pdf"
+      },
+      {
+        "label": "NRPP - National Radon Proficiency Program (home)",
+        "href": "https://nrpp.info/"
+      },
+      {
+        "label": "NRPP - Find a Radon Mitigation or Measurement Professional",
+        "href": "https://nrpp.info/pro-search/"
+      },
+      {
+        "label": "NRSB - Find a Certified Professional",
+        "href": "https://nrsb.org/find-a-pro/"
+      },
+      {
+        "label": "National Radon Program Services (Kansas State Univ., EPA-funded) - Installing Mitigation",
+        "href": "https://sosradon.org/node/153"
+      },
+      {
+        "label": "Minnesota Dept. of Health - Radon Mitigation (updated Mar 15, 2023)",
+        "href": "https://www.health.state.mn.us/communities/environment/air/radon/mitigation.html"
+      },
+      {
+        "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+        "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+      },
+      {
+        "label": "Environmental Law Institute - Radon Excerpt (laws through Dec 2024)",
+        "href": "https://www.eli.org/sites/default/files/files-pdf/2025%20Radon.pdf"
+      },
+      {
+        "label": "AARST - Homebuyer Awareness-Notification Law Toolkit (June 2024)",
+        "href": "https://aarst.org/wp-content/uploads/2024/07/Homebuyer-Awareness-Notification-Law-Toolkit-June-2024.pdf"
+      },
+      {
+        "label": "AARST - State Certification and Licensure Laws 101 (2021 report; Colorado licensure detail)",
+        "href": "https://aarst.org/?p=25751"
+      },
+      {
+        "label": "Illinois Radon Awareness Act, 420 ILCS 46 (ILGA)",
+        "href": "https://ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2913"
+      },
+      {
+        "label": "Minnesota Dept. of Health - Radon in Real Estate (updated Apr 22, 2025)",
+        "href": "https://www.health.state.mn.us/communities/environment/air/radon/radonre.html"
+      },
+      {
+        "label": "Colorado SB 23-206 (enrolled) - radon disclosure in sales and leases",
+        "href": "https://content.leg.colorado.gov/sites/default/files/documents/2023A/bills/2023a_206_enr.pdf"
+      },
+      {
+        "label": "Florida Dept. of Health - Radon Professional Certification",
+        "href": "https://www.floridahealth.gov/licensing-regulations/regulated-professions/certification/"
+      },
+      {
+        "label": "Maine DHHS - LD 943 Fact Sheet (Public Law Chapter 278, radon)",
+        "href": "https://www.maine.gov/dhhs/mecdc/environmental-health/rad/radon/pl-278-fact-sheet.htm"
+      },
+      {
+        "label": "Missouri DHSS - Radon",
+        "href": "https://health.mo.gov/prevention/environmental-factors/radon"
+      },
+      {
+        "label": "Missouri House - HB 2730 (2026) bill actions",
+        "href": "https://house.mo.gov/BillActions.aspx?bill=HB2730&year=2026&code=R"
+      },
+      {
+        "label": "Iowa Acts 2026, ch. 1124 (HF 2297) - passive radon mitigation in new 1-2 family homes",
+        "href": "https://www.legis.iowa.gov/docs/publications/iactc/91.2/CH1124.pdf"
+      },
+      {
+        "label": "American Lung Association statement on Iowa HF 2297 signing (May 21, 2026)",
+        "href": "https://www.lung.org/media/press-releases/ia-radon-bill-signature-26-statement"
+      },
+      {
+        "label": "California Dept. of Public Health - Radon Services Certification",
+        "href": "https://www.cdph.ca.gov/Programs/CEH/DRSEM/Pages/EMB/Radon/Radon-Services-Certification.aspx"
+      },
+      {
+        "label": "Colorado DORA press release - Radon professional licensure now required (Aug 16, 2022)",
+        "href": "https://dora.colorado.gov/press-release/radon-professional-licensure-now-required-in-colorado"
+      },
+      {
+        "label": "Connecticut DPH - How to become a radon mitigation professional (fact sheet, May 2024)",
+        "href": "https://portal.ct.gov/-/media/dph/radon-program/howtoformitprofs-factsheet_2024.pdf"
+      },
+      {
+        "label": "D.C. Code 28-4201 - radon proficiency requirement",
+        "href": "https://code.dccouncil.gov/us/dc/council/code/sections/28-4201"
+      },
+      {
+        "label": "Illinois IEMA-OHS - Applying for a Radon License",
+        "href": "https://iemaohs.illinois.gov/nrs/radon/applylic.html"
+      },
+      {
+        "label": "Indiana Dept. of Health - Indiana Certified Radon Testers and Mitigators (updated Apr 30, 2026)",
+        "href": "https://www.in.gov/health/leadsafe/radon-information-contractors/indiana-certified-radon-testers-and-mitigators/"
+      },
+      {
+        "label": "Iowa HHS - Radon testing, lab certification and mitigation credentialing (updated Jun 30, 2026)",
+        "href": "https://hhs.iowa.gov/radiological-health/radon/radon-testing-lab-certification-and-mitigation-credentialing"
+      },
+      {
+        "label": "Kansas KDHE - Radon Laws",
+        "href": "https://www.kdhe.ks.gov/1087/Laws"
+      },
+      {
+        "label": "Kentucky Board of Radon Safety - Statutory Requirements Notification",
+        "href": "https://radon.ky.gov/Documents/Statutory%20Requirements%20Notification%20(ADA%20UPDATED).pdf"
+      },
+      {
+        "label": "Minnesota Dept. of Health - Radon Licensing (updated Oct 3, 2024)",
+        "href": "https://www.health.state.mn.us/communities/environment/air/radon/licensing.html"
+      },
+      {
+        "label": "Nebraska DHHS - Radon Occupation Licensing",
+        "href": "https://dhhs.ne.gov/licensure/pages/radon-occupation-licensing.aspx"
+      },
+      {
+        "label": "New Hampshire RSA 310-A:189-a - airborne radon mitigation certification",
+        "href": "https://gc.nh.gov/rsa/html/XXX/310-A/310-A-189-a.htm"
+      },
+      {
+        "label": "New Hampshire OPLC - Airborne Radon Mitigation Certification",
+        "href": "https://oplc.nh.gov/airborne-radon-mitigation-certification"
+      },
+      {
+        "label": "New Jersey DEP - Radon information sheet",
+        "href": "https://www.nj.gov/dep/rpp/radon/download/info_radon.pdf"
+      },
+      {
+        "label": "New Jersey DOH - Radon mitigation indicator (certification statement)",
+        "href": "https://www-doh.nj.gov/doh-shad/indicator/summary/RadonMitigation.html"
+      },
+      {
+        "label": "Ohio Revised Code 3723.02 - radon licensing",
+        "href": "https://codes.ohio.gov/ohio-revised-code/section-3723.02"
+      },
+      {
+        "label": "Pennsylvania DEP - Radon Certification",
+        "href": "https://www.pa.gov/agencies/dep/programs-and-services/radiation-protection/radon-division/radon-certification"
+      },
+      {
+        "label": "Rhode Island DOH - Radon facts (updated Jul 28, 2022)",
+        "href": "https://health.ri.gov/publications/factsheets/RIRadonFacts.pdf"
+      },
+      {
+        "label": "Utah DEQ - State Qualifications for Radon Mitigation Professionals (updated Apr 15, 2026)",
+        "href": "https://deq.utah.gov/waste-management-and-radiation-control/state-qualifications-radon-mitigation-professionals"
+      },
+      {
+        "label": "Better Utah Institute bill tracker - HB 563 Radon Amendments (2026) (third-party)",
+        "href": "https://billtracker.betterutahinstitute.org/bills/HB0563"
+      },
+      {
+        "label": "Virginia Dept. of Health - Radon Professionals",
+        "href": "https://www.vdh.virginia.gov/radiological-health/indoor-radon-program/radon-professionals/"
+      },
+      {
+        "label": "West Virginia Code 16-34-3 - licensure of radon testers, mitigators, contractors and laboratories",
+        "href": "https://code.wvlegislature.gov/16-34-3/"
+      },
+      {
+        "label": "West Virginia Legislature - HB 5625 (2026) bill history",
+        "href": "https://bills.wvlegislature.gov/bill/history/2026/RS/HB5625"
+      },
+      {
+        "label": "New York State DOH - Certified Radon Mitigation Contractors (revised Aug 2026)",
+        "href": "https://healthweb-back.health.ny.gov/environmental/radon/mitigators.htm"
+      },
+      {
+        "label": "Michigan EGLE - Radon Testers and Mitigators",
+        "href": "https://www.michigan.gov/egle/about/organization/materials-management/indoor-radon/radon-testers-and-mitigators"
+      },
+      {
+        "label": "Massachusetts DPH - Nationally Certified Radon Mitigation Professionals (updated Jul 8, 2026)",
+        "href": "https://www.mass.gov/doc/nationally-certified-radon-mitigation-professionals/download"
+      },
+      {
+        "label": "Texas Tech University - Texas Radon Information (state program manager)",
+        "href": "https://www.depts.ttu.edu/ceweb/radon/"
+      },
+      {
+        "label": "Texas DSHS - Indoor Radon (program moved to Texas Tech)",
+        "href": "https://www.dshs.texas.gov/texas-radiation-control/indoor-radon-radiation-control-program"
+      },
+      {
+        "label": "UGA Extension Radon Program - Find a Radon Mitigator",
+        "href": "https://radon.uga.edu/?p=16"
+      },
+      {
+        "label": "NCDHHS - Radon Proficiency Programs",
+        "href": "https://ncdhhs.gov/divisions/health-service-regulation/north-carolina-radon-program/radon-proficiency-programs"
+      },
+      {
+        "label": "Oregon Health Authority - Radon mitigation companies",
+        "href": "https://www.oregon.gov/oha/PH/HEALTHYENVIRONMENTS/HEALTHYNEIGHBORHOODS/RADONGAS/Pages/mitigation.aspx"
+      },
+      {
+        "label": "Washington DOH - Radon",
+        "href": "https://doh.wa.gov/community-and-environment/contaminants/radon"
+      },
+      {
+        "label": "Arizona DHS - Radon",
+        "href": "https://azdhs.gov/licensing/radiation-regulatory/radon/index.php"
+      },
+      {
+        "label": "Maryland Code, Environment 8-305 (radon testing businesses)",
+        "href": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gen&section=8-305&enactments=false"
+      },
+      {
+        "label": "Delaware DPH - Radon contractor list (Rev. 7/19)",
+        "href": "https://dhss.delaware.gov/wp-content/uploads/sites/10/dph/pdf/radconlist.pdf"
+      }
+    ]
+  },
+  "carbonMonoxide": {
+    "alarmStandard": "UL 2034, Standard for Single and Multiple Station Carbon Monoxide Alarms. Edition 5 is current: published June 3, 2024 and last revised Aug 7, 2024, so it changed in 2024. It covers electrically operated single- and multiple-station CO alarms for indoor spaces and unconditioned areas, including RVs, mobile homes and boats. Alarms must sound below CO levels that impair a person's ability to react, and must resist false alarms from long-term low-level or brief transient CO (for example, air pollution or properly working appliances). CPSC points consumers to the current UL 2034 standard. Several state laws require alarms listed to ANSI/UL 2034 or ANSI/UL 2075 (for example, N.C. G.S. 42-42 and Michigan MCL 125.1504f).",
+    "guidance": "CPSC recommends CO alarms on every level of the home and outside sleeping areas, ideally interconnected so that when one sounds, all sound. Keep alarms away from heating vents and anywhere furniture or drapes could block them; CPSC does not recommend placing them in kitchens or above fuel-burning appliances. Battery-operated alarms, or plug-in or hard-wired alarms with battery backup, are recommended. The test button checks the circuitry, not sensor accuracy. Replace alarms at the replacement age in the product literature; CPSC gives no fixed number of years. For audits, BPI-1200 sets ambient CO action levels: 9-35 ppm, advise checking sources and ventilating; 36-69 ppm, ventilate and turn off sources; 70 ppm or more, stop work and evacuate.",
+    "stateLaws": [
+      {
+        "state": "NY",
+        "requirement": "Executive Law 378(5-a): every one- or two-family dwelling, condo or co-op dwelling unit, and multiple dwelling must have an operable CO detector where the unit has CO-emitting appliances, devices or systems, or an attached garage. The statute sets no construction-date cutoff.",
+        "url": "https://www.nysenate.gov/legislation/laws/EXC/378"
+      },
+      {
+        "state": "NJ",
+        "requirement": "N.J.S.A. 52:27D-133.3 to -133.5: CO detectors in one- and two-family homes at initial occupancy or change of occupancy (sale or new tenancy); separate statutes cover hotels, multiple dwellings and rooming houses unless no CO hazard exists. Fire Code rules (N.J.A.C. 5:70-4.9(d), 4.19) require CO detection in existing buildings with a fuel-burning appliance or attached garage.",
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "state": "PA",
+        "requirement": "Act 121 of 2013 (Carbon Monoxide Alarm Standards Act, effective Dec 18, 2013): on sale of a residential building the seller must disclose CO detector information on the property disclosure statement. Each apartment in a multifamily dwelling with a fossil-fuel heater or appliance, fireplace or attached garage must have an approved, centrally located CO alarm near the bedrooms (owner installs; tenant maintains). Municipalities may adopt stricter rules.",
+        "url": "https://www.palegis.us/statutes/unconsolidated/law-information?sessYr=2013&sessInd=0&actNum=121"
+      },
+      {
+        "state": "CA",
+        "requirement": "Health & Safety Code 17926: owners must install a State Fire Marshal-listed CO device in each existing dwelling unit with a fossil-fuel heater or appliance, fireplace or attached garage, by July 1, 2011 for single-family homes, Jan 1, 2013 for other dwellings and Jan 1, 2017 for hotels and motels. Sellers disclose CO devices on the transfer disclosure form (Civ. Code 1102, per ELI).",
+        "url": "https://california.public.law/codes/health_and_safety_code_section_17926"
+      },
+      {
+        "state": "IL",
+        "requirement": "Carbon Monoxide Alarm Detector Act (430 ILCS 135/10): every dwelling unit must have at least one approved, operating CO alarm within 15 feet of every room used for sleeping; multi-unit structures also need at least one.",
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "state": "TX",
+        "requirement": "No statewide residential CO-alarm statute found. NCSL lists only Hum. Res. Code 42.060, which requires CO detectors in qualifying day-care centers, group day-care homes and family homes. Municipalities apply the IRC as it existed May 1, 2012 as their residential code (Loc. Gov't Code 214.212); its CO-alarm section was not verified here.",
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "state": "GA",
+        "requirement": "Georgia State Minimum Standard One and Two Family Dwelling Code (R313.4.1, R315.2.1, adopted under O.C.G.A. 8-2-20): CO detectors in general sleeping areas of all new one- and two-family homes and townhomes of three stories or less. New construction only.",
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "state": "FL",
+        "requirement": "F.S. 553.885: every building or addition built on or after July 1, 2008 with a fossil-fuel heater or appliance, fireplace, attached garage or other CO source needs an approved CO alarm within 10 feet of each room used for sleeping (hard-wired or battery, or combination smoke/CO). Does not apply to existing homes unless an addition is built.",
+        "url": "https://www.flsenate.gov/Laws/Statutes/2025/553.885"
+      },
+      {
+        "state": "DC",
+        "requirement": "D.C. Code 6-751.02: the owner of every new and existing occupied dwelling unit must install smoke detectors and carbon monoxide detectors in accordance with the DC Construction Codes.",
+        "url": "https://code.dccouncil.gov/us/dc/council/code/sections/6-751.02"
+      },
+      {
+        "state": "VA",
+        "requirement": "Per NCSL: Va. Code 27-94 et seq. and 36-97 et seq. set a statewide standard for installing and maintaining smoke and CO alarms in rental properties under the Statewide Fire Prevention Code. The landlord's annual certification (Va. Code 55.1-1220) covers smoke alarms. The fire-code CO provisions were not opened.",
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "state": "MD",
+        "requirement": "Public Safety 12-1101 to -1106: applies to new dwellings using fossil fuel with building permits issued on or after Jan 1, 2008, and to hotels, rooming houses and rental dwelling units. A CO alarm goes in a central location outside each sleeping area; rental units since April 1, 2018 need alarms outside each sleeping area and on each level including the basement; hotels since April 1, 2017. Per NCSL, sellers of single-family homes must disclose fossil-fuel heating and alarm installation.",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gps&section=12-1104&enactments=false"
+      },
+      {
+        "state": "MA",
+        "requirement": "M.G.L. c.148 s.26F1/2: every residential building with fossil-fuel equipment (furnace, boiler, water heater, fireplace) or enclosed parking must have working, approved CO alarms. Landlords install them and must have them working at the start of each rental. The fire department inspects for compliance on sale or transfer.",
+        "url": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148/Section26F1~2"
+      },
+      {
+        "state": "AZ",
+        "requirement": null,
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations",
+        "notes": "No Arizona statute appears in NCSL's compilation (updated Sep 29, 2025), and none was found elsewhere. Local codes may require CO alarms in new construction. Absence not independently confirmed."
+      },
+      {
+        "state": "MI",
+        "requirement": "MCL 125.1504f (effective Mar 23, 2009): the state construction code may require at least one CO device in new single- and multifamily dwellings, renovations needing a permit, and bedroom additions. Devices go near bedrooms, next to an attached garage and next to fuel-burning appliances, and must be listed to ANSI/UL 2034 or UL 2075. The requirement applies through the adopted residential code; it is not a retrofit mandate for existing homes.",
+        "url": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-1504f"
+      },
+      {
+        "state": "WA",
+        "requirement": "RCW 19.27.530: CO alarms required in newly built residential occupancies (code by Jan 1, 2011) and all other residential buildings by Jan 1, 2013. Owner-occupied single-family homes legally occupied before July 26, 2009 are exempt, but when one is sold the seller must install CO alarms before the buyer occupies it.",
+        "url": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.27.530"
+      },
+      {
+        "state": "MN",
+        "requirement": "Minn. Stat. 299F.51: every single-family dwelling and every multifamily dwelling unit must have an approved, working CO alarm within 10 feet of each room lawfully used for sleeping. Multifamily owners install and replace alarms between tenancies; occupants maintain them; disabling an alarm is prohibited.",
+        "url": "https://www.revisor.mn.gov/statutes/cite/299F.51"
+      },
+      {
+        "state": "CO",
+        "requirement": "C.R.S. 38-45-101 to -106 (per NCSL): existing single-family homes and multifamily units offered for sale or transfer (on or after a specified date) that have a fuel-burning heater or appliance, fireplace or attached garage must have an operational CO alarm within a specified distance of each sleeping room; a similar rule applies to new residential construction. The statute text was not opened; leg.colorado.gov blocked automated access.",
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "state": "MO",
+        "requirement": null,
+        "url": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations",
+        "notes": "No Missouri statute appears in NCSL's compilation (updated Sep 29, 2025), and none was found elsewhere. Local ordinances or adopted building codes may apply. Absence not independently confirmed."
+      },
+      {
+        "state": "NC",
+        "requirement": "G.S. 42-42(a)(7): landlords must provide at least one operable CO alarm per rental unit per level in units with a fossil-fuel heater, appliance or fireplace, or an attached garage. Alarms must be listed to ANSI/UL 2034 or 2075, working at the start of each tenancy, and repaired or replaced within 15 days of written notice. Per NCSL, G.S. 143-138 also authorizes State Building Code rules requiring CO detectors in dwelling units with fossil-fuel sources or attached garages.",
+        "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-42.html"
+      },
+      {
+        "state": "OR",
+        "requirement": "ORS 105.836-.842: one- and two-family dwellings and multifamily housing with a CO source (fuel-burning heater, fireplace, appliance or cooking source, or an attached garage) can't be sold or transferred unless working CO alarms cover all sleeping areas; buyers may sue for the greater of actual damages or $250 per unit. ORS 90.317: landlords must provide CO alarms in such units and give written testing instructions; CO alarms are a habitability requirement.",
+        "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors105.html"
+      }
+    ],
+    "notes": "CDC's carbon monoxide pages (cdc.gov/carbon-monoxide) blocked both WebFetch and curl from this environment (HTTP 403), so CPSC is the federal placement source here. Florida, Georgia and Michigan rules apply mainly to new construction; Texas has only a child-care requirement. Laws marked 'per NCSL' were not checked against the statute text.",
+    "sources": [
+      {
+        "label": "UL Standards & Engagement - UL 2034 Single and Multiple Station Carbon Monoxide Alarms (Edition 5)",
+        "href": "https://www.shopulstandards.com/ProductDetail.aspx?productId=UL2034"
+      },
+      {
+        "label": "CPSC - Carbon Monoxide Questions and Answers",
+        "href": "https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center/Carbon-Monoxide-Questions-and-Answers"
+      },
+      {
+        "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+        "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+      },
+      {
+        "label": "N.Y. Executive Law 378 (subd. 5-a, carbon monoxide detectors)",
+        "href": "https://www.nysenate.gov/legislation/laws/EXC/378"
+      },
+      {
+        "label": "NJ DCA Division of Fire Safety - Codes & regulations (CO detection rules, N.J.A.C. 5:70-4.9/4.19)",
+        "href": "https://www.nj.gov/dca/dfs/codes/index.shtml"
+      },
+      {
+        "label": "NJ Register 48 N.J.R. 1851(a) - CO detection rule proposal (2016)",
+        "href": "https://www.nj.gov/dca/divisions/dfs/codes/regulations/carbon_monoxide_detection.pdf"
+      },
+      {
+        "label": "Pennsylvania Carbon Monoxide Alarm Standards Act, Act 121 of 2013",
+        "href": "https://www.palegis.us/statutes/unconsolidated/law-information?sessYr=2013&sessInd=0&actNum=121"
+      },
+      {
+        "label": "Cal. Health & Safety Code 17926 (public.law copy; leginfo.legislature.ca.gov blocked automated access)",
+        "href": "https://california.public.law/codes/health_and_safety_code_section_17926"
+      },
+      {
+        "label": "Florida Statutes 553.885 (2025)",
+        "href": "https://www.flsenate.gov/Laws/Statutes/2025/553.885"
+      },
+      {
+        "label": "D.C. Code 6-751.02 - duty of owner to install detectors",
+        "href": "https://code.dccouncil.gov/us/dc/council/code/sections/6-751.02"
+      },
+      {
+        "label": "Md. Code, Public Safety 12-1104",
+        "href": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gps&section=12-1104&enactments=false"
+      },
+      {
+        "label": "Md. Code, Public Safety 12-1102 (applicability)",
+        "href": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gps&section=12-1102&enactments=false"
+      },
+      {
+        "label": "Mass. Gen. Laws ch. 148, sec. 26F1/2",
+        "href": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148/Section26F1~2"
+      },
+      {
+        "label": "Michigan MCL 125.1504f",
+        "href": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-1504f"
+      },
+      {
+        "label": "RCW 19.27.530 - carbon monoxide alarms",
+        "href": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.27.530"
+      },
+      {
+        "label": "Minn. Stat. 299F.51 - carbon monoxide alarms",
+        "href": "https://www.revisor.mn.gov/statutes/cite/299F.51"
+      },
+      {
+        "label": "N.C. Gen. Stat. 42-42 - landlord to provide fit premises",
+        "href": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-42.html"
+      },
+      {
+        "label": "Oregon ORS chapter 105 (105.836-105.842 CO alarms at sale)",
+        "href": "https://www.oregonlegislature.gov/bills_laws/ors/ors105.html"
+      },
+      {
+        "label": "Oregon ORS chapter 90 (90.317 landlord CO alarm duties)",
+        "href": "https://www.oregonlegislature.gov/bills_laws/ors/ors090.html"
+      },
+      {
+        "label": "Texas Local Government Code ch. 214 (214.212 municipal residential code = IRC as of May 1, 2012)",
+        "href": "https://statutes.capitol.texas.gov/Docs/LG/htm/LG.214.htm"
+      },
+      {
+        "label": "Va. Code 55.1-1220 (landlord smoke-alarm certification)",
+        "href": "https://law.lis.virginia.gov/vacode/title55.1/chapter12/section55.1-1220/"
+      },
+      {
+        "label": "ANSI/BPI-1200-S-2017 Standard Practice for Basic Analysis of Buildings",
+        "href": "https://www.bpi.org/__cms/docs/ANSI%20BPI-1200-S-2017%20Standard%20Practice%20for%20Basic%20Analysis%20of%20Buildings.pdf"
+      }
+    ]
+  },
+  "lead": {
+    "pre1978": "EPA: a home built before 1978 is more likely to have lead-based paint; the federal government banned consumer uses of lead-based paint in 1978, and some states banned it earlier. EPA says the most common source of lead exposure is dust from lead-based paint in older homes. Lead is especially dangerous to children 6 and younger. CDC's blood lead reference value is 3.5 ug/dL, and EPA notes CDC recommends testing children at 12 and 24 months.",
+    "rrpRule": "Anyone paid to do work that disturbs paint in housing or child-occupied facilities (child care centers, preschools) built before 1978 must be lead-safe certified by EPA or an authorized state, sole proprietors included. Firms must use certified renovators trained by EPA-accredited providers and follow lead-safe work practices. Covered work includes remodeling, repair and maintenance, electrical, plumbing, painting prep, carpentry and window replacement. Exempt: minor repair and maintenance disturbing 6 sq ft of paint or less per room inside, or 20 sq ft or less outside; window replacement and demolition of painted surfaces are always covered. Also excluded: housing for the elderly or disabled and zero-bedroom units (unless a child under 6 lives there), and components certified lead-free. Firms must give occupants EPA's 'Lead-Safe Certified Guide to Renovate Right' no more than 60 days before work starts. EPA tells homeowners in pre-1978 homes to hire a lead-safe certified contractor and check the firm in EPA's locator. Fifteen states run their own RRP programs instead of EPA: AL, DE, GA, IA, KS, MA, MS, NC, OK, OR, RI, UT, VT, WA and WI (plus the Bois Forte Band); a contractor working in several states may need both EPA and state certification.",
+    "disclosure": "Under the federal lead disclosure rule (Section 1018 of the Residential Lead-Based Paint Hazard Reduction Act of 1992), sellers and landlords of housing built before 1978 must: disclose any known lead-based paint and lead hazards; hand over available records and reports; give buyers or renters EPA's pamphlet 'Protect Your Family From Lead in Your Home'; and put a Lead Warning Statement in or attached to the contract or lease. Buyers get 10 days to arrange a lead-based paint inspection or risk assessment; the parties can change the period in writing, or the buyer can waive it. Landlords don't have to provide an inspection. Signed disclosures must be kept for 3 years. Exempt: zero-bedroom units and elderly or disabled housing (unless a child under 6 lives there), leases of 100 days or less, housing certified lead-free, foreclosure sales, and housing built after 1977.",
+    "inspectionVsRiskAssessment": "EPA: a lead-based paint inspection tells you whether a building has lead-based paint and where it is, but not whether hazards exist now. A risk assessment tells you whether there are lead hazards from paint, dust or soil, and what to do about them. Both must be done by EPA- or state-certified inspectors or risk assessors working for certified firms. EPA runs the abatement, inspection and risk-assessment program directly in AK, AZ, FL, ID, MT, NV, NM, NY, SC, SD and WY (plus territories and most tribal lands); every other state has an EPA-authorized program.",
+    "dustStandards2024": "Changed in 2024. EPA finalized the rule in October 2024 (Federal Register Nov 12, 2024); it took effect January 13, 2025. The dust-lead hazard standard, renamed the 'dust-lead reportable level', dropped from 10 ug/ft2 (floors) and 100 ug/ft2 (window sills) to any reportable level as analyzed by an EPA-recognized (NLLAP) lab. Post-abatement clearance, renamed 'dust-lead action levels', dropped to 5 ug/ft2 for floors (from 10), 40 ug/ft2 for sills (from 100) and 100 ug/ft2 for window troughs (from 400). The rule decouples the hazard and clearance standards and redefines abatement so EPA recommends it at or above the action levels; between the reportable and action levels, EPA recommends HEPA vacuuming and wet cleaning instead. The 2024 levels replace those set in 2001, 2019 and 2021. Separate compliance deadlines (for example, for authorized state programs) could not be confirmed from the text opened; EPA's page (updated Dec 19, 2025) lists no later changes. The rule says EPA plans to propose soil-lead hazard standards in 2026.",
+    "drinkingWater": "Lead and Copper Rule Improvements, finalized Oct 8, 2024 (Federal Register Oct 30, 2024). Most water systems must identify and replace lead and galvanized-requiring-replacement service lines under their control within 10 years; limited deferrals are allowed. The lead action level drops from 0.015 to 0.010 mg/L (15 to 10 ug/L), the separate trigger level is removed, and tap sampling becomes stricter. By Nov 1, 2027 systems must submit their baseline service line inventory and a replacement plan, and from that date the new action level triggers Tier 1 public notice. Systems with repeated exceedances must offer certified lead-reducing filters. Status Oct 2026: EPA's LCRI pages (updated Dec 29, 2025) and supporting-materials page (live HTML dated Oct 5, 2026) still show the 2024 rule and dates with no announced extension. Other 2025-2026 EPA announcements, litigation or proposals could not be checked once the search budget ran out.",
+    "findAPro": "EPA's Lead-Based Paint Professional Locator finds lead-safe certified renovation firms and certified inspection, risk assessment and abatement firms: https://cdxocsppapps.epa.gov/ocspp-oppt-lead/firm-location-search . In states with their own RRP or abatement program, use the state link on EPA's authorization pages. Training providers: https://cdxocsppapps.epa.gov/ocspp-oppt-lead/training-search .",
+    "notes": "Section 1018 regulation citations (40 CFR 745 subpart F and 24 CFR 35 subpart A) were not opened. The NLLAP accredited-lab list was not opened.",
+    "sources": [
+      {
+        "label": "EPA - Protect Your Family from Sources of Lead (updated Jun 15, 2026)",
+        "href": "https://www.epa.gov/lead/protect-your-family-sources-lead"
+      },
+      {
+        "label": "EPA - Learn About Lead (updated Oct 5, 2026)",
+        "href": "https://www.epa.gov/lead/learn-about-lead"
+      },
+      {
+        "label": "EPA - Lead Renovation, Repair and Painting Program (updated Jun 17, 2026)",
+        "href": "https://www.epa.gov/lead/lead-renovation-repair-and-painting-program"
+      },
+      {
+        "label": "EPA - RRP Program: Contractors (updated Mar 31, 2026)",
+        "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-contractors"
+      },
+      {
+        "label": "EPA - RRP Program: Consumers (updated May 27, 2026)",
+        "href": "https://www.epa.gov/lead/renovation-repair-and-painting-rrp-program-consumers"
+      },
+      {
+        "label": "EPA - RRP Program: Renters (updated Oct 29, 2025)",
+        "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-renters"
+      },
+      {
+        "label": "EPA - RRP Program Rules (updated Dec 15, 2025)",
+        "href": "https://www.epa.gov/lead/lead-renovation-repair-and-painting-program-rules"
+      },
+      {
+        "label": "EPA - RRP Firm Certification / authorized states (updated May 27, 2026)",
+        "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+      },
+      {
+        "label": "EPA - Real Estate Disclosures about Potential Lead Hazards (updated May 27, 2026)",
+        "href": "https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards"
+      },
+      {
+        "label": "EPA - Lead Abatement, Inspection, and Risk Assessment (updated Oct 5, 2026)",
+        "href": "https://www.epa.gov/lead/lead-abatement-inspection-and-risk-assessment"
+      },
+      {
+        "label": "EPA - Lead-Based Paint Abatement and Evaluation Program Overview / authorized states (updated Aug 27, 2026)",
+        "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+      },
+      {
+        "label": "EPA - Hazard Standards and Clearance Levels for Lead in Paint, Dust and Soil (updated Dec 19, 2025)",
+        "href": "https://www.epa.gov/lead/hazard-standards-and-clearance-levels-lead-paint-dust-and-soil-tsca-sections-402-and-403"
+      },
+      {
+        "label": "Federal Register - Reconsideration of the Dust-Lead Hazard Standards and Dust-Lead Post-Abatement Clearance Levels (final rule, Nov 12, 2024)",
+        "href": "https://www.federalregister.gov/documents/2024/11/12/2024-25070/reconsideration-of-the-dust-lead-hazard-standards-and-dust-lead-post-abatement-clearance-levels"
+      },
+      {
+        "label": "EPA - Lead and Copper Rule Improvements (updated Dec 29, 2025)",
+        "href": "https://www.epa.gov/ground-water-and-drinking-water/lead-and-copper-rule-improvements"
+      },
+      {
+        "label": "EPA - LCRI Supporting Materials (page updated Oct 5, 2026 per live HTML)",
+        "href": "https://www.epa.gov/dwreginfo/lead-and-copper-rule-improvements-supporting-materials"
+      },
+      {
+        "label": "EPA - LCRI Technical Fact Sheet: States and Public Water Systems (Oct 2024)",
+        "href": "https://www.epa.gov/system/files/documents/2024-10/final_lcri_fact-sheet_statespws.pdf"
+      },
+      {
+        "label": "EPA - LCRI Fact Sheet for the General Public (Oct 2024)",
+        "href": "https://www.epa.gov/system/files/documents/2024-10/final_lcri_fact-sheet_general_public.pdf"
+      },
+      {
+        "label": "EPA - Lead and Copper Rule (dwreginfo, updated Jan 2, 2026)",
+        "href": "https://www.epa.gov/dwreginfo/lead-and-copper-rule"
+      },
+      {
+        "label": "EPA - Lead-Based Paint Professional Locator (firm location search)",
+        "href": "https://cdxocsppapps.epa.gov/ocspp-oppt-lead/firm-location-search"
+      },
+      {
+        "label": "EPA - Lead-Based Paint Activities training search",
+        "href": "https://cdxocsppapps.epa.gov/ocspp-oppt-lead/training-search"
+      }
+    ]
+  },
+  "asbestos": {
+    "homeowners": "EPA: leave asbestos material that is in good condition and won't be disturbed alone. If it is damaged, or remodeling will disturb it, have a trained and accredited asbestos professional assess it; repair or removal must be done only by trained and accredited professionals. Don't take samples yourself: a professional should do it, because sampling can release fibers. Use different firms for inspection and for repair or removal to avoid a conflict of interest. Federal law does not require accreditation for most work in detached single-family homes, but some states and localities do, so check state and local rules before any work.",
+    "vermiculite": "EPA: the mine near Libby, Montana supplied more than 70 percent of all vermiculite sold in the U.S. from 1919 to 1990, and it was contaminated with asbestos. If you have vermiculite attic or wall insulation, assume it may contain asbestos. Leave it undisturbed, limit trips into the attic, and do not try to remove it yourself; for renovation that would disturb it, hire a professional asbestos contractor. EPA warns that testing an attic can be expensive and, depending on the method, may give erroneous results, and it does not recommend opening walls to look for vermiculite.",
+    "inspectors": "EPA's Asbestos Model Accreditation Plan (MAP) requires training for five disciplines: worker, contractor/supervisor, inspector, management planner and project designer. States must meet at least the MAP minimums; some states accredit people directly and others approve training providers, so the state agency is the source for who may work there (EPA keeps a state asbestos contacts directory). Asbestos labs are accredited through NIST's NVLAP. School (AHERA) samples must go to an NVLAP lab, and EPA recommends NVLAP or equivalent for other samples.",
+    "cost": null,
+    "notes": "cost: no EPA or state page with typical inspection or abatement prices was found, so none is given. Changed in 2024: EPA's Part 1 TSCA rule (final Mar 28, 2024) bans ongoing uses of chrysotile asbestos on staged deadlines (imports for chlor-alkali use banned immediately; aftermarket brakes, linings and some gaskets after 6 months; most sheet gaskets after 2 years). It does not address asbestos already in homes, and EPA's page (updated May 5, 2026) lists no later changes. The Zonolite Attic Insulation Trust site could not be reached.",
+    "sources": [
+      {
+        "label": "EPA - Protect Your Family from Exposures to Asbestos (updated Jun 25, 2026)",
+        "href": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos"
+      },
+      {
+        "label": "EPA - Protect Your Family from Asbestos-Contaminated Vermiculite Insulation (updated Apr 17, 2026)",
+        "href": "https://www.epa.gov/asbestos/protect-your-family-asbestos-contaminated-vermiculite-insulation"
+      },
+      {
+        "label": "EPA - Asbestos Professionals (updated Mar 25, 2026)",
+        "href": "https://www.epa.gov/asbestos/asbestos-professionals"
+      },
+      {
+        "label": "EPA - State Asbestos Contacts (updated Oct 1, 2026)",
+        "href": "https://www.epa.gov/asbestos/state-asbestos-contacts"
+      },
+      {
+        "label": "EPA - Risk Management for Asbestos, Part 1: Chrysotile (updated May 5, 2026)",
+        "href": "https://www.epa.gov/assessing-and-managing-chemicals-under-tsca/risk-management-asbestos-part-1-chrysotile-asbestos"
+      }
+    ]
+  },
+  "mold": {
+    "federal": "EPA does not regulate mold or mold spores in indoor air, and there are no EPA or other federal limits for mold or spores, so sampling can't show compliance with any federal standard. EPA says sampling is usually unnecessary when mold is visible; surface sampling may help confirm an area was cleaned, and should be done by experienced professionals. Fix the water problem, dry everything, scrub hard surfaces with detergent and water, and discard porous materials such as ceiling tiles or carpet that stay moldy. Don't paint or caulk over mold. If the moldy area is less than about 10 sq ft (roughly 3 ft by 3 ft), you can usually handle it yourself; for larger areas or significant water damage, follow EPA's 'Mold Remediation in Schools and Commercial Buildings'.",
+    "stateLicensing": [
+      {
+        "state": "TX",
+        "requirement": "State license from TDLR required for mold assessment and mold remediation (Occupations Code ch. 1958; 16 TAC ch. 78). One licensee may not do both assessment and remediation on the same project (school-district employees excepted). Exemptions include visible mold under 25 contiguous sq ft and some owner/building exemptions (for example, residential buildings with fewer than 10 units). Assessors must give clients a Consumer Mold Information Sheet.",
+        "url": "https://www.tdlr.texas.gov/mld/mldfaq.htm"
+      },
+      {
+        "state": "FL",
+        "requirement": "DBPR licenses mold assessors and mold remediators (F.S. 468.84-.8424; F.A.C. 61-31). Licenses expire July 31 of even years (latest deadline July 31, 2026).",
+        "url": "https://www2.myfloridalicense.com/mold-related-services/"
+      },
+      {
+        "state": "NY",
+        "requirement": "NY DOL license required to work, advertise or hold out as a mold assessor or mold remediation contractor; abatement workers are also licensed (Labor Law Article 32, sections 930-948). The same person may not do both assessment and remediation on one property; owners working on their own residential property are exempt.",
+        "url": "https://dol.ny.gov/mold-program"
+      },
+      {
+        "state": "LA",
+        "requirement": "LSLBC Mold Remediation license required for remediation projects worth $7,500 or more; the qualifying party needs 24 hours of training in mold remediation and basic mold assessment (La. R.S. 37:2150.1, 2156-2158). The same contractor may not do both assessment and remediation on one property.",
+        "url": "https://lslbc.gov/types-of-licenses/"
+      },
+      {
+        "state": "DC",
+        "requirement": "DOEE licenses individual mold assessors and remediators (exam, 2-year license, $1M insurance; D.C. Code 8-241.01-.09; 20 DCMR ch. 32). In rentals, landlords must use DOEE-licensed assessors and remediators for mold areas of 10 sq ft or more; smaller areas may be cleaned by unlicensed workers.",
+        "url": "https://doee.dc.gov/node/1280391"
+      },
+      {
+        "state": "NH",
+        "requirement": "Paid residential mold assessment requires a valid national third-party mold assessment certification (RSA 310-A:189-b). Not a state license; professionals whose main contracted work is not mold assessment are exempt.",
+        "url": "https://gc.nh.gov/rsa/html/XXX/310-A/310-A-189-b.htm"
+      },
+      {
+        "state": "VA",
+        "requirement": "It is a prohibited practice under the Consumer Protection Act to sell professional mold remediation for a home without a mold remediation certification from a nationally or internationally recognized body, or to skip EPA's Mold Remediation in Schools and Commercial Buildings, ANSI/IICRC S520 or an equivalent standard (Va. Code 59.1-200(A)(81)). Not a state license. 2025 HB 2195 had DPOR study whether to license mold inspectors and remediators (report due Jan 1, 2026); outcome not verified.",
+        "url": "https://law.lis.virginia.gov/vacode/title59.1/chapter17/section59.1-200/"
+      },
+      {
+        "state": "CT",
+        "requirement": "Not mold-specific: residential mold remediation over $200 counts as 'home improvement', so the contractor needs a Home Improvement Contractor registration from DCP (C.G.S. 20-419 to -420), per ELI.",
+        "url": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+      },
+      {
+        "state": "TN",
+        "requirement": "Not mold-specific: mold remediation falls under the contractor board's Specialty/Environmental license classification (Tenn. Code 62-6-112; Tenn. Comp. R. & Regs. 0680-01-.16), per ELI.",
+        "url": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+      }
+    ],
+    "notes": "Based on ELI's June 2026 mold law database plus each state's own page. Illinois law (410 ILCS 105) authorizes IDPH to create a mold professional registration program, and from 2025 a public awareness campaign; no operating registration was confirmed, so Illinois is not counted. Kentucky (KRS 367.83801-.83807) sets minimum practices for mold remediation companies but has no license. No mold licensing law was found for the other jurisdictions in the state summary.",
+    "sources": [
+      {
+        "label": "EPA - A Brief Guide to Mold, Moisture and Your Home (updated Feb 18, 2026)",
+        "href": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
+      },
+      {
+        "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+        "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+      },
+      {
+        "label": "Texas TDLR - Mold Assessors and Remediators",
+        "href": "https://www.tdlr.texas.gov/mld/"
+      },
+      {
+        "label": "Texas TDLR - Mold FAQ",
+        "href": "https://www.tdlr.texas.gov/mld/mldfaq.htm"
+      },
+      {
+        "label": "Florida DBPR - Mold-Related Services",
+        "href": "https://www2.myfloridalicense.com/mold-related-services/"
+      },
+      {
+        "label": "New York State DOL - Mold Program",
+        "href": "https://dol.ny.gov/mold-program"
+      },
+      {
+        "label": "Louisiana LSLBC - Types of Licenses (Mold Remediation)",
+        "href": "https://lslbc.gov/types-of-licenses/"
+      },
+      {
+        "label": "DC DOEE - Mold",
+        "href": "https://doee.dc.gov/service/mold"
+      },
+      {
+        "label": "DC DOEE - Mold Professional Licensing",
+        "href": "https://doee.dc.gov/node/1280391"
+      },
+      {
+        "label": "DC DOEE - Mold Facts & FAQs (PDF)",
+        "href": "https://doee.dc.gov/sites/default/files/dc/sites/doee/service_content/attachments/Mold%20FAQ%20%26%20Fact%20Sheet.pdf"
+      },
+      {
+        "label": "New Hampshire RSA 310-A:189-b - mold assessment certification",
+        "href": "https://gc.nh.gov/rsa/html/XXX/310-A/310-A-189-b.htm"
+      },
+      {
+        "label": "Va. Code 59.1-200(A)(81) - professional mold remediator certification",
+        "href": "https://law.lis.virginia.gov/vacode/title59.1/chapter17/section59.1-200/"
+      }
+    ]
+  },
+  "wellWater": {
+    "federal": "EPA: private domestic wells are not regulated by the federal Safe Drinking Water Act, nor by most states; owners are responsible for making sure their water is safe. About 15 percent of Americans (more than 43 million people, over 23 million households) use private wells. In a USGS study of 2,100 domestic wells, about one in five had at least one contaminant above a human-health benchmark, mostly naturally occurring metals, radionuclides and nitrate; bacteria were found in about a third of the roughly 400 wells tested for microbes.",
+    "testAnnually": "EPA: test a private well every year for total coliform bacteria, nitrates, total dissolved solids and pH. Test more often if young children, older adults, or someone pregnant or nursing lives there. Test right away after flooding, land disturbance or nearby construction or industrial activity; after repairing or replacing any part of the well system; if taste, odor or color changes; or if there are known groundwater problems in the area. Ask the local health department what is common in local groundwater.",
+    "otherContaminants": "EPA's triggers: recurring stomach illness, test for coliform; lead plumbing or corrosion, test pH, lead and copper; radon in indoor air or a radon-rich area, test for radon; intensive farming nearby, test nitrate, nitrite, pesticides and coliform; mining nearby, test metals and pH; gas drilling nearby, test chloride, sodium, barium and strontium; landfills, gas stations or dry cleaners nearby, or a fuel odor, test VOCs. EPA lists arsenic among heavy metals and uranium among radionuclides that can occur in wells (radionuclides can harm kidneys and raise cancer risk). USGS estimates about 2.1 million people use wells high in arsenic (over 10 ug/L, the public-water MCL); about 7 percent of drinking-water aquifer wells sampled nationally exceeded it, about 16 percent in the Southwest, and arsenic is more common in the West, the glacial aquifer system and several eastern and southern aquifers. PFAS: private wells fall outside the Safe Drinking Water Act, so EPA's PFAS limits don't apply to them; for reference, the 2024 public-water limits are PFOA and PFOS 4.0 ppt and PFHxS, PFNA and GenX 10 ppt, plus a mixture hazard index. EPA's 2024 funding announcement included help for private well owners dealing with PFAS. Changed in 2025-2026: EPA said on May 14, 2025 it would keep the PFOA and PFOS limits, and on May 18, 2026 proposed two rules for public comment: one lets systems request two more years (to 2031) to comply, and one would rescind the limits for PFHxS, PFNA, GenX and the hazard index. Whether either has been finalized since May 18, 2026 was not verified.",
+    "certifiedLabs": "Use only labs certified for drinking-water testing. EPA links each state's lab certification program in a PDF: https://www.epa.gov/system/files/documents/2023-03/state-cert-programs-certify-labs-to-conduct-drinking-water-analyses.pdf (from https://www.epa.gov/dwlabcert/contact-information-certification-programs-and-certified-laboratories-drinking-water). Local health departments may test private wells for free. EPA does not test home water on request.",
+    "notes": "CDC's well-testing pages blocked automated access (HTTP 403), so EPA and USGS are used instead. EPA's own pages give no testing interval for arsenic, uranium or PFAS.",
+    "sources": [
+      {
+        "label": "EPA - Private Drinking Water Wells (updated Aug 25, 2026)",
+        "href": "https://www.epa.gov/privatewells"
+      },
+      {
+        "label": "EPA - Protect Your Home's Water (updated Feb 26, 2026)",
+        "href": "https://www.epa.gov/privatewells/protect-your-homes-water"
+      },
+      {
+        "label": "EPA - Potential Well Water Contaminants and Their Impacts (updated Jul 6, 2026)",
+        "href": "https://www.epa.gov/privatewells/potential-well-water-contaminants-and-their-impacts"
+      },
+      {
+        "label": "EPA - Contact Information for Certification Programs and Certified Laboratories for Drinking Water (updated Aug 11, 2026)",
+        "href": "https://www.epa.gov/dwlabcert/contact-information-certification-programs-and-certified-laboratories-drinking-water"
+      },
+      {
+        "label": "EPA - State certification programs for drinking water labs (PDF)",
+        "href": "https://www.epa.gov/system/files/documents/2023-03/state-cert-programs-certify-labs-to-conduct-drinking-water-analyses.pdf"
+      },
+      {
+        "label": "USGS - Domestic (Private) Supply Wells",
+        "href": "https://www.usgs.gov/mission-areas/water-resources/science/domestic-private-supply-wells"
+      },
+      {
+        "label": "USGS - Arsenic and Drinking Water",
+        "href": "https://www.usgs.gov/mission-areas/water-resources/science/arsenic-and-drinking-water"
+      },
+      {
+        "label": "EPA - Per- and Polyfluoroalkyl Substances (PFAS) NPDWR (updated May 18, 2026)",
+        "href": "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+      }
+    ]
+  },
+  "energyTests": {
+    "blowerDoor": {
+      "iecc2021": "2021 IECC: every new dwelling must pass a whole-house blower-door test at 50 Pa plus field verification of the air-barrier checklist. Limits: 5.0 ACH50 or less in climate zones 0-2 and 3.0 ACH50 or less in zones 3-8. New in 2021: tested leakage may never exceed 5.0 ACH50 in any zone, even on the performance/ERI trade-off paths. Attached dwelling units and dwellings under 1,500 sq ft may instead meet 0.30 cfm50 per sq ft of dwelling-unit enclosure area. Changed in the 2024 IECC: 4.0 ACH50 in zones 0-2, still 3.0 in zones 3-5, 2.5 in zones 6-8, the performance/ERI cap tightened to 4.0 ACH50, and the multifamily alternative cut to 0.27 cfm50/sq ft. DOE issued its 2024 IECC determination Dec 20, 2024, and state certifications are due Dec 30, 2026. Which edition applies depends on local adoption.",
+      "standard": "ANSI/RESNET/ICC 380 (Standard for Testing Airtightness of Building, Dwelling Unit and Sleeping Unit Enclosures; Airtightness of Heating and Cooling Air Distribution Systems; and Airflow of Mechanical Ventilation). The latest edition is 380-2025. RESNET's HERS currently uses 380-2019 (through ANSI/RESNET/ICC 301-2019); 301-2022 and 380-2022 become mandatory for HERS on Jan 1, 2027. DOE's Building America Solution Center says enclosure tests follow RESNET Standards Chapter 8, ASTM E1827 or ASTM E779, and ACH50 = (CFM50 x 60) / building volume in cubic feet.",
+      "typicalCost": null,
+      "notes": "typicalCost: no official source gives a price, so none is given. DOE's Energy Saver 'blower door tests' page now returns 404; DOE's 'Professional Home Energy Assessments' page says many assessments include a blower door test and a thermographic scan. DOE's air-leakage numbers come from its 2021 webinar slides and the 2021/2024 determination analyses, because ICC's online code text could not be read. On the 0.30 alternative, DOE's 2021 analysis table prints the unit as 'cfm25/ft2' but DOE's 2024 slides say 'cfm50/ft2'; check adopted code text.",
+      "sources": [
+        {
+          "label": "DOE Building Energy Codes Program - 2021 IECC Residential Webinar slides (Feb 2021)",
+          "href": "https://www.energycodes.gov/sites/default/files/2021-02/2021_IECC_Residential_Webinar_presentation_slides.pdf"
+        },
+        {
+          "label": "DOE/PNNL - 2021 IECC Final Determination energy savings analysis (TSD, Jul 2021)",
+          "href": "https://www.energycodes.gov/sites/default/files/2021-07/2021_IECC_Final_Determination_AnalysisTSD.pdf"
+        },
+        {
+          "label": "DOE/PNNL - 2024 IECC Determination TSD (Dec 2024)",
+          "href": "https://www.energycodes.gov/sites/default/files/2024-12/2024_IECC_Determination_TSD.pdf"
+        },
+        {
+          "label": "DOE BECP - 2024 IECC webinar presentation (Sep 19, 2024)",
+          "href": "https://www.energycodes.gov/sites/default/files/2024-09/2024%20IECC%20Webinar%20-%20Full%20Presentation.pdf"
+        },
+        {
+          "label": "DOE BECP - Determinations (2024 IECC determination Dec 20, 2024; state certifications due Dec 30, 2026)",
+          "href": "https://www.energycodes.gov/determinations"
+        },
+        {
+          "label": "RESNET - RESNET-ANSI American National Standards (301, 380, 310 editions and compliance dates)",
+          "href": "https://www.resnet.us/about/standards/resnet-ansi/"
+        },
+        {
+          "label": "DOE Building America Solution Center (PNNL) - Enclosure Leakage Test",
+          "href": "https://basc.pnnl.gov/resource-guides/enclosure-leakage-test"
+        },
+        {
+          "label": "DOE Energy Saver - Professional Home Energy Assessments",
+          "href": "https://www.energy.gov/energysaver/professional-home-energy-assessments"
+        }
+      ]
+    },
+    "ductLeakage": {
+      "iecc2021": "2021 IECC total duct leakage, tested at 25 Pa (0.1 in. w.g.) at rough-in or after construction with all registers sealed: 4.0 cfm25 or less per 100 sq ft of conditioned floor area (after construction, or at rough-in with the air handler installed); 3.0 cfm25 per 100 sq ft at rough-in without the air handler. New in 2021: ducts and air handlers located entirely inside the thermal envelope are no longer exempt and must test at 8.0 cfm25 per 100 sq ft or less (twice the standard rate). The 4.0 limit has been unchanged from the 2012 through the 2021 IECC. Changed in the 2024 IECC: limits move into a new Table R403.3.6, with more leakage allowed for systems with 3 or more ducted returns, for smaller homes, and for ducts in conditioned space without an air handler at rough-in (6 cfm per 100 sq ft, up from 3); duct-leakage-to-outside may be used only on the performance and ERI paths.",
+      "typicalCost": null,
+      "notes": "typicalCost: no official source gives a price, so none is given. The values come from DOE/PNNL sources (Building America Solution Center, the 2021 and 2024 determination analyses, and DOE's 2021 webinar) because ICC's code text could not be read. ANSI/RESNET/ICC 380 also covers duct airtightness testing.",
+      "sources": [
+        {
+          "label": "DOE Building America Solution Center (PNNL) - Duct Leakage Tests",
+          "href": "https://basc.pnnl.gov/resource-guides/duct-leakage-tests"
+        },
+        {
+          "label": "DOE/PNNL - 2021 IECC Final Determination energy savings analysis (TSD, Jul 2021)",
+          "href": "https://www.energycodes.gov/sites/default/files/2021-07/2021_IECC_Final_Determination_AnalysisTSD.pdf"
+        },
+        {
+          "label": "DOE/PNNL - 2024 IECC Determination TSD (Dec 2024)",
+          "href": "https://www.energycodes.gov/sites/default/files/2024-12/2024_IECC_Determination_TSD.pdf"
+        },
+        {
+          "label": "DOE Building Energy Codes Program - 2021 IECC Residential Webinar slides (Feb 2021)",
+          "href": "https://www.energycodes.gov/sites/default/files/2021-02/2021_IECC_Residential_Webinar_presentation_slides.pdf"
+        },
+        {
+          "label": "DOE BECP - 2021 IECC Residential Webinar transcript (Feb 2021)",
+          "href": "https://www.energycodes.gov/sites/default/files/2021-02/2021_IECC_Residential_Webinar_presentation_transcript.pdf"
+        },
+        {
+          "label": "DOE BECP - 2024 IECC webinar presentation (Sep 19, 2024)",
+          "href": "https://www.energycodes.gov/sites/default/files/2024-09/2024%20IECC%20Webinar%20-%20Full%20Presentation.pdf"
+        },
+        {
+          "label": "RESNET - RESNET-ANSI American National Standards (301, 380, 310 editions and compliance dates)",
+          "href": "https://www.resnet.us/about/standards/resnet-ansi/"
+        }
+      ]
+    },
+    "infrared": {
+      "standards": "ASTM C1060-23, Standard Practice for Thermographic Inspection of Insulation Installations in Envelope Cavities of Frame Buildings (active; updated Mar 16, 2023): qualitative infrared inspection of framed walls, ceilings, roofs and floors to find missing, partial, poorly installed or damaged cavity insulation; ASTM says proof of missing insulation needs independent checks such as visual inspection. ASTM E1186-22, Standard Practices for Air Leakage Site Detection in Building Envelopes and Air Barrier Systems (active; updated Oct 11, 2022): qualitative methods for locating leaks (infrared scanning, smoke tracer, theatrical fog, anemometer, sound, bubble, tracer gas). Infrared scanning surveys large areas fast. E1186 says forced air leakage (pressurizing or depressurizing the building) is needed because leaks are hard to find under normal weather. DOE says many professional assessments pair a blower door test with a thermographic scan.",
+      "typicalCost": null,
+      "notes": "typicalCost: no official source gives a price, so none is given. DOE's Energy Saver 'thermographic inspections' page now returns 404.",
+      "sources": [
+        {
+          "label": "ASTM C1060-23 Thermographic Inspection of Insulation Installations in Envelope Cavities of Frame Buildings",
+          "href": "https://store.astm.org/standards/c1060"
+        },
+        {
+          "label": "ASTM E1186-22 Air Leakage Site Detection in Building Envelopes and Air Barrier Systems",
+          "href": "https://store.astm.org/standards/e1186"
+        },
+        {
+          "label": "DOE Energy Saver - Professional Home Energy Assessments",
+          "href": "https://www.energy.gov/energysaver/professional-home-energy-assessments"
+        }
+      ]
+    },
+    "combustionSafety": {
+      "standard": "ANSI/BPI-1200-S-2017, Standard Practice for Basic Analysis of Buildings, is still listed on BPI's standards page. Its Section 7 adopts the combustion-appliance inspection requirements of BPI-1100 Section 7 and adds to them; the current BPI-1100 is ANSI/BPI-1100-T-2023 (Home Energy Auditing Standard). Before testing, the auditor checks combustible gas (below 10% of the lower explosive limit) and ambient CO (below 70 ppm). Ambient CO action levels: 9-35 ppm, advise; 36-69 ppm, ventilate and shut off sources; 70 ppm or more, stop, evacuate and call emergency services from outside. The combustion appliance safety test sets up the greatest depressurization achievable in the combustion appliance zone (CAZ) for the conditions, then measures spillage and CO on natural-draft appliances (barometric draft control) and Category I appliances (draft hood or natural-draft vent), plus CO on gas ovens and direct-vent or vent-free equipment. DOE's Building America Solution Center calls for CAZ testing in homes with natural-draft furnaces, boilers or water heaters, especially when air sealing (at the end of each workday). It cites NFPA 54 for combustion air, and RESNET Section 805 / ANSI/ACCA 12 QH-2014 Appendix A (CO test and CAZ depressurization test) for ENERGY STAR homes keeping non-direct-vent appliances in climate zones 1-3.",
+      "sources": [
+        {
+          "label": "BPI - Standards (ANSI/BPI-1100-T-2023, ANSI/BPI-1200-S-2017, BPI-2400)",
+          "href": "https://www.bpi.org/resources/standards/"
+        },
+        {
+          "label": "ANSI/BPI-1200-S-2017 Standard Practice for Basic Analysis of Buildings (PDF)",
+          "href": "https://www.bpi.org/__cms/docs/ANSI%20BPI-1200-S-2017%20Standard%20Practice%20for%20Basic%20Analysis%20of%20Buildings.pdf"
+        },
+        {
+          "label": "DOE Building America Solution Center (PNNL) - Combustion Appliance Zone (CAZ) Testing",
+          "href": "https://basc.pnnl.gov/resource-guides/combustion-appliance-zone-caz-testing"
+        },
+        {
+          "label": "DOE Building America Solution Center (PNNL) - Enclosure Leakage Test",
+          "href": "https://basc.pnnl.gov/resource-guides/enclosure-leakage-test"
+        }
+      ]
+    },
+    "loadCalculation": {
+      "manualJ": "ACCA Manual J, 8th Edition (ANSI/ACCA 2 Manual J-2016): the ANSI-recognized method for residential heating and cooling loads; ACCA says codes and most state and local jurisdictions require a Manual J load calculation. Manual S, 3rd Edition, Version 1.02 (ANSI/ACCA 3 Manual S-2023, with Addenda A and B 2024), selects and sizes heating, cooling, dehumidification and humidification equipment; it is new since 2023. Manual D (ANSI/ACCA 1 Manual D-2016, 3rd Edition) designs duct systems. Code triggers, as quoted by ACCA from the 2018 codes: IRC M1401.3 and IECC R403.7 / IRC N1103.7 (mandatory) require heating and cooling equipment sized per Manual S based on Manual J loads, or other approved methods; IRC M1601.1 requires duct systems built per Manual D, the manufacturer's instructions or other approved methods. DOE's 2021 IECC field-study checklist confirms R403.7 carries into the 2021 IECC. These apply only where a jurisdiction has adopted these codes, and local amendments may change them.",
+      "typicalCost": null,
+      "notes": "typicalCost: no official source gives a price, so none is given. The 2021 IRC text was not opened, so M1401.3/M1601.1 wording is the 2018 version as quoted by ACCA.",
+      "sources": [
+        {
+          "label": "ACCA - Manual J Residential Load Calculation",
+          "href": "https://www.acca.org/standards/technical-manuals/manual-j"
+        },
+        {
+          "label": "ACCA - Manual S Residential Equipment Selection",
+          "href": "https://www.acca.org/standards/technical-manuals/manual-s"
+        },
+        {
+          "label": "ACCA - Manual D Residential Duct Design",
+          "href": "https://www.acca.org/standards/technical-manuals/manual-d"
+        },
+        {
+          "label": "ACCA - 2018 Model Code References (IRC M1401.3, M1601.1; IECC R403.7)",
+          "href": "https://higherlogicdownload.s3.amazonaws.com/ACCA/c6b38bda-2e04-4f93-bd51-7a80525ad936/UploadedImages/2018_Model_Code_References_42518.pdf"
+        },
+        {
+          "label": "DOE BECP - 2021 IECC Single-Family Field Study data collection forms (zip, Sep 2024; checklist item R403.7)",
+          "href": "https://www.energycodes.gov/sites/default/files/2025-01/Single-Family_Field_Study_Data_Collection_2021IECC.zip"
+        }
+      ]
+    },
+    "insulation": {
+      "recommendedRValues": [
+        {
+          "zone": "1",
+          "attic": "R30 if uninsulated; R25 if already 3-4 in. of insulation",
+          "wall": "When siding is removed on an uninsulated wood-frame wall: blow insulation into the empty cavities (ENERGY STAR lists no added sheathing for zones 1-2)",
+          "floor": "R13"
+        },
+        {
+          "zone": "2",
+          "attic": "R49 if uninsulated; R38 if already 3-4 in.",
+          "wall": "When re-siding an uninsulated wall: blow insulation into the cavities (no added sheathing listed)",
+          "floor": "R13"
+        },
+        {
+          "zone": "3",
+          "attic": "R49 if uninsulated; R38 if already 3-4 in.",
+          "wall": "When re-siding an uninsulated wall: blow in cavity insulation plus R5 insulative sheathing; basement/crawlspace walls R5 sheathing or R13 batt",
+          "floor": "R19"
+        },
+        {
+          "zone": "4",
+          "attic": "R60 if uninsulated; R49 if already 3-4 in.",
+          "wall": "When re-siding: blow in cavity insulation plus R5-R10 insulative sheathing (R10 if the 2x4 wall is already insulated); basement/crawlspace walls R10 sheathing or R13 batt in 4A/4B, R15 sheathing or R19 batt in 4C",
+          "floor": "R19 (4A and 4B); R30 (4C)"
+        },
+        {
+          "zone": "5",
+          "attic": "R60 if uninsulated; R49 if already 3-4 in.",
+          "wall": "When re-siding: blow in cavity insulation plus R5-R10 sheathing (R10 if already insulated); basement/crawlspace walls R15 sheathing or R19 batt",
+          "floor": "R30"
+        },
+        {
+          "zone": "6",
+          "attic": "R60 if uninsulated; R49 if already 3-4 in.",
+          "wall": "When re-siding: blow in cavity insulation plus R5-R10 sheathing (R10 if already insulated); basement/crawlspace walls R15 sheathing or R19 batt",
+          "floor": "R30"
+        },
+        {
+          "zone": "7",
+          "attic": "R60 if uninsulated; R49 if already 3-4 in.",
+          "wall": "When re-siding: blow in cavity insulation plus R5-R10 sheathing (R10 if already insulated); basement/crawlspace walls R15 sheathing or R19 batt",
+          "floor": "R38"
+        },
+        {
+          "zone": "8",
+          "attic": "R60 if uninsulated; R49 if already 3-4 in.",
+          "wall": "When re-siding: blow in cavity insulation plus R5-R10 sheathing (R10 if already insulated); basement/crawlspace walls R15 sheathing or R19 batt",
+          "floor": "R38"
+        }
+      ],
+      "notes": "ENERGY STAR's table is for retrofitting existing wood-framed homes and is based on 2021 IECC Table R402.1.3. It groups zones as 1, 2, 3, 4A/4B, 4C/5/6 and 7/8; the rows here expand those groups into zones 1-8. Wall advice applies 'whenever exterior siding is removed'. The page shows no last-updated date.",
+      "sources": [
+        {
+          "label": "ENERGY STAR - Recommended Home Insulation R-Values",
+          "href": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values"
+        }
+      ]
+    },
+    "hersIndex": {
+      "summary": "RESNET's HERS Index is the industry standard home energy rating. A certified RESNET HERS Rater rates the home against a computer-modeled reference home of the same size and shape. A home built to 2006 energy standards (the 2006 IECC) scores 100, and lower is better: 70 means 30% more efficient than the reference home, 130 means 30% less efficient, and 0 means net zero energy. Ratings are calculated under ANSI/RESNET/ICC 301 and tested under 380. HERS uses 301-2019 through Dec 31, 2026, and 301-2022 (with 380-2022) is mandatory from Jan 1, 2027; 301-2025 will be allowed voluntarily once software is updated. RESNET's public registry verifies raters and shows ratings for rated homes. Find a rater: https://www.hersindex.com/find-a-hers-rater/",
+      "typicalCost": null,
+      "notes": "typicalCost: RESNET publishes no price and none was found, so none is given. Changed for 2026: the IRS page (reviewed Apr 28, 2026) says the Energy Efficient Home Improvement Credit (30% of qualified costs; up to $150 for a home energy audit of a main home) 'is allowed for qualifying property placed in service on or after Jan. 1, 2023, and before December 31, 2025'. 2026 audits therefore appear ineligible; that is an inference, as the IRS page does not discuss 2026 audits directly.",
+      "sources": [
+        {
+          "label": "RESNET HERS Index - What Is the HERS Index",
+          "href": "https://www.hersindex.com/hers-index/what-is-the-hers-index/"
+        },
+        {
+          "label": "RESNET HERS Index - Understanding the HERS Score (0 = net zero)",
+          "href": "https://www.hersindex.com/know-your-homes-hers-index-score/hers-index-understanding-the-hers-score/"
+        },
+        {
+          "label": "RESNET - Find a HERS Rater",
+          "href": "https://www.hersindex.com/find-a-hers-rater/"
+        },
+        {
+          "label": "RESNET - RESNET-ANSI American National Standards (301, 380, 310 editions and compliance dates)",
+          "href": "https://www.resnet.us/about/standards/resnet-ansi/"
+        },
+        {
+          "label": "IRS - Energy Efficient Home Improvement Credit (reviewed Apr 28, 2026)",
+          "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+        }
+      ]
+    },
+    "billAnalysis": {
+      "tools": "ENERGY STAR Home Energy Yardstick: the former URL (energystar.gov/campaign/home_energy_yardstick) now sends an HTTP 302 redirect to ENERGY STAR's general 'Energy Savings at Home' page, which doesn't mention the Yardstick. The tool appears to be gone, but no official retirement notice was found. Green Button: an industry-led effort launched January 2012 that lets utility customers download their own usage data in a standard format ('Download My Data') or authorize automatic transfer to third parties with opt-in consent ('Connect My Data'), based on NAESB's Energy Services Provider Interface (ESPI) standard. DOE's page (metadata updated May 14, 2026) still cites early commitments of more than 50 utilities covering over 60 million homes and businesses. The Green Button Alliance says it has spent more than a decade enhancing the standards and testing Green Button platforms, and it offers certification testing. For calibrating savings predictions to past bills, BPI-2400-S-2015 v.2 is the BPI standard.",
+      "sources": [
+        {
+          "label": "ENERGY STAR - former Home Energy Yardstick URL (now redirects to /saveathome)",
+          "href": "https://www.energystar.gov/campaign/home_energy_yardstick"
+        },
+        {
+          "label": "ENERGY STAR - Energy Savings at Home",
+          "href": "https://www.energystar.gov/saveathome"
+        },
+        {
+          "label": "DOE - Green Button",
+          "href": "https://www.energy.gov/data/green-button"
+        },
+        {
+          "label": "Green Button Alliance",
+          "href": "https://www.greenbuttonalliance.org/"
+        },
+        {
+          "label": "BPI - Standards (ANSI/BPI-1100-T-2023, ANSI/BPI-1200-S-2017, BPI-2400)",
+          "href": "https://www.bpi.org/resources/standards/"
+        }
+      ]
+    },
+    "notes": "ICC's online IECC text could not be read (it requires a captcha and subscription), so IECC values come from DOE and PNNL publications. Model codes apply only where adopted; check the local edition."
+  },
+  "stateSummary": [
+    {
+      "state": "NY",
+      "radonLicensing": false,
+      "moldLicensing": true,
+      "coAlarmLaw": true,
+      "leadProgram": "EPA-run (RRP and abatement/inspection/risk assessment)",
+      "notes": "Radon: NYS DOH says New York does not certify or license radon mitigators; no tester licensing found. Mold: NY DOL license (Labor Law Art. 32). CO: Exec. Law 378(5-a) covers 1-2 family homes, condos/co-ops and multiple dwellings with CO sources or attached garages.",
+      "sources": [
+        {
+          "label": "New York State DOH - Certified Radon Mitigation Contractors (revised Aug 2026)",
+          "href": "https://healthweb-back.health.ny.gov/environmental/radon/mitigators.htm"
+        },
+        {
+          "label": "New York State DOL - Mold Program",
+          "href": "https://dol.ny.gov/mold-program"
+        },
+        {
+          "label": "N.Y. Executive Law 378 (subd. 5-a, carbon monoxide detectors)",
+          "href": "https://www.nysenate.gov/legislation/laws/EXC/378"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        }
+      ]
+    },
+    {
+      "state": "NJ",
+      "radonLicensing": true,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement/inspection: state-run (EPA-authorized)",
+      "notes": "Radon: NJDEP certification for all testers and mitigators; sellers must give buyers any radon test results at contract (per ELI). CO: required at initial occupancy or change of occupancy of 1-2 family homes (N.J.S.A. 52:27D-133.3).",
+      "sources": [
+        {
+          "label": "New Jersey DEP - Radon information sheet",
+          "href": "https://www.nj.gov/dep/rpp/radon/download/info_radon.pdf"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "PA",
+      "radonLicensing": true,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (EPA-authorized)",
+      "notes": "Radon: DEP certification for testing, mitigation and labs. CO: Act 121 of 2013 covers seller disclosure and multifamily rentals.",
+      "sources": [
+        {
+          "label": "Pennsylvania DEP - Radon Certification",
+          "href": "https://www.pa.gov/agencies/dep/programs-and-services/radiation-protection/radon-division/radon-certification"
+        },
+        {
+          "label": "Pennsylvania Carbon Monoxide Alarm Standards Act, Act 121 of 2013",
+          "href": "https://www.palegis.us/statutes/unconsolidated/law-information?sessYr=2013&sessInd=0&actNum=121"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "CA",
+      "radonLicensing": true,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (CDPH, EPA-authorized)",
+      "notes": "Radon: providers must hold NRPP/NRSB certification and be on CDPH's list (H&S 106750); mitigators also need a CSLB license. CO: H&S 17926 covers existing dwellings with CO sources.",
+      "sources": [
+        {
+          "label": "California Dept. of Public Health - Radon Services Certification",
+          "href": "https://www.cdph.ca.gov/Programs/CEH/DRSEM/Pages/EMB/Radon/Radon-Services-Certification.aspx"
+        },
+        {
+          "label": "Cal. Health & Safety Code 17926 (public.law copy; leginfo.legislature.ca.gov blocked automated access)",
+          "href": "https://california.public.law/codes/health_and_safety_code_section_17926"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "IL",
+      "radonLicensing": true,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (IDPH, EPA-authorized)",
+      "notes": "Radon: IEMA-OHS licensing; Radon Awareness Act disclosure at sale; new homes need passive radon-resistant construction (420 ILCS 52). Mold: a statute authorizes a registration program, but none was confirmed operating. CO: 430 ILCS 135 requires an alarm within 15 ft of sleeping rooms (per NCSL).",
+      "sources": [
+        {
+          "label": "Illinois IEMA-OHS - Applying for a Radon License",
+          "href": "https://iemaohs.illinois.gov/nrs/radon/applylic.html"
+        },
+        {
+          "label": "Illinois Radon Awareness Act, 420 ILCS 46 (ILGA)",
+          "href": "https://ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2913"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "TX",
+      "radonLicensing": false,
+      "moldLicensing": true,
+      "coAlarmLaw": false,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (DSHS, EPA-authorized)",
+      "notes": "Radon: no state certification requirement (Texas Tech, which now runs the state radon program). Mold: TDLR license. CO: statewide statute covers only child-care facilities (per NCSL); municipal residential code is the 2012 IRC (Loc. Gov't Code 214.212), whose CO section was not verified.",
+      "sources": [
+        {
+          "label": "Texas Tech University - Texas Radon Information (state program manager)",
+          "href": "https://www.depts.ttu.edu/ceweb/radon/"
+        },
+        {
+          "label": "Texas TDLR - Mold FAQ",
+          "href": "https://www.tdlr.texas.gov/mld/mldfaq.htm"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "Texas Local Government Code ch. 214 (214.212 municipal residential code = IRC as of May 1, 2012)",
+          "href": "https://statutes.capitol.texas.gov/Docs/LG/htm/LG.214.htm"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        }
+      ]
+    },
+    {
+      "state": "GA",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "State-run (Georgia EPD is EPA-authorized for both RRP and abatement)",
+      "notes": "Radon: UGA's state radon program says no law requires mitigator certification. CO: state minimum standard code requires CO detectors in new 1-2 family homes and townhomes (new construction only, per NCSL).",
+      "sources": [
+        {
+          "label": "UGA Extension Radon Program - Find a Radon Mitigator",
+          "href": "https://radon.uga.edu/?p=16"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "FL",
+      "radonLicensing": true,
+      "moldLicensing": true,
+      "coAlarmLaw": true,
+      "leadProgram": "EPA-run (RRP and abatement/inspection/risk assessment)",
+      "notes": "Radon: FDOH certification; a radon notice must appear on sale and rental documents (F.S. 404.056). Mold: DBPR license. CO: F.S. 553.885 covers buildings and additions built on or after July 1, 2008.",
+      "sources": [
+        {
+          "label": "Florida Dept. of Health - Radon Professional Certification",
+          "href": "https://www.floridahealth.gov/licensing-regulations/regulated-professions/certification/"
+        },
+        {
+          "label": "Florida DBPR - Mold-Related Services",
+          "href": "https://www2.myfloridalicense.com/mold-related-services/"
+        },
+        {
+          "label": "Florida Statutes 553.885 (2025)",
+          "href": "https://www.flsenate.gov/Laws/Statutes/2025/553.885"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        }
+      ]
+    },
+    {
+      "state": "DC",
+      "radonLicensing": true,
+      "moldLicensing": true,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement/inspection: District-run (DOEE, EPA-authorized)",
+      "notes": "Radon: NRPP/NRSB certification or EPA proficiency listing required for fee-based testing and mitigation (D.C. Code 28-4201). Mold: DOEE licenses assessors and remediators; rentals need licensed professionals at 10 sq ft or more. CO: owners of new and existing dwellings must install CO detectors (D.C. Code 6-751.02).",
+      "sources": [
+        {
+          "label": "D.C. Code 28-4201 - radon proficiency requirement",
+          "href": "https://code.dccouncil.gov/us/dc/council/code/sections/28-4201"
+        },
+        {
+          "label": "DC DOEE - Mold Professional Licensing",
+          "href": "https://doee.dc.gov/node/1280391"
+        },
+        {
+          "label": "D.C. Code 6-751.02 - duty of owner to install detectors",
+          "href": "https://code.dccouncil.gov/us/dc/council/code/sections/6-751.02"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        }
+      ]
+    },
+    {
+      "state": "VA",
+      "radonLicensing": true,
+      "moldLicensing": true,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (DPOR, EPA-authorized)",
+      "notes": "Radon: NRPP/NRSB certification required by statute (Va. Code 32.1-229.01). Mold: the Consumer Protection Act requires remediators to hold a national certification (not a state license); a 2025 study of licensing had a report due Jan 1, 2026. CO: rental standard under the Statewide Fire Prevention Code (per NCSL).",
+      "sources": [
+        {
+          "label": "Virginia Dept. of Health - Radon Professionals",
+          "href": "https://www.vdh.virginia.gov/radiological-health/indoor-radon-program/radon-professionals/"
+        },
+        {
+          "label": "Va. Code 59.1-200(A)(81) - professional mold remediator certification",
+          "href": "https://law.lis.virginia.gov/vacode/title59.1/chapter17/section59.1-200/"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        }
+      ]
+    },
+    {
+      "state": "MD",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (MDE, EPA-authorized)",
+      "notes": "Radon: no state license; Environment 8-305 only requires radon testing businesses to use EPA-listed analysis facilities and give written results. CO: Public Safety 12-1101 to -1106 covers new fossil-fuel homes (permits from Jan 1, 2008), hotels (2017) and rental units (Apr 1, 2018).",
+      "sources": [
+        {
+          "label": "Maryland Code, Environment 8-305 (radon testing businesses)",
+          "href": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gen&section=8-305&enactments=false"
+        },
+        {
+          "label": "Md. Code, Public Safety 12-1104",
+          "href": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gps&section=12-1104&enactments=false"
+        },
+        {
+          "label": "Md. Code, Public Safety 12-1102 (applicability)",
+          "href": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gps&section=12-1102&enactments=false"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "MA",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "State-run (EPA-authorized for both RRP and abatement)",
+      "notes": "Radon: MDPH says the Commonwealth does not certify radon professionals and lists NRPP/NRSB-certified ones. CO: M.G.L. c.148 s.26F1/2 requires alarms in homes with fossil-fuel equipment or enclosed parking, with a fire department inspection at sale.",
+      "sources": [
+        {
+          "label": "Massachusetts DPH - Nationally Certified Radon Mitigation Professionals (updated Jul 8, 2026)",
+          "href": "https://www.mass.gov/doc/nationally-certified-radon-mitigation-professionals/download"
+        },
+        {
+          "label": "Mass. Gen. Laws ch. 148, sec. 26F1/2",
+          "href": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter148/Section26F1~2"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "AZ",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": null,
+      "leadProgram": "EPA-run (RRP and abatement/inspection/risk assessment)",
+      "notes": "Radon: no radon-specific credential found (ELI database through June 2026); ADHS notes contractors are licensed by the Registrar of Contractors and offers free test kits. CO: no statute in NCSL's compilation; not confirmed either way (null).",
+      "sources": [
+        {
+          "label": "Arizona DHS - Radon",
+          "href": "https://azdhs.gov/licensing/radiation-regulatory/radon/index.php"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "MI",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (EPA-authorized)",
+      "notes": "Radon: EGLE says radon testers and mitigators are not licensed or regulated in Michigan. CO: MCL 125.1504f applies through the state code to new construction, permitted renovations and bedroom additions.",
+      "sources": [
+        {
+          "label": "Michigan EGLE - Radon Testers and Mitigators",
+          "href": "https://www.michigan.gov/egle/about/organization/materials-management/indoor-radon/radon-testers-and-mitigators"
+        },
+        {
+          "label": "Michigan MCL 125.1504f",
+          "href": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-1504f"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "WA",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "State-run (Dept. of Commerce is EPA-authorized for both RRP and abatement)",
+      "notes": "Radon: no state license found; DOH points to NRPP/NRSB search tools (ELI lists no Washington licensing law). CO: RCW 19.27.530 covers all residential buildings since Jan 1, 2013, except owner-occupied homes occupied before July 26, 2009, which must be equipped at sale.",
+      "sources": [
+        {
+          "label": "Washington DOH - Radon",
+          "href": "https://doh.wa.gov/community-and-environment/contaminants/radon"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+        },
+        {
+          "label": "RCW 19.27.530 - carbon monoxide alarms",
+          "href": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.27.530"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "MN",
+      "radonLicensing": true,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (MDH, EPA-authorized)",
+      "notes": "Radon: MDH licenses professionals, companies and labs; Radon Awareness Act disclosure at sale. CO: Minn. Stat. 299F.51 requires an alarm within 10 ft of each sleeping room in every dwelling.",
+      "sources": [
+        {
+          "label": "Minnesota Dept. of Health - Radon Licensing (updated Oct 3, 2024)",
+          "href": "https://www.health.state.mn.us/communities/environment/air/radon/licensing.html"
+        },
+        {
+          "label": "Minnesota Dept. of Health - Radon in Real Estate (updated Apr 22, 2025)",
+          "href": "https://www.health.state.mn.us/communities/environment/air/radon/radonre.html"
+        },
+        {
+          "label": "Minn. Stat. 299F.51 - carbon monoxide alarms",
+          "href": "https://www.revisor.mn.gov/statutes/cite/299F.51"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "CO",
+      "radonLicensing": true,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (CDPHE, EPA-authorized)",
+      "notes": "Radon: DPO license since July 1, 2022; SB 23-206 radon disclosures for sales and leases. CO: C.R.S. 38-45 covers sale or transfer of homes with fuel-burning appliances, fireplaces or attached garages, plus new construction (per NCSL).",
+      "sources": [
+        {
+          "label": "Colorado DORA press release - Radon professional licensure now required (Aug 16, 2022)",
+          "href": "https://dora.colorado.gov/press-release/radon-professional-licensure-now-required-in-colorado"
+        },
+        {
+          "label": "Colorado SB 23-206 (enrolled) - radon disclosure in sales and leases",
+          "href": "https://content.leg.colorado.gov/sites/default/files/documents/2023A/bills/2023a_206_enr.pdf"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "MO",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": null,
+      "leadProgram": "RRP: EPA-run; abatement: state-run (DHSS, EPA-authorized)",
+      "notes": "Radon: no licensing; HB 2730 (2026), which would have created licensing, died in committee; DHSS recommends NRPP/NRSB professionals and says professionals must test for legal transactions, and offers free kits. CO: no statute in NCSL's compilation; not confirmed either way (null).",
+      "sources": [
+        {
+          "label": "Missouri DHSS - Radon",
+          "href": "https://health.mo.gov/prevention/environmental-factors/radon"
+        },
+        {
+          "label": "Missouri House - HB 2730 (2026) bill actions",
+          "href": "https://house.mo.gov/BillActions.aspx?bill=HB2730&year=2026&code=R"
+        },
+        {
+          "label": "NCSL - Carbon Monoxide Detector Requirements, Laws and Regulations (updated Sep 29, 2025)",
+          "href": "https://www.ncsl.org/environment-and-natural-resources/carbon-monoxide-detector-requirements-laws-and-regulations"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "NC",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "State-run (NCDHHS is EPA-authorized for both RRP and abatement)",
+      "notes": "Radon: voluntary state approval of certifying programs (10A NCAC 15.1801, final May 2025); no individual certification required. CO: G.S. 42-42 requires landlords to provide one alarm per level in units with fossil-fuel sources or attached garages.",
+      "sources": [
+        {
+          "label": "NCDHHS - Radon Proficiency Programs",
+          "href": "https://ncdhhs.gov/divisions/health-service-regulation/north-carolina-radon-program/radon-proficiency-programs"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+        },
+        {
+          "label": "N.C. Gen. Stat. 42-42 - landlord to provide fit premises",
+          "href": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-42.html"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    },
+    {
+      "state": "OR",
+      "radonLicensing": false,
+      "moldLicensing": false,
+      "coAlarmLaw": true,
+      "leadProgram": "State-run (OHA is EPA-authorized for both RRP and abatement)",
+      "notes": "Radon: no state license found; OHA lists NRPP/NRSB-certified companies. CO: ORS 105.838 requires alarms at sale or transfer, and ORS 90.317 sets landlord duties.",
+      "sources": [
+        {
+          "label": "Oregon Health Authority - Radon mitigation companies",
+          "href": "https://www.oregon.gov/oha/PH/HEALTHYENVIRONMENTS/HEALTHYNEIGHBORHOODS/RADONGAS/Pages/mitigation.aspx"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Radon Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Radon%20Excerpt.pdf"
+        },
+        {
+          "label": "Oregon ORS chapter 105 (105.836-105.842 CO alarms at sale)",
+          "href": "https://www.oregonlegislature.gov/bills_laws/ors/ors105.html"
+        },
+        {
+          "label": "Oregon ORS chapter 90 (90.317 landlord CO alarm duties)",
+          "href": "https://www.oregonlegislature.gov/bills_laws/ors/ors090.html"
+        },
+        {
+          "label": "EPA - RRP authorized states",
+          "href": "https://www.epa.gov/lead/renovation-repair-and-painting-program-firm-certification"
+        },
+        {
+          "label": "EPA - Lead abatement program authorizations",
+          "href": "https://www.epa.gov/lead/lead-based-paint-abatement-and-evaluation-program-overview"
+        },
+        {
+          "label": "Environmental Law Institute - State IAQ Law Database, Mold Excerpt (laws through June 2026)",
+          "href": "https://www.eli.org/sites/default/files/files-pdf/2026%20IAQ%20Database%20-%20Mold%20Excerpt.pdf"
+        }
+      ]
+    }
+  ]
+}

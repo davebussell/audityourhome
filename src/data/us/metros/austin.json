@@ -1,0 +1,225 @@
+{
+  "slug": "austin",
+  "name": "Austin",
+  "metroName": "Austin-Round Rock-San Marcos, TX Metropolitan Statistical Area (CBSA 12420; OMB July 2023 delineation: Bastrop, Caldwell, Hays, Travis and Williamson counties)",
+  "states": ["TX"],
+  "principalCity": "Austin",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Austin Energy",
+        "serves": "Community-owned electric utility, 'a department of the City of Austin.' It sells and delivers power, publishing its own residential rates including separate 'Rates for Outside the City of Austin', so its territory extends beyond city limits. It runs its own rebate, weatherization and ECAD programs.",
+        "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Texas Gas Service (a division of ONE Gas, Inc.)",
+        "serves": "Natural gas utility serving 'nearly 711,000 residential, commercial and industrial customers in Texas.' Its office is in Austin, and ONE Gas lists Austin among its largest distribution markets.",
+        "url": "https://www.texasgasservice.com/corporate/aboutus"
+      }
+    ],
+    "notes": "Austin Energy is city-owned. Under PUCT rules, municipal utilities decide for themselves whether to opt into Texas retail electric choice, and Austin Energy sells power to its own customers at its own published rates. Austin Energy pays rebates itself, usually to the account holder or via the participating contractor's application. Parts of the 5-county MSA outside Austin Energy's territory are served by other utilities (electric co-ops, other municipal systems, and competitive-area wires utilities); their programs were not researched. Texas Gas Service has no efficiency rebates now. Its Energy Efficiency Program 'has expired, and rebate offerings are no longer available', and a proposed new program filed with the Railroad Commission of Texas 'was not approved.'"
+  },
+  "auditPrograms": [
+    {
+      "name": "Austin Energy Home Energy Savings: no-cost in-home energy assessment",
+      "runBy": "Austin Energy, through Austin Energy participating contractors",
+      "cost": "Free assessment ('no-cost, in-home energy assessment'). Upgrades are paid by the homeowner, less rebates; 0% financing is available.",
+      "whoQualifies": "Homes with Austin Energy electric service at residential rates: single-family, condos, townhomes, duplexes to fourplexes, and rentals (renters need written owner permission). Home must be 10+ years old; mobile and manufactured homes are excluded. Project must qualify for at least $100 in rebates. Excluded: asbestos in the HVAC system, imminent remodeling, spray-foam insulation. No repeat rebates for the same measure within 10 years.",
+      "whatYouGet": "A participating contractor assesses the home, recommends improvements and leaves an estimate, then handles the rebate (and loan) paperwork. Completing the upgrades earns a Home Energy Savings participation document that exempts the home from ECAD audit reporting at sale (City of Austin only).",
+      "howToBook": "Choose an Austin Energy participating contractor (Austin Energy recommends getting at least three estimates), or take Austin Energy's Home Energy Quiz. Questions: conservation@austinenergy.com, 512-482-5346.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings",
+      "status": "Open; 'Funding is limited and available only to Austin Energy customers on a first-come, first-served basis.' The page's last-reviewed stamp is 09/02/2025, yet it carries newer text (0% loan 'now through September 30, 2027').",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "ECAD home energy audit (required for most Austin home sales)",
+      "runBy": "Private ECAD Energy Professionals registered with Austin Energy (RESNET Raters or BPI Building Analyst Professionals); program run by Austin Energy",
+      "cost": "Set by the auditor. Austin Energy estimates about $200–$300 for a typical single-family home of 1,800 sq ft or less with one A/C system.",
+      "whoQualifies": "Required for sellers of homes 10+ years old inside Austin city limits that receive Austin Energy electric service (see exemptions in localRules).",
+      "whatYouGet": "Audit of HVAC, envelope and ducts, attic insulation, windows, water efficiency, solar screens/shading and improvement opportunities. The auditor files with Austin Energy and gives the seller an Audit Certificate to attach to the Seller's Disclosure Notice. Valid 10 years.",
+      "howToBook": "Hire an ECAD Energy Professional from Austin Energy's list. Contact ecad@austinenergy.com or 512-482-5346.",
+      "url": "https://austinenergy.com/energy-efficiency/ecad-ordinance/ecad-for-residential-customers/sellers",
+      "status": "In force. The ordinance was adopted Nov 6, 2008 and amended Apr 21, 2011. No 2024–2026 amendment is shown on Austin Energy's ECAD pages (last reviewed 03/14/2025).",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Weatherization Assistance (free home energy assessment + upgrades)",
+      "runBy": "Austin Energy, with participating contractors",
+      "cost": "Free: 'weatherization improvements at no cost to qualifying customers.'",
+      "whoQualifies": "Austin Energy customers enrolled in the Customer Assistance Program, or in the Medically Vulnerable Registry and under 80% MFI (2026 limits: 1 person $68,500; 2 $78,250; 3 $88,050; 4 $97,800; 5 $105,650; 6 $113,450; 7 $121,300; 8 $129,100). Must live in a single-family home, duplex to fourplex, or mobile home that is more than 10 years old, 2,500 sq ft or smaller, with improvement value of $548,990 or less. No Weatherization or Home Energy Savings participation in the past 10 years. Owners and renters (with Landlord Permission Form).",
+      "whatYouGet": "A participating contractor does a home energy assessment, then installs attic insulation, duct repair/sealing, air sealing, solar screens, smoke/CO detectors, LED lighting, A/C inspection and cleaning, a smart thermostat, and reflective roof coating for mobile homes. Austin Energy does a final inspection.",
+      "howToBook": "Online Weatherization Assistance Program Form (English/Spanish) or mail the PDF to Austin Energy, Weatherization Assistance Program, 4815 Mueller Blvd, Austin, TX 78723-3573. Questions: 512-482-5346, AEWeatherization@austinenergy.com.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization",
+      "status": "Open, first-come, first-served; applicants 'could be placed on a waiting list if the program reaches currently funded capacity.' Page last reviewed 10/01/2026.",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "Austin Energy Home Energy Savings (whole-home rebates + 0% financing)",
+      "runBy": "Austin Energy, via participating contractors; loans through Velocity Credit Union",
+      "category": "whole-home",
+      "amount": "Rebates 'averaging $3,000 for qualifying projects.' Per measure: air infiltration and duct sealing $0.20/sq ft of floor area (mandatory); attic insulation to R-38 = attic sq ft × $0.03 × R-value added + $45 setup; duct replacement $3.25/linear ft; solar screens/film $1.00/sq ft (single-pane windows only); smart thermostat $50; A/C tune-up $175/system. Central/mini-split A/C $950 / $1,200 / $1,450 (tiers 1–3). Heat pump $1,000 / $1,300 / $1,600. Loans $1,500–$25,000, up to 120 months, minimum credit score 600.",
+      "whoQualifies": "Austin Energy residential customers in homes 10+ years old (not mobile/manufactured). At least three qualifying upgrades by a participating contractor; at least $100 in rebates. A new A/C or heat pump requires replacing all components and making all recommended improvements at the same time.",
+      "status": "Open, first-come, first-served. Conflict on the page: a banner offers the 0% loan 'now through September 30, 2027', but the loan table says the 0% rate runs 'December 1 – September 30, 2026'. Confirm the current rate with Velocity Credit Union (512-469-7060).",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Home Energy Savings Essential",
+      "runBy": "Austin Energy, via participating contractors",
+      "category": "insulation-air-sealing",
+      "amount": "Rebates 'averaging $1,500.' Air infiltration and duct sealing $0.20/sq ft of floor area. Attic insulation to R-38 at attic sq ft × $0.03 × R-value added + $45 setup fee.",
+      "whoQualifies": "Same property rules as Home Energy Savings: Austin Energy residential service, home 10+ years old, participating contractor does the no-cost assessment and work, minimum $100 in rebates.",
+      "status": "Open, first-come, first-served while funding lasts (page last reviewed 12/01/2025).",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings-essential",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Air Conditioner and Heat Pump Rebate (standalone)",
+      "runBy": "Austin Energy, via participating contractors",
+      "category": "heat-pump",
+      "amount": "Central split or mini-split A/C: $600 (15.2 SEER2/12.0 EER2), $700 (17.0/12.0), $800 (18.0/13.0). Heat pump or heat-pump mini-split: $650 (15.2 SEER2/11.0 EER2/7.8 HSPF2), $750 (16.0/11.0/8.0), $950 (17.0/13.0/9.0). An extra $200 if the customer joins Home Energy Savings within six months.",
+      "whoQualifies": "Austin Energy customers replacing a system 10+ years old in a home 10+ years old. All components must be replaced, sized by Manual J (or AE guidance), with City permits. Systems with electric resistance heating elements don't qualify. Payment goes to the account holder by default; contractors can't receive it.",
+      "status": "Open, first-come, first-served. Contractor must apply within 90 days of installation. Page last reviewed 02/24/2026.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating/ac",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Heat Pump Water Heater Rebate",
+      "runBy": "Austin Energy",
+      "category": "heat-pump",
+      "amount": "$1,000 for a qualifying ENERGY STAR certified heat pump water heater.",
+      "whoQualifies": "Homes with permanent Austin Energy electric service. ENERGY STAR hybrid/heat pump unit with Energy Factor 2.0+, 40 gallons or more, new, permitted, with at least a 6-year warranty on major components. Gas water heaters don't qualify. A replaced heat pump water heater must be 10+ years old.",
+      "status": "Open, first-come, first-served. Apply within 90 days of purchase. Page last reviewed 07/02/2026.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/appliances-equipment/hp-water-heater",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Residential Solar Rebate",
+      "runBy": "Austin Energy, via participating solar contractors",
+      "category": "other",
+      "amount": "'$4,000 rebate for eligible home solar projects.' Separately, production is credited at the Value of Solar rate of 12.89 cents per kWh.",
+      "whoQualifies": "Austin Energy customers. System 3 kW DC or larger, mostly unshaded, installed by an Austin Energy participating contractor. Must receive an Austin Energy Solar Rebate Confirmation Letter before installation.",
+      "status": "Not stated (no open/waitlist/exhausted notice). Page last reviewed 10/01/2026.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/green-power/residential-solar-rebate",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Power Partner Thermostat",
+      "runBy": "Austin Energy",
+      "category": "other",
+      "amount": "$50 purchase rebate per new eligible smart thermostat (apply within 90 days; earlier $30 rebate for purchases before Nov 24, 2025). $75 bill credit per thermostat enrolled in Power Partner. $30 annual bill credit per thermostat while enrolled. Up to five thermostats.",
+      "whoQualifies": "Austin Energy customers with their own account (co-op and master-metered accounts excluded) and standard central A/C or heat pump controlled by an approved communicating thermostat (Alarm.com, Amazon, ecobee, Emerson, Honeywell Home, Nest).",
+      "status": "Open, first-come, first-served. Page last reviewed 02/01/2026.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating/pp-thermostat",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Austin Energy Solar Screen Rebate",
+      "runBy": "Austin Energy, via participating contractors",
+      "category": "other",
+      "amount": "$1.00 per sq ft of eligible solar screen fabric (SHGC 0.40 or lower).",
+      "whoQualifies": "Austin Energy residential owners of single-family homes to fourplexes and rentals. Mobile homes, new-construction builders and contractors are excluded. No screen rebate at the property in the past 10 years.",
+      "status": "Open, first-come, first-served. Contractor applies within 90 days. Page last reviewed 05/14/2024.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/solar-screens",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Texas Gas Service Energy Efficiency Program (gas rebates)",
+      "runBy": "Texas Gas Service",
+      "category": "appliances",
+      "amount": null,
+      "whoQualifies": null,
+      "status": "Ended. 'The Texas Gas Service Energy Efficiency Program has expired, and rebate offerings are no longer available.' Its proposal for a new program 'was not approved, and as a result, Texas Gas Service is unable to offer a rebate program at this time.'",
+      "url": "https://www.texasgasservice.com/save-money/energy-saving-tools-tips/energy-efficiency-program",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "Not launched. SECO says 'Rebates are not currently available.' The programs are being designed in fall 2026, and 'A launch date has not been set and will depend on DOE approval of the final program design.'",
+    "programName": "Texas HOMES and HEAR Rebate programs (Home Efficiency Rebates, HOMES; Home Electrification and Appliance Rebates, HEAR)",
+    "administrator": "Texas Comptroller of Public Accounts, State Energy Conservation Office (SECO). Implementer: APTIM Federal Services, LLC, hired April 2026.",
+    "summary": "$690 million DOE allocation. HOMES will be open to all incomes; HEAR is limited to households below 150% of AMI. Rebate levels are not set, and HOMES levels are under DOE review. Projects completed before launch are unlikely to qualify.",
+    "url": "https://comptroller.texas.gov/programs/seco/funding/ira/faq.php",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Austin Energy Weatherization Assistance",
+      "runBy": "Austin Energy",
+      "summary": "Free assessment and weatherization (insulation, duct and air sealing, solar screens, smart thermostat, safety detectors) for Austin Energy customers on the Customer Assistance Program, or on the Medically Vulnerable Registry and under 80% MFI ($97,800 for a household of 4 in 2026). Waitlist possible when funded capacity is reached.",
+      "url": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization"
+    },
+    {
+      "name": "Weatherization Assistance Program, Travis County",
+      "runBy": "Travis County Health & Human Services (TDHCA WAP subrecipient for Travis County)",
+      "summary": "Free weatherization (air infiltration reduction, solar screens, attic insulation, HVAC duct sealing) for Travis County residents. The timeline is '9 months to a year,' and eligible applicants go on a waitlist. Apply via the county's online pre-screening portal or at any of six Community Centers; help line (512) 854-7250. The county page carries an 'Expired' label, so current intake is unconfirmed.",
+      "url": "https://www.traviscountytx.gov/health-human-services/apply-for-assistance/home-weatherization"
+    },
+    {
+      "name": "WAP providers for the rest of the Austin MSA",
+      "runBy": "TDHCA subrecipients (list updated 2/2/2026)",
+      "summary": "Williamson County: Hill Country Community Action Association, Inc. Bastrop, Caldwell and Hays: Combined Community Action, Inc.",
+      "url": "https://www.tdhca.texas.gov/sites/default/files/community-affairs/docs/CA-SubRecip.pdf"
+    },
+    {
+      "name": "City of Austin home repair programs",
+      "runBy": "City of Austin, Austin Housing",
+      "summary": "Safety Repairs and Modifications grants up to $20,000 (plumbing, electrical, mechanical; at or below 80% MFI, $106,800 for 4). Plumbing Repairs grants up to $15,000 (at or below 100% MFI). Home Rehabilitation Loan Program: 0% loans up to $75,000, or $350,000 for reconstruction, forgivable after 15–20 years. Start with the online Home Repair Interest Application; 512-974-3100, hpdcs@austintexas.gov.",
+      "url": "https://www.austintexas.gov/housing/home-repair-programs"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "Austin Energy Conservation Audit and Disclosure (ECAD) ordinance: homes at sale",
+      "appliesTo": "Ordinary homeowners: YES when selling a home that is 10+ years old, inside Austin city limits and served by Austin Energy (condos in 1–4 unit buildings follow the residential rules).",
+      "summary": "Before sale the seller must either (1) get an ECAD home energy audit from a registered Energy Professional and give results to the buyer 'At least three days before the end of the option period or time of contract' (or at contract signing if there is no option period), or (2) show qualifying Austin Energy program participation in the past 10 years. Option 2 means Home Energy Savings, Weatherization Assistance, or rebates for three or more qualifying improvements or at least $500 in residential efficiency rebates. An audit is valid 10 years. Exempt: homes outside city limits or not on Austin Energy service; homes under 10 years old; manufactured homes on a permanent chassis; and transfers by foreclosure, short sale, eminent domain, family gift, court order/probate, or divorce. The ordinance was adopted Nov 6, 2008 (No. 20081106-047) and amended Apr 21, 2011 (No. 20110421-002). Austin Energy's pages describe no penalties.",
+      "url": "https://austinenergy.com/energy-efficiency/ecad-ordinance/ecad-for-residential-customers/sellers"
+    },
+    {
+      "name": "ECAD: multifamily properties (5+ units)",
+      "appliesTo": "Apartment and condo properties with 5+ units, not single-family homeowners. Renters benefit from the disclosures.",
+      "summary": "Owners must have an energy audit in the calendar year the property turns 10 years old, valid 10 years. Results must be posted for current and prospective residents, given before any application fee is accepted and at lease renewal. 'High Energy Use' properties (more than 150% of average) must notify residents and reduce energy use by 20%.",
+      "url": "https://austinenergy.com/energy-efficiency/ecad-ordinance/for-multifamily-properties"
+    },
+    {
+      "name": "ECAD: commercial building benchmarking",
+      "appliesTo": "Commercial buildings of 10,000 sq ft or more in Austin city limits on Austin Energy service. Does not apply to homeowners.",
+      "summary": "Owners must benchmark and report an energy use rating to Austin Energy 'by June 1st each year.'",
+      "url": "https://austinenergy.com/energy-efficiency/ecad-ordinance/for-commercial-buildings"
+    }
+  ],
+  "notes": "Austin is the only metro in this batch where an ordinary homeowner faces an energy rule. Selling a 10+-year-old home in Austin city limits on Austin Energy service triggers an ECAD audit-and-disclosure requirement, which is a direct hook for audityourhome.com. Austin Energy estimates typical audit cost at $200–$300. Doing a Home Energy Savings project (with its no-cost assessment) exempts the home for 10 years. Surprising: Texas Gas Service's rebate program has ended because the Railroad Commission did not approve its proposed new program, so Austin gas customers have no utility gas rebates. Also surprising: Austin Energy's Home Energy Savings page gives two different end dates for the 0% loan (Sept 30, 2026 vs Sept 30, 2027). Federal 25C/25D credits ended for property placed in service or expenditures after Dec 31, 2025; Austin Energy pages still tell customers to 'check IRS guidelines.' Texas HOMES/HEAR rebates have not launched. Unverified: whether the Travis County WAP is accepting new applications (page labeled 'Expired'); current Home Energy Savings 0% loan end date; Austin Energy solar rebate funding status.",
+  "sources": [
+    { "label": "Census Bureau / OMB July 2023 CBSA delineation file (list1_2023.xlsx)", "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx" },
+    { "label": "Austin Energy: About", "href": "https://austinenergy.com/about" },
+    { "label": "Austin Energy: Residential rebates hub", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential" },
+    { "label": "Austin Energy: Residential home improvements", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements" },
+    { "label": "Austin Energy: Residential cooling & heating", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating" },
+    { "label": "Austin Energy: Home Energy Savings", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings" },
+    { "label": "Austin Energy: Home Energy Savings Essential", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings-essential" },
+    { "label": "Austin Energy: Air conditioning / heat pump rebate", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating/ac" },
+    { "label": "Austin Energy: Power Partner Thermostat", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/cooling-heating/pp-thermostat" },
+    { "label": "Austin Energy: Heat pump water heater rebate", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/appliances-equipment/hp-water-heater" },
+    { "label": "Austin Energy: Solar screens rebate", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/solar-screens" },
+    { "label": "Austin Energy: Residential solar rebate", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/green-power/residential-solar-rebate" },
+    { "label": "Austin Energy: Weatherization Assistance", "href": "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization" },
+    { "label": "Austin Energy: ECAD for home sellers", "href": "https://austinenergy.com/energy-efficiency/ecad-ordinance/ecad-for-residential-customers/sellers" },
+    { "label": "Austin Energy: ECAD residential exemptions", "href": "https://austinenergy.com/energy-efficiency/ecad-ordinance/ecad-for-residential-customers/exemptions" },
+    { "label": "Austin Energy: About the ECAD ordinance", "href": "https://austinenergy.com/energy-efficiency/ecad-ordinance/about-the-ordinance" },
+    { "label": "Austin Energy: ECAD for multifamily properties", "href": "https://austinenergy.com/energy-efficiency/ecad-ordinance/for-multifamily-properties" },
+    { "label": "Austin Energy: ECAD for commercial buildings", "href": "https://austinenergy.com/energy-efficiency/ecad-ordinance/for-commercial-buildings" },
+    { "label": "Texas Gas Service: Energy Efficiency Program (expired)", "href": "https://www.texasgasservice.com/save-money/energy-saving-tools-tips/energy-efficiency-program" },
+    { "label": "Texas Gas Service: About us", "href": "https://www.texasgasservice.com/corporate/aboutus" },
+    { "label": "ONE Gas: About ONE Gas", "href": "https://www.onegas.com/about-one-gas/default.aspx" },
+    { "label": "Travis County HHS: Home Weatherization Assistance", "href": "https://www.traviscountytx.gov/health-human-services/apply-for-assistance/home-weatherization" },
+    { "label": "City of Austin Housing: Home repair programs", "href": "https://www.austintexas.gov/housing/home-repair-programs" },
+    { "label": "TDHCA subrecipient contact list (updated 2/2/2026)", "href": "https://www.tdhca.texas.gov/sites/default/files/community-affairs/docs/CA-SubRecip.pdf" },
+    { "label": "PUCT FAQ: municipally owned utilities and customer choice", "href": "https://puc.texas.gov/consumer/facts/faq/muni" },
+    { "label": "Texas Comptroller SECO: IRA Home Energy Rebates FAQ", "href": "https://comptroller.texas.gov/programs/seco/funding/ira/faq.php" },
+    { "label": "IRS FAQs on OBBB changes to 25C/25D (FS-2025-05)", "href": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb" }
+  ]
+}

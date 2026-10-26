@@ -1,0 +1,75 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CalcStyles from '../../../components/calc/CalcStyles.astro';
+import CityPicker from '../../../components/calc/CityPicker.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { CALC_META, CALC_SLUGS, CALC_CITIES, type CalcSlug } from '../../../lib/calc/data';
+import { longDate } from '../../../lib/calc/format';
+
+const what: Record<CalcSlug, string[]> = {
+  'energy-costs': ['Yearly heating cost for gas, oil, propane, electric, heat pump and wood systems', 'Hot water and air conditioning costs', 'Optional: scale it to your own bills'],
+  'upgrade-payback': ['Attic, walls, basement, windows, air sealing, thermostat', 'Rebates that are open today, with their conditions', 'Payback with conservative savings'],
+  'home-health': ['What your radon result means', 'Winter humidity that keeps windows dry', 'Smoke and CO alarms: the law and the recommendation'],
+  'appliance-energy': ['Fridges, freezers, laundry, TVs, hot tubs, EVs', 'Block heaters, with your city\'s cold nights', 'What a newer model or a timer saves'],
+};
+
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Calculators', path: '/ca/calculators/' }])];
+---
+
+<Base
+  title="Home energy and health calculators for Canada"
+  description={`Four free calculators set up for ${CALC_CITIES.length} Canadian cities: heating costs, upgrade payback and rebates, home health (radon, humidity, alarms) and appliance running costs.`}
+  schema={schema}
+  ogImage={ogFor('energy-bill-analysis')}
+>
+  <CalcStyles />
+  <div class="container cpage">
+    <div class="page-hero calc-hero">
+      <p class="eyebrow">{CALC_CITIES.length} Canadian cities · prices and programs checked {longDate('2026-10-08')}</p>
+      <h1>Home calculators</h1>
+      <p class="lede">Four calculators set up with your city's climate, 2026 energy prices, open rebates and provincial rules. Each one shows its formulas and sources, labels every assumption you can change, and keeps what you enter in your browser.</p>
+      <CityPicker id="idx-city" label="Your city" placeholder="Choose your city" hint="Pick a city and the links below open each calculator pre-filled for it." />
+    </div>
+
+    <div class="idx-grid">
+      {CALC_SLUGS.map((c) => (
+        <a class="card idx-card" href={`/ca/calculators/${c}/`} data-calc-link={c}>
+          <h2>{CALC_META[c].name}</h2>
+          <p>{CALC_META[c].blurb}</p>
+          <ul>{what[c].map((w) => <li>{w}</li>)}</ul>
+          <span class="idx-go" data-where>Open the calculator →</span>
+        </a>
+      ))}
+    </div>
+
+    <section class="sec" aria-labelledby="how-h">
+      <h2 id="how-h">How these calculators work</h2>
+      <div class="prose">
+        <p>The numbers come from public sources we checked on {longDate('2026-10-08')}: NRCan's HOT2000 climate data and heating tables, Environment and Climate Change Canada's climate normals, utility rate schedules, Statistics Canada fuel prices, provincial fire codes and rebate program pages. Each page lists its sources.</p>
+        <p>Where a number has to be assumed, such as how much insulation a 1970s attic has, the calculator says so and lets you change it. Savings use the price of one more unit of energy, without fixed charges, which keeps them on the low side. An EnerGuide evaluation measures your house and replaces those assumptions.</p>
+      </div>
+      <div class="linkrow">
+        <a class="primary" href="/ca/plan/">Build your upgrade plan →</a>
+        <a href="/ca/programs/">Rebates and programs</a>
+        <a href="/ca/issues/high-heating-bills/">High heating bills</a>
+        <a href="/ca/issues/switching-to-heat-pump/">Switching to a heat pump</a>
+        <a href="/ca/issues/condensation-mould/">Condensation and mould</a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .calc-hero { padding-bottom: 22px; }
+  .calc-hero .lede { max-width: 72ch; font-size: 18px; }
+  .idx-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 8px 0 0; }
+  @media (max-width: 760px) { .idx-grid { grid-template-columns: minmax(0, 1fr); } }
+  .idx-card { display: flex; flex-direction: column; gap: 8px; padding: 22px 24px; text-decoration: none; color: var(--ink); border-top: 4px solid var(--heat); }
+  .idx-card:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .idx-card h2 { font-size: 21px; margin: 0; }
+  .idx-card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .idx-card ul { margin: 2px 0 6px; padding-left: 18px; display: grid; gap: 4px; font-size: 14.5px; }
+  .idx-go { margin-top: auto; font-weight: 700; color: var(--heat-deep); }
+  @media (max-width: 640px) { .idx-card { padding: 18px 18px; } }
+</style>

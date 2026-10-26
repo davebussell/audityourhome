@@ -157,7 +157,7 @@ export function updateEmail(cfg, update, prefs, token) {
     ...layout(cfg, {
       title: update.title,
       intro: update.summary,
-      cta: update.url ? { label: 'Read the details', url: update.url } : { label: 'All program changes', url: '/updates/' },
+      cta: update.url ? { label: 'Read the details', url: update.url } : { label: 'All program changes', url: '/ca/updates/' },
       why: `You’re getting this because you turned on rebate and program alerts${(prefs.provinces ?? []).length ? ` for ${(prefs.provinces ?? []).map((p) => PROVINCE_NAMES[p] ?? p).join(', ')}` : ''}${provs.length ? '' : ' (this change applies across Canada)'}.`,
       token,
     }),

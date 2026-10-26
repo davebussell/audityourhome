@@ -1,0 +1,369 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import ProgramStyles from '../../../components/us/ProgramStyles.astro';
+import ProgramStatus from '../../../components/us/ProgramStatus.astro';
+import ProgramStateTable from '../../../components/us/ProgramStateTable.astro';
+import ProgramFaq from '../../../components/us/ProgramFaq.astro';
+import ProgramSources from '../../../components/us/ProgramSources.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { statusChip } from '../../../lib/us/data';
+import {
+  REBATES, COUNTS, GROUPS, statesIn, stateByCode, takingPhrase, takesApplications, src, dedupe, clean, fmtISO, VERIFIED,
+} from '../../../lib/us/programs';
+
+const taking = takingPhrase();
+const takingNames = COUNTS.taking.map((s) => (s.code === 'DC' ? 'DC' : s.name));
+const takingList = `${takingNames.slice(0, -1).join(', ')} and ${takingNames.at(-1)}`;
+
+const GA = stateByCode('GA')!;
+const WI = stateByCode('WI')!;
+const NC = stateByCode('NC')!;
+const VA = stateByCode('VA')!;
+const S = {
+  doe: src(/scep\/home-energy-rebates-program$/),
+  pn261: src(/program-notice-26-1$/),
+  pn262: src(/program-notice-26-2$/),
+  bulletin: src(/bulletins\/4199045/),
+  statute50121: src(/uscode\/text\/42\/18795$/),
+  statute50122: src(/uscode\/text\/42\/18795a$/),
+  bpa: src(/06\.2026-State-Home-Energy-Rebates-Factsheet/),
+  oldMap: src(/energy\.gov\/save\/rebates$/),
+  ncChanges: src(/Program Changes \(HEAR updates\)/),
+  azChanges: src(/efficiencyarizona\.com\/significant-changes/),
+  wiHear: src(/focusonenergy\.com\/ira-hear/),
+};
+
+const title = 'Home Energy Rebates 2026: HOMES and HEEHR, the new rules and where they’re open | AuditYourHome';
+const description = `HOMES and HEEHR (formerly HEAR) are run by states. DOE’s May 29, 2026 rules ended HEEHR rebates for replacing gas equipment. Open in ${taking}.`;
+
+const changes = [
+  { h: 'New names', t: 'The programs went back to their names in the law: HOMES (Home Owner Managing Energy Savings) and HEEHR (High-Efficiency Electric Home Rebates). “Home Efficiency Rebates” and “Home Electrification and Appliance Rebates” (HEAR) are the old names, and many state pages still use them.' },
+  { h: 'No more fuel switching in HEEHR', t: 'DOE now allows rebates only “for upgrading HVAC and appliances only from existing electric equipment to more efficient electric equipment,” plus new construction, even though the law’s definition lists purchases made “to replace a nonelectric appliance.”' },
+  { h: 'Insulation and air sealing first', t: 'Homes must get insulation and air sealing before heating and cooling upgrades, unless they already meet a level the state sets.' },
+  { h: 'Equity set-asides removed', t: 'The Justice40 requirement to reserve 40% of funds for low-income households, Community Benefits Plans and disadvantaged-community mapping are gone. HOMES keeps the $200 payment the law sets for contractors per home in a disadvantaged community.' },
+  { h: 'Fraud controls', t: 'Consumer protection plans became “Fraud, Waste, and Abuse Mitigation Plans,” and contractors are vetted against the Treasury “Do Not Pay” system.' },
+  { h: 'Less paperwork', t: 'ENERGY STAR certification became optional for HOMES, and several inspection and paperwork requirements were dropped. If DOE doesn’t respond within 30 days of a state’s final Blueprint feedback, the state may launch.' },
+  { h: 'Deadlines', t: 'Launched programs had three months to comply; states cite August 31 or September 1, 2026. Reservations approved earlier may still be paid. States that hadn’t launched must align before launching, and many are resubmitting: Maryland on September 30, 2026, while Virginia and Kentucky are updating their documents.' },
+];
+
+const caps = [
+  ['Heat pump for heating and cooling', '$8,000'],
+  ['Electrical panel (load center)', '$4,000'],
+  ['Electrical wiring', '$2,500'],
+  ['Heat pump water heater', '$1,750'],
+  ['Insulation, air sealing and ventilation', '$1,600'],
+  ['Heat pump clothes dryer', '$840'],
+  ['Electric stove, cooktop, range or oven', '$840'],
+];
+
+const notLaunched = statesIn('not-open');
+
+// Official pages for the programs taking applications, one link per distinct page.
+const applyNow = COUNTS.taking.map((s) => {
+  const progs = [s.hear, s.homes].filter((p) => takesApplications(p.chip) && p.url);
+  const byUrl = new Map<string, string[]>();
+  for (const p of progs) byUrl.set(p.url!, [...(byUrl.get(p.url!) ?? []), p.short]);
+  return { s, links: [...byUrl].map(([href, shorts]) => ({ href, label: shorts.join(' and ') })) };
+});
+
+const faqs = [
+  {
+    q: 'Are the federal Home Energy Rebates still available in 2026?',
+    a: `In some states. Both programs are still funded through September 30, 2031, but each state runs its own. As of ${VERIFIED}, ${taking} were taking applications for at least one program: ${takingList}. Most other states haven't launched.`,
+  },
+  {
+    q: 'What is HEEHR, and is it the same as HEAR?',
+    a: 'Yes. HEEHR (High-Efficiency Electric Home Rebates) is the name DOE restored on May 29, 2026 for the program many states still call HEAR (Home Electrification and Appliance Rebates). It pays toward heat pumps, heat pump water heaters, electric stoves, heat pump dryers, panels, wiring, insulation and air sealing for households up to 150% of area median income, up to $14,000 per household.',
+  },
+  {
+    q: 'Can I get a Home Energy Rebate to replace my gas furnace with a heat pump?',
+    a: "Not through HEEHR anymore. Since DOE's May 29, 2026 rules, HEEHR pays only for upgrades from existing electric equipment to more efficient electric equipment, plus new construction. North Carolina, Wisconsin and Arizona applied the change on September 1, 2026. Utility programs in several metro areas still pay toward heat pumps; check your metro page.",
+  },
+  {
+    q: 'How many states have launched Home Energy Rebates?',
+    a: `The Building Performance Association's June 2026 map counted 12 states plus DC as launched, and 55 states and territories applied (all but South Dakota). Our check of state pages on ${VERIFIED} found ${taking} taking applications. Colorado's and California's programs are now closed to new applicants, Utah's is on hold and West Virginia is running a pilot with a waitlist.`,
+  },
+  {
+    q: 'Do I apply to the Department of Energy?',
+    a: "No. DOE funds the programs, but you apply through your state's program, usually with a participating contractor or retailer. DOE no longer publishes a current state-by-state list; its old status map shows “Last updated 04/09/2024.”",
+  },
+  {
+    q: 'Can I get a rebate for work I already finished?',
+    a: "Usually not. Alaska, Illinois, Vermont and Washington say their rebates aren't retroactive, Minnesota says HEAR rebates won't be, and Arizona says completed projects don't qualify. Minnesota says HOMES projects started on or after August 16, 2022 may qualify if they meet every requirement.",
+  },
+];
+
+const sources = dedupe([
+  ...REBATES.sources,
+  { label: `Virginia Energy — Home Energy Rebates FAQ (federal HEEHR caps)`, href: VA.hear.url! },
+  { label: 'NC DEQ — Energy Saver North Carolina', href: NC.hear.url! },
+  S.ncChanges,
+  { label: "Georgia's Home Energy Rebates — Home Efficiency Rebates", href: GA.homes.url! },
+  { label: 'Focus on Energy — IRA HOMES (Wisconsin)', href: WI.homes.url! },
+  S.wiHear,
+  S.azChanges,
+]);
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Home Energy Rebates', path: '/us/programs/home-energy-rebates/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('attic-insulation-inspection')}>
+  <ProgramStyles />
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Home Energy Rebates</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Federal rebates, run by states</p>
+        <h1>Home Energy Rebates in 2026: HOMES and HEEHR</h1>
+        <p class="lede measure">
+          The Inflation Reduction Act created two rebate programs, and both still exist: HOMES for whole-home
+          upgrades and HEEHR for electric appliances. States run them, so whether you can apply depends on where
+          you live. As of {VERIFIED}, they’re taking applications in {taking}.
+        </p>
+        <ProgramStatus
+          chip={statusChip('partly open')}
+          text={`DOE: “Home Energy Rebates are now available in select states” (program page modified July 8, 2026). DOE no longer publishes a current state-by-state list.`}
+        />
+        <p class="up-meta up-hero-meta">
+          <a href={S.doe.href} rel="noopener" target="_blank">DOE program page&nbsp;↗</a> · verified {VERIFIED}
+        </p>
+      </div>
+      <Photo name="attic-insulation-inspection" eager />
+    </div>
+
+    <section class="up-s" aria-labelledby="two-h">
+      <h2 class="up-sec" id="two-h">The two programs</h2>
+      <div class="up-two">
+        <article class="card card-pad prog">
+          <p class="eyebrow">HOMES · whole-home upgrades</p>
+          <h3>Home Owner Managing Energy Savings</h3>
+          <dl class="up-kv">
+            <dt>Law</dt><dd>Inflation Reduction Act Sec. 50121 (42 U.S.C. 18795)</dd>
+            <dt>Funding</dt><dd>$4.3 billion, available through September 30, 2031</dd>
+            <dt>Pays for</dt><dd>Whole-home projects, with rebates set by modeled or measured energy savings and household income. Open programs that state a threshold start at 20% modeled savings (Georgia, Indiana, North Carolina, Rhode Island, Wisconsin).</dd>
+            <dt>Who</dt><dd>Set by each state. Wisconsin opens HOMES to all incomes; North Carolina and Michigan limit it to low- and moderate-income households.</dd>
+          </dl>
+          <p class="ex-h">Two open programs, as published</p>
+          <p class="ex"><strong>Georgia:</strong> {clean(GA.homes.amounts)}</p>
+          <p class="ex"><strong>Wisconsin:</strong> {clean(WI.homes.amounts)}</p>
+          <p class="up-meta">
+            <a href={GA.homes.url!} rel="noopener" target="_blank">GEFA&nbsp;↗</a> ·
+            <a href={WI.homes.url!} rel="noopener" target="_blank">Focus on Energy&nbsp;↗</a> ·
+            <a href={S.statute50121.href} rel="noopener" target="_blank">42 U.S.C. 18795&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+        </article>
+
+        <article class="card card-pad prog">
+          <p class="eyebrow">HEEHR · electric appliances (formerly HEAR)</p>
+          <h3>High-Efficiency Electric Home Rebates</h3>
+          <dl class="up-kv">
+            <dt>Law</dt><dd>Inflation Reduction Act Sec. 50122 (42 U.S.C. 18795a)</dd>
+            <dt>Funding</dt><dd>$4.275 billion to states and territories plus $225 million to tribes, through September 30, 2031</dd>
+            <dt>Who</dt><dd>Households at or below 150% of area median income (AMI)</dd>
+            <dt>Share paid</dt><dd>Up to 100% of the cost below 80% of AMI; up to 50% at 80–150% of AMI</dd>
+            <dt>Since May 29, 2026</dt><dd>Only upgrades from existing electric equipment to more efficient electric equipment, or new construction</dd>
+          </dl>
+          <div class="tablewrap caps">
+            <table>
+              <caption>Federal caps, up to $14,000 per household</caption>
+              <thead><tr><th scope="col">Item</th><th scope="col">Up to</th></tr></thead>
+              <tbody>
+                {caps.map(([item, amt]) => (
+                  <tr><td>{item}</td><td class="money">{amt}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="up-meta">
+            <a href={VA.hear.url!} rel="noopener" target="_blank">Virginia Energy FAQ&nbsp;↗</a> ·
+            <a href={NC.hear.url!} rel="noopener" target="_blank">NC DEQ&nbsp;↗</a> ·
+            <a href={S.statute50122.href} rel="noopener" target="_blank">42 U.S.C. 18795a&nbsp;↗</a> · verified {VERIFIED}
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="up-s" id="changes" aria-labelledby="changes-h">
+      <h2 class="up-sec" id="changes-h">What changed on May 29, 2026</h2>
+      <p class="up-intro">
+        DOE Program Notices 26-1 (HOMES) and 26-2 (HEEHR) took effect May 29, 2026 and were announced to states
+        on June 1. They rewrote the rules.
+      </p>
+      <div class="up-three">
+        {changes.map((c) => (
+          <article class="card card-pad chg">
+            <h3>{c.h}</h3>
+            <p>{c.t}</p>
+          </article>
+        ))}
+        <article class="card card-pad chg">
+          <h3>Tribal HEEHR</h3>
+          <p>Program Notice 26-3 covers tribal HEEHR, whose application deadline was reopened to December 11, 2026.</p>
+        </article>
+      </div>
+      <p class="up-meta src-line">
+        <a href={S.pn261.href} rel="noopener" target="_blank">Program Notice 26-1&nbsp;↗</a> ·
+        <a href={S.pn262.href} rel="noopener" target="_blank">Program Notice 26-2&nbsp;↗</a> ·
+        <a href={S.bulletin.href} rel="noopener" target="_blank">DOE bulletin, June 1, 2026&nbsp;↗</a> · verified {VERIFIED}
+      </p>
+
+      <div class="card card-pad up-warn">
+        <h3>What it means for you</h3>
+        <ul class="up-list">
+          <li>
+            <strong>If you heat with gas, oil or propane,</strong> HEEHR won’t pay toward electric equipment that
+            replaces it. North Carolina stopped funding fuel switching on September 1, 2026; Wisconsin stopped
+            retail coupons for equipment replacing fossil fuel appliances the same day; Efficiency Arizona’s last
+            day to reserve under the old rules was August 28, 2026.
+          </li>
+          <li>
+            <strong>Upgrades from electric to more efficient electric still qualify,</strong> and so does new
+            construction.
+          </li>
+          <li><strong>Plan for insulation and air sealing first,</strong> unless your home already meets your state’s level.</li>
+          <li><strong>A reservation approved before your state changed its rules may still be paid.</strong></li>
+          <li>
+            <strong>Some state pages don’t say yet how they’ve applied the new rules,</strong> including Michigan,
+            New Mexico, Rhode Island, California and DC. Ask the program before you buy equipment.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="up-s" id="states" aria-labelledby="states-h">
+      <h2 class="up-sec" id="states-h">Where they’re open now</h2>
+      <p class="up-intro">
+        Checked against each state’s own page on {VERIFIED}. {taking} are taking applications for at least one
+        program. Each state page quotes the state’s wording and links the official site.
+      </p>
+      {(['open', 'limited', 'closed'] as const).map((g) => (
+        <>
+          <h3 class="up-grp"><span class={`chip ${GROUPS[g].cls}`}>{GROUPS[g].label}</span> <span class="n">{statesIn(g).length}</span></h3>
+          <p class="small grp-d">{GROUPS[g].desc}</p>
+          <ProgramStateTable states={statesIn(g)} caption={`Home Energy Rebates: ${GROUPS[g].label}`} />
+        </>
+      ))}
+      <h3 class="up-grp"><span class={`chip ${GROUPS['not-open'].cls}`}>{GROUPS['not-open'].label}</span> <span class="n">{notLaunched.length}</span></h3>
+      <p class="small grp-d">{GROUPS['not-open'].desc}</p>
+      <p class="nl">
+        {notLaunched.map((s, i) => (
+          <>{i > 0 && ' · '}<a href={`/us/programs/states/${s.slug}/`}>{s.name}</a>{s.mapOnly && <span class="q" title="No state page could be checked">*</span>}</>
+        ))}
+      </p>
+      <p class="small">* No state program page could be checked; the status comes from the Building Performance Association’s June 2026 map.</p>
+      <p class="up-related">
+        <a class="btn btn-ghost" href="/us/programs/states/">Every state with its exact wording →</a>
+      </p>
+    </section>
+
+    <section class="up-s" id="apply" aria-labelledby="apply-h">
+      <h2 class="up-sec" id="apply-h">How to apply</h2>
+      <ol class="up-steps measure">
+        <li><p><strong>Find your state’s program.</strong> Open your state’s page in our <a href="/us/programs/states/">state list</a>; it links the official program site. You apply through the state or its contractors, not through DOE.</p></li>
+        <li><p><strong>Check income eligibility.</strong> States use area median income (AMI). For HEEHR, households above 150% of AMI aren’t eligible; below 80% of AMI, rebates can cover up to 100% of the cost. Some states accept enrollment in other programs as proof: Arizona lists SNAP, AHCCCS/Medicaid, LIHEAP, Lifeline, Head Start and public housing.</p></li>
+        <li><p><strong>Use a participating contractor or retailer.</strong> Most programs pay through enrolled contractors, such as TECH-certified, HEEHRA-trained contractors in California, MiHER Registered Contractors in Michigan and registered contractors in North Carolina. Wisconsin, Arizona and New Mexico also use retail coupons.</p></li>
+        <li><p><strong>For HOMES, start with an energy assessment.</strong> The rebate depends on modeled savings. The assessment can carry a fee: Georgia warns of possible costs, Wisconsin gives low-income households up to $500 toward it, and North Carolina’s is free. Assessors usually have to be enrolled in the state program (Oregon requires every contractor, home energy assessor and energy modeler offering rebates to enroll), so check before you book one.</p></li>
+        <li><p><strong>Get approved before work starts.</strong> Colorado guarantees a rebate only after a formal reservation notice, and several states say rebates aren’t retroactive.</p></li>
+      </ol>
+
+      <h3 class="up-sub" id="apply-now">Taking applications now</h3>
+      <p class="up-intro">Official program pages for the {taking} where at least one program is taking applications, as checked {VERIFIED}.</p>
+      <div class="ap-grid">
+        {applyNow.map((a) => (
+          <div class="ap">
+            <a class="ap-n" href={`/us/programs/states/${a.s.slug}/`}>{a.s.name}</a>
+            <span class="ap-l">
+              {a.links.map((l, i) => (<>{i > 0 && ' · '}<a href={l.href} rel="noopener" target="_blank">{l.label}&nbsp;↗</a></>))}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="card card-pad up-warn">
+      <h3>Gotchas</h3>
+      <ul class="up-list">
+        <li><strong>Scams.</strong> Kentucky says anyone offering its rebates before launch “is misinformed,” North Dakota calls current offers likely scams, and Alaska and California warn of rebate scams. Indiana says its program contractors don’t go door to door.</li>
+        <li><strong>Money runs out.</strong> Colorado’s single-family rebates closed when its funds reached $0. California’s are fully reserved, with a waitlist. Michigan paused new income-qualified applications in several districts, which covers every county in metro Detroit.</li>
+        <li><strong>Stale state pages.</strong> Some state pages haven’t been updated since 2024 or 2025 and still show launch dates that have passed, including Delaware, Iowa, Nevada and Wyoming.</li>
+        <li><strong>Look-alike state programs.</strong> Washington’s state-funded HEAR, Oregon’s heat pump programs, DC’s DCSEU residential rebates and Alaska’s $10,000 new-home rebate are state programs, not the federal rebates.</li>
+        <li><strong>No federal tax credit to combine.</strong> The 25C and 25D credits ended for work after December 31, 2025. <a href="/us/programs/federal-tax-credits/">What ended</a></li>
+      </ul>
+    </div>
+
+    <section class="up-s" aria-labelledby="hist-h">
+      <h2 class="up-sec" id="hist-h">How we got here</h2>
+      <ol class="up-tl measure">
+        {REBATES.keyDates.map((k) => (
+          <li><span class="d">{fmtISO(k.date)}</span><span class="t">{k.event}</span></li>
+        ))}
+      </ol>
+      <p class="small measure" style="margin-top:18px">
+        Several states say their plans sat with DOE after the January 2025 pause: Utah’s page (dated July 2025)
+        says DOE “has not approved the application from Utah, nor those from numerous other state energy offices,”
+        and Montana paused planning in February 2025.
+      </p>
+    </section>
+
+    <ProgramFaq faqs={faqs} />
+
+    <div class="up-lf">
+      <LeadFormUS context="us-home-energy-rebates" />
+    </div>
+
+    <ProgramSources sources={sources} verified={VERIFIED} note="The state-by-state status comes from each state’s page; see the state pages for those sources." />
+
+    <p class="up-related">
+      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/us/programs/states/">Rebates by state</a>
+      <a class="btn btn-ghost" href="/us/programs/federal-tax-credits/">Tax credits that ended</a>
+      <a class="btn btn-ghost" href="/us/programs/weatherization-assistance-program/">Weatherization</a>
+      <a class="btn btn-ghost" href="/us/find/">Find a certified auditor</a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .up-s { padding: 0; }
+  .prog { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .prog .eyebrow { margin: 0; }
+  .prog h3 { margin: 0; font-size: 20px; }
+  .ex-h { margin: 4px 0 0; font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .ex { margin: 0; font-size: 14px; color: var(--muted); }
+  .ex strong { color: var(--ink); }
+  .prog .up-meta { margin-top: auto; padding-top: 4px; line-height: 1.7; }
+  .caps table { font-size: 14.5px; }
+  .caps caption { text-align: left; font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); padding-bottom: 6px; }
+  .caps td, .caps th { padding: 7px 10px; }
+  .caps td.money { text-align: right; white-space: nowrap; }
+  .caps th:last-child { text-align: right; }
+  .chg { display: flex; flex-direction: column; gap: 6px; }
+  .chg h3 { margin: 0; font-size: 17.5px; }
+  .chg p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .src-line { margin: 12px 0 0; line-height: 1.7; }
+  .grp-d { margin: -2px 0 0; }
+  .up-grp { margin-top: 28px; }
+  .nl { font-size: 15px; line-height: 2; margin: 10px 0 4px; }
+  .nl .q { color: var(--faint); margin-left: 1px; }
+  .hero-text :global(.pstat) { margin-top: 4px; }
+  .ap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 10px; margin-top: 12px; }
+  .ap { display: grid; gap: 2px; padding: 11px 14px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--pine); border-radius: var(--radius); }
+  .ap-n { font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--ink); text-decoration: none; }
+  .ap-n:hover { color: var(--heat-deep); text-decoration: underline; }
+  .ap-l { font-family: var(--mono); font-size: 12px; }
+  .ap-l a { color: var(--heat-deep); text-decoration: none; }
+  .ap-l a:hover { text-decoration: underline; }
+</style>

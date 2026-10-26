@@ -48,7 +48,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
         : reno
           ? 'Health Canada recommends every home test — and air-sealing or basement work without knowing your radon number is doing it blind.'
           : 'Health Canada recommends every home be tested, whatever its age or location.',
-    guide: '/tests/radon/',
+    guide: '/ca/tests/radon/',
   });
 
   // CO — law + physics for fuel-burning homes.
@@ -58,7 +58,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       name: 'Carbon monoxide alarms & spillage check',
       level: 'strongly-flagged',
       why: 'You heat with combustion — Ontario law requires CO alarms near sleeping areas, and tightening the house makes the audit’s spillage check essential.',
-      guide: '/tests/carbon-monoxide/',
+      guide: '/ca/tests/carbon-monoxide/',
     });
   } else {
     flags.push({
@@ -66,7 +66,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       name: 'Carbon monoxide alarms',
       level: 'recommended',
       why: 'No combustion heating — but any gas appliance, fireplace, or attached garage still calls for working CO alarms (check their expiry dates).',
-      guide: '/tests/carbon-monoxide/',
+      guide: '/ca/tests/carbon-monoxide/',
     });
   }
 
@@ -80,7 +80,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       why: strong
         ? 'Your home’s era is squarely in the vermiculite/asbestos window — sample before any attic or renovation work disturbs old materials.'
         : 'Early-materials risk at the tail of the asbestos era — check attic insulation and older finishes before disturbing them.',
-      guide: '/tests/asbestos-vermiculite/',
+      guide: '/ca/tests/asbestos-vermiculite/',
     });
   }
 
@@ -91,7 +91,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       name: 'Lead paint testing',
       level: 'strongly-flagged',
       why: 'Homes of this era very likely contain lead paint — any window, trim, or wall work needs a cheap swab test first.',
-      guide: '/tests/lead-paint/',
+      guide: '/ca/tests/lead-paint/',
     });
   } else if (PRE_1990.includes(era) && (goals.includes('reno') || symptoms.length > 0)) {
     flags.push({
@@ -99,7 +99,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       name: 'Lead paint testing',
       level: 'flagged',
       why: 'Pre-1990 paint layers can contain lead — swab-test before sanding or removing trim and windows.',
-      guide: '/tests/lead-paint/',
+      guide: '/ca/tests/lead-paint/',
     });
   }
 
@@ -110,7 +110,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       name: 'Mold & indoor air quality assessment',
       level: 'flagged',
       why: 'You flagged condensation or musty air — diagnose the moisture cause first (the audit does this); sampling confirms scope if odours persist.',
-      guide: '/tests/mold-iaq/',
+      guide: '/ca/tests/mold-iaq/',
     });
   }
 
@@ -123,7 +123,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       why: buying
         ? 'Private well — test before closing, and then at least annually (bacteriological testing is free in Ontario).'
         : 'Private well — Ontario recommends bacteriological testing at least annually, and it’s free through the public health lab.',
-      guide: '/tests/well-water/',
+      guide: '/ca/tests/well-water/',
     });
   } else if (water === 'unsure') {
     flags.push({
@@ -131,7 +131,7 @@ export function screenSpecialtyTests(input: ScreenerInput): TestFlag[] {
       name: 'Well water testing',
       level: 'recommended',
       why: 'Not sure of your water source? Rural properties on wells should test at least annually — free in Ontario.',
-      guide: '/tests/well-water/',
+      guide: '/ca/tests/well-water/',
     });
   }
 

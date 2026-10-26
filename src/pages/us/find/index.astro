@@ -1,0 +1,341 @@
+---
+/**
+ * How to find a certified home energy auditor in the US: start with the utility or state program,
+ * then the credentials in federal.json and their official directories, questions to ask and red
+ * flags. Verified October 12, 2026.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import FaqList from '../../../components/us/FaqList.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import StatusLine from '../../../components/us/StatusLine.astro';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { METROS, FEDERAL, US_VERIFIED } from '../../../lib/us/data';
+import { mainAudit, hasFreeVisitForAll, auditTags, metrosByRegion } from '../../../lib/us/metro-view';
+import testsData from '../../../data/us/tests.json';
+
+const n = METROS.length;
+const creds = FEDERAL.credentials as any[];
+const T = testsData as any;
+const freeVisit = METROS.filter(hasFreeVisitForAll).length;
+const rows = METROS.map((m) => ({ m, p: mainAudit(m) }));
+const regions = metrosByRegion();
+
+const hersVerify = 'https://www.hersindex.com/rater-verification/';
+const hesFind = creds.find((c) => /Home Energy Score/.test(c.name))?.findAProUrl;
+const bpiFind = creds.find((c) => /BPI Building Analyst/.test(c.name))?.findAProUrl;
+const hersFind = creds.find((c) => /RESNET HERS/.test(c.name))?.findAProUrl;
+const radonPros = [
+  { label: 'NRPP: find a radon professional', href: 'https://nrpp.info/pro-search/' },
+  { label: 'NRSB: find a radon professional', href: 'https://nrsb.org/find-a-pro/' },
+];
+const radonList = T.radon.stateLicensing as any[];
+const radonStates = radonList.filter((r) => r.state !== 'DC').length;
+const radonDC = radonList.some((r) => r.state === 'DC');
+const leadLocator = 'https://cdxocsppapps.epa.gov/ocspp-oppt-lead/firm-location-search';
+const fhaUrl = (FEDERAL.otherFederal as any[]).find((o) => /FHA Energy Efficient Mortgage/.test(o.name))?.url;
+const gcUrl = (FEDERAL.otherFederal as any[]).find((o) => /GreenCHOICE/.test(o.name))?.url;
+const liheap = FEDERAL.liheap;
+const liheapUrl = (liheap.sources as any[])[0]?.href;
+const credIrs = (FEDERAL.taxCredits as any[]).find((c) => c.id === '25C')?.sources?.[0]?.href;
+
+const title = 'How to find a certified home energy auditor in the U.S. (2026) | AuditYourHome';
+const description = `Start with your utility’s audit program, then check a RESNET, BPI or DOE Home Energy Score credential in the official directory. Questions to ask, red flags, and the first stop in each of the ${n} largest metros. Verified ${US_VERIFIED}.`;
+
+const faqs = [
+  {
+    q: 'Do I need a certified auditor?',
+    a: 'For a utility or state program, no: the program sends its own trained staff or participating contractors. Some programs and loans do require a credential. FHA’s Energy Efficient Mortgage needs an assessment by a BPI Building Analyst Professional, a BPI Home Energy Professional Energy Auditor, a RESNET Home Energy Rater or a state or locally qualified auditor, with a report no more than 120 days old. Freddie Mac’s GreenCHOICE mortgage needs a HERS report, a DOE Home Energy Score report or a comparable audit when the improvements total more than $6,500. SRP’s $100 audit discount in Phoenix requires a BPI-certified contractor, and Xcel Energy’s audit rebate in Colorado requires a registered audit contractor.',
+  },
+  {
+    q: 'What’s the difference between a HERS rating and a Home Energy Score?',
+    a: 'A HERS rating comes from a RESNET HERS Rater, who tests the home (typically a blower door and duct leakage test) and scores it against a modeled reference home built to the 2006 energy code: 100 is that reference, lower is better and 0 is net zero. It is used most for new homes, ENERGY STAR and code compliance. The DOE Home Energy Score rates a home 1 to 10 from about 40 data points collected in a walk-through of under an hour, ignores how the occupants live, and comes with cost-effective upgrade recommendations. Portland, Oregon requires a Home Energy Score before most homes are listed for sale.',
+  },
+  {
+    q: 'How do I check an auditor’s certification?',
+    a: 'RESNET lets you verify an individual HERS Rater’s certification on its rater-verification page; its find-a-rater tool lists member rating companies and is not a complete list. BPI’s locator searches certified contractors by ZIP code. DOE’s Home Energy Score site has a ZIP-code Find an Assessor tool. For radon, check the NRPP or NRSB directories and, in states that license radon work, the state’s own list. For lead paint, use EPA’s Lead-Based Paint Professional Locator or your state program.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Find an auditor', path: '/us/find/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>Find an auditor</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Find a certified auditor · verified {US_VERIFIED}</p>
+        <h1>How to find a certified home energy auditor</h1>
+        <p class="lede">
+          Start with your utility or state program: it’s often free, and many rebates require it. If you want a full
+          diagnostic audit, hire someone with a recognized credential and look them up in the certifying body’s own
+          directory. We don’t sell listings or rank providers.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#first-stop">First stop in your metro</a>
+          <a class="btn btn-ghost" href="#credentials">The credentials</a>
+        </div>
+      </div>
+      <Photo name="home-energy-audit" eager hud="Home energy audit" />
+    </div>
+
+    <!-- STEP 1 -->
+    <section id="first-stop" class="sec">
+      <p class="eyebrow">Step 1</p>
+      <h2>Start with your utility or state program</h2>
+      <p class="measure">
+        In {freeVisit} of the {n} metros we cover, a utility or state program offers a free in-person assessment open to all
+        incomes. Others charge a published fee or pay back part of a private audit. Programs often require their own
+        assessment or participating contractor before they pay rebates, so check this first. The table shows where most
+        homeowners in each metro can start; each metro guide lists every program we found.
+      </p>
+      <div class="tablewrap card">
+        <table class="stack" aria-label={`First audit program to try in each of the ${n} metros, verified ${US_VERIFIED}`}>
+          <thead>
+            <tr><th scope="col">Metro</th><th scope="col">Where to start</th><th scope="col">Cost</th><th scope="col">Status</th></tr>
+          </thead>
+          <tbody>
+            {rows.map(({ m, p }) => (
+              <tr>
+                <td data-label="Metro"><a href={`/us/cities/${m.slug}/`}><strong>{m.data.name}</strong></a> <span class="st">{(m.data.states ?? []).join(' · ')}</span></td>
+                <td data-label="Where to start">
+                  {p ? (
+                    <span>
+                      {p.url ? <a href={p.url} rel="noopener" target="_blank">{p.name}&nbsp;↗</a> : p.name}
+                      {p.runBy && <span class="by"> {p.runBy}</span>}
+                      {auditTags(p).length > 0 && <span class="tags"> {auditTags(p).join(' · ')}</span>}
+                    </span>
+                  ) : 'No open program in our research'}
+                </td>
+                <td data-label="Cost"><span class:list={['cost', { free: p?.cost.kind === 'free' }]}>{p?.cost.label ?? '—'}</span></td>
+                <td data-label="Status">{p && <StatusLine text={p.statusText} chip={p.chip} />}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small">Statuses and prices are as each program published them on {US_VERIFIED}. <a href="/us/cost/">Every program’s price</a>.</p>
+    </section>
+
+    <!-- STEP 2 -->
+    <section id="credentials" class="sec">
+      <p class="eyebrow">Step 2</p>
+      <h2>Hiring an auditor? Check the credential</h2>
+      <p class="measure">
+        Several organizations certify home energy auditors. Most of these credentials were on DOE’s list of recognized
+        programs for the (now ended) audit tax credit, and several are accepted for FHA’s Energy Efficient Mortgage and for
+        DOE’s Home Energy Score. Look the person up in the official directory, not just the company’s website.
+      </p>
+      <div class="cred-grid">
+        {creds.map((c) => (
+          <article class="card cred">
+            <h3>{c.name}</h3>
+            <p class="cred-by">{c.certifiedBy}</p>
+            <p class="cred-what">{c.whatTheyDo}</p>
+            {c.notes && <p class="cred-note">{c.notes}</p>}
+            {c.findAProUrl ? (
+              <div class="cred-find"><a class="btn btn-ghost btn-sm" href={c.findAProUrl} rel="noopener" target="_blank">Find one&nbsp;↗</a></div>
+            ) : (
+              !c.notes && <p class="cred-note">No public directory verified.</p>
+            )}
+            <p class="cred-src">
+              Sources: {(c.sources as any[]).map((s, i) => <span>{i > 0 && ' · '}<a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></span>)}
+            </p>
+          </article>
+        ))}
+      </div>
+
+      <div class="card card-pad health">
+        <h3>For radon, lead and other home health tests</h3>
+        <p>
+          These need different specialists. Radon testers and fixers are credentialed through NRPP or NRSB, and {radonStates} states
+          {radonDC ? 'plus DC' : ''} require a state license or a mandated credential for radon work, so the state’s list governs
+          there. Lead paint inspectors and lead-safe renovation firms must be certified by EPA or an authorized state.
+        </p>
+        <p class="links">
+          {radonPros.map((r) => <span><a href={r.href} rel="noopener" target="_blank">{r.label}&nbsp;↗</a> · </span>)}
+          <a href={leadLocator} rel="noopener" target="_blank">EPA lead professional locator&nbsp;↗</a> ·
+          <a href="/us/tests/">The testing guide</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- QUESTIONS -->
+    <section id="ask" class="sec">
+      <h2>What to ask before you book</h2>
+      <ol class="asks measure">
+        <li>
+          <strong>Which credential do you hold, and under what name can I look it up?</strong>
+          Check it yourself: <a href={hersVerify} rel="noopener" target="_blank">RESNET rater verification&nbsp;↗</a>,
+          {bpiFind && <a href={bpiFind} rel="noopener" target="_blank">BPI locator&nbsp;↗</a>},
+          {hesFind && <a href={hesFind} rel="noopener" target="_blank">DOE Home Energy Score assessors&nbsp;↗</a>}.
+        </li>
+        <li>
+          <strong>Will you run a blower door test and an infrared scan?</strong>
+          DOE says many professional assessments include both. The blower door is the test that measures how leaky the house is.
+          <a href="/us/tests/blower-door/">Blower door test</a> · <a href="/us/tests/thermal-imaging/">Infrared scan</a>
+        </li>
+        <li>
+          <strong>Will you test my gas appliances for safe venting and carbon monoxide?</strong>
+          Combustion safety and CO testing are required parts of BPI’s Home Energy Professional field exam. It matters most
+          before air sealing a home with natural-draft equipment. <a href="/us/tests/combustion-safety/">Combustion safety</a>
+        </li>
+        <li>
+          <strong>What will I get in writing?</strong>
+          A report that ranks the upgrades for your house. A BPI Home Energy Professional writes a prioritized scope of work;
+          a Home Energy Score comes with recommendations that pay back within 10 years.
+        </li>
+        <li>
+          <strong>What does it cost, and does my utility pay part of it?</strong>
+          Some do: Georgia Power rebates half of an assessment up to $150, Xcel Energy in Colorado rebates 60% (up to $100–$200)
+          with a registered auditor, and SRP in Phoenix takes $100 off with a BPI-certified contractor.
+          <a href="/us/cost/">What audits cost</a>
+        </li>
+        <li>
+          <strong>Will this assessment count for the rebates I want?</strong>
+          Many programs pay only through their own assessment or contractor network. Georgia’s Home Efficiency Rebates require
+          a program-approved contractor, and Mass Save’s insulation rebates follow a Mass Save Home Energy Assessment.
+        </li>
+        <li>
+          <strong>Do you also sell or install what you recommend?</strong>
+          It doesn’t rule anyone out, but you should know where the advice comes from before you sign for upgrades.
+        </li>
+      </ol>
+    </section>
+
+    <!-- RED FLAGS -->
+    <section id="red-flags" class="sec">
+      <h2>Red flags</h2>
+      <div class="flags">
+        <article class="card flag">
+          <h3>Anyone selling the federal tax credits</h3>
+          <p>
+            The 25C and 25D credits don’t cover work done after December 31, 2025, including the $150 audit credit. Some
+            pages are out of date: our research found utility, city and partner pages in Los Angeles, Chicago, South Florida
+            and San Antonio still pointing people to the old credits.
+          </p>
+          <p class="flag-src">{credIrs && <a href={credIrs} rel="noopener" target="_blank">IRS&nbsp;↗</a>} · <a href="/us/programs/federal-tax-credits/">What ended</a></p>
+        </article>
+        <article class="card flag">
+          <h3>A “free audit” from a company that sells upgrades</h3>
+          <p>
+            Free and discounted assessments come through utilities, state programs and weatherization agencies. A free visit
+            from a window, insulation, HVAC or solar company is a sales appointment unless your utility or state program
+            sends it. Ask what will be measured and what you get in writing.
+          </p>
+        </article>
+        <article class="card flag">
+          <h3>Promises of state rebates that haven’t launched</h3>
+          <p>
+            Many states haven’t launched the federal Home Energy Rebates, and they aren’t retroactive: Washington says you must
+            be approved before buying, and Texas says projects finished before launch are unlikely to qualify. Check the
+            state’s own page.
+          </p>
+          <p class="flag-src"><a href="/us/programs/states/">Status by state</a></p>
+        </article>
+        <article class="card flag">
+          <h3>Pressure to switch fuels “for the federal rebate”</h3>
+          <p>
+            Since DOE’s May 29, 2026 rules, the federal appliance rebates no longer pay for switching from gas, oil or propane
+            to electric equipment. Some utility and state programs still do, so ask which program would pay and get it in writing.
+          </p>
+          <p class="flag-src"><a href="/us/programs/home-energy-rebates/">The 2026 rules</a></p>
+        </article>
+        <article class="card flag">
+          <h3>A fee to apply for energy bill help</h3>
+          <p>
+            HHS says LIHEAP doesn’t give grants directly to individuals and doesn’t charge a fee. It asks people to report such
+            offers to the HHS fraud hotline, 1-800-447-8477.
+          </p>
+          <p class="flag-src">{liheapUrl && <a href={liheapUrl} rel="noopener" target="_blank">HHS: LIHEAP&nbsp;↗</a>}</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BY METRO -->
+    <section id="by-metro" class="sec">
+      <h2>Metro guides</h2>
+      <p class="measure small">Every program, price and rebate we found for each metro, with official links.</p>
+      <div class="by-region">
+        {regions.map((g) => (
+          <div>
+            <h3 class="col-h">{g.region}</h3>
+            <ul>
+              {g.metros.map((m) => <li><a href={`/us/cities/${m.slug}/`}>{m.data.name}</a> <span class="st">{(m.data.states ?? []).join(' · ')}</span></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <FaqList faqs={faqs} />
+
+    <div class="lf-wrap">
+      <LeadFormUS heading="Want a second opinion on a quote?" context="us-find" />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .sec { padding: 36px 0 0; scroll-margin-top: 80px; }
+  .sec > h2 { font-size: clamp(24px, 3vw, 30px); }
+  .sec > .eyebrow { margin-bottom: 6px; }
+  .tablewrap { margin: 16px 0 10px; }
+  td .st { font-family: var(--mono); font-size: 11.5px; color: var(--faint); white-space: nowrap; }
+  td .by { display: block; font-size: 13px; color: var(--faint); }
+  td .tags { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  td a { overflow-wrap: anywhere; }
+  .cost { font-family: var(--display); font-weight: 800; font-size: 15px; }
+  .cost.free { color: var(--pine); }
+  @media (min-width: 641px) {
+    td:nth-child(1) { width: 17%; }
+    td:nth-child(2) { width: 36%; }
+    td:nth-child(3) { width: 17%; }
+  }
+
+  .cred-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+  @media (max-width: 800px) { .cred-grid { grid-template-columns: 1fr; } }
+  .cred { padding: 18px 20px; display: grid; gap: 8px; align-content: start; box-shadow: none; }
+  .cred h3 { font-size: 18px; margin: 0; line-height: 1.25; }
+  .cred-by { margin: -2px 0 0; font-size: 13.5px; color: var(--faint); }
+  .cred-what { margin: 0; font-size: 14.5px; line-height: 1.55; }
+  .cred-note { margin: 0; font-size: 13.5px; color: var(--muted); overflow-wrap: anywhere; }
+  .cred-find { margin-top: 2px; }
+  .cred-src { margin: 0; line-height: 1.6; font-size: 12.5px; color: var(--faint); }
+  .cred-src a { color: var(--steel); overflow-wrap: anywhere; }
+  .health { margin-top: 16px; border-left: 4px solid var(--steel); box-shadow: none; }
+  .health h3 { font-size: 18px; }
+  .health p { font-size: 15px; color: var(--muted); }
+  .health .links { margin: 0; font-size: 14px; }
+
+  .asks { margin: 14px 0 0; padding-left: 22px; display: grid; gap: 14px; }
+  .asks li { font-size: 15px; color: var(--muted); }
+  .asks strong { display: block; color: var(--ink); font-size: 16px; margin-bottom: 2px; }
+
+  .flags { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-top: 14px; }
+  .flag { padding: 18px 20px; border-left: 4px solid var(--dead); box-shadow: none; display: grid; gap: 8px; align-content: start; }
+  .flag h3 { font-size: 17px; margin: 0; }
+  .flag p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .flag-src { font-size: 13.5px; }
+  .flag-src a { color: var(--steel); }
+
+  .by-region { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 14px; }
+  @media (max-width: 900px) { .by-region { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .by-region { grid-template-columns: 1fr; } }
+  .col-h { font-size: 13px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .by-region ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .by-region li { font-size: 15px; }
+  .by-region .st { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+  .lf-wrap { margin: 30px 0 48px; }
+</style>

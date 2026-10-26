@@ -1,0 +1,288 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import TestStyles from '../../../components/us/TestStyles.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { US_VERIFIED } from '../../../lib/us/data';
+import {
+  S, TEST_GROUPS, testsIn, guideHref, uniqSources, SUMMARY_STATES, stateName, summaryFor, leadPrograms,
+  type UsTest,
+} from '../../../lib/us/tests';
+
+const title = 'The US home testing guide: radon, lead, mold, blower door and more | AuditYourHome';
+const description =
+  'Thirteen tests your home might need, from radon and lead paint to blower door and Manual J. What each one finds, the federal standard behind it, who does it and state rules.';
+
+const cardSrc = (t: UsTest) => S(t.src[0], t.src[1]);
+
+const src = {
+  radon: S('radon', 'Action Level'),
+  citizen: S('radon', "Citizen's Guide"),
+  cpsc: S('carbonMonoxide', 'Questions and Answers'),
+  rrp: S('lead', 'Lead Renovation, Repair and Painting Program ('),
+  verm: S('asbestos', 'Vermiculite'),
+  doe: S('blowerDoor', 'Professional Home Energy Assessments'),
+  caz: S('combustionSafety', 'Combustion Appliance Zone'),
+  well: S('wellWater', "Protect Your Home's Water"),
+  acca: S('loadCalculation', 'Manual J Residential Load Calculation'),
+  hers: S('hersIndex', 'What Is the HERS Index'),
+  hersFind: S('hersIndex', 'Find a HERS Rater'),
+  irs: S('hersIndex', 'IRS'),
+  nrpp: S('radon', 'NRPP - Find'),
+  leadLocator: S('lead', 'Professional Locator'),
+  eliMold: S('mold', 'Mold Excerpt'),
+  ncsl: S('carbonMonoxide', 'NCSL'),
+  eliRadon: S('radon', 'laws through June 2026'),
+  rrpStates: S('lead', 'RRP Firm Certification'),
+  abatement: S('lead', 'Program Overview'),
+};
+
+// state rules at a glance (20 jurisdictions)
+const CO_LABEL = { true: 'Yes', false: 'Not for homes', null: 'Not confirmed' } as const;
+const glanceRows = SUMMARY_STATES.map((st) => {
+  const s = summaryFor(st);
+  const lead = leadPrograms(st);
+  return {
+    st,
+    name: stateName(st),
+    radon: s.radonLicensing as boolean,
+    mold: s.moldLicensing as boolean,
+    co: s.coAlarmLaw as boolean | null,
+    lead: `Renovation: ${lead.rrp === 'state' ? 'state' : 'EPA'} · Inspection & abatement: ${lead.abatement === 'state' ? 'state' : 'EPA'}`,
+  };
+});
+const chip = (on: boolean | null) => (on === true ? 'chip-info' : on === false ? 'chip-neutral' : 'chip-limited');
+
+const faqs = [
+  {
+    q: 'Which of these tests does every home need?',
+    a: 'EPA says every home should be tested for radon, and CPSC recommends a carbon monoxide alarm on every level and outside sleeping areas. If your water comes from a private well, EPA says to test it every year for coliform bacteria, nitrates, total dissolved solids and pH. The rest depend on your home’s age, fuel, water source, symptoms and plans; the screener sorts that out.',
+    src: [src.radon, src.cpsc, src.well],
+  },
+  {
+    q: 'Can one professional do all of these tests?',
+    a: 'Not necessarily, because the credentials differ: radon pros are certified by NRPP or NRSB, or licensed by the state where required; lead inspectors and risk assessors are certified by EPA or the state; asbestos professionals are accredited under state programs; some states license mold assessors and remediators; and well water goes to a certified lab. Energy auditors and RESNET HERS raters handle the energy tests. Ask any pro which of these they’re certified for.',
+    src: [src.nrpp, src.leadLocator, src.eliMold, src.hersFind],
+  },
+  {
+    q: 'What is a HERS rating?',
+    a: 'RESNET’s HERS Index rates a home against a computer-modeled reference home of the same size and shape. A home built to the 2006 IECC scores 100 and lower is better: 70 means 30% more efficient than the reference, 130 means 30% less efficient, and 0 means net zero energy. A certified RESNET HERS Rater does the rating; it’s calculated under ANSI/RESNET/ICC 301 and tested under 380, the airtightness standard.',
+    src: [src.hers],
+  },
+  {
+    q: 'Can I still claim the federal tax credit for an energy audit?',
+    a: 'Probably not for a 2026 audit. The IRS page says the Energy Efficient Home Improvement Credit (30% of qualified costs, up to $150 for a home energy audit of your main home) is allowed for qualifying property placed in service on or after January 1, 2023 and before December 31, 2025. That 2026 audits don’t qualify is our reading; the IRS page doesn’t address them directly.',
+    src: [src.irs],
+  },
+  {
+    q: 'Where do the facts on these pages come from?',
+    a: `Official sources: EPA, CPSC, DOE and its national labs, the IRS, ENERGY STAR, ACCA, BPI, RESNET, ASTM, USGS, NCSL and state agencies and statutes. Every one was opened and checked on ${US_VERIFIED}, and each guide links its sources next to the numbers they support.`,
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'United States', path: '/us/' },
+    { name: 'Testing guide', path: '/us/tests/' },
+  ]),
+  faqSchema(faqs.map((f) => ({ q: f.q, a: f.a }))),
+];
+
+const sources = uniqSources([
+  ...TEST_GROUPS.flatMap((g) => testsIn(g.id).map(cardSrc)),
+  src.citizen, src.rrp, src.verm, src.doe, src.caz, src.well, src.acca, src.hers, src.irs,
+  src.eliRadon, src.eliMold, src.ncsl, src.rrpStates, src.abatement,
+]);
+const displayLabel = (l: string) => l.replace(' - ', ': ');
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
+  <TestStyles />
+  <div class="container ust">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">The US testing guide · verified {US_VERIFIED}</p>
+        <h1>Every test your home might need</h1>
+        <p class="lede measure">
+          Thirteen tests, from radon and lead paint to the blower door and Manual J. For each one: what
+          it finds, the federal standard or threshold behind it, who does it, and the state rules that
+          change the answer. Every number links to its official source.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="/us/tests/screener/">Which tests does my home need? →</a>
+          <a class="btn btn-ghost" href="/us/find/">Find a certified auditor</a>
+        </div>
+        <p class="small mb-0">The screener takes about a minute and runs in your browser; your answers aren’t stored or sent anywhere.</p>
+      </div>
+      <Photo name="home-energy-audit" hud="Home energy assessment" eager />
+    </div>
+
+    {TEST_GROUPS.map((g) => (
+      <section class="sec" aria-labelledby={`grp-${g.id}`}>
+        <h2 class="cat" id={`grp-${g.id}`}>
+          <span class={`chip ${g.id === 'health' ? 'chip-limited' : 'chip-active'}`}>{g.chip}</span> {g.title}
+        </h2>
+        <p class="small measure catnote">{g.intro}</p>
+        <div class="test-list">
+          {testsIn(g.id).map((t) => (
+            <article class={`card trow ${g.id}`} id={t.slug}>
+              <a class="tthumb" href={guideHref(t.slug)} tabindex="-1" aria-hidden="true">
+                <Photo name={t.photo} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 220px" />
+              </a>
+              <div class="tbody">
+                <h3><a href={guideHref(t.slug)}>{t.name}</a></h3>
+                <p>{t.why}</p>
+                <p class="who"><strong>Who does it:</strong> {t.who}</p>
+                <p class="meta">
+                  <span class="fact">{t.fact}</span> · <a href={cardSrc(t).href} rel="noopener" title={cardSrc(t).label}>source&nbsp;↗</a> · verified {US_VERIFIED}
+                </p>
+                <p class="gl"><a href={guideHref(t.slug)}><strong>{g.id === 'health' ? 'Full guide: the thresholds, who to hire and what to do next →' : 'Full guide: the standard, how to get it done and the fixes →'}</strong></a></p>
+              </div>
+            </article>
+          ))}
+        </div>
+        {g.id === 'health' && (
+          <div class="card card-pad screener-cta">
+            <div>
+              <h3>Not sure which of these apply to your home?</h3>
+              <p class="mb-0 small">Year built, location, water source, fuel and a few symptoms are enough to sort it out.</p>
+            </div>
+            <a class="btn btn-primary" href="/us/tests/screener/">Run the screener →</a>
+          </div>
+        )}
+      </section>
+    ))}
+
+    <section class="sec" aria-labelledby="order-h">
+      <h2 id="order-h">A sensible order</h2>
+      <ol class="steps">
+        <li>
+          <h3>Start a radon test now</h3>
+          <p>EPA says every home should be tested, and its first step is a short-term test of 2 to 90 days. <a href="/us/tests/radon/">Radon guide</a></p>
+        </li>
+        <li>
+          <h3>Check your CO alarms today</h3>
+          <p>CPSC recommends one on every level and outside sleeping areas, replaced at the age given in the product literature. <a href="/us/tests/carbon-monoxide/">CO guide</a></p>
+        </li>
+        <li>
+          <h3>Before any work in an older home, check for lead and vermiculite</h3>
+          <p>Built before 1978? Most paid work that disturbs paint needs a lead-safe certified firm. Vermiculite in the attic? EPA says leave it undisturbed. <a href="/us/tests/lead-paint/">Lead</a> · <a href="/us/tests/asbestos-vermiculite/">Asbestos and vermiculite</a></p>
+        </li>
+        <li>
+          <h3>Book the energy assessment and ask for tests by name</h3>
+          <p>DOE says many assessments include a blower door test and an infrared scan. Add duct testing, and a Manual J if new equipment is on the way. <a href="/us/tests/blower-door/">Blower door</a> · <a href="/us/tests/heat-loss-calc/">Manual J</a></p>
+        </li>
+        <li>
+          <h3>Pair air sealing with combustion safety</h3>
+          <p>DOE calls for combustion appliance zone testing in homes with natural-draft furnaces, boilers or water heaters, at the end of each workday of air sealing. <a href="/us/tests/combustion-safety/">Combustion safety</a></p>
+        </li>
+      </ol>
+      <TestCite src={[src.citizen, src.cpsc, src.rrp, src.verm, src.doe, src.caz]} labels={['EPA radon guide', 'CPSC', 'EPA RRP', 'EPA vermiculite', 'DOE assessments', 'DOE BASC']} />
+    </section>
+
+    <section class="sec" aria-labelledby="states-h">
+      <h2 id="states-h">State rules at a glance</h2>
+      <p class="small measure">
+        Twenty jurisdictions checked in full. “Yes” means a state law requires a license, certification or
+        named credential (radon, mold) or requires CO alarms in at least some homes. Details and sources
+        are in each guide’s state table.
+      </p>
+      <div class="tablewrap">
+        <table class="stack datatable glance-states">
+          <caption>Testing rules in 20 jurisdictions</caption>
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col"><a href="/us/tests/radon/#state-rules">Radon credential</a></th>
+              <th scope="col"><a href="/us/tests/mold-iaq/#state-rules">Mold credential</a></th>
+              <th scope="col"><a href="/us/tests/carbon-monoxide/#state-rules">CO alarm law</a></th>
+              <th scope="col"><a href="/us/tests/lead-paint/#state-rules">Lead programs run by</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            {glanceRows.map((r) => (
+              <tr>
+                <td>{r.name}</td>
+                <td class="kv" data-label="Radon credential"><span class={`chip ${chip(r.radon)}`}>{r.radon ? 'Required' : 'None found'}</span></td>
+                <td class="kv" data-label="Mold credential"><span class={`chip ${chip(r.mold)}`}>{r.mold ? 'Required' : 'None found'}</span></td>
+                <td class="kv" data-label="CO alarm law"><span class={`chip ${chip(r.co)}`}>{CO_LABEL[String(r.co) as 'true' | 'false' | 'null']}</span></td>
+                <td data-label="Lead programs run by" class="leadcell">{r.lead}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <TestCite src={[src.eliRadon, src.eliMold, src.ncsl, src.rrpStates, src.abatement]} labels={['ELI radon database', 'ELI mold database', 'NCSL CO laws', 'EPA RRP states', 'EPA abatement states']} />
+    </section>
+
+    <section class="sec faqs" aria-labelledby="faq-h">
+      <h2 id="faq-h">Common questions</h2>
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body">
+            <p class="mb-0">{f.a}</p>
+            {f.src && <TestCite src={f.src} />}
+          </div>
+        </details>
+      ))}
+    </section>
+
+    <section class="card card-pad srcs" aria-labelledby="src-h">
+      <h2 id="src-h">Sources</h2>
+      <p class="small mb-0">Every source below was opened and checked on {US_VERIFIED}. Each guide lists the full set for its test, and state sources are linked in each guide’s state table.</p>
+      <ul>
+        {sources.map((s) => (
+          <li><a href={s.href} rel="noopener">{displayLabel(s.label)}&nbsp;↗</a> <span class="meta">verified {US_VERIFIED}</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="lead-wrap">
+      <LeadFormUS
+        heading="Not sure which tests to book first?"
+        sub="Email us your ZIP code, the year your home was built and what you’re planning. A person reads every message and replies with the certified pros and programs that serve your area."
+        context="us-tests"
+      />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .cat { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 25px; margin: 0 0 6px; }
+  .catnote { margin-bottom: 16px; }
+  .test-list { display: grid; gap: 14px; margin-bottom: 16px; }
+  .trow { display: grid; grid-template-columns: 220px minmax(0, 1fr); overflow: hidden; }
+  .tthumb { display: block; }
+  .tthumb :global(.photo), .tthumb :global(.frame) { height: 100%; }
+  .tthumb :global(.frame) { border-radius: 0; box-shadow: none; }
+  .tbody { padding: 20px 22px; min-width: 0; }
+  .trow h3 { margin: 0 0 6px; font-size: 19px; }
+  .trow h3 a { color: var(--ink); text-decoration: none; }
+  .trow h3 a:hover { color: var(--heat-deep); text-decoration: underline; }
+  .trow p { font-size: 15px; margin: 0 0 8px; max-width: 90ch; }
+  .trow .who { color: var(--muted); }
+  .trow .who strong { color: var(--pine); }
+  .trow .meta { font-size: 12px; }
+  .trow .meta .fact { color: var(--ink); font-weight: 600; }
+  .trow .meta a { color: var(--steel); }
+  .trow.health { border-left: 4px solid var(--warn); }
+  .trow.energy { border-left: 4px solid var(--pine); }
+  .trow .gl { margin: 0; font-size: 14.5px; }
+  .trow .gl a { color: var(--heat-deep); text-decoration: none; }
+  .trow .gl a:hover { text-decoration: underline; }
+  @media (max-width: 700px) {
+    .trow { grid-template-columns: 1fr; }
+    .tthumb :global(.photo) { --ratio: 16 / 9; }
+    .tbody { padding: 16px 16px 18px; }
+  }
+  .screener-cta { display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--heat); margin: 6px 0 0; }
+  .screener-cta h3 { margin: 0 0 4px; font-size: 19px; }
+  .glance-states th a { color: inherit; }
+  @media (min-width: 641px) {
+    .leadcell { min-width: 220px; }
+  }
+</style>

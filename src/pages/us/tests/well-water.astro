@@ -1,0 +1,188 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import TestGear from '../../../components/us/TestGear.astro';
+import { S } from '../../../lib/us/tests';
+
+const src = {
+  wells: S('wellWater', 'Private Drinking Water Wells'),
+  protect: S('wellWater', "Protect Your Home's Water"),
+  contaminants: S('wellWater', 'Potential Well Water Contaminants'),
+  labs: S('wellWater', 'Contact Information for Certification Programs'),
+  labsPdf: S('wellWater', 'State certification programs'),
+  usgs: S('wellWater', 'Domestic (Private) Supply Wells'),
+  arsenic: S('wellWater', 'Arsenic and Drinking Water'),
+  pfas: S('wellWater', 'PFAS'),
+};
+
+const triggers = [
+  { when: 'Recurring stomach illness', test: 'Coliform bacteria' },
+  { when: 'Lead plumbing or signs of corrosion', test: 'pH, lead and copper' },
+  { when: 'Radon in your indoor air, or a radon-rich area', test: 'Radon' },
+  { when: 'Intensive farming nearby', test: 'Nitrate, nitrite, pesticides and coliform' },
+  { when: 'Mining nearby', test: 'Metals and pH' },
+  { when: 'Gas drilling nearby', test: 'Chloride, sodium, barium and strontium' },
+  { when: 'Landfills, gas stations or dry cleaners nearby, or a fuel odor', test: 'Volatile organic compounds (VOCs)' },
+];
+
+const faqs = [
+  {
+    q: 'How often should I test my well?',
+    a: 'EPA says every year for total coliform bacteria, nitrates, total dissolved solids and pH, and more often if young children, older adults, or someone pregnant or nursing lives there. Test right away after flooding, land disturbance or nearby construction, after any repair to the well system, or if the water’s taste, odor or color changes.',
+    src: [src.protect],
+  },
+  {
+    q: 'Will EPA test my water?',
+    a: 'No. EPA does not test home water on request. Use a lab certified for drinking-water testing; EPA links each state’s lab certification program. Local health departments may test private wells for free.',
+    src: [src.labs],
+  },
+  {
+    q: 'Do the federal PFAS limits apply to my well?',
+    a: 'No. Private wells fall outside the Safe Drinking Water Act, so EPA’s PFAS limits don’t apply to them. For reference, the 2024 public-water limits are 4.0 parts per trillion for PFOA and PFOS and 10 ppt for PFHxS, PFNA and GenX, plus a mixture hazard index. In May 2026 EPA proposed letting systems request two more years to comply (to 2031) and rescinding the limits for PFHxS, PFNA, GenX and the hazard index; whether either has been finalized wasn’t verified.',
+    src: [src.pfas],
+  },
+  {
+    q: 'Should I test my well for radon?',
+    a: 'EPA lists radon in your indoor air, or living in a radon-rich area, as a reason to test well water for radon. Testing the air is a separate test; see the radon guide.',
+    src: [src.contaminants],
+  },
+  {
+    q: 'How common are problems in private wells?',
+    a: 'In a USGS study of 2,100 domestic wells, about one in five had at least one contaminant above a human-health benchmark, mostly naturally occurring metals, radionuclides and nitrate. Bacteria turned up in about a third of the roughly 400 wells tested for microbes.',
+    src: [src.usgs],
+  },
+];
+
+const sources = [src.wells, src.protect, src.contaminants, src.labs, src.labsPdf, src.usgs, src.arsenic, src.pfas];
+---
+
+<TestPage
+  slug="well-water"
+  title="Well water testing in the US: what EPA says to test every year | AuditYourHome"
+  description="Private wells aren’t covered by federal drinking water rules. EPA’s yearly test list, when to test for lead, arsenic, radon and more, and how to find a certified lab."
+  heroTitle="Well water: nobody tests it but you"
+  glance={[
+    { k: 'Test every year', v: 'Coliform, nitrates, TDS, pH', src: src.protect, srcLabel: 'EPA' },
+    { k: 'Arsenic benchmark', v: '10 µg/L (public-water MCL)', src: src.arsenic, srcLabel: 'USGS' },
+    { k: 'Wells over a health benchmark', v: 'About 1 in 5', src: src.usgs, srcLabel: 'USGS study' },
+    { k: 'Testing cost', v: 'May be free at your health department', src: src.labs, srcLabel: 'EPA' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Buying or renovating a home on a well?"
+  leadSub="Email us your ZIP code and what you’re planning. A person reads every message and replies with where to find certified drinking-water labs and the auditors who serve your area."
+>
+  <Fragment slot="lede">
+    About 15 percent of Americans, more than 43 million people, get their water from private wells.
+    The federal Safe Drinking Water Act doesn’t cover those wells, and neither do most states, so
+    making sure the water is safe is up to the owner.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="why-h">
+    <h2 id="why-h">Why private wells need testing</h2>
+    <p>
+      In a USGS study of 2,100 domestic wells, <strong>about one in five</strong> had at least one
+      contaminant above a human-health benchmark, mostly naturally occurring metals, radionuclides and
+      nitrate. Bacteria turned up in about a third of the roughly 400 wells tested for microbes.
+    </p>
+    <TestCite src={[src.wells, src.usgs]} labels={['EPA private wells (updated Aug 25, 2026)', 'USGS domestic wells']} />
+  </section>
+
+  <section class="sec" aria-labelledby="yearly-h">
+    <h2 id="yearly-h">The yearly test</h2>
+    <ol class="steps">
+      <li>
+        <h3>Every year: four basics</h3>
+        <p>Total coliform bacteria, nitrates, total dissolved solids and pH.</p>
+      </li>
+      <li>
+        <h3>More often for some households</h3>
+        <p>If young children, older adults, or someone pregnant or nursing lives in the home.</p>
+      </li>
+      <li>
+        <h3>Right away after a change</h3>
+        <p>After flooding, land disturbance, or nearby construction or industrial activity; after repairing or replacing any part of the well system; or if the water’s taste, odor or color changes.</p>
+      </li>
+      <li>
+        <h3>Ask what’s common locally</h3>
+        <p>Ask your local health department what is common in local groundwater. Known groundwater problems in the area are another reason to test right away.</p>
+      </li>
+    </ol>
+    <TestCite src={src.protect} labels={['EPA, protect your home’s water (updated Feb 26, 2026)']} />
+  </section>
+
+  <section class="sec" aria-labelledby="more-h">
+    <h2 id="more-h">When to test for more</h2>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>EPA’s triggers for extra well tests</caption>
+        <thead><tr><th scope="col">If you have</th><th scope="col">Test for</th></tr></thead>
+        <tbody>
+          {triggers.map((t) => (
+            <tr>
+              <td>{t.when}</td>
+              <td data-label="Test for">{t.test}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <TestCite src={src.contaminants} labels={['EPA, potential well water contaminants (updated Jul 6, 2026)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="as-h">
+    <h2 id="as-h">Arsenic, uranium and PFAS</h2>
+    <h3>Arsenic</h3>
+    <p>
+      USGS estimates about 2.1 million people use wells high in arsenic, meaning over
+      <span class="num">10 µg/L</span>, the limit for public water systems. About 7 percent of
+      drinking-water aquifer wells sampled nationally exceeded it, and about 16 percent in the
+      Southwest. Arsenic is more common in the West, the glacial aquifer system and several eastern
+      and southern aquifers.
+    </p>
+    <TestCite src={src.arsenic} labels={['USGS, arsenic and drinking water']} />
+    <h3>Uranium and other radionuclides</h3>
+    <p>
+      EPA lists uranium among the radionuclides that can occur in wells; radionuclides can harm the
+      kidneys and raise cancer risk. EPA’s pages give no testing interval for arsenic, uranium or PFAS,
+      so ask your local health department whether they’re a concern in your area.
+    </p>
+    <TestCite src={src.contaminants} labels={['EPA, potential well water contaminants']} />
+    <h3>PFAS</h3>
+    <p>
+      EPA’s PFAS limits don’t apply to private wells. For reference, the 2024 public-water limits are
+      <span class="num">4.0 ppt</span> for PFOA and PFOS and <span class="num">10 ppt</span> for PFHxS,
+      PFNA and GenX, plus a hazard index for mixtures. EPA said on May 14, 2025 it would keep the PFOA
+      and PFOS limits, and on May 18, 2026 proposed two rules: one lets systems request two more years
+      (to 2031) to comply, and one would rescind the limits for PFHxS, PFNA, GenX and the hazard index. Whether
+      either has been finalized since wasn’t verified.
+    </p>
+    <TestCite src={src.pfas} labels={['EPA PFAS drinking water rule (updated May 18, 2026)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="lab-h">
+    <h2 id="lab-h">Finding a certified lab</h2>
+    <p>
+      Use only a lab certified for drinking-water testing. EPA links each state’s lab certification
+      program, and local health departments may test private wells for free. EPA itself does not test
+      home water on request. We don’t quote private lab prices: none came from an official source.
+    </p>
+    <ul class="linkrow">
+      <li><a href={src.labsPdf.href} rel="noopener">State lab certification programs (PDF)&nbsp;↗</a></li>
+      <li><a href={src.labs.href} rel="noopener">EPA lab certification contacts&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.labs, src.labsPdf]} labels={['EPA lab certification contacts (updated Aug 11, 2026)', 'EPA state programs PDF']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If a result comes back high</h2>
+    <ul>
+      <li>Ask your local health department what the result means for your household and what to do next.</li>
+      <li>After any repair or replacement in the well system, test again; EPA lists that as a time to test.</li>
+      <li>If radon shows up in your water or your air, read the <a href="/us/tests/radon/">radon guide</a> too.</li>
+    </ul>
+    <TestCite src={src.protect} labels={['EPA, protect your home’s water']} />
+  </section>
+
+  <TestGear cats={[{ slug: 'water-testing', label: 'Water test kits' }]} />
+</TestPage>

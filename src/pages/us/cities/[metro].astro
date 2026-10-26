@@ -1,0 +1,563 @@
+---
+/**
+ * One page per US metro (26, Census rank order). Everything on the page comes from the metro's
+ * research record (src/data/us/metros/<slug>.json), climate.json, prices.json, federal.json and
+ * tests.json, all verified October 12, 2026.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import AuditProgram from '../../../components/us/AuditProgram.astro';
+import RebateItem from '../../../components/us/RebateItem.astro';
+import PriceTable from '../../../components/us/PriceTable.astro';
+import StatusLine from '../../../components/us/StatusLine.astro';
+import FaqList from '../../../components/us/FaqList.astro';
+import CreditsEnded from '../../../components/us/CreditsEnded.astro';
+import WapNote from '../../../components/us/WapNote.astro';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { METROS, FEDERAL, US_VERIFIED, fmtInt } from '../../../lib/us/data';
+import type { Metro } from '../../../lib/us/data';
+import {
+  auditProgramsSorted, mainAudit, herStatus, stateHerRows, rebateGroups, rebateCounts, localRules, metroNotes, glance,
+  metroStates, relatedMetros, regionOf, auditTags, placeShort, fmtISO, sentence, andList,
+  RADON_ZONE, RADON_ZONE_SOURCE, CLIMATE_SOURCES,
+} from '../../../lib/us/metro-view';
+import { cleanText } from '../../../lib/us/metro-text';
+
+export function getStaticPaths() {
+  return METROS.map((m) => ({ params: { metro: m.slug }, props: { m } }));
+}
+
+interface Props {
+  m: Metro;
+}
+const { m } = Astro.props;
+const d = m.data;
+const name: string = d.name;
+const states = metroStates(m);
+const stateNames = states.map((s) => s.name);
+const g = glance(m);
+const audits = auditProgramsSorted(m);
+const main = mainAudit(m);
+const her = herStatus(m);
+const herRows = stateHerRows(m);
+const groups = rebateGroups(m);
+const counts = rebateCounts(m);
+const rules = localRules(m);
+const homeRules = rules.filter((r) => r.tag.homes);
+const notes = metroNotes(m);
+const sameState = relatedMetros(m);
+const region = regionOf(m);
+const related = sameState.length ? sameState : METROS.filter((o) => o.slug !== m.slug && regionOf(o) === region);
+const herSummary = cleanText(her.summary);
+const income = (d.incomeQualified ?? []) as any[];
+const util = d.utilities ?? {};
+const utilNotes = (util.notes ?? '').replace(/\s*Sources?:\s.*$/s, '').trim();
+const utilNoteLinks = ((util.notes ?? '').match(/Sources?:\s(.*)$/s)?.[1]?.match(/https?:\/\/[^\s,]+/g) ?? []) as string[];
+const host = (u: string) => {
+  try {
+    return new URL(u).hostname.replace(/^www\./, '');
+  } catch {
+    return u;
+  }
+};
+
+const cold = (g.hdd ?? 0) >= 4000;
+const photoKey = cold ? 'blower-door-test' : 'home-energy-audit';
+const hud = cold ? 'Depressurized to 50 Pa' : 'Home energy audit';
+
+const title = `Home energy audits in ${name}: programs, rebates and costs (2026)`;
+const description = `Home energy audit programs in the ${name} area and what they cost, the rebates open now, federal Home Energy Rebates status in ${andList(states.map((s) => s.code))} and help for lower-income homes. Verified ${US_VERIFIED}.`;
+
+// ---------------------------------------------------------------- FAQ, answered only from the research records
+const faqs: { q: string; a: string }[] = [];
+const FORMAT_NOTE: Record<string, string> = {
+  online: 'It’s an online tool, not a home visit.',
+  virtual: 'It’s a virtual assessment.',
+  coaching: 'It’s coaching, not an on-site audit.',
+  unclear: 'The program doesn’t say whether it’s done in person or by phone.',
+};
+const AUDIENCE_NOTE: Record<string, string> = {
+  income: 'It’s for income-qualified households.',
+  area: 'It serves select areas only.',
+};
+if (main) {
+  const costPart = main.costText ? sentence(main.costText) : sentence(main.cost.label);
+  const notesPart = [FORMAT_NOTE[main.format], AUDIENCE_NOTE[main.audience]].filter(Boolean).join(' ');
+  faqs.push({
+    q: `How do I get a home energy audit in ${name}?`,
+    a: [
+      `Start with ${main.name}.`,
+      main.runBy ? `Run by: ${sentence(main.runBy)}` : '',
+      notesPart,
+      `Cost: ${costPart}`,
+      main.whoQualifies ? `Who qualifies: ${sentence(main.whoQualifies)}` : '',
+      main.howToBook ? `How to book: ${sentence(main.howToBook)}` : '',
+      `Our research lists ${audits.length} audit program${audits.length === 1 ? '' : 's'} for the ${name} metro, checked ${US_VERIFIED}; all of them are on this page.`,
+    ].filter(Boolean).join(' '),
+  });
+}
+faqs.push({
+  q: `Are the federal Home Energy Rebates available in ${name}?`,
+  a: `${sentence(her.text)}${her.checked ? ` Checked ${fmtISO(her.checked)}.` : ''} Nationally, DOE rewrote the rules effective May 29, 2026: federal appliance rebates no longer pay for switching from gas, oil or propane to electric equipment, and homes must get insulation and air sealing before heating and cooling upgrades unless they already meet a state-set level.`,
+});
+if (income.length) {
+  faqs.push({
+    q: `Is there help for lower-income households in ${name}?`,
+    a: `Yes. Programs for income-qualified households in the ${name} metro include ${andList(income.map((p) => p.name))}. Each one’s rules and contacts are listed on this page, with a link to its official page.`,
+  });
+}
+{
+  const parts: string[] = [];
+  const homes = rules.filter((r) => r.reach === 'homes');
+  const build = rules.filter((r) => r.reach === 'build');
+  const indirect = rules.filter((r) => r.reach === 'indirect');
+  const large = rules.filter((r) => r.reach === 'large');
+  const none = rules.filter((r) => r.reach === 'none');
+  const proposed = rules.filter((r) => r.reach === 'proposed');
+  const appliesTo = (t: string | null) => sentence((t ?? '').replace(/^Ordinary homeowners:\s*(YES\s+)?/i, ''));
+  if (homes.length) {
+    parts.push(`${homes.length === 1 ? 'One rule reaches' : `${homes.length} rules reach`} ordinary homeowners.`);
+    for (const r of homes) parts.push(`${sentence(r.name)} Who it applies to: ${appliesTo(r.appliesTo)}`);
+  } else parts.push('No local energy rule in our research applies to ordinary existing homes.');
+  if (build.length) parts.push(`${andList(build.map((r) => r.name))} ${build.length === 1 ? 'applies' : 'apply'} only to new buildings or permitted work.`);
+  if (indirect.length) parts.push(`${andList(indirect.map((r) => r.name))} ${indirect.length === 1 ? 'affects' : 'affect'} homeowners only indirectly.`);
+  if (large.length) parts.push(`${large.length === 1 ? `One ${homes.length || build.length ? 'other ' : ''}rule applies` : `${large.length} ${homes.length || build.length ? 'other ' : ''}rules apply`} only to larger buildings.`);
+  if (proposed.length) parts.push(`Proposed, not in force: ${andList(proposed.map((r) => r.name))}.`);
+  if (none.length && !homes.length) parts.push(sentence(none[0].name));
+  if (parts.length) faqs.push({ q: `Which local energy rules affect homeowners in ${name}?`, a: parts.join(' ') });
+}
+{
+  const c = (FEDERAL.taxCredits as any[]).find((t) => t.id === '25C');
+  if (c) {
+    faqs.push({
+      q: `Can I claim a federal tax credit for an energy audit in ${name}?`,
+      a: 'Not for an audit done in 2026. The federal credit of up to $150 for a home energy audit was part of the Energy Efficient Home Improvement Credit (25C), and the IRS says it can’t be claimed for audits paid for or done after December 31, 2025. Public Law 119-21 ended 25C and the Residential Clean Energy Credit (25D) for 2026 work. An audit done in 2025 is claimed on the 2025 return (Form 5695).',
+    });
+  }
+}
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Cities', path: '/us/cities/' },
+    { name, path: `/us/cities/${m.slug}/` },
+  ]),
+  faqSchema(faqs),
+];
+
+const jump = [
+  ['glance', 'At a glance'],
+  ['utilities', 'Utilities'],
+  ['audits', 'Audits'],
+  ['rebates', 'Rebates'],
+  ['home-energy-rebates', 'Federal rebates'],
+  ['income', 'Lower-income help'],
+  ['rules', 'Local rules'],
+  ...(notes.keep.length || notes.unconfirmed.length ? [['notes', 'Notes']] : []),
+  ['sources', 'Sources'],
+] as [string, string][];
+const herOverview = FEDERAL.homeEnergyRebates.overview;
+const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.test(s.href));
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(photoKey)}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/us/cities/">Cities</a> <span aria-hidden="true">/</span>
+      <span>{name}</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{stateNames.join(' · ')} · #{m.rank} metro by population</p>
+        <h1>Home energy audits in {name}</h1>
+        <p class="lede">
+          Where to get a home energy audit in the {name} area, what it costs, which rebates are open now and where
+          {' '}{andList(stateNames)} {states.length === 1 ? 'stands' : 'stand'} on the federal Home Energy Rebates.
+          Every program links to its official page and was checked on {US_VERIFIED}.
+        </p>
+        <p class="small msa">Metro area: {d.metroName}.</p>
+      </div>
+      <Photo name={photoKey} eager hud={hud} />
+    </div>
+
+    <div class="keys">
+      <div class="key card">
+        <span class="k">Start here</span>
+        {main ? (
+          <>
+            <span class:list={['kv-big', { free: main.cost.kind === 'free' }]}>{main.cost.label}</span>
+            <span class="kv-sub">{main.name}{auditTags(main).length > 0 && ` · ${auditTags(main).join(' · ')}`}</span>
+          </>
+        ) : (
+          <span class="kv-sub">No audit program in our research is open right now. See the notes below.</span>
+        )}
+      </div>
+      <div class="key card">
+        <span class="k">Rebates and incentives open now</span>
+        <span class="kv-big">{counts.live} of {counts.total}</span>
+        <span class="kv-sub">
+          {[
+            counts.closed > 0 ? `${counts.closed} closed or fully reserved` : '',
+            counts.total - counts.live - counts.closed > 0 ? `${counts.total - counts.live - counts.closed} unconfirmed or not open yet` : '',
+          ].filter(Boolean).join('; ') || 'All the offers in our research are open.'}
+        </span>
+      </div>
+      <div class="key card">
+        <span class="k">Federal Home Energy Rebates</span>
+        <span><span class={`chip ${her.chip.cls}`}>{her.chip.label}</span></span>
+        <span class="kv-sub"><a href="#home-energy-rebates">What that means here</a></span>
+      </div>
+    </div>
+
+    <nav class="jump" aria-label="On this page">
+      {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+
+    <!-- AT A GLANCE -->
+    <section id="glance" class="sec">
+      <h2>{name} at a glance</h2>
+      <div class="tiles">
+        <div class="tile card">
+          <span class="k">Climate zone</span>
+          <span class="t-big">{g.zone ?? 'Not published'}</span>
+          <p>IECC 2021 climate zone{g.county ? ` for ${g.county}` : ''}. {CLIMATE_SOURCES.zones && <a href={CLIMATE_SOURCES.zones.href} rel="noopener" target="_blank">PNNL&nbsp;↗</a>}</p>
+        </div>
+        <div class="tile card">
+          <span class="k">Heating and cooling</span>
+          <span class="t-big">{fmtInt(g.hdd)} <small>HDD</small> · {fmtInt(g.cdd)} <small>CDD</small></span>
+          <p>
+            Heating and cooling degree days, base 65°F, 1991–2020 normals
+            {g.station ? <> at <span class="mono">{g.station.name}</span> ({g.station.id})</> : ''}.
+            {CLIMATE_SOURCES.normals && <a href={CLIMATE_SOURCES.normals.href} rel="noopener" target="_blank">NOAA&nbsp;↗</a>}
+          </p>
+        </div>
+        <div class="tile card">
+          <span class="k">Homes</span>
+          <span class="t-big">
+            {g.yearBuilt ?? g.yearBuiltNote ?? 'Not published'} <small>median year built</small>
+          </span>
+          <p>
+            {g.yearBuiltNote ? 'The Census puts the median in its lowest category, “built 1939 or earlier.” ' : ''}
+            {g.owner != null ? `${(g.owner * 100).toFixed(1)}% of occupied homes are owner-occupied. ` : ''}
+            {g.place ?? placeShort(d.principalCity)}, {g.acs ?? 'ACS'}.
+            {CLIMATE_SOURCES.yearBuilt && <a href={CLIMATE_SOURCES.yearBuilt.href} rel="noopener" target="_blank">Census&nbsp;↗</a>}
+          </p>
+        </div>
+        <div class="tile card">
+          <span class="k">Radon</span>
+          <span class="t-big">EPA zone {g.radonZone ?? '—'}</span>
+          <p>
+            {g.radonZone ? `${RADON_ZONE[g.radonZone] ?? ''}${g.county ? ` (${g.county})` : ''}. ` : ''}
+            EPA says not to use the zone to decide whether to test: high levels turn up in all three zones, so test every home.
+            <a href="/us/tests/radon/">Radon testing guide</a> · <a href={RADON_ZONE_SOURCE.href} rel="noopener" target="_blank">EPA&nbsp;↗</a>
+          </p>
+        </div>
+      </div>
+      <h3 class="sub-h">What energy costs here</h3>
+      <PriceTable states={states.map((s) => s.code)} caption={`Residential energy prices in ${andList(stateNames)} (EIA)`} />
+    </section>
+
+    <!-- UTILITIES -->
+    <section id="utilities" class="sec">
+      <h2>Utilities in the {name} area</h2>
+      <p class="measure small">Utility efficiency programs follow the company that delivers your power or gas, so check your bill before you book anything.</p>
+      <div class="util-cols">
+        <div>
+          <h3 class="col-h">Electric</h3>
+          <ul class="util">
+            {(util.electric ?? []).map((u: any) => (
+              <li>
+                <strong>{u.name}</strong>
+                {u.serves && <span class="small"> {u.serves}</span>}
+                {u.url && <span class="meta"> <a href={u.url} rel="noopener" target="_blank">Source&nbsp;↗</a></span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="col-h">Natural gas</h3>
+          <ul class="util">
+            {(util.gas ?? []).map((u: any) => (
+              <li>
+                <strong>{u.name}</strong>
+                {u.serves && <span class="small"> {u.serves}</span>}
+                {u.url && <span class="meta"> <a href={u.url} rel="noopener" target="_blank">Source&nbsp;↗</a></span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      {utilNotes && (
+        <p class="measure small util-note">
+          {utilNotes}
+          {utilNoteLinks.map((u) => <span> <a href={u} rel="noopener" target="_blank">{host(u)}&nbsp;↗</a></span>)}
+        </p>
+      )}
+    </section>
+
+    <!-- AUDITS -->
+    <section id="audits" class="sec">
+      <h2>How to get a home energy audit in {name}</h2>
+      <p class="measure">
+        {audits.length} program{audits.length === 1 ? '' : 's'} in our research, open ones first. Prices are as each program
+        publishes them. If you want a full diagnostic audit outside these programs, look for a certified auditor:
+        <a href="/us/find/">how to find one</a> and <a href="/us/cost/">what audits cost</a>.
+      </p>
+      <div class="ap-grid">
+        {audits.map((p) => <AuditProgram p={p} />)}
+      </div>
+    </section>
+
+    <!-- REBATES -->
+    <section id="rebates" class="sec">
+      <h2>Rebates and incentives now</h2>
+      <p class="measure">
+        {counts.total} offers in our research for the {name} metro; {counts.live} {counts.live === 1 ? 'is' : 'are'} open as of {US_VERIFIED}.
+        Many require the program’s own contractor or an audit first, so read the terms before you buy.
+      </p>
+      <CreditsEnded />
+      {groups.map((grp) => (
+        <div class="rb-group">
+          <h3 class="col-h">{grp.label} <span class="cnt">{grp.live} open of {grp.items.length}</span></h3>
+          <div class="rb-grid">
+            {grp.items.map((r) => <RebateItem r={r} />)}
+          </div>
+        </div>
+      ))}
+      <p class="small more">Statewide rebate programs and federal options: <a href="/us/programs/">rebates and programs</a>.</p>
+      <a class="card card-pad hp-link" href={`/us/heat-pumps/${m.slug}/`}>
+        <span class="hp-t">Heat pumps in {name} →</span>
+        <span class="hp-d">What one costs to run against gas here, each heat pump rebate with the equipment rule that decides which models qualify, and the certified systems and brands that suit the climate.</span>
+      </a>
+    </section>
+
+    <!-- FEDERAL HOME ENERGY REBATES -->
+    <section id="home-energy-rebates" class="sec">
+      <h2>Federal Home Energy Rebates in {andList(stateNames)}</h2>
+      <p class="measure">
+        The two federal rebate programs, HOMES (whole-home efficiency) and the high-efficiency electric home rebates (HEAR, renamed
+        HEEHR in 2026), are run by each state, so availability depends on the state. DOE rewrote the rules effective
+        May 29, 2026{pn26 ? <> (<a href={pn26.href} rel="noopener" target="_blank">Program Notice 26-2&nbsp;↗</a>)</> : ''}:
+        no more federal rebates for switching from gas, oil or propane to electric equipment, and insulation and air sealing
+        come before heating and cooling upgrades unless a home already meets a state-set level.
+      </p>
+      <div class="card card-pad her">
+        <span class="k">Status for the {name} metro</span>
+        <StatusLine text={her.text} chip={her.chip} href={her.url} checked={her.checked} />
+        {her.programName && <p class="small her-p"><strong>Program:</strong> {her.programName}</p>}
+        {her.administrator && <p class="small her-p"><strong>Run by:</strong> {her.administrator}</p>}
+        {herSummary && <p class="small her-p">{herSummary}</p>}
+      </div>
+      <div class="tablewrap card her-table">
+        <table class="stack" aria-label={`Federal Home Energy Rebates by state, checked ${US_VERIFIED}`}>
+          <thead>
+            <tr><th scope="col">State</th><th scope="col">HEAR / HEEHR (electric appliances)</th><th scope="col">HOMES (whole-home efficiency)</th></tr>
+          </thead>
+          <tbody>
+            {herRows.map((r) => (
+              <tr>
+                <td data-label="State">
+                  <strong>{r.state.name}</strong>
+                  <span class="small st-link"><a href={r.state.href}>{r.state.name} rebate guide</a></span>
+                </td>
+                <td data-label="HEAR / HEEHR (electric appliances)"><StatusLine text={r.hear.text} chip={r.hear.chip} href={r.hear.url} checked={r.hear.checked} /></td>
+                <td data-label="HOMES (whole-home efficiency)"><StatusLine text={r.homes.text} chip={r.homes.chip} href={r.homes.url} checked={r.homes.checked} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small more">How the programs work: <a href="/us/programs/home-energy-rebates/">Home Energy Rebates explained</a> · <a href="/us/programs/states/">every state’s status</a>.</p>
+    </section>
+
+    <!-- INCOME-QUALIFIED -->
+    <section id="income" class="sec">
+      <h2>Help for lower-income households</h2>
+      {income.length > 0 ? (
+        <div class="iq-grid">
+          {income.map((p) => (
+            <article class="card iq">
+              <h3>{p.name}</h3>
+              {p.runBy && <p class="iq-by">{p.runBy}</p>}
+              {p.summary && <p class="iq-sum">{p.summary}</p>}
+              <p class="meta">{p.url ? <a href={p.url} rel="noopener" target="_blank">Official page&nbsp;↗</a> : 'No official page given'} · verified {US_VERIFIED}</p>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="measure">Our research found no income-qualified program specific to this metro.</p>
+      )}
+      <WapNote />
+    </section>
+
+    <!-- LOCAL RULES -->
+    <section id="rules" class="sec">
+      <h2>Local energy rules</h2>
+      <p class="measure">
+        {homeRules.length > 0
+          ? `${homeRules.length} of the ${rules.length} rules we found ${homeRules.length === 1 ? 'reaches' : 'reach'} ordinary homeowners in some way; ${homeRules.length === 1 ? 'it’s' : 'they’re'} listed first.`
+          : `None of the ${rules.length} rule${rules.length === 1 ? '' : 's'} we found ${rules.length === 1 ? 'reaches' : 'reach'} ordinary homes.`}
+      </p>
+      <div class="rules">
+        {rules.map((r) => (
+          <article class:list={['card', 'rule', { 'rule-home': r.tag.homes }]}>
+            <div class="rule-head">
+              <span class={`chip ${r.tag.cls}`}>{r.tag.label}</span>
+              <h3>{r.name}</h3>
+            </div>
+            {r.appliesTo && <p class="rule-who"><span class="lbl">Who it applies to</span> {r.appliesTo}</p>}
+            {r.summary && <p class="rule-sum">{r.summary}</p>}
+            <p class="meta">{r.url ? <a href={r.url} rel="noopener" target="_blank">Official page&nbsp;↗</a> : 'No official page given'} · verified {US_VERIFIED}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    {(notes.keep.length > 0 || notes.unconfirmed.length > 0) && (
+      <section id="notes" class="sec">
+        <h2>Notes worth knowing</h2>
+        {notes.keep.length > 0 && (
+          <ul class="notes measure">
+            {notes.keep.map((s) => <li>{s}</li>)}
+          </ul>
+        )}
+        {notes.unconfirmed.length > 0 && (
+          <div class="card card-pad unconf">
+            <h3>What our research couldn’t confirm</h3>
+            <ul>
+              {notes.unconfirmed.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+        )}
+      </section>
+    )}
+
+    <FaqList faqs={faqs} heading={`${name}: common questions`} />
+
+    <!-- SOURCES -->
+    <section id="sources" class="sec">
+      <div class="card card-pad srcs">
+        <h2>Sources</h2>
+        <p class="small">Every source below was opened and checked on {US_VERIFIED}.</p>
+        <ul>
+          {(d.sources ?? []).map((s: any) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></li>)}
+          {[CLIMATE_SOURCES.normals, CLIMATE_SOURCES.zones, CLIMATE_SOURCES.radon, CLIMATE_SOURCES.yearBuilt, CLIMATE_SOURCES.tenure, CLIMATE_SOURCES.ranking]
+            .filter(Boolean)
+            .map((s) => <li><a href={s!.href} rel="noopener" target="_blank">{s!.label}&nbsp;↗</a></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <div class="lf-wrap">
+      <LeadFormUS heading={`Planning upgrades in ${name}?`} context={`metro-${m.slug}`} />
+    </div>
+
+    <section class="related">
+      <h2>{sameState.length > 0 ? `Other metros in ${andList(stateNames)}` : `Other metros in the ${region}`}</h2>
+      <div class="nb">
+        {related.map((o) => <a href={`/us/cities/${o.slug}/`}>{o.data.name} <span class="st">{(o.data.states ?? []).join(' · ')}</span></a>)}
+        <a class="all" href="/us/cities/">All {METROS.length} metros →</a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .msa { margin: 10px 0 0; color: var(--faint); }
+  .keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 4px 0 18px; }
+  @media (max-width: 860px) { .keys { grid-template-columns: 1fr; } }
+  .key { padding: 16px 18px; display: grid; gap: 4px; align-content: start; box-shadow: none; }
+  .k { display: block; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); }
+  .kv-big { font-family: var(--display); font-weight: 800; font-size: 21px; line-height: 1.2; }
+  .kv-big.free { color: var(--pine); }
+  .kv-sub { font-size: 14px; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
+
+  .jump { display: flex; gap: 8px; overflow-x: auto; padding: 6px 0 10px; margin: 0 -22px; padding-left: 22px; padding-right: 22px; scrollbar-width: thin; }
+  .jump a { flex-shrink: 0; font-size: 13.5px; font-weight: 600; text-decoration: none; color: var(--ink); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; background: var(--card); }
+  .jump a:hover { border-color: var(--ink); }
+
+  .sec { padding: 34px 0 0; scroll-margin-top: 80px; }
+  .sec > h2 { font-size: clamp(24px, 3vw, 30px); }
+  .sub-h { font-size: 18px; margin: 26px 0 10px; }
+  .col-h { font-size: 13px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .cnt { font-weight: 500; color: var(--faint); letter-spacing: 0.02em; text-transform: none; margin-left: 6px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  @media (max-width: 1000px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .tiles { grid-template-columns: 1fr; } }
+  .tile { padding: 16px 18px; display: grid; gap: 6px; align-content: start; box-shadow: none; min-width: 0; }
+  .t-big { font-family: var(--display); font-weight: 800; font-size: 24px; line-height: 1.15; }
+  .t-big small { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .tile p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; overflow-wrap: anywhere; }
+  .mono { font-family: var(--mono); font-size: 12px; }
+
+  .util-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px; }
+  @media (max-width: 760px) { .util-cols { grid-template-columns: 1fr; } }
+  .util { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .util li { padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); line-height: 1.45; overflow-wrap: anywhere; }
+  .util li strong { display: block; margin-bottom: 2px; }
+  .util .meta a { color: var(--steel); }
+  .util-note { margin-top: 14px; }
+  .util-note a { overflow-wrap: anywhere; }
+
+  .ap-grid { display: grid; gap: 14px; margin-top: 16px; }
+
+  .rb-group { margin-top: 24px; }
+  .rb-grid { display: grid; gap: 10px; }
+  .more { margin-top: 18px; }
+
+  .her { display: grid; gap: 8px; margin: 14px 0 16px; border-left: 4px solid var(--steel); box-shadow: none; }
+  .her-p { margin: 0; overflow-wrap: anywhere; }
+  .her-table td { min-width: 0; }
+  .her-table td:first-child { width: 18%; }
+  .st-link { display: block; margin-top: 4px; }
+  @media (max-width: 640px) { .her-table td:first-child { width: auto; } }
+
+  .iq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin: 14px 0 18px; }
+  .iq { padding: 16px 18px; display: grid; gap: 6px; align-content: start; box-shadow: none; }
+  .iq h3 { font-size: 16.5px; margin: 0; line-height: 1.3; }
+  .iq-by { margin: 0; font-size: 13px; color: var(--faint); }
+  .iq-sum { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.55; overflow-wrap: anywhere; }
+  .iq .meta { margin: 0; }
+  .iq .meta a { color: var(--steel); }
+
+  .rules { display: grid; gap: 12px; margin-top: 12px; }
+  .rule { padding: 16px 18px; display: grid; gap: 6px; box-shadow: none; }
+  .rule-home { border-left: 4px solid var(--heat); }
+  .rule-head { display: grid; gap: 6px; justify-items: start; }
+  .rule-head h3 { font-size: 17px; margin: 0; line-height: 1.3; }
+  .rule-who, .rule-sum { margin: 0; font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; }
+  .rule-sum { color: var(--muted); }
+  .lbl { display: block; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .rule .meta { margin: 0; }
+  .rule .meta a { color: var(--steel); }
+
+  .notes { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+  .unconf { margin-top: 18px; border-left: 4px solid var(--warn); box-shadow: none; }
+  .unconf h3 { font-size: 16px; margin-bottom: 8px; }
+  .unconf ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14.5px; color: var(--muted); }
+
+  .srcs { border-left: 4px solid var(--steel); box-shadow: none; }
+  .srcs h2 { font-size: 22px; margin-bottom: 4px; }
+  .srcs ul { margin: 0; padding-left: 20px; columns: 2 340px; column-gap: 32px; font-size: 13.5px; }
+  .srcs li { break-inside: avoid; margin-bottom: 6px; }
+  .srcs a { overflow-wrap: anywhere; }
+
+  .lf-wrap { margin-top: 30px; }
+  .related { padding: 34px 0 40px; }
+  .related h2 { font-size: 22px; }
+  .nb { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nb a { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--ink); background: var(--card); }
+  .nb a:hover { border-color: var(--ink); }
+  .nb .st { font-family: var(--mono); font-size: 11.5px; color: var(--faint); font-weight: 500; }
+  .nb a.all { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .hp-link { display: grid; gap: 4px; margin-top: 14px; border-left: 4px solid var(--heat); text-decoration: none; color: var(--ink); }
+  .hp-link:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .hp-t { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--heat-deep); }
+  .hp-d { font-size: 14.5px; color: var(--muted); }
+</style>

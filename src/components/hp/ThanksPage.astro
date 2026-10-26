@@ -1,0 +1,45 @@
+---
+/** Where the heat pump quote form lands after a successful Netlify submission. Not indexed. */
+import Base from '../../layouts/Base.astro';
+import type { Market } from '../../lib/heatpumps';
+import '../../styles/hp.css';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+---
+
+<Base title="Request received | AuditYourHome" description="Your heat pump quote request reached us." indexable={false}>
+  <div class="container hp" style="padding-bottom:48px">
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Heat pump quotes</p>
+        <h1>Thanks. Your request reached us.</h1>
+        <p class="lede measure">
+          A person reads every request, usually within one business day.
+          {isCA
+            ? ' We’ll introduce you to one contractor or registered energy advisor who serves your area and knows the rebates.'
+            : ' We’ll reply by email with the contractors and rebate programs that serve your ZIP code.'}
+        </p>
+      </div>
+    </div>
+    <div class="cards">
+      <article class="card c">
+        <h3>Before the visit</h3>
+        <p>Have your last 12 months of heating bills handy and note the rooms that run cold. Ask for a room-by-room heat-loss calculation, not a size based on square footage.</p>
+      </article>
+      <article class="card c">
+        <h3>On the quote</h3>
+        <p>Get the outdoor and indoor model numbers and the AHRI reference number for the pairing, the refrigerant, and the warranty registration deadline.</p>
+      </article>
+      <article class="card c">
+        <h3>Rebates first</h3>
+        <p>{isCA ? 'Some rebates need pre-approval or an evaluation before you buy. Check your province’s rules before you sign anything.' : 'Some utility rebates need a participating contractor or pre-approval. Check your metro’s rules before you sign anything.'}</p>
+        <p class="meta"><a href={`/${market}/heat-pumps/#rebates`}>Rebates by {isCA ? 'province' : 'metro'}</a></p>
+      </article>
+    </div>
+    <p style="margin-top:22px"><a class="btn btn-ghost" href={`/${market}/heat-pumps/`}>Back to the heat pump guide</a></p>
+  </div>
+</Base>

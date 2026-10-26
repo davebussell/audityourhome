@@ -1,0 +1,111 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import ProviderCard from '../../../components/ProviderCard.astro';
+import LeadForm from '../../../components/LeadForm.astro';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema, cityDirectorySchema, faqSchema } from '../../../lib/schema';
+import { regions, providersForRegion, regionBySlug } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return regions.map((r) => ({ params: { city: r.slug } }));
+}
+
+const { city } = Astro.params;
+const region = regionBySlug(city!)!;
+const list = providersForRegion(region.slug);
+const hrsCount = list.filter((p) => p.hrsApproved).length;
+
+const title = `Home energy auditors in ${region.name} (${list.length} registered providers) | AuditYourHome`;
+const description = `Compare ${list.length} NRCan-licensed service organizations delivering EnerGuide home energy assessments in ${region.name}. Registration shown, prices where published, rebate guidance included.`;
+
+const faqs = [
+  {
+    q: `What does an energy audit cost in ${region.name}?`,
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies (Windfall Ecology Centre: $500 and $250 plus HST; Reep Green Solutions: $540 and $406, no HST). The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify (marked “HRSP-approved: Yes” below), and the follow-up has to be done by December 31, 2026. Few providers publish prices; the ones here that do show them on their card.',
+  },
+  {
+    q: `Which rebates apply in ${region.name}?`,
+    a: 'Home Renovation Savings (province-wide): $600 toward assessments, up to $7,700 insulation and $100 per window on the assessment path; without an assessment, heat pumps up to $7,500 ($2,000 if gas-heated) and up to $10,000 for solar with a battery. CMHC-insured recent buyers can add the 25% Eco Improvement premium refund.' + (region.slug === 'toronto' ? ' Toronto homeowners can also finance through the City’s HELP loans at posted rates up to $125,000.' : ''),
+  },
+  {
+    q: 'Are these providers vetted?',
+    a: 'Every listing is an NRCan-licensed service organization — the registration source is linked on each profile, compiled from public registries and provider websites and checked ' + SITE.dataReviewDate + '. We list no solar or HVAC sales reps as auditors.',
+  },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/ca/' },
+    { name: 'Find an auditor', path: '/ca/find/' },
+    { name: region.name, path: `/ca/find/${region.slug}/` },
+  ]),
+  cityDirectorySchema(region, list.map((p) => p.name)),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/ca/find/">Find an auditor</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
+    </nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+      <h1>Home energy auditors in {region.name}</h1>
+      <p class="lede">{region.intro}</p>
+      <p class="small">
+        {list.length} registered service organization{list.length === 1 ? '' : 's'} · compiled from
+        public sources, checked {SITE.dataReviewDate} ·
+        <a href={`/ca/guides/${region.slug}/`}>read the full {region.name} guide</a> ·
+        <a href="/ca/plan/">or start with the planner</a>
+      </p>
+      </div>
+      <Photo name={'home-energy-audit'} eager />
+    </div>
+
+    <p class="card card-pad hrs-callout small">
+      <strong>Claiming Ontario's Home Renovation Savings rebates?</strong> Only assessments from the
+      seven HRSP-approved organizations qualify for the $600 rebate and the assessment-path upgrade
+      rebates. Book the follow-up by November 30, 2026; it has to be done within 180 days of the
+      first assessment or by December 31, 2026, whichever comes first.
+      {hrsCount === 0
+        ? ' None of the providers listed for this area is on that list.'
+        : hrsCount === list.length
+          ? ` All ${list.length} providers below are marked “HRSP-approved: Yes.”`
+          : ` ${hrsCount} of the ${list.length} providers below ${hrsCount === 1 ? 'is' : 'are'} marked “HRSP-approved: Yes.”`}
+      Every provider here delivers official EnerGuide evaluations for everything else, from
+      financing to heat pump sizing.
+      <a href="/ca/programs/home-renovation-savings-assessment/">See the seven and the deadlines</a>
+    </p>
+
+    <div class="provider-grid">
+      {list.map((p) => <ProviderCard provider={p} />)}
+    </div>
+
+    <section class="tight">
+      <h2>Good to know</h2>
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </section>
+
+    <LeadForm
+      heading={`Get matched in ${region.name}`}
+      sub="Tell us what you're planning and we'll connect you with one registered service organization serving your area — not a shared lead list."
+      region={region.slug}
+      context={`directory-${region.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .hrs-callout { border-left: 4px solid var(--pine); margin: 0 0 16px; }
+  .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 24px; }
+</style>

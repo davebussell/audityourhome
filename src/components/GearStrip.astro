@@ -17,14 +17,14 @@ const cats = categories
     <p class="gs-head">{heading}</p>
     <div class="gs-row">
       {cats.map((c) => (
-        <a href={`/products/${c.slug}/`} class="gs-item">
+        <a href={`/ca/products/${c.slug}/`} class="gs-item">
           <strong>{c.name}</strong>
           <span>{c.short}</span>
           <em>Compare picks →</em>
         </a>
       ))}
     </div>
-    <p class="gs-note">Independent picks · affiliate-supported · <a href="/products/">all gear guides</a></p>
+    <p class="gs-note">Independent picks · affiliate-supported · <a href="/ca/products/">all gear guides</a></p>
   </aside>
 )}
 

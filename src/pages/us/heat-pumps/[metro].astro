@@ -1,0 +1,296 @@
+---
+/**
+ * Heat pumps in one US metro: climate (degree days, IECC zone), what heat costs with each fuel at the
+ * state's EIA prices, the heat pump programs and their equipment rules (researched October 19, 2026),
+ * and the certified systems that suit the climate, cooling-first in hot metros.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import ModelTable from '../../../components/hp/ModelTable.astro';
+import CostTable from '../../../components/hp/CostTable.astro';
+import RebateCard from '../../../components/hp/RebateCard.astro';
+import QuoteForm from '../../../components/hp/QuoteForm.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { relatedMetros } from '../../../lib/us/metro-view';
+import { PRICE_META } from '../../../lib/us/data';
+import type { Metro } from '../../../lib/us/data';
+import {
+  US_METROS, metroName, metroState, stateName, usRebates, usClimateKind, costsUS, leaders, brandsBySize, brandInfo, statsFor, brandHref,
+  HP_CHECKED, REBATES_US, COP_NOTE, fmtInt, fmtCop, fmt1, tierLabel, statusChipHP, type ModelRow,
+} from '../../../lib/heatpumps';
+import '../../../styles/hp.css';
+
+export function getStaticPaths() {
+  return US_METROS.map((m) => ({ params: { metro: m.slug }, props: { m } }));
+}
+interface Props {
+  m: Metro;
+}
+const { m } = Astro.props;
+const name = metroName(m);
+const st = metroState(m);
+const states: string[] = m.data.states ?? [st];
+const c = m.climate;
+const hdd = c?.hdd65 ?? null;
+const cdd = c?.cdd65 ?? null;
+const zone = c?.iecc2021ClimateZone ?? null;
+const moisture = zone?.slice(-1) ?? '';
+const kind = usClimateKind(m);
+const heatLed = kind === 'cold' || (hdd ?? 0) >= 4000;
+const costs = costsUS(st, hdd ?? 3000);
+const gasCost = costs.rows.find((x) => x.key === 'gas');
+const hpCost = costs.rows.find((x) => x.key === 'hp-cold');
+const hpStd = costs.rows.find((x) => x.key === 'hp-std');
+const elecCost = costs.rows.find((x) => x.key === 'elec');
+const breakEven = costs.elecPerMMBtu && costs.gasPerMMBtu ? costs.elecPerMMBtu / costs.gasPerMMBtu : null;
+const progs = usRebates(m.slug);
+const openProgs = progs.filter((p) => ['Open', 'Open · limits apply'].includes(statusChipHP(p.status).label));
+const unconfirmed = progs.filter((p) => statusChipHP(p.status).label === 'Unconfirmed').length;
+// Heat-led metros quote the cold-climate heat pump; mild and hot ones a standard heat pump.
+const hpLead = heatLed ? hpCost : hpStd ?? hpCost;
+const hpLeadLabel = heatLed ? 'Cold-climate heat pump' : 'Heat pump';
+const hpLeadCop = heatLed ? costs.band.coldClimate : costs.band.standard;
+const photoKey = heatLed ? 'heat-loss-calculation' : 'energy-bill-analysis';
+const photoHud = heatLed ? 'Load calculation · Manual J' : 'Running costs';
+const L = leaders('us');
+const fed = REBATES_US.federal ?? {};
+
+// Which certified systems lead depends on the climate: heating in the cold, cooling in hot metros.
+const TABLES: Record<string, { h: string; rows: ModelRow[]; cooling: boolean }> = {
+  coldDucted: { h: 'Central systems that heat best in the cold (2 tons and up)', rows: L.coldDucted, cooling: false },
+  coldDuctless: { h: 'Mini-splits that heat best in the cold', rows: L.coldDuctless, cooling: false },
+  coolDucted: { h: 'Central systems that cool most efficiently', rows: L.coolDucted, cooling: true },
+  coolDuctless: { h: 'Mini-splits that cool most efficiently', rows: L.coolDuctless, cooling: true },
+};
+const order = kind === 'hot' ? ['coolDucted', 'coolDuctless'] : heatLed ? ['coldDucted', 'coldDuctless', 'coolDucted'] : ['coolDucted', 'coldDucted', 'coolDuctless'];
+
+const ranked = brandsBySize('us')
+  .map((s) => ({ s, st: statsFor('us', s)! }))
+  .sort((a, b) =>
+    kind === 'hot' ? (b.st.bestSeer2 ?? 0) - (a.st.bestSeer2 ?? 0) || b.st.outdoorModels - a.st.outdoorModels : b.st.coldOutdoorModels - a.st.coldOutdoorModels,
+  )
+  .slice(0, 12);
+
+const sameState = relatedMetros(m);
+const sameKind = US_METROS.filter((o) => o.slug !== m.slug && !sameState.includes(o) && usClimateKind(o) === kind).slice(0, 8);
+const fmtDD = (n: number | null) => (n == null ? '—' : fmtInt(n, 'us'));
+
+const hdd0 = hdd ?? 0;
+const cdd0 = cdd ?? 0;
+let climateLine = 'Winters are mild, so almost any certified heat pump can heat the house; cooling efficiency and quiet running decide the choice.';
+if (kind === 'cold') climateLine = 'Winters here are long and cold, so the heat pump has to keep its output near 5°F.';
+else if (kind === 'hot') climateLine = 'Cooling runs most of the year here, so summer efficiency matters more than heating at 5°F.';
+else if (moisture === 'C')
+  climateLine =
+    hdd0 >= 4000
+      ? 'Heating runs from fall to spring here, but deep cold is rare, so seasonal heating efficiency (HSPF2) and quiet running matter more than output at 5°F.'
+      : 'The climate is mild all year, so almost any certified heat pump can heat the house; efficiency and quiet running decide the choice.';
+else if (hdd0 >= 4000) climateLine = 'Winters are cold enough that output in a cold snap matters, and summers need real cooling.';
+else if (hdd0 >= 2500) climateLine = 'Winters are moderate: a good standard heat pump handles them, with backup heat for the odd cold snap, and summers need real cooling.';
+else if (cdd0 >= 1500) climateLine = 'Winters are mild and summers are hot, so cooling efficiency matters most; almost any certified heat pump can heat the house.';
+const moistureLine =
+  moisture === 'A'
+    ? 'This is a humid climate: a variable-speed system that runs longer at low speed pulls more moisture out of the air than a single-stage one.'
+    : moisture === 'B'
+      ? 'This is a dry climate: look at EER2, the efficiency on the hottest afternoons, as well as SEER2.'
+      : moisture === 'C'
+        ? 'This is a marine climate: mild all year, so a small system sized to the real load runs quietly and efficiently.'
+        : '';
+
+const heroCostLine = hpLead
+  ? ` At ${stateName(st)} prices ${heatLed ? 'a cold-climate' : 'an efficient'} heat pump delivers heat for about $${hpLead.cost.toFixed(2)} per million Btu${
+      gasCost ? `, against $${gasCost.cost.toFixed(2)} for a high-efficiency gas furnace` : ''
+    }.`
+  : '';
+const breakEvenKey = breakEven == null ? 'no gas price in our data'
+  : breakEven > hpLeadCop ? `gas costs less to run here; a heat pump would need a seasonal COP of ${breakEven.toFixed(1)} to match it`
+  : `a heat pump beats gas here above a seasonal COP of ${breakEven.toFixed(1)}`;
+let breakEvenLine = '';
+if (breakEven && breakEven <= hpLeadCop) {
+  breakEvenLine = ` Here a heat pump costs less to run than a 95% gas furnace whenever its seasonal COP is above ${breakEven.toFixed(1)}, which ${heatLed ? 'a cold-climate system' : 'an efficient heat pump'} reaches in this climate.`;
+} else if (breakEven) {
+  breakEvenLine = ` Here a heat pump needs a seasonal COP above ${breakEven.toFixed(1)} to beat a 95% gas furnace, so at these prices gas stays cheaper to run; the case for a heat pump rests on replacing the air conditioner, cutting emissions or a time-of-use rate.`;
+}
+
+const title = `Heat pumps in ${name}: costs, rebates and the right systems | AuditYourHome`;
+const description = `What a heat pump costs to run in ${name} against gas and electric heat, the ${progs.length} heat pump program${progs.length === 1 ? '' : 's'} and their equipment rules, and the certified systems that suit the climate.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Heat pumps', path: '/us/heat-pumps/' },
+    { name, path: `/us/heat-pumps/${m.slug}/` },
+  ]),
+];
+const jump: [string, string][] = [
+  ['climate', 'Climate and sizing'],
+  ['costs', 'Running costs'],
+  ['rebates', 'Rebates'],
+  ['systems', 'Systems that suit'],
+  ['brands', 'Brands'],
+  ['quote', 'Get quotes'],
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(photoKey)}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/us/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{name}</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Heat pumps by metro · {states.map(stateName).join(' · ')} · checked {HP_CHECKED}</p>
+        <h1>Heat pumps in {name}</h1>
+        <p class="lede measure">{climateLine}{heroCostLine}</p>
+      </div>
+      <Photo name={photoKey} eager hud={photoHud} />
+    </div>
+
+    <div class="keys">
+      <div class="key card">
+        <span class="k">Climate</span>
+        <span class="kv-big">{zone ? `Zone ${zone}` : '—'}</span>
+        <span class="kv-sub">{fmtDD(hdd)} heating and {fmtDD(cdd)} cooling degree days a year</span>
+      </div>
+      <div class="key card">
+        <span class="k">{hpLeadLabel}</span>
+        <span class="kv-big">${hpLead ? hpLead.cost.toFixed(2) : '—'} <small>per million Btu</small></span>
+        <span class="kv-sub">seasonal COP {fmt1(hpLeadCop)} for this climate</span>
+      </div>
+      <div class="key card">
+        <span class="k">{gasCost ? 'Gas furnace (95%)' : 'Electric furnace'}</span>
+        <span class="kv-big">${(gasCost ?? elecCost)?.cost.toFixed(2) ?? '—'} <small>per million Btu</small></span>
+        <span class="kv-sub">{breakEvenKey}</span>
+      </div>
+      <div class="key card">
+        <span class="k">Heat pump programs</span>
+        <span class="kv-big">{openProgs.length} <small>of {progs.length} open</small></span>
+        <span class="kv-sub">{unconfirmed > 0 && `${unconfirmed} unconfirmed · `}<a href="#rebates">Amounts and equipment rules</a></span>
+      </div>
+    </div>
+
+    <nav class="jump" aria-label="On this page">
+      {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+
+    <section id="climate" class="sec">
+      <h2>Climate and sizing</h2>
+      <p class="sec-intro">
+        {climateLine} {moistureLine} Whatever the climate, the system should be sized from a room-by-room load calculation (ACCA Manual J), not from
+        the size of the old air conditioner or furnace: an oversized heat pump short-cycles, dehumidifies poorly and costs more.
+      </p>
+      <dl class="card glance">
+        <div><dt>IECC 2021 climate zone</dt><dd>{zone ?? '—'}</dd></div>
+        <div><dt>Heating degree days (65°F)</dt><dd>{fmtDD(hdd)}</dd></div>
+        <div><dt>Cooling degree days (65°F)</dt><dd>{fmtDD(cdd)}</dd></div>
+        <div><dt>Weather station</dt><dd>{c?.station?.name ?? '—'}</dd></div>
+        <div><dt>Seasonal COP for planning</dt><dd>{fmt1(costs.band.coldClimate)} cold-climate · {fmt1(costs.band.standard)} standard</dd></div>
+        <div><dt>Typical home</dt><dd>{c?.medianYearBuilt ? `built around ${c.medianYearBuilt}` : '—'}{c?.ownerOccupiedShare != null ? `; ${Math.round(c.ownerOccupiedShare * 100)}% owner-occupied` : ''}</dd></div>
+      </dl>
+      <p class="tnote">
+        Degree days: NOAA 1991–2020 climate normals. Climate zone: IECC 2021 (PNNL county list). Housing: Census American Community Survey.
+        Seasonal COP: {COP_NOTE}
+      </p>
+    </section>
+
+    <section id="costs" class="sec">
+      <h2>What heat costs to run in {name}</h2>
+      <p class="sec-intro">
+        Cost per million Btu of heat delivered into the house, at {stateName(st)}'s average residential prices from the EIA (electricity for
+        {' '}{PRICE_META.electricity.month}, gas as an annual average). A typical older house in a cold climate uses 50 to 100 million Btu of heat a
+        year; a house in the South uses far less.{breakEvenLine}
+      </p>
+      <CostTable rows={costs.rows} market="us" caption={`Delivered heat cost by fuel in ${name}`} />
+      {hpStd && elecCost && <p class="tnote">Against electric resistance heat (baseboards or an electric furnace), even a standard heat pump cuts the heating bill by about {Math.round((1 - hpStd.cost / elecCost.cost) * 100)}%.</p>}
+      <p class="tnote">Prices: <a href={PRICE_META.electricity.url} rel="noopener" target="_blank">EIA electricity</a> · <a href={PRICE_META.gas.url} rel="noopener" target="_blank">EIA natural gas</a>. Your own rate plan may differ, especially on a time-of-use or heat pump rate.</p>
+    </section>
+
+    <section id="rebates" class="sec">
+      <h2>Heat pump rebates in {name}</h2>
+      <p class="sec-intro">
+        Every heat pump program we found for the {name} area, with the equipment rule that decides which models qualify. Checked against each
+        program's own page on {HP_CHECKED}. Most utility programs need an AHRI-matched system; check the exact pairing in the AHRI directory before you sign.
+      </p>
+      {progs.length ? <div class="cards">{progs.map((p) => <RebateCard p={p} />)}</div> : <p>No heat pump program found in our check.</p>}
+      <h3 class="sub-h">Federal</h3>
+      <div class="cards">
+        <article class="card c">
+          <h3>Federal tax credit (25C)</h3>
+          <span><span class="chip chip-closed">Ended</span></span>
+          <p class="muted">No 25C credit for a heat pump placed in service after December 31, 2025. Heat pumps installed in 2025 are claimed on 2025 returns.</p>
+          {fed['25CUrl'] && <p class="meta"><a href={fed['25CUrl']} rel="noopener" target="_blank">irs.gov&nbsp;↗</a></p>}
+        </article>
+        <article class="card c">
+          <h3>High-Efficiency Electric Home Rebates</h3>
+          <p class="muted">
+            The federal rebate (formerly HEAR) pays up to $8,000 toward an ENERGY STAR certified heat pump for income-qualified households, through
+            the state. Since May 29, 2026 it covers only upgrades from existing electric equipment, and the installer must be on the state's
+            contractor list. {states.length === 1 ? `${stateName(st)}'s status is in the program list above.` : 'Each state runs its own program; the status is in the list above.'}
+          </p>
+          {fed.HEARUrl && <p class="meta"><a href={fed.HEARUrl} rel="noopener" target="_blank">Program rules&nbsp;↗</a></p>}
+        </article>
+      </div>
+      <p class="tnote">Audit programs, other rebates and help for lower-income homes: <a href={`/us/cities/${m.slug}/`}>our {name} guide</a>.</p>
+    </section>
+
+    <section id="systems" class="sec">
+      <h2>Systems that suit {name}</h2>
+      <p class="sec-intro">
+        {kind === 'hot'
+          ? "The certified systems with the highest SEER2, on current refrigerants, from ENERGY STAR's US listings. Each row keeps its cold-weather numbers too."
+          : "The certified systems that heat most efficiently at 5°F, and those that cool most efficiently, on current refrigerants, from ENERGY STAR's US listings."}
+        {' '}Rebadged twins with identical ratings are folded into one row.
+      </p>
+      {order.map((k) => (
+        <>
+          <h3 class="sub-h">{TABLES[k].h}</h3>
+          <ModelTable rows={TABLES[k].rows.slice(0, 8)} market="us" caption={`${TABLES[k].h} for ${name}`} showBrand cooling={TABLES[k].cooling} />
+        </>
+      ))}
+    </section>
+
+    <section id="brands" class="sec">
+      <h2>{kind === 'hot' ? 'Brands with the most efficient cooling' : 'Brands with the most cold-climate models'}</h2>
+      <p class="sec-intro">
+        {kind === 'hot' ? 'Brands by the best SEER2 among their certified systems.' : 'Outdoor models that meet ENERGY STAR Cold Climate, by brand.'} Each brand page has the
+        warranty, product lines and best models.
+      </p>
+      <div class="tablewrap card">
+        <table class="stack dt">
+          <caption class="sr-only">Heat pump brands for {name}</caption>
+          <thead>
+            <tr>
+              <th scope="col">Brand</th>
+              <th scope="col" class="num">{kind === 'hot' ? 'Best SEER2' : 'ENERGY STAR Cold Climate'}</th>
+              <th scope="col" class="num">{kind === 'hot' ? 'Best COP at 5°F' : 'Best COP at 5°F'}</th>
+              <th scope="col" class="num">All certified models</th>
+              <th scope="col">Price tier</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ranked.map(({ s, st: b }) => (
+              <tr>
+                <td class="brand-cell"><a href={brandHref('us', s)}>{brandInfo(s).name}</a></td>
+                <td class="num" data-label={kind === 'hot' ? 'Best SEER2' : 'ENERGY STAR Cold Climate'}>{kind === 'hot' ? fmt1(b.bestSeer2) : fmtInt(b.coldOutdoorModels, 'us')}</td>
+                <td class="num" data-label="Best COP at 5°F">{fmtCop(b.bestCop5)}</td>
+                <td class="num" data-label="All certified models">{fmtInt(b.outdoorModels, 'us')}</td>
+                <td data-label="Price tier">{tierLabel(brandInfo(s).priceTier)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote"><a href="/us/heat-pumps/">Compare every brand</a> · <a href="/us/heat-pumps/brands/">All {fmtInt(brandsBySize('us').length, 'us')} brand pages and every certified name</a></p>
+    </section>
+
+    <div class="lf-wrap">
+      <QuoteForm market="us" region={m.slug} context={`metro-${m.slug}`} heading={`Get heat pump quotes in ${name}`} />
+    </div>
+
+    <section class="related">
+      <h2>{sameState.length ? `Other metros in ${states.length === 1 ? stateName(st) : 'the same states'}` : 'Metros with a similar climate'}</h2>
+      <div class="nb">
+        {(sameState.length ? [...sameState, ...sameKind.slice(0, 4)] : sameKind).map((o) => <a href={`/us/heat-pumps/${o.slug}/`}>{metroName(o)} <span class="st">{(o.data.states ?? []).join(' · ')}</span></a>)}
+        <a class="all" href={`/us/cities/${m.slug}/`}>Audits and other rebates in {name} →</a>
+      </div>
+    </section>
+  </div>
+</Base>

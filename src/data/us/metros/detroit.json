@@ -1,0 +1,275 @@
+{
+  "slug": "detroit",
+  "name": "Detroit",
+  "metroName": "Detroit-Warren-Dearborn, MI Metropolitan Statistical Area",
+  "states": [
+    "MI"
+  ],
+  "principalCity": "Detroit, MI",
+  "utilities": {
+    "electric": [
+      {
+        "name": "DTE Electric (DTE Energy)",
+        "serves": "'2.3 million customers in southeastern Michigan', including Detroit and most of the metro",
+        "url": "https://www.dteenergy.com/us/en/residential/about-dte/about-dte/about-dte.html"
+      },
+      {
+        "name": "Consumers Energy",
+        "serves": "Michigan's other large combination electric and gas utility. It serves some households in the metro's outer areas; boundaries were not checked county by county.",
+        "url": "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates"
+      }
+    ],
+    "gas": [
+      {
+        "name": "DTE Gas (DTE Energy)",
+        "serves": "About 1.4 million natural gas customers in Michigan, including the City of Detroit",
+        "url": "https://www.dteenergy.com/us/en/residential/about-dte/about-dte/about-dte.html"
+      },
+      {
+        "name": "Consumers Energy",
+        "serves": "Natural gas in parts of the metro (not verified county by county; check your bill)",
+        "url": "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates"
+      }
+    ],
+    "notes": "Most DTE home rebates require that 'DTE is the primary provider of your home's heat', which in practice means DTE gas or gas/electric combination customers. DTE heat pump rebates are only for electric customers replacing electric heating. A household with DTE electric and Consumers gas should check each utility's rules before assuming it qualifies."
+  },
+  "auditPrograms": [
+    {
+      "name": "DTE Home Energy Assessment (contractor-delivered diagnostic assessment)",
+      "runBy": "DTE Energy, through participating contractors",
+      "cost": "The contractor sets the price; DTE's page does not state one. DTE pays a $50 rebate for the blower-door pre-test, plus $75, $125 or $150 for 10%, 20% or 40% air-leakage reductions measured before and after.",
+      "whoQualifies": "Homes where 'DTE is the primary provider of your home's heat' (most gas and gas/electric combination customers). Single-family homes and buildings with fewer than five connected units qualify if each has a separate entrance and meter. New homes don't qualify: the home must be more than 24 months old. There is no income test.",
+      "whatYouGet": "Blower door tests, safety and efficiency testing of heating and cooling equipment, thermal imaging, and energy modeling of recommended improvements. The contractor files the rebate online.",
+      "howToBook": "Find a participating contractor with DTE's Find a Contractor tool, or call (866) 796-0512.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/home-energy-assessment.html",
+      "status": "Available as of 2026-10-12. Rebates are 'first-come, first-served... program funds are limited.'",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Consumers Energy Free Home Energy Analysis",
+      "runBy": "Consumers Energy (online scheduling runs through a CLEAResult-hosted store)",
+      "cost": "Free ('it's free with no hidden costs')",
+      "whoQualifies": "Consumers Energy residential customers. The page lists no income or home-type limits, and says apartments and duplexes are served by a separate free assessment.",
+      "whatYouGet": "A home visit that installs free upgrades (smart thermostat, water-pipe insulation, advanced power strips, efficient bulbs, showerheads and more), plus a report on how the home uses energy. The page doesn't describe diagnostic testing.",
+      "howToBook": "Online via 'Schedule Now' (consumersenergystore.clearesult.com/home-energy-assessment)",
+      "url": "https://www.consumersenergy.com/residential/savings-and-clean-energy/assessments/home-energy-analysis",
+      "status": "Listed as available as of 2026-10-12. No dates or funding status are given.",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "DTE Energy Efficiency Assistance (EEA) home energy assessment (income-qualified)",
+      "runBy": "DTE Energy, through participating community organizations",
+      "cost": "Free",
+      "whoQualifies": "Household income at or below 250% of the federal poverty guidelines ($39,125 for 1 person; $80,375 for 4; $135,375 for 8, plus $13,750 for each additional person). Enrollment in DTE's Low Income Self-Sufficiency Plan, SNAP, WIC or similar programs also qualifies. The DTE account must be active and in good standing.",
+      "whatYouGet": "A home energy assessment followed by contractor-installed products at no cost. Depending on the home and account type, these may include weatherization, a heating tune-up or replacement, a high-efficiency water heater, an ENERGY STAR refrigerator and efficient lighting.",
+      "howToBook": "Contact the participating organization for your county (list on the DTE page), or call 866.796.0512.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/limited-income-assistance.html",
+      "status": "Open as of 2026-10-12. Services depend on available funding, which goes to organizations first-come, first-served. DTE's 'Limited Rebates Available' meter showed 88% (electric) and 87% (gas).",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "DTE insulation rebates plus the 'Do More' bonus",
+      "runBy": "DTE Energy",
+      "category": "insulation-air-sealing",
+      "amount": "Roof and attic $600 (minimum 500 sq ft). Above-grade wall $125 (250 sq ft). Kneewall $25. Rim or band joist $50. Basement wall $50. Crawl space wall $50. Floor $50. A limited-time $250 'Do More' bonus is added when attic insulation is installed together with one more listed measure.",
+      "whoQualifies": "Homes where DTE is the primary heat provider (most DTE gas and gas/electric customers) that are single-family (two or fewer connected units, each separately metered with its own HVAC and water heater) and more than 24 months old. DIY or contractor installs both qualify.",
+      "status": "Open. Applications are due within 6 months of purchase and no later than December 31, 2026. The Do More bonus covers installs completed September 15-December 15, 2026, with applications by December 18, 2026. Funds are limited; the page meter showed 55% (electric) and 66% (gas).",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/insulation-and-windows.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "DTE electric-heat comprehensive audit, air sealing and insulation offer (promo code ELECTRIC25)",
+      "runBy": "DTE Energy",
+      "category": "whole-home",
+      "amount": "50% of the cost of a comprehensive energy audit, air sealing and insulation, up to $5,000",
+      "whoQualifies": "DTE electric customers whose primary heat is an air-source heat pump or electric baseboard, in single-family homes built before 2016. A participating contractor submits it with promo code ELECTRIC25. Air sealing must cut infiltration by at least 10%.",
+      "status": "Listed as available as of 2026-10-12; no end date is stated.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/home-energy-assessment.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "DTE heat pump rebates (electric customers replacing electric heat)",
+      "runBy": "DTE Energy",
+      "category": "heat-pump",
+      "amount": "Cold-climate air-source heat pump: $1,200, $1,000 or $900 by efficiency tier. Standard air-source heat pump: $500 at 18+ SEER2, $150 at 15.2-17.99 SEER2. Ground-source: $800 at 20+ EER2, $600 at 17-19.99 EER2. Ductless mini-split: $1,000 above 31.5 SEER2, $700 at 17-31.5 SEER2.",
+      "whoQualifies": "Only 'electric customers replacing electric heating'. Gas-heated homes switching to a heat pump don't qualify for these DTE rebates. The home must be single-family and more than 24 months old, and a participating contractor files the rebate.",
+      "status": "Available as of 2026-10-12. Funds are limited; the page meter showed 52%.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/air-conditioners.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "DTE furnace rebates, fall bonus and tune-ups",
+      "runBy": "DTE Energy",
+      "category": "appliances",
+      "amount": "Furnace: $400 at 98% AFUE or more, $200 at 96-97%, $100 at 95%. A limited-time $300 in additional bonuses applies to qualified furnace installs. A tune-up with combustion analysis earns up to $150.",
+      "whoQualifies": "DTE residential natural gas customers in single-family homes more than 24 months old, using a participating contractor. New construction and first-time installs are excluded.",
+      "status": "Open. The $300 bonus covers installs October 1-December 15, 2026, with applications by December 18, 2026. Tune-up promotional pricing covers work September 1-November 15, 2026, submitted by December 31, 2026. The page meter showed 27% for natural gas customers.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/furnaces.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "DTE Wi-Fi thermostat, window and water heater offers",
+      "runBy": "DTE Energy",
+      "category": "appliances",
+      "amount": "Wi-Fi thermostat $50 (one per household). Windows $15 per unit. An instant discount on ENERGY STAR gas tankless or storage water heaters (0.81 UEF or more) or heat pump water heaters (2.2 UEF or more); the page doesn't state the discount amount.",
+      "whoQualifies": "DTE electric and/or gas residential customers. Windows need DTE gas or gas/electric service with DTE as the primary heat provider.",
+      "status": "Open. Thermostat applications are due within 6 months of purchase and no later than December 31, 2026.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/wi-fi-enabled-thermostats.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Consumers Energy insulation, window and HVAC rebates (for Consumers customers in the metro)",
+      "runBy": "Consumers Energy",
+      "category": "insulation-air-sealing",
+      "amount": "Attic insulation $125-$200 for combo or gas customers, $50-$70 for electric-only customers, depending on final R-value. Above-grade wall $125 (combo or gas). Windows $15 each. Patio doors $40. Furnace $300 at 97%+ AFUE, $100 at 95-96.99%. Air-source heat pump $300. Ductless mini-split $350. Ground-source $200-$300. Central AC $150-$300.",
+      "whoQualifies": "Consumers Energy customers. HVAC equipment must be installed by a Consumers Energy participating contractor; insulation and windows can be DIY. Consumers' 2026 qualifying measures sheet limits heat pump rebates to its electric customers: the air-source and ground-source rebates are only for replacing an existing heat pump, and the mini-split rebate is for replacing any primary electric heat system.",
+      "status": "Listed as available as of 2026-10-12. Insulation and window applications must be received by December 31 to get the charted amounts.",
+      "url": "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates/windows-and-insulation",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "Michigan Saves home energy loans",
+      "runBy": "Michigan Saves (nonprofit green bank) with participating credit unions",
+      "category": "financing",
+      "amount": "Unsecured fixed-rate loans from $1,000 up to $50,000-$100,000 depending on the lender, with rates 'as low as' 6.24%-6.99% and terms up to 180 months. One Detroit Credit Union offers $1,000-$30,000 from 6.75% for up to 120 months in Macomb, Oakland, Washtenaw and Wayne counties.",
+      "whoQualifies": "Michigan homeowners using a Michigan Saves authorized contractor. Rates and approval depend on the lender and on credit.",
+      "status": "Open as of 2026-10-12.",
+      "url": "https://michigansaves.org/home-energy-improvements/",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "paused for metro Detroit. New income-qualified MiHER applications are 'temporarily unavailable' in the EGLE Detroit, Warren and Lansing districts (Lansing includes Lapeer and Livingston), and also in the Grand Rapids and Kalamazoo districts. Elsewhere, applications are open to low- and moderate-income households only.",
+    "programName": "Michigan Home Energy Rebates (MiHER): HOMES (IRA Section 50121) and HEAR (Section 50122)",
+    "administrator": "Michigan Department of Environment, Great Lakes, and Energy (EGLE). The call center (855-510-7080, MiEnergyRebates@CLEAResult.com) is run by CLEAResult.",
+    "summary": "MiHER has launched statewide but is closed to new applicants across metro Detroit. EGLE says applications are 'currently open to low- to moderate-income households only'. New income-qualified applications are paused by EGLE district: Detroit (Wayne County), Warren (Macomb, Oakland, St. Clair and Wayne) and Lansing (including Lapeer and Livingston), so every county in the Detroit MSA is paused. The Grand Rapids and Kalamazoo districts are paused too. The pauses began in May (Detroit), August (Warren) and September 2026 (Lansing), but EGLE's page no longer shows those dates. 'Applications in these districts will reopen when the program determines that sufficient capacity and funding are available.' Applications submitted before a pause are still reviewed. Rebates: households below 80% AMI get up to 100% of qualified project cost; 80-150% AMI get up to 50%. HEAR is limited to households at or below 150% AMI. Michigan received $105.7 million for HOMES and $105.3 million for HEAR. The Detroit district's allocation is $26,138,495.59 and Warren's is $18,931,747.69. Work must be done by a MiHER Registered Contractor.",
+    "url": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs",
+    "checked": "2026-10-19"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program (WAP)",
+      "runBy": "Michigan Department of Health and Human Services (MDHHS), through local Community Action Agencies",
+      "summary": "Free energy conservation and health and safety work: a home energy audit, air sealing, attic, wall and foundation insulation, a programmable thermostat, furnace or water heater tune-up or replacement, and refrigerator replacement. Homeowners and renters who meet income guidelines qualify if the home hasn't had WAP in the last 15 years. Local providers on MDHHS's operator map: Wayne County (including Detroit), Wayne Metro CAA, (313) 388-9799; apply through Wayne Metro's Universal Application at gateway.waynemetro.org/cp. Oakland and Livingston, Oakland Livingston Human Service Agency, (248) 209-2760. Macomb, Macomb Community Action, (586) 469-6329. St. Clair, Blue Water Community Action, (810) 455-6454. Lapeer, Human Development Commission, (989) 673-4121.",
+      "url": "https://www.michigan.gov/mdhhs/doing-business/weatherization/state-map-of-weatherization-operators"
+    },
+    {
+      "name": "DTE Energy Efficiency Assistance (EEA)",
+      "runBy": "DTE Energy with participating organizations",
+      "summary": "Free assessment and installed upgrades for DTE customers at or below 250% of the federal poverty guidelines, or enrolled in LSP, SNAP, WIC and similar programs. Services depend on funding and the equipment in the home.",
+      "url": "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/limited-income-assistance.html"
+    },
+    {
+      "name": "MiHER enhanced rebates (below 80% AMI)",
+      "runBy": "Michigan EGLE",
+      "summary": "Up to 100% of qualified project cost for households below 80% AMI. New applications in all metro Detroit counties are paused (Detroit district since May 2026, Warren since August 2026, Lansing since September 2026).",
+      "url": "https://mienergyrebates.clearesult.com/help-center"
+    }
+  ],
+  "localRules": [],
+  "notes": "As of 2026-10-12: (1) The state IRA rebates (MiHER) have launched but are paused for new applicants in every Detroit-metro county. (2) DTE's furnace, insulation and tune-up promotions end December 15-31, 2026, and some DTE fund meters were low (furnace page showed 27% for gas). DTE doesn't explain whether these meters show funds remaining or used. (3) DTE heat pump rebates are only for homes replacing electric heat; gas-heated DTE homes get no DTE heat pump rebate. No home energy disclosure, benchmarking or building performance rule for Detroit or the metro could be verified. detroitmi.gov (the City of Detroit Office of Sustainability and housing repair programs) blocked automated access with a bot challenge, so City of Detroit programs and rules are not included and need a manual check. Federal 25C/25D credits do not apply to property placed in service after 2025 (IRS). The web-search budget ran out partway through this metro; the remaining facts were checked by fetching official sites directly.",
+  "sources": [
+    {
+      "label": "OMB Bulletin 23-01 (July 21, 2023): MSA delineations",
+      "href": "https://www.whitehouse.gov/wp-content/uploads/2023/07/OMB-Bulletin-23-01.pdf"
+    },
+    {
+      "label": "DTE: About DTE (service territory)",
+      "href": "https://www.dteenergy.com/us/en/residential/about-dte/about-dte/about-dte.html"
+    },
+    {
+      "label": "DTE: Home Energy Assessment",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/home-energy-assessment.html"
+    },
+    {
+      "label": "DTE: Insulation & Windows rebates",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/insulation-and-windows.html"
+    },
+    {
+      "label": "DTE: Furnace rebates",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/furnaces.html"
+    },
+    {
+      "label": "DTE: Air Conditioner & Heat Pump rebates",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/air-conditioners.html"
+    },
+    {
+      "label": "DTE: Water Heaters",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/water-heaters.html"
+    },
+    {
+      "label": "DTE: Wi-Fi Enabled Thermostats",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/rebates-and-offers/wi-fi-enabled-thermostats.html"
+    },
+    {
+      "label": "DTE: Limited Income Assistance (EEA)",
+      "href": "https://www.dteenergy.com/us/en/residential/save-money-energy/get-started-with/limited-income-assistance.html"
+    },
+    {
+      "label": "Consumers Energy: Rebates & Discounts",
+      "href": "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates"
+    },
+    {
+      "label": "Consumers Energy: Free Home Energy Analysis",
+      "href": "https://www.consumersenergy.com/residential/savings-and-clean-energy/assessments/home-energy-analysis"
+    },
+    {
+      "label": "Consumers Energy: Windows & Insulation rebates",
+      "href": "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates/windows-and-insulation"
+    },
+    {
+      "label": "Consumers Energy: Heating & Cooling rebates",
+      "href": "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates/heating-and-cooling"
+    },
+    {
+      "label": "Consumers Energy: 2026 residential qualifying measures (PDF)",
+      "href": "https://www.consumersenergy.com/-/media/CE/Documents/residential/save-money-and-energy/rebates/hvac/res-programs.pdf"
+    },
+    {
+      "label": "Michigan EGLE: Home Energy Rebates (MiHER)",
+      "href": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs"
+    },
+    {
+      "label": "Michigan EGLE: MiHER for residents",
+      "href": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate"
+    },
+    {
+      "label": "Michigan EGLE: MiHER income-based eligibility",
+      "href": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate/eligibility"
+    },
+    {
+      "label": "Michigan EGLE: MiHER regional funding allocations",
+      "href": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/contractors/regional"
+    },
+    {
+      "label": "MiHER Help Center: temporary suspension by district",
+      "href": "https://mienergyrebates.clearesult.com/help-center"
+    },
+    {
+      "label": "Michigan EGLE: District office locations (county lists)",
+      "href": "https://www.michigan.gov/egle/contact/district-office-locations"
+    },
+    {
+      "label": "MDHHS: Weatherization, prospective clients",
+      "href": "https://www.michigan.gov/mdhhs/doing-business/weatherization/prospective-clients"
+    },
+    {
+      "label": "MDHHS: State map of weatherization operators",
+      "href": "https://www.michigan.gov/mdhhs/doing-business/weatherization/state-map-of-weatherization-operators"
+    },
+    {
+      "label": "Wayne Metro Community Action Agency: Programs (WAP application)",
+      "href": "https://www.waynemetro.org/programs"
+    },
+    {
+      "label": "Michigan Saves: Home Energy Improvements financing",
+      "href": "https://michigansaves.org/home-energy-improvements/"
+    },
+    {
+      "label": "IRS: Energy Efficient Home Improvement Credit (25C)",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    }
+  ]
+}

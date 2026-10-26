@@ -1,0 +1,109 @@
+---
+/**
+ * US contact form. The US site has no partner network yet, so this promises only what a person can
+ * do: point people to the certified pros and programs that serve their ZIP code. On Netlify builds
+ * (FORMS=netlify) it's a Netlify form ("us-question") emailed to dave@clickshift.ca; anywhere else
+ * it's an email link, so the request never dead-ends.
+ */
+import { SITE } from '../../config/site';
+import { NETLIFY_FORMS, FORM_NAMES } from '../../config/forms';
+
+interface Props {
+  heading?: string;
+  sub?: string;
+  /** Context tag added to the email subject */
+  context?: string;
+}
+const {
+  heading = 'Not sure where to start?',
+  sub = 'Email us your ZIP code, the kind of home you have and what you’re planning. A person reads every message and replies with the certified auditors and utility programs that serve your area.',
+  context = 'us-general',
+} = Astro.props;
+const subject = `US audit question (${context})`;
+const body = 'ZIP code:\nType of home (house, townhouse, condo, multi-unit):\nWhat I’m planning:\n';
+const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+// The default copy asks people to email; the form version asks them to fill it in.
+const subText = NETLIFY_FORMS ? sub.replace(/^Email us /, 'Tell us ') : sub;
+const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="card card-pad lf-us" id="us-lead-form" data-clarity-mask="true">
+  <h2>{heading}</h2>
+  <p>{subText}</p>
+  {NETLIFY_FORMS ? (
+    <form
+      class="lfu-form"
+      name={FORM_NAMES.usQuestion}
+      method="POST"
+      action="/us/thanks/"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      data-context={context}
+    >
+      <input type="hidden" name="form-name" value={FORM_NAMES.usQuestion} />
+      <input type="hidden" name="context" value={context} />
+      <input type="hidden" name="subject" value={subject} />
+      <p class="lfu-hide"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-name`}>Name</label>
+          <input id={`${uid}-name`} name="name" type="text" autocomplete="name" maxlength="120" required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-email`}>Email</label>
+          <input id={`${uid}-email`} name="email" type="email" autocomplete="email" maxlength="200" required />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-zip`}>ZIP code</label>
+          <input id={`${uid}-zip`} name="postal" type="text" autocomplete="postal-code" inputmode="numeric" maxlength="10" required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-home`}>Type of home</label>
+          <select id={`${uid}-home`} name="home">
+            <option value="house">House</option>
+            <option value="townhouse">Townhouse or row house</option>
+            <option value="condo">Condo or apartment</option>
+            <option value="multi-unit">Multi-unit building</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for={`${uid}-msg`}>What are you planning? <span class="optional">(optional)</span></label>
+        <textarea id={`${uid}-msg`} name="message" rows="3" maxlength="4000" placeholder="e.g. Drafty 1970s ranch, high winter bills, wondering about insulation and a heat pump"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Send my question</button>
+      <p class="meta">A person replies by email. We don’t sell your details or share them with contractors. See our <a href="/privacy/">privacy note</a>.</p>
+    </form>
+  ) : (
+    <>
+      <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
+      <p class="meta">We don’t sell your details or share them with contractors. See our <a href="/privacy/">privacy note</a>.</p>
+    </>
+  )}
+</div>
+
+<style>
+  .lf-us { display: grid; gap: 12px; justify-items: start; }
+  .lf-us h2 { margin: 0; font-size: 24px; }
+  .lf-us > p { margin: 0; max-width: 62ch; color: var(--muted); }
+  .lf-us .meta { font-size: 13px; margin: 8px 0 0; }
+  .lfu-form { width: 100%; display: grid; gap: 4px; }
+  .lfu-form .btn { justify-self: start; }
+  .lfu-hide { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .lfu-form .optional { font-weight: 400; color: var(--faint); }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form.lfu-form').forEach((f) => {
+    f.addEventListener('submit', () => {
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+      try {
+        w.gtag?.('event', 'generate_lead', { form_name: 'us_question', country: 'us', page_context: f.dataset.context });
+      } catch {
+        /* analytics is optional */
+      }
+    });
+  });
+</script>

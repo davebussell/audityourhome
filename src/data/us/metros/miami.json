@@ -1,0 +1,351 @@
+{
+  "slug": "miami",
+  "name": "Miami",
+  "metroName": "Miami-Fort Lauderdale-West Palm Beach, FL Metropolitan Statistical Area",
+  "states": [
+    "FL"
+  ],
+  "principalCity": "Miami",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Florida Power & Light (FPL)",
+        "serves": "Florida's largest electric utility: more than 6 million customer accounts (about 12 million people) in 43 counties. FPL's April 2026 Ten-Year Site Plan names Southeastern Florida (Miami-Dade and Broward) as part of its service area. FPL serves most homes in the metro, but no official county-by-county territory map was checked.",
+        "url": "https://www.fpl.com/save/programs.html"
+      },
+      {
+        "name": "City of Homestead (municipal electric; FMPA member)",
+        "serves": "City-owned utility, 26,520 customers (FMPA). Its programs were not researched.",
+        "url": "https://fmpa.com/members/"
+      },
+      {
+        "name": "City of Lake Worth Beach (municipal electric; FMPA member)",
+        "serves": "City-owned utility, 27,177 customers (FMPA). Its programs were not researched.",
+        "url": "https://fmpa.com/members/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Peoples Gas",
+        "serves": "Statewide gas utility, an Emera company with 500,000+ customers. Its site lists Dade/Broward and Jupiter among its local areas (under 'Appliances and Sales'). Gas is available only at some addresses; check by ZIP code.",
+        "url": "https://www.peoplesgas.com/residential/saveenergy/rebates/"
+      },
+      {
+        "name": "Florida City Gas (FCG)",
+        "serves": "Chesapeake Utilities subsidiary serving nearly 125,000 customers in Miami-Dade, Broward, Brevard, Palm Beach, Hendry, Martin, St. Lucie and Indian River counties.",
+        "url": "https://www.floridacitygas.com/about-us/"
+      }
+    ],
+    "notes": "The brief's 'TECO Peoples Gas' now brands itself simply 'Peoples Gas' ('an Emera company'). Two gas utilities overlap in Miami-Dade and Broward. Which one serves a given address was not verified, and many South Florida homes have no gas service."
+  },
+  "auditPrograms": [
+    {
+      "name": "FPL Energy Manager online Energy Survey",
+      "runBy": "Florida Power & Light",
+      "cost": "Free",
+      "whoQualifies": "FPL customers with an online account.",
+      "whatYouGet": "A personalized energy survey with tips, an Energy Dashboard, an Energy Analyzer showing where the home uses energy, and an Energy Simulator. It links to FPL programs and incentives.",
+      "howToBook": "Online at FPL's Energy Manager page. There is no appointment.",
+      "url": "https://www.fpl.com/landing/energy-manager.html",
+      "status": "open (online tool)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "FPL free Home Energy Analysis (Residential Home Energy Survey)",
+      "runBy": "Florida Power & Light",
+      "cost": "Free",
+      "whoQualifies": "FPL residential customers.",
+      "whatYouGet": "An analysis by an FPL Energy Expert. FPL's 2025 DSM Plan describes the Home Energy Survey as educating customers and identifying candidates for its rebate programs, for example confirming ceiling-insulation eligibility. FPL's pages do not say whether it is done in person or by phone.",
+      "howToBook": "Call 800-DIAL-FPL (800-342-5375) to schedule, as stated on FPL's ceiling insulation page.",
+      "url": "https://www.fpl.com/save/resources/ceiling-insulation.html",
+      "status": "open (no end date published)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Peoples Gas Online Energy Audit (personalized or simple)",
+      "runBy": "Peoples Gas",
+      "cost": "Free",
+      "whoQualifies": "The personalized audit is for Peoples Gas customers who log in. The simple audit needs no account.",
+      "whatYouGet": "The personalized audit gives a report based on your home's actual gas use, plus alerts. The simple audit estimates use from a home profile and local weather. Both point to natural gas appliance options.",
+      "howToBook": "Online at the Peoples Gas Energy Audit page. There is no appointment.",
+      "url": "https://www.peoplesgas.com/residential/saveenergy/energyaudit/",
+      "status": "open (online tool)",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "FPL A/C instant rebate",
+      "runBy": "Florida Power & Light",
+      "category": "heat-pump",
+      "amount": "$200 instant rebate, credited on the contractor's invoice",
+      "whoQualifies": "FPL residential customers buying a new A/C system (both indoor and outdoor units) rated SEER2 15.2 or higher, installed by an FPL Participating Independent Contractor (PIC). FPL's page says 'A/C' and does not mention heat pumps separately.",
+      "status": "open (no end date published)",
+      "url": "https://www.fpl.com/save/programs/ac-rebate.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "FPL ceiling insulation instant rebate",
+      "runBy": "Florida Power & Light",
+      "category": "insulation-air-sealing",
+      "amount": "$220 instant rebate, credited on the contractor's invoice",
+      "whoQualifies": "FPL residential customers whose current ceiling insulation is below R-8. The upgrade must be installed by an FPL PIC, with access to all attic spaces.",
+      "status": "open (no end date published)",
+      "url": "https://www.fpl.com/save/resources/ceiling-insulation.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "FPL On Call (residential load management)",
+      "runBy": "Florida Power & Light",
+      "category": "other",
+      "amount": "FPL says customers can 'save over $90 a year' by enrolling.",
+      "whoQualifies": "FPL residential customers who let FPL cycle selected appliances during peak demand.",
+      "status": "open",
+      "url": "https://www.fpl.com/save/programs/on-call-program.html",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "FPL Residential Low-Income Weatherization",
+      "runBy": "Florida Power & Light (directly, and through state WAP and other approved agencies)",
+      "category": "income-qualified",
+      "amount": "Measures installed free. FPL reimburses agencies per home, for example: ceiling insulation adding R-10 ($500), weatherstripping/caulking/door sweeps ($90), duct testing and repair ($60), outdoor coil cleaning ($60).",
+      "whoQualifies": "Existing FPL residential customers who meet low-income criteria. Under 'Community Energy Saver', FPL canvasses areas where most incomes are below 200% of the federal poverty level. For agency installs, the agency decides eligibility.",
+      "status": "open (program standards effective 2025-09-01)",
+      "url": "https://www.fpl.com/content/dam/fplgp/us/en/partner/pdf/residential-low-income-program-standards.pdf",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Peoples Gas residential energy conservation rebates",
+      "runBy": "Peoples Gas (Peoples Gas System, an Emera company)",
+      "category": "appliances",
+      "amount": "Replacing electric with natural gas / replacing gas with gas: tank water heater $550 / $350; ENERGY STAR tank water heater $650 / $400; tankless water heater $700 / $550; cooking $300 / $100; clothes drying $300 / $150; gas furnace $725 / $500; gas space conditioning $500 per ton / $150 per ton. The rebate cannot exceed the total cost of equipment, installation, piping and venting.",
+      "whoQualifies": "Peoples Gas residential customers. Equipment must be installed within one year before applying. Used, refurbished or thrift-store appliances, propane conversions, point-of-use tankless units (minimum 5 gpm), fireplaces, fire pits, grills and portable heaters do not qualify. For electric-to-gas conversions the invoice must say 'electric to gas'. CLEAResult may verify the installation by smartphone.",
+      "status": "open (no end date published; Peoples Gas may change or end it without notice)",
+      "url": "https://www.peoplesgas.com/residential/saveenergy/rebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Florida City Gas residential appliance rebates",
+      "runBy": "Florida City Gas",
+      "category": "appliances",
+      "amount": "Switching from non-gas / replacing gas / switching from propane: furnace $725 / $500 / $200; tank water heater (EF 0.81+) $500 / $350 / $100; tankless water heater $675 / $550; range $200 / $100 / $25; dryer $150 / $100 / $50. Extra $200 for reactivating service inactive for 12+ months. FCG also advertises 'limited-time incentives of up to $1,700 for customers located along our gas main'. The generator rebate is 'currently not available'.",
+      "whoQualifies": "FCG residential customers (or new customers) in its service area. See FCG's terms and conditions.",
+      "status": "open; changes pending: Florida PSC docket 20260063-EG would raise several amounts (for example, existing-customer tankless $550 to $600, cooking $100 to $315). PSC staff recommended approval for the 2026-09-10 agenda; the final decision and effective date were not verified.",
+      "url": "https://floridacitygasrebates.com/residential-appliances-and-rebates/",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "not launched (as of 2026-10-12)",
+    "programName": "Florida Energy Saver Program: HOMES (Home Owner Managing Energy Savings) and HEEHR (High-Efficiency Electric Home Rebates, Florida's name for HEAR)",
+    "administrator": "Florida Department of Agriculture and Consumer Services (FDACS), Office of Energy",
+    "summary": "The state portal says both programs 'are expected to launch in the future' and that 'additional information on the program timeline will be made available soon'. Homeowners can only register and fill in a profile to be emailed when applications open. Florida has about $346 million in federal funding. Planned HEEHR caps: heat pump $8,000; heat pump water heater $1,750; electric stove/cooktop/range/oven or heat pump dryer $840; panel (load service center) $4,000; insulation, air sealing and ventilation $1,600; wiring $2,500; up to $14,000 per household. It covers 100% of project cost under 80% of area median income (AMI) and 50% at 80-150% AMI. Households over 150% AMI are not eligible. Planned single-family HOMES limits (20-34% modeled savings / 35%+): under 80% AMI $16,000 / $20,000 (up to 100% of cost); 80% AMI and above $2,000 / $4,000 (up to 50% of cost). These pages carry a 2025 copyright and predate DOE's May 2026 program notices, so final terms (for example fuel switching under HEEHR) may change. On June 8, 2026 U.S. Rep. Kathy Castor said Florida's funding was approved in January 2025 but has been delayed since.",
+    "url": "https://floridaenergysaverprogram.fdacs.gov/en-US/",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program, Miami-Dade County",
+      "runBy": "Miami-Dade County Community Action and Human Services Department (CAHSD), the local WAP provider under FloridaCommerce",
+      "summary": "For low-income homeowners in Miami-Dade with household income at or below 200% of federal poverty guidelines (1 person $29,160; 2 $39,440; 3 $49,720; 4 $60,000; +$10,280 for each person over 8). Proof of ownership and 12 months of income proof are required. Measures can include attic insulation, weatherstripping, water-heater and fixture measures, and repair/replacement of doors, windows, refrigerators, water heaters and HVAC. Apply by mail or in person; served 'first come, first serve' and subject to funds. Phone (FloridaCommerce list): (786) 469-4730, (786) 469-4600, (305) 545-2224. The County page's eligibility section was last updated 07/29/2024, and the application is labeled 2023-2024.",
+      "url": "https://www.miamidade.gov/global/service.page?Mduid_service=ser1541190292258414"
+    },
+    {
+      "name": "Weatherization Assistance Program, Broward and Palm Beach counties",
+      "runBy": "Centro Campesino Farmworker Center, Inc.",
+      "summary": "Local WAP provider for Broward and Palm Beach: (305) 245-7738, ext. 236. FloridaCommerce says applications are available only by contacting the local provider, not online.",
+      "url": "https://floridajobs.org/community-development/Weatherization-Assistance-Program/contact-your-local-weatherization-office-for-help"
+    },
+    {
+      "name": "Miami-Dade 'Building Blocks' local Weatherization Assistance Program",
+      "runBy": "Miami-Dade County CAHSD",
+      "summary": "A county-funded program ($3 million total; about 200-250 households) for Miami-Dade homeowners (primary residence) with income at or below 140% of AMI. Award amounts depend on a home inspection. The fact sheet is undated, so it is unknown whether it is still taking applications.",
+      "url": "https://www.miamidade.gov/sites/global/government/mayor/building-blocks/homes-weatherization.pdf"
+    },
+    {
+      "name": "FPL Residential Low-Income Weatherization",
+      "runBy": "Florida Power & Light",
+      "summary": "Free installed measures for income-qualified FPL customers, through FPL neighborhood canvassing (areas where most incomes are under 200% FPL) or WAP/approved agencies.",
+      "url": "https://www.fpl.com/content/dam/fplgp/us/en/partner/pdf/residential-low-income-program-standards.pdf"
+    },
+    {
+      "name": "Florida Energy Saver Program HEEHR (when launched)",
+      "runBy": "FDACS Office of Energy",
+      "summary": "Planned rebates of up to $14,000 for households under 150% AMI, covering 100% of cost under 80% AMI. Not launched as of 2026-10-12.",
+      "url": "https://floridaenergysaverprogram.fdacs.gov/en-US/heehr-program/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "City of Miami Building Energy and Water Consumption Benchmarking and Retuning Ordinance (Ordinance 14005, 2021; 'Miami BE305')",
+      "appliesTo": "Large buildings only: properties with buildings over 20,000 sq ft. It explicitly excludes single-family homes, duplexes and residential multifamily buildings of five units or fewer, so it does not affect ordinary homeowners.",
+      "summary": "Owners report energy and water use each year via ENERGY STAR Portfolio Manager. First deadlines were phased by size (June 30, 2023 for 200,000+ sq ft through Oct. 1, 2025 for 20,000-49,999 sq ft), then June 30 annually. Buildings of 50,000+ sq ft must have base-building systems retuned every five years, with first reports due Dec. 1, 2028 to Dec. 1, 2030 by size. Fines: $250/day for a first offense and $500/day for repeats.",
+      "url": "https://southeastfloridaclimatecompact.org/wp-content/uploads/2022/02/City-of-Miami_Building-Energy-and-Water-Consumption-Benchmarking-and-Retuning-Ordinance.pdf"
+    },
+    {
+      "name": "Miami-Dade County Building Performance Ordinance (BE305): proposed",
+      "appliesTo": "Proposed for buildings of 20,000 sq ft or more. Not single-family homes.",
+      "summary": "As of the Southeast Florida Climate Compact's February 2025 summary, the County's mandatory benchmarking ordinance 'has not yet been passed by the Board of County Commissioners'. It would phase in benchmarking from 2026 (about 13,500 buildings) and retuning for 50,000+ sq ft buildings. The County's climate-strategy page still lists passing it as an action. Whether it has been adopted since was not verified. BE305 otherwise runs as a voluntary challenge, launched in 2020.",
+      "url": "https://www.miamidade.gov/global/economy/resilience/climate-strategy/energy-buildings-approach-1.page"
+    },
+    {
+      "name": "Florida Building Energy-Efficiency Rating Act: disclosure at sale (s. 553.996, Florida Statutes)",
+      "appliesTo": "Every sale of real property with a building on it, including ordinary single-family homes. It affects homeowners who sell or buy.",
+      "summary": "Before or when the buyer signs the contract, they must be given information telling them they can get an energy-efficiency rating on the building. The information covers how to analyze the rating, comparisons to statewide averages, ways to improve the rating, and a notice that a rating may qualify the buyer for an energy-efficient mortgage. This is a disclosure of information only. No rating or audit is required.",
+      "url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0500-0599/0553/Sections/0553.996.html"
+    },
+    {
+      "name": "State preemption of local energy-source and appliance restrictions (s. 366.032, Florida Statutes)",
+      "appliesTo": "Applies statewide and limits local governments. It affects homeowners indirectly.",
+      "summary": "Counties, cities and other local bodies may not restrict or prohibit the types or fuel sources of energy that utilities and gas suppliers deliver, or appliances (including stoves and grills) that use them. The only exception is enforcing the Florida Building Code or Fire Prevention Code. In practice no Florida city or county can adopt a gas ban or all-electric mandate for homes.",
+      "url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0366/Sections/0366.032.html"
+    }
+  ],
+  "notes": "MSA: CBSA 33100 (OMB July 2023): Broward, Miami-Dade and Palm Beach counties. Florida utility efficiency programs run under the Florida Energy Efficiency and Conservation Act (FEECA). The PSC approved new 2025-2034 DSM goals in 2024 (FPL docket 20240012-EG). FPL's 2025 DSM Plan residential programs are: Home Energy Survey, On Call, HVAC, Ceiling Insulation, BuildSmart new construction, Low-Income Weatherization, and a Low-Income Renter Pilot. Outdated information on official sites: the City of Fort Lauderdale's 'Financial Assistance for Energy Efficiency Improvements' page still promotes the expired federal tax credits, cites FPL's A/C rebate as $150 (FPL now says $200), and says Florida's IRA rebates were expected to launch in early 2025. Florida City Gas's rebate page still says 'save money on taxes when you buy an ENERGY STAR appliance from now until December 31, 2032'. Financing: Florida law (s. 163.08) authorizes PACE financing for residential energy-efficient HVAC, insulation, water heaters, windows/doors and renewables. Which PACE programs operate in Miami-Dade, Broward and Palm Beach was not verified. Florida City Gas and its sister utility Florida Public Utilities also proposed 'Efficiency First', a free online survey with weatherization and smart-home kits replacing the in-home survey, and 'Efficiency for All', kits installed in low-income multifamily buildings, in PSC docket 20260063-EG. The outcome was not verified. The research tool's web-search budget ran out partway through, so some leads (Miami-Dade ordinance adoption, PACE providers, municipal utility programs) were not followed up. Federal tax credits: the IRS says the Energy Efficient Home Improvement Credit (25C) can be claimed for improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) 'is not available for any property placed in service after December 31, 2025.' Do not list either as a current incentive. Federal rule change for the IRA rebates: DOE Program Notices 26-1 (HOMES) and 26-2 (HEAR/HEEHR), effective May 29, 2026, removed fuel-switching (gas/propane-to-electric) from HEAR so it now covers only electric-to-electric upgrades, and generally require insulation/air sealing to be addressed before heating and cooling upgrades. Launched states had to comply within three months; per NASEO's August 2026 FAQ, reservations made on or after September 1, 2026 must follow the new notices and DOE is extending award periods to September 30, 2031.",
+  "sources": [
+    {
+      "label": "FPL - Programs and resources",
+      "href": "https://www.fpl.com/save/programs.html"
+    },
+    {
+      "label": "FPL - A/C rebate",
+      "href": "https://www.fpl.com/save/programs/ac-rebate.html"
+    },
+    {
+      "label": "FPL - Ceiling insulation rebate",
+      "href": "https://www.fpl.com/save/resources/ceiling-insulation.html"
+    },
+    {
+      "label": "FPL - Energy Manager",
+      "href": "https://www.fpl.com/landing/energy-manager.html"
+    },
+    {
+      "label": "FPL - On Call",
+      "href": "https://www.fpl.com/save/programs/on-call-program.html"
+    },
+    {
+      "label": "FPL - Residential Low-Income Weatherization program standards (eff. Sept. 1, 2025)",
+      "href": "https://www.fpl.com/content/dam/fplgp/us/en/partner/pdf/residential-low-income-program-standards.pdf"
+    },
+    {
+      "label": "FPL - Company profile",
+      "href": "https://www.fpl.com/about/company-profile.html"
+    },
+    {
+      "label": "FPL - Ten Year Power Plant Site Plan 2026-2035 (April 2026)",
+      "href": "https://www.fpl.com/content/dam/fplgp/us/en/about/pdf/ten-year-site-plan.pdf"
+    },
+    {
+      "label": "FMPA - Members (municipal utilities)",
+      "href": "https://fmpa.com/members/"
+    },
+    {
+      "label": "Florida City Gas - About us (service counties)",
+      "href": "https://www.floridacitygas.com/about-us/"
+    },
+    {
+      "label": "Florida City Gas - Residential appliances and rebates",
+      "href": "https://floridacitygasrebates.com/residential-appliances-and-rebates/"
+    },
+    {
+      "label": "Florida PSC staff recommendation, docket 20260063-EG (Sept. 10, 2026 agenda)",
+      "href": "https://floridapsc.com/pscfiles/website-files/PDF/Agendas/archive/260910cc/26091012.html"
+    },
+    {
+      "label": "Miami-Dade County - Weatherization Assistance Program",
+      "href": "https://www.miamidade.gov/global/service.page?Mduid_service=ser1541190292258414"
+    },
+    {
+      "label": "Miami-Dade County - Building Blocks weatherization fact sheet",
+      "href": "https://www.miamidade.gov/sites/global/government/mayor/building-blocks/homes-weatherization.pdf"
+    },
+    {
+      "label": "Miami-Dade County - Climate strategy: benchmark, retune and retrofit existing buildings",
+      "href": "https://www.miamidade.gov/global/economy/resilience/climate-strategy/energy-buildings-approach-1.page"
+    },
+    {
+      "label": "City of Miami benchmarking and retuning ordinance text (via SE Florida Climate Compact)",
+      "href": "https://southeastfloridaclimatecompact.org/wp-content/uploads/2022/02/City-of-Miami_Building-Energy-and-Water-Consumption-Benchmarking-and-Retuning-Ordinance.pdf"
+    },
+    {
+      "label": "SE Florida Climate Compact - Benchmarking summary (Feb. 2025)",
+      "href": "https://southeastfloridaclimatecompact.org/wp-content/uploads/2025/03/Benchmarking-Summary-Document-Final.pdf"
+    },
+    {
+      "label": "City of Fort Lauderdale - Financial assistance for energy efficiency improvements",
+      "href": "https://www.fortlauderdale.gov/Government/Departments/Parks-Recreation/Sustainability/Energy-Affordability/Financial-Assistance-for-Energy-Efficiency-Improvements"
+    },
+    {
+      "label": "FloridaCommerce - Contact your local Weatherization office (county list)",
+      "href": "https://floridajobs.org/community-development/Weatherization-Assistance-Program/contact-your-local-weatherization-office-for-help"
+    },
+    {
+      "label": "IMT - Comparison of U.S. Commercial Building Energy Benchmarking and Transparency Policies (January 2026)",
+      "href": "https://cityenergyproject.org/wp-content/uploads/2015/09/Benchmarking-Matrix-June-2026.pdf"
+    },
+    {
+      "label": "Peoples Gas - Residential rebates",
+      "href": "https://www.peoplesgas.com/residential/saveenergy/rebates/"
+    },
+    {
+      "label": "Peoples Gas - Online Energy Audit",
+      "href": "https://www.peoplesgas.com/residential/saveenergy/energyaudit/"
+    },
+    {
+      "label": "Peoples Gas - About us (500,000+ customers; Emera)",
+      "href": "https://www.peoplesgas.com/company/about/"
+    },
+    {
+      "label": "FDACS - Florida Energy Saver Program portal (home)",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/en-US/"
+    },
+    {
+      "label": "FDACS - HEEHR program page",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/en-US/heehr-program/"
+    },
+    {
+      "label": "FDACS - HOMES program page",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/en-US/homes-program/"
+    },
+    {
+      "label": "FDACS - Florida Energy Saver Program FAQs/resources",
+      "href": "https://floridaenergysaverprogram.fdacs.gov/resources"
+    },
+    {
+      "label": "Rep. Kathy Castor release, June 8, 2026 (via Capitol Releases)",
+      "href": "https://capitolreleases.com/releases/971af4f2-558f-45a0-a9f6-15acb1d8866e"
+    },
+    {
+      "label": "Florida Statutes s. 553.996 (energy-efficiency rating information at sale)",
+      "href": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0500-0599/0553/Sections/0553.996.html"
+    },
+    {
+      "label": "Florida Statutes s. 366.032 (preemption over utility service restrictions)",
+      "href": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0366/Sections/0366.032.html"
+    },
+    {
+      "label": "Florida Statutes s. 163.08 (PACE qualifying improvements)",
+      "href": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0163/Sections/0163.08.html"
+    },
+    {
+      "label": "IRS - Energy Efficient Home Improvement Credit (25C)",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS - Residential Clean Energy Credit (25D)",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    },
+    {
+      "label": "U.S. DOE - Program Notice 26-2 (HEEHR/HEAR), effective May 29, 2026",
+      "href": "https://www.energy.gov/documents/program-notice-26-2"
+    },
+    {
+      "label": "NASEO - Home Energy Rebates FAQ, August 2026",
+      "href": "https://wwww.naseo.org/Data/Sites/1/media/tknaseo/home-energy-rebates_faq-august-2026_final_8.31.2026.pdf"
+    },
+    {
+      "label": "U.S. Census Bureau - CBSA delineation file (OMB, July 2023)",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    }
+  ]
+}

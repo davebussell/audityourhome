@@ -1,9 +1,14 @@
 ---
 import Logo from './Logo.astro';
-import { NAV } from '../lib/nav';
+import CountrySwitch from './CountrySwitch.astro';
+import { navFor } from '../lib/nav';
 import { ACCOUNTS_ENABLED } from '../config/site';
+import { countryOf, COUNTRIES } from '../lib/country';
 
 const path = Astro.url.pathname;
+const country = countryOf(path);
+const NAV = navFor(country);
+const home = country ? COUNTRIES[country].home : '/';
 
 /** plain-link active state */
 const isActive = (href?: string) => !!href && path.startsWith(href);
@@ -16,7 +21,7 @@ const sectionActive = (item: (typeof NAV)[number]) =>
 
 <header class="site-header" id="siteHeader">
   <div class="container inner">
-    <Logo />
+    <Logo href={home} />
     <nav aria-label="Main" class="mainnav">
       <button class="menu-btn" aria-expanded="false" aria-controls="mobile-nav" id="menuBtn">Menu</button>
 
@@ -49,7 +54,8 @@ const sectionActive = (item: (typeof NAV)[number]) =>
             </a>
           </li>
         )}
-        <li class="cta"><a href="/plan/" class="btn btn-primary btn-sm">Check my home</a></li>
+        {country && <li class="ctry-li"><CountrySwitch current={country} /></li>}
+        {country && <li class="cta"><a href={`${home}plan/`} class="btn btn-primary btn-sm">Check my home</a></li>}
       </ul>
     </nav>
   </div>
@@ -91,6 +97,7 @@ const sectionActive = (item: (typeof NAV)[number]) =>
 
   <!-- Mobile drawer -->
   <div class="mobile" id="mobile-nav" hidden>
+    {country && <CountrySwitch current={country} variant="mobile" />}
     {NAV.map((item) =>
       item.columns ? (
         <details class="m-group">
@@ -112,7 +119,7 @@ const sectionActive = (item: (typeof NAV)[number]) =>
       )
     )}
     {ACCOUNTS_ENABLED && <a class="m-link" href="/account/" data-acct-link><span data-acct-text>Sign in</span> <span class="m-sub">My Home: your plan, records and alerts</span></a>}
-    <a href="/plan/" class="btn btn-primary m-cta">Check my home</a>
+    {country && <a href={`${home}plan/`} class="btn btn-primary m-cta">Check my home</a>}
   </div>
 </header>
 
@@ -125,7 +132,7 @@ const sectionActive = (item: (typeof NAV)[number]) =>
     top: 0;
     z-index: 50;
   }
-  .inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 66px; }
+  .inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 66px; }
   .mainnav { display: flex; align-items: stretch; height: 100%; }
 
   .deskrow { display: flex; align-items: stretch; gap: 4px; list-style: none; margin: 0; padding: 0; height: 66px; }
@@ -133,16 +140,13 @@ const sectionActive = (item: (typeof NAV)[number]) =>
   .deskrow > li > a:not(.btn), .trigger {
     display: flex; align-items: center; gap: 6px;
     font-family: var(--body);
-    font-weight: 600; font-size: 14.5px; color: var(--ink);
+    font-weight: 600; font-size: 14px; color: var(--ink);
     text-decoration: none; background: none; border: none; cursor: pointer;
-    padding: 0 11px; height: 100%;
+    padding: 0 7px; height: 100%;
     white-space: nowrap;
   }
   .cta .btn { white-space: nowrap; }
-  @media (max-width: 1240px) {
-    .inner { gap: 14px; }
-    .deskrow > li > a:not(.btn), .trigger { padding: 0 7px; font-size: 14px; }
-  }
+  /* six top-level items (Canada) fill the 1140px container: one compact size at every desktop width */
   .deskrow > li > a:not(.btn):hover, .trigger:hover { color: var(--heat-deep); }
   .deskrow a[aria-current='page'], .trigger[data-active='true'] {
     color: var(--heat-deep);
@@ -151,7 +155,8 @@ const sectionActive = (item: (typeof NAV)[number]) =>
   .trigger[aria-expanded='true'] { color: var(--heat-deep); box-shadow: inset 0 -2px 0 var(--heat); }
   .chev { width: 10px; height: 6px; transition: transform 0.15s; }
   .trigger[aria-expanded='true'] .chev { transform: rotate(180deg); }
-  .cta { margin-left: 8px; align-items: center !important; }
+  .cta { margin-left: 6px; align-items: center !important; }
+  .ctry-li { align-items: center !important; margin-left: 2px; }
   .acct-li .acct-link { gap: 7px; }
   .acct-link svg { width: 19px; height: 19px; flex-shrink: 0; }
   /* icon only: the full row has no room for a text label */
@@ -219,12 +224,12 @@ const sectionActive = (item: (typeof NAV)[number]) =>
   .m-link { display: block; font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .m-cta { margin-top: 16px; }
 
-  @media (max-width: 1060px) {
+  @media (max-width: 1140px) {
     .menu-btn { display: inline-block; }
     .deskrow { display: none; }
     .panel { display: none !important; }
   }
-  @media (min-width: 1061px) {
+  @media (min-width: 1141px) {
     .mobile { display: none !important; }
   }
 </style>

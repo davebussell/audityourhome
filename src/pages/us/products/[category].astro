@@ -1,0 +1,168 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import { AFFILIATE } from '../../../config/site';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { amazonUS } from '../../../lib/affiliate';
+import productsData from '../../../data/us/products.json';
+
+export function getStaticPaths() {
+  return productsData.categories.map((c) => ({ params: { category: c.slug } }));
+}
+
+const { category } = Astro.params;
+const c = productsData.categories.find((x) => x.slug === category)!;
+const updated = productsData.meta.updated;
+
+const ELEMENT_LABEL: Record<string, string> = {
+  air: 'Air',
+  water: 'Water & moisture',
+  energy: 'Heat & energy',
+};
+
+const title = `${c.name} for US homes: picks and buying notes | AuditYourHome`;
+const description = `${c.short} ${c.picks.map((p) => p.name).join(', ')}: what each is for and the buying notes that matter in US homes.`;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Gear guides', path: '/us/products/' },
+    { name: c.name, path: `/us/products/${c.slug}/` },
+  ]),
+];
+
+const tests = c.tests.map((t) => ({ ...t, href: `/us/tests/${t.slug}/` }));
+const others = productsData.categories.filter((x) => x.slug !== c.slug).slice(0, 3);
+
+/** Same photos as the Canadian guides; the corner label is swapped where the default uses Canadian units. */
+const PRODUCT_PHOTO: Record<string, { name: string; hud?: string }> = {
+  'radon-monitors': { name: 'radon-testing', hud: 'Radon · pCi/L' },
+  'co-alarms': { name: 'carbon-monoxide-testing' },
+  'dehumidifiers-hygrometers': { name: 'mold-testing' },
+  'water-testing': { name: 'well-water-testing', hud: 'Coliform · nitrate · pH' },
+  'air-quality-monitors': { name: 'ventilation-assessment', hud: 'Ventilation · CFM' },
+};
+/**
+ * Social cards are pre-rendered images with the label baked in. The radon (Bq/m³) and
+ * ventilation (L/s) cards show Canadian units and the default card names NRCan, so these
+ * pages use cards whose labels hold up in the US.
+ */
+const OG_PHOTO: Record<string, string> = {
+  'radon-monitors': 'home-hero',
+  'air-quality-monitors': 'mold-testing',
+  'air-purifiers': 'home-hero',
+  'co-alarms': 'carbon-monoxide-testing',
+  'dehumidifiers-hygrometers': 'mold-testing',
+  'water-testing': 'well-water-testing',
+};
+const hero = PRODUCT_PHOTO[category ?? ''];
+const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogImage}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/us/products/">Gear guides</a> <span aria-hidden="true">/</span> <span>{c.name}</span></nav>
+    <div class:list={['page-hero', { 'has-photo': hero }]}>
+      <div class="hero-text">
+      <p class="eyebrow">Gear guide · {ELEMENT_LABEL[c.element] ?? c.element} · updated {updated}</p>
+      <h1>{c.name}</h1>
+      <p class="lede measure">{c.why}</p>
+      <p class="small measure">
+        Not sure this category applies to your home? The <a href="/us/tests/">testing guide</a> covers
+        which tests matter. For the testing side, see {tests.map((t, i) => (
+          <>{i > 0 && (i === tests.length - 1 ? ' and ' : ', ')}<a href={t.href}>{t.name}</a></>
+        ))}.
+      </p>
+      </div>
+      {hero && <Photo name={hero.name} hud={hero.hud ?? true} eager />}
+    </div>
+
+    {AFFILIATE.amazonTagUS && (
+      <p class="aff-note">
+        Buttons open amazon.com search results. As an Amazon Associate, AuditYourHome earns from
+        qualifying purchases, at no extra cost to you.
+      </p>
+    )}
+
+    <div class="pick-list">
+      {c.picks.map((p) => (
+        <article class="card pick">
+          <div class="p-main">
+            <p class="role">{p.role}</p>
+            <h2>{p.name}</h2>
+            <p class="p-why">{p.why}</p>
+          </div>
+          <div class="p-side">
+            {p.band && <p class="band">{p.band}</p>}
+            <a class="btn btn-primary btn-sm" href={amazonUS(p.q)} rel="nofollow sponsored noopener" target="_blank">Find on Amazon.com ↗</a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="meta pricenote">{productsData.pricesNote}</p>
+
+    <div class="card card-pad notes">
+      <h3>Before you buy</h3>
+      <ul>
+        {c.notes.map((n) => <li>{n}</li>)}
+      </ul>
+      {c.sources.length > 0 && (
+        <div class="srcs">
+          <p class="srcs-t">Sources</p>
+          <ul>
+            {c.sources.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+
+    <AffiliateDisclosure />
+
+    <div class="card card-pad next">
+      <div>
+        <h3>Measure, then act</h3>
+        <p class="mb-0 small">
+          Gear tells you what is happening; an energy audit tells you why. A certified auditor
+          measures air leakage, insulation and combustion safety, and can tell you which of these
+          categories matter in your home.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/us/find/">Find a certified auditor →</a>
+    </div>
+
+    <p class="also">
+      Also in gear guides:
+      {others.map((o, i) => (
+        <span>{i > 0 && ' · '}<a href={`/us/products/${o.slug}/`}>{o.name}</a></span>
+      ))}
+    </p>
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .aff-note { font-size: 13px; color: var(--faint); margin: 0 0 12px; max-width: 72ch; }
+  .pick-list { display: grid; gap: 14px; margin-bottom: 14px; }
+  .pick { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; padding: 20px 22px; }
+  @media (max-width: 720px) { .pick { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 18px; } }
+  .role { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--heat-deep); font-weight: 600; margin: 0 0 4px; }
+  .pick h2 { font-size: 20px; margin: 0 0 6px; }
+  .p-why { font-size: 14.5px; color: var(--muted); margin: 0; max-width: 70ch; }
+  .p-side { display: grid; gap: 8px; align-content: start; justify-items: start; }
+  @media (min-width: 721px) { .p-side { border-left: 1px solid var(--line); padding-left: 18px; } }
+  .band { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  .pricenote { margin: 0 0 22px; }
+  .notes { border-left: 4px solid var(--warn); }
+  .notes ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .srcs { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
+  .srcs-t { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); font-weight: 600; margin: 0 0 6px; }
+  .notes .srcs ul { display: flex; flex-wrap: wrap; gap: 4px 18px; list-style: none; padding: 0; font-size: 13px; }
+  .srcs a { color: var(--muted); overflow-wrap: anywhere; }
+  .next { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin: 8px 0 18px; }
+  .next h3 { margin-bottom: 4px; }
+  .also { font-size: 14px; color: var(--muted); margin-bottom: 30px; }
+</style>

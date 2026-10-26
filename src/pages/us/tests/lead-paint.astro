@@ -1,0 +1,242 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import TestStateTable from '../../../components/us/TestStateTable.astro';
+import { S, leadStateRows, RRP_STATES, EPA_LEAD_ABATEMENT_STATES, listStates } from '../../../lib/us/tests';
+
+const src = {
+  sources: S('lead', 'Protect Your Family from Sources of Lead'),
+  learn: S('lead', 'Learn About Lead'),
+  rrp: S('lead', 'Lead Renovation, Repair and Painting Program ('),
+  rrpContractors: S('lead', 'RRP Program: Contractors'),
+  rrpConsumers: S('lead', 'RRP Program: Consumers'),
+  rrpRenters: S('lead', 'RRP Program: Renters'),
+  rrpRules: S('lead', 'RRP Program Rules'),
+  rrpStates: S('lead', 'RRP Firm Certification'),
+  disclosure: S('lead', 'Real Estate Disclosures'),
+  abatement: S('lead', 'Lead Abatement, Inspection, and Risk Assessment'),
+  abatementStates: S('lead', 'Program Overview'),
+  hazard: S('lead', 'Hazard Standards and Clearance Levels'),
+  fedreg: S('lead', 'Federal Register - Reconsideration'),
+  lcri: S('lead', 'Lead and Copper Rule Improvements (updated'),
+  lcriPublic: S('lead', 'LCRI Fact Sheet for the General Public'),
+  locator: S('lead', 'Professional Locator'),
+  training: S('lead', 'training search'),
+};
+
+const dust = [
+  { surface: 'Floors', before: '10', after: '5' },
+  { surface: 'Window sills', before: '100', after: '40' },
+  { surface: 'Window troughs', before: '400', after: '100' },
+];
+
+const faqs = [
+  {
+    q: 'What’s the difference between a lead inspection and a risk assessment?',
+    a: 'An inspection tells you whether the home has lead-based paint and where it is, but not whether it’s causing a hazard now. A risk assessment tells you whether there are lead hazards from paint, dust or soil, and what to do about them. Both must be done by EPA- or state-certified inspectors or risk assessors working for certified firms.',
+    src: [src.abatement],
+  },
+  {
+    q: 'Does the renovation rule apply if I do the work myself?',
+    a: 'The RRP rule covers people who are paid to do work that disturbs paint in pre-1978 housing, sole proprietors included. EPA’s advice to homeowners in pre-1978 homes is to hire a lead-safe certified contractor and check the firm in EPA’s locator.',
+    src: [src.rrp, src.rrpConsumers],
+  },
+  {
+    q: 'Does my landlord have to test for lead?',
+    a: 'Under the federal disclosure rule, landlords of pre-1978 housing must disclose known lead-based paint and hazards, hand over available records, give you EPA’s pamphlet and include a Lead Warning Statement in the lease. Landlords don’t have to provide an inspection.',
+    src: [src.disclosure],
+  },
+  {
+    q: 'What changed in 2024?',
+    a: 'Two things. EPA lowered its dust-lead levels: the hazard standard became a “reportable level” of any amount a recognized lab can report, and the clearance levels after abatement dropped to 5 µg/ft² for floors, 40 for window sills and 100 for window troughs (effective January 13, 2025). And the Lead and Copper Rule Improvements cut the drinking water action level from 15 to 10 µg/L and require most water systems to replace the lead service lines they control within 10 years, with limited deferrals.',
+    src: [src.hazard, src.lcri],
+  },
+  {
+    q: 'Should my child be tested?',
+    a: 'Lead is especially dangerous to children 6 and younger. EPA notes that CDC recommends testing children at 12 and 24 months; CDC’s blood lead reference value is 3.5 µg/dL. Ask your child’s doctor.',
+    src: [src.sources],
+  },
+];
+
+const sources = [
+  src.sources, src.learn, src.rrp, src.rrpContractors, src.rrpConsumers, src.rrpRenters, src.rrpRules, src.rrpStates,
+  src.disclosure, src.abatement, src.abatementStates, src.hazard, src.fedreg, src.lcri, src.lcriPublic, src.locator, src.training,
+];
+---
+
+<TestPage
+  slug="lead-paint"
+  title="Lead paint testing in the US: pre-1978 homes, the RRP rule and 2024 dust levels | AuditYourHome"
+  description="Homes built before 1978 are more likely to have lead paint. Inspection vs. risk assessment, the RRP rule, disclosure at sale, EPA’s 2024 dust-lead levels and state programs."
+  heroTitle="Lead paint: what a pre-1978 home needs before anyone sands, scrapes or sells"
+  glance={[
+    { k: 'Higher likelihood', v: 'Built before 1978', src: src.sources, srcLabel: 'EPA' },
+    { k: 'Floor dust action level', v: '5 µg/ft² (was 10)', src: src.hazard, srcLabel: 'EPA, 2024 rule' },
+    { k: 'Minor-repair exemption', v: '6 sq ft inside, 20 outside', src: src.rrpRules, srcLabel: 'EPA RRP rules' },
+    { k: 'Buyer’s inspection window', v: '10 days', src: src.disclosure, srcLabel: 'EPA disclosure rule' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Renovating or buying an older home?"
+  leadSub="Email us your ZIP code, the year the home was built and what you’re planning. A person reads every message and replies with how to find certified lead inspectors and lead-safe firms in your state."
+>
+  <Fragment slot="lede">
+    EPA says the most common source of lead exposure is dust from lead-based paint in older homes,
+    and that lead is especially dangerous to children 6 and younger. The federal government banned
+    consumer uses of lead-based paint in 1978, so homes built before then are more likely to have it,
+    and federal rules shape how they’re tested, renovated, sold and rented.
+  </Fragment>
+
+  <section class="sec prose" aria-labelledby="risk-h">
+    <h2 id="risk-h">Who’s most at risk</h2>
+    <p>
+      Young children. EPA notes that CDC recommends testing children’s blood lead at 12 and 24 months,
+      and CDC’s blood lead reference value is <span class="num">3.5 µg/dL</span>. Some states banned
+      lead-based paint before the federal ban, but 1978 is the date federal rules key on.
+    </p>
+    <TestCite src={src.sources} labels={['EPA, sources of lead']} />
+  </section>
+
+  <section class="sec" aria-labelledby="test-h">
+    <h2 id="test-h">Inspection or risk assessment?</h2>
+    <div class="std-grid">
+      <div class="std">
+        <p class="sv">Inspection</p>
+        <p class="sl">Is there lead paint, and where?</p>
+        <p>Finds lead-based paint and where it is, but not whether it’s a hazard right now.</p>
+      </div>
+      <div class="std heat">
+        <p class="sv">Risk assessment</p>
+        <p class="sl">Is there a hazard now, and what should I do?</p>
+        <p>Looks for lead hazards from paint, dust or soil and tells you what to do about them.</p>
+      </div>
+    </div>
+    <p class="measure">
+      Both must be done by EPA- or state-certified inspectors or risk assessors working for certified
+      firms. EPA runs the program itself in {listStates(EPA_LEAD_ABATEMENT_STATES)} (plus territories
+      and most tribal lands); every other state has an EPA-authorized program of its own. We don’t
+      quote prices for either service because none came from an official source; ask certified
+      firms for written quotes.
+    </p>
+    <ul class="linkrow">
+      <li><a href={src.locator.href} rel="noopener">EPA lead professional locator&nbsp;↗</a></li>
+      <li><a href={src.abatementStates.href} rel="noopener">State-run programs&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.abatement, src.abatementStates]} labels={['EPA abatement, inspection and risk assessment', 'EPA program authorizations']} />
+  </section>
+
+  <section class="sec" aria-labelledby="dust-h">
+    <h2 id="dust-h">EPA’s 2024 dust-lead levels</h2>
+    <p class="measure">
+      EPA finalized new dust-lead levels in October 2024, effective January 13, 2025. The old hazard
+      standard of 10 µg/ft² for floors and 100 µg/ft² for window sills became a
+      <strong>dust-lead reportable level</strong>: any amount an EPA-recognized (NLLAP) lab can report.
+      The clearance levels used after abatement, now called <strong>dust-lead action levels</strong>,
+      dropped as shown.
+    </p>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>Dust-lead action levels after abatement (µg/ft²)</caption>
+        <thead><tr><th scope="col">Surface</th><th scope="col">Before 2025</th><th scope="col">From Jan 13, 2025</th></tr></thead>
+        <tbody>
+          {dust.map((d) => (
+            <tr>
+              <td>{d.surface}</td>
+              <td class="kv" data-label="Before 2025">{d.before} µg/ft²</td>
+              <td class="kv" data-label="From Jan 13, 2025"><strong>{d.after} µg/ft²</strong></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="measure">
+      At or above the action levels, EPA recommends abatement. Between the reportable level and the
+      action levels, it recommends HEPA vacuuming and wet cleaning instead. EPA plans to propose
+      soil-lead hazard standards in 2026. Separate compliance deadlines, for example for
+      state-run programs, couldn’t be confirmed from the rule text.
+    </p>
+    <TestCite src={[src.hazard, src.fedreg]} labels={['EPA hazard standards (updated Dec 19, 2025)', 'Federal Register final rule (Nov 12, 2024)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="rrp-h">
+    <h2 id="rrp-h">Renovating: the RRP rule</h2>
+    <p>
+      Anyone paid to do work that disturbs paint in housing or child-occupied facilities built before
+      1978 must be lead-safe certified by EPA or an authorized state, sole proprietors included. That
+      covers remodeling, repair and maintenance, electrical, plumbing, painting prep, carpentry and
+      window replacement. Firms use certified renovators and lead-safe work practices, and must give
+      you EPA’s “Renovate Right” pamphlet no more than 60 days before work starts.
+    </p>
+    <ul>
+      <li><strong>Exempt:</strong> minor repair and maintenance that disturbs 6 sq ft of paint or less per room inside, or 20 sq ft or less outside. Window replacement and demolition of painted surfaces are always covered.</li>
+      <li><strong>Also excluded:</strong> housing for the elderly or disabled and zero-bedroom units (unless a child under 6 lives there), and components certified lead-free.</li>
+      <li><strong>State programs:</strong> {RRP_STATES.length} states run their own RRP program instead of EPA: {listStates(RRP_STATES)}. A contractor working in several states may need both EPA and state certification.</li>
+    </ul>
+    <ul class="linkrow">
+      <li><a href={src.locator.href} rel="noopener">Find a lead-safe certified firm&nbsp;↗</a></li>
+      <li><a href={src.rrpStates.href} rel="noopener">States with their own RRP program&nbsp;↗</a></li>
+    </ul>
+    <TestCite src={[src.rrp, src.rrpRules, src.rrpStates]} labels={['EPA RRP program', 'EPA RRP rules', 'EPA RRP authorized states']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="sale-h">
+    <h2 id="sale-h">Buying, selling or renting: the disclosure rule</h2>
+    <p>
+      Under the federal lead disclosure rule (Section 1018 of the Residential Lead-Based Paint Hazard
+      Reduction Act of 1992), sellers and landlords of housing built before 1978 must:
+    </p>
+    <ul>
+      <li>disclose any known lead-based paint and lead hazards;</li>
+      <li>hand over available records and reports;</li>
+      <li>give buyers or renters EPA’s pamphlet “Protect Your Family From Lead in Your Home”;</li>
+      <li>put a Lead Warning Statement in, or attached to, the contract or lease.</li>
+    </ul>
+    <p>
+      Buyers get <strong>10 days</strong> to arrange a lead-based paint inspection or risk assessment;
+      the parties can change the period in writing, or the buyer can waive it. Landlords don’t have to
+      provide an inspection. Signed disclosures are kept for 3 years. Exempt: zero-bedroom units and
+      elderly or disabled housing (unless a child under 6 lives there), leases of 100 days or less,
+      housing certified lead-free, foreclosure sales and housing built after 1977.
+    </p>
+    <TestCite src={src.disclosure} labels={['EPA real estate disclosures']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="water-h">
+    <h2 id="water-h">Lead in drinking water</h2>
+    <p>
+      EPA’s Lead and Copper Rule Improvements, finalized October 8, 2024, require most water systems to
+      identify and replace the lead and galvanized-requiring-replacement service lines they control
+      within 10 years. The lead action level drops from <span class="num">15 to 10 µg/L</span>
+      (0.015 to 0.010 mg/L), with limited deferrals allowed on replacement. By November 1, 2027, systems
+      must submit their baseline service line inventory and a replacement plan, and from that date the
+      new action level triggers Tier 1 public notice. Systems with repeated exceedances must offer
+      certified lead-reducing filters.
+    </p>
+    <p>
+      As of October 2026, EPA’s rule pages still show the 2024 rule and dates with no announced
+      extension; other 2025–2026 announcements or litigation weren’t checked. On a private well? EPA suggests testing pH, lead and copper if you have lead
+      plumbing or corrosion; see the <a href="/us/tests/well-water/">well water guide</a>.
+    </p>
+    <TestCite src={[src.lcri, src.lcriPublic]} labels={['EPA LCRI (updated Dec 29, 2025)', 'EPA LCRI fact sheet']} />
+  </section>
+
+  <section class="sec" aria-labelledby="state-h">
+    <h2 id="state-h">Who runs the lead programs in your state</h2>
+    <p class="small measure">
+      The renovation (RRP) program and the abatement, inspection and risk assessment program can be run
+      by EPA or by the state. Where the state runs it, use the state’s certification list.
+    </p>
+    <TestStateTable rows={leadStateRows()} caption="Lead program administration, 20 jurisdictions" textHead="Who runs it" id="state-rules" />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If lead is found</h2>
+    <ul>
+      <li>A <strong>risk assessment</strong> tells you which hazards need attention and what to do about them.</li>
+      <li>Where dust-lead results fall between the reportable level and the action levels, EPA recommends HEPA vacuuming and wet cleaning; at or above the action levels, it recommends abatement by a certified firm.</li>
+      <li>For any repair or renovation that disturbs paint, hire a lead-safe certified firm.</li>
+      <li>If young children live in the home, ask their doctor about blood lead testing.</li>
+    </ul>
+    <TestCite src={[src.hazard, src.rrpConsumers, src.sources]} labels={['EPA hazard standards', 'EPA RRP for consumers', 'EPA, sources of lead']} />
+  </section>
+</TestPage>

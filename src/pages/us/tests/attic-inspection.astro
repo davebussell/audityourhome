@@ -1,0 +1,192 @@
+---
+import TestPage from '../../../components/us/TestPage.astro';
+import TestCite from '../../../components/us/TestCite.astro';
+import { S, T, ZONE_SOURCES, metrosByClimateZone, metroName, metroHref } from '../../../lib/us/tests';
+
+const src = {
+  es: S('insulation', 'Recommended Home Insulation R-Values'),
+  verm: S('asbestos', 'Vermiculite'),
+  c1060: S('infrared', 'C1060'),
+  caz: S('combustionSafety', 'Combustion Appliance Zone'),
+  doe: S('blowerDoor', 'Professional Home Energy Assessments'),
+};
+
+interface RRow { zone: string; attic: string; wall: string; floor: string }
+const rows = (T.energyTests.insulation.recommendedRValues as RRow[]).map((r) => {
+  const m = r.attic.match(/^(R\d+) if uninsulated; (R\d+) if already/);
+  if (!m) throw new Error(`attic-inspection: unexpected attic text for zone ${r.zone}: ${r.attic}`);
+  return { ...r, bare: m[1], topped: m[2] };
+});
+const zoneGroups = metrosByClimateZone();
+// the copy below groups zones 2–3 and 4–8; fail the build if the source table stops matching that
+const same = (a: number, b: number, k: 'bare' | 'topped') => rows.slice(a, b + 1).every((r) => r[k] === rows[a][k]);
+if (!(same(1, 2, 'bare') && same(1, 2, 'topped') && same(3, 7, 'bare') && same(3, 7, 'topped'))) {
+  throw new Error('attic-inspection: ENERGY STAR attic values no longer group as zones 2–3 and 4–8');
+}
+const lowAttic = rows[0].bare;
+const highAttic = rows[rows.length - 1].bare;
+
+const faqs = [
+  {
+    q: 'How much attic insulation do I need?',
+    a: `For an attic with no insulation now, ENERGY STAR’s retrofit table recommends ${rows[0].bare} in zone 1, ${rows[1].bare} in zones 2 and 3, and ${rows[3].bare} in zones 4 to 8. If there’s already 3 to 4 inches, the targets are ${rows[0].topped}, ${rows[1].topped} and ${rows[3].topped}.`,
+    src: [src.es],
+  },
+  {
+    q: 'What climate zone am I in?',
+    a: 'Climate zones are assigned by county. The list on this page gives the IECC 2021 zone for the principal county of 26 large metros, from DOE/PNNL’s county guide; other counties in the same metro can differ. ENERGY STAR’s table runs from zone 1 to zone 8, with higher R-values in the higher-numbered zones.',
+    src: [ZONE_SOURCES.climate],
+  },
+  {
+    q: 'Should I insulate the walls too?',
+    a: 'ENERGY STAR’s wall advice applies whenever exterior siding is removed: blow insulation into the empty cavities of an uninsulated wood-frame wall, and in zones 3 through 8 add insulative sheathing as well (R5 in zone 3; R5 to R10 in zones 4 to 8, R10 if the 2x4 wall is already insulated).',
+    src: [src.es],
+  },
+  {
+    q: 'There’s vermiculite in my attic. Can I add insulation on top?',
+    a: 'EPA’s advice is to assume vermiculite may contain asbestos, leave it undisturbed, limit trips into the attic and hire a professional asbestos contractor for any renovation that would disturb it. Talk to one before planning insulation work.',
+    src: [src.verm],
+  },
+  {
+    q: 'What does an attic insulation check cost?',
+    a: 'No official source publishes a price for an attic inspection or for adding insulation, so we don’t quote one.',
+  },
+];
+
+const sources = [src.es, ZONE_SOURCES.climate, src.verm, src.c1060, src.caz, src.doe];
+---
+
+<TestPage
+  slug="attic-inspection"
+  title="Attic insulation check: ENERGY STAR R-values by climate zone, metro by metro | AuditYourHome"
+  description="ENERGY STAR’s recommended R-values for attics, walls and floors in climate zones 1 to 8, the IECC zone for 26 US metros, and the vermiculite warning to heed first."
+  heroTitle="Attic insulation: what you have, and what ENERGY STAR recommends"
+  glance={[
+    { k: 'Uninsulated attic, zone 1', v: lowAttic, src: src.es, srcLabel: 'ENERGY STAR' },
+    { k: 'Zones 2–3', v: rows[1].bare, src: src.es, srcLabel: 'ENERGY STAR' },
+    { k: 'Zones 4–8', v: highAttic, src: src.es, srcLabel: 'ENERGY STAR' },
+    { k: 'Already 3–4 inches?', v: `${rows[0].topped} to ${rows[7].topped}`, src: src.es, srcLabel: 'ENERGY STAR' },
+  ]}
+  faqs={faqs}
+  sources={sources}
+  leadHeading="Planning to top up the attic?"
+  leadSub="Email us your ZIP code and the kind of home you have. A person reads every message and replies with certified auditors and the programs that may help pay for insulation in your area."
+>
+  <Fragment slot="lede">
+    ENERGY STAR’s retrofit table sets out how much insulation an existing wood-framed home should have,
+    by climate zone. For an attic with none today, that’s {lowAttic} in zone 1 and {highAttic} in
+    zones 4 through 8, a little less if there’s already 3 to 4 inches. Check what’s up
+    there first, and if it’s vermiculite, stop and read EPA’s advice.
+  </Fragment>
+
+  <div class="card card-pad callout dead">
+    <h3>Before you go up there: vermiculite</h3>
+    <p class="mb-0">
+      If your attic has vermiculite insulation, EPA says to assume it may contain asbestos, leave it
+      undisturbed, limit trips into the attic and not try to remove it yourself. See the
+      <a href="/us/tests/asbestos-vermiculite/">asbestos and vermiculite guide</a>.
+    </p>
+    <TestCite src={src.verm} labels={['EPA, vermiculite insulation']} />
+  </div>
+
+  <section class="sec" aria-labelledby="r-h">
+    <h2 id="r-h">ENERGY STAR’s recommended R-values</h2>
+    <p class="small measure">
+      For retrofitting existing wood-framed homes, based on 2021 IECC Table R402.1.3. ENERGY STAR groups
+      the zones as 1, 2, 3, 4A/4B, 4C/5/6 and 7/8; the rows below expand those groups. Wall advice
+      applies whenever exterior siding is removed.
+    </p>
+    <div class="tablewrap">
+      <table class="stack datatable">
+        <caption>Recommended insulation by climate zone</caption>
+        <thead>
+          <tr>
+            <th scope="col">Zone</th>
+            <th scope="col">Attic, none now</th>
+            <th scope="col">Attic, 3–4 in. now</th>
+            <th scope="col">Floor</th>
+            <th scope="col">Walls, when re-siding</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <td>Zone {r.zone}</td>
+              <td class="kv" data-label="Attic, none now"><strong>{r.bare}</strong></td>
+              <td class="kv" data-label="Attic, 3–4 in. now">{r.topped}</td>
+              <td class="kv" data-label="Floor">{r.floor}</td>
+              <td data-label="Walls, when re-siding" class="wallcell">{r.wall}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <TestCite src={src.es} labels={['ENERGY STAR recommended R-values (no last-updated date shown)']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="zones">
+    <h2 id="zones">Find your climate zone</h2>
+    <p>
+      Zones are assigned by county. Each metro below is listed under the 2021 IECC zone of its principal
+      county; suburbs in another county can fall in a different zone. The letter after the number is
+      the moisture regime in DOE/PNNL’s county guide.
+    </p>
+    <div class="zonelist">
+      {zoneGroups.map((g) => (
+        <div class="zr">
+          <p class="zk mb-0">Zone {g.zone}<small>{rows.find((r) => r.zone === String(g.num))?.bare} attic if uninsulated</small></p>
+          <ul class="linkrow">
+            {g.metros.map((m) => (
+              <li><a href={metroHref(m)} title={`${m.climate?.principalCounty}: IECC 2021 zone ${g.zone}`}>{metroName(m)}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <TestCite src={[ZONE_SOURCES.climate, src.es]} labels={['DOE/PNNL climate zones by county (PNNL-33270)', 'ENERGY STAR R-values']} />
+  </section>
+
+  <section class="sec" aria-labelledby="how-h">
+    <h2 id="how-h">How to check, or get it checked</h2>
+    <ol class="steps">
+      <li>
+        <h3>Look before you step</h3>
+        <p>From the hatch, see what kind of insulation is there. If it’s vermiculite, stop (see above).</p>
+      </li>
+      <li>
+        <h3>Measure the depth</h3>
+        <p>ENERGY STAR’s table splits on whether there’s already 3 to 4 inches of insulation, so a ruler tells you which column applies.</p>
+      </li>
+      <li>
+        <h3>Find your zone and target</h3>
+        <p>Match your county’s climate zone to the table above.</p>
+      </li>
+      <li>
+        <h3>Have the hidden parts checked</h3>
+        <p>Walls and sloped ceilings are harder to see into. An <a href="/us/tests/thermal-imaging/">infrared scan</a> can flag missing insulation; ASTM C1060 says a visual check confirms it.</p>
+      </li>
+    </ol>
+    <p class="measure">What it costs: no official source publishes a price for an attic inspection or insulation, so we don’t quote one.</p>
+    <ul class="linkrow">
+      <li><a href="/us/find/">Find a certified auditor</a></li>
+      <li><a href="/us/programs/">Rebates and programs</a></li>
+    </ul>
+    <TestCite src={[src.es, src.c1060]} labels={['ENERGY STAR R-values', 'ASTM C1060']} />
+  </section>
+
+  <section class="sec prose" aria-labelledby="fix-h">
+    <h2 id="fix-h">If you’re short of the target</h2>
+    <ul>
+      <li>Plan to bring the attic up to the ENERGY STAR level for your zone.</li>
+      <li>If a blower door or infrared scan found leaks at the attic floor, have them sealed before new insulation covers them.</li>
+      <li>Air sealing a home with natural-draft gas, oil or propane appliances? DOE calls for combustion appliance zone testing during the work; see the <a href="/us/tests/combustion-safety/">combustion safety guide</a>.</li>
+    </ul>
+    <TestCite src={[src.es, src.caz]} labels={['ENERGY STAR R-values', 'DOE BASC, CAZ testing']} />
+  </section>
+</TestPage>
+
+<style>
+  @media (min-width: 641px) {
+    .wallcell { min-width: 300px; }
+  }
+</style>

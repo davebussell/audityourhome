@@ -1,0 +1,60 @@
+---
+/**
+ * Compact state-rules table for the US testing guides. Rows become cards on phones
+ * (table.stack); the fuller rule text sits behind a "Full rule" toggle.
+ */
+import { US_VERIFIED } from '../../lib/us/data';
+import { shortLabel, type StateRow, type RuleStatus } from '../../lib/us/tests';
+
+interface Props {
+  rows: StateRow[];
+  caption: string;
+  /** Header for the status column; omit to drop the column */
+  statusHead?: string;
+  statusLabels?: Partial<Record<RuleStatus, string>>;
+  textHead?: string;
+  id?: string;
+}
+
+const { rows, caption, statusHead, statusLabels = {}, textHead = 'What the rule says', id } = Astro.props;
+const CHIP: Record<RuleStatus, string> = { yes: 'chip-info', no: 'chip-neutral', unknown: 'chip-limited' };
+const LABEL: Record<RuleStatus, string> = { yes: 'Yes', no: 'None found', unknown: 'Not confirmed', ...statusLabels };
+const anyNcsl = rows.some((r) => /per NCSL/i.test(`${r.text} ${r.detail ?? ''}`));
+---
+
+<div class="tablewrap" id={id}>
+  <table class="stack datatable">
+    <caption>{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">State</th>
+        {statusHead && <th scope="col">{statusHead}</th>}
+        <th scope="col">{textHead}</th>
+        <th scope="col">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td class="st-name">{r.name}</td>
+          {statusHead && (
+            <td class="st-status"><span class={`chip ${CHIP[r.status]}`}>{LABEL[r.status]}</span></td>
+          )}
+          <td class="st-text">
+            {r.text}
+            {r.detail && r.detail !== r.text && (
+              <details><summary>More detail</summary><p>{r.detail}</p></details>
+            )}
+          </td>
+          <td class="src-cell">
+            <a href={r.src.href} rel="noopener" title={r.src.label}>{shortLabel(r.src.label)}&nbsp;↗</a>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="cite">
+  State rules verified {US_VERIFIED} against the source linked in each row.
+  {anyNcsl && ' Rules marked “per NCSL” come from NCSL’s compilation and were not checked against the statute text.'}
+</p>

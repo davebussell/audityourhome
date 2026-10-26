@@ -1,0 +1,457 @@
+{
+  "slug": "los-angeles",
+  "name": "Los Angeles",
+  "metroName": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area",
+  "states": [
+    "CA"
+  ],
+  "principalCity": "Los Angeles",
+  "utilities": {
+    "electric": [
+      {
+        "name": "Los Angeles Department of Water and Power (LADWP)",
+        "serves": "City of Los Angeles (city-owned utility; SCE's service area excludes the City of Los Angeles)",
+        "url": "https://www.ladwp.com/residential-services/assistance-programs"
+      },
+      {
+        "name": "Southern California Edison (SCE)",
+        "serves": "Most of Los Angeles and Orange counties outside the City of LA and municipal-utility cities; SCE says it serves 15 million people in 50,000 sq mi of central, coastal and Southern California, excluding the City of Los Angeles and some other cities",
+        "url": "https://www.sce.com/about-sce"
+      },
+      {
+        "name": "San Diego Gas & Electric (SDG&E)",
+        "serves": "Southern Orange County (SDG&E's service area covers San Diego and southern Orange counties)",
+        "url": "https://www.sdge.com/more-information/our-company/about-us"
+      },
+      {
+        "name": "Clean Power Alliance (community choice aggregator)",
+        "serves": "Community choice aggregator offering customers 'high levels of renewable energy' in communities across Los Angeles and Ventura counties (its residential page lists no efficiency rebates)",
+        "url": "https://cleanpoweralliance.org/about-clean-power-alliance/"
+      }
+    ],
+    "gas": [
+      {
+        "name": "Southern California Gas Company (SoCalGas)",
+        "serves": "Most of the metro; SoCalGas serves 21.1 million consumers in more than 500 communities across about 24,000 sq mi of Central and Southern California",
+        "url": "https://www.socalgas.com/about-us"
+      },
+      {
+        "name": "Long Beach Utilities",
+        "serves": "Gas, water and sewer utility based in Long Beach (site lists gas service and a gas emergency line; service-area boundaries not stated)",
+        "url": "https://www.lbutilities.org/"
+      }
+    ],
+    "notes": "LADWP serves the City of LA; SCE serves most other cities. Several cities run their own municipal utilities with separate rebate programs that this file does not cover (for example Pasadena Water and Power, which describes itself as a community-owned utility, plus Burbank Water and Power and Glendale Water & Power). SCE program eligibility depends on being an SCE customer, so Clean Power Alliance households should check their bill for the delivery utility. Anaheim Public Utilities could not be verified (site blocked automated access on 2026-10-12)."
+  },
+  "auditPrograms": [
+    {
+      "name": "LADWP Home Energy Improvement Program (HEIP)",
+      "runBy": "Los Angeles Department of Water and Power",
+      "cost": "Free ('Receive free energy and water efficiency upgrades')",
+      "whoQualifies": "LADWP residential customers in a single-family home, condo, townhome or multi-residential building of 4 units or less that has not previously participated; tenants need the owner's written approval. No income test is listed on the page.",
+      "whatYouGet": "In-home assessment by trained technicians, a home report of cost-effective energy and water upgrades, installation by LADWP repair technicians, and a quality-assurance review",
+      "howToBook": "Apply online through LADWP's rebates/programs portal or mail the HEIP application to LADWP, Attn: Home Energy Improvement Program, PO Box 51111, Room 1019, Los Angeles, CA 90051-5799; LADWP then schedules the assessment",
+      "url": "https://www.ladwp.com/residential-services/home-energy-improvement-program",
+      "status": "open ('Apply Today' on the program page; LADWP notes programs may change or end without notice)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SCE Home Performance Plus",
+      "runBy": "CLEAResult under contract with Southern California Edison",
+      "cost": "Free home energy assessment and Energy Advisor guidance",
+      "whoQualifies": "SCE residential electric customers who rent or own a single-family detached home or a unit in a building of 4 units or less located in a Disadvantaged or Low-Income community",
+      "whatYouGet": "On-site visit by an Energy Specialist, a custom report of recommendations and available rebates, one-on-one advisor support, and access to more than $5,000 in program rebates",
+      "howToBook": "Schedule a free appointment with an Energy Advisor via homeperformanceplusca.com/sce or call 888-662-1637 (9am-5pm PT, Mon-Fri)",
+      "url": "https://homeperformanceplusca.com/sce/",
+      "status": "open",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Home Energy Score California (statewide)",
+      "runBy": "Bay Area Regional Energy Network (BayREN) and Earth Advantage; funded by PG&E, SDG&E, SoCalGas and SCE ratepayers under the CPUC",
+      "cost": "Cost varies by assessor (BayREN says it depends on factors such as location and home size); the program FAQ says customers who get gas and/or electricity from a CCA or investor-owned utility are eligible for a $250 rebate toward it (Berkeley residents excepted because of BESO)",
+      "whoQualifies": "California homeowners can hire a certified assessor; the $250 rebate is for customers who receive gas and/or electric service from an investor-owned utility (such as PG&E, SCE, SoCalGas or SDG&E) or a community choice aggregator",
+      "whatYouGet": "Certified assessor walk-through (most take 45-90 minutes, including attic and crawlspace), a U.S. DOE 1-10 Home Energy Score, a report with energy-use, cost and emissions estimates, and prioritized upgrade recommendations",
+      "howToBook": "Find a certified assessor on homescoreca.org and ask for a score through the HES California program; confirm rebate eligibility and cost with the assessor",
+      "url": "https://www.homescoreca.org/faq",
+      "status": "open (statewide program page live; no closing date stated)",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "Equitable Building Decarbonization (EBD) Direct Install - Southern California",
+      "runBy": "County of Los Angeles (Internal Services Department) as Southern Region administrator for the California Energy Commission; partly funded by federal HOMES",
+      "cost": "No cost to eligible households",
+      "whoQualifies": "Low-income households (up to 80% of area median income) in single-family, multifamily or manufactured homes built before January 1, 2020 that use gas, propane or another fossil fuel for space or water heating, located in an initial community focus area. LA/Orange County focus areas include Bassett Avocado Heights, Bell Gardens, Buena Park, Carson, Compton, El Monte, Fullerton, Hawaiian Gardens, Hawthorne, Huntington Park, Lancaster, Lawndale, Maywood, North Hollywood, Pacoima, Paramount, Pico Rivera, Pomona, Santa Ana, South Gate and Wilmington.",
+      "whatYouGet": "Eligibility screening, a home assessment, then no-cost installation of a heat pump and/or heat pump water heater plus possible extras (induction stove, electric dryer, duct sealing, insulation, air sealing, smart thermostat, panel upgrades, minor remediation)",
+      "howToBook": "Complete the interest form at socalebd.org or call 1-424-285-6602",
+      "url": "https://socalebd.org/",
+      "status": "accepting interest forms in select communities; CEC timeline lists outreach Winter 2025-2026, first rapid-start retrofits Spring 2026 and first focus-area retrofits Summer 2026 (expected); a community application process for other areas is expected late 2026",
+      "checked": "2026-10-12"
+    }
+  ],
+  "rebates": [
+    {
+      "name": "LADWP Consumer Rebate Program - heat pumps and envelope",
+      "runBy": "LADWP",
+      "category": "heat-pump",
+      "amount": "Heat pump HVAC up to $2,500 per ton (ducted $1,000-$1,250/ton; ductless mini/multi-split $1,500-$2,500/ton by SEER2/HSPF2 tier); ENERGY STAR heat pump water heater up to $2,500 per unit ($1,500-$2,500 by size and UEF); central HVAC $100-$120/ton; cool roofs $0.20-$0.60/sq ft; ENERGY STAR windows $2.00/sq ft; whole house fan $200; variable-speed pool pump $500 ($750 summer special for purchases June 1-September 30, 2026 submitted by December 31, 2026)",
+      "whoQualifies": "LADWP residential customers with active electric service; apply after purchase and installation, within 12 months of purchase; permits required for most items; new construction and ADUs excluded for heat pumps",
+      "status": "open (higher heat pump amounts apply to equipment purchased and installed on or after November 1, 2025)",
+      "url": "https://www.ladwp.com/residential-services/assistance-programs/consumer-rebate-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "LADWP Attic Insulation Rebate Program",
+      "runBy": "LADWP",
+      "category": "insulation-air-sealing",
+      "amount": "$0.50/sq ft above R-19 or $0.30/sq ft at R-19 or below (batt and roll only), plus a 'Launch Special Extended' extra $0.25/sq ft for all participants",
+      "whoQualifies": "LADWP residential customers with active electric service or verified property owners; projects purchased and installed on or after September 1, 2025; LADBS permit with finaled status; apply within 12 months",
+      "status": "open",
+      "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/attic-insulation-rebate-program",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "LADWP Efficient Product Marketplace and Cool LA rebates",
+      "runBy": "LADWP",
+      "category": "appliances",
+      "amount": "Smart thermostat up to $140; ENERGY STAR window AC up to $125 (standard); up to $275 for window/wall/portable AC for customers on a discount rate (EZ-SAVE, Lifeline, Life-Support or Physician Certified Allowance); limit two AC units",
+      "whoQualifies": "LADWP residential electric customers; higher Cool LA amount requires an active discounted-rate account at time of purchase",
+      "status": "open (rebate limits updated June 23, 2025)",
+      "url": "https://www.ladwp.com/residential-services/assistance-programs/cool-la",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "SCE Home Performance Plus rebates",
+      "runBy": "CLEAResult for Southern California Edison",
+      "category": "whole-home",
+      "amount": "Attic insulation $1.07/sq ft; wall insulation $1.06/sq ft (homes under 3,000 sq ft with qualifying HVAC); heat pump water heaters $500-$1,350 depending on voltage, size and fuel replaced; ducted central heat pump $667/ton (16 SEER2+, replacing old AC and 80% AFUE-or-lower furnace); ductless mini-split $600/ton or $1,144.80/ton when replacing a gas wall furnace and window AC; induction cooktop $424",
+      "whoQualifies": "SCE residential electric customers in single-family homes or buildings of up to 4 units; work through program trade allies. The program's main page limits it to Disadvantaged or Low-Income communities, but the rebates page does not mention that limit, so it could not be re-confirmed. Heat pumps must be rated 16 SEER2 or higher. A ducted heat pump must replace a central AC rated 13 SEER (12.4 SEER2) or lower and a gas furnace rated 80% AFUE or lower; a ductless one must replace a gas wall furnace with no blower fan rated 67% AFUE or lower.",
+      "status": "open; the rebates page gives no status or end date",
+      "url": "https://homeperformanceplusca.com/sce/rebates/",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "SoCalGas Home Energy Efficiency Rebate Program (2026)",
+      "runBy": "SoCalGas",
+      "category": "appliances",
+      "amount": "ENERGY STAR furnace (AFUE 92%+) $1.40-$25 per kBTUh; tankless water heater $80-$1,500; storage water heater (UEF 0.64+, 55 gal or less) $300-$575; ENERGY STAR gas dryer $70; solar thermal water heating $2,500-$5,000; other gas appliances listed on page",
+      "whoQualifies": "SoCalGas residential customers installing qualifying new natural gas appliances in an existing home within the calendar year; instant rebates via SoCalGas Marketplace or post-purchase application",
+      "status": "open; funds first-come, first-served until December 31, 2026 or until exhausted",
+      "url": "https://www.socalgas.com/savings/rebates-and-incentives",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "South Coast AQMD GO ZERO single-family heat pump rebate",
+      "runBy": "South Coast Air Quality Management District (single-family rebates implemented by EGIA)",
+      "category": "heat-pump",
+      "amount": "Standard rebates $1,000-$2,000 per unit; up to $3,000 in overburdened communities (per AQMD's August 28, 2026 release)",
+      "whoQualifies": "Single-family homeowners replacing gas or propane space or water heating with qualifying heat pumps in the South Coast AQMD area",
+      "status": "closed: the single-family portal reopened August 28, 2026 and closed September 4, 2026 at 5:00 PM because funds ran low; new single-family and multifamily applications are still not being accepted. AQMD's Governing Board approved Phase 2 on October 2, 2026 for up to $60.2 million; the portal relaunch is 'forthcoming', with no date given",
+      "url": "https://www.aqmd.gov/go-zero",
+      "checked": "2026-10-19"
+    },
+    {
+      "name": "TECH Clean California San Fernando Valley (Aliso Canyon) residential incentives",
+      "runBy": "TECH Clean California",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "Residents of Aliso Canyon priority communities (Porter Ranch, Granada Hills, Northridge, Chatsworth, North Hills, Canoga Park, Reseda, Winnetka, West Hills, Van Nuys, Lake Balboa; 39 ZIP codes listed on the page, from 91303 through 91436); income-qualified residents may get extra measures and full-cost coverage",
+      "status": "not launched: page says incentives begin 'in late summer 2026' but contractor enrollment details, product lists and outreach materials were still marked 'coming soon' on 2026-10-12",
+      "url": "https://techcleanca.com/incentives/sanfernandovalley/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "HEEHRA Phase I heat pump rebates (California's IRA Home Electrification and Appliance Rebates)",
+      "runBy": "California Energy Commission, delivered through TECH Clean California",
+      "category": "income-qualified",
+      "amount": "Single-family: up to $8,000 (household income under 80% AMI) or up to $4,000 (80-150% AMI) for a qualifying heat pump HVAC system; multifamily up to $14,000 per unit",
+      "whoQualifies": "Income-qualified owners (or landlords renting to income-qualified households) replacing a non-heat-pump heating system; only through HEEHRA-trained, TECH-certified contractors with a pre-approved reservation",
+      "status": "closed to new applicants: single-family rebates fully reserved statewide since February 24, 2026 (unapproved requests waitlisted; no new income verifications); multifamily fully reserved since September 1, 2026 per TECH",
+      "url": "https://techcleanca.com/incentives/heehrarebates/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "TECH Clean California single-family heat pump HVAC and heat pump water heater incentives",
+      "runBy": "TECH Clean California (Energy Solutions, under contract with SCE on behalf of California utilities, CPUC oversight)",
+      "category": "heat-pump",
+      "amount": null,
+      "whoQualifies": "California single-family homes through enrolled contractors",
+      "status": "fully reserved since November 14, 2025; not accepting new reservations",
+      "url": "https://techcleanca.com/incentives/single-family-incentives/",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "LADWP HOME LA (wildfire rebuild electrification)",
+      "runBy": "LADWP for the City of Los Angeles",
+      "category": "other",
+      "amount": "Whole Home all-electric bundle $10,000 per single-family home ($5,000-$8,000 for other housing types) plus bonuses of $5,000 (whole-home battery) and $3,000 (ultra-low-GWP heat pump water heater); Express path: heat pump HVAC $1,000-$2,500/ton, heat pump water heater $1,500-$2,500",
+      "whoQualifies": "Only owners rebuilding homes in LADWP territory substantially damaged or destroyed by the January 2025 Palisades, Hurst, Kenneth, Archer and Sunset wildfires",
+      "status": "open to eligible wildfire-rebuild projects (launched August 15, 2025; LADWP says it may expand later)",
+      "url": "https://www.ladwp.com/construction-services/home-la",
+      "checked": "2026-10-12"
+    },
+    {
+      "name": "GoGreen Home Energy Financing",
+      "runBy": "State of California GoGreen Financing program (the page links to the State Treasurer's residential portal); utilities named do not lend",
+      "category": "financing",
+      "amount": "Loan amounts and rates not stated on the page; it advertises below-market rates, extended terms, no property lien, up to 30% of financing for other improvements, and 0% financing for heat pump heating, cooling and water heating in qualifying communities",
+      "whoQualifies": "Owners (and tenants with owner permission) of single-family homes, townhomes, condos, 2-4 unit buildings and manufactured homes on a site-built foundation who are customers of PG&E, SDG&E, SCE, SoCalGas or City of Palo Alto Utilities; customers of other publicly owned utilities 'may finance most measures'",
+      "status": "open (page modified October 6, 2026)",
+      "url": "https://gogreenfinancing.com/residential",
+      "checked": "2026-10-12"
+    }
+  ],
+  "stateHomeEnergyRebates": {
+    "status": "closed to new applicants (waitlist only): HEEHRA Phase I single-family fully reserved statewide since 2026-02-24 and multifamily since 2026-09-01 (per TECH); HEEHRA Phase II not yet available; HOMES not available as rebates (some HOMES funds pay for no-cost EBD Direct Install retrofits in selected low-income communities)",
+    "programName": "HEEHRA (Home Electrification and Appliance Rebates) and HOMES (Home Owner Managing Energy Savings)",
+    "administrator": "California Energy Commission (HEEHRA Phase I delivered by TECH Clean California; EBD Direct Install run by three regional administrators)",
+    "summary": "California received $590 million in total for Home Energy Rebates ($290 million HEEHRA awarded June 2024; $291 million HOMES approved January 2025). HEEHRA Phase I paid up to $8,000 (under 80% AMI) or $4,000 (80-150% AMI) toward a heat pump HVAC system through TECH-certified contractors; it launched October 2024, paused February 2025, resumed March 2025, was fully reserved in June 2025, reopened October 2025 and was fully reserved again on February 24, 2026. The HOMES award is split between EBD Direct Install ($130.3 million, no-cost retrofits for low-income households, projects must model at least 20% savings) and a statewide Pay for Performance program ($90.8 million) that has not launched (solicitation concept workshop held August 8, 2025). Note: the CEC Q&A still says multifamily HEEHRA rebates are available, but TECH's incentives page says they were fully reserved as of September 1, 2026.",
+    "url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
+    "checked": "2026-10-12"
+  },
+  "incomeQualified": [
+    {
+      "name": "Weatherization Assistance Program / LIHEAP (Los Angeles and Orange counties)",
+      "runBy": "California Department of Community Services and Development (CSD) through local providers: Maravilla Foundation (323-721-4162), Pacific Asian Consortium in Employment (PACE) (213-989-3177) and Long Beach Community Action Partnership (888-351-4061) in LA County; Community Action Partnership of Orange County (714-839-6199)",
+      "summary": "Free home energy assessment and weatherization (sealing, insulation, window, HVAC and water heater repair or replacement) plus bill assistance for income-eligible owners and renters. CSD's provider directory lists all three LA County agencies for home weatherization; contact the one serving your area.",
+      "url": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "name": "SCE Energy Savings Assistance (ESA)",
+      "runBy": "Southern California Edison",
+      "summary": "No-cost upgrades such as heat pump water heater replacement, refrigerator, central AC or heat pump replacement, smart thermostat and more, installed by approved contractors after a walk-through. Income limit June 1, 2026-May 31, 2027 is 250% of federal poverty guidelines (e.g., $82,500 for a household of 4) or enrollment in programs like CalFresh, Medi-Cal, LIHEAP or SSI. SCE's Building Electrification program closed to new enrollments in September 2026, and the ESA Whole Home pilot (with SoCalGas) is no longer taking new applications and sunsets at the end of 2026 under CPUC D.26-07-007.",
+      "url": "https://www.sce.com/save-money/income-qualified-programs/energy-savings-assistance-program"
+    },
+    {
+      "name": "SoCalGas Energy Savings Assistance (ESA)",
+      "runBy": "SoCalGas",
+      "summary": "No-cost improvements for income-qualified owners and renters, which may include attic insulation, furnace duct sealing, high-efficiency furnace replacement (owner-occupied), tankless water heater and low-flow fixtures. Same income limits as SCE ESA. Apply by interest form or 1-800-331-7593.",
+      "url": "https://www.socalgas.com/billing-payment/assistance-programs/energy-savings-assistance-program"
+    },
+    {
+      "name": "LADWP EZ-SAVE (bill discount, unlocks Cool LA rebates)",
+      "runBy": "LADWP",
+      "summary": "Bill discount for income-qualified LADWP customers (e.g., maximum gross income $66,000 for a household of 4, effective July 1, 2026); enrollment qualifies customers for the higher Cool LA air-conditioner rebate.",
+      "url": "https://www.ladwp.com/residential-services/assistance-programs/ez-save-program"
+    },
+    {
+      "name": "Equitable Building Decarbonization Direct Install (Southern California)",
+      "runBy": "County of Los Angeles for the California Energy Commission",
+      "summary": "No-cost electrification and efficiency retrofits for households up to 80% AMI in select communities; interest form at socalebd.org or 1-424-285-6602.",
+      "url": "https://socalebd.org/"
+    }
+  ],
+  "localRules": [
+    {
+      "name": "City of Los Angeles Existing Buildings Energy & Water Efficiency (EBEWE) Program",
+      "appliesTo": "Large buildings only: privately owned buildings of 20,000 sq ft or more. Does not affect ordinary single-family homeowners.",
+      "summary": "Administered by LADBS. Annual benchmarking report (ENERGY STAR Portfolio Manager) due by June 1, plus energy and water audits and retro-commissioning every 5 years by December 1 on a schedule set by the building ID.",
+      "url": "https://www.ladbsservices2.lacity.org/ebewe"
+    },
+    {
+      "name": "California Building Energy Benchmarking Program (AB 802)",
+      "appliesTo": "Large buildings only: commercial buildings over 50,000 sq ft with no residential utility accounts, and multifamily buildings over 50,000 sq ft with 17 or more utility accounts. Does not affect ordinary homeowners.",
+      "summary": "Owners report energy use to the California Energy Commission by June 1 every year.",
+      "url": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    },
+    {
+      "name": "South Coast AQMD Proposed Amended Rules 1111 and 1121 (zero-emission furnaces and water heaters)",
+      "appliesTo": "Would have affected homeowners replacing gas furnaces and water heaters; not adopted",
+      "summary": "On June 6, 2025 the South Coast AQMD Governing Board voted 7 to 5 not to approve the amendments, so the previously amended rule language remains in effect. There is no new zero-emission appliance mandate for homeowners in the South Coast air district.",
+      "url": "https://www.aqmd.gov/home/rules-compliance/rules/scaqmd-rule-book/proposed-rules/rule-1111-and-rule-1121"
+    },
+    {
+      "name": "West Hollywood Equitable Building Performance Standards",
+      "appliesTo": "Buildings over 20,000 sq ft in West Hollywood; not single-family homes",
+      "summary": "The city filed a CEQA Notice of Exemption on 2025-12-09 for an ordinance that 'establishes building energy benchmarking and performance standards for existing and newly constructed buildings' over 20,000 sq ft. Compliance dates were not stated in the state filing.",
+      "url": "https://ceqanet.lci.ca.gov/2025120319"
+    }
+  ],
+  "notes": "No time-of-sale energy disclosure rule for homes was found on the LADBS, LADWP or South Coast AQMD pages reviewed. Federal home-efficiency tax credits are over: the IRS says the Energy Efficient Home Improvement Credit (25C) covered improvements made through December 31, 2025, and the Residential Clean Energy Credit (25D) is not available for property placed in service after December 31, 2025. Stale information to watch: LADWP's Consumer Rebate page still tells heat pump buyers they 'may also receive up to $2,000 in Federal Tax Credit' and promotes GO ZERO's $3,000 rebate, but the credit ended with 2025 and GO ZERO's single-family portal closed September 4, 2026. SCE's rebates page still describes Golden State Rebates instant coupons, but SDG&E (the program's contract holder) says its retail offerings have ended. SoCalREN's homeowner page only refers residents to utility programs and GoGreen financing; SoCalREN's own residential offerings are multifamily. Municipal utilities (Burbank, Glendale, Pasadena and others) have their own rebates that were not researched here. Federal IRA-funded HEEHRA single-family rebates are waitlisted statewide.",
+  "sources": [
+    {
+      "label": "Census Bureau July 2023 CBSA delineation file (MSA name and counties)",
+      "href": "https://www2.census.gov/programs-surveys/metro-micro/geographies/reference-files/2023/delineation-files/list1_2023.xlsx"
+    },
+    {
+      "label": "LADWP Consumer Rebate Program",
+      "href": "https://www.ladwp.com/residential-services/assistance-programs/consumer-rebate-program"
+    },
+    {
+      "label": "LADWP Home Energy Improvement Program",
+      "href": "https://www.ladwp.com/residential-services/home-energy-improvement-program"
+    },
+    {
+      "label": "LADWP Attic Insulation Rebate Program",
+      "href": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/attic-insulation-rebate-program"
+    },
+    {
+      "label": "LADWP Cool LA",
+      "href": "https://www.ladwp.com/residential-services/assistance-programs/cool-la"
+    },
+    {
+      "label": "LADWP EZ-SAVE",
+      "href": "https://www.ladwp.com/residential-services/assistance-programs/ez-save-program"
+    },
+    {
+      "label": "LADWP assistance programs index",
+      "href": "https://www.ladwp.com/residential-services/assistance-programs"
+    },
+    {
+      "label": "LADWP HOME LA",
+      "href": "https://www.ladwp.com/construction-services/home-la"
+    },
+    {
+      "label": "Mayor of Los Angeles: HOME LA launch (Aug 15, 2025)",
+      "href": "https://mayor.lacity.gov/news/resilient-rebuilding-city-launches-new-home-la-pilot-program-help-palisades-residents-rebuild"
+    },
+    {
+      "label": "SCE About (service area)",
+      "href": "https://www.sce.com/about-sce"
+    },
+    {
+      "label": "SCE Energy Savings Assistance, Building Electrification and ESA Whole Home notices",
+      "href": "https://www.sce.com/save-money/income-qualified-programs/energy-savings-assistance-program"
+    },
+    {
+      "label": "SCE Rebates & SCE Marketplace",
+      "href": "https://www.sce.com/save-money/rebates-financial-assistance/rebates-sce-marketplace"
+    },
+    {
+      "label": "Home Performance Plus (SCE)",
+      "href": "https://homeperformanceplusca.com/sce/"
+    },
+    {
+      "label": "Home Performance Plus rebates",
+      "href": "https://homeperformanceplusca.com/sce/rebates/"
+    },
+    {
+      "label": "SDG&E rebates page (Golden State Rebates ended)",
+      "href": "https://www.sdge.com/rebates"
+    },
+    {
+      "label": "SDG&E About Us (service area incl. southern Orange County)",
+      "href": "https://www.sdge.com/more-information/our-company/about-us"
+    },
+    {
+      "label": "SoCalGas Rebates & Incentives",
+      "href": "https://www.socalgas.com/savings/rebates-and-incentives"
+    },
+    {
+      "label": "SoCalGas Energy Savings Assistance",
+      "href": "https://www.socalgas.com/billing-payment/assistance-programs/energy-savings-assistance-program"
+    },
+    {
+      "label": "SoCalGas About Us",
+      "href": "https://www.socalgas.com/about-us"
+    },
+    {
+      "label": "Clean Power Alliance - About",
+      "href": "https://cleanpoweralliance.org/about-clean-power-alliance/"
+    },
+    {
+      "label": "Clean Power Alliance - Residential",
+      "href": "https://cleanpoweralliance.org/residential/"
+    },
+    {
+      "label": "SoCalREN homeowner resources",
+      "href": "https://socalren.org/residential/homeowners"
+    },
+    {
+      "label": "South Coast AQMD GO ZERO",
+      "href": "https://www.aqmd.gov/go-zero"
+    },
+    {
+      "label": "South Coast AQMD release: GO ZERO re-opens Aug 28, 2026",
+      "href": "https://www.aqmd.gov/docs/default-source/news-archive/2026/go-zero-incentive-program-for-zero-emission-heat-pumps-re-opens-august-28-2026.pdf"
+    },
+    {
+      "label": "GO ZERO single-family portal notice",
+      "href": "https://gozeroprogram.com/"
+    },
+    {
+      "label": "South Coast AQMD PAR 1111/1121 status",
+      "href": "https://www.aqmd.gov/home/rules-compliance/rules/scaqmd-rule-book/proposed-rules/rule-1111-and-rule-1121"
+    },
+    {
+      "label": "TECH Clean California incentives updates",
+      "href": "https://techcleanca.com/incentives/"
+    },
+    {
+      "label": "TECH Clean California single-family incentives",
+      "href": "https://techcleanca.com/incentives/single-family-incentives/"
+    },
+    {
+      "label": "TECH Clean California San Fernando Valley incentives",
+      "href": "https://techcleanca.com/incentives/sanfernandovalley/"
+    },
+    {
+      "label": "TECH Clean California HEEHRA rebates",
+      "href": "https://techcleanca.com/incentives/heehrarebates/"
+    },
+    {
+      "label": "CEC IRA residential energy rebate programs",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs"
+    },
+    {
+      "label": "CEC EBD Statewide Direct Install program",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/equitable-building-decarbonization-program/ebd-statewide-direct"
+    },
+    {
+      "label": "SoCal EBD program site",
+      "href": "https://socalebd.org/"
+    },
+    {
+      "label": "LA County ISD release on EBD (May 20, 2026)",
+      "href": "https://isd.lacounty.gov/no-cost-home-energy-upgrades/"
+    },
+    {
+      "label": "Home Energy Score California FAQ",
+      "href": "https://www.homescoreca.org/faq"
+    },
+    {
+      "label": "Home Energy Score California - how it works",
+      "href": "https://www.homescoreca.org/how-the-score-works"
+    },
+    {
+      "label": "GoGreen Home Energy Financing",
+      "href": "https://gogreenfinancing.com/residential"
+    },
+    {
+      "label": "CSD Weatherization Assistance Program",
+      "href": "https://csd.ca.gov/Pages/Residential-Energy-Efficiency.aspx"
+    },
+    {
+      "label": "CSD Directory of Service Providers (CSV, data.chhs.ca.gov)",
+      "href": "https://data.chhs.ca.gov/dataset/e8d55304-b058-41de-a59f-4f646d792c11/resource/e0dc77e1-8575-4e20-8ade-3135158daf4b/download/directory-of-service-providers.csv"
+    },
+    {
+      "label": "LADBS EBEWE program",
+      "href": "https://www.ladbsservices2.lacity.org/ebewe"
+    },
+    {
+      "label": "LADBS EBEWE ordinances (scope 20,000 sq ft)",
+      "href": "https://dbs.lacity.gov/sites/default/files/efs/forms/pc17/ebewe-ordinances.pdf"
+    },
+    {
+      "label": "CEC Building Energy Benchmarking Program",
+      "href": "https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program"
+    },
+    {
+      "label": "CEQAnet: West Hollywood Equitable Building Performance Standards",
+      "href": "https://ceqanet.lci.ca.gov/2025120319"
+    },
+    {
+      "label": "Pasadena Water and Power",
+      "href": "https://pwp.cityofpasadena.net/"
+    },
+    {
+      "label": "IRS Energy Efficient Home Improvement Credit",
+      "href": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit"
+    },
+    {
+      "label": "IRS Residential Clean Energy Credit",
+      "href": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit"
+    }
+  ]
+}

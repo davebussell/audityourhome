@@ -10,7 +10,7 @@ const { id, label, calc, selected, button, placeholder, hint } = Astro.props;
 const groups = citiesByProvince().map((g) => ({ ...g, cities: [...g.cities].sort((a, b) => cityName(a).localeCompare(cityName(b), 'en-CA')) }));
 ---
 
-<form class="picker city-picker" data-picker data-calc={calc ?? ''} action={calc ? `/calculators/${calc}/` : '/calculators/'} method="get">
+<form class="picker city-picker" data-picker data-calc={calc ?? ''} action={calc ? `/ca/calculators/${calc}/` : '/ca/calculators/'} method="get">
   <div class="field">
     <label for={id}>{label}</label>
     <select id={id} name="city" aria-describedby={hint ? `${id}-hint` : undefined}>
@@ -35,7 +35,7 @@ const groups = citiesByProvince().map((g) => ({ ...g, cities: [...g.cities].sort
     if (calc) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (sel?.value) window.location.href = `/calculators/${calc}/${sel.value}/`;
+        if (sel?.value) window.location.href = `/ca/calculators/${calc}/${sel.value}/`;
       });
       return;
     }
@@ -46,7 +46,7 @@ const groups = citiesByProvince().map((g) => ({ ...g, cities: [...g.cities].sort
       const name = sel?.selectedOptions[0]?.textContent ?? '';
       links.forEach((a) => {
         const c = a.dataset.calcLink!;
-        a.href = slug ? `/calculators/${c}/${slug}/` : `/calculators/${c}/`;
+        a.href = slug ? `/ca/calculators/${c}/${slug}/` : `/ca/calculators/${c}/`;
         const where = a.querySelector<HTMLElement>('[data-where]');
         if (where) where.textContent = slug ? `Open for ${name} →` : 'Open the calculator →';
       });

@@ -145,22 +145,22 @@ class Sources(GP.Sources):
 # ------------------------------------------------------------------ services on area pages
 SERVICES = [
     dict(slug='home-energy-audit', name='Home energy audits', short='Home energy audit', cat='energy', photo='home-energy-audit',
-         guide='/articles/what-is-a-home-energy-audit/', guideLabel='What a home energy audit involves', hub='/services/home-energy-audit/',
+         guide='/ca/articles/what-is-a-home-energy-audit/', guideLabel='What a home energy audit involves', hub='/ca/services/home-energy-audit/',
          blurb='EnerGuide home energy assessments by NRCan-registered energy advisors: blower door, full inspection, rating and upgrade list.'),
     dict(slug='heat-loss-calculation', name='Heat loss calculations', short='Heat loss calculation', cat='energy', photo='heat-loss-calculation',
-         guide='/tests/heat-loss-calc/', guideLabel='The CSA F280 heat-loss calculation', hub='/services/heat-loss-calculation/',
+         guide='/ca/tests/heat-loss-calc/', guideLabel='The CSA F280 heat-loss calculation', hub='/ca/services/heat-loss-calculation/',
          blurb='Room-by-room CSA F280-12 calculations at the local design temperature, for sizing a heat pump or furnace.'),
     dict(slug='radon-testing', name='Radon testing and long-term monitoring', short='Radon testing', cat='health', photo='radon-testing',
-         guide='/tests/radon/', guideLabel='The radon testing guide', hub='/services/radon-testing/',
+         guide='/ca/tests/radon/', guideLabel='The radon testing guide', hub='/ca/services/radon-testing/',
          blurb='Long-term radon tests of at least 91 days in the heating season, monitors, and mitigation by C-NRPP professionals.'),
     dict(slug='mold-testing', name='Mould and indoor air quality testing', short='Mould and air quality testing', cat='health', photo='mold-testing',
-         guide='/tests/mold-iaq/', guideLabel='The mould and indoor air quality guide', hub='/services/mold-testing/',
+         guide='/ca/tests/mold-iaq/', guideLabel='The mould and indoor air quality guide', hub='/ca/services/mold-testing/',
          blurb='Mould inspection and air quality sampling, the size rules for safe cleanup, and when to hire a remediation contractor.'),
     dict(slug='well-water-testing', name='Well water testing', short='Well water testing', cat='health', photo='well-water-testing',
-         guide='/tests/well-water/', guideLabel='The well water guide', hub='/services/well-water-testing/',
+         guide='/ca/tests/well-water/', guideLabel='The well water guide', hub='/ca/services/well-water-testing/',
          blurb='Bacteria testing (E. coli and total coliforms) for private wells, where to get bottles locally, and chemistry tests.'),
     dict(slug='wood-burning-inspection', name='Wood-burning appliance inspections (WETT)', short='Wood stove and chimney inspection', cat='health',
-         photo=None, guide='/tests/wood-burning-inspection/', guideLabel='The wood-burning inspection guide', hub=None,
+         photo=None, guide='/ca/tests/wood-burning-inspection/', guideLabel='The wood-burning inspection guide', hub=None,
          blurb='WETT-certified inspections of wood stoves, inserts, chimneys and flue pipes, and the yearly chimney inspection rule.'),
 ]
 SV = {s['slug']: s for s in SERVICES}
@@ -451,7 +451,7 @@ def providers_block(a, area, key='main'):
     towns = list(d['towns'].keys())
     fsas = [f for t in d['towns'].values() for f in t['fsas']]
     items = [{'name': o['name'], 'phone': o['phone'], 'towns': o['towns'], 'allTowns': len(o['towns']) == len(towns),
-              'profile': f"/providers/{o['profile']}/" if o['profile'] else None, 'hrs': o['hrs'], 'gcc': o['gcc']} for o in d['orgs']]
+              'profile': f"/ca/providers/{o['profile']}/" if o['profile'] else None, 'hrs': o['hrs'], 'gcc': o['gcc']} for o in d['orgs']]
     lab = area['section']['name'] if key == area.get('section', {}) and area.get('section') else None
     return {'key': key, 'towns': towns, 'fsas': fsas, 'items': items, 'count': len(items),
             'heading': (f"NRCan-registered energy advisors for {area['section']['name']}" if key not in ('main', 'nearby')
@@ -982,7 +982,7 @@ def gen_wood(a, area, src):
         "Burn dry wood: the US EPA says wood burns best below 20% moisture; check it with a moisture meter.",
         "Dense smoke at the top of the chimney is a warning sign of poor operation, a wrongly sized chimney or unsuitable fuel (National Fire Code note).",
         "Keep combustible things out of the clearance space around the stove and flue pipe.",
-        "Have the chimney inspected after any chimney fire, and when you add or replace an appliance."]) + p(link('/tests/wood-burning-inspection/', 'Read the full wood-burning inspection guide') + '.')})
+        "Have the chimney inspected after any chimney fire, and when you add or replace an appliance."]) + p(link('/ca/tests/wood-burning-inspection/', 'Read the full wood-burning inspection guide') + '.')})
     src.add('wood-epaPractice')
     pg['sections'] = secs
     pg['providers'] = None
@@ -1079,7 +1079,7 @@ def hub(a, area, src):
 
 # ------------------------------------------------------------------ build
 def related(a, area, svc):
-    return [{'href': f"/areas/{a['slug']}/{s['slug']}/", 'label': s['name']} for s in SERVICES if s['slug'] != svc]
+    return [{'href': f"/ca/areas/{a['slug']}/{s['slug']}/", 'label': s['name']} for s in SERVICES if s['slug'] != svc]
 
 
 def snapshot(area):

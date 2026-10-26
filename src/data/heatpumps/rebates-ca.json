@@ -1,0 +1,800 @@
+{
+ "checked": "2026-10-19",
+ "energyStar": {
+  "coldClimateCriteria": "Specification: ENERGY STAR Program Requirements for Heat Pumps, Version 6.2 (latest revision 'Rev. February 2, 2026'; the V6.2 amendment was finalized with a December 4, 2024 cover letter and revised March 2025). The spec text still says it 'shall take effect on January 1, 2023' (the Version 6.1 date), and a model must meet the spec in effect on its date of manufacture. The central air conditioner part of the spec was sunset in February 2026, so it now covers heat pumps only. Cold Climate is an optional designation/mark for ENERGY STAR heat pumps and requires ALL of: (1) SEER2 ≥ 15.2 and HSPF2 ≥ 8.5 for non-ducted split systems, HSPF2 ≥ 8.1 for ducted split systems and for single-package units (no EER2 floor in the Cold Climate table; base ENERGY STAR is ≥ 7.8 HSPF2 / 15.2 SEER2 / 11.0 EER2 for split systems and ≥ 7.2 / 15.2 / 10.0 for single-package); (2) COP at 5°F (−15°C) ≥ 1.75, measured with the DOE Appendix M1 H42 test; (3) heating capacity at 5°F ≥ 70% of heating capacity at 47°F (8.3°C), where the 47°F figure is the nominal heating capacity from the Appendix M1 H1N test for variable-speed compressors (at the maximum speed the controls would use at 47°F) or the H12 test otherwise; (4) a controls verification procedure (CVP) showing those 5°F results are achieved by the unit's native controls 'operating as they would in a customer's home' — either the ENERGY STAR Cold Climate Heat Pump CVP or a CVP adopted by DOE into the CFR. The ENERGY STAR CVP (Rev. March 2025) runs the unit at the 5°F H4 outdoor condition with the thermostat at its maximum achievable set point, field settings from the installation manual, no steady-state 'test mode' or control overrides, a pretest of up to four hours, a defrost cycle, then a one-hour official test; it passes only if COP @ 5°F ≥ 1.75 and capacity @ 5°F ≥ 70% of the certified 47°F capacity. There is no 17°F requirement. In its V6.2 comment response EPA kept the 70% ratio (CEE adopted 60%) and said it would revisit in 2026 whether the DOE CVP should become the only pathway; we found no posted decision.",
+  "coldClimateUrl": "https://www.energystar.gov/products/heating_cooling/heat_pumps_air_source/key_product_criteria",
+  "mostEfficient2026": "Not found. As of October 19, 2026, EPA's Most Efficient pages (2025 criteria page, 2025 criteria-development page and criteria archive) and NRCan's ENERGY STAR Most Efficient page (modified October 20, 2025) show no 2026 criteria for air-source heat pumps; the latest published set is ENERGY STAR Most Efficient 2025 (final December 2024, unchanged from the proposal). It requires ENERGY STAR certification plus: split heat pumps, ducted or ductless ≥ 16.0 SEER2 / ≥ 11.0 EER2 / ≥ 8.0 HSPF2; single-package ≥ 15.2 / ≥ 10.0 / ≥ 7.2; Cold Climate split (ducted or ductless) ≥ 16.0 / ≥ 9.8 / ≥ 8.5; Cold Climate packaged ≥ 15.2 / ≥ 10.0 / ≥ 8.1; every recognized model COP ≥ 1.75 at 5°F (H42 test) and capacity at 5°F ≥ 45% of 47°F capacity (≥ 70% for Cold Climate models); the installation-benefits requirement was removed. Recognition period January 1–December 31, 2025, with the designation kept while the model stays on the market. No official page we could read says whether these criteria were carried into 2026.",
+  "mostEfficientUrl": "https://www.energystar.gov/sites/default/files/2024-12/Final%20ASHP%20ENERGY%20STAR%20Most%20Efficient%202025%20Criteria.pdf",
+  "canadaSameCriteria": "Yes. NRCan's ENERGY STAR Canada technical specifications page (modified June 30, 2026) lists 'Heat pumps-air source' with a link straight to the U.S. EPA specification page, and says 'For most technical specifications, ENERGY STAR Canada links directly to the U.S. ENERGY STAR website' and that the eligible product lists in Canada and the U.S. are 'almost identical', with 'a few exceptions related to our different climates' (for air-source heat pumps it adds links to Canada's Energy Efficiency Regulations). NRCan also hosts the U.S. Version 6.1 specification PDF unchanged, and its communiqués relay EPA's heat pump spec changes. Caution for the guide: NRCan's own rebate lists (Greener Homes / Oil to Heat Pump) use different, Canadian thresholds — HSPF2 Region V ≥ 6.6, SEER2 ≥ 15.2, COP ≥ 1.8 at −15°C at maximum capacity and ≥ 70% capacity maintenance — so 'ENERGY STAR Cold Climate' and 'cold climate on NRCan's list' are not the same test."
+ },
+ "canada": {
+  "federalList": {
+   "name": "NRCan Searchable Product List (spl-lpi.nrcan-rncan.gc.ca): Canada Greener Homes eligible product lists — 'Air Source Heat Pumps and Cold Climate Air Source Heat Pumps' (ASHP1_GH; all provinces and territories except Quebec and Nova Scotia), 'Cold Climate Air Source Heat Pumps in Quebec and Nova Scotia' (ASHP2_GH), 'Ground Source Heat Pumps' (HP_GS_GH) and heat pump water heaters (HP_WH_GH) — plus the Oil to Heat Pump Affordability lists (ASHP1_OHPA general; ASHP2_OHPA New Brunswick and Nova Scotia; ASHP3_OHPA British Columbia only; ASHP4_OHPA 'Cold Climate Air Source Heat Pumps for Manitoba and Yukon'; HP_GS_OHPA ground source).",
+   "whatQualifies": "Per NRCan's 'How products are listed' page (modified July 10, 2026), the air-source lists are built from ENERGY STAR certified heat pumps (via the AHRI Directory), NEEP's cold climate list and NRCan's regulated-products list, with manufacturers responsible for reporting. ENERGY STAR air-source heat pumps: HSPF2 (AHRI Climate Region V) ≥ 6.6 and SEER2 ≥ 15.2, status Active or Production Stopped (the OHPA criteria page says 'ENERGY STAR version 6.1 certified'). Cold climate air-source heat pumps: HSPF2 Region V ≥ 6.6 and SEER2 ≥ 15.2; capacity maintenance (maximum at −15°C/5°F ÷ rated at 8.3°C/47°F) ≥ 70%; COP ≥ 1.8 at −15°C at maximum capacity; status 'Live'; variable-capacity compressor with 3 or more distinct speeds or continuously variable. A unit that qualifies both ways is listed only as cold climate. Systems qualifying only on HSPF Region IV ≥ 10 are no longer added (those already listed stayed eligible until June 1, 2025). 'Coils Only' systems (AHRI HRCU-A-C) count for OHPA only when paired with an electric furnace; Hybrid and Coils Only systems are not eligible for BC residents on the OHPA list. Ground source: only water-to-air and brine-to-air units, which are regulated under Canada's Energy Efficiency Regulations, 2016 (SOR/2016-311); DX, water-to-water and brine-to-water systems are not eligible. Equipment must be bought in Canada (online only from a Canadian distributor). Lists are updated quarterly (March, June, September, December); the air-source list pages say they were last updated August 7, 2026, and the Greener Homes ground-source list September 26, 2025.",
+   "howToCheck": "Ask the contractor to put the AHRI reference number, the brand, and the indoor and outdoor model numbers (plus furnace or air handler, if any) on the quote. Open the list for your program and province, type the AHRI number in the 'AHRI / Verification reference' field and press Enter, then confirm the brand and every model number match the quote exactly (a full CSV download is also offered). Quebec and Nova Scotia residents use the separate cold-climate list. Note that the Greener Homes list pages still carry the old grant's wording (a 'Grant amount' column and the Renovation Upgrade Report requirement) even though that grant is closed.",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/products-are-listed-canada-greener-homes-initiative (criteria); lists: https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=ASHP1_GH , https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=ASHP2_GH&page=1 , https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=HP_GS_GH&page=1 , OHPA lists via https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/eligibility-criteria-oil-heat-pump-affordability-program",
+   "nationalHeatPumpRebateEquipment": "The ECCC backgrounder of October 8, 2026 says the rebate is for homeowners 'installing eligible electric cold climate air source heat pumps', and: 'To qualify for the Rebate, heat pumps must be on the \"Eligible Products List\",' described as 'an extensive selection of over 100,000 options at various price points and configurations, all suited for the Canadian climate.' Homeowners apply online with basic personal information, get approval within 24 hours, and after 'the purchase and installation of the pre-approved heat pump' upload receipts, with payment approved within five days; no energy audits before or after. Up to $10,000 for households below the median income, $2,000 for other eligible homeowners; one rebate per person (e.g., a landlord who installs one in a rental can't also get one for their own home). Ground-source systems aren't mentioned. Neither the backgrounder, the PMO release (which says both rebates 'can be combined with existing provincial programs'), the ECCC release of October 9, nor the campaign page (modified October 8, 2026; launch dates, eligibility, amounts and how to apply 'to come') says which NRCan list or which cold-climate criteria will apply. Hydro-Québec's LogisVert page now says the federal funding starts in 2027 and 'details about this offer are not yet known'. Source: https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html"
+  },
+  "provinces": [
+   {
+    "province": "ontario",
+    "programs": [
+     {
+      "name": "Home Renovation Savings — heat pump rebates (no assessment)",
+      "runBy": "Enbridge Gas and Save on Energy (IESO)",
+      "heatPumpRebate": "Owned homes heated by electricity, oil, propane or wood: cold-climate air-source (centrally ducted, ductless or partially ducted mini-split, or multi-split) $1,250 per ton up to $7,500; ground-source $2,000 per ton up to $12,000. Enbridge natural-gas-heated homes: air-source $500 per ton up to $2,000; ground-source $3,000 flat. Rented heat pumps, any fuel: air-source $500 per ton up to $2,000; ground-source $3,000. No separate ducted/ductless amounts. Air-source tons are based on the minimum rated heating capacity at 8.3°C (47°F); ground-source on closed-loop capacity (open-loop capacity for open-loop-only systems).",
+      "equipmentRule": "Air-source: an active cold-climate model on NRCan's Eligible Product Lists for Air Source Heat Pumps and Cold Climate Heat Pumps meeting HSPF2 (Region V) ≥ 6.6, SEER2 ≥ 15.2, COP ≥ 1.8 at −15°C (5°F) at maximum capacity, capacity maintenance (max at −15°C vs rated at 8.3°C) ≥ 70%, variable capacity (3+ speeds or continuously variable), rated heating capacity ≥ 12,000 BTU/h at 8.3°C, status Live/Active, sold in Canada; de-listed, inactive or archived models don't qualify. Indoor and outdoor units must be listed together under one AHRI number (except 'Coils only', AHRI HRCU-A-C). Up to three ccASHPs can count toward one rebate. Ground-source: water-to-air models must be active on NRCan's Eligible Product List for Ground Source Heat Pumps; water-to-water models must be on the ENERGY STAR Certified Geothermal Heat Pump list, available in Canada, with the AHRI certificate; DX systems not eligible; must meet Canada's Energy Efficiency Regulations and/or O. Reg. 509/18; IGSHPA-certified installer; a CSA C448 installation attestation is 'highly recommended'; ground loop sized to the home's heating load. Sizing: the contractor does the load calculation and submits NRCan's ASHP Sizing and Selection Tool form for each system (one per outdoor unit); gas- and propane-heated homes may use NRCan sizing options A–D; oil-, wood- or electric-heated homes only options C or D (D = the heat pump supplies all or nearly all heating over the season).",
+      "otherConditions": "Written pre-approval of the participating contractor's pre-installation application is mandatory; installs before approval get nothing. Participating HVAC contractor only (Ontario business licence, 2+ consecutive years of heat pump business in Ontario, 313A/313D licence, TSSA registration, ozone depletion prevention certificate). The home must not already have a heat pump for space heating (replacements ineligible); new homes need 6 months' occupancy. One rebate per home. Gas homes may keep or add a furnace as backup (no rebate on backup); wood or electric homes may keep existing heat as backup; oil homes may use electric-resistance backup and must have the oil tank removed by a TSSA-registered contractor. Post-installation paperwork within 30 days. The heat pump page and the May 2025 requirements show no end date.",
+      "status": "open",
+      "url": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Save on Energy Energy Affordability Program — free cold-climate heat pumps",
+      "runBy": "Save on Energy (IESO); oil-heated homes funded through NRCan's Oil to Heat Pump Affordability program",
+      "heatPumpRebate": "A cold-climate air-source heat pump installed at no cost for income-eligible households; listed under Comprehensive Support 'for homes heated by electricity or oil'. No ground-source offer.",
+      "equipmentRule": "'Cold climate air source heat pump' chosen and installed through the program; no model list, certification or sizing rule is published on the program pages.",
+      "otherConditions": "Income-eligible under the Comprehensive Support income table; the utility account holder who owns, rents or leases the home (the heat pump text says 'eligible homeowners'). No dates or closing notice shown. Phone 1-844-770-3148.",
+      "status": "open",
+      "url": "https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program/Air-Source-Heat-Pumps",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "quebec",
+    "programs": [
+     {
+      "name": "LogisVert — residential heat pump and geothermal grants",
+      "runBy": "Hydro-Québec",
+      "heatPumpRebate": "Air-source (central or mini-split): $50 per 1,000 BTU/h of heating capacity at −8°C for an ENERGY STAR certified heat pump; $120 per 1,000 BTU/h if it is an ENERGY STAR model 'classified cold climate' (Hydro-Québec's summary card says 'up to $6,700' without a breakdown). Eligible multi-unit buildings, installs from June 15, 2026: +$100 per 1,000 BTU/h at −8°C (total $220), not combinable with the 5% multiple-measures bonus or any other Hydro-Québec or government offer. Geothermal: new system $750 per 1,000 BTU/h, capped at $54,000 per house and limited to 72,000 BTU/h since August 25, 2025; replacement $250 per 1,000 BTU/h, capped at $18,000 per address. Electric thermal storage: $15,000, or $22,000 when combined with a central heat pump (installer page).",
+      "equipmentRule": "Heat pumps installed on or after November 26, 2025 must be ENERGY STAR certified; the $120 rate needs an ENERGY STAR model 'classified cold climate' (the participant's guide, version 1.10 of September 15, 2026, doesn't define the term further). The model must be on Hydro-Québec's list of eligible heat pumps ('Liste des thermopompes admissibles au Programme', which prevails over the online search tool; searchable by ENERGY STAR Unique ID or AHRI model number, filtered by installation date); the invoice must show the AHRI or ENERGY STAR number. Outdoor unit ≥ 12,000 BTU/h nominal cooling capacity. The grant is calculated on heating capacity at −8°C; neither the guide nor the search page explains how that figure is derived beyond the eligible list. Geothermal: complete system new and bought in Quebec; at least 18,000 BTU/h for a single-family home (12,000 BTU/h per address in multiplexes up to 19 units); wells sized to the heat pumps' capacity; no ENERGY STAR or CSA C448 requirement stated on the installer page.",
+      "otherConditions": "No evaluation required. Buy new from a Quebec retailer; contractor registered with the Registraire des entreprises, holding the RBQ licences for the work and belonging to the relevant professional body. Apply within nine months of installation (portal in French); geothermal and thermal storage grants are deducted by the installer. Not eligible: indoor units or ducts outside the insulated living space; replacing a single coil or a single indoor or outdoor unit; replacing a heat pump after equipment failure (warranty or insurance); installing or replacing a central heat pump in a home with a geothermal system; geothermal replacement without drilling. Grant can't exceed the pre-tax cost. New notice on the page: on October 8, 2026 Ottawa announced heat pump funding from 2027; 'Details about this offer are not yet known' and LogisVert requests are processed normally.",
+      "status": "open",
+      "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "LogisVert — modest-income households (free heat pump; Greener Homes Affordability partner)",
+      "runBy": "Hydro-Québec, with federal Canada Greener Homes Affordability Program funding",
+      "heatPumpRebate": "Heat pump, installation and support at no cost (a municipality may charge permit fees).",
+      "equipmentRule": "Equipment chosen and installed by the program; no model list or certification rule published on the page.",
+      "otherConditions": "Tenant or owner; main residence heated by baseboard heaters; no heat pump already installed; household income before tax under the 2026–2027 limits ($59,076 for one person to $144,705 for six or more); registered for Éconologis after September 30, 2025. Rollout continues gradually from early fall 2026 through year-end, in certain regions first.",
+      "status": "closed",
+      "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/modest-income-households/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Hydro-Québec dual-energy offer (natural gas + electric central heat pump)",
+      "runBy": "Hydro-Québec with Énergir and Enbridge Gaz Québec (page refers to the Chauffez vert program)",
+      "heatPumpRebate": "$7,300 for Énergir customers or $6,800 for Enbridge Gaz Québec customers to add an electric central heat pump to a forced-air natural gas system in a detached, semi-detached or row house, or a condo with its own heating system. Duplexes, triplexes and hot-water systems are said to qualify but no amount is given. No ground-source amount.",
+      "equipmentRule": "An 'electric central heat pump' added to the existing natural gas system. The page states no ENERGY STAR, cold-climate, capacity or model-list requirement; the gas distributor handles eligibility.",
+      "otherConditions": "Contact the gas distributor (Énergir 1 844 480-1313; Enbridge Gaz Québec 1 819 771-8321) and get contractor bids that include the assistance; billing on Rate DT. Homes already heated by electricity aren't eligible (per our October 8 data). The page shows no dates or funding status.",
+      "status": "open",
+      "url": "https://www.hydroquebec.com/residential/energy-wise/offers-to-save/dual-energy-offer.html",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Chauffez vert — oil and propane conversion component",
+      "runBy": "Government of Quebec (MELCCFP)",
+      "heatPumpRebate": "None now: aid has not been offered since March 31, 2026, and applications received after that date are refused.",
+      "equipmentRule": "While it ran: a new system powered by electricity or a combination of renewables (e.g., an air-source heat pump or electric baseboards), new equipment only, with the oil or propane furnace or boiler and the tank fully removed; RBQ-licensed contractor. No ENERGY STAR or cold-climate rule was stated.",
+      "otherConditions": "Natural gas systems weren't eligible for this component. Quebec's page (updated July 6, 2026) says the conversion component ended after nearly 14 years and 64,000+ households.",
+      "status": "closed",
+      "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/chauffez-vert-mazout-propane",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "bc",
+    "programs": [
+     {
+      "name": "Home Renovation Rebate — air-source heat pump replacing electric heat",
+      "runBy": "BC Hydro and FortisBC (electricity customers), under CleanBC Better Homes",
+      "heatPumpRebate": "Ducted or ductless (mini-split, multi-split or central) replacing hard-wired electric heat: whole home $4,000; partial home $1,500 (same amount from BC Hydro or FortisBC). BC Hydro limited-time bonus: up to $1,000 for an eligible air-source heat pump completed, invoiced and paid between August 1 and October 31, 2026, apply by November 30, 2026, first come first served while funds last. No ground-source rebate appears in the program's requirements or BC Hydro's rebate table.",
+      "equipmentRule": "Listed as a qualifying system on the Qualified Heat Pump Product List (BC Hydro's 'rebate-eligible heat pump list' lookup, app.bchydro.com/hero/HeatPumpLookup) with a variable-speed compressor; SEER ≥ 16 and HSPF (Region IV) ≥ 10.0, or SEER2 ≥ 15.2 and HSPF2 (Region IV) ≥ 8.5; minimum 12,000 BTU (1 ton) rated at 8°C/47°F; AHRI certified reference; sized to hold 22°C at −5°C (or at local design temperature in colder areas, e.g. −23°C in Kamloops). Whole home: also on the NEEP Cold Climate Air Source Heat Pump list, sized for 100% of the home's heating at −5°C without electric resistance heat, serving at least 80% of conditioned space, with a heat load calculation from CSA F280-12 verified software plus the program's summary form. Partial home: at least 50% of the home's heating requirement in a main living area; NEEP listing and F280 calculation recommended, not required; homes over 1,200 sq ft need a multi-split or central system.",
+      "otherConditions": "Home primarily heated by electricity and the heat pump replaces a hard-wired electric system; wood-heated homes get no heat pump rebate. Installed by a Home Performance Contractor Network member verified for heating and cooling (no self-installs). One primary space-heating rebate per home; year-round primary residence at least 12 months old; apply within 6 months. New requirements apply to invoices dated on or after October 15, 2026 (earlier installs use the May 15, 2026 rules). Can't be combined with the CleanBC or FortisBC income-qualified programs. The heat pump also counts as one bonus-eligible upgrade toward the $300 Two Upgrade Bonus or the $750–$2,000 Home Energy Improvement Bonus (pre- and post-upgrade EnerGuide evaluations; air-to-water combined space and water heating counts as two upgrades).",
+      "status": "open",
+      "url": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Home Renovation Rebate — Northern heat pump offers (north of and including 100 Mile House)",
+      "runBy": "CleanBC (Province of B.C.), for BC Hydro electricity customers",
+      "heatPumpRebate": "Converting from oil, propane or natural gas: ductless mini-split, ductless multi-split or central ducted (Tier 2) $6,000 (same amount for every fossil fuel); Northern dual fuel heat pump with fossil-fuel backup $4,500 (BC Hydro's table: PNG residential gas customers); air-to-water $6,000 for space heating or $7,000 combined space and water; northern heat pump water heater $1,000. Better Homes BC's overview says 'up to $6,000' for oil-heated and 'up to $8,000' for gas- or propane-heated northern homes; none of the itemized pages shows how $8,000 is reached.",
+      "equipmentRule": "Qualified Heat Pump Product List; SEER ≥ 16 and HSPF (Region IV) ≥ 10.0, or SEER2 ≥ 15.2 and HSPF2 (Region IV) ≥ 8.5; minimum 12,000 BTU (1 ton); variable-speed compressor for ductless and central systems (not required for northern dual fuel); central ducted maximum static pressure ≥ 0.6 in. WC; ductless mini-split only in homes of 1,200 sq ft or less; sized to work as the home's primary heating. Air-to-water: on the Air-to-Water Heat Pump Qualifying List, commissioned in the DSMAlly app. Dual fuel: program-approved heat load calculation, two-pipe direct-vent gas furnace backup, outdoor switch-over controls set to program temperatures.",
+      "otherConditions": "Home connected to BC Hydro and at or north of latitude 51.628°N; fossil-fuel system removed with proof (BC Hydro's table lets northern homes heated mainly by an oil furnace keep it as backup); HPCN contractor; apply within 6 months of the invoice; one primary space-heating rebate per home.",
+      "status": "open",
+      "url": "https://www.betterhomesbc.ca/rebates/northern-central-ducted-heat-pump-rebate",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "FortisBC dual fuel heating system rebate (heat pump + gas furnace)",
+      "runBy": "FortisBC (natural gas)",
+      "heatPumpRebate": "$4,000 for an eligible dual-fuel system (heat pump paired with a gas furnace); also $4,000 for Revelstoke customers on FortisBC piped propane. Better Homes BC's separate FortisBC dual-fuel page still shows an older offer ($10,000, or $13,000 for Revelstoke piped propane, furnace at least 10 years old), which conflicts with FortisBC's own page, the October 15, 2026 requirements and BC Hydro's October 2026 rebate table.",
+      "equipmentRule": "Qualified Heat Pump Product List; SEER ≥ 16 and HSPF ≥ 10.00, or SEER2 ≥ 15.20 and HSPF2 ≥ 8.50 (Region IV); AHRI certified reference listing the outdoor unit, indoor unit and furnace; minimum 12,000 BTU (1 ton); program-approved heat load calculation (rule-of-thumb sizing rejected); switch-over control set to 5°C or lower (Lower Mainland, Vancouver Island) or 2°C or lower (Southern Interior, Northern B.C.) for the life of the system; propane backup must be a two-pipe direct-vent furnace.",
+      "otherConditions": "FortisBC natural gas or piped-propane customer replacing a gas or piped-propane furnace at least 15 years old (requirements for invoices dated on or after October 15, 2026); Technical Safety BC licensed gas contractor who is an HPCN member; commissioning in DSMAlly; apply within 6 months.",
+      "status": "open",
+      "url": "https://fortisbc.com/rebates/home/dual-fuel-heating-system-rebate--electric-heat-pump-combined-with-gas-furnace",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "CleanBC Energy Savings Program (income-qualified rebates)",
+      "runBy": "Province of B.C. (CleanBC Better Homes), supported by BC Hydro and FortisBC",
+      "heatPumpRebate": "Up to 100% of eligible costs, capped by income level (Levels 1/2/3): central ducted or 3-head multi-split replacing oil, gas or propane $13,000 / $7,000 / $3,500; replacing electric or wood $5,000 (Level 1) or $4,000 (Level 2, wood only); 2-head multi-split or two single-head mini-splits: oil $11,000 / $5,500 / $3,000, gas or propane $11,000 / $5,500 / $1,000; single-head mini-split: oil $7,000 / $5,000 / $3,000, gas or propane $5,500 / $4,500 / $1,000; air-to-water space heating $13,000 / $7,000 / $3,500 from fossil fuels ($5,000 from electric or wood); combined space and water heat pump $16,500 / $11,500 / $7,000 from fossil fuels ($8,500 from electric or wood); dual fuel ducted (gas or propane) $12,000 / $5,000 / $3,000. Northern top-ups exist north of 100 Mile House. No ground-source line.",
+      "equipmentRule": "Listed as a qualifying system on the Qualified Heat Pump Product List; SEER ≥ 16.0 and HSPF ≥ 10.0, or SEER2 ≥ 15.2 and HSPF2 ≥ 8.5 (Region IV); variable-speed compressor; minimum 12,000 BTU (1 ton); sized to work as the home's primary heating, and a CSA F280-12 heat load calculation 'may be requested'; dual fuel needs a program-approved calculation (rule-of-thumb sizing rejected). No NEEP requirement stated.",
+      "otherConditions": "Pre-register for an eligibility code (valid 3 months) with proof of income; Level 3 only for ground-oriented homes switching from gas, propane or oil. Registered Energy Savings Program contractor buys, supplies and installs, deducts the rebate and claims within 6 months (no self-installs). Gas/propane conversions must remove all fossil-fuel heating equipment and infrastructure; oil homes must remove the oil tank; proof by permit, inspection report or removal invoice. One primary space-heating rebate per home; can't be combined with Home Renovation Rebate funding or OHPA. Requirements for invoices dated on or after July 6, 2026.",
+      "status": "open",
+      "url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/energy-savings-program-requirements/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "BC Hydro Energy Conservation Assistance Program (free upgrades; Greener Homes Affordability partner)",
+      "runBy": "BC Hydro, with federal Canada Greener Homes Affordability Program funding",
+      "heatPumpRebate": "Free home energy evaluation and recommended upgrades at no cost: electrically heated homes may get a ducted or ductless air-source heat pump; homes heated by natural gas, oil, propane or wood may be switched to an electric heat pump, or get a dual-fuel (hybrid) system. Two years of service and maintenance for qualifying BC Hydro electrically heated homes.",
+      "equipmentRule": "Chosen and installed by the program; no model list or certification published. 'Not all homes qualify for a heat pump or fuel switching.'",
+      "otherConditions": "Household income at or under $51,100 (1 person) to $135,100 (7+), previous year, all adults counted; owners and tenants who hold the utility account (landlord consent form); detached homes, townhomes, rowhomes, plexes and manufactured homes, with apartments and condos 'available in Fall 2026'; Pacific Northern Gas customers can apply since August 25, 2026. First come, first served, subject to funding; eligibility doesn't guarantee upgrades.",
+      "status": "limited",
+      "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income/free-product-install-and-advice.html",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "FortisBC income-qualified heat pump rebate and free upgrades",
+      "runBy": "FortisBC",
+      "heatPumpRebate": "FortisBC's income-qualified heat pump page says 'Get up to $12,000 in rebates' for upgrading an electric furnace or baseboard heaters to a high-efficiency air-source heat pump. FortisBC also delivers free home energy evaluations and upgrades for income-qualified households (Greener Homes Affordability partner).",
+      "equipmentRule": "'High-efficiency air source heat pump'; the detailed terms didn't load for us, so the equipment list and criteria are unverified.",
+      "otherConditions": "Income-qualified customers; can't be combined with the Home Renovation Rebate. Income limits, territory (electric vs gas customers) and status not verified.",
+      "status": "open",
+      "url": "https://www.fortisbc.com/rebates/detail/iqheatpump",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "alberta",
+    "programs": [
+     {
+      "name": "Clean Energy Improvement Program (CEIP) — residential property-tax financing",
+      "runBy": "Alberta Municipalities with 27 participating municipalities",
+      "heatPumpRebate": "No rebate: financing of up to 100% of eligible upgrade costs (air-source and ground-source heat pumps included), repaid on the property tax bill over up to 20 years for some upgrades. Calgary: up to $50,000 at an estimated 6.00%–6.10%, closed until winter 2026/2027. Edmonton: 6.00% fixed, waitlist (intake pauses after 150 submissions). Lethbridge 2.83% and Strathcona County 2%: both at capacity and closed to pre-qualification. Municipal extras tied to CEIP: Lethbridge $1,350 rebate on a completed project (limited time); Strathcona County 5% incentive on completed projects. We found no provincial heat pump rebate; Edmonton says its Home Energy Retrofit Accelerator and solar rebates are fully subscribed.",
+      "equipmentRule": "Air-source heat pump (upgrade R-HC-007): ENERGY STAR certified to the most recently published version (no cold-climate requirement); indoor/outdoor combination with an AHRI reference number; must replace or supplement a less efficient heat source; must meet at least 50% of the design heating load of the conditioned space; contractors are encouraged (not required) to size with NRCan's Air Source Heat Pump Sizing and Selection Toolkit. Ground-source heat pump (R-HC-011): ENERGY STAR certified (latest version), meets CSA C448, installed by an IGSHPA-certified installer, at least 50% of the design heating load.",
+      "otherConditions": "EnerGuide home evaluation required; pre-qualify, then submit the project before work starts (Calgary and Edmonton won't finance projects already started); CEIP-qualified contractor; permits required; in Calgary, condos, row and town houses need an electrical load calculation for heat pumps. Each municipality sets its own rate, cap and intake.",
+      "status": "limited",
+      "url": "https://ceip.abmunis.ca/residential/upgrades/heating-ventilation-ac/",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "saskatchewan",
+    "programs": [
+     {
+      "name": "Home Efficiency Retrofit Rebate (no current provincial or utility heat pump rebate)",
+      "runBy": "SaskPower and SaskEnergy",
+      "heatPumpRebate": "None. SaskPower says the Home Efficiency Retrofit Rebate 'ended in April 2026'. SaskEnergy's current residential rebates (Residential Equipment Replacement Rebate, Homes Beyond Code, First Nations Furnace Replacement, Heating Affordability Program) cover gas equipment and new homes, not heat pumps, and SaskPower's Energy Assistance Program upgrades (LEDs, aerators, showerheads, smart thermostat) don't include heat pumps.",
+      "equipmentRule": "Not applicable.",
+      "otherConditions": "City of Saskatoon's Home Energy Loan Program (HELP) finances cold-climate air-source and ground-source heat pumps (per our October 8 data); its equipment-specification page says certain upgrades must be ENERGY STAR certified, but the heat pump specifications wouldn't load for us.",
+      "status": "closed",
+      "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/home-efficiency-retrofit-rebate",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "manitoba",
+    "programs": [
+     {
+      "name": "Air Source Heat Pump Rebate",
+      "runBy": "Efficiency Manitoba",
+      "heatPumpRebate": "$2,000 for a centrally ducted cold-climate air-source heat pump; $1,500 for a ductless one. One rebate per home (the highest-value one if several units are installed).",
+      "equipmentRule": "Listed as a ccASHP on NRCan's Canada Greener Homes eligible product list; ENERGY STAR certified; HSPF2 Region V ≥ 6.6 and SEER2 ≥ 15.2; COP ≥ 1.8 at −15°C (5°F) at maximum capacity; heating capacity maintenance ≥ 70%; variable-capacity compressor (3+ speeds or continuously variable); outdoor, indoor and furnace units part of an AHRI matched system. Sizing: heat loss/gain calculation before installation; sized for up to 100% of the base building's unoccupied transmission and infiltration heating loads; the heat pump provides the first stage of heating and is designed for at least 1,500 full-load hours per heating season (September–May); natural infiltration in the calculation no more than 0.3 air changes per hour.",
+      "otherConditions": "Supplementing electric resistance or natural gas heat (propane and fuel-oil conversions also eligible); primary (not seasonal) residence with Manitoba Hydro service; registered Efficiency Manitoba contractor submits within 90 days of installation; replacing an existing heat pump and new homes not eligible. Registered suppliers get a $100 bonus per application that includes an F280 heat load calculation, for work before March 31, 2027 (page modified August 10, 2026; terms V2 06/25).",
+      "status": "open",
+      "url": "https://efficiencymb.ca/ashp-home/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Ground Source Heat Pump Program (on-bill)",
+      "runBy": "Efficiency Manitoba with Manitoba Hydro",
+      "heatPumpRebate": "No upfront cost, then an interest-free $75 a month for 15 years ($13,500) on the Manitoba Hydro bill; retrofit projects over $38,000, or replacement systems over $18,500, need an upfront contribution; the balance is due on sale or transfer.",
+      "equipmentRule": "The program page lists no equipment specification (no ENERGY STAR, CSA C448 or certification rule stated); registered Efficiency Manitoba contractor.",
+      "otherConditions": "Replacing an electric furnace or boiler, electric baseboards or natural gas heat (fuel-oil conversions may qualify); primary residence; new homes eligible; replacing an existing ground-source system eligible (contact first); wait for email approval, then one year to install; Efficiency Manitoba pays the contractor after the completion declaration, permits and invoices.",
+      "status": "open",
+      "url": "https://efficiencymb.ca/gshp-home/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Energy Efficiency Assistance Program (free heat pumps; Greener Homes Affordability partner)",
+      "runBy": "Efficiency Manitoba, with federal Canada Greener Homes Affordability Program funding",
+      "heatPumpRebate": "A free air-source or ground-source heat pump for qualifying homes. Separate offers: Red River Métis Citizens can get a free ground- or air-source heat pump; First Nation communities get enhanced heat pump rebates (Community Heat Pump Program).",
+      "equipmentRule": "Installed by a registered program contractor; no model list published on the page.",
+      "otherConditions": "Homes with an electric furnace, baseboards or electric boiler; single-detached or semi-detached, lived in year-round; household income before deductions at or under $46,264 (1 person) to $122,432 (7+), with property value and assets possibly considered; owners and renters (landlords may apply, tenants sign consent); status First Nation band members may qualify without the income test.",
+      "status": "open",
+      "url": "https://efficiencymb.ca/my-home/energy-efficiency-assistance-program/",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "new-brunswick",
+    "programs": [
+     {
+      "name": "Total Home Energy Savings Program — space heating rebates",
+      "runBy": "NB Power (SaveEnergyNB)",
+      "heatPumpRebate": "Central ducted air-source heat pump $1,500; furnace heat pump add-on $1,000; mini-split $400; multizone $350 per indoor head; geothermal $2,000.",
+      "equipmentRule": "Central, mini-split and multizone units must be on NB Power's qualifying air-source heat pump list, which for participants registered on or after May 1, 2023 means NRCan's Canada Greener Homes list of Cold Climate Air Source Heat Pumps (updated four times a year); furnace add-on: ENERGY STAR or on that list; geothermal: on the Canada Greener Homes list of Ground Source Heat Pumps or ENERGY STAR.",
+      "otherConditions": "Register, then the $99 + HST Home Energy Evaluation (covers initial and final); rebates are for upgrading the existing primary heating system, with details in the program guidelines dated July 1, 2026 (we couldn't open that PDF: the site's robots.txt blocks it); 9 months from the evaluation to finish; rented equipment may qualify with NB Power's prior approval. Oil-to-heat-pump advance payments closed to new registrations June 30, 2026 (paperwork due October 1, 2026; work and final evaluation by March 31, 2027, no extensions).",
+      "status": "open",
+      "url": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/space-heating-equipment-rebates/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Enhanced Energy Savings Program (free upgrades, income under $70,000)",
+      "runBy": "NB Power (SaveEnergyNB)",
+      "heatPumpRebate": "Free upgrades that include 'energy-efficient heat pumps for heating and cooling' along with insulation and ventilation; a mini-split received through the program comes with a 10-year warranty; support for switching from oil.",
+      "equipmentRule": "Chosen and installed by the program; no model list published on the page.",
+      "otherConditions": "Homeowners with combined household income under $70,000, whatever their heating fuel; pre-upgrade evaluation within 2–3 weeks of confirmation, upgrades 2–7 months later. No dates or intake status shown.",
+      "status": "open",
+      "url": "https://www.saveenergynb.ca/en/for-home/enhanced-energy-savings-program/",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "nova-scotia",
+    "programs": [
+     {
+      "name": "Home Energy Assessment rebates",
+      "runBy": "Efficiency Nova Scotia (EfficiencyOne)",
+      "heatPumpRebate": "Ductless mini-split $300 per ton; centrally ducted $500 per ton; closed-loop geothermal $600 per ton; within the $5,000 assessment-path maximum. Tons = rated capacity at 47°F (12,000 BTU/h per ton, pro-rated), counting only newly added capacity minus any heat pump capacity removed.",
+      "equipmentRule": "Air-source: the model must have a check mark under the right program category on Efficiency Nova Scotia's own heat pump list (the rebate guide doesn't publish the list's criteria). Not eligible: replacement heat pumps; ducted, compact-ducted or mixed-ducted mini-splits; units in unconditioned space. Geothermal: maximum 40 kW (135,000 Btu/h); closed loop heating COP ≥ 3.1 at 0°C entering water and cooling COP ≥ 3.93 at 25°C; open-loop thresholds (heating COP ≥ 3.6 at 10°C, cooling ≥ 4.75 at 15°C) are listed but only closed loop shows a rebate; DX, water-to-water and brine-to-water not eligible. Installed by a certified Refrigeration and Air Conditioning Mechanic.",
+      "otherConditions": "$199 Home Energy Assessment (waived under the income threshold); equipment new, bought in Canada, purchased and installed between the initial and final assessments; 12 months to finish; rebates can't exceed 100% of cost. OHPA through Efficiency Nova Scotia closed to new applicants (July 2, 2026 per our data).",
+      "status": "open",
+      "url": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Moderate Income Rebate (top-up)",
+      "runBy": "Efficiency Nova Scotia (EfficiencyOne)",
+      "heatPumpRebate": "Ductless mini-split $500 per ton; centrally ducted $1,500 per ton; combinable with the assessment-path heat pump rebate; up to $5,000 more (up to $10,000 in all). No geothermal top-up listed.",
+      "equipmentRule": "Same heat pump list rule and exclusions as the assessment path (replacement heat pumps, ducted mini-splits, units in unconditioned space).",
+      "otherConditions": "Owner-occupied primary residence heated mainly by non-electric sources (electrically heated homes not eligible); household income under the program limits; pre-approval per our October 8 data (efficiencyns.ca pages didn't render for us today).",
+      "status": "open",
+      "url": "https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "HomeWarming (free upgrades; Greener Homes Affordability partner)",
+      "runBy": "Efficiency Nova Scotia, with federal Canada Greener Homes Affordability Program funding",
+      "heatPumpRebate": "Efficiency Nova Scotia's page description: 'free energy-efficient upgrades like heat pumps and insulation' for income-qualified homeowners. NRCan also lists the African Nova Scotian Communities Retrofit program as a Nova Scotia partner.",
+      "equipmentRule": "Installed by the program; no criteria published that we could read.",
+      "otherConditions": "Income-qualified homeowners (renters not eligible per our October 8 data). We couldn't verify any separate provincial free heat pump program: efficiencyns.ca pages return only metadata to our fetcher.",
+      "status": "open",
+      "url": "https://www.efficiencyns.ca/programs-rebates/homewarming",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "pei",
+    "programs": [
+     {
+      "name": "efficiencyPEI heat pump rebates (ended) and free heat pumps (closed)",
+      "runBy": "Government of Prince Edward Island (efficiencyPEI)",
+      "heatPumpRebate": "None for new purchases: rebates for air-source heat pumps (mini-split or central) and ground-source heat pumps ended April 15, 2026. Heat pumps bought between April 15, 2025 and April 15, 2026 can still be claimed within one year of the purchase date. Applications for free heat pumps and for OHPA are closed ('many Island households are in line for one').",
+      "equipmentRule": "Not published on the current pages; the former eligible-equipment list is in an Excel file (annual_rebates_epei.xlsx) we didn't open.",
+      "otherConditions": "PEI's Greener Homes Affordability partnership covers free insulation (household income under $55,000), not heat pumps. Heat pumps page published June 30, 2026, metadata modified September 22, 2026.",
+      "status": "closed",
+      "url": "https://www.princeedwardisland.ca/en/information/energy/heat-pumps",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "newfoundland-labrador",
+    "programs": [
+     {
+      "name": "Oil to Electric Incentive Program",
+      "runBy": "takeCHARGE (Newfoundland Power and NL Hydro)",
+      "heatPumpRebate": "Up to $22,000 for income-qualified homeowners (text on the page), covering up to 100% of the switch. Our October 8 data from the incentive chart: central heat pump up to $9,000 ($22,000 income-qualified); multi-split or several mini-splits up to $6,500 ($18,000); electric furnace or boiler up to $5,000 ($10,000). The charts are images, so only the $22,000 figure could be re-read today. Income-qualified customers pre-approved for a central, multi-split or multiple mini-split heat pump also get $250 from NRCan.",
+      "equipmentRule": "'Heat pumps must be listed as eligible equipment for the Oil to Heat Pump (OHPA) grant', i.e., on NRCan's database for the zone where installed (NRCan's OHPA lists are split by province group). Whole-house heating required, with an installer attestation; a backup heat source is required for very cold weather. Installer: journeyman Refrigeration and Air Conditioning Mechanic or manufacturer-certified, and on the participating installer list.",
+      "otherConditions": "Pre-approval first; incentive held 365 days to install, remove the oil tank and submit final documents, no extensions. Oil: at least 500 litres over a consecutive 12 months within two years; propane: 1,000 litres. Applications showing only the minimum or a new oil tank since January 1, 2025 get extra scrutiny. 'Still accepting applications' with no closure date set.",
+      "status": "open",
+      "url": "https://takechargenl.ca/oiltoelectric/",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "TakeCharge Greener Homes Program (income-eligible; Greener Homes Affordability partner)",
+      "runBy": "takeCHARGE, in partnership with the Government of Canada",
+      "heatPumpRebate": "A limited number of no-cost heat pumps (one per property), plus HRVs, insulation, air sealing and assessments; incentives up to 100% depending on technology, income and household size.",
+      "equipmentRule": "Air-source heat pumps listed on NRCan's database for the installation zone; installed in the main living area; installed by a qualified electrician working under permit.",
+      "otherConditions": "Income limits (line 23600 minus line 43500): $37,375 (1 person), $73,600 (2), $104,650 (3), $131,100 (4), $136,850 (5+); homeowners and landlords, up to two properties; homes that already have a heat pump get no heat pump rebate; pre- and post-assessments by a participating NRCan Certified Energy Advisor; rebate held 120 days from pre-approval, no extensions; only projects completed after October 5, 2026.",
+      "status": "limited",
+      "url": "https://takechargenl.ca/greenerhomes/",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "yukon",
+    "programs": [
+     {
+      "name": "Heat pump rebate (heating system rebate)",
+      "runBy": "Government of Yukon (Energy Branch)",
+      "heatPumpRebate": "Existing home: 50% of project costs up to $10,500 (air-source or ground-source). New home: up to $1,500 (rebates overview page).",
+      "equipmentRule": "Air-source: 'listed by Natural Resources Canada as Cold Climate Air Source Heat Pumps for Manitoba and Yukon' (NRCan's OHPA list 'Cold Climate Air Source Heat Pumps for Manitoba and Yukon', last updated August 7, 2026). Ground-source: ENERGY STAR certified.",
+      "otherConditions": "Home at least six months old (for the existing-home rebate); a non-electric existing heating system must be kept as backup; an existing electric system must be kept as backup and enrolled in Yukon Energy's Peak Smart Home program; homes with electric heat may instead qualify for a dual-fuel heating system rebate (amount not shown). Backup upgrades aren't eligible costs. Paid within 12 weeks. Page modified May 13, 2026.",
+      "status": "open",
+      "url": "https://yukon.ca/en/heating-system-rebate",
+      "checked": "2026-10-19"
+     },
+     {
+      "name": "Affordable Heat Pump Program (income-qualified)",
+      "runBy": "Government of Yukon (Energy Branch)",
+      "heatPumpRebate": "100% of project costs up to $24,000; oil-heated approved applicants also get an upfront $250 from NRCan.",
+      "equipmentRule": "Same as the standard rebate: NRCan cold-climate ASHP list for Manitoba and Yukon, or ENERGY STAR ground-source.",
+      "otherConditions": "After-tax household income under $53,820 (1 resident) up to under $184,000 (5+); approval required before installation; same backup and Peak Smart Home rules; anyone who received NRCan Oil to Heat Pump Affordability funding is ineligible.",
+      "status": "open",
+      "url": "https://yukon.ca/en/heating-system-rebate",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "northwest-territories",
+    "programs": [
+     {
+      "name": "Arctic Energy Alliance — Energy-Efficient Products rebates (2026/27)",
+      "runBy": "Arctic Energy Alliance (GNWT-funded)",
+      "heatPumpRebate": "None: the 2026/27 product list (April 1, 2026–March 31, 2027) covers appliances, wood/pellet stoves, thermostats, ECM pumps, drain-water heat recovery and insulation, but no heat pumps, and rebates are no longer offered on heating systems that use fossil fuels.",
+      "equipmentRule": "Not applicable.",
+      "otherConditions": "AEA's Renewable Energy program page (modified May 14, 2026) says AEA funds renewable sources 'such as solar, wind, wood pellet heating, biofuel/synthetic gas and ground-source heat pumps', but ground-source heat pumps aren't on its 'Eligible Technologies' list and no amount is given; equipment must be CSA or ULC certified and new; contact AEA before applying (867-920-3333).",
+      "status": "open",
+      "url": "https://aea.nt.ca/program/energy-efficient-products/",
+      "checked": "2026-10-19"
+     }
+    ]
+   },
+   {
+    "province": "nunavut",
+    "programs": [
+     {
+      "name": "No heat pump rebate found — Nunavut Housing Corporation homeownership programs",
+      "runBy": "Nunavut Housing Corporation",
+      "heatPumpRebate": "None found. The NHC's Home Renovation Program (forgivable loan up to $100,000 over 10 years, or a 50% grant up to $20,000 for owners doing the work) covers major repairs and renovations; neither it nor any other listed program mentions heat pumps. Heating oil tank repairs now fall under the Home Renovation Program.",
+      "equipmentRule": "Not applicable.",
+      "otherConditions": "Nunavut homes were never eligible for the federal Oil to Heat Pump Affordability program (grid requirements, per our data).",
+      "status": "open",
+      "url": "https://www.nunavuthousing.ca/programs/homeownership",
+      "checked": "2026-10-19"
+     }
+    ]
+   }
+  ]
+ },
+ "differencesFromOurData": [
+  "Canada Greener Homes Affordability Program: NRCan's page (modified October 16, 2026) now lists Newfoundland and Labrador (takechargenl.ca/greenerhomes/) as a delivery partner. programs.json (cghap whoQualifies and FAQ, takecharge-nl notes) says NRCan doesn't list NL yet and cites the page as 'updated August 31, 2026'. https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program",
+  "BC Home Renovation Rebate: the requirements page now applies to invoices dated on or after October 15, 2026 and says 'Some program requirements have changed'; the May 15, 2026 rules are archived as a PDF for earlier installs. programs.json (bc-improvement-bonus notes and FAQ) treats the May 15, 2026 rules as current. https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/",
+  "BC: a FortisBC dual-fuel heat pump rebate of $4,000 (FortisBC natural gas or Revelstoke piped propane customers, furnace at least 15 years old) is in the October 15, 2026 requirements, BC Hydro's rebate table (CX-7881, revised October 2026) and FortisBC's page. programs.json says BC heat pump rebates apply 'only when they replace electric heating' outside the north. Better Homes BC's own FortisBC dual-fuel page still shows a conflicting older offer ($10,000; $13,000 Revelstoke propane). https://fortisbc.com/rebates/home/dual-fuel-heating-system-rebate--electric-heat-pump-combined-with-gas-furnace",
+  "BC northern heat pumps: programs.json says gas- or propane-heated northern homes get 'up to $8,000'. That matches Better Homes BC's overview, but the itemized CleanBC amounts are $6,000 for a northern mini-split, multi-split or central heat pump regardless of fossil fuel, $4,500 for a northern dual-fuel heat pump and up to $7,000 for air-to-water; no page shows how $8,000 is reached. https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/heating-system-rebate-table.pdf",
+  "New Brunswick Total Home: SaveEnergyNB also lists a $1,000 furnace heat pump add-on rebate (ENERGY STAR or on the qualifying list), which programs.json omits. Its Enhanced Energy Savings Program also includes free heat pumps (mini-splits with a 10-year warranty), not just insulation and air sealing as programs.json describes it. https://www.saveenergynb.ca/en/for-home/total-home/rebates/space-heating-equipment-rebates/",
+  "Yukon: the rebates page lists up to $1,500 for a heat pump in a new home, which programs.json omits. The Affordable Heat Pump Program also excludes anyone who received NRCan Oil to Heat Pump Affordability funding. https://yukon.ca/node/6422 and https://yukon.ca/en/heating-system-rebate",
+  "Ontario Energy Affordability Program: Save on Energy offers free cold-climate air-source heat pumps to income-eligible homes heated by electricity or oil. programs.json (ohpa notes and howToApply) mentions only oil-heated homes. https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program/Air-Source-Heat-Pumps",
+  "Hydro-Québec LogisVert: the residential page now has a notice that Ottawa announced heat pump funding from 2027 on October 8, 2026 ('details about this offer are not yet known'; LogisVert continues normally). It also lists two exclusions programs.json doesn't mention: installing or replacing a central heat pump in a home with a geothermal system is ineligible, and new geothermal systems are limited to 72,000 BTU/h since August 25, 2025. The installer page lists electric thermal storage grants of $15,000, or $22,000 with a central heat pump, without amounts in programs.json. https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+  "Quebec: the provincial Chauffez vert oil and propane conversion component ended March 31, 2026 (Quebec page updated July 6, 2026). programs.json's LogisVert FAQ calls the gas offer the 'Chauffez vert dual-energy offer'; Hydro-Québec's page still names Chauffez vert but shows no dates, so whether the dual-energy component is still funded isn't confirmed. https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/chauffez-vert-mazout-propane",
+  "NWT: programs.json says the Arctic Energy Alliance 'lists no heat pump rebate'. That's true of its product rebates, but its Renewable Energy program page names ground-source heat pumps among the renewable sources AEA funds; no amount is given and heat pumps aren't on its eligible-technologies list. https://aea.nt.ca/program/renewable-energy/",
+  "Nova Scotia HomeWarming: Efficiency Nova Scotia's description is 'free energy-efficient upgrades like heat pumps and insulation'. programs.json's HomeWarming FAQ mentions only draft-proofing and insulation. https://www.efficiencyns.ca/programs-rebates/homewarming"
+ ],
+ "sources": [
+  {
+   "title": "ENERGY STAR — Heat pumps (air source) key product criteria, incl. Cold Climate",
+   "url": "https://www.energystar.gov/products/heating_cooling/heat_pumps_air_source/key_product_criteria"
+  },
+  {
+   "title": "ENERGY STAR — Air-source heat pumps partner resources (Version 6.2, CVP)",
+   "url": "https://www.energystar.gov/products/air_source_heat_pumps/partners"
+  },
+  {
+   "title": "ENERGY STAR — Air-Source Heat Pump Specification Version 6 history",
+   "url": "https://www.energystar.gov/node/7035"
+  },
+  {
+   "title": "ENERGY STAR Heat Pump Version 6.2 Specification (Rev. February 2, 2026)",
+   "url": "https://www.energystar.gov/sites/default/files/2026-02/HP%20Version%206.2%20Specification%20Revised%20February%202026.pdf"
+  },
+  {
+   "title": "ENERGY STAR Cold Climate Heat Pump Controls Verification Procedure (Rev. March 2025)",
+   "url": "https://www.energystar.gov/sites/default/files/asset/document/ENERGY%20STAR%20Cold%20Climate%20Heat%20Pump%20Controls%20Verification%20Procedure_1.pdf"
+  },
+  {
+   "title": "ENERGY STAR Most Efficient 2025 and Version 6.2 Heat Pump final cover letter",
+   "url": "https://www.energystar.gov/sites/default/files/2024-12/ENERGY%20STAR%20Most%20Efficient%202025%20and%20Version%206.2%20Heat%20Pump%20Final%20Specification%20Cover%20Letter.pdf"
+  },
+  {
+   "title": "ENERGY STAR Most Efficient 2025 / V6.2 comment response matrix",
+   "url": "https://www.energystar.gov/sites/default/files/2024-12/ESME%202025_ES%20V6.2%20ASHPs%20Comment%20Response%20Matrix_1.pdf"
+  },
+  {
+   "title": "ENERGY STAR Most Efficient 2025 — Air Source Heat Pumps recognition criteria",
+   "url": "https://www.energystar.gov/sites/default/files/2024-12/Final%20ASHP%20ENERGY%20STAR%20Most%20Efficient%202025%20Criteria.pdf"
+  },
+  {
+   "title": "ENERGY STAR Most Efficient 2025 criteria page",
+   "url": "https://www.energystar.gov/partner-resources/products_partner_resources/energy-star-most-efficient-2025-criteria"
+  },
+  {
+   "title": "ENERGY STAR Most Efficient criteria archive",
+   "url": "https://www.energystar.gov/partner-resources/products_partner_resources/most-efficient-criteria-archive"
+  },
+  {
+   "title": "ENERGY STAR — December 2025 information for program planning (CAC sunset, V6.2)",
+   "url": "https://www.energystar.gov/sites/default/files/2025-12/ENERGYSTARInformationtoAssistEEProgramPlanningDec2025.pdf"
+  },
+  {
+   "title": "NRCan — ENERGY STAR Canada technical specifications",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/technical-specifications"
+  },
+  {
+   "title": "NRCan — ENERGY STAR air-source heat pumps (Canada)",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/air-source-heat-pumps"
+  },
+  {
+   "title": "NRCan — ENERGY STAR Most Efficient (Canada)",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/products/energy-star-most-efficient"
+  },
+  {
+   "title": "NRCan-hosted ENERGY STAR Version 6.1 CAC and heat pump specification",
+   "url": "https://natural-resources.canada.ca/sites/nrcan/files/energy/pdf/energystar/ENERGY_STAR_Central_Air_Conditioner_and_Heat_Pump_Version_6_1_Final_Specification.pdf"
+  },
+  {
+   "title": "NRCan — ENERGY STAR communiqué list",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/communique-list"
+  },
+  {
+   "title": "NRCan — How products are listed with the Canada Greener Homes Initiative (criteria)",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/products-are-listed-canada-greener-homes-initiative"
+  },
+  {
+   "title": "NRCan — Eligible products for home retrofits",
+   "url": "https://prod-natural-resources.azure.cloud.nrcan-rncan.gc.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/eligible-products-home-retrofit"
+  },
+  {
+   "title": "NRCan Searchable Product List — Air Source and Cold Climate Air Source Heat Pumps (Greener Homes)",
+   "url": "https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=ASHP1_GH"
+  },
+  {
+   "title": "NRCan Searchable Product List — Cold Climate ASHPs in Quebec and Nova Scotia",
+   "url": "https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=ASHP2_GH&page=1"
+  },
+  {
+   "title": "NRCan Searchable Product List — Ground Source Heat Pumps (Greener Homes)",
+   "url": "https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=HP_GS_GH&page=1"
+  },
+  {
+   "title": "NRCan — OHPA eligibility criteria and product lists",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/eligibility-criteria-oil-heat-pump-affordability-program"
+  },
+  {
+   "title": "NRCan Searchable Product List — Air Source and Cold Climate ASHPs (OHPA)",
+   "url": "https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=ASHP1_OHPA&page=1"
+  },
+  {
+   "title": "NRCan Searchable Product List — Cold Climate ASHPs for Manitoba and Yukon (OHPA)",
+   "url": "https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=ASHP4_OHPA&page=1"
+  },
+  {
+   "title": "NRCan — Oil to Heat Pump Affordability program",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program"
+  },
+  {
+   "title": "NRCan — OHPA process and deadlines",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/process-works"
+  },
+  {
+   "title": "NRCan — Canada Greener Homes Affordability Program (partners)",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-affordability-program"
+  },
+  {
+   "title": "NRCan — Making the switch to heat pumps",
+   "url": "https://natural-resources.canada.ca/energy-efficiency/electric-heat-pumps"
+  },
+  {
+   "title": "ECCC backgrounder, October 8, 2026 — National Heat Pump Rebate details",
+   "url": "https://www.canada.ca/en/environment-climate-change/news/2026/10/prime-minister-carney-announces-landmark-investment-to-retrofit-one-million-homes-cutting-energy-costs-and-emissions.html"
+  },
+  {
+   "title": "Prime Minister's Office release, October 8, 2026",
+   "url": "https://www.pm.gc.ca/en/news/news-releases/2026/10/08/prime-minister-carney-announces-landmark-investment-retrofit-one"
+  },
+  {
+   "title": "ECCC release, October 9, 2026",
+   "url": "https://www.canada.ca/en/environment-climate-change/news/2026/10/the-government-of-canada-is-supporting-new-measures-to-lower-energy-costs-and-reduce-emissions.html"
+  },
+  {
+   "title": "Government of Canada — One million home energy retrofits (campaign page)",
+   "url": "https://www.canada.ca/en/environment-climate-change/campaigns/one-million-home-energy-retrofits.html"
+  },
+  {
+   "title": "Government of Canada, June 29, 2026 — Affordability Program expansion",
+   "url": "https://www.canada.ca/en/natural-resources-canada/news/2026/06/canada-drives-lower-bills-and-cleaner-energy-in-quebec-british-columbia-nova-scotia-and-prince-edward-island.html"
+  },
+  {
+   "title": "Home Renovation Savings — heat pumps",
+   "url": "https://www.homerenovationsavings.ca/without-assessment/heat-pumps"
+  },
+  {
+   "title": "Home Renovation Savings — Heat Pump Program Stream Requirements (May 2025)",
+   "url": "https://www.homerenovationsavings.ca/-/media/home-renovation-savings/pdf/HRSP-Heat-Pump-Program-Stream-Requirements.pdf"
+  },
+  {
+   "title": "Save on Energy — Energy Affordability Program",
+   "url": "https://saveonenergy.ca/en/For-Your-Home/Energy-Affordability-Program"
+  },
+  {
+   "title": "Save on Energy — Energy Affordability Program air-source heat pumps",
+   "url": "https://saveonenergy.ca/For-Your-Home/Energy-Affordability-Program/Air-Source-Heat-Pumps"
+  },
+  {
+   "title": "Hydro-Québec — LogisVert residential",
+   "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html"
+  },
+  {
+   "title": "Hydro-Québec — LogisVert participant's guide, residential (v1.10, September 15, 2026)",
+   "url": "https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-en.pdf?v=20260910"
+  },
+  {
+   "title": "Hydro-Québec — LogisVert eligible heat pump search",
+   "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/efficient-heat-pump-search.html"
+  },
+  {
+   "title": "Hydro-Québec — LogisVert for installers (geothermal, thermal storage)",
+   "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/installer.html"
+  },
+  {
+   "title": "Hydro-Québec — LogisVert for modest-income households",
+   "url": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/modest-income-households/"
+  },
+  {
+   "title": "Hydro-Québec — dual-energy offer",
+   "url": "https://www.hydroquebec.com/residential/energy-wise/offers-to-save/dual-energy-offer.html"
+  },
+  {
+   "title": "Québec.ca — Chauffez vert (oil/propane) ended March 31, 2026",
+   "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/chauffez-vert-mazout-propane"
+  },
+  {
+   "title": "Québec.ca — Chauffez vert eligible work",
+   "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/chauffez-vert-mazout-propane/travaux"
+  },
+  {
+   "title": "Québec.ca — About Chauffez vert",
+   "url": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/chauffez-vert-mazout-propane/a-propos"
+  },
+  {
+   "title": "Better Homes BC — Home Renovation Rebate requirements (invoices from October 15, 2026)",
+   "url": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/home-renovation-rebate-program-requirements/"
+  },
+  {
+   "title": "Better Homes BC — Home Renovation Rebate requirements, May 15, 2026 (archived)",
+   "url": "https://betterhomesbc.ca/wp-content/uploads/2026/10/HRR_RebateRequirements_May15_2026.pdf"
+  },
+  {
+   "title": "Better Homes BC — Home Renovation Rebate program overview",
+   "url": "https://betterhomesbc.ca/learn-about-programs/home-renovation-rebate-program/"
+  },
+  {
+   "title": "Better Homes BC — Northern central ducted heat pump rebate",
+   "url": "https://www.betterhomesbc.ca/rebates/northern-central-ducted-heat-pump-rebate"
+  },
+  {
+   "title": "Better Homes BC — CleanBC northern heat pump rebate offer",
+   "url": "https://betterhomesbc.ca/rebates/cleanbc-northern-heat-pump-rebate-offer"
+  },
+  {
+   "title": "Better Homes BC — FortisBC dual fuel heating system rebate (older terms)",
+   "url": "https://betterhomesbc.ca/rebates/fortisbc-dual-fuel-heating-system-rebate"
+  },
+  {
+   "title": "Better Homes BC — Energy Savings Program requirements (invoices from July 6, 2026)",
+   "url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/energy-savings-program-requirements/"
+  },
+  {
+   "title": "Better Homes BC — Energy Savings Program",
+   "url": "https://betterhomesbc.ca/learn-about-programs/energy-savings-program/"
+  },
+  {
+   "title": "BC Hydro — heat pump rebates and limited-time bonus",
+   "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/renovating-heating-system.html"
+  },
+  {
+   "title": "BC Hydro — heating system rebate table (CX-7881, revised October 2026)",
+   "url": "https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/power-smart/residential/programs/heating-system-rebate-table.pdf"
+  },
+  {
+   "title": "BC Hydro — bonus rebates",
+   "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/home-renovation/bonus-rebates.html"
+  },
+  {
+   "title": "BC Hydro — Energy Conservation Assistance Program",
+   "url": "https://www.bchydro.com/powersmart/residential/rebates-programs/savings-based-on-income/free-product-install-and-advice.html"
+  },
+  {
+   "title": "FortisBC — dual fuel heating system rebate",
+   "url": "https://fortisbc.com/rebates/home/dual-fuel-heating-system-rebate--electric-heat-pump-combined-with-gas-furnace"
+  },
+  {
+   "title": "FortisBC — heat pump rebate (electric conversion)",
+   "url": "https://www.fortisbc.com/rebates-and-energy-savings/rebates-and-offers/rebates-details/air-source-heat-pump-rebate"
+  },
+  {
+   "title": "FortisBC — income-qualified heat pump rebate",
+   "url": "https://www.fortisbc.com/rebates/detail/iqheatpump"
+  },
+  {
+   "title": "FortisBC — HRR and CleanBC terms and conditions (CX-7339, invoices from May 15, 2026)",
+   "url": "https://www.cdn.fortisbc.com/libraries/docs/default-source/rebates-and-energy-savings-documents/rebates-for-homes/cs-3156-hrr-cleanbc-prr.pdf?sfvrsn=d5b86b4a_3"
+  },
+  {
+   "title": "FortisBC — free home energy evaluation and upgrades",
+   "url": "https://www.fortisbc.com/rebates/detail/free-home-energy-evaluation-and-upgrades"
+  },
+  {
+   "title": "Alberta Municipalities — CEIP residential",
+   "url": "https://ceip.abmunis.ca/residential/"
+  },
+  {
+   "title": "Alberta Municipalities — CEIP eligible upgrades",
+   "url": "https://ceip.abmunis.ca/residential/upgrades/"
+  },
+  {
+   "title": "Alberta Municipalities — CEIP heating, ventilation and AC upgrades",
+   "url": "https://ceip.abmunis.ca/residential/upgrades/heating-ventilation-ac/"
+  },
+  {
+   "title": "City of Edmonton — CEIP",
+   "url": "https://www.edmonton.ca/city_government/environmental_stewardship/clean-energy-improvement-program"
+  },
+  {
+   "title": "City of Calgary — CEIP",
+   "url": "https://www.calgary.ca/environment/programs/clean-energy-improvement-program.html"
+  },
+  {
+   "title": "City of Lethbridge — CEIP",
+   "url": "https://www.lethbridge.ca/ceip"
+  },
+  {
+   "title": "Strathcona County — CEIP",
+   "url": "https://www.strathcona.ca/your-property-utilities/residential-permits/residential-improvement/home-efficiency/clean-energy-improvement-program/"
+  },
+  {
+   "title": "SaskPower — Home Efficiency Retrofit Rebate (ended April 2026)",
+   "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/home-efficiency-retrofit-rebate"
+  },
+  {
+   "title": "SaskEnergy — rebates and programs",
+   "url": "https://www.saskenergy.com/ways-save/rebates-programs"
+  },
+  {
+   "title": "SaskPower — Energy Assistance Program",
+   "url": "https://www.saskpower.com/power-savings-and-programs/home/programs/energy-assistance-program"
+  },
+  {
+   "title": "City of Saskatoon — HELP equipment specifications (content did not load)",
+   "url": "https://www.saskatoon.ca/environmental-initiatives/better-buildings/home-energy-and-water-efficiency/home-energy-loan-program-help/help-equipment-specifications"
+  },
+  {
+   "title": "Efficiency Manitoba — air source heat pump rebate",
+   "url": "https://efficiencymb.ca/ashp-home/"
+  },
+  {
+   "title": "Efficiency Manitoba — ASHP terms and conditions (V2 06/25)",
+   "url": "https://efficiencymb.ca/wp-content/uploads/ASHP_TermsAndConditions_FNL_Digital.pdf"
+  },
+  {
+   "title": "Efficiency Manitoba — residential ASHP program guide (V1 06/25)",
+   "url": "https://efficiencymb.ca/wp-content/uploads/EM_Residential_ASHPProgramGuide.pdf"
+  },
+  {
+   "title": "Efficiency Manitoba — ground source heat pump program",
+   "url": "https://efficiencymb.ca/gshp-home/"
+  },
+  {
+   "title": "Efficiency Manitoba — heat pump offers",
+   "url": "https://efficiencymb.ca/heat-pumps/"
+  },
+  {
+   "title": "Efficiency Manitoba — Energy Efficiency Assistance Program",
+   "url": "https://efficiencymb.ca/my-home/energy-efficiency-assistance-program/"
+  },
+  {
+   "title": "SaveEnergyNB — space heating equipment rebates",
+   "url": "https://www.saveenergynb.ca/en/for-home/total-home/rebates/space-heating-equipment-rebates/"
+  },
+  {
+   "title": "SaveEnergyNB — qualifying heat pumps",
+   "url": "https://www.saveenergynb.ca/en/for-home/total-home/heat-pumps/qualifying-heat-pumps/"
+  },
+  {
+   "title": "SaveEnergyNB — Total Home Energy Savings Program",
+   "url": "https://www.saveenergynb.ca/en/for-home/total-home/"
+  },
+  {
+   "title": "SaveEnergyNB — Total Home FAQ",
+   "url": "https://www.saveenergynb.ca/en/for-home/total-home/frequently-asked-questions/"
+  },
+  {
+   "title": "SaveEnergyNB — Total Home eligibility",
+   "url": "https://www.saveenergynb.ca/en/for-home/total-home/eligibility/"
+  },
+  {
+   "title": "SaveEnergyNB — Enhanced Energy Savings Program",
+   "url": "https://www.saveenergynb.ca/en/for-home/enhanced-energy-savings-program/"
+  },
+  {
+   "title": "Efficiency Nova Scotia — Home Energy Assessment rebate guide (August 2026)",
+   "url": "https://assets.ctfassets.net/hro74sf4x6k2/3WUCMiBurFYsS5L8O0Dg0K/e980fabca778e3ed2e7c2a0b4ff8e56a/Home-Energy-Assessment-Rebate-Guide-Aug-2026.pdf"
+  },
+  {
+   "title": "Efficiency Nova Scotia — HomeWarming",
+   "url": "https://www.efficiencyns.ca/programs-rebates/homewarming"
+  },
+  {
+   "title": "Efficiency Nova Scotia — Moderate Income Rebate",
+   "url": "https://www.efficiencyns.ca/programs-rebates/moderate-income-rebate"
+  },
+  {
+   "title": "Efficiency Nova Scotia — OHPA closed to new applicants",
+   "url": "https://www.efficiencyns.ca/programs-rebates/oil-to-heat-pump-affordability-program"
+  },
+  {
+   "title": "Government of PEI — heat pumps (rebates ended April 15, 2026)",
+   "url": "https://www.princeedwardisland.ca/en/information/energy/heat-pumps"
+  },
+  {
+   "title": "Government of PEI — save energy, save money with funding and rebates",
+   "url": "https://www.princeedwardisland.ca/en/information/energy/save-energy-save-money-with-funding-and-rebates"
+  },
+  {
+   "title": "Government of PEI — energy efficient appliance rebates eligible list",
+   "url": "https://www.princeedwardisland.ca/en/publication/energy-efficient-appliance-rebates-eligible-appliance-list"
+  },
+  {
+   "title": "takeCHARGE — Oil to Electric Incentive Program",
+   "url": "https://takechargenl.ca/oiltoelectric/"
+  },
+  {
+   "title": "takeCHARGE — TakeCharge Greener Homes Program",
+   "url": "https://takechargenl.ca/greenerhomes/"
+  },
+  {
+   "title": "takeCHARGE — home page (residential rebates)",
+   "url": "https://takechargenl.ca/"
+  },
+  {
+   "title": "Government of Yukon — heating system rebate and Affordable Heat Pump Program",
+   "url": "https://yukon.ca/en/heating-system-rebate"
+  },
+  {
+   "title": "Government of Yukon — rebates for buildings and homes",
+   "url": "https://yukon.ca/node/6422"
+  },
+  {
+   "title": "Arctic Energy Alliance — energy-efficient products (2026/27)",
+   "url": "https://aea.nt.ca/program/energy-efficient-products/"
+  },
+  {
+   "title": "Arctic Energy Alliance — renewable energy",
+   "url": "https://aea.nt.ca/program/renewable-energy/"
+  },
+  {
+   "title": "Arctic Energy Alliance — building improvements",
+   "url": "https://aea.nt.ca/program/building-improvements/"
+  },
+  {
+   "title": "Nunavut Housing Corporation — homeownership programs",
+   "url": "https://www.nunavuthousing.ca/programs/homeownership"
+  }
+ ],
+ "notes": "Checked October 19, 2026. (1) The shared web-search budget for this turn ran out partway through. Everything after that came from fetching official URLs already in programs.json or linked from pages we'd fetched, so we couldn't search for programs not linked from those pages: other Alberta municipal heat pump rebates, a separate Nova Scotia free heat pump program, other NWT or Nunavut funding, or other Ontario municipal offers. (2) Could not verify: ENERGY STAR Most Efficient 2026 criteria for air-source heat pumps (none found; 2025 is the latest posted); which NRCan list and criteria the National Heat Pump Rebate's 'Eligible Products List' will use; how BC's 'up to $8,000' northern figure is built; the full terms of FortisBC's income-qualified 'up to $12,000' heat pump offer; how Hydro-Québec derives −8°C capacity and its 'up to $6,700' figure; whether Hydro-Québec's gas dual-energy offer is still funded under Chauffez vert; and PEI's former heat pump equipment rules (in an Excel file). (3) Pages that wouldn't load: efficiencyns.ca program pages (metadata only, so Nova Scotia relies on the August 2026 rebate guide PDF); Saskatoon HELP pages (navigation only); NB Power's July 1, 2026 Total Home guidelines PDF (blocked by robots.txt, so we didn't fetch it); FortisBC rebate detail pages (summaries only); takeCHARGE incentive charts (images). (4) For the guide, there are three different 'cold climate' tests in use. ENERGY STAR Cold Climate: COP ≥ 1.75 at 5°F/−15°C, ≥ 70% capacity, a CVP, HSPF2 Region IV ≥ 8.1–8.5; Quebec uses it. NRCan's list: COP ≥ 1.8 at −15°C at maximum capacity, ≥ 70% capacity maintenance, HSPF2 Region V ≥ 6.6, SEER2 ≥ 15.2, variable capacity; Ontario, Manitoba, New Brunswick, Yukon and NL point to NRCan lists. BC's Qualified Heat Pump Product List plus NEEP listing for whole-home systems, with HSPF2 Region IV ≥ 8.5. Nova Scotia uses its own heat pump list, and Alberta CEIP requires only ENERGY STAR. (5) Federal versus provincial conflict to flag: the National Heat Pump Rebate targets failed or end-of-life heating systems, but LogisVert excludes replacing a heat pump after equipment failure, and several provincial programs (Ontario HRSP, Manitoba, Nova Scotia, NL Greener Homes) exclude replacing an existing heat pump. (6) Better Homes BC's site says it isn't being updated during the provincial election period, yet its Home Renovation Rebate requirements were updated for October 15, 2026 invoices. Some Better Homes BC rebate detail pages, such as FortisBC dual fuel, show older terms than FortisBC's and BC Hydro's own October 2026 documents. (7) ENERGY STAR's central air conditioner sunset date differs slightly between sources: February 1, 2026 in EPA's December 2025 planning document, February 2, 2026 on the specification page."
+}
