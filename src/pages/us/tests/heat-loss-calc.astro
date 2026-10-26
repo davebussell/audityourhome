@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S } from '../../../lib/us/tests';
 
 const src = {
@@ -124,6 +125,8 @@ const sources = [src.j, src.s, src.d, src.code, src.field];
     </ul>
     <TestCite src={[src.j, src.s, src.d]} labels={['ACCA Manual J', 'ACCA Manual S', 'ACCA Manual D']} />
   </section>
+
+  <ReadingGuide country="us" test="heat-loss-calc" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If the quote and the calculation don’t line up</h2>

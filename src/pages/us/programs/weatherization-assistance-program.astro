@@ -6,6 +6,7 @@ import ProgramStyles from '../../../components/us/ProgramStyles.astro';
 import ProgramStatus from '../../../components/us/ProgramStatus.astro';
 import ProgramFaq from '../../../components/us/ProgramFaq.astro';
 import ProgramSources from '../../../components/us/ProgramSources.astro';
+import AuditFirst from './_AuditFirst.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { statusChip } from '../../../lib/us/data';
@@ -152,6 +153,15 @@ const open = statusChip('open');
         </article>
       </div>
     </section>
+
+    <AuditFirst
+      answer="No. The program does the audit for you."
+      points={[
+        'You apply on income, through your local provider. Once you’re accepted, the provider audits your home, and DOE allows only cost-effective measures that match that audit (WPN 26-1), so there’s no need to pay for your own audit first.',
+        'The audit is also how health and safety problems get found and treated, and every finished home is inspected.',
+        'If your household is over the income limit, many utilities offer free or low-cost home energy assessments instead; your metro guide lists them.',
+      ]}
+    />
 
     <section class="up-s" id="funding" aria-labelledby="f-h">
       <h2 class="up-sec" id="f-h">Funding in 2026</h2>

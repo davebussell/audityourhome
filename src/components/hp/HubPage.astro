@@ -418,7 +418,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
           updated {updated}), filtered to pairings certified for {country}. We leave out listings with physically impossible ratings and placeholder
           entries. Leaderboards use R-454B and R-32 systems only. Brand facts and rebate rules were researched from makers' and programs' own pages on
           {HP_CHECKED}; each brand page lists its sources. Running-cost comparisons on the {isCA ? 'province' : 'metro'} pages use
-          {isCA ? ' the provincial energy prices from our calculators and seasonal COP planning values from Dunsky/CCI (2024), adjusted for field studies.' : ' EIA state energy prices and the same seasonal COP planning values used on our Canadian pages, by heating degree days.'}
+          {isCA ? ' the provincial energy prices from our calculators and seasonal COP planning values from Dunsky/CCI (2024), adjusted for field studies.' : ' EIA state energy prices and seasonal COP planning values from Dunsky/CCI (2024), set slightly below modeled results and chosen by heating degree days. Cooling estimates scale EIA’s 2020 household survey (RECS) benchmarks by each system’s SEER2.'}
         </p>
         <ul>
           <li><a href={ESTAR_URL} rel="noopener" target="_blank">ENERGY STAR product finder: certified heat pumps</a></li>

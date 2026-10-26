@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S } from '../../../lib/us/tests';
 
 const src = {
@@ -49,7 +50,7 @@ const sources = [src.basc, src.resnet, src.slides21, src.transcript21, src.tsd21
     { k: 'Test pressure', v: '25 Pa (0.1 in. w.g.)', src: src.basc, srcLabel: 'DOE BASC' },
     { k: '2021 IECC limit', v: '4.0 CFM25 per 100 sq ft', src: src.slides21, srcLabel: 'DOE' },
     { k: 'Ducts inside the envelope', v: '8.0 CFM25 per 100 sq ft', src: src.slides21, srcLabel: 'DOE' },
-    { k: 'Typical cost', v: 'Not published' },
+    { k: 'Typical cost', v: 'Often part of an audit' },
   ]}
   faqs={faqs}
   sources={sources}
@@ -107,13 +108,20 @@ const sources = [src.basc, src.resnet, src.slides21, src.transcript21, src.tsd21
       plan, pair the test with a <a href="/us/tests/heat-loss-calc/">Manual J load calculation and
       Manual D duct design</a>.
     </p>
-    <p>What it costs: no official source publishes a price for a duct leakage test, so we don’t quote one.</p>
+    <p>
+      What it costs: no official source publishes a price for a duct leakage test on its own, so we don’t quote one. It’s
+      often done as part of a full home energy audit in homes with ducted heating or air conditioning, and some utility
+      programs include duct testing or pay toward duct sealing: <a href="/us/cities/">your metro guide</a> lists the programs near
+      you. Ask whether the quote measures leakage to outside (the leaks that waste energy), and whether the ducts are retested after sealing.
+    </p>
     <ul class="linkrow">
       <li><a href="/us/find/">Find a certified auditor</a></li>
       <li><a href={src.hersFind.href} rel="noopener">RESNET: find a HERS rater&nbsp;↗</a></li>
     </ul>
     <TestCite src={src.resnet} labels={['RESNET standards']} />
   </section>
+
+  <ReadingGuide country="us" test="duct-leakage" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If the ducts leak</h2>

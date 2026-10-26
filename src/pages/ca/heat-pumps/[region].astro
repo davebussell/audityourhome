@@ -10,6 +10,8 @@ import ModelTable from '../../../components/hp/ModelTable.astro';
 import CostTable from '../../../components/hp/CostTable.astro';
 import RebateCard from '../../../components/hp/RebateCard.astro';
 import QuoteForm from '../../../components/hp/QuoteForm.astro';
+import RegionalNeeds from '../../../components/RegionalNeeds.astro';
+import { provinceClimate } from '../../../lib/climate';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { PROV_SLUG_PHOTO, ogFor } from '../../../lib/photos';
 import {
@@ -26,6 +28,7 @@ interface Props {
 }
 const { r } = Astro.props;
 const place = caShortName(r);
+const provClimate = provinceClimate(r.slug);
 const cities = citiesIn(r.slug);
 const main = cities[0];
 const costs = main ? costsCA(main.prov, main.hdd18 ?? 4500) : null;
@@ -70,6 +73,7 @@ const schema = [
 ];
 const jump: [string, string][] = [
   ['climate', 'Climate and sizing'],
+  ...(provClimate?.profileList.length ? ([['needs', 'What to look for']] as [string, string][]) : []),
   ['costs', 'Running costs'],
   ['rebates', 'Rebates'],
   ['systems', 'Systems that suit'],
@@ -163,6 +167,22 @@ const jump: [string, string][] = [
         Seasonal COP: {COP_NOTE}
       </p>
     </section>
+
+    {provClimate && provClimate.profileList.length > 0 && (
+      <div id="needs">
+        {provClimate.profileList.map((p, i) => (
+          <RegionalNeeds
+            country="ca"
+            profile={p}
+            placeName={provClimate.profileList.length > 1 ? p.regionName : place}
+            variant="heatpump"
+            id={`needs-${p.key}`}
+            heading={provClimate.profileList.length > 1 ? `Choosing equipment in ${p.regionName}` : undefined}
+            moreHref={r.slug === 'north' ? '/ca/provinces/north/' : `/ca/provinces/${r.slug}/`}
+          />
+        ))}
+      </div>
+    )}
 
     <section id="costs" class="sec">
       <h2>What heat costs to run{main ? ` in ${main.name}` : ''}</h2>

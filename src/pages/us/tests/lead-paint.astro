@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import TestStateTable from '../../../components/us/TestStateTable.astro';
 import { S, leadStateRows, RRP_STATES, EPA_LEAD_ABATEMENT_STATES, listStates } from '../../../lib/us/tests';
 
@@ -228,6 +229,8 @@ const sources = [
     </p>
     <TestStateTable rows={leadStateRows()} caption="Lead program administration, 20 jurisdictions" textHead="Who runs it" id="state-rules" />
   </section>
+
+  <ReadingGuide country="us" test="lead-paint" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If lead is found</h2>

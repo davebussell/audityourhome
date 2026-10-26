@@ -166,6 +166,7 @@ const PROCESS = [
 
 const TRIMS: [RegExp, string][] = [
   [/, which is a direct hook for audityourhome\.com/i, ''],
+  [/,? so audityourhome\.com should ask which utility is on the bill/i, ', so check which one is on your bill before you book anything'],
   [/ \(the date of this check\)/i, ''],
   [/ \(OHCS's page does not list them in its static text\)/i, ''],
   [/, so [A-Z][\w.' -]+ is the only [^.]*? here where [^.]*/, ''],

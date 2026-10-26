@@ -16,6 +16,7 @@ import provincesJson from '../data/provinces.json';
 import calcCities from '../data/calc/cities.json';
 import calcPrices from '../data/calc/prices.json';
 import calcModel from '../data/calc/model.json';
+import coolingModel from '../data/us/cooling-model.json';
 import { programs } from './data';
 import { METROS, statePrices, STATE_NAMES, PRICE_META } from './us/data';
 import type { Metro } from './us/data';
@@ -306,6 +307,11 @@ export interface CopBand {
 }
 const BANDS = (calcModel as any).ashpCopBands as (CopBand & { minHdd: number; maxHdd: number | null })[];
 export const COP_NOTE = (calcModel as any).ashpNote as string;
+/** The same seasonal COP planning bands, described for US pages (no Canadian field-study sites). */
+export const COP_NOTE_US =
+  'Seasonal COP is the heat delivered over a whole heating season, including electric backup heat and defrost, for a heat pump sized for the house. ' +
+  'We pick the planning value by how cold the winter is (heating degree days) and set it slightly below modelled results (Dunsky/CCI 2024), because measured field performance tends to come in lower. ' +
+  "For your own house, the HSPF2 rating of the system you choose and your installer's Manual J load calculation are the better guide.";
 const EC = (calcModel as any).energyContentGJ;
 
 /** Seasonal COP planning band for a climate, by heating degree days (°C base 18). */
@@ -376,6 +382,128 @@ export function costsUS(state: string, hdd65: number): { rows: FuelCost[]; elecP
   rows.sort((a, b) => a.cost - b.cost);
   return { rows, elecPerMMBtu, gasPerMMBtu, band };
 }
+
+// ---------------------------------------------------------------- US cooling costs
+const CM = coolingModel as any;
+/** Federal minimum for split heat pumps since 2023, everywhere in the US. */
+export const SEER2_MIN_HP = 14.3;
+/** SEER2 is about 0.95 × SEER on the same equipment (DOE's 2023 test procedure change). */
+const SEER2_PER_SEER = 0.955;
+
+export interface CoolingRow { key: string; label: string; seer2: number | null; kwh: number; cost: number | null; note: string }
+export interface CoolingEstimate {
+  sqft: number;
+  cdd: number;
+  centsPerKwh: number | null;
+  seerRef: number;
+  kwhTypical: number;
+  kwhLow: number;
+  kwhHigh: number;
+  rows: CoolingRow[];
+  moisture: string;
+  basis: string;
+  sources: { label: string; url: string }[];
+}
+
+/**
+ * Annual central-air cooling electricity for a typical single-family house in a US metro, from the
+ * EIA 2020 Residential Energy Consumption Survey (central AC or heat pump, indoor fan included),
+ * rescaled to the metro's 1991–2020 normal cooling degree days (src/data/us/cooling-model.json),
+ * then compared across equipment efficiencies at the state's average residential electricity price.
+ */
+export function coolingUS(m: Metro, sqft = 1600): CoolingEstimate | null {
+  const zone: string | null = m.climate?.iecc2021ClimateZone ?? null;
+  const cdd: number | null = m.climate?.cdd65 ?? null;
+  if (!zone || cdd == null) return null;
+  const P = CM.model?.parameters ?? {};
+  const moisture = zone.slice(-1);
+  const bm = CM.benchmarks?.byMetro?.[m.slug];
+  const bz = CM.benchmarks?.byZone?.[zone];
+  const areaExp = P.areaExponent ?? 0.6;
+  let kwh: number | null = null;
+  if (bm?.kwhAtNormalWeather && bm?.cooledSqftRef) {
+    kwh = bm.kwhAtNormalWeather * Math.pow(sqft / bm.cooledSqftRef, areaExp);
+  } else if (bz?.kwhPerHousehold && bz?.cooledSqftMean && bz?.cdd65Ref2020) {
+    const e = (P.cddExponent ?? {})[moisture] ?? 0.9;
+    kwh = bz.kwhPerHousehold * Math.pow(sqft / bz.cooledSqftMean, areaExp) * Math.pow(cdd / bz.cdd65Ref2020, e);
+  }
+  if (kwh == null) return null;
+  const base = kwh;
+  const seerRef: number = (P.seerRefByZone ?? {})[zone] ?? bz?.seerRef ?? 13;
+  const cents = statePrices(metroState(m)).elecCents;
+  const price = (k: number) => (cents ? (k * cents) / 100 : null);
+  const at = (seer2: number) => base * (seerRef / (seer2 / SEER2_PER_SEER));
+  const range = P.baselineRange ?? {};
+  const lowM = moisture === 'C' ? range.marineLowMultiplier ?? 0.5 : range.lowMultiplier ?? 0.7;
+  const highM = moisture === 'C' ? range.marineHighMultiplier ?? 1.6 : range.highMultiplier ?? 1.35;
+  const rows: CoolingRow[] = [
+    { key: 'typical', label: 'Typical system in homes like this today', seer2: null, kwh: base, cost: price(base), note: `about ${seerRef.toFixed(1)} SEER, the average of systems now installed in this climate` },
+    { key: 'min', label: 'New heat pump at the federal minimum', seer2: SEER2_MIN_HP, kwh: at(SEER2_MIN_HP), cost: price(at(SEER2_MIN_HP)), note: 'the lowest efficiency a new split heat pump can be sold at since 2023' },
+    { key: 'two', label: 'High-efficiency system (often two-stage)', seer2: 18, kwh: at(18), cost: price(at(18)), note: 'rated 18 SEER2' },
+    { key: 'vs', label: 'Top-tier variable-speed system', seer2: 22, kwh: at(22), cost: price(at(22)), note: 'rated 22 SEER2; real-world savings usually come in a little below the rating' },
+  ];
+  return {
+    sqft, cdd, centsPerKwh: cents, seerRef, kwhTypical: base, kwhLow: base * lowM, kwhHigh: base * highM, rows, moisture,
+    basis: bm?.recsCell ? `EIA RECS 2020 survey cell ${bm.recsCell}` : `EIA RECS 2020 survey, climate zone ${zone}`,
+    sources: [
+      { label: 'EIA: 2020 Residential Energy Consumption Survey (public microdata)', url: 'https://www.eia.gov/consumption/residential/data/2020/' },
+      { label: 'NOAA: 1991–2020 U.S. climate normals', url: 'https://www.ncei.noaa.gov/products/land-based-station/us-climate-normals' },
+      { label: 'EIA: average residential electricity price by state', url: PRICE_META.electricity.url },
+    ],
+  };
+}
+
+// ---------------------------------------------------------------- US text clean-up (brand facts written for both countries)
+const CA_ONLY = /\b(Canad(a|ian|iens?)|Qu[ée]bec(ers?)?|Ontario|Alberta|British Columbia|Manitoba|Saskatchewan|Nova Scotia|New Brunswick|Newfoundland|Yukon|provinces?|provincial|NRCan|Health Canada|Mississauga|Brampton|L'Islet|Pointe-Claire|Saint-Bruno|Dettson|LogisVert|Airtek|Sunrise Tradex|Wolseley|KeepRite|Novacap|bilingual|jusqu|fiable|offre une|ruud\.ca|rheem\.ca|registermyunit\.ca|na\.panasonic\.ca|recalls-rappels\.canada\.ca|plumbingandhvac\.ca|senville\.ca|CAD)\b|C\$/i;
+/** Neutralise "US and Canada"-style scope phrases so the US half survives the filter. */
+const BOTH = /\b(?:in|for|across|covering|covers|cover)?\s*(?:the\s+)?(?:U\.?S\.?A?\.?|US|United States|continental US(?:, Alaska, Hawaii)?)\s*(?:,\s*Alaska,\s*Hawaii)?\s*(?:and|or|&)\s*Canad(?:a|ian)\b(?:\s+markets?)?/gi;
+
+const C_NUM = String.raw`[−-]?\d+(?:\.\d+)?`;
+/** a °C figure, unless it's already followed by its °F ("-15°C (5°F)") or is the start of a converted range ("-25°C to 24°C (-13°F to 75°F)") */
+const C_FIG = new RegExp(
+  String.raw`(${C_NUM})\s?°C(?!\s*[/(]\s*${C_NUM}\s?°F)(?!\s*(?:to|–|-)\s*${C_NUM}\s?°C\s*[/(]\s*${C_NUM}\s?°F)`,
+  'g',
+);
+function cToF(text: string): string {
+  return text.replace(C_FIG, (all, num: string, off: number, src: string) => {
+    if (/°F\s*[/(]\s*$/.test(src.slice(Math.max(0, off - 8), off))) return all;
+    // Inside brackets the °C is almost always the conversion of a °F figure just before it.
+    const before = src.slice(0, off);
+    if ((before.match(/\(/g)?.length ?? 0) > (before.match(/\)/g)?.length ?? 0)) return all;
+    const c = parseFloat(num.replace('−', '-'));
+    if (Number.isNaN(c)) return all;
+    const f = Math.round((c * 9) / 5 + 32);
+    const minus = num.startsWith('−') ? '−' : '-';
+    const fTxt = `${f < 0 ? minus : ''}${Math.abs(f)}°F`;
+    // Inside a quotation, keep the maker's words and add the conversion in square brackets.
+    const openQuote = (before.match(/“/g)?.length ?? 0) > (before.match(/”/g)?.length ?? 0) || (before.match(/"/g)?.length ?? 0) % 2 === 1;
+    return openQuote ? `${all} [${fTxt}]` : `${fTxt} (${num}°C)`;
+  });
+}
+
+/** One brand fact for a US page: Canada-only clauses dropped, °C given in °F. Returns '' if nothing US-relevant is left. */
+export function usText(text: string | null | undefined): string {
+  if (!text) return '';
+  const neutral = text
+    // "the US and Canada" → "the US"; "US and Canadian markets" → "US market"
+    .replace(BOTH, (m) => m.replace(/\s*(?:and|or|&)\s*Canad(?:a|ian)\b(?:\s+markets?)?/i, (x) => (/markets?/i.test(x) ? ' market' : '')))
+    // "DIY installs and Canadian installs fall outside it" → "DIY installs fall outside it"
+    .replace(/\s(?:and|or)\sCanadian\s(?!markets?\b)[a-z]+/g, '')
+    // "California, Florida, Georgia or Quebec" → "California, Florida or Georgia"; "CA, FL, GA and Quebec" → "CA, FL and GA"
+    .replace(/,\s([^,()]+?)\s(or|and)\sQu[ée]bec\b/g, ' $2 $1')
+    .replace(/\s(?:or|and)\sQu[ée]bec\b/g, '')
+    .replace(/,\sQu[ée]bec\b/g, '')
+    // bracketed Canadian asides: "(Health Canada: 'Manufactured in Thailand')", "(Canadian launch, Dec 2024)"
+    .replace(/\s*\([^()]*\b(?:Canad(?:a|ian)|Qu[ée]bec|Ontario)\b[^()]*\)/g, '');
+  const sentences = neutral.split(/(?<=[.!?])\s+(?=[A-Z0-9“"'(])/);
+  const kept = sentences
+    .map((snt) => snt.split(/;\s+/).filter((cl) => !CA_ONLY.test(cl)).join('; '))
+    .map((snt) => snt.trim())
+    .filter((snt) => snt && !/^[,;:.\s]*$/.test(snt));
+  const out = kept.join(' ').replace(/\s{2,}/g, ' ').replace(/[;,]\s*$/, '.').trim();
+  return out ? cToF(out) : '';
+}
+export const usList = (items: string[] | null | undefined): string[] => (items ?? []).map(usText).filter(Boolean);
 
 // ---------------------------------------------------------------- Canadian regions
 export interface CARegion {

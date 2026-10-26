@@ -1,0 +1,751 @@
+{
+  "checked": "2026-10-26",
+  "about": "US common-problem guides (/us/issues/). Written from the climate profiles in src/data/climate/us.json and established building science; figures only where a listed source gives them. 'symptoms' are the symptom labels in src/data/climate/us.json profiles, used to list the metro guides where each problem is common. 'photo' is optional: the site's photos are cold-weather scenes, so the hot-weather problems use a summary card instead.",
+  "costLegend": "Rough cost before rebates: $ is under about $1,000, $$ about $1,000 to $5,000, $$$ about $5,000 to $15,000, $$$$ more. Prices vary a lot by region and house, so get written quotes.",
+  "groups": {
+    "hot-humid": {
+      "label": "Hot and humid",
+      "where": "Florida, Texas and the Gulf Coast",
+      "profiles": ["hot-humid"]
+    },
+    "hot-dry": {
+      "label": "Hot and dry",
+      "where": "the desert Southwest and inland Southern California",
+      "profiles": ["hot-dry"]
+    },
+    "mixed": {
+      "label": "Mixed",
+      "where": "the Mid-Atlantic, St. Louis and the Southeast Piedmont",
+      "profiles": ["mixed-humid", "mixed-humid-warm"]
+    },
+    "cold": {
+      "label": "Cold",
+      "where": "the Northeast, Great Lakes, Upper Midwest and Colorado Front Range",
+      "profiles": ["very-cold", "cold", "cold-dry"]
+    },
+    "marine": {
+      "label": "Marine and mild coastal",
+      "where": "the Pacific Northwest and coastal California",
+      "profiles": ["marine", "mild-coastal"]
+    }
+  },
+  "sections": [
+    { "title": "Summer, cooling and humidity", "slugs": ["high-summer-bills", "humid-indoors", "hot-upstairs", "ac-runs-constantly", "musty-smell", "dust-smoke"] },
+    { "title": "Winter, heating and drafts", "slugs": ["high-heating-bills", "drafts-cold-rooms", "ice-dams", "cold-floors", "window-condensation"] }
+  ],
+  "issues": [
+    {
+      "slug": "high-summer-bills",
+      "name": "High summer electric bills",
+      "short": "Bills spike when the AC runs. Leaky attic ducts, attic heat and sun on west-facing glass are more common causes than an old AC alone.",
+      "symptom": "Your electric bill jumps every summer, or it’s higher than neighbors with similar homes. Before replacing the air conditioner, find out where the cooling goes: much of it can be lost in the attic before it reaches a room.",
+      "symptoms": ["High summer bills"],
+      "meaning": [
+        "Cooling is usually the biggest summer load, so a high bill means the AC is working hard, working inefficiently, or both. Compare a summer bill with a spring or fall bill, when you used little heat or AC: the difference is roughly what cooling costs you.",
+        "The usual culprits are heat getting in (through the attic, unshaded west and south windows and air leaks) and cooling getting lost (leaky or uninsulated ducts in a hot attic, garage or crawlspace).",
+        "ENERGY STAR estimates that in a typical house, 20 to 30 percent of the air moving through the duct system is lost to leaks, holes and poorly connected ducts."
+      ],
+      "causes": {
+        "hot-humid": "Cooling runs most of the year, and the AC also has to pull moisture out of the air. Ducts and the air handler often sit in a vented attic that gets far hotter than the outdoor air, so every leak loses cooled, dried air and pulls in hot, humid air. Oversized and older single-speed systems waste energy on short runs.",
+        "hot-dry": "Months of extreme heat make the AC the biggest bill. The attic climbs well above the outdoor temperature, so attic ducts, thin attic insulation and west-facing windows add the most load. On the hottest afternoons, the rating that matters most is EER2, the efficiency at 95°F outdoors, not just SEER2.",
+        "mixed": "Summers are hot and muggy, so the same attic, duct and window problems apply, plus damp basements and crawlspaces that add moisture the AC has to remove. If you have both a gas and an electric bill, the electric bill’s summer peak is the one to study.",
+        "cold": "Summers are shorter, so a high summer bill often points to something besides central AC: window units cooling hot upstairs rooms, a basement dehumidifier running nonstop, an old second refrigerator or freezer, or a pool pump. A bill analysis separates these from cooling.",
+        "marine": "Most homes need little cooling, so a summer spike usually comes from heat waves in homes built without AC, portable or window units running in upstairs rooms, or high electricity prices, especially in coastal California. Shading and a well-sealed, insulated attic keep upstairs rooms cooler for less."
+      },
+      "tests": [
+        { "test": "bill-analysis", "why": "Separates cooling from the rest of your use by comparing summer bills with spring and fall, so you know how much is really the AC." },
+        { "test": "duct-leakage", "why": "Measures how much cooled air the ducts lose. Ask for leakage to outside, the part that wastes energy." },
+        { "test": "attic-inspection", "why": "Checks attic insulation against ENERGY STAR’s level for your climate zone, and whether attic ducts are sealed and insulated." },
+        { "test": "blower-door", "why": "Measures how leaky the house is, which is how hot, humid outdoor air gets in." },
+        { "test": "thermal-imaging", "why": "With the AC running on a hot afternoon, shows warm patches where insulation is missing and air leaks in." },
+        { "test": "heat-loss-calc", "why": "A Manual J load calculation works out the cooling load too, so you know the right size before you replace the AC." }
+      ],
+      "diyFirst": [
+        "Change or clean the AC filter, and keep plants and debris away from the outdoor unit.",
+        "Close blinds or shades on sunny east, west and south windows, and add exterior shading where you can.",
+        "Set the thermostat a few degrees higher when you’re away or asleep, and use ceiling fans in rooms you’re in. Fans cool people, not rooms, so switch them off when you leave.",
+        "Read your bills: if summer use is far above spring and fall, it’s cooling. If every month is high, look at year-round loads like pool pumps, old refrigerators and water heating.",
+        "If your utility has time-of-use rates, run laundry, the dishwasher and other big loads outside the peak hours."
+      ],
+      "fixLadder": [
+        { "step": "Shades, a thermostat schedule and fresh filters", "cost": "Free–$" },
+        { "step": "Seal and insulate ducts in the attic, garage or crawlspace", "cost": "$–$$" },
+        { "step": "Air seal the attic floor, then add insulation; in hot climates, add a radiant barrier under the roof deck", "cost": "$$" },
+        { "step": "Solar control at the windows: exterior shade screens, awnings, or low-SHGC glass when windows are replaced", "cost": "$$–$$$" },
+        { "step": "Replace an old or oversized system with a right-sized, high-efficiency AC or heat pump, sized by Manual J", "cost": "$$$–$$$$" }
+      ],
+      "callPro": [
+        "The AC runs but the air from the vents isn’t cool, or there’s ice on the refrigerant lines or indoor coil. Switch to fan only so it thaws, and call an HVAC technician.",
+        "Bills jumped with no change in weather or habits. A refrigerant leak or a failing part can do that.",
+        "You’re about to replace the system. Ask for a Manual J load calculation in writing, not a size based on square footage or the old unit."
+      ],
+      "avoid": [
+        "Replacing the AC before checking the ducts: a new unit on leaky attic ducts still loses its cooling to the attic.",
+        "Buying on SEER2 alone in a very hot, dry climate: compare EER2 too, because that’s the efficiency on the hottest afternoons."
+      ],
+      "glossary": ["seer", "eer", "cooling-degree-days", "duct-leakage-test", "leakage-to-outside", "radiant-barrier", "shgc", "baseload", "time-of-use-pricing", "manual-j"],
+      "related": ["ac-runs-constantly", "hot-upstairs", "humid-indoors"],
+      "faq": [
+        { "q": "Will a new, higher-SEER2 air conditioner fix high summer bills?", "a": "Sometimes, but check the ducts and attic first. A new unit connected to leaky ducts in a hot attic still loses cooled air, and a unit bigger than the house needs runs short cycles that waste energy and remove less humidity. Seal and insulate the ducts, improve the attic, then size any replacement with a Manual J load calculation." },
+        { "q": "What’s the difference between SEER2 and EER2?", "a": "SEER2 rates cooling efficiency across a typical season. EER2 rates it at one hot condition, 95°F outdoors. In very hot climates, where the AC spends long hours at or above that temperature, a higher EER2 matters as much as a higher SEER2." },
+        { "q": "How do I know how much of my bill is air conditioning?", "a": "Compare a summer bill with a spring or fall bill from a month when you used little heat or AC. The difference is roughly your cooling cost. An energy bill analysis does this properly, adjusting each month for the weather." }
+      ],
+      "sources": [
+        { "label": "ENERGY STAR: duct sealing", "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing" },
+        { "label": "DOE Building Science Education: proper HVAC sizing", "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems" },
+        { "label": "Building America Solution Center: attic radiant barriers", "url": "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers" },
+        { "label": "ENERGY STAR: recommended insulation levels", "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" },
+        { "label": "ENERGY STAR: window, door and skylight criteria", "url": "https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria" },
+        { "label": "DOE 2023 central AC and heat pump standards FAQ", "url": "https://www1.eere.energy.gov/buildings/appliance_standards/pdfs/2023_CAC_Standards_FAQ_10-5-2022_Final.pdf" }
+      ],
+      "metaDescription": "Why summer electric bills run high in your climate: leaky attic ducts, attic heat, west-facing windows or an oversized AC. The tests that find the cause and the fixes, cheapest first."
+    },
+    {
+      "slug": "humid-indoors",
+      "name": "Humid, sticky air indoors",
+      "short": "The AC runs but the house feels clammy. Usually an oversized AC, the fan left on, or humid air leaking in through ducts and crawlspaces.",
+      "symptom": "The house feels clammy even with the AC on, vents or windows sweat, or a hygrometer reads above 60%. Cooling the air and drying it are two jobs, and many systems only do the first one well.",
+      "photo": "mold-testing",
+      "symptoms": ["Humid or sticky indoors"],
+      "meaning": [
+        "EPA advises keeping indoor relative humidity below 60%, ideally between 30% and 50%. Above that, mold and dust mites thrive, and the house feels warmer than the thermostat says.",
+        "An air conditioner only removes moisture while its coil is cold and the system runs long enough for water to drip off. Short runs, a fan that keeps blowing between cycles and humid air leaking in can all leave a house cool but damp.",
+        "An inexpensive digital hygrometer tells you whether you have a humidity problem before you spend money fixing one."
+      ],
+      "causes": {
+        "hot-humid": "Outdoor air is humid most of the year, so every leak brings moisture in. The usual causes are an oversized AC that cools fast and shuts off before it dries the air, the thermostat fan set to On (which blows water from the wet coil back into the house), return ducts leaking in the attic or crawlspace, and missing kitchen or bath exhaust. Mild, humid spring and fall weeks are often the worst, because the AC barely runs.",
+        "hot-dry": "Desert air is rarely the problem. If the house feels damp, look at how you use an evaporative cooler: it adds moisture by design and needs a window or vent open to work, and on humid monsoon days it cools less while adding more moisture. Plumbing leaks and a blocked AC drain are the other usual causes.",
+        "mixed": "Muggy summers and mild, humid spring and fall weeks bring the same problems as the Gulf Coast, plus basements and crawlspaces that stay damp. A basement often needs a dehumidifier in summer even when the rest of the house is fine.",
+        "cold": "Upstairs is rarely humid, but basements often are in summer: humid air meets cool foundation walls and condenses, which brings musty smells. In winter, too much indoor humidity shows up as condensation on windows instead.",
+        "marine": "Summers are mostly dry, so humidity problems show up in winter: long, damp months, little ventilation, and cooking, showers and laundry drying indoors. Window condensation and mold in closets and corners on outside walls are the signs."
+      },
+      "tests": [
+        { "test": "mold-iaq", "why": "Starts with humidity readings and a search for moisture sources: leaks, the crawlspace or basement, drain pans and ventilation." },
+        { "test": "heat-loss-calc", "why": "A Manual J calculation includes the moisture (latent) load and shows whether the AC is oversized for the house." },
+        { "test": "duct-leakage", "why": "Finds return-duct leaks that pull humid attic or crawlspace air into the system." },
+        { "test": "blower-door", "why": "Shows how much outdoor air leaks in, and where, while the house is under pressure." }
+      ],
+      "diyFirst": [
+        "Put a digital hygrometer in a few rooms for a week. Aim for below 60%, ideally 30–50%.",
+        "Set the thermostat fan to Auto, not On, so the coil can drain between cycles.",
+        "Run bathroom fans during and after showers, and use a range hood that vents outdoors.",
+        "Check that the AC condensate drain flows freely and the drain pan isn’t holding water.",
+        "In a damp basement, run a dehumidifier set to about 50%, draining to a floor drain if you can."
+      ],
+      "fixLadder": [
+        { "step": "Hygrometer, fan on Auto, exhaust fans used and vented outdoors", "cost": "Free–$" },
+        { "step": "Seal return ducts and air leaks to the attic and crawlspace", "cost": "$–$$" },
+        { "step": "A portable or ducted whole-house dehumidifier", "cost": "$–$$" },
+        { "step": "Close and condition a vented crawlspace: drainage, a sealed ground vapor barrier and drying", "cost": "$$–$$$" },
+        { "step": "Replace an oversized AC with a right-sized variable-speed system with a dehumidify mode, sized by Manual J", "cost": "$$$–$$$$" }
+      ],
+      "callPro": [
+        "Mold covers more than about 10 square feet, or the house has had water damage. EPA points to its professional remediation guide for larger jobs.",
+        "Water drips from ducts, vents or the air handler, or the drain pan keeps overflowing.",
+        "Humidity stays above 60% with the AC running normally. Ask an HVAC contractor to check airflow and settings, and whether the system is oversized."
+      ],
+      "avoid": [
+        "Plastic sheeting or vinyl wallpaper on the inside of exterior walls in a humid climate: it traps moisture in the wall when the AC runs.",
+        "Buying a bigger AC to fix humidity: an oversized unit short-cycles and dries the air less."
+      ],
+      "glossary": ["relative-humidity", "dew-point", "hygrometer", "dehumidifier", "oversizing", "short-cycling", "variable-speed-compressor", "condensation", "mold", "hot-humid-climate"],
+      "related": ["musty-smell", "ac-runs-constantly", "window-condensation"],
+      "faq": [
+        { "q": "What indoor humidity should I aim for?", "a": "EPA advises keeping indoor relative humidity below 60%, ideally between 30% and 50%. A digital hygrometer is the easiest way to check." },
+        { "q": "Why is my house humid when the AC is running?", "a": "Usually because the AC doesn’t run long enough to dry the air, often because it’s oversized; the fan is set to On and puts water from the coil back into the air; or humid air leaks in through return ducts, the attic or a crawlspace." },
+        { "q": "Should I buy a dehumidifier or a new AC?", "a": "Start with the cheaper steps: fan on Auto, exhaust fans, sealed return ducts, and a dehumidifier for a damp basement or crawlspace. Replace the AC only if a Manual J calculation shows it’s the wrong size or it’s due anyway, and then choose a right-sized variable-speed system." }
+      ],
+      "sources": [
+        { "label": "EPA: a brief guide to mold, moisture and your home", "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home" },
+        { "label": "Building America Solution Center: whole-house dehumidification", "url": "https://basc.pnnl.gov/resource-guides/whole-house-dehumidification" },
+        { "label": "DOE Building Science Education: proper HVAC sizing", "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems" },
+        { "label": "Building America Solution Center: evaporative cooling", "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems" },
+        { "label": "Building America Solution Center: Class I vapor retarders in humid climates", "url": "https://basc.pnnl.gov/resource-guides/class-i-vapor-retarders-not-installed-above-grade-walls-warm-humid-climate" }
+      ],
+      "metaDescription": "Why your house feels humid with the AC on: an oversized AC, the fan left on, leaky return ducts or a damp crawlspace. The humidity to aim for, the tests and the fixes by climate."
+    },
+    {
+      "slug": "hot-upstairs",
+      "name": "Hot upstairs rooms",
+      "short": "Downstairs is fine, upstairs is stuffy. Usually attic heat, ducts losing cool air on the way up, or too little return air.",
+      "symptom": "The second floor or a bonus room runs several degrees warmer than downstairs, especially on summer afternoons. Turning the thermostat down makes downstairs cold without fixing upstairs.",
+      "symptoms": ["Hot upstairs rooms", "Hot west-facing rooms", "Hot rooms in summer"],
+      "meaning": [
+        "Upstairs rooms sit under the attic, which gets far hotter than outdoors in summer, so missing insulation and air leaks there show up first in the rooms below.",
+        "Warm air rises, and in most two-story homes one thermostat downstairs controls the whole house. Upstairs rooms also tend to get the longest duct runs, often through the hottest part of the attic.",
+        "Rooms over garages and bonus rooms with sloped ceilings and knee walls are classic problem spots, because their walls, ceilings and floors border unconditioned space."
+      ],
+      "causes": {
+        "hot-humid": "Ducts in a vented attic lose cooling on the way to upstairs rooms, and sun on the roof drives attic heat into the ceilings. Bonus rooms over garages and rooms with knee walls are the usual worst offenders.",
+        "hot-dry": "Extreme attic heat and west-facing windows load upstairs rooms on summer afternoons. Attic ducts, thin insulation and missing shade are the first things to check, and a radiant barrier under the roof deck helps more here than in milder climates.",
+        "mixed": "Upstairs rooms overheat in summer and may run cold in winter for the same reasons: leaky ducts through the attic, too little return air, and leaks at knee walls and the attic hatch.",
+        "cold": "Upstairs rooms get hot under poorly insulated attics, and many older homes rely on window units there. The air sealing and insulation that help in winter, and against ice dams, also keep upstairs cooler in summer.",
+        "marine": "Many homes here were built without AC, so heat waves hit the upstairs hardest. Attic air sealing and insulation, shade on west windows and a ductless heat pump for the upstairs rooms are the common fixes."
+      },
+      "tests": [
+        { "test": "duct-leakage", "why": "Shows whether cooled air leaks out of the ducts before it reaches upstairs rooms." },
+        { "test": "attic-inspection", "why": "Checks insulation depth, knee walls, the attic hatch and whether attic ducts are sealed and insulated." },
+        { "test": "thermal-imaging", "why": "On a hot afternoon with the AC on, shows warm patches in ceilings and knee walls where insulation is missing." },
+        { "test": "heat-loss-calc", "why": "Room-by-room Manual J loads, with a Manual D duct design, show whether each room gets the airflow it needs." },
+        { "test": "blower-door", "why": "Finds the leaks between the house and the attic while the house is under pressure." }
+      ],
+      "diyFirst": [
+        "Close blinds or shades on sunny upstairs windows during the day.",
+        "Make sure upstairs supply vents are fully open and nothing blocks them or the upstairs return grille.",
+        "Weatherstrip and insulate the attic hatch or pull-down stairs.",
+        "If your thermostat has a circulate setting, try it to mix air between floors, but skip it in a humid climate, where a running fan can raise indoor humidity.",
+        "If your ducts have balancing dampers, have an HVAC technician send more air upstairs for the summer."
+      ],
+      "fixLadder": [
+        { "step": "Shades, clear vents and returns, a sealed and insulated attic hatch", "cost": "Free–$" },
+        { "step": "Balance the system; add a return or jumper duct to rooms without one", "cost": "$–$$" },
+        { "step": "Seal and insulate attic ducts", "cost": "$–$$" },
+        { "step": "Air seal the attic floor and knee walls, then add insulation; in hot climates, a radiant barrier under the roof deck", "cost": "$$" },
+        { "step": "Zoning, or a ductless heat pump for the upstairs or bonus room", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "One room stays hot no matter what. Ask an HVAC contractor to measure airflow at the vents and check that room’s duct for kinks, crushing or disconnections.",
+        "You’re finishing an attic or bonus room. Get a load calculation for that space before extending ducts to it.",
+        "The attic has vermiculite insulation or old knob-and-tube wiring. Get those assessed before anyone works up there."
+      ],
+      "avoid": [
+        "Closing lots of downstairs registers to push air upstairs: it raises pressure in the ducts, which can increase duct leakage and cut airflow across the coil. Adjusting a few dampers is fine.",
+        "Laying radiant barrier foil on top of the attic insulation: dust ruins its effect. It belongs under the roof deck."
+      ],
+      "glossary": ["radiant-barrier", "knee-wall", "attic-bypass", "duct-leakage-test", "stack-effect", "zoning", "ductless-mini-split", "manual-j", "manual-d", "shgc"],
+      "related": ["high-summer-bills", "ac-runs-constantly", "drafts-cold-rooms"],
+      "faq": [
+        { "q": "Why is my upstairs so much hotter than downstairs?", "a": "Upstairs rooms sit under a hot attic, get the longest duct runs (often through that attic) and collect warm air rising from below, while one thermostat downstairs decides when the system runs. Missing attic insulation, leaky ducts and too little return air upstairs make it worse." },
+        { "q": "Should I close the vents downstairs to push air upstairs?", "a": "Not many of them. Closing lots of registers raises the pressure in the ducts, which can increase duct leakage and cut the airflow the system needs. Balancing dampers, an added return, duct sealing or a separate zone are better fixes." },
+        { "q": "Does a radiant barrier help?", "a": "In hot, sunny climates, a radiant barrier under the roof deck can cut the heat the attic passes down to the rooms and ducts below. It helps least in cool climates, and foil laid on top of the attic insulation loses its effect as dust collects on it." }
+      ],
+      "sources": [
+        { "label": "ENERGY STAR: duct sealing", "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing" },
+        { "label": "Building America Solution Center: attic radiant barriers", "url": "https://basc.pnnl.gov/resource-guides/attic-radiant-barriers" },
+        { "label": "ENERGY STAR: recommended insulation levels", "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" },
+        { "label": "DOE Building America: high-performance ducts", "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/ba_innovations_1-1-3_high_performance_ducts.pdf" },
+        { "label": "DOE Building Science Education: proper HVAC sizing", "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems" }
+      ],
+      "metaDescription": "Why upstairs rooms run hot: attic heat, leaky attic ducts, too little return air and one thermostat downstairs. The tests that find the cause and the fixes, cheapest first."
+    },
+    {
+      "slug": "ac-runs-constantly",
+      "name": "AC runs all the time",
+      "short": "The air conditioner barely shuts off. On the hottest days that can be normal; otherwise look at the ducts, attic heat, refrigerant and a dirty coil.",
+      "symptom": "The AC runs for hours without reaching the setting, or barely shuts off even in moderate heat. Long runs aren’t always a problem, but long runs while the house stays warm usually are.",
+      "symptoms": ["AC runs all the time", "AC can't keep up", "AC breaks down in heat waves"],
+      "meaning": [
+        "A correctly sized system is chosen for a typical hot day in your area (the design day), not the hottest day on record. In a heat wave it may run nonstop and let the house drift a few degrees above the setting. That alone doesn’t mean it’s broken.",
+        "Variable-speed systems are designed to run for long stretches at low speed, which dries the air better and uses less energy. Check whether yours is one before worrying about run time.",
+        "Long runs on ordinary days, warm air at the vents or a rising bill point to lost capacity: a dirty filter or coil, low refrigerant from a leak, leaky ducts, or more heat getting into the house than the system was sized for."
+      ],
+      "causes": {
+        "hot-humid": "The AC handles heat and moisture, and runs most of the year. Leaky attic ducts, a dirty outdoor coil, low refrigerant and attic heat are the usual causes, and an aging system loses capacity, too.",
+        "hot-dry": "With so many afternoons above 100°F, a healthy system can run nonstop at the peak of the day. Watch the air at the vents and the bill instead: attic ducts, a dirty outdoor coil and low refrigerant are common, and an evaporative cooler loses cooling power on humid monsoon days.",
+        "mixed": "Long runs in a heat wave are normal. On ordinary summer days, look at ducts in the attic or crawlspace, a dirty coil and refrigerant leaks. Heat waves are when systems most often fail, so have it serviced before summer.",
+        "cold": "Central AC here is sized for shorter, milder summers. In a heat wave, a healthy system may run all afternoon, and window units in upstairs rooms often can’t keep up. If it runs constantly on mild days, look for low refrigerant, a dirty coil or attic ducts.",
+        "marine": "Many homes have no AC or added it recently. Portable and window units often can’t keep up in a heat wave, and a ductless heat pump sized for the rooms you use is the usual upgrade. Ducted AC added to an older home may have undersized or leaky ducts."
+      },
+      "tests": [
+        { "test": "heat-loss-calc", "why": "A Manual J load calculation shows how big the system should be for your house and climate, so you can tell undersized from underperforming." },
+        { "test": "duct-leakage", "why": "Leaky ducts in a hot attic can waste a big share of the system’s output before it reaches a room." },
+        { "test": "attic-inspection", "why": "Thin attic insulation and attic heat raise the load the AC has to meet." },
+        { "test": "bill-analysis", "why": "Compares your summer use with past years and the weather, which shows whether something changed." },
+        { "test": "blower-door", "why": "Measures how much hot outdoor air leaks in." }
+      ],
+      "diyFirst": [
+        "Replace the filter. A clogged filter is the most common, and cheapest, cause of weak cooling.",
+        "With the power off at the outdoor disconnect, gently rinse dirt and debris off the outdoor coil with a garden hose (no pressure washer), and keep plants back from the unit.",
+        "Hold your hand to a supply vent: if the air isn’t noticeably cool, or the house stays far above the setting for hours, call a technician.",
+        "Close blinds on sunny windows, and save oven cooking and the dryer for cooler hours.",
+        "Look up your model number: if it’s a variable-speed system, long, quiet runs are how it’s meant to work."
+      ],
+      "fixLadder": [
+        { "step": "New filter, a clean outdoor coil and clear space around the unit", "cost": "Free–$" },
+        { "step": "A professional tune-up: refrigerant charge, airflow, indoor coil and drain", "cost": "$" },
+        { "step": "Find and repair a refrigerant leak; topping it up without a repair doesn’t last", "cost": "$–$$" },
+        { "step": "Seal and insulate ducts; improve attic insulation and window shading", "cost": "$–$$" },
+        { "step": "Replace an aging or undersized system with one sized by Manual J; variable-speed for long, efficient runs", "cost": "$$$–$$$$" }
+      ],
+      "callPro": [
+        "There’s ice on the refrigerant lines or indoor coil. Switch to fan only so it thaws, and call a technician: running it frozen can damage the compressor.",
+        "The air at the vents is warm, or the outdoor unit hums, clicks or won’t start.",
+        "The AC fails in a heat wave. Don’t wait it out in a hot house: heat illness is the main risk when cooling fails, so go somewhere cool, such as a friend’s home or a cooling center, until it’s fixed."
+      ],
+      "avoid": [
+        "Setting the thermostat very low to cool the house faster: it doesn’t, it just runs longer.",
+        "Buying a bigger unit without a load calculation: oversized systems short-cycle and leave the air humid."
+      ],
+      "glossary": ["load-calculation", "manual-j", "design-temperature", "oversizing", "short-cycling", "variable-speed-compressor", "compressor-staging", "refrigerant", "ton", "eer"],
+      "related": ["high-summer-bills", "hot-upstairs", "humid-indoors"],
+      "faq": [
+        { "q": "Is it normal for my AC to run all day?", "a": "On the hottest days, often yes: systems are sized for a typical hot day in your area, not the extreme, so they may run nonstop in a heat wave. Variable-speed systems also run for long periods by design. Constant running on ordinary days, warm air at the vents or a jump in your bill are signs something needs attention." },
+        { "q": "Does my AC need more refrigerant?", "a": "An AC doesn’t use up refrigerant. If it’s low, it’s leaking, and the leak should be found and repaired. Adding refrigerant without fixing the leak only lasts until it leaks out again." },
+        { "q": "Do I need a bigger AC?", "a": "Not necessarily. Many systems that can’t keep up are losing capacity to leaky ducts, attic heat or a dirty coil. A Manual J load calculation tells you the size the house actually needs; a bigger unit than that short-cycles and leaves the air humid." }
+      ],
+      "sources": [
+        { "label": "DOE Building Science Education: proper HVAC sizing", "url": "https://bsesc.energy.gov/energy-basics/hvac-proper-sizing-hvac-systems" },
+        { "label": "ENERGY STAR: duct sealing", "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing" },
+        { "label": "ENERGY STAR: recommended insulation levels", "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" },
+        { "label": "Building America Solution Center: evaporative cooling", "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems" },
+        { "label": "NOAA 1991-2020 climate normals: Phoenix Sky Harbor airport", "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023183.csv" }
+      ],
+      "metaDescription": "When an AC that never shuts off is normal and when it isn’t: design days, variable-speed systems, leaky ducts, low refrigerant and sizing. The tests and fixes for your climate."
+    },
+    {
+      "slug": "musty-smell",
+      "name": "Musty smell",
+      "short": "A damp, earthy smell means moisture, and usually mold, somewhere: a crawlspace, basement, AC drain pan or a hidden leak.",
+      "symptom": "A damp, earthy odor that’s stronger when the AC or heat starts, in the basement, or after rain. A musty smell is a moisture problem first: find the water and you’ve found the fix.",
+      "photo": "mold-testing",
+      "symptoms": ["Musty smell", "Damp or musty basement"],
+      "meaning": [
+        "Musty odors come from mold and bacteria growing where something stays damp. EPA’s advice is to fix the moisture source, then clean, because cleaning without stopping the water doesn’t last.",
+        "If the smell gets stronger when the system starts, look at the air handler: the drain pan, the coil, and return ducts that may pull air from a damp crawlspace, basement or wall cavity.",
+        "If it’s strongest in the basement or after rain, look for water getting in, and for humidity above 60%."
+      ],
+      "causes": {
+        "hot-humid": "Humid outdoor air, condensation on cold ducts and air handlers, slow-draining AC pans and vented crawlspaces are the common sources. Water from storms or flooding can also hide in walls and under floors.",
+        "hot-dry": "Less common in dry air. Check the evaporative cooler (wet pads and standing water, especially when it sits idle), plumbing leaks, roof leaks after monsoon storms and the AC drain.",
+        "mixed": "Damp basements and crawlspaces are the usual source, especially in summer, along with AC drain pans and leaky return ducts in crawlspaces.",
+        "cold": "Basements are the usual source: humid summer air condenses on cool foundation walls, and water seeps in after rain. Finished basements with carpet or drywall against concrete can hold moisture out of sight.",
+        "marine": "Long, damp winters and vented crawlspaces make mold in crawlspaces, closets and corners on outside walls common. Bath and kitchen fans that aren’t used, or don’t vent outdoors, make it worse."
+      },
+      "tests": [
+        { "test": "mold-iaq", "why": "A moisture and humidity check: moisture meter readings, humidity, and a look at the crawlspace or basement, drain pans and ventilation." },
+        { "test": "duct-leakage", "why": "Return-duct leaks in a crawlspace, basement or wall cavity can pull musty air into the system and spread it through the house." },
+        { "test": "blower-door", "why": "Shows where air enters from the crawlspace or basement when the house is under pressure." },
+        { "test": "thermal-imaging", "why": "Can point to damp spots, which often show up cooler than the surface around them, but a moisture meter has to confirm them." }
+      ],
+      "diyFirst": [
+        "Follow your nose: check under sinks, around the water heater and washer, at the AC drain pan and in the crawlspace or basement.",
+        "Measure humidity with a digital hygrometer and keep it below 60%, ideally 30–50%.",
+        "Run a dehumidifier in a damp basement, and make gutters and downspouts carry roof water away from the foundation.",
+        "Replace the AC filter, and make sure the condensate drain flows.",
+        "Clean small mold patches, under about 10 square feet, with detergent and water and dry them completely, as EPA describes. Wear gloves, goggles and an N-95 respirator."
+      ],
+      "fixLadder": [
+        { "step": "Find and stop the water: plumbing and roof leaks, gutters and downspouts, the AC drain", "cost": "Free–$" },
+        { "step": "Dehumidify the basement or crawlspace; clean small mold areas", "cost": "$" },
+        { "step": "Seal return ducts in the crawlspace or basement; have the coil and drain pan cleaned", "cost": "$–$$" },
+        { "step": "Fix foundation drainage and water entry before finishing or insulating a basement", "cost": "$$–$$$" },
+        { "step": "Close and condition a vented crawlspace, or professional cleanup of larger mold areas", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "Mold covers more than about 10 square feet, the house has had flooding or a sewage backup, or the smell comes from inside the ducts. EPA points to professional remediation guidance for larger jobs.",
+        "Anyone in the home has allergies, asthma or other health concerns. Talk to a doctor as well as fixing the source.",
+        "Cleanup would disturb insulation, ceiling texture or old flooring in an older home. Have those materials checked for asbestos first."
+      ],
+      "avoid": [
+        "Painting or caulking over mold: it keeps growing underneath. Clean and dry the surface first.",
+        "Insulating a basement or crawlspace that still takes on water."
+      ],
+      "glossary": ["mold", "relative-humidity", "hygrometer", "dehumidifier", "condensation", "dew-point", "indoor-air-quality", "vapor-barrier"],
+      "related": ["humid-indoors", "window-condensation", "dust-smoke"],
+      "faq": [
+        { "q": "Should I test for mold?", "a": "Usually not, if you can see or smell it. EPA says sampling is usually unnecessary when mold is visible, and there are no federal limits to compare a result against. Finding and fixing the moisture is what solves it." },
+        { "q": "Why does my house smell musty when the AC turns on?", "a": "Common causes are a slow-draining or dirty drain pan, a damp coil, or return ducts that leak and pull air from a damp crawlspace, basement or wall cavity. A technician can clean the coil and pan, and a duct leakage test finds the return leaks." },
+        { "q": "Can I clean mold myself?", "a": "For areas under about 10 square feet, EPA says you can usually handle it yourself: scrub hard surfaces with detergent and water, dry them completely, and wear gloves, goggles and an N-95 respirator. Fix the moisture source first, or it will come back." }
+      ],
+      "sources": [
+        { "label": "EPA: a brief guide to mold, moisture and your home", "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home" },
+        { "label": "Building America Solution Center: whole-house dehumidification", "url": "https://basc.pnnl.gov/resource-guides/whole-house-dehumidification" },
+        { "label": "Building America Solution Center: evaporative cooling", "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems" },
+        { "label": "EPA: protect your family from asbestos", "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos" },
+        { "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades", "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf" }
+      ],
+      "metaDescription": "A musty smell means moisture: a crawlspace, basement, AC drain pan or hidden leak. What it means in your climate, when mold needs a pro, and the fixes in the right order."
+    },
+    {
+      "slug": "dust-smoke",
+      "name": "Dust or wildfire smoke indoors",
+      "short": "Dust settles fast, or smoke gets in on bad-air days. Seal the leaks it comes through, then filter what’s left.",
+      "symptom": "Surfaces get dusty days after cleaning, you smell smoke indoors on wildfire days, or dark lines appear at carpet edges and around vents. Particles follow the same leaks heat does, so sealing and filtering work together.",
+      "symptoms": ["Dust or smoke indoors"],
+      "meaning": [
+        "Outdoor particles get in wherever air does: around doors, windows and attic openings, and through leaky ducts. Return ducts in an attic, garage or crawlspace can pull in dust and fumes and blow them through the house.",
+        "On wildfire smoke days, EPA advises keeping windows and doors closed, using the most efficient filter your system can handle (MERV 13 if it can), running a portable air cleaner and setting up a clean room.",
+        "Dark lines at carpet edges and around vents often mark places where air leaks through a gap and leaves its dust behind, like a filter."
+      ],
+      "causes": {
+        "hot-humid": "Dust is the more common complaint: return-duct leaks in the attic pull in attic dust and insulation fibers, and an air handler in the garage can pull in fumes if its closet and ducts aren’t sealed.",
+        "hot-dry": "Desert dust storms and wildfire smoke both get in through leaks. An evaporative cooler brings outdoor air in by design, so on smoky or dusty days filter its intake with MERV 13 media or switch to the AC if you have one.",
+        "mixed": "Wildfire smoke has reached the East in recent years, including record smoke in New York City and Washington, DC in June 2023. Older homes with leaky windows, attics and basements let it in; sealing, then MERV 13 filters and a portable air cleaner, handle most of it.",
+        "cold": "Smoke from distant wildfires now reaches the Upper Midwest and Colorado often; Minnesota set a record for air-quality alerts in 2023. Homes with an HRV or ERV bring in outdoor air all the time, so keep its filters clean and, on the worst days, set it to its lowest or recirculate setting if it has one.",
+        "marine": "Wildfire smoke can reach hazardous levels in the Pacific Northwest and California. Many homes have no central system to filter through, so portable HEPA air cleaners sized for the room, a clean room and well-sealed windows and doors are the core of the plan."
+      },
+      "tests": [
+        { "test": "blower-door", "why": "Measures how leaky the house is and, with the fan running, shows where outdoor air and smoke get in." },
+        { "test": "duct-leakage", "why": "Finds return-duct leaks in the attic, garage or crawlspace that pull dust and fumes into the system." },
+        { "test": "mold-iaq", "why": "An indoor air check looks at humidity, ventilation and particle sources inside the house." },
+        { "test": "combustion-safety", "why": "If you tighten a house with gas, oil or propane appliances, this test makes sure they still vent safely." }
+      ],
+      "diyFirst": [
+        "Weatherstrip doors, add door sweeps and seal the attic hatch and other gaps you can see.",
+        "Use the most efficient filter your system can handle; EPA suggests MERV 13 for smoke. Ask your HVAC technician if you’re not sure your system can take one.",
+        "Run a portable HEPA air cleaner sized for the room, especially in bedrooms, and set up one clean room for smoky days.",
+        "On smoke days, keep windows closed, recirculate, and avoid adding particles indoors: frying, candles, smoking, and vacuuming without a HEPA vacuum.",
+        "Check the filter more often during smoke or dust season, because a loaded filter cuts airflow."
+      ],
+      "fixLadder": [
+        { "step": "Weatherstripping, door sweeps and sealing the gaps you can see", "cost": "Free–$" },
+        { "step": "Better filters, a portable HEPA air cleaner and a clean room", "cost": "$" },
+        { "step": "Seal the return ducts and the air handler cabinet or closet", "cost": "$–$$" },
+        { "step": "Professional air sealing of the attic, rim joists and penetrations, guided by a blower door", "cost": "$$" },
+        { "step": "A deeper filter cabinet that can take MERV 13, or balanced ventilation (an ERV or HRV) with filtration", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "Your system can’t run a MERV 13 filter without losing airflow. An HVAC contractor can add a deeper filter cabinet.",
+        "Dust or insulation fibers come out of the vents, or you smell car exhaust from an attached garage. Have the return ducts and air handler sealed.",
+        "Anyone in the home has asthma, or heart or lung disease. Ask a doctor about a plan for smoke days."
+      ],
+      "avoid": [
+        "Running an evaporative cooler on full with the windows shut: it needs an open window or vent to work, and it pulls smoke in.",
+        "Tightening a house with natural-draft gas appliances without a combustion safety test."
+      ],
+      "glossary": ["merv", "hepa-filter", "pm25", "indoor-air-quality", "air-sealing", "air-leakage", "duct-leakage-test", "depressurization", "hrv", "erv"],
+      "related": ["drafts-cold-rooms", "musty-smell", "humid-indoors"],
+      "faq": [
+        { "q": "What filter should I use for wildfire smoke?", "a": "EPA suggests a MERV 13 filter, or the highest rating your system can handle. Higher-rated filters can restrict airflow in some systems, so check with an HVAC technician, and add a portable HEPA air cleaner for the rooms you use most." },
+        { "q": "Why does my house get so dusty?", "a": "Outdoor dust comes in through air leaks, and leaky return ducts in an attic, garage or crawlspace can pull dust and insulation fibers into the system and blow them around the house. Sealing those leaks and then using a good filter does more than dusting more often." },
+        { "q": "Should I run my evaporative cooler on smoky days?", "a": "Sparingly. An evaporative cooler pulls in outdoor air, smoke included. Fit MERV 13 filter media to the intake if you can, or use the AC instead on the worst days." }
+      ],
+      "sources": [
+        { "label": "EPA: wildfires and indoor air quality", "url": "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq" },
+        { "label": "ENERGY STAR: duct sealing", "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing" },
+        { "label": "ENERGY STAR: seal and insulate", "url": "https://www.energystar.gov/saveathome/seal_insulate" },
+        { "label": "NASA Earth Observatory: smoke smothers the Northeast (June 2023)", "url": "https://science.nasa.gov/earth/earth-observatory/smoke-smothers-the-northeast-151433/" },
+        { "label": "Minnesota Pollution Control Agency: record air-quality alerts (2023)", "url": "https://www.pca.state.mn.us/news-and-stories/air-quality-alerts-record" },
+        { "label": "Building America Solution Center: evaporative cooling", "url": "https://basc.pnnl.gov/resource-guides/evaporative-cooling-systems" },
+        { "label": "Building America Solution Center: combustion appliance zone test", "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test" }
+      ],
+      "metaDescription": "How dust and wildfire smoke get into your house and how to keep them out: air leaks, leaky return ducts, MERV 13 filters, HEPA air cleaners and a clean room, by climate."
+    },
+    {
+      "slug": "high-heating-bills",
+      "name": "High heating bills",
+      "short": "Winter bills that sting. In cold climates it’s usually air leaks and thin attic insulation; in warm ones, electric backup heat.",
+      "symptom": "Your gas, oil, propane or electric bill climbs every winter, or it’s higher than neighbors with similar homes. What drives it depends on where you live: in cold climates it’s mostly the house, in warm ones it’s usually the heating equipment.",
+      "photo": "thermal-imaging",
+      "symptoms": ["High winter bills"],
+      "meaning": [
+        "Heating bills depend on how cold your winters are, how much heat the house loses (through air leaks, the attic, walls, windows and the basement or crawlspace) and how efficiently your equipment makes or moves heat.",
+        "In cold climates, air sealing and insulation usually come first, because no furnace can make up for a leaky house. In warm climates, heating seasons are short, so a big winter bill usually points to electric resistance heat: baseboards, an electric furnace, or a heat pump leaning on its backup heat strips.",
+        "A heat pump moves heat instead of making it, so it uses far less electricity than resistance heat when it’s working right. If yours shows “aux” or “emergency” heat often in mild weather, have it checked."
+      ],
+      "causes": {
+        "hot-humid": "Heating seasons are short, so high winter bills usually come from electric resistance heat: an electric furnace, or a heat pump running its backup strips in a cold snap. Leaky attic ducts lose heat as well as cooling. The February 2021 freeze in Texas showed how quickly bills, and outages, can spike when a hard freeze arrives.",
+        "hot-dry": "Winters are mild, so check the equipment first: a heat pump stuck on emergency heat, electric resistance heat, or ducts leaking into the attic. Pool and water heating can also add up on winter bills.",
+        "mixed": "You pay for real winters and real summers. Air leaks in older homes, uninsulated attics and basements, and older furnaces or boilers drive winter bills. Heat pumps fit both seasons well, with backup heat for cold snaps.",
+        "cold": "Heating is the biggest energy bill. Air leaks into the attic and around rim joists, thin attic insulation, empty walls in older homes and aging furnaces or boilers are the usual causes. Seal and insulate first, then size any new equipment with a load calculation.",
+        "marine": "A long, mild, damp heating season means the house loses heat for many months. Electric baseboard and older furnaces are common, and heat pumps work well in this climate. In coastal California, heating loads are small but electricity prices are high, and old wall furnaces are often inefficient."
+      },
+      "tests": [
+        { "test": "bill-analysis", "why": "Separates heating from the rest of your use and adjusts for the weather, so you know how big the problem really is." },
+        { "test": "blower-door", "why": "Measures air leakage, often the biggest heat loss in older homes, and helps find each leak." },
+        { "test": "thermal-imaging", "why": "On a cold day, shows where heat escapes: missing insulation, air leaks and thermal bridges." },
+        { "test": "attic-inspection", "why": "Compares your attic insulation with ENERGY STAR’s level for your climate zone and looks for bypasses." },
+        { "test": "duct-leakage", "why": "Ducts in attics, crawlspaces and garages can lose heat before it reaches a room." },
+        { "test": "combustion-safety", "why": "Needed before and after air sealing in homes with gas, oil or propane appliances." },
+        { "test": "heat-loss-calc", "why": "A Manual J load calculation sizes new heating equipment for the house after the fixes." }
+      ],
+      "diyFirst": [
+        "Lower the thermostat at night and when you’re away, or set a schedule on a programmable or smart thermostat.",
+        "Weatherstrip doors and the attic hatch, and seal gaps around pipes and wires where you can reach them.",
+        "Replace the furnace filter, and keep supply vents and returns clear of furniture.",
+        "With a heat pump, avoid deep setbacks that make it call for backup heat to recover, and make sure the emergency heat setting is off.",
+        "Compare your bills with last year’s in similar weather: a sudden jump can mean equipment trouble."
+      ],
+      "fixLadder": [
+        { "step": "A thermostat schedule, weatherstripping and filter changes", "cost": "Free–$" },
+        { "step": "Air seal the attic floor, rim joists and other leaks found with a blower door", "cost": "$–$$" },
+        { "step": "Seal and insulate ducts outside the heated space", "cost": "$–$$" },
+        { "step": "Add attic insulation to ENERGY STAR’s level for your zone; insulate rim joists and basement walls", "cost": "$$" },
+        { "step": "Dense-pack insulation in the empty walls of older homes", "cost": "$$–$$$" },
+        { "step": "Replace aging heating with a heat pump (a cold-climate model where winters are cold) or a high-efficiency furnace, sized by Manual J", "cost": "$$$–$$$$" }
+      ],
+      "callPro": [
+        "Your home has a natural-draft furnace, boiler or water heater and you’re planning air sealing. Get a combustion safety test before and after.",
+        "You smell gas or a carbon monoxide alarm sounds. Leave the house and call the gas utility or 911 from outside.",
+        "A heat pump runs on backup heat in mild weather, or the outdoor unit ices up and doesn’t clear. Have a technician check the controls, defrost and refrigerant."
+      ],
+      "avoid": [
+        "Replacing windows first: they’re usually the most expensive way to save heating energy. Air sealing and attic insulation save more for less.",
+        "Sizing a new furnace or heat pump from the old one: get a load calculation after the envelope work."
+      ],
+      "glossary": ["heating-degree-days", "air-sealing", "attic-bypass", "r-value", "afue", "hspf", "auxiliary-heat", "electric-resistance-heat", "balance-point", "cold-climate-heat-pump", "dual-fuel", "therm"],
+      "related": ["drafts-cold-rooms", "ice-dams", "cold-floors"],
+      "faq": [
+        { "q": "What’s the first thing to fix for high heating bills?", "a": "In most homes, air sealing, especially at the attic floor and rim joists, then insulation. A blower door test shows how leaky the house is and where. In warm climates with electric heat, check the equipment first: a heat pump stuck on backup heat or an electric furnace is usually the cause." },
+        { "q": "Why is my heat pump bill so high in winter?", "a": "Common reasons are backup (auxiliary or emergency) electric heat running too often, deep thermostat setbacks that trigger backup heat on recovery, a refrigerant or defrost problem, and leaky ducts. Where winters are cold, choose a cold-climate model sized for your house." },
+        { "q": "Will new windows cut my heating bill?", "a": "Some, but windows are usually the most expensive way to save heating energy. Air sealing and attic insulation usually save more for less. Replace windows when they’re failing or for comfort." }
+      ],
+      "sources": [
+        { "label": "ENERGY STAR: seal and insulate", "url": "https://www.energystar.gov/saveathome/seal_insulate" },
+        { "label": "ENERGY STAR: recommended insulation levels", "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" },
+        { "label": "DOE Building Science Education: insulating and sealing rim joists", "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists" },
+        { "label": "Building America Solution Center: combustion appliance zone test", "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test" },
+        { "label": "NEEP cold-climate heat pump specification and list", "url": "https://neep.org/heating-electrification/ccashp-specification-product-list" },
+        { "label": "National Weather Service Fort Worth: February 2021 winter storm", "url": "https://weather.gov/fwd/Feb-2021-WinterEvent" }
+      ],
+      "metaDescription": "Why heating bills run high in your climate: air leaks and thin attic insulation in cold regions, electric backup heat in warm ones. The tests that show it and the fixes, cheapest first."
+    },
+    {
+      "slug": "drafts-cold-rooms",
+      "name": "Drafts and cold rooms",
+      "short": "Cold air on your ankles, rooms that never warm up. Usually air leaks high and low in the house, plus ducts that don’t deliver.",
+      "symptom": "You feel cold air near outlets, baseboards, doors and windows, or one room stays colder than the rest of the house wherever you set the thermostat.",
+      "photo": "blower-door-test",
+      "symptoms": ["Drafts or cold rooms"],
+      "meaning": [
+        "A draft is outside air being pulled in. In winter, warm air rises and leaks out through the attic and upper floors, which pulls cold air in through gaps low in the house. This is the stack effect, and it’s why sealing the attic floor and basement rim joists often fixes drafts you feel in the living room.",
+        "A room that stays cold is losing more heat than it gets: missing insulation, more outside walls or windows, a floor over a garage or crawlspace, or a duct that delivers too little air.",
+        "Windows feel drafty partly because cold glass chills the air next to it, which then sinks. That’s a draft even without a leak, and better glass or storm windows help."
+      ],
+      "causes": {
+        "hot-humid": "Drafts are a rare complaint here, but the same leaks bring hot, humid air in all summer. Cold rooms show up in cold snaps, like February 2021 in Texas, in homes with leaky ducts, little insulation and electric heat that can’t keep up.",
+        "hot-dry": "Desert winter nights can be chilly, and homes with leaky attic ducts, single-pane windows or little insulation feel it. The same leaks let dust and summer heat in.",
+        "mixed": "Older rowhouses and homes with basements and crawlspaces leak at rim joists, around windows and into the attic. Rooms over garages and porches are the classic cold rooms.",
+        "cold": "The stack effect is strongest in long, cold winters, so leaks at the attic floor and rim joists drive drafts on the lower floors. Many older homes also have empty wall cavities and rooms over unheated garages or porches.",
+        "marine": "Homes over vented crawlspaces with uninsulated floors feel cold underfoot, and older homes leak around windows and doors. In coastal California, a wall furnace heats the room it’s in and leaves far rooms cold."
+      },
+      "tests": [
+        { "test": "blower-door", "why": "Measures how leaky the house is, and with the fan running you can feel and see each leak." },
+        { "test": "thermal-imaging", "why": "Under blower-door pressure, shows cold streaks where air leaks in and patches where insulation is missing." },
+        { "test": "duct-leakage", "why": "Checks whether the ducts lose air before it reaches the cold room." },
+        { "test": "heat-loss-calc", "why": "Room-by-room loads show whether each room gets enough heat for what it loses." },
+        { "test": "combustion-safety", "why": "Air sealing can change how gas, oil and propane appliances vent; this test checks them before and after." }
+      ],
+      "diyFirst": [
+        "On a cold, windy day, hold a lit incense stick near outlets, baseboards, window trim, the attic hatch and pipe openings. Where the smoke wavers, air is leaking. Keep it away from curtains.",
+        "Weatherstrip doors and the attic hatch, add door sweeps, and fit foam gaskets behind outlet and switch covers on outside walls.",
+        "Caulk gaps around window trim and where pipes and wires pass through walls and floors.",
+        "Make sure the cold room’s vents are open and nothing blocks its return.",
+        "Close heavy curtains at night over single-pane windows."
+      ],
+      "fixLadder": [
+        { "step": "Weatherstripping, door sweeps, outlet gaskets and caulk", "cost": "Free–$" },
+        { "step": "Air seal the attic floor and rim joists, with a blower door guiding the work", "cost": "$–$$" },
+        { "step": "Seal and insulate ducts, and have airflow balanced to the cold rooms", "cost": "$–$$" },
+        { "step": "Insulate floors over garages, crawlspaces and porches, and empty walls", "cost": "$$–$$$" },
+        { "step": "A ductless heat pump for a room the system can’t reach, or new windows when the old ones are failing", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "You have a natural-draft furnace, boiler or water heater. Get a combustion safety test with any major air sealing.",
+        "The cold room is over an attached garage. Sealing that floor also keeps car exhaust out of the house, and it’s best done by a pro.",
+        "You find knob-and-tube wiring or vermiculite in the walls or attic. Get it assessed before anyone insulates."
+      ],
+      "avoid": [
+        "Sealing up a house with natural-draft appliances without combustion testing.",
+        "Insulating walls or an attic over live knob-and-tube wiring."
+      ],
+      "glossary": ["air-leakage", "stack-effect", "air-sealing", "attic-bypass", "rim-joist", "ach50", "cfm50", "thermal-bridging", "combustion-appliance-zone", "backdrafting-spillage", "knob-and-tube-wiring"],
+      "related": ["high-heating-bills", "cold-floors", "dust-smoke"],
+      "faq": [
+        { "q": "Why do I feel drafts when the windows are closed?", "a": "In winter, warm air rises and leaks out through the attic and upper floors, pulling cold air in through gaps lower down: around baseboards, outlets, rim joists and windows. That’s the stack effect. Sealing the attic floor and rim joists often does more than sealing the windows." },
+        { "q": "What does a blower door test show about drafts?", "a": "It measures how leaky the house is, as ACH50 or CFM50, and while the fan holds the house under pressure, the auditor can find each leak with an infrared camera or smoke. That turns “it’s drafty” into a list of leaks to seal." },
+        { "q": "Why is one room always colder than the rest?", "a": "It loses more heat (more outside walls or windows, a floor over a garage or crawlspace, missing insulation) or gets less heat (a long, leaky or crushed duct, or no return air). A room-by-room load calculation and a duct check tell you which." }
+      ],
+      "sources": [
+        { "label": "ENERGY STAR: seal and insulate", "url": "https://www.energystar.gov/saveathome/seal_insulate" },
+        { "label": "DOE Building Science Education: insulating and sealing rim joists", "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists" },
+        { "label": "Building America Solution Center: combustion appliance zone test", "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test" },
+        { "label": "Building America Solution Center: finding missing insulation with thermal imaging", "url": "https://basc.pnnl.gov/diy-guides/look-missing-insulation-using-thermal-imaging" },
+        { "label": "Mass Save: pre-weatherization barriers (knob-and-tube, vermiculite)", "url": "https://www.masssave.com/business/rebates-offers-services/building-insulation-and-weatherization/pre-weatherization-barrier-mitigation" },
+        { "label": "National Weather Service Fort Worth: February 2021 winter storm", "url": "https://weather.gov/fwd/Feb-2021-WinterEvent" }
+      ],
+      "metaDescription": "Where drafts and cold rooms come from: the stack effect, leaks at the attic floor and rim joists, missing insulation and ducts that don’t deliver. The tests and fixes for your climate."
+    },
+    {
+      "slug": "ice-dams",
+      "name": "Ice dams and icicles",
+      "short": "A ridge of ice at the eaves means heat is leaking into the attic and melting the snow. Seal the attic first, then insulate.",
+      "symptom": "Thick icicles and a ridge of ice along the roof edge after snow, sometimes with water stains on ceilings or walls near the outside walls.",
+      "photo": "attic-insulation-inspection",
+      "symptoms": ["Ice dams"],
+      "meaning": [
+        "Ice dams form when heat from the house warms the roof: snow melts, runs down to the cold eaves and refreezes. Water then backs up behind the ice and can get under the shingles.",
+        "The heat comes mostly from warm air leaking into the attic through gaps around lights, wiring, plumbing, chimneys and the attic hatch, plus thin insulation and ducts or bath fans that dump warm air into the attic.",
+        "Icicles alone aren’t always a problem, but a ridge of ice with water stains inside means the attic needs work."
+      ],
+      "causes": {
+        "hot-humid": "Ice dams are almost unheard of here. Water stains near the edges of ceilings usually mean a roof or flashing leak, condensation from the AC or its ducts, or wind-driven rain from a storm.",
+        "hot-dry": "Ice dams don’t form in desert winters. If you see water stains, look for roof leaks after monsoon storms, or condensation from the AC or an evaporative cooler.",
+        "mixed": "Ice dams are occasional, after heavier snows followed by cold spells. When they form, the causes are the same as farther north: attic air leaks and thin insulation.",
+        "cold": "Long, snowy winters make ice dams common, especially on older homes with leaky attics, recessed lights, and finished attic rooms with knee walls and sloped ceilings.",
+        "marine": "Lasting snow is uncommon in the Pacific Northwest lowlands and coastal California, so ice dams are rare. Stains are more often roof or gutter leaks, or condensation in an attic where warm, moist house air leaks in."
+      },
+      "tests": [
+        { "test": "attic-inspection", "why": "Checks insulation depth, attic bypasses, the hatch, bath fan vents and roof ventilation." },
+        { "test": "blower-door", "why": "Measures how much warm air leaks into the attic and, with an infrared camera, shows where." },
+        { "test": "thermal-imaging", "why": "On a cold day, shows warm spots on ceilings and the roof where heat escapes into the attic." },
+        { "test": "combustion-safety", "why": "Air sealing the attic tightens the house, so homes with natural-draft appliances need this test before and after." },
+        { "test": "asbestos-vermiculite", "why": "If the attic has vermiculite insulation, EPA says to leave it alone and bring in a professional before anyone works up there." }
+      ],
+      "diyFirst": [
+        "After heavy snow, pull snow off the lower few feet of the roof with a roof rake, standing on the ground.",
+        "Don’t chip or hammer at the ice: it damages shingles and gutters.",
+        "Make sure bathroom and kitchen fans vent outdoors, not into the attic.",
+        "Weatherstrip and insulate the attic hatch or pull-down stairs.",
+        "Keep gutters and downspouts clear so meltwater can drain."
+      ],
+      "fixLadder": [
+        { "step": "A roof rake, a sealed attic hatch and fans vented outdoors", "cost": "Free–$" },
+        { "step": "Air seal attic bypasses: around lights, wiring, plumbing, chimney chases and wall tops", "cost": "$–$$" },
+        { "step": "Seal and insulate ducts that run through the attic, or move them inside", "cost": "$–$$" },
+        { "step": "Add insulation to ENERGY STAR’s level for your zone, with baffles to keep the soffit vents open", "cost": "$$" },
+        { "step": "At the next reroof, add an ice-and-water membrane along the eaves", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "Water is coming inside, or ceilings and walls are stained. Get the roof and attic checked before mold sets in.",
+        "Ice is heavy on the gutters or there’s a lot of snow on the roof. A roofing pro can remove it safely; roofs are dangerous in winter.",
+        "The attic has vermiculite or knob-and-tube wiring. Both need a specialist before air sealing or insulating."
+      ],
+      "avoid": [
+        "Adding insulation without sealing the bypasses first: air leaks right through most loose-fill insulation.",
+        "Installing powered attic ventilators: they can pull conditioned air out of the house into the attic.",
+        "Relying on heat cables: they treat the symptom, not the heat leak."
+      ],
+      "glossary": ["ice-dam", "attic-bypass", "air-sealing", "r-value", "blown-in-insulation", "soffit-vent-baffle", "stack-effect", "vermiculite", "knob-and-tube-wiring"],
+      "related": ["high-heating-bills", "drafts-cold-rooms", "window-condensation"],
+      "faq": [
+        { "q": "What causes ice dams?", "a": "Heat leaking from the house into the attic warms the roof, the snow melts, and the water refreezes at the cold eaves. The ice holds back more meltwater, which can get under shingles. Most of the heat comes from air leaks into the attic, along with thin insulation and ducts or fans venting into the attic." },
+        { "q": "Will more insulation stop ice dams?", "a": "Only if the air leaks are sealed first. Warm air moves right through most loose-fill insulation, so seal the attic bypasses, then insulate to the level ENERGY STAR recommends for your zone, with baffles to keep the soffit vents open." },
+        { "q": "Are heat cables a fix?", "a": "They can keep a channel open where ice keeps forming, but they treat the symptom. Sealing and insulating the attic fixes the cause." }
+      ],
+      "sources": [
+        { "label": "University of Minnesota Extension: ice dams", "url": "https://extension.umn.edu/protecting-home-rain-and-ice/dealing-and-preventing-ice-dams" },
+        { "label": "ENERGY STAR: recommended insulation levels", "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" },
+        { "label": "ENERGY STAR: seal and insulate", "url": "https://www.energystar.gov/saveathome/seal_insulate" },
+        { "label": "EPA: protect your family from asbestos", "url": "https://www.epa.gov/asbestos/protect-your-family-exposures-asbestos" },
+        { "label": "Mass Save: pre-weatherization barriers (knob-and-tube, vermiculite)", "url": "https://www.masssave.com/business/rebates-offers-services/building-insulation-and-weatherization/pre-weatherization-barrier-mitigation" }
+      ],
+      "metaDescription": "Ice dams mean heat is leaking into your attic. Why they form, why they’re rare outside cold climates, the attic checks that find the leaks, and the fixes in the right order."
+    },
+    {
+      "slug": "cold-floors",
+      "name": "Cold floors",
+      "short": "Floors that feel cold underfoot. Usually an uninsulated crawlspace, a room over a garage, leaky rim joists or an uninsulated slab edge.",
+      "symptom": "Floors feel cold underfoot in winter, especially near outside walls or over a crawlspace, garage or porch, even when the air in the room is warm.",
+      "photo": "home-hero-thermal",
+      "symptoms": ["Cold floors"],
+      "meaning": [
+        "A floor feels cold when the space under it is cold: a vented crawlspace, an unheated garage or porch, or the ground under a slab. Air leaking in at the rim joist, where the house frame sits on the foundation, chills floors near outside walls.",
+        "Cold floors make a room feel colder than the thermostat says, so people turn the heat up. Fixing the floor often saves energy as well as improving comfort.",
+        "In a crawlspace, moisture comes first: insulating the floor of a damp crawlspace can trap moisture against the wood."
+      ],
+      "causes": {
+        "hot-humid": "Most homes sit on slabs, which feel cool, not cold, in mild winters; tile on a slab can feel cold in a cold snap. Raised homes over vented crawlspaces are the exception, and there the crawlspace’s summer humidity is the bigger problem.",
+        "hot-dry": "Slab floors are common, and the edges near outside walls can feel cool on winter nights. Cold floors are rarely a big energy problem here.",
+        "mixed": "Crawlspaces and basements under older homes are the usual cause, along with rooms over garages and porches. Sealing and insulating rim joists helps with both drafts and cold floors.",
+        "cold": "Floors over unheated garages, cantilevers and porches, basement rim joists and uninsulated slab edges are the common culprits. In basements, insulating the walls and rim joists keeps the floor above warmer.",
+        "marine": "Cold floors are a classic Pacific Northwest problem: many homes sit over vented crawlspaces with little or no floor insulation, and the cool, damp season is long. Fix crawlspace moisture first, with a ground vapor barrier, then insulate the floor or the crawlspace walls."
+      },
+      "tests": [
+        { "test": "thermal-imaging", "why": "On a cold day, shows cold floor edges, rim joist leaks and missing insulation under floors." },
+        { "test": "blower-door", "why": "Measures air leakage and shows the leaks at rim joists and around floor penetrations." },
+        { "test": "mold-iaq", "why": "Checks crawlspace or basement moisture before anyone insulates the floor." },
+        { "test": "duct-leakage", "why": "Ducts in a crawlspace that leak or aren’t insulated chill the floors above and waste heat." }
+      ],
+      "diyFirst": [
+        "Look under the house: is there insulation between the floor joists, is it falling down, and is there a plastic vapor barrier on the ground?",
+        "Seal gaps where pipes and wires pass through the floor.",
+        "Put rugs on cold floors, and keep the crawlspace hatch closed tight.",
+        "If ducts run through the crawlspace, look for disconnected or crushed sections."
+      ],
+      "fixLadder": [
+        { "step": "Rugs, sealed floor penetrations and a tight crawlspace hatch", "cost": "Free–$" },
+        { "step": "A ground vapor barrier in the crawlspace, and drainage fixes", "cost": "$–$$" },
+        { "step": "Seal and insulate the rim joists", "cost": "$–$$" },
+        { "step": "Insulate the floor over a crawlspace, garage or porch, or the walls of a closed crawlspace", "cost": "$$" },
+        { "step": "Seal and insulate crawlspace ducts, or close and condition the crawlspace", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "The crawlspace has standing water, mold or pests. Fix those before insulating.",
+        "The room is over an attached garage. Sealing that floor also keeps car exhaust and fumes out of the house.",
+        "A furnace or water heater sits in the crawlspace or basement you’re closing in. Its combustion air and venting need checking."
+      ],
+      "avoid": [
+        "Insulating a crawlspace floor before fixing the moisture.",
+        "Plastic sheeting over fiberglass on basement walls: it can trap moisture against the wall."
+      ],
+      "glossary": ["rim-joist", "thermal-bridging", "r-value", "rigid-foam", "spray-foam", "vapor-barrier", "continuous-insulation", "building-envelope", "marine-climate"],
+      "related": ["drafts-cold-rooms", "high-heating-bills", "musty-smell"],
+      "faq": [
+        { "q": "Why are my floors cold when the room is warm?", "a": "The floor is losing heat to a cold space below it: a vented crawlspace, a garage, a porch or the ground under a slab. Air leaking in at the rim joist chills floors near outside walls, too." },
+        { "q": "Should I insulate the crawlspace floor or close the crawlspace?", "a": "Either can work. Insulating between the floor joists is common for vented crawlspaces in mild climates. Closing the crawlspace, with sealed vents, a ground vapor barrier, insulated walls and a way to dry the air, works well in humid climates. Either way, fix water and moisture problems first." },
+        { "q": "Do rim joists matter?", "a": "Yes. The rim joist is where the house frame sits on the foundation, and it’s often uninsulated and leaky. DOE recommends sealing and insulating it, and it’s one of the cheaper fixes that helps with both cold floors and drafts." }
+      ],
+      "sources": [
+        { "label": "DOE Building Science Education: insulating and sealing rim joists", "url": "https://bsesc.energy.gov/energy-basics/insulating-and-sealing-rim-joists" },
+        { "label": "ENERGY STAR: recommended insulation levels", "url": "https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-r-values" },
+        { "label": "ENERGY STAR: seal and insulate", "url": "https://www.energystar.gov/saveathome/seal_insulate" },
+        { "label": "ICC technical note: vapor retarders in the IRC", "url": "https://www.iccsafe.org/wp-content/uploads/proclamations/TN06-Vapor-Retarders_pdf.pdf" }
+      ],
+      "metaDescription": "Why floors feel cold: vented crawlspaces, rooms over garages, rim joists and slab edges. What it means in your climate, the tests that confirm it and the fixes in order."
+    },
+    {
+      "slug": "window-condensation",
+      "name": "Window condensation",
+      "short": "Fog or frost on the inside of windows means indoor air is too humid for the glass. Dew on the outside of efficient windows is normal.",
+      "symptom": "Water, fog or frost on the inside of windows on cold mornings, sometimes with mold on the sills and frames. Or dew on the outside of the glass on cool, humid mornings, which is a different thing.",
+      "photo": "thermal-imaging",
+      "symptoms": ["Window condensation"],
+      "meaning": [
+        "Condensation forms when moist air touches a surface colder than its dew point. In winter, window glass is usually the coldest surface in a room, so it’s where too much indoor humidity shows first.",
+        "Water on the inside points to indoor moisture (cooking, showers, laundry, people, plants, an unvented dryer or a damp crawlspace) with too little ventilation. Single-pane and aluminum-frame windows get cold enough to condense much sooner than efficient ones.",
+        "Dew on the outside of the glass on cool, clear, humid mornings is normal with efficient, low-e windows: the outer pane stays cold because the window insulates well. Fog between the panes means a failed seal, and that glass unit needs replacing."
+      ],
+      "causes": {
+        "hot-humid": "Condensation inside on windows is uncommon; dew outside efficient windows on spring and fall mornings is normal. Sweating supply vents and damp ceilings around them are the hot-climate version: humid air reaching surfaces chilled by the AC, often from attic air leaking around duct boots or indoor humidity above 60%.",
+        "hot-dry": "Rare, because desert air is dry. If you see it, look for an evaporative cooler running with the windows shut or a big indoor moisture source.",
+        "mixed": "Winter condensation shows up on single-pane, aluminum-frame and older windows, and in rooms with lots of moisture, like bathrooms and kitchens. Summer dew on the outside of efficient windows is normal.",
+        "cold": "The colder it gets outside, the colder the glass, so the lower indoor humidity has to be to keep windows dry. In cold spells, keep humidity at the low end of the 30–50% range and turn humidifiers down. Frost on the glass and mold on sills are the warning signs.",
+        "marine": "Long, cool, damp winters make condensation inside windows very common in Seattle and Portland, especially in tighter homes without steady ventilation. Using bath and kitchen fans, venting dryers outdoors and adding balanced ventilation usually fix it."
+      },
+      "tests": [
+        { "test": "mold-iaq", "why": "Measures indoor humidity, finds moisture sources and checks sills, frames and walls for mold." },
+        { "test": "blower-door", "why": "Shows how tight the house is, which tells the auditor how much ventilation it needs." },
+        { "test": "combustion-safety", "why": "A furnace or water heater that spills its exhaust adds moisture as well as carbon monoxide; this test checks the venting." },
+        { "test": "thermal-imaging", "why": "Shows cold window frames, air leaks around windows and cold wall corners where condensation and mold form." }
+      ],
+      "diyFirst": [
+        "Measure humidity with a digital hygrometer. In winter, aim for the low end of 30–50%, and lower in very cold weather.",
+        "Run bathroom fans during and after showers and the range hood while cooking, and make sure both vent outdoors.",
+        "Check that the clothes dryer vents outdoors, and turn down or stop using a humidifier.",
+        "Open curtains and blinds during the day so room air can warm the glass.",
+        "Wipe sills dry, and clean small mold spots with detergent and water."
+      ],
+      "fixLadder": [
+        { "step": "A hygrometer, exhaust fans used and vented outdoors, the humidifier turned down", "cost": "Free–$" },
+        { "step": "Quiet, timer-controlled bath fans that ventilate steadily", "cost": "$" },
+        { "step": "Fix moisture sources: a crawlspace vapor barrier, the dryer vent, plumbing leaks", "cost": "$–$$" },
+        { "step": "Storm windows, or new glass units where seals have failed", "cost": "$–$$" },
+        { "step": "Balanced ventilation (an HRV or ERV) in a tight home, or efficient replacement windows with a low U-factor", "cost": "$$–$$$" }
+      ],
+      "callPro": [
+        "Mold keeps coming back on sills and walls, or covers more than about 10 square feet.",
+        "Water runs down walls or window frames are rotting.",
+        "You’re tightening the house or adding a heat pump. Ask the auditor about ventilation, and about combustion safety if you have fuel-burning appliances."
+      ],
+      "avoid": [
+        "Running a humidifier in very cold weather without watching the windows and a hygrometer.",
+        "Air sealing a home without a ventilation plan: a tighter house holds onto the moisture you make indoors."
+      ],
+      "glossary": ["condensation", "dew-point", "relative-humidity", "hygrometer", "low-e-glass", "u-factor", "hrv", "erv", "air-sealing"],
+      "related": ["humid-indoors", "musty-smell", "drafts-cold-rooms"],
+      "faq": [
+        { "q": "Is condensation on the outside of my windows a problem?", "a": "No. Dew on the outside of the glass on cool, humid mornings is normal with efficient windows: the outer pane stays cold because the window insulates well. It clears as the sun warms the glass." },
+        { "q": "What humidity stops window condensation?", "a": "It depends on how cold it is outside and how well your windows insulate. EPA advises keeping indoor humidity below 60%, ideally 30–50%. In very cold weather you may need to stay at the low end of that range, or below it, to keep windows dry." },
+        { "q": "Do new windows fix condensation?", "a": "Efficient windows stay warmer on the inside, so they condense less, but the cause is indoor moisture. Use exhaust fans, fix moisture sources and add ventilation first, and replace windows when they’re failing anyway." }
+      ],
+      "sources": [
+        { "label": "EPA: a brief guide to mold, moisture and your home", "url": "https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home" },
+        { "label": "ENERGY STAR: window, door and skylight criteria", "url": "https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria" },
+        { "label": "EPA Healthy Indoor Environment Protocols for Home Energy Upgrades", "url": "https://19january2021snapshot.epa.gov/sites/static/files/2014-08/documents/epa_retrofit_protocols.pdf" },
+        { "label": "Building America Solution Center: combustion appliance zone test", "url": "https://basc.pnnl.gov/building-science-measures/combustion-appliance-zone-caz-test" }
+      ],
+      "metaDescription": "What window condensation means: indoor air too humid for the glass in winter, normal dew outside efficient windows, and fog between panes. Causes by climate and the fixes."
+    }
+  ]
+}

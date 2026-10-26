@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import TestStateTable from '../../../components/us/TestStateTable.astro';
 import TestGear from '../../../components/us/TestGear.astro';
 import { S, moldStateRows, otherMoldStates } from '../../../lib/us/tests';
@@ -126,6 +127,8 @@ const sources = [src.epa, src.eli, src.tx, src.fl, src.ny, src.la, src.dc];
     <TestStateTable rows={otherMoldStates()} caption="Mold rules found outside the 20" />
     <TestCite src={src.eli} labels={['ELI state mold law database (laws through June 2026)']} />
   </section>
+
+  <ReadingGuide country="us" test="mold-iaq" />
 
   <section class="sec prose" aria-labelledby="help-h">
     <h2 id="help-h">Getting help, and what it costs</h2>

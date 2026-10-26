@@ -5,11 +5,12 @@ import ProgramStyles from '../../../../components/us/ProgramStyles.astro';
 import ProgramStatus from '../../../../components/us/ProgramStatus.astro';
 import ProgramFaq from '../../../../components/us/ProgramFaq.astro';
 import ProgramSources from '../../../../components/us/ProgramSources.astro';
+import AuditFirst from '../_AuditFirst.astro';
 import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
 import { statusChip } from '../../../../lib/us/data';
 import {
   STATES, stateBySlug, stateLede, baselineNote, metroProgramsFor, metroName, nameIn, NameStart,
-  PROG_LABEL, TAX, BPA_SOURCE, src, dedupe, clean, fmtISO, VERIFIED, type ProgView,
+  PROG_LABEL, TAX, BPA_SOURCE, src, dedupe, clean, fmtISO, VERIFIED, takesApplications, type ProgView,
 } from '../../../../lib/us/programs';
 
 export function getStaticPaths() {
@@ -78,6 +79,29 @@ const closed = statusChip(TAX['25C'].status);
 const open = statusChip('open');
 const others = STATES.filter((x) => x.code !== s.code);
 const anchor = (p: ProgView) => (p.key === 'hear' ? 'heehr' : 'homes');
+
+// "Do you need an audit first?": HOMES rebates follow modeled savings, so an open HOMES program means an
+// assessment first; the state's own amounts text sometimes says whether that assessment is free.
+const homesOpen = takesApplications(s.homes.chip);
+const hearOpen = takesApplications(s.hear.chip);
+const assessClause = clean(s.homes.amounts)
+  .split(/(?<=[.;])\s+/)
+  .find((x) => /assess/i.test(x))
+  ?.replace(/[.;]\s*$/, '');
+const assessNote = assessClause ? `${assessClause.charAt(0).toUpperCase()}${assessClause.slice(1)}.` : '';
+const auditAnswer = homesOpen
+  ? `For HOMES, yes.${hearOpen ? ' For HEEHR, not a full audit, but expect an insulation and air sealing check.' : ''}`
+  : hearOpen
+    ? 'For HEEHR, not a full audit, but expect an insulation and air sealing check.'
+    : 'No rebate open here requires one today, but an audit still shows what to fix first.';
+const auditPoints = [
+  homesOpen
+    ? `HOMES rebates in ${nameIn(s)} are set by modeled energy savings, so a HOMES project starts with an energy assessment, usually by an assessor enrolled in the state program.${assessNote ? ` From the state’s program details: ${assessNote}` : ' Ask whether it’s free or carries a fee before you book.'}`
+    : `HOMES isn’t taking applications in ${nameIn(s)} as we last checked. Its rebates are set by modeled energy savings, so whenever it is, projects start with an energy assessment.`,
+  'Under DOE’s May 29, 2026 rules, insulation and air sealing come before heating and cooling upgrades unless a home already meets a level the state sets, so expect your insulation and air sealing to be checked first.',
+  'If your household qualifies for weatherization, the program’s energy audit is part of the service, so there’s no need to pay for one first.',
+  ...(metros.length > 0 ? [`Many utilities offer free or low-cost assessments; the local programs below and each metro guide list the ones in ${nameIn(s)}.`] : []),
+];
 ---
 
 <Base title={title} description={description} schema={schema}>
@@ -151,6 +175,8 @@ const anchor = (p: ProgView) => (p.key === 'hear' ? 'heehr' : 'homes');
       )}
       <p class="small">{baselineNote(s)}</p>
     </div>
+
+    <AuditFirst answer={auditAnswer} points={auditPoints} />
 
     {metros.length > 0 && (
       <section class="up-s" id="metros" aria-labelledby="metros-h">

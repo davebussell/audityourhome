@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S } from '../../../lib/us/tests';
 
 const src = {
@@ -50,7 +51,7 @@ const sources = [src.bpi, src.bpi1200, src.caz, src.enclosure, src.cpsc];
     { k: 'Standard', v: 'ANSI/BPI-1200-S-2017', src: src.bpi, srcLabel: 'BPI' },
     { k: 'Stop and evacuate at', v: '70 ppm CO or more', src: src.bpi1200, srcLabel: 'BPI-1200' },
     { k: 'Gas check first', v: 'Below 10% of the LEL', src: src.bpi1200, srcLabel: 'BPI-1200' },
-    { k: 'Typical cost', v: 'Not published' },
+    { k: 'Typical cost', v: 'Part of the audit' },
   ]}
   faqs={faqs}
   sources={sources}
@@ -119,7 +120,9 @@ const sources = [src.bpi, src.bpi1200, src.caz, src.enclosure, src.cpsc];
     <p>
       Ask auditors whether their assessment follows BPI-1200, which includes the combustion appliance
       inspection, and whether they’ll test at the end of each day of air sealing, as DOE describes.
-      What it costs: no official source publishes a price, so we don’t quote one.
+      What it costs: no official source publishes a price for the test on its own, so we don’t quote one. In a home with
+      gas, oil or propane appliances it belongs in any audit that includes air sealing, so ask for it in the audit quote rather
+      than as an extra.
     </p>
     <ul class="linkrow">
       <li><a href="/us/find/">Find a certified auditor</a></li>
@@ -127,6 +130,8 @@ const sources = [src.bpi, src.bpi1200, src.caz, src.enclosure, src.cpsc];
     </ul>
     <TestCite src={[src.bpi, src.caz]} labels={['BPI standards', 'DOE BASC, CAZ testing']} />
   </section>
+
+  <ReadingGuide country="us" test="combustion-safety" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If an appliance fails</h2>

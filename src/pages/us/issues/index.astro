@@ -1,0 +1,133 @@
+---
+/**
+ * US common problems index: start from the symptom. Cards grouped by season, then the problems that
+ * are common in each climate (from the climate profiles in src/data/climate/us.json).
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { SITE } from '../../../config/site';
+import { ISSUES, SECTIONS, GROUPS, GROUP_ORDER, issueBySlug, commonGroups } from './_issues';
+
+const title = 'Common home energy problems in the US, explained by climate | AuditYourHome';
+const description =
+  'Start from the symptom: high summer or winter bills, humid air, hot upstairs rooms, drafts, musty smells, smoke, ice dams or foggy windows. What each means in your climate, the tests that confirm it and the fixes, cheapest first.';
+
+const byGroup = GROUP_ORDER.map((g) => ({
+  key: g,
+  ...GROUPS[g],
+  issues: ISSUES.filter((i) => commonGroups(i).includes(g)),
+}));
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Common problems', path: '/us/issues/' },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Common home energy problems',
+    itemListElement: ISSUES.map((i, n) => ({
+      '@type': 'ListItem',
+      position: n + 1,
+      name: i.name,
+      url: `${SITE.url}/us/issues/${i.slug}/`,
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>Common problems</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Common problems</p>
+        <h1>Start from what’s bothering you</h1>
+        <p class="lede measure">
+          Houses tell you what’s wrong: a bill that spikes, air that feels sticky, an upstairs that won’t cool, drafts, a
+          musty smell. Each guide explains what the symptom usually means in your climate, which tests confirm the cause,
+          and the fixes from cheapest to biggest, so you don’t pay for the wrong one.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#by-climate">Problems in your climate</a>
+          <a class="btn btn-ghost" href="/us/plan/">Get a free plan for your house</a>
+        </div>
+      </div>
+      <Photo name="blower-door-test" hud={false} eager />
+    </div>
+
+    {SECTIONS.map((s) => (
+      <section class="blk" aria-label={s.title}>
+        <h2 class="sh">{s.title}</h2>
+        <div class="issue-grid">
+          {s.slugs.map((slug) => {
+            const i = issueBySlug(slug)!;
+            const where = commonGroups(i).map((g) => GROUPS[g].label);
+            return (
+              <a class="card issue-card" href={`/us/issues/${i.slug}/`}>
+                <h3>{i.name}</h3>
+                <p class="small">{i.short}</p>
+                {where.length > 0 && <p class="common">Common in: {where.join(' · ')}</p>}
+                <span class="go">Diagnose it →</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+
+    <section class="blk" id="by-climate" aria-labelledby="clim-h">
+      <h2 id="clim-h" class="sh">What’s common in your climate</h2>
+      <p class="measure">
+        A hot, humid house and a cold, dry one go wrong in different ways. These are the problems our climate research
+        flags for each region; your <a href="/us/cities/">metro guide</a> has the details for where you live.
+      </p>
+      <div class="clim-grid">
+        {byGroup.map((g) => (
+          <div class="card card-pad clim">
+            <h3>{g.label}</h3>
+            <p class="small">{g.where}</p>
+            <ul>
+              {g.issues.map((i) => (
+                <li><a href={`/us/issues/${i.slug}/#in-${g.key}`}>{i.name}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="card card-pad more">
+      <h2 class="ct">Not sure which problem is yours?</h2>
+      <p class="mb-0">
+        <a href="/us/plan/">The free planner</a> looks at your whole house and puts the fixes in order, and the
+        <a href="/us/tests/screener/">test screener</a> tells you which tests are worth asking for. An
+        <a href="/us/how-it-works/">energy audit</a> measures the house itself.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .blk { margin-top: 36px; padding: 0; }
+  .sh { font-size: clamp(22px, 3vw, 27px); margin: 0 0 14px; }
+  .ct { font-size: 19px; margin: 0 0 8px; }
+  .issue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+  .issue-card { padding: 24px 26px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s ease; }
+  .issue-card:hover { border-color: var(--heat); }
+  .issue-card h3 { font-size: 19px; margin: 0; color: var(--ink); }
+  .issue-card .small { margin: 0; }
+  .issue-card .common { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+  .issue-card .go { margin-top: auto; padding-top: 10px; font-weight: 700; font-size: 14px; color: var(--heat-deep); }
+  .clim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; margin-top: 14px; }
+  .clim h3 { font-size: 18px; margin: 0 0 4px; }
+  .clim .small { margin: 0 0 10px; }
+  .clim ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+  .more { border-left: 4px solid var(--heat); margin-top: 28px; }
+</style>

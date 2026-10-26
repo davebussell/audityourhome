@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S } from '../../../lib/us/tests';
 
 const src = {
@@ -84,6 +85,8 @@ const sources = [src.home, src.verm, src.pros, src.states, src.ban];
     </p>
     <TestCite src={src.verm} labels={['EPA, vermiculite insulation (updated Apr 17, 2026)']} />
   </section>
+
+  <ReadingGuide country="us" test="asbestos-vermiculite" />
 
   <section class="sec" aria-labelledby="leave-h">
     <h2 id="leave-h">Leave it, assess it, or remove it</h2>

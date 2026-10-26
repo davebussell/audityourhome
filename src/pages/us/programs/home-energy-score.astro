@@ -6,6 +6,7 @@ import ProgramStyles from '../../../components/us/ProgramStyles.astro';
 import ProgramStatus from '../../../components/us/ProgramStatus.astro';
 import ProgramFaq from '../../../components/us/ProgramFaq.astro';
 import ProgramSources from '../../../components/us/ProgramSources.astro';
+import AuditFirst from './_AuditFirst.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { statusChip, metroBySlug, METROS } from '../../../lib/us/data';
@@ -159,6 +160,15 @@ const ext = { rel: 'noopener', target: '_blank' };
         </div>
       </div>
     </section>
+
+    <AuditFirst
+      answer="No. The score is itself a short assessment."
+      points={[
+        'A certified assessor collects about 40 data points in a walk-through of under an hour, and the report lists cost-effective upgrades. You don’t need an audit before it.',
+        'A diagnostic energy audit goes further: it measures the house, with a blower door test, combustion safety testing and often an infrared scan. Rebates set by modeled savings, such as HOMES, need that kind of assessment from an assessor enrolled in the state program.',
+        'Because the score is often bundled with an energy audit or a home inspection, ask for both in one visit if you’re planning upgrades.',
+      ]}
+    />
 
     <section class="up-s" id="required" aria-labelledby="req-h">
       <h2 class="up-sec" id="req-h">Where it’s required or paid for</h2>

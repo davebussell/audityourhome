@@ -23,7 +23,10 @@ import {
   metroStates, relatedMetros, regionOf, auditTags, placeShort, fmtISO, sentence, andList,
   RADON_ZONE, RADON_ZONE_SOURCE, CLIMATE_SOURCES,
 } from '../../../lib/us/metro-view';
-import { cleanText } from '../../../lib/us/metro-text';
+import { cleanText, notesFor } from '../../../lib/us/metro-text';
+import RegionalNeeds from '../../../components/RegionalNeeds.astro';
+import { placeClimate, climateMeaning } from '../../../lib/climate';
+import { issuesForProfile, groupOf } from '../issues/_issues';
 
 export function getStaticPaths() {
   return METROS.map((m) => ({ params: { metro: m.slug }, props: { m } }));
@@ -53,8 +56,26 @@ const related = sameState.length ? sameState : METROS.filter((o) => o.slug !== m
 const herSummary = cleanText(her.summary);
 const income = (d.incomeQualified ?? []) as any[];
 const util = d.utilities ?? {};
-const utilNotes = (util.notes ?? '').replace(/\s*Sources?:\s.*$/s, '').trim();
+// Utility notes come from the research record: keep the homeowner guidance, move "couldn't confirm" lines to the limits note.
+const utilSplit = notesFor((util.notes ?? '').replace(/\s*Sources?:\s.*$/s, '').trim());
+const utilNotes = utilSplit.keep.join(' ');
 const utilNoteLinks = ((util.notes ?? '').match(/Sources?:\s(.*)$/s)?.[1]?.match(/https?:\/\/[^\s,]+/g) ?? []) as string[];
+const limits = [...notes.unconfirmed, ...utilSplit.unconfirmed];
+const pc = placeClimate('us', m.slug);
+/** Common-problem guides this metro's climate profile lists, linked to the cause for its climate. */
+const probs = pc ? issuesForProfile(pc.place.profile) : [];
+const probGroup = pc ? groupOf(pc.place.profile) : undefined;
+const ddMeaning = climateMeaning('us', { hdd: g.hdd, cdd: g.cdd });
+const yb = typeof g.yearBuilt === 'number' ? g.yearBuilt : null;
+const homesMeaning = g.yearBuiltNote || (yb != null && yb < 1960)
+  ? 'Most homes here are old enough that walls may be uninsulated and wiring, lead paint or vermiculite need checking before insulation work; an audit sorts out what to do first.'
+  : yb != null && yb < 1980
+    ? 'Homes from this era usually have some insulation, but often thin attics, leaky ducts and original windows; air sealing and duct work tend to pay back first.'
+    : yb != null && yb < 2000
+      ? 'Homes from the 1980s and 1990s usually have insulation, but ducts, attic air leaks and aging heating and cooling equipment are common audit findings.'
+      : yb != null
+        ? 'Newer homes are usually tighter and better insulated, so an audit tends to find duct, ventilation and equipment-sizing issues rather than missing insulation.'
+        : '';
 const host = (u: string) => {
   try {
     return new URL(u).hostname.replace(/^www\./, '');
@@ -149,13 +170,14 @@ const schema = [
 
 const jump = [
   ['glance', 'At a glance'],
+  ...(pc ? [['regional-needs', 'What homes here need']] : []),
   ['utilities', 'Utilities'],
   ['audits', 'Audits'],
   ['rebates', 'Rebates'],
   ['home-energy-rebates', 'Federal rebates'],
   ['income', 'Lower-income help'],
   ['rules', 'Local rules'],
-  ...(notes.keep.length || notes.unconfirmed.length ? [['notes', 'Notes']] : []),
+  ...(notes.keep.length ? [['notes', 'Notes']] : []),
   ['sources', 'Sources'],
 ] as [string, string][];
 const herOverview = FEDERAL.homeEnergyRebates.overview;
@@ -225,6 +247,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
           <span class="k">Climate zone</span>
           <span class="t-big">{g.zone ?? 'Not published'}</span>
           <p>IECC 2021 climate zone{g.county ? ` for ${g.county}` : ''}. {CLIMATE_SOURCES.zones && <a href={CLIMATE_SOURCES.zones.href} rel="noopener" target="_blank">PNNL&nbsp;↗</a>}</p>
+          {pc && <p class="t-mean"><strong>What it means:</strong> {pc.profile.label} climate. {pc.profile.oneLiner}</p>}
         </div>
         <div class="tile card">
           <span class="k">Heating and cooling</span>
@@ -234,6 +257,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
             {g.station ? <> at <span class="mono">{g.station.name}</span> ({g.station.id})</> : ''}.
             {CLIMATE_SOURCES.normals && <a href={CLIMATE_SOURCES.normals.href} rel="noopener" target="_blank">NOAA&nbsp;↗</a>}
           </p>
+          {ddMeaning && <p class="t-mean"><strong>What it means:</strong> {ddMeaning}</p>}
         </div>
         <div class="tile card">
           <span class="k">Homes</span>
@@ -246,6 +270,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
             {g.place ?? placeShort(d.principalCity)}, {g.acs ?? 'ACS'}.
             {CLIMATE_SOURCES.yearBuilt && <a href={CLIMATE_SOURCES.yearBuilt.href} rel="noopener" target="_blank">Census&nbsp;↗</a>}
           </p>
+          {homesMeaning && <p class="t-mean"><strong>What it means:</strong> {homesMeaning}</p>}
         </div>
         <div class="tile card">
           <span class="k">Radon</span>
@@ -260,6 +285,23 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
       <h3 class="sub-h">What energy costs here</h3>
       <PriceTable states={states.map((s) => s.code)} caption={`Residential energy prices in ${andList(stateNames)} (EIA)`} />
     </section>
+
+    {pc && <RegionalNeeds country="us" profile={pc.profile} place={pc.place} placeName={name} variant="full" id="regional-needs" />}
+
+    {probs.length > 0 && (
+      <section class="sec probs" aria-labelledby="probs-h">
+        <h3 id="probs-h" class="sub-h">Common problems in {name} homes</h3>
+        <p class="measure small">
+          What each one usually means in this climate, the tests that confirm it and the fixes, cheapest first.
+        </p>
+        <ul class="prob-list">
+          {probs.map((i) => (
+            <li><a href={`/us/issues/${i.slug}/${probGroup ? `#in-${probGroup}` : ''}`}>{i.name}</a></li>
+          ))}
+          <li><a href="/us/issues/">All common problems →</a></li>
+        </ul>
+      </section>
+    )}
 
     <!-- UTILITIES -->
     <section id="utilities" class="sec">
@@ -331,7 +373,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
       <p class="small more">Statewide rebate programs and federal options: <a href="/us/programs/">rebates and programs</a>.</p>
       <a class="card card-pad hp-link" href={`/us/heat-pumps/${m.slug}/`}>
         <span class="hp-t">Heat pumps in {name} →</span>
-        <span class="hp-d">What one costs to run against gas here, each heat pump rebate with the equipment rule that decides which models qualify, and the certified systems and brands that suit the climate.</span>
+        <span class="hp-d">What a heat pump costs to run here for cooling and heating, each heat pump rebate with the equipment rule that decides which models qualify, and the certified systems and brands that suit the climate.</span>
       </a>
     </section>
 
@@ -418,22 +460,12 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
     </section>
 
     <!-- NOTES -->
-    {(notes.keep.length > 0 || notes.unconfirmed.length > 0) && (
+    {notes.keep.length > 0 && (
       <section id="notes" class="sec">
         <h2>Notes worth knowing</h2>
-        {notes.keep.length > 0 && (
-          <ul class="notes measure">
-            {notes.keep.map((s) => <li>{s}</li>)}
-          </ul>
-        )}
-        {notes.unconfirmed.length > 0 && (
-          <div class="card card-pad unconf">
-            <h3>What our research couldn’t confirm</h3>
-            <ul>
-              {notes.unconfirmed.map((s) => <li>{s}</li>)}
-            </ul>
-          </div>
-        )}
+        <ul class="notes measure">
+          {notes.keep.map((s) => <li>{s}</li>)}
+        </ul>
       </section>
     )}
 
@@ -450,6 +482,13 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
             .filter(Boolean)
             .map((s) => <li><a href={s!.href} rel="noopener" target="_blank">{s!.label}&nbsp;↗</a></li>)}
         </ul>
+        {limits.length > 0 && (
+          <div class="limits">
+            <h3>Sources and limits</h3>
+            <p class="small">What this guide couldn’t confirm when we checked on {US_VERIFIED}. Ask the program or your utility directly about these:</p>
+            <ul>{limits.map((s) => <li>{s}</li>)}</ul>
+          </div>
+        )}
       </div>
     </section>
 
@@ -538,9 +577,17 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
   .rule .meta a { color: var(--steel); }
 
   .notes { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
-  .unconf { margin-top: 18px; border-left: 4px solid var(--warn); box-shadow: none; }
-  .unconf h3 { font-size: 16px; margin-bottom: 8px; }
-  .unconf ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14.5px; color: var(--muted); }
+  .probs { padding-top: 6px; }
+  .prob-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .prob-list a {
+    display: inline-block; font-size: 14px; font-weight: 600; padding: 6px 12px; border: 1px solid var(--line-strong);
+    border-radius: 999px; text-decoration: none; color: var(--ink); background: var(--card);
+  }
+  .prob-list a:hover { border-color: var(--ink); }
+  .limits { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .limits h3 { font-size: 15px; margin-bottom: 4px; }
+  .limits ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: 13.5px; color: var(--muted); columns: auto; }
+  .t-mean { color: var(--ink) !important; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px !important; }
 
   .srcs { border-left: 4px solid var(--steel); box-shadow: none; }
   .srcs h2 { font-size: 22px; margin-bottom: 4px; }

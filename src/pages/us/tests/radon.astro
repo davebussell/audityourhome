@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import TestStateTable from '../../../components/us/TestStateTable.astro';
 import TestGear from '../../../components/us/TestGear.astro';
 import {
@@ -281,6 +282,8 @@ const sources = [
     </div>
     <TestCite src={[src.aarst, src.eli]} labels={['AARST notification-law toolkit (June 2024)', 'ELI radon law database']} />
   </section>
+
+  <ReadingGuide country="us" test="radon" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If your level is high</h2>

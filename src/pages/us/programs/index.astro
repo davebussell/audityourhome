@@ -5,6 +5,7 @@ import LeadFormUS from '../../../components/us/LeadFormUS.astro';
 import ProgramStyles from '../../../components/us/ProgramStyles.astro';
 import ProgramCard from '../../../components/us/ProgramCard.astro';
 import ProgramStateTable from '../../../components/us/ProgramStateTable.astro';
+import AuditFirst from './_AuditFirst.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { statusChip, METROS } from '../../../lib/us/data';
@@ -264,6 +265,18 @@ const schema = [
         </ProgramCard>
       </div>
     </section>
+
+    <AuditFirst
+      answer="Often. It depends on the program."
+      points={[
+        'Home Energy Rebates (HOMES): yes. Rebates follow modeled energy savings, so a project starts with an energy assessment, usually by an assessor enrolled in the state program.',
+        'HEEHR: not a full audit, but under DOE’s 2026 rules insulation and air sealing come before heating and cooling upgrades unless a home already meets a level the state sets.',
+        'Weatherization Assistance: the program audits your home itself, as the first step of the work.',
+        'FHA Energy Efficient Mortgage: based on a home energy assessment no more than 120 days old.',
+        'Utility programs: often. Mass Save’s insulation rebates follow its Home Energy Assessment, and NYSERDA’s Smart Energy Loan requires a no-cost assessment first. Your metro guide lists the local rules.',
+        'Federal tax credits: the $150 audit credit ended for audits paid for or done after December 31, 2025.',
+      ]}
+    />
 
     <section id="states" aria-labelledby="states-h">
       <h2 class="up-sec" id="states-h">Home Energy Rebates by state</h2>

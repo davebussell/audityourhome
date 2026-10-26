@@ -14,8 +14,10 @@ interface Props {
   showBrand?: boolean;
   /** Lead with cooling numbers (hot climates) */
   cooling?: boolean;
+  /** Show cold-weather details (COP at 5°F column in cooling tables, ENERGY STAR Cold Climate tags). Off in mild and hot climates. */
+  coldInfo?: boolean;
 }
-const { rows, market, caption, showBrand = false, cooling = false } = Astro.props;
+const { rows, market, caption, showBrand = false, cooling = false, coldInfo = true } = Astro.props;
 const t5 = at5(market);
 const linkable = (slug: string | null) => (slug && statsFor(market, slug) ? brandHref(market, slug) : null);
 ---
@@ -33,7 +35,7 @@ const linkable = (slug: string | null) => (slug && statsFor(market, slug) ? bran
             <th scope="col" class="num">SEER2</th>
             <th scope="col" class="num">EER2</th>
             <th scope="col" class="num">HSPF2</th>
-            <th scope="col" class="num">COP at {t5}</th>
+            {coldInfo && <th scope="col" class="num">COP at {t5}</th>}
           </>
         ) : (
           <>
@@ -73,7 +75,7 @@ const linkable = (slug: string | null) => (slug && statsFor(market, slug) ? bran
                 <td class="num" data-label="SEER2">{fmt1(r.seer2)}</td>
                 <td class="num" data-label="EER2">{fmt1(r.eer2)}</td>
                 <td class="num" data-label="HSPF2">{fmt1(r.hspf2)}</td>
-                <td class="num" data-label={`COP at ${t5}`}>{fmtCop(r.cop5)}</td>
+                {coldInfo && <td class="num" data-label={`COP at ${t5}`}>{fmtCop(r.cop5)}</td>}
               </>
             ) : (
               <>
@@ -88,7 +90,7 @@ const linkable = (slug: string | null) => (slug && statsFor(market, slug) ? bran
             )}
             <td data-label="Refrigerant">
               {r.refrig}
-              {r.cold && <span class="sub">ENERGY STAR Cold Climate</span>}
+              {coldInfo && r.cold && <span class="sub">ENERGY STAR Cold Climate</span>}
               {market === 'ca' && r.nrcanLike && <span class="sub">Meets NRCan's −15°C thresholds</span>}
             </td>
             <td class="mono ahri" data-label="AHRI #">{r.ahri ?? '—'}</td>

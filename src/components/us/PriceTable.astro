@@ -13,7 +13,19 @@ interface Props {
 }
 const { states, caption = 'Residential energy prices by state (EIA)' } = Astro.props;
 const rows = priceRows(states);
+// EIA surveys heating oil and propane only in some states; leave a fuel out where it isn't reported anywhere on the page.
+const showOil = rows.some((r) => r.oilPerGal != null);
+const showPropane = rows.some((r) => r.propanePerGal != null);
 const oddGas = rows.filter((r) => r.gasPerTherm != null && r.gasYear && r.gasYear !== PRICE_INFO.gasYear);
+const e = rows[0]?.elecCents ?? null;
+const usE = PRICE_INFO.usElec ?? null;
+const elecMeaning = e != null && usE
+  ? e > usE * 1.1
+    ? `Electricity in ${rows[0].state.name} costs more than the US average (${fmtCents(e)} against ${fmtCents(usE)} per kWh), so every kWh an upgrade saves is worth more here, and it's worth checking a heat pump's running cost against gas before you switch.`
+    : e < usE * 0.9
+      ? `Electricity in ${rows[0].state.name} is cheaper than the US average (${fmtCents(e)} against ${fmtCents(usE)} per kWh), which keeps air conditioning and heat pumps cheaper to run.`
+      : `Electricity in ${rows[0].state.name} costs about the US average (${fmtCents(e)} against ${fmtCents(usE)} per kWh).`
+  : '';
 const thermsPerMcf = (PRICE_INFO.btu * 1000) / 100000;
 const week = (w: string) => w.replace(/^(\w+) (\d+), (\d{4})$/, (_, m, d, y) => `${m.slice(0, 3)} ${d}, ${y}`);
 ---
@@ -26,8 +38,8 @@ const week = (w: string) => w.replace(/^(\w+) (\d+), (\d{4})$/, (_, m, d, y) => 
           <th scope="col">State</th>
           <th scope="col">Electricity<span class="u">¢ per kWh · {PRICE_INFO.elecMonth}</span></th>
           <th scope="col">Natural gas<span class="u">$ per therm · {PRICE_INFO.gasYear} average</span></th>
-          <th scope="col">Heating oil<span class="u">$ per gallon · week of {week(PRICE_INFO.oilWeek)}</span></th>
-          <th scope="col">Propane<span class="u">$ per gallon · week of {week(PRICE_INFO.propaneWeek)}</span></th>
+          {showOil && <th scope="col">Heating oil<span class="u">$ per gallon · week of {week(PRICE_INFO.oilWeek)}</span></th>}
+          {showPropane && <th scope="col">Propane<span class="u">$ per gallon · week of {week(PRICE_INFO.propaneWeek)}</span></th>}
         </tr>
       </thead>
       <tbody>
@@ -45,13 +57,14 @@ const week = (w: string) => w.replace(/^(\w+) (\d+), (\d{4})$/, (_, m, d, y) => 
                 <span class="na">Not published</span>
               )}
             </td>
-            <td data-label={`Heating oil, $/gal (week of ${week(PRICE_INFO.oilWeek)})`} class="num">{r.oilPerGal != null ? fmtDollars(r.oilPerGal) : <span class="na">Not reported</span>}</td>
-            <td data-label={`Propane, $/gal (week of ${week(PRICE_INFO.propaneWeek)})`} class="num">{r.propanePerGal != null ? fmtDollars(r.propanePerGal) : <span class="na">Not reported</span>}</td>
+            {showOil && <td data-label={`Heating oil, $/gal (week of ${week(PRICE_INFO.oilWeek)})`} class="num">{r.oilPerGal != null ? fmtDollars(r.oilPerGal) : <span class="na">Not reported</span>}</td>}
+            {showPropane && <td data-label={`Propane, $/gal (week of ${week(PRICE_INFO.propaneWeek)})`} class="num">{r.propanePerGal != null ? fmtDollars(r.propanePerGal) : <span class="na">Not reported</span>}</td>}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
+  {elecMeaning && <p class="pt-mean"><strong>What this means for your bills:</strong> {elecMeaning}</p>}
   <ul class="pt-notes small">
     <li>
       Electricity: EIA’s average residential price, {PRICE_INFO.elecMonth} (preliminary; released {PRICE_INFO.elecReleased}).
@@ -63,10 +76,14 @@ const week = (w: string) => w.replace(/^(\w+) (\d+), (\d{4})$/, (_, m, d, y) => 
       A full-year average is used because summer months run far higher. <a href={PRICE_INFO.gasUrl} rel="noopener" target="_blank">EIA&nbsp;↗</a>
       {oddGas.map((r) => <span> <sup>*</sup>{r.state.name}: {r.gasYear} average; EIA published no {PRICE_INFO.gasYear} average.</span>)}
     </li>
-    <li>
-      Heating oil and propane: EIA’s weekly residential prices, excluding taxes, for the week of {PRICE_INFO.oilWeek}. EIA surveys
-      them only in some states. <a href={PRICE_INFO.weeklyUrl} rel="noopener" target="_blank">EIA&nbsp;↗</a>
-    </li>
+    {(showOil || showPropane) ? (
+      <li>
+        Heating oil and propane: EIA’s weekly residential prices, excluding taxes, for the week of {PRICE_INFO.oilWeek}. EIA surveys
+        them only in some states. <a href={PRICE_INFO.weeklyUrl} rel="noopener" target="_blank">EIA&nbsp;↗</a>
+      </li>
+    ) : (
+      <li>EIA doesn’t survey heating oil or propane prices in {rows.length === 1 ? 'this state' : 'these states'}; its weekly survey covers the states where those fuels are common for home heating.</li>
+    )}
   </ul>
 </div>
 
@@ -77,6 +94,7 @@ const week = (w: string) => w.replace(/^(\w+) (\d+), (\d{4})$/, (_, m, d, y) => 
   .pt td.num { font-family: var(--mono); font-size: 14.5px; font-variant-numeric: tabular-nums; }
   .pt .sub { display: block; font-size: 11.5px; color: var(--faint); }
   .pt .na { font-family: var(--body); font-size: 13px; color: var(--faint); }
+  .pt-mean { margin: 4px 0 12px; padding: 10px 14px; background: var(--pine-tint); border-left: 4px solid var(--pine); border-radius: 6px; font-size: 15px; }
   .pt-notes { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13px; }
   .pt-notes a { overflow-wrap: anywhere; }
   @media (max-width: 640px) {
