@@ -1,19 +1,20 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/Photo.astro';
+import JourneyBar from '../../components/JourneyBar.astro';
 import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
-const title = 'How a home energy audit works (EnerGuide, step by step) | AuditYourHome';
+const title = 'How a home energy audit works in Canada (EnerGuide evaluation, step by step) | AuditYourHome';
 const description =
-  'What actually happens during an EnerGuide home energy assessment: the blower door test, thermal imaging, your rating and upgrade report, and how the audit unlocks Ontario rebates.';
+  'What happens in a home energy audit (EnerGuide evaluation) in Canada: booking a registered energy advisor, the blower door test, your EnerGuide rating and upgrade report, and how the follow-up unlocks your province’s rebates.';
 
 const faqs = [
-  { q: 'How long does the assessment take?', a: 'Plan for 2–3 hours on site for a typical house. The advisor needs access to the attic hatch, basement, mechanical room, and every exterior wall.' },
-  { q: 'What is a blower door test?', a: 'A calibrated fan seals into an exterior door and depressurizes the house, measuring exactly how leaky it is and revealing where outside air gets in. It is the single measurement that separates a real energy audit from a sales walkthrough.' },
-  { q: 'What do I get afterwards?', a: 'Your EnerGuide rating and label, plus a renovation upgrade report: a prioritized list of improvements with modeled savings — the document Ontario’s assessment-path rebates are built around.' },
-  { q: 'Do I need the follow-up visit?', a: 'Only if you want the rebates: the follow-up re-tests the house after upgrades, documents the improvement, and triggers the Home Renovation Savings payments, including the $600 assessment rebate.' },
+  { q: 'How long does the evaluation take?', a: 'Plan for 2–3 hours on site for a typical house. The advisor needs access to the attic hatch, basement, mechanical room and every exterior wall. The follow-up visit after your upgrades is shorter.' },
+  { q: 'What is a blower door test?', a: 'A calibrated fan fitted into an exterior door pulls air out of the house until it reaches a standard test pressure, which measures how leaky the house is and shows where outside air gets in. It’s the measurement that separates a real energy audit from a sales walk-through.' },
+  { q: 'What do I get afterwards?', a: 'Your EnerGuide rating and label, plus a renovation upgrade report: a ranked list of improvements with their estimated savings for your house. Rebate programs that need an evaluation use this report to decide what qualifies.' },
+  { q: 'Do I need the follow-up visit?', a: 'Only if your rebates depend on it. Programs that pay on measured improvement, such as BC’s Home Energy Improvement Bonus or Ontario’s Home Renovation Savings assessment path, need a second evaluation after the work, and each program sets its own deadline. Check your province’s program page before you start.' },
 ];
 
 const schema = [
@@ -24,38 +25,119 @@ const schema = [
   faqSchema(faqs),
 ];
 
-const steps = [
-  { n: '01', h: 'Book a registered advisor', p: 'EnerGuide assessments are performed by energy advisors registered with Natural Resources Canada, working under licensed service organizations — the only providers whose reports count for rebates. That’s who our directory lists.' },
-  { n: '02', h: 'The walkthrough & measurements', p: 'The advisor measures insulation levels in the attic and walls, inventories windows and doors, records your heating, cooling, and water-heating equipment, and photographs it all for quality assurance.' },
-  { n: '03', h: 'The blower door test', p: 'The house is depressurized with a calibrated fan to measure air leakage precisely. On a cold day you can feel every leak the moment the fan spins up — most homeowners call this the moment the house stops being a mystery.' },
-  { n: '04', h: 'Your rating & upgrade report', p: 'You receive an EnerGuide rating (gigajoules per year — lower is better), an official label, and a renovation upgrade report that ranks improvements by impact for your specific house.' },
-  { n: '05', h: 'Upgrade with the rebates', p: 'Do two or more recommended upgrades and Ontario’s Home Renovation Savings pays: $600 toward the assessments, up to $7,700 for insulation, $100 per window/door opening, and more — if your assessments come from one of its seven approved service organizations and the follow-up is done by December 31, 2026.' },
-  { n: '06', h: 'The follow-up seals it', p: 'The same advisor re-tests, documents your improvement, and your rebates pay out. You keep the before/after numbers — useful at resale, and satisfying forever.' },
+interface Step { n: string; h: string; p: string; link?: { href: string; label: string } }
+const before: Step[] = [
+  {
+    n: '01',
+    h: 'Book a registered energy advisor',
+    p: 'EnerGuide evaluations are done by energy advisors registered with Natural Resources Canada (NRCan), working for licensed service organizations: the only providers whose reports count for rebates. In most provinces you book them directly; in others (Nova Scotia, New Brunswick, PEI, Yukon and the NWT) you go through the provincial or territorial program, which subsidizes the visit.',
+    link: { href: '/ca/find/', label: 'How booking works in your province' },
+  },
+];
+const visit: Step[] = [
+  {
+    n: '02',
+    h: 'The walk-through and measurements',
+    p: 'The advisor measures insulation in the attic, walls and basement, records your windows and doors, notes your heating, cooling and water-heating equipment, and photographs it all for quality assurance.',
+    link: { href: '/ca/tests/', label: 'What each test checks' },
+  },
+  {
+    n: '03',
+    h: 'The blower door test',
+    p: 'A calibrated fan depressurizes the house to measure air leakage precisely. While it runs, you and the advisor can feel where outside air gets in: the attic hatch, the rim joists, pot lights, trim. It’s the moment the house stops being a mystery.',
+    link: { href: '/ca/tests/blower-door/', label: 'The blower door test in detail' },
+  },
+  {
+    n: '04',
+    h: 'Your rating and upgrade report',
+    p: 'You get an EnerGuide rating (in gigajoules a year: lower is better), an official label, and a renovation upgrade report that ranks improvements by what they’d save in your house.',
+    link: { href: '/ca/learn/energuide-ratings/', label: 'How to read your EnerGuide rating' },
+  },
+];
+const after: Step[] = [
+  {
+    n: '05',
+    h: 'Do the upgrades and claim your rebates',
+    p: 'What you can claim depends on your province. For example, BC’s Home Energy Improvement Bonus pays for the measured improvement between two evaluations, Manitoba rebates $400 on the evaluation itself, and in Ontario the Home Renovation Savings Program pays $600 toward the two assessments when you install at least two recommended upgrades and both visits come from one of its seven approved organizations. Most programs count only work done after the first evaluation.',
+    link: { href: '/ca/programs/', label: 'Rebates and programs by province' },
+  },
+  {
+    n: '06',
+    h: 'The follow-up confirms it',
+    p: 'For rebates that pay on measured results, the advisor comes back after the work, re-tests the house and documents the improvement, and that report is what the program pays on. Deadlines vary by program (Ontario’s follow-up, for instance, must be done by December 31, 2026). You keep the before-and-after numbers, which are useful at resale.',
+    link: { href: '/ca/programs/home-renovation-savings-assessment/', label: 'Example: Ontario’s follow-up rules' },
+  },
 ];
 ---
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
   <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
+    </nav>
+
+    <JourneyBar country="ca" current={3} ticks={false} hereLabel="Explained here" />
+
     <div class="page-hero has-photo">
       <div class="hero-text">
-      <p class="eyebrow">How it works</p>
-      <h1>What actually happens in an energy audit</h1>
-      <p class="lede measure">
-        An EnerGuide assessment is a measurement visit, not a sales visit: a registered advisor
-        tests your house with real instruments and hands you a prioritized plan. Here's the whole
-        arc, from booking to rebate cheque.
-      </p>
+        <p class="eyebrow">How it works</p>
+        <h1>What actually happens in a home energy audit</h1>
+        <p class="lede measure">
+          In Canada a home energy audit is called an EnerGuide evaluation. It’s a measurement visit, not a sales
+          visit: a registered energy advisor tests your house with real instruments and hands you a ranked list of
+          upgrades. Here’s the whole arc, from booking to rebate cheque.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/ca/plan/">Start with your free plan</a>
+          <a class="btn btn-ghost" href="/ca/find/">Find an advisor in your province</a>
+        </div>
       </div>
       <Photo name={'blower-door-test'} eager />
     </div>
 
+    <p class="plan-note card card-pad">
+      <strong>Before anyone visits:</strong> the <a href="/ca/plan/">free planner</a> gives you an estimate of what
+      your house likely needs, what it could save and which tests to ask for. It’s a starting point; the evaluation
+      measures your actual house.
+    </p>
+
+    <h2 class="phase">Booking</h2>
     <div class="timeline">
-      {steps.map((s) => (
+      {before.map((s) => (
         <div class="tstep card">
           <span class="tn">{s.n}</span>
           <div>
             <h3>{s.h}</h3>
             <p class="mb-0">{s.p}</p>
+            {s.link && <p class="tlink"><a href={s.link.href}>{s.link.label} →</a></p>}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="phase" id="visit">The visit and the report</h2>
+    <div class="timeline">
+      {visit.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+            {s.link && <p class="tlink"><a href={s.link.href}>{s.link.label} →</a></p>}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="phase">After the visit</h2>
+    <div class="timeline">
+      {after.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+            {s.link && <p class="tlink"><a href={s.link.href}>{s.link.label} →</a></p>}
           </div>
         </div>
       ))}
@@ -76,9 +158,13 @@ const steps = [
 </Base>
 
 <style>
-  .timeline { display: grid; gap: 14px; margin-bottom: 40px; max-width: 800px; }
+  .plan-note { border-left: 4px solid var(--pine); margin: 0 0 26px; max-width: 800px; box-shadow: none; }
+  .phase { font-size: clamp(22px, 2.8vw, 28px); margin: 8px 0 12px; scroll-margin-top: 80px; }
+  .timeline { display: grid; gap: 14px; margin-bottom: 30px; max-width: 800px; }
   .tstep { display: flex; gap: 20px; padding: 22px 26px; align-items: flex-start; }
   .tn { font-family: var(--mono); font-weight: 600; font-size: 14px; color: var(--heat); padding-top: 3px; }
   .tstep h3 { margin-bottom: 4px; }
   .tstep p { font-size: 15px; color: var(--muted); }
+  .tlink { margin: 8px 0 0; font-weight: 600; font-size: 14.5px; }
+  @media (max-width: 560px) { .tstep { gap: 12px; padding: 18px 16px; } }
 </style>

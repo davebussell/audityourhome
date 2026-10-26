@@ -9,6 +9,7 @@ import Photo from '../../components/Photo.astro';
 import FaqList from '../../components/us/FaqList.astro';
 import LeadFormUS from '../../components/us/LeadFormUS.astro';
 import WapNote from '../../components/us/WapNote.astro';
+import JourneyBar from '../../components/JourneyBar.astro';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 import { ogFor } from '../../lib/photos';
 import { FEDERAL, US_VERIFIED, metroBySlug } from '../../lib/us/data';
@@ -85,6 +86,26 @@ const schema = [
   faqSchema(faqs),
 ];
 const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => /program-notice-26-2/.test(s.href));
+
+/** ENERGY STAR attic levels by climate zone, grouped where zones share a value: "R30 (zone 1), R49 (zones 2–3), R60 (zones 4–8)" */
+function atticLevels(which: 'empty' | 'some'): string {
+  const rows = (E.insulation.recommendedRValues as { zone: string; attic: string }[]).map((r) => {
+    const m = r.attic.match(/R(\d+) if uninsulated; R(\d+) if already/);
+    return { zone: Number(r.zone), r: m ? Number(which === 'empty' ? m[1] : m[2]) : null };
+  });
+  const groups: { r: number; zones: number[] }[] = [];
+  for (const row of rows) {
+    if (row.r == null) continue;
+    const last = groups[groups.length - 1];
+    if (last && last.r === row.r) last.zones.push(row.zone);
+    else groups.push({ r: row.r, zones: [row.zone] });
+  }
+  return groups
+    .map((g) => `R${g.r} (${g.zones.length === 1 ? `zone ${g.zones[0]}` : `zones ${g.zones[0]}–${g.zones[g.zones.length - 1]}`})`)
+    .join(', ');
+}
+const atticEmpty = atticLevels('empty');
+const atticSome = atticLevels('some');
 ---
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
@@ -92,6 +113,8 @@ const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => 
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
     </nav>
+
+    <JourneyBar country="us" current={3} ticks={false} hereLabel="Explained here" />
 
     <div class="page-hero has-photo">
       <div class="hero-text">
@@ -103,11 +126,23 @@ const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => 
           U.S. audit includes, how long it takes and what comes next.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#kinds">The four kinds</a>
-          <a class="btn btn-ghost" href="#tests">The tests</a>
+          <a class="btn btn-primary" href="/us/plan/">Start with your free plan</a>
+          <a class="btn btn-ghost" href="#kinds">The four kinds</a>
+          <a class="btn btn-ghost" href="#visit">The visit</a>
         </div>
       </div>
       <Photo name="blower-door-test" eager />
+    </div>
+
+    <div class="plan-note card card-pad">
+      <p>
+        <strong>Before anyone visits:</strong> the <a href="/us/plan/">free planner</a> estimates what your house likely
+        needs, what it could save and which tests to ask for. It’s a starting point; the audit measures your actual house.
+      </p>
+      <p class="mb-0">
+        <strong>Your first stop is usually your utility.</strong> Many utilities offer a free or low-cost assessment, and
+        your <a href="/us/cities/">metro guide</a> lists the one that serves your area, with what it includes and costs.
+      </p>
     </div>
 
     <!-- KINDS -->
@@ -211,9 +246,10 @@ const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => 
       </div>
     </section>
 
-    <!-- TESTS -->
+    <!-- THE VISIT: tests, timing and the report -->
+    <span id="visit" class="anchor" aria-hidden="true"></span>
     <section id="tests" class="sec">
-      <h2>The tests</h2>
+      <h2>The visit: the tests</h2>
       <p class="measure">DOE says many professional assessments include a blower door test and an infrared scan. These are the tests worth asking about, with links to our full guides.</p>
       <div class="tests">
         <a class="test card" href="/us/tests/blower-door/">
@@ -249,18 +285,18 @@ const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => 
           <span class="go">Duct leakage guide →</span>
         </a>
         <a class="test card" href="/us/tests/heat-loss-calc/">
-          <h3>Heat-loss calculation</h3>
+          <h3>Heating and cooling load calculation</h3>
           <p>
             ACCA Manual J works out room-by-room heating and cooling loads; Manual S sizes the equipment from them and Manual D
             designs the ducts. Where codes adopt them, new equipment must be sized this way.
           </p>
-          <span class="go">Heat-loss guide →</span>
+          <span class="go">Load calculation guide →</span>
         </a>
         <a class="test card" href="/us/tests/attic-inspection/">
           <h3>Attic inspection</h3>
           <p>
-            Measures insulation depth against ENERGY STAR’s retrofit levels: in climate zones 4–8, R60 for an uninsulated attic,
-            or R49 if it already has 3–4 inches.
+            Measures insulation depth against ENERGY STAR’s retrofit levels for your climate zone. For an attic with no
+            insulation: {atticEmpty}. If it already has 3–4 inches: {atticSome}.
           </p>
           <span class="go">Attic guide →</span>
         </a>
@@ -378,6 +414,9 @@ const pn262 = (FEDERAL.homeEnergyRebates.overview.sources as any[]).find((s) => 
 
 <style>
   .sec { padding: 36px 0 0; scroll-margin-top: 80px; }
+  .anchor { display: block; position: relative; top: -80px; height: 0; }
+  .plan-note { border-left: 4px solid var(--pine); margin: 0 0 8px; max-width: 820px; box-shadow: none; display: grid; gap: 8px; }
+  .plan-note p { margin: 0; font-size: 15.5px; }
   .sec > h2 { font-size: clamp(24px, 3vw, 30px); }
   .kinds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
   @media (max-width: 860px) { .kinds { grid-template-columns: 1fr; } }

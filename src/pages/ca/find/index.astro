@@ -1,72 +1,204 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
 import { ogFor } from '../../../lib/photos';
 import { SITE } from '../../../config/site';
-import { breadcrumbSchema } from '../../../lib/schema';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { regions, providers, providersForRegion } from '../../../lib/data';
+import { PROVINCE_BOOKING, citiesInProvince, providerCountLabel, CITY_DATA_CHECKED } from '../../../lib/find';
+import { localCities } from '../../../lib/local';
 
-const title = 'Find a home energy auditor in Ontario | AuditYourHome';
+const title = 'Find a home energy auditor (EnerGuide evaluation) in Canada | AuditYourHome';
 const description =
-  'Browse NRCan-licensed service organizations delivering EnerGuide home energy assessments across Ontario. Registration shown, prices where published, no sales-pitch listings.';
+  'How to book a home energy audit (EnerGuide evaluation) in every province and territory: who runs bookings, what it costs, and the NRCan-licensed service organizations serving 70 Canadian cities.';
+
+const faqs = [
+  {
+    q: 'Who does a home energy audit in Canada?',
+    a: 'A registered energy advisor who works for a service organization licensed by Natural Resources Canada (NRCan). Their visit is called an EnerGuide evaluation, and it’s the audit that rebate programs ask for when they need one. Sales visits sold as a “free audit” don’t count.',
+  },
+  {
+    q: 'Do I book the advisor myself?',
+    a: 'In most provinces, yes: you call a licensed service organization that serves your postal code. In Nova Scotia, New Brunswick, Prince Edward Island, the Northwest Territories and Yukon, the provincial or territorial program arranges subsidized evaluations, and in Quebec the Rénoclimat program sets the rules. Each province’s section below says which route applies.',
+  },
+  {
+    q: 'What if my town isn’t listed?',
+    a: 'Licensed organizations serve postal codes, not just cities, so the nearest covered city’s list is a good start: most of its organizations also travel to the surrounding area. You can also ask us, and we’ll tell you who serves your postal code.',
+  },
+];
 
 const schema = [
   breadcrumbSchema([
     { name: 'Home', path: '/ca/' },
     { name: 'Find an auditor', path: '/ca/find/' },
   ]),
+  faqSchema(faqs),
 ];
+
+const sections = PROVINCE_BOOKING.map((b) => ({ ...b, cities: citiesInProvince(b.slug) }));
+const coveredCities = localCities.length;
 ---
 
-<Base title={title} description={description} schema={schema} ogImage={ogFor('region-ontario')}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>Find an auditor</span>
+    </nav>
+
+    <JourneyBar country="ca" current={2} ticks={false} />
+
     <div class="page-hero has-photo">
       <div class="hero-text">
-      <p class="eyebrow">The directory</p>
-      <h1>Find a registered energy auditor</h1>
-      <p class="lede">
-        Every listing is an NRCan-licensed service organization. NRCan licensing is required for
-        EnerGuide rebates, and Ontario's Home Renovation Savings program further limits its $600
-        assessment rebate to seven approved organizations, marked “HRSP-approved: Yes” on each card.
-        {providers.length} providers across {regions.length} areas, compiled from public registries
-        and provider sites, checked {SITE.dataReviewDate}.
-      </p>
+        <p class="eyebrow">Find an auditor · Canada</p>
+        <h1>Find a home energy auditor (EnerGuide evaluation) in Canada</h1>
+        <p class="lede">
+          In Canada, a home energy audit is called an <strong>EnerGuide evaluation</strong>. It’s done by a
+          registered energy advisor who works for a service organization licensed by Natural Resources Canada
+          (NRCan), and it’s the audit rebate programs accept. How you book one depends on your province, so start
+          with yours below.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#provinces">Choose your province</a>
+          <a class="btn btn-ghost" href="/ca/plan/">Get your free plan first</a>
+        </div>
       </div>
-      <Photo name={'region-ontario'} eager />
+      <Photo name={'home-energy-audit'} eager />
     </div>
 
-    <div class="region-grid">
-      {regions.map((r) => {
-        const count = providersForRegion(r.slug).length;
-        return (
-          <a class="card region-card" href={`/ca/find/${r.slug}/`}>
-            <h2>{r.name}</h2>
-            <p class="small">{count} registered provider{count === 1 ? '' : 's'}</p>
-            <span class="go">Browse →</span>
-          </a>
-        );
-      })}
+    <nav class="prov-picker" id="provinces" aria-label="Provinces and territories">
+      {sections.map((s) => <a href={`#${s.slug}`}>{s.name}</a>)}
+    </nav>
+
+    <div class="prov-list">
+      {sections.map((s) => (
+        <section class="card prov" id={s.slug} aria-labelledby={`h-${s.slug}`}>
+          <div class="prov-head">
+            <h2 id={`h-${s.slug}`}>{s.name}</h2>
+            <p class="route">{s.route}</p>
+          </div>
+          <p class="how">{s.how}</p>
+          <dl class="prov-facts">
+            <div><dt>Typical cost</dt><dd>{s.cost}</dd></div>
+            <div><dt>Help with the cost</dt><dd>{s.help || 'None province-wide'}</dd></div>
+          </dl>
+          {s.bookWith && (
+            <p class="book-with"><a class="btn btn-sm btn-primary" href={s.bookWith.href} rel="noopener" target="_blank">Book through {s.bookWith.label}&nbsp;↗</a></p>
+          )}
+          {s.cities.length > 0 && (
+            <div class="cities">
+              <h3>Licensed organizations by city</h3>
+              <ul class="city-grid">
+                {s.cities.map((c) => (
+                  <li>
+                    <a href={`/ca/services/home-energy-audit/${c.slug}/`}>
+                      <span class="cn">{c.label ?? c.name}</span>
+                      <span class="cc">{providerCountLabel(c)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <p class="prov-links small">
+            <a href={`/ca/provinces/${s.slug}/`}>{s.name} rebates and programs</a>
+            {s.slug === 'ontario' && <span> · <a href="#ontario-areas">Ontario areas we cover in depth</a></span>}
+            <span class="src"> · Checked {s.checked}: {s.sources.map((src, i) => (
+              <span>{i > 0 && ', '}<a href={src.href} rel="noopener" target="_blank">{src.label}&nbsp;↗</a></span>
+            ))}</span>
+          </p>
+        </section>
+      ))}
     </div>
+
+    <section class="ontario" id="ontario-areas" aria-labelledby="h-ontario-areas">
+      <h2 id="h-ontario-areas">Ontario areas we cover in depth</h2>
+      <p class="measure">
+        In {regions.length} Ontario areas we profile {providers.length} providers in full: registration, published
+        prices where they exist, and whether each is one of the seven organizations approved for Ontario’s $600
+        Home Renovation Savings assessment rebate (“HRSP-approved: Yes” on its card). Compiled from public
+        registries and provider sites, checked {SITE.dataReviewDate}.
+      </p>
+      <div class="region-grid">
+        {regions.map((r) => {
+          const count = providersForRegion(r.slug).length;
+          return (
+            <a class="card region-card" href={`/ca/find/${r.slug}/`}>
+              <h3>{r.name}</h3>
+              <p class="small">{count} registered provider{count === 1 ? '' : 's'}</p>
+              <span class="go">Browse →</span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
 
     <div class="card card-pad elsewhere">
-      <h3>Elsewhere in Ontario?</h3>
+      <h2>Town not listed?</h2>
       <p class="mb-0">
-        Province-wide providers such as The Energuy, Greenbrain and The Home Inspectors Group cover
-        most of Ontario, and
-        <a href="/ca/plan/"> the planner</a> matches programs to any Ontario postal code. If your area
-        isn't listed yet, <a href={`mailto:${SITE.contactEmail}`}>tell us where you are</a> — we
-        prioritize new areas by request.
+        The {coveredCities} city lists above come from NRCan’s register of licensed service organizations
+        (checked {CITY_DATA_CHECKED}), and those organizations serve postal codes around each city too, so the
+        nearest city is a good place to start. Or <a href={`mailto:${SITE.contactEmail}`}>email us your postal
+        code</a> and we’ll tell you who serves it. If you haven’t yet, <a href="/ca/plan/">get your free plan</a>
+        first: it lists the tests to ask for.
       </p>
     </div>
+
+    <section class="tight faqs">
+      <h2>Good to know</h2>
+      <div class="measure">
+        {faqs.map((f) => (
+          <details class="faq">
+            <summary>{f.q}</summary>
+            <div class="faq-body"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </section>
   </div>
 </Base>
 
 <style>
-  .region-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 28px; }
-  .region-card { padding: 22px 24px; text-decoration: none; display: flex; flex-direction: column; gap: 2px; transition: border-color 0.15s ease; }
+  .prov-picker {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 22px; scroll-margin-top: 80px;
+  }
+  .prov-picker a {
+    font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; background: var(--card);
+  }
+  .prov-picker a:hover { border-color: var(--heat); color: var(--heat-deep); }
+  .prov-list { display: grid; gap: 16px; margin-bottom: 36px; }
+  .prov { padding: 22px 24px; box-shadow: none; scroll-margin-top: 80px; display: grid; gap: 10px; }
+  .prov-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+  .prov h2 { font-size: 24px; margin: 0; }
+  .route { margin: 0; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pine); }
+  .how { margin: 0; max-width: 75ch; }
+  .prov-facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; }
+  .prov-facts div { display: grid; gap: 2px; }
+  .prov-facts dt { font-family: var(--display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
+  .prov-facts dd { margin: 0; font-size: 15px; }
+  @media (max-width: 640px) { .prov-facts { grid-template-columns: 1fr; } }
+  .book-with { margin: 2px 0 0; }
+  .cities h3 { font-size: 15px; margin: 6px 0 8px; }
+  .city-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .city-grid a {
+    display: grid; gap: 1px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px;
+    text-decoration: none; color: var(--ink); background: var(--paper);
+  }
+  .city-grid a:hover { border-color: var(--heat); }
+  .cn { font-weight: 700; font-size: 14.5px; }
+  .cc { font-size: 12.5px; color: var(--muted); }
+  .prov-links { margin: 4px 0 0; line-height: 1.7; }
+  .prov-links .src { color: var(--faint); }
+  .prov-links a { overflow-wrap: anywhere; }
+  .ontario { padding: 8px 0 28px; scroll-margin-top: 80px; }
+  .region-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 16px; }
+  .region-card { padding: 20px 22px; text-decoration: none; display: flex; flex-direction: column; gap: 2px; transition: border-color 0.15s ease; }
   .region-card:hover { border-color: var(--heat); }
-  .region-card h2 { font-size: 19px; margin: 0; color: var(--ink); }
+  .region-card h3 { font-size: 18px; margin: 0; color: var(--ink); }
   .region-card .small { margin: 0; }
   .region-card .go { margin-top: 10px; font-weight: 700; font-size: 14px; color: var(--heat-deep); }
-  .elsewhere { border-left: 4px solid var(--steel); }
+  .elsewhere { border-left: 4px solid var(--steel); margin-bottom: 8px; }
+  .elsewhere h2 { font-size: 21px; margin-bottom: 6px; }
+  .faqs { padding-bottom: 48px; }
 </style>

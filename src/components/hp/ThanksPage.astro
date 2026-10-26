@@ -1,6 +1,11 @@
 ---
-/** Where the heat pump quote form lands after a successful Netlify submission. Not indexed. */
+/**
+ * Where the heat pump quote form lands after a Netlify submission (the form posts to
+ * /<market>/heat-pumps/thanks/?sent=1). Without the flag the page doesn't claim anything was sent.
+ * Not indexed.
+ */
 import Base from '../../layouts/Base.astro';
+import JourneyBar from '../JourneyBar.astro';
 import type { Market } from '../../lib/heatpumps';
 import '../../styles/hp.css';
 
@@ -11,10 +16,11 @@ const { market } = Astro.props;
 const isCA = market === 'ca';
 ---
 
-<Base title="Request received | AuditYourHome" description="Your heat pump quote request reached us." indexable={false}>
+<Base title="Your heat pump quote request | AuditYourHome" description="What happens after you ask for heat pump quotes." indexable={false}>
   <div class="container hp" style="padding-bottom:48px">
+    <JourneyBar country={market} current={2} ticks={false} />
     <div class="page-hero">
-      <div class="hero-text">
+      <div class="hero-text" data-sent="yes" hidden>
         <p class="eyebrow">Heat pump quotes</p>
         <h1>Thanks. Your request reached us.</h1>
         <p class="lede measure">
@@ -24,11 +30,25 @@ const isCA = market === 'ca';
             : ' We’ll reply by email with the contractors and rebate programs that serve your ZIP code.'}
         </p>
       </div>
+      <div class="hero-text" data-sent="no">
+        <p class="eyebrow">Heat pump quotes</p>
+        <h1>What happens after you ask for quotes</h1>
+        <p class="lede measure">
+          If you sent a request from our quote form, a person reads it and replies by email, usually within one business
+          day. If you landed here another way, nothing has been sent yet:
+          <a href={`/${market}/heat-pumps/#quote`}>the quote form is on the heat pump guide</a>.
+        </p>
+      </div>
     </div>
     <div class="cards">
       <article class="card c">
         <h3>Before the visit</h3>
-        <p>Have your last 12 months of heating bills handy and note the rooms that run cold. Ask for a room-by-room heat-loss calculation, not a size based on square footage.</p>
+        <p>
+          Have your last 12 months of heating and cooling bills handy and note the rooms that run hot or cold.
+          {isCA
+            ? ' Ask for a room-by-room heat-loss calculation, not a size based on square footage.'
+            : ' Ask for a Manual J heating and cooling load calculation, not a size based on square footage.'}
+        </p>
       </article>
       <article class="card c">
         <h3>On the quote</h3>
@@ -43,3 +63,12 @@ const isCA = market === 'ca';
     <p style="margin-top:22px"><a class="btn btn-ghost" href={`/${market}/heat-pumps/`}>Back to the heat pump guide</a></p>
   </div>
 </Base>
+
+<script is:inline>
+  (function () {
+    var sent = /(?:^|[?&])sent=1(?:&|$)/.test(location.search);
+    document.querySelectorAll('[data-sent]').forEach(function (el) {
+      el.hidden = (el.getAttribute('data-sent') === 'yes') !== sent;
+    });
+  })();
+</script>

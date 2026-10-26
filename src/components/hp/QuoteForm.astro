@@ -28,7 +28,7 @@ const sub =
     ? 'Tell us about your home and what you want to heat. We match you with one heating and cooling contractor or registered energy advisor who serves your area and knows the rebates.'
     : 'Tell us about your home and what you want to heat. A person reads every request and replies with the contractors and rebate programs that serve your ZIP code.');
 const onNetlify = NETLIFY_FORMS;
-const action = `/${market}/heat-pumps/thanks/`;
+const action = `/${market}/heat-pumps/thanks/?sent=1`;
 const uid = `hpq-${Math.random().toString(36).slice(2, 8)}`;
 const regionOptions: [string, string][] = isCA
   ? [...CA_REGIONS.map((r) => [r.slug, r.name] as [string, string]), ['outside-canada', 'Outside Canada']]
@@ -61,7 +61,7 @@ const consent = isCA
       <input type="hidden" name="country" value={market.toUpperCase()} />
       <input type="hidden" name="context" value={context} />
       <input type="hidden" name="subject" value={`Heat pump quote request (${market.toUpperCase()}, ${context})`} />
-      <p class="hpq-hide"><label>Leave this empty <input name="bot-field" /></label></p>
+      <p class="hpq-hide" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
       <div class="grid-2">
         <div class="field">
           <label for={`${uid}-name`}>Name</label>
