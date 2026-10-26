@@ -33,10 +33,14 @@ const otherStates = Object.keys(facts.states)
   .filter((st) => !SUMMARY_STATES.includes(st))
   .sort((a, b) => stateName(a).localeCompare(stateName(b)));
 
+// the Home Energy Planner's six eras, so answers carry over to it
 const builtOpts = [
-  { v: 'pre1978', l: 'Before 1978' },
-  { v: '1978-1989', l: '1978–1989' },
-  { v: '1990plus', l: '1990 or later' },
+  { v: 'pre-1946', l: 'Before 1946' },
+  { v: '1946-1965', l: '1946–1965' },
+  { v: '1966-1980', l: '1966–1980' },
+  { v: '1981-1995', l: '1981–1995' },
+  { v: '1996-2010', l: '1996–2010' },
+  { v: '2011-plus', l: '2011 or later' },
   { v: 'unsure', l: 'Not sure' },
 ];
 const hasOpts = [
@@ -160,8 +164,9 @@ const planOpts = [
       <ul>
         <li><strong>Radon</strong> is on every list, because EPA says every home should be tested. Your radon zone adds context but never takes it off the list.</li>
         <li><strong>Carbon monoxide</strong> alarms are recommended for every home; fuel-burning appliances, a fireplace or an attached garage move them to the top.</li>
-        <li><strong>Lead</strong> comes up for homes built before 1978, or when you’re not sure of the year.</li>
-        <li><strong>Asbestos and vermiculite</strong> come up for homes built before 1990, the end of the period when Libby, Montana vermiculite dominated U.S. sales, or whenever you’ve seen vermiculite.</li>
+        <li><strong>Lead</strong> comes up for homes built before 1978 (the 1966–1980 band included, since most of it predates 1978), or when you’re not sure of the year.</li>
+        <li><strong>Asbestos and vermiculite</strong> come up for homes built before 1990, the end of the period when Libby, Montana vermiculite dominated U.S. sales (the 1981–1995 band included), or whenever you’ve seen vermiculite.</li>
+        <li>The year bands match the <a href="/us/plan/">Home Energy Planner</a>’s, and the results end with a link that carries your answers over to it.</li>
         <li><strong>Mold</strong> comes up when you report moisture or a musty odor; <strong>well water</strong> when you’re on a private well.</li>
         <li>Energy work adds tests that protect it: a <strong>combustion safety test</strong> when air sealing a home with fuel-burning appliances, and a <strong>Manual J</strong> when replacing heating or cooling.</li>
       </ul>
@@ -298,4 +303,6 @@ const planOpts = [
   .ust .sflag .go a { color: var(--heat-deep); font-weight: 600; text-decoration: none; }
   .ust .sflag .go a:hover { text-decoration: underline; }
   .ust .sres .rfoot { font-size: 14px; color: var(--muted); margin: 12px 0 0; }
+  .ust .sres .rplan { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--heat); border-radius: var(--radius); padding: 12px 14px; color: var(--ink); }
+  .ust .sres .rplan a { font-weight: 700; color: var(--heat-deep); }
 </style>

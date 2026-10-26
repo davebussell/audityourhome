@@ -11,8 +11,13 @@
  *     °C degree days (÷ 1.8); the yearly mean temperature for cold-water inlet comes from the
  *     degree days (65 °F − (HDD − CDD) ÷ 365);
  *   - attic targets: ENERGY STAR's US retrofit table by IECC climate zone (src/data/us/tests.json);
- *   - bills: only the heating-fuel bill (gas, oil, propane) is used, and it is split between
- *     heating and hot water in the proportions the model gives for the local climate.
+ *   - bills: a gas, oil or propane bill is split between heating and hot water in the proportions
+ *     the model gives for the local climate; for electric heat, a summer and a winter electric bill
+ *     are split by degree days (plan-cooling.ts) and the heating part scales the house;
+ *   - heat pump water heaters: the heat they take from the house is charged to the heating system
+ *     only for the heating share of the year (hpwhHeatShare), which is small in hot climates;
+ *   - heat pump upgrades: a cold-climate model where winters are long, a standard one elsewhere.
+ * Air conditioning is estimated separately, in plan-cooling.ts.
  *
  * Pure TypeScript, no DOM: runs at build time and in the browser.
  */
@@ -136,14 +141,26 @@ export interface UsWaterHeaterCost {
   extraCost: number;
 }
 
-export function usWaterHeaterCost(t: UsWaterHeater, deliveredGJ: number, p: UsPrices, space?: { sys: SystemKey; hddC: number } | null): UsWaterHeaterCost {
+/**
+ * Share of the year a heat pump water heater's heat has to be replaced by the heating system. The
+ * engine's figure (two-thirds) is for Canadian winters; where the heating season is short, the heat
+ * it pulls from the house mostly arrives when the house is being cooled, so the share follows
+ * heating degree days as a fraction of all degree days, never above the engine's figure.
+ */
+export function hpwhHeatShare(c: { hdd65: number; cdd65: number }): number {
+  const engine = MODEL.water.hpwhHeatTaken.heatingSeasonShare;
+  const dd = c.hdd65 + c.cdd65;
+  return dd > 0 ? Math.min(engine, c.hdd65 / dd) : engine;
+}
+
+export function usWaterHeaterCost(t: UsWaterHeater, deliveredGJ: number, p: UsPrices, space?: { sys: SystemKey; hddC: number; share?: number } | null): UsWaterHeaterCost {
   const s = waterHeaterSpec(t);
   const u = usUnit(s.fuel);
   const units = deliveredGJ / s.uef / u.gjPerUnit;
   const price = usPrice(s.fuel, p);
   let extraCost = 0;
   if (t === 'heatPump' && space) {
-    const extraGJ = deliveredGJ * (1 - 1 / s.uef) * MODEL.water.hpwhHeatTaken.heatingSeasonShare;
+    const extraGJ = deliveredGJ * (1 - 1 / s.uef) * (space.share ?? MODEL.water.hpwhHeatTaken.heatingSeasonShare);
     extraCost = usHeatingCost(extraGJ, space.sys, space.hddC, p).cost ?? 0;
   }
   return { type: t, fuel: s.fuel, uef: s.uef, units, unit: u.unit, cost: price !== null ? units * price : null, extraCost };
@@ -180,13 +197,14 @@ export function houseModel(h: HouseInput, c: UsClimate, p: UsPrices) {
   const heat = usHeatingCost(demand, h.sys, hddC, p);
   const meanC = annualMeanC(c.hdd65, c.cdd65);
   const water = waterHeatingDemand(PERSONS, meanC);
+  const hpwhShare = hpwhHeatShare(c);
   const waterCost = h.wh === 'boiler'
     ? (() => { const x = usHeatingCost(water.gj, h.sys, hddC, p); return { fuel: x.fuel, units: x.units, unit: x.unit, cost: x.cost, extraCost: 0 }; })()
-    : usWaterHeaterCost(h.wh, water.gj, p, { sys: h.sys, hddC });
+    : usWaterHeaterCost(h.wh, water.gj, p, { sys: h.sys, hddC, share: hpwhShare });
   const storeys = h.size === 'small' ? 1 : 2;
   const basement = h.found === 'basement' || h.found === 'unsure';
   const g = geometry(area, storeys, basement);
-  return { hddC, area, type, demand, heat, meanC, water, waterCost, g, storeys, basement };
+  return { hddC, area, type, demand, heat, meanC, water, waterCost, hpwhShare, g, storeys, basement };
 }
 export type HouseModel = ReturnType<typeof houseModel>;
 
@@ -223,7 +241,7 @@ export function typicalFuelBill(m: HouseModel): number | null {
  * Scale the typical house to a monthly gas, oil or propane bill. The bill is split between
  * space heating and a same-fuel water heater in the model's proportions for this climate, after
  * the engine's 5% for other uses; the result is clamped to the engine's 0.5–1.6 range.
- * Electric heating is not calibrated: one electric bill mixes heating, cooling and appliances.
+ * Electric heating is calibrated from two electric bills instead (calibrateElectricHeat).
  */
 export function calibrateFuelBill(m: HouseModel, sys: SystemKey, monthlyBill: number | null): UsCalibration {
   if (fuelOf(sys) === 'electricity' || !(monthlyBill && monthlyBill > 0) || m.heat.price === null || !(m.demand > 0)) return NO_CAL;
@@ -239,6 +257,18 @@ export function calibrateFuelBill(m: HouseModel, sys: SystemKey, monthlyBill: nu
   return { calibrated: true, factor, raw, clamped: factor !== raw, actualDemandGJ: actual, share };
 }
 
+/**
+ * Electric heat: scale the typical house to the yearly heating kWh that a summer and a winter
+ * electric bill point to (plan-cooling.ts billSplit, heating mode), with the same 0.5–1.6 clamp.
+ */
+export function calibrateElectricHeat(m: HouseModel, heatKwh: number | null | undefined): UsCalibration {
+  if (!(heatKwh && heatKwh > 0) || m.heat.fuel !== 'electricity' || !(m.heat.units > 0) || !(m.demand > 0)) return NO_CAL;
+  const raw = heatKwh / m.heat.units;
+  const C = MODEL.calibration;
+  const factor = Math.min(C.max, Math.max(C.min, raw));
+  return { calibrated: true, factor, raw, clamped: factor !== raw, actualDemandGJ: m.demand * raw, share: null };
+}
+
 /* ------------------------------------------------------------------ upgrades */
 
 /** ENERGY STAR attic figure (R-value for an uninsulated attic) by zone number, from tests.json. */
@@ -248,6 +278,14 @@ export function atticTargetR(zone: string | null, targets: AtticTargets): number
   const z = zoneNumber(zone);
   const t = z ? targets[z] : undefined;
   return Math.min(t ?? MODEL.envelope.atticTargetCapR, MODEL.envelope.atticTargetCapR);
+}
+
+/**
+ * The heat pump the planner prices as an upgrade: a cold-climate model where winters are long
+ * (4,000 heating degree days or more, °F) or the home already has one, a standard model elsewhere.
+ */
+export function heatPumpFor(c: { hdd65: number }, current?: SystemKey): SystemKey {
+  return current === 'ashpCold' || c.hdd65 >= 4000 ? 'ashpCold' : 'ashpStandard';
 }
 
 export interface ItemSaving {
@@ -295,14 +333,16 @@ export function itemSaving(
     }
     case 'heat-pump': {
       const now = usHeatingCost(demand, h.sys, m.hddC, p);
-      const hp = usHeatingCost(demand, 'ashpCold', m.hddC, p);
+      const hp = usHeatingCost(demand, heatPumpFor(c, h.sys), m.hddC, p);
       if (now.cost === null || hp.cost === null) return { dollars: null, units: null, unit: '' };
-      return { dollars: now.cost - hp.cost, units: null, unit: '' };
+      // a home that already has a heat pump gets a like-for-like or better replacement, never a worse one
+      const d = now.cost - hp.cost;
+      return { dollars: isHeatPump(h.sys) ? Math.max(0, d) : d, units: null, unit: '' };
     }
     case 'water-heating': {
       if (h.wh === 'heatPump') return { dollars: 0, units: null, unit: '' };
       const cur = m.waterCost.cost;
-      const alt = usWaterHeaterCost('heatPump', m.water.gj, p, { sys: h.sys, hddC: m.hddC });
+      const alt = usWaterHeaterCost('heatPump', m.water.gj, p, { sys: h.sys, hddC: m.hddC, share: m.hpwhShare });
       if (cur === null || alt.cost === null) return { dollars: null, units: null, unit: '' };
       return { dollars: cur - (alt.cost + alt.extraCost), units: null, unit: '' };
     }

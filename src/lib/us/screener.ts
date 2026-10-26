@@ -13,7 +13,13 @@ export interface Src {
   short?: string;
 }
 
-export type Built = 'pre1978' | '1978-1989' | '1990plus' | 'unsure';
+/** The same six build eras as the Home Energy Planner, so answers carry over between the two. */
+export type Built = 'pre-1946' | '1946-1965' | '1966-1980' | '1981-1995' | '1996-2010' | '2011-plus' | 'unsure';
+/** Eras entirely before 1978 (lead paint) and before 1990 (vermiculite), and the eras that straddle each line. */
+const BEFORE_1978: Built[] = ['pre-1946', '1946-1965'];
+const MOSTLY_BEFORE_1978: Built[] = ['1966-1980'];
+const BEFORE_1990: Built[] = ['pre-1946', '1946-1965', '1966-1980'];
+const PARTLY_BEFORE_1990: Built[] = ['1981-1995'];
 export type Water = 'public' | 'well' | 'unsure';
 export type Plan = 'reno' | 'sale' | 'sealing' | 'hvac';
 export type Level = 'start' | 'next' | 'good';
@@ -181,12 +187,15 @@ export function screenUsTests(input: ScreenerInput, facts: ScreenerFacts): Scree
   }
 
   // ---------------------------------------------------------------- lead paint
-  if (input.built === 'pre1978' || input.built === 'unsure') {
-    const pre = input.built === 'pre1978';
+  const mostly78 = MOSTLY_BEFORE_1978.includes(input.built);
+  if (BEFORE_1978.includes(input.built) || mostly78 || input.built === 'unsure') {
+    const pre = input.built !== 'unsure';
     const reasons = [
-      pre
-        ? 'EPA says homes built before 1978 are more likely to have lead-based paint, and dust from it is the most common source of lead exposure.'
-        : 'You’re not sure when the home was built. EPA says homes built before 1978 are more likely to have lead-based paint, so find out before any work that disturbs paint.',
+      mostly78
+        ? 'If the home was built before 1978, as most 1966–1980 homes were, EPA says it is more likely to have lead-based paint, and dust from it is the most common source of lead exposure.'
+        : pre
+          ? 'EPA says homes built before 1978 are more likely to have lead-based paint, and dust from it is the most common source of lead exposure.'
+          : 'You’re not sure when the home was built. EPA says homes built before 1978 are more likely to have lead-based paint, so find out before any work that disturbs paint.',
     ];
     const sources: Src[] = [F.leadSources];
     if (reno) {
@@ -215,16 +224,17 @@ export function screenUsTests(input: ScreenerInput, facts: ScreenerFacts): Scree
 
   // ---------------------------------------------------------------- asbestos & vermiculite
   {
-    const oldHome = input.built === 'pre1978' || input.built === '1978-1989';
+    const oldHome = BEFORE_1990.includes(input.built);
+    const partly = PARTLY_BEFORE_1990.includes(input.built);
     const reasons: string[] = [];
     const sources: Src[] = [F.vermiculite];
     let level: Level | null = null;
     if (input.vermiculite) {
       level = 'start';
       reasons.push('You noted vermiculite insulation. EPA says to assume it may contain asbestos, leave it undisturbed, limit trips into the attic and not try to remove it yourself.');
-    } else if (oldHome) {
+    } else if (oldHome || partly) {
       level = reno || sealing ? 'start' : 'next';
-      reasons.push('Your home was built before 1990. A Libby, Montana mine supplied more than 70% of U.S. vermiculite sold from 1919 to 1990, and it was contaminated with asbestos. Check, without disturbing anything, whether the attic or walls have vermiculite.');
+      reasons.push(`${partly ? 'If your home was built before 1990: a' : 'Your home was built before 1990. A'} Libby, Montana mine supplied more than 70% of U.S. vermiculite sold from 1919 to 1990, and it was contaminated with asbestos. Check, without disturbing anything, whether the attic or walls have vermiculite.`);
     } else if (input.built === 'unsure') {
       level = 'next';
       reasons.push('Not sure of the year? If the attic or walls have vermiculite insulation, EPA says to assume it may contain asbestos and leave it undisturbed.');
@@ -326,11 +336,30 @@ const esc = (t: string) => String(t).replace(/[&<>"']/g, (c) => ESC[c]);
 const shortName = (s: Src) => s.short ?? s.label.split(' - ')[0].replace(/\s*\([^)]*\)\s*/g, ' ').trim();
 const CHIP: Record<Level, string> = { start: 'chip-info', next: 'chip-limited', good: 'chip-neutral' };
 const BUILT_TEXT: Record<Built, string> = {
-  pre1978: 'built before 1978',
-  '1978-1989': 'built 1978 to 1989',
-  '1990plus': 'built 1990 or later',
+  'pre-1946': 'built before 1946',
+  '1946-1965': 'built 1946 to 1965',
+  '1966-1980': 'built 1966 to 1980',
+  '1981-1995': 'built 1981 to 1995',
+  '1996-2010': 'built 1996 to 2010',
+  '2011-plus': 'built 2011 or later',
   unsure: 'year built not sure',
 };
+
+/**
+ * The Home Energy Planner with the answers that carry over (build era, water source, moisture,
+ * renovating or buying), in the #fragment so they never reach a server.
+ */
+export function plannerHref(input: ScreenerInput): string {
+  const q = new URLSearchParams();
+  if (input.built !== 'unsure') q.set('age', input.built);
+  q.set('water', input.water === 'public' ? 'municipal' : input.water);
+  if (input.moisture) q.set('sym', 'musty-smell');
+  const goals = ['bills'];
+  if (input.plans.includes('reno')) goals.push('reno');
+  if (input.plans.includes('sale')) goals.push('buying');
+  q.set('goal', goals.join(','));
+  return `/us/plan/#${q.toString()}`;
+}
 
 function cite(list: Src[], verified: string): string {
   const links = list.map((s) => `<a href="${esc(s.href)}" rel="noopener" title="${esc(s.label)}">${esc(shortName(s))}&nbsp;↗</a>`).join(', ');
@@ -385,5 +414,6 @@ export function renderResultHtml(input: ScreenerInput, r: ScreenerResult, facts:
     .join('');
 
   return `${head}${stateNote}${groups}
-    <p class="rfoot">Take this list to your auditor or tester. <a href="/us/find/">Find a certified auditor →</a></p>`;
+    <p class="rfoot">Take this list to your auditor or tester. <a href="/us/find/">Our guide to finding an auditor →</a></p>
+    <p class="rfoot rplan"><b>Want the energy side too?</b> The Home Energy Planner adds your ZIP code, heating and cooling to these answers and gives you an upgrade plan with savings, the energy tests and the programs open where you live. <a href="${esc(plannerHref(input))}">Build my full plan, with these answers carried over →</a></p>`;
 }
