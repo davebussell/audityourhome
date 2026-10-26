@@ -40,7 +40,7 @@ const eras = [
     </div>
 
     <div class="screener-grid">
-      <form class="card card-pad sform" id="screenerForm">
+      <form class="card card-pad sform" id="screenerForm" data-clarity-mask="true">
         <div class="q">
           <p class="qlabel">When was your home built?</p>
           <div class="pills">
@@ -99,12 +99,12 @@ const eras = [
       <div>
         <h3>Want the whole picture, not just the tests?</h3>
         <p class="mb-0 small">
-          The full planner adds your energy profile: what to fix first, which rebates apply, your
-          estimated savings — and it folds these same specialty flags into your audit request
-          automatically.
+          The full planner adds your energy profile: what to fix first, which rebates are open in
+          your province and what the upgrades could save in your climate. Your answers here carry
+          over (add your postal code to start), and the same test flags go into your audit request.
         </p>
       </div>
-      <a class="btn btn-primary" href="/ca/plan/">Build my full plan →</a>
+      <a class="btn btn-primary" id="toPlanner" href="/ca/plan/">Build my full plan →</a>
     </div>
   </div>
   <GlossaryRuntime country="ca" live="#screenerResults" />
@@ -112,6 +112,7 @@ const eras = [
 
 <script>
   import { screenSpecialtyTests } from '../../../../lib/screener';
+  import { localizeScreener } from '../../../../lib/ca/plan-helpers';
   import testsData from '../../../../data/tests.json';
 
   const H: Record<string, { cost?: string }> = {};
@@ -134,6 +135,24 @@ const eras = [
     return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)).map((i) => i.value);
   }
 
+  /** The planner link carries these answers after the # (same era bands and values as the planner). */
+  function plannerHref(): string {
+    const p = new URLSearchParams();
+    p.set('age', vals('s-era')[0] ?? '1966-1980');
+    p.set('heat', vals('s-heat')[0] ?? 'gas'); // gas · electric (baseboard) · oil (oil or propane) · heatpump
+    p.set('water', vals('s-water')[0] ?? 'municipal');
+    const sym = vals('s-symptom');
+    if (sym.length) p.set('sym', sym.join(','));
+    const goals = vals('s-goal');
+    if (goals.length) p.set('goal', ['bills', ...goals].join(','));
+    return '/ca/plan/#' + p.toString();
+  }
+  function syncPlannerLinks() {
+    const href = plannerHref();
+    document.querySelectorAll<HTMLAnchorElement>('#toPlanner, .rfoot a[data-plan]').forEach((a) => (a.href = href));
+  }
+  document.getElementById('screenerForm')?.addEventListener('change', syncPlannerLinks);
+
   document.getElementById('screenerForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const era = vals('s-era')[0] ?? '1966-1980';
@@ -142,7 +161,10 @@ const eras = [
     const symptoms = vals('s-symptom');
     const goals = vals('s-goal');
 
-    const flags = screenSpecialtyTests({ era, heat, water, symptoms, goals, htype: 'detached' });
+    // The screener doesn't ask where you live, so province-specific rules (Ontario's CO law, its free well tests)
+    // give way to the national wording.
+    const flags = screenSpecialtyTests({ era, heat, water, symptoms, goals, htype: 'detached' })
+      .map((f) => ({ ...f, why: localizeScreener(f.id, f.why, false) }));
 
     const groups: Record<string, typeof flags> = {};
     for (const f of flags) (groups[f.level] ??= []).push(f);
@@ -167,7 +189,8 @@ const eras = [
         <p class="small rsub">Sorted by how strongly your answers call for them.</p>
       </div>
       ${section('strongly-flagged')}${section('flagged')}${section('recommended')}
-      <p class="meta rfoot">Take this list with you — the <a href="/ca/plan/">planner</a> puts it straight into your audit request.</p>`;
+      <p class="meta rfoot">Take this list with you: the <a href="/ca/plan/" data-plan>planner</a> starts with these answers and puts the list straight into your audit request.</p>`;
+    syncPlannerLinks();
     el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 </script>

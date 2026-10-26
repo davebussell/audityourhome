@@ -2,6 +2,8 @@
 import Base from '../../../layouts/Base.astro';
 import LeadForm from '../../../components/LeadForm.astro';
 import AccountSignup from '../../../components/AccountSignup.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
+import GlossaryRuntime from '../../../components/GlossaryRuntime.astro';
 import { SITE, ACCOUNTS_ENABLED } from '../../../config/site';
 import { breadcrumbSchema } from '../../../lib/schema';
 import archetypes from '../../../data/archetypes.json';
@@ -9,18 +11,30 @@ import issues from '../../../data/issues.json';
 import savings from '../../../data/savings.json';
 import rates from '../../../data/rates.json';
 import tests from '../../../data/tests.json';
+import climateCa from '../../../data/climate/ca.json';
+import readingGuides from '../../../data/reading-guides.json';
+import rebatesData from '../../../data/calc/rebates.json';
 import { regions, providers, programs, reviewLinks } from '../../../lib/data';
 import { CALC_CITIES, PROVINCE_ORDER, resolvePrices, enginePrices } from '../../../lib/calc/data';
 import { MODEL } from '../../../lib/calc/engine';
+import { PROVINCE_BOOKING, openPrograms } from '../../../lib/find';
+import { localCities } from '../../../lib/local';
+import { PROVINCE_CHOICES, PROV_NAME, SYMPTOMS } from '../../../lib/ca/plan-helpers';
 import localData from '../../../../tools/local-pages/out/cities.json';
 
-const title = 'Home Energy Planner — what your home needs, what it saves | AuditYourHome';
+const title = 'Home Energy Planner: what your home needs and what it saves | AuditYourHome';
 const description =
-  'Answer six quick questions about your home and bills. Get a read on what’s behind your walls, your upgrade sequence with conservative savings for your area, live rebates, and registered advisors near you.';
+  'Six short steps about your home and bills. Get a free plan: what’s likely behind your walls, which upgrades to do first and what they save in your climate, the rebates open in your province, and how to book your EnerGuide evaluation.';
+
+const programSlugs = new Set(programs.map((p) => p.slug));
 
 const payload = {
   archetypes,
-  issues: issues.map((i) => ({ slug: i.slug, name: i.name, categories: i.categories })),
+  issues: issues.map((i) => ({
+    slug: i.slug, name: i.name, categories: i.categories,
+    cause: i.likelyCauses?.[0] ?? '', check: i.auditMeasures?.[0] ?? '',
+    fix: (i.fixLadder ?? []).map((f: { step: string }) => f.step),
+  })),
   savings,
   rates,
   regions: regions.map((r) => ({ slug: r.slug, name: r.name, fsa: r.fsaPrefixes })),
@@ -59,14 +73,108 @@ for (const prov of PROVINCE_ORDER) {
   const list = CALC_CITIES.filter((c) => c.prov === prov).sort((a, b) => b.population - a.population);
   if (list[0]) provRep[prov] = list[0].slug;
 }
+// Nunavut has no covered city; Yellowknife is the closest climate we model.
+if (!provRep.NU && calcCities['yellowknife']) provRep.NU = 'yellowknife';
 (payload as Record<string, unknown>).calc = { cities: calcCities, fsa: fsaCity, provRep, baseKwh: rates.ontario.benchmarks.gasHeatedElecKwh, sizeMult: rates.ontario.benchmarks.sizeMultiplier };
 
+// ---- climate profiles (what homes in each climate need), trimmed for the browser
+type CaClimate = {
+  profiles: Record<string, { label: string; regionName: string; oneLiner: string; summary: string; seasonNote: string; priorities: { title: string; why: string; ask: string; tests: string[] }[] }>;
+  places: Record<string, { profile: string; note?: string; iceDams?: boolean; smoke?: boolean; summerCooling?: string }>;
+  provinces: Record<string, { profiles: string[]; radon?: string }>;
+};
+const CC = climateCa as unknown as CaClimate;
+(payload as Record<string, unknown>).climate = {
+  profiles: Object.fromEntries(Object.entries(CC.profiles).map(([k, p]) => [k, {
+    label: p.label, regionName: p.regionName, oneLiner: p.oneLiner, summary: p.summary, seasonNote: p.seasonNote,
+    priorities: p.priorities.slice(0, 4).map((x) => ({ title: x.title, why: x.why, ask: x.ask, tests: x.tests })),
+  }])),
+  places: Object.fromEntries(Object.entries(CC.places).map(([k, p]) => [k, {
+    profile: p.profile, note: p.note ?? '', iceDams: p.iceDams, smoke: p.smoke, summerCooling: p.summerCooling,
+  }])),
+  provinces: Object.fromEntries(Object.entries(CC.provinces).map(([k, p]) => [k, { profiles: p.profiles, radon: p.radon ?? '' }])),
+};
+
+// ---- covered cities: name, province and how many licensed organizations list them
+(payload as Record<string, unknown>).cityInfo = Object.fromEntries(localCities.map((c) => [c.slug, {
+  n: c.label ?? c.name, prov: c.prov, provSlug: c.provSlug, providers: c.facts.providers ?? 0,
+}]));
+
+// ---- how booking works in each province (src/lib/find.ts), with the territories split out
+const booking: Record<string, unknown> = {};
+for (const b of PROVINCE_BOOKING) {
+  booking[b.slug] = { name: b.name, route: b.route, how: b.how, cost: b.cost, help: b.help, bookWith: b.bookWith ?? null, checked: b.checked };
+}
+const north = PROVINCE_BOOKING.find((b) => b.slug === 'north');
+booking['north-YT'] = {
+  name: 'Yukon', route: 'Through Yukon’s Good Energy program',
+  how: 'In Yukon, the Good Energy program arranges assessments with local energy advisors for $50, plus $50 for the return visit.',
+  cost: '$50, plus $50 for the return visit', help: 'Subsidized by the Government of Yukon',
+  bookWith: { label: 'Government of Yukon — energy assessments', href: 'https://yukon.ca/en/energy-assessment' }, checked: north?.checked ?? '',
+};
+booking['north-NT'] = {
+  name: 'Northwest Territories', route: 'Through the Arctic Energy Alliance',
+  how: 'In the Northwest Territories, the Arctic Energy Alliance delivers subsidized EnerGuide evaluations for $200 + GST for a house.',
+  cost: '$200 + GST', help: 'Subsidized by the Arctic Energy Alliance',
+  bookWith: { label: 'Arctic Energy Alliance — home energy evaluations', href: 'https://aea.nt.ca/program/home-energy-evaluations/' }, checked: north?.checked ?? '',
+};
+booking['north-NU'] = {
+  name: 'Nunavut', route: 'Start with the Nunavut Housing Corporation',
+  how: 'In Nunavut, homeowner energy support runs through the Nunavut Housing Corporation; ask it how to arrange an evaluation in your community.',
+  cost: 'Ask the Housing Corporation', help: '',
+  bookWith: { label: 'Nunavut Housing Corporation', href: 'https://www.nunavuthousing.ca/' }, checked: north?.checked ?? '',
+};
+(payload as Record<string, unknown>).booking = booking;
+
+// ---- rebates open in each province (for "after the audit, apply for")
+const provPrograms: Record<string, unknown> = {};
+for (const b of PROVINCE_BOOKING) {
+  provPrograms[b.slug] = openPrograms(b.slug).map((p) => ({
+    name: p.name, headline: p.headline, status: p.status,
+    href: p.programSlug && programSlugs.has(p.programSlug) ? `/ca/programs/${p.programSlug}/` : p.url,
+  }));
+}
+(payload as Record<string, unknown>).provPrograms = provPrograms;
+
+// ---- rebate rules for after-rebate paybacks (same data and maths as the upgrade calculator)
+type RebateEntryLite = Record<string, unknown> & { status?: string };
+const KEEP = ['id', 'program', 'slug', 'status', 'kind', 'rate', 'cap', 'pct', 'pctCostCap', 'fuels', 'minRAdded', 'minRAddedByOption', 'minTargetR',
+  'maxExistingR', 'minSqft', 'minCount', 'requiresDoubling', 'defaultOff', 'perCount', 'scope', 'ductedAmount', 'ductedRate', 'coldClimateRate', 'ductlessCap', 'rented', 'windowReq'];
+const rebates: Record<string, Record<string, RebateEntryLite[]>> = {};
+for (const [prov, p] of Object.entries((rebatesData as unknown as { provinces: Record<string, { measures?: Record<string, RebateEntryLite[]> }> }).provinces)) {
+  const out: Record<string, RebateEntryLite[]> = {};
+  for (const [mk, arr] of Object.entries(p.measures ?? {})) {
+    const open = arr.filter((e) => e.status === 'open' && e.kind !== 'info');
+    if (open.length) out[mk] = open.map((e) => Object.fromEntries(KEEP.filter((k) => e[k] !== undefined && e[k] !== null).map((k) => [k, e[k]])));
+  }
+  rebates[prov] = out;
+}
+(payload as Record<string, unknown>).rebates = rebates;
+
+// ---- how to read each test's result (Canadian bands only)
+const GOOD = ['Very tight', 'Tight', 'Below guideline', 'Background', 'Pass', 'At target', 'Meets code level', 'Even', 'Right-sized', 'Target', 'Clear',
+  'Built after 1990', 'Below federal threshold', 'None seen', 'No deficiencies', 'Meets code flow', 'Meets design'];
+const MID = ['Moderate', 'Consider fixing', 'CO detected', 'Below target', 'Below code level', 'Patches', 'Oversized', 'Below load', 'Too dry', 'Damp',
+  'Built 1960–1990', 'Untested pre-1978', 'Low or unbalanced', 'Humid or stale', 'Humid', 'Deficiencies'];
+const BAD = ['Leaky', 'Above guideline', 'Fix', 'Elevated', 'Dangerous', 'Spillage', 'High flue CO', 'Stop', 'Little or none', 'Vermiculite', 'Streaks',
+  'Too humid', 'Coliforms found', 'E. coli found', 'Nitrate high', 'Pre-1960 or lead found', 'Lead-based paint', 'Vermiculite present', 'Asbestos confirmed', 'Unsafe'];
+const tone = (l: string, test: string) => (l === 'Low' ? (test === 'radon' ? 'good' : 'mid') : GOOD.includes(l) ? 'good' : MID.includes(l) ? 'mid' : BAD.includes(l) ? 'bad' : 'neutral');
+type Guide = { measure: string; unit: string; countries?: string[]; bands: { label: string; range: string; means: string; do: string; countries?: string[] }[]; caNote?: string };
+const reading: Record<string, unknown> = {};
+for (const [slug, g] of Object.entries((readingGuides as unknown as { tests: Record<string, Guide> }).tests)) {
+  if (g.countries && !g.countries.includes('ca')) continue;
+  const bands = g.bands.filter((b) => !b.countries || b.countries.includes('ca'));
+  if (!bands.length) continue;
+  reading[slug] = { measure: g.measure, unit: g.unit, note: g.caNote ?? '', bands: bands.map((b) => ({ l: b.label, r: b.range, m: b.means, d: b.do, t: tone(b.label, slug) })) };
+}
+(payload as Record<string, unknown>).reading = reading;
+
 // province price table for the assumptions section
-const PROV_NAME: Record<string, string> = { BC: 'British Columbia', AB: 'Alberta', SK: 'Saskatchewan', MB: 'Manitoba', ON: 'Ontario', QC: 'Quebec', NB: 'New Brunswick', NS: 'Nova Scotia', PE: 'Prince Edward Island', NL: 'Newfoundland and Labrador', YT: 'Yukon', NT: 'Northwest Territories' };
+const PROV_TABLE: Record<string, string> = { BC: 'British Columbia', AB: 'Alberta', SK: 'Saskatchewan', MB: 'Manitoba', ON: 'Ontario', QC: 'Quebec', NB: 'New Brunswick', NS: 'Nova Scotia', PE: 'Prince Edward Island', NL: 'Newfoundland and Labrador', YT: 'Yukon', NT: 'Northwest Territories' };
 const priceRows = PROVINCE_ORDER.filter((p) => provRep[p]).map((prov) => {
   const city = CALC_CITIES.find((c) => c.slug === provRep[prov])!;
   const rp = resolvePrices(city);
-  return { prov: PROV_NAME[prov] ?? prov, city: city.label ?? city.name, elecAvg: rp.elec.avg, elecVar: rp.elec.variable, gasNow: rp.gas?.now ?? null, gasVar: rp.gas?.variable ?? null, oil: rp.oil?.perL ?? null };
+  return { prov: PROV_TABLE[prov] ?? prov, city: city.label ?? city.name, elecAvg: rp.elec.avg, elecVar: rp.elec.variable, gasNow: rp.gas?.now ?? null, gasVar: rp.gas?.variable ?? null, oil: rp.oil?.perL ?? null };
 });
 const intensityRows = Object.entries(MODEL.demand.intensityGJperM2 as Record<string, number>);
 const pricesAsOf = new Date(String(MODEL.asOf) + 'T12:00:00').toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -81,45 +189,58 @@ const schema = [
 // ---- visible assumptions table (same data the estimator reads)
 const bm = rates.ontario.benchmarks;
 const fmtN = (n: number) => n.toLocaleString('en-CA');
-const pctN = (x: number) => `${Math.round(x * 100)}%`;
 const ERA_LABEL: Record<string, string> = {
   'pre-1946': 'before 1946', '1946-1965': '1946–1965', '1966-1980': '1966–1980',
   '1981-1995': '1981–1995', '1996-2010': '1996–2010', '2011-plus': '2011 or later',
 };
-const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', large: 'large', xlarge: 'very large' };
+const STEP_NAMES = ['Location', 'Your home', 'Heating', 'Concerns', 'Goals', 'Bills'];
+const privacyLine = ACCOUNTS_ENABLED
+  ? 'Your answers stay in your browser (this page has no analytics) unless you save your plan or ask to be matched.'
+  : 'Your answers stay in your browser: this page has no analytics, and nothing is sent unless you ask to be matched.';
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} analytics={false}>
   <div class="container">
-    <div class="page-hero">
-      <p class="eyebrow">Home Energy Planner</p>
+    <div class="page-hero plan-hero">
+      <p class="eyebrow">Home Energy Planner · free</p>
       <h1>What does <em>your</em> home actually need?</h1>
       <p class="lede">
-        Six quick questions. No email required. You'll get the likely story behind your walls, a
-        prioritized upgrade plan with estimated savings, the rebates that are live right now, and
-        registered advisors for your area.
+        Six short steps, about two minutes, no email needed. You’ll get your free plan: what’s
+        probably behind your walls, which upgrades to do first and what they could save in your
+        climate, the rebates open in your province, and how to book the audit that measures it all.
       </p>
+      <JourneyBar country="ca" current={1} ticks={false} />
     </div>
 
     <div class="planner card" id="planner">
-      <!-- progress -->
+      <!-- progress: completed steps can be reopened -->
       <ol class="steps-nav" id="stepsNav" aria-label="Planner steps">
-        <li data-step="1" class="on">Location</li>
-        <li data-step="2">Your home</li>
-        <li data-step="3">Heating</li>
-        <li data-step="4">Symptoms</li>
-        <li data-step="5">Goals</li>
-        <li data-step="6">Bills</li>
+        {STEP_NAMES.map((n, i) => (
+          <li data-step={i + 1} class={i === 0 ? 'on' : ''}>
+            <button type="button" class="stepbtn" data-go={i + 1} disabled={i !== 0} aria-current={i === 0 ? 'step' : undefined}>{n}</button>
+          </li>
+        ))}
       </ol>
+      <p class="step-count" id="stepCount" aria-live="polite">Step 1 of 6</p>
+      <p class="match-line" id="matchLine" hidden></p>
 
       <form id="plannerForm" novalidate>
         <!-- STEP 1 -->
         <fieldset class="step on" data-step="1">
-          <legend><h2>Where's the house?</h2></legend>
+          <legend><h2>Where’s the house?</h2></legend>
           <div class="field narrow">
-            <label for="postal">Postal code (or US ZIP)</label>
-            <input id="postal" name="postal" type="text" placeholder="e.g. M4E 2V5" autocomplete="postal-code" />
-            <p class="small hint">We use this to match programs and advisors for your area. {ACCOUNTS_ENABLED ? 'It stays in your browser unless you save your plan or ask to be matched.' : 'It isn’t stored or sent anywhere.'}</p>
+            <label for="postal">Postal code</label>
+            <input id="postal" name="postal" type="text" placeholder="e.g. V6B 1A1" autocomplete="postal-code" maxlength="7" aria-describedby="postalHint" />
+            <p class="small hint" id="postalHint">Just the first three characters (like V6B) are enough. They set your province’s programs, your climate and energy prices, and the advisors near you. {privacyLine}</p>
+            <p class="field-error" id="postalError" role="alert" hidden></p>
+            <p class="postal-match" id="postalMatch" aria-live="polite" hidden></p>
+          </div>
+          <div class="field narrow">
+            <label for="provPick">Rather not say? Choose your province or territory</label>
+            <select id="provPick" name="prov">
+              <option value="">Choose…</option>
+              {PROVINCE_CHOICES.map((p) => <option value={p}>{PROV_NAME[p]}</option>)}
+            </select>
           </div>
         </fieldset>
 
@@ -247,15 +368,11 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         <!-- STEP 4 -->
         <fieldset class="step" data-step="4">
           <legend><h2>Anything bugging you about the house?</h2></legend>
-          <p class="small">Pick everything that applies — this tunes your plan.</p>
+          <p class="small" id="symHint">Pick everything that applies. The list matches your climate, and each one shapes your plan.</p>
           <div class="radio-row wrap" id="symptomRow">
-            <label class="radio-pill"><input type="checkbox" name="sym" value="drafty-rooms" /><span>Drafts / cold rooms</span></label>
-            <label class="radio-pill"><input type="checkbox" name="sym" value="high-heating-bills" /><span>High heating bills</span></label>
-            <label class="radio-pill"><input type="checkbox" name="sym" value="ice-dams" /><span>Ice dams / icicles</span></label>
-            <label class="radio-pill"><input type="checkbox" name="sym" value="cold-second-floor" /><span>2nd floor hot/cold</span></label>
-            <label class="radio-pill"><input type="checkbox" name="sym" value="condensation-mould" /><span>Condensation / musty air</span></label>
-            <label class="radio-pill"><input type="checkbox" name="sym" value="cold-basement" /><span>Cold basement</span></label>
-            <label class="radio-pill"><input type="checkbox" name="sym" value="summer-overheating" /><span>Won't stay cool in summer</span></label>
+            {SYMPTOMS.map((s) => (
+              <label class="radio-pill" data-sym={s.slug}><input type="checkbox" name="sym" value={s.slug} /><span>{s.label}</span></label>
+            ))}
           </div>
         </fieldset>
 
@@ -277,8 +394,8 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         <fieldset class="step" data-step="6">
           <legend><h2>Add your bills for dollar estimates <span class="hint-inline">(optional)</span></h2></legend>
           <p class="small">
-            We've pre-set these to a typical home of your size and era — drag to match your actual
-            bills (a typical month across the year). Leave them as-is and we'll estimate from the
+            We’ve pre-set these to a typical home of your size and era near you. Drag them to match
+            your real bills (a typical month across the year), or leave them and we’ll use the
             typical figures.
           </p>
           <div class="sliders">
@@ -299,79 +416,84 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
             </div>
           </div>
           <p class="small bill-note">
-            Why we ask: estimates based on a "typical" house can be far from your real bills. With
-            your bills, every saving below is scaled to how much energy your house actually uses.
+            Why we ask: estimates for a “typical” house can be far from your real bills. With your
+            bills, every saving below is scaled to how much energy your house actually uses.
           </p>
         </fieldset>
 
         <div class="wizard-actions">
-          <button type="button" class="btn btn-ghost" id="backBtn" hidden>Back</button>
+          <button type="button" class="btn btn-ghost" id="backBtn">Back</button>
           <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
         </div>
       </form>
+      <p class="small how-link"><a href="#assumptions">How the estimates work</a></p>
     </div>
 
     <!-- RESULTS -->
     <div id="results" hidden>
       <div class="results-head">
-        <p class="eyebrow">Your plan</p>
-        <h2 id="rTitle">Your home's energy profile</h2>
+        <p class="eyebrow">Your free plan · an estimate before anyone visits</p>
+        <h2 id="rTitle">Your home’s energy plan</h2>
         <p class="small" id="rSub"></p>
+        <p class="small era-note" id="rEra"></p>
       </div>
+      <JourneyBar country="ca" current={2} hereLabel="Your next step" />
 
+      <div id="rNext"></div>
+      <div id="rClimate"></div>
+      <div id="rConcerns"></div>
       <div id="rBenchmark"></div>
+      <div id="rSequence"></div>
+      <div id="rLater"></div>
       <div class="grid-2 profile-grid">
         <div class="card card-pad" id="rWalls"></div>
         <div class="card card-pad" id="rWatch"></div>
       </div>
-      <div id="rSequence"></div>
-      <div id="rSystems"></div>
-      <div id="rMethod"></div>
       <div id="rTests"></div>
       <div id="rPrograms"></div>
-      <div id="rIssues"></div>
       <div id="rProviders"></div>
+      <div id="rSystems"></div>
+      <div id="rMethod"></div>
       <div id="rResources"></div>
 
       <div class="card card-pad audit-cta" id="rAuditCta">
         <h3>Estimates end where the audit begins</h3>
-        <p>
-          Everything above is based on how homes like yours typically perform (scaled to your bills
-          if you entered them), not a model of your actual house. An EnerGuide evaluation (blower door test, thermal imaging, room-by-room
-          heat-loss model) turns these ranges into numbers for <em>your</em> address, and it's the
-          required first step for the biggest rebates. In Ontario, the $600 Home Renovation Savings
-          rebate covers most of its cost if you book one of the seven HRSP-approved organizations and
-          install at least two recommended upgrades.
+        <p id="rAuditCtaText">
+          Everything above comes from how homes like yours typically perform (scaled to your bills
+          if you entered them), not from measurements of your house. An EnerGuide evaluation, with a
+          blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers
+          for your address, and it’s the first step for the biggest rebates.
         </p>
       </div>
 
       {ACCOUNTS_ENABLED && <AccountSignup mode="plan" />}
 
       <LeadForm
-        heading="Want this plan handled?"
-        sub="Send us your plan summary and we'll connect you with a registered service organization for your area."
+        heading="Get matched with a registered energy advisor"
+        sub="Send us your plan and we’ll introduce you to one registered energy advisor (a licensed service organization) that serves your area, usually within one business day. Participating advisors pay us a referral fee; you pay nothing."
         context="planner"
       />
 
       <p class="small disclaimer">
-        Estimates are ranges based on how similar Canadian homes perform, your area's climate and
-        energy prices, and the assumptions <a href="#assumptions">listed below</a>. They are deliberately
-        conservative and are not a guarantee of savings. Program details change — confirm on official pages before spending.
+        Estimates are ranges based on how similar Canadian homes perform, your area’s climate and
+        energy prices, and the assumptions under <a href="#assumptions">How the estimates work</a>. They are deliberately
+        conservative and are not a guarantee of savings. Program details change, so confirm on official pages before spending.
         {ACCOUNTS_ENABLED
-          ? 'The planner runs in your browser. Nothing you enter is stored unless you save your plan to My Home or ask to be matched.'
-          : 'Nothing you enter here is stored or transmitted; the planner runs entirely in your browser.'}
+          ? ' The planner runs in your browser and this page loads no analytics. Your plan lives in this page’s address (after the #) unless you save it to My Home or ask to be matched.'
+          : ' The planner runs in your browser and this page loads no analytics: your plan lives only in this page’s address (after the #), which you can copy to save or share.'}
       </p>
-      <div class="wizard-actions">
-        <button type="button" class="btn btn-ghost" id="restartBtn">Start over</button>
+      <div class="wizard-actions results-actions">
+        <button type="button" class="btn btn-ghost" id="editBtn">Edit answers</button>
         <button type="button" class="btn btn-ghost" id="copyLink">Copy link to this plan</button>
+        <button type="button" class="btn btn-ghost" id="restartBtn">Start over</button>
       </div>
     </div>
 
-    <section class="assumptions" id="assumptions">
-      <h2>How the planner estimates, and the assumptions behind it</h2>
+    <details class="assumptions" id="assumptions">
+      <summary><h2>How the estimates work, and the assumptions behind them</h2></summary>
       <p class="small measure">
         Kept deliberately conservative. Your postal code picks the nearest of the 70 cities we cover
-        (or your province's largest city), which sets the climate (heating degree-days from NRCan's
+        (or your province’s largest city), which sets the climate (heating degree-days from NRCan’s
         HOT2000 weather data, the same data EnerGuide uses) and the energy prices. If you enter your
         bills, the heating estimate is scaled to them (within 0.5× to 1.6× of a typical house) and
         every saving is scaled the same way. An EnerGuide evaluation replaces all of this with
@@ -389,15 +511,16 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         </table>
       </div>
       <p class="small measure">
-        From NRCan's Comprehensive Energy Use Database (heating need per floor area by construction
-        period), scaled to your city's degree-days and checked against NRCan's typical heating loads
+        From NRCan’s Comprehensive Energy Use Database (heating need per floor area by construction
+        period), scaled to your city’s degree-days and checked against NRCan’s typical heating loads
         for Ottawa and Toronto houses. Semi-detached houses use 90% and row houses 80% of the detached
         figure. Upgrade savings use the physics of each part of the house (insulation R-values, window
         U-values, air leakage) with your local degree-days, then multiply by 0.75 above grade and 0.4
         for basement walls to stay conservative. No single upgrade is credited with more than 35% of
         your heating, and all of them together with no more than 60%. Savings are valued at the price
         of one more unit of energy (excluding fixed monthly charges), which is lower than your average
-        price.
+        price. Rebates use each program’s lowest published amount for a job like yours, from the same
+        rebate data as the upgrade calculator.
       </p>
       <div class="tablewrap card">
         <table class="stack">
@@ -420,59 +543,90 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
       <p class="small measure">
         Electricity for lights, appliances and electronics is assumed at {fmtN(bm.gasHeatedElecKwh)} kWh a year for a
         medium house, scaled by size. Hot water uses 75 litres per person a day, heated from your
-        area's average cold-water temperature to 55 °C. Air conditioning uses NRCan's cooling-hours
-        method with your area's cooling degree-days, times 0.8. Every city's numbers, sources and
+        area’s average cold-water temperature to 55 °C. Air conditioning uses NRCan’s cooling-hours
+        method with your area’s cooling degree-days, times 0.8. Every city’s numbers, sources and
         formulas are laid out in the <a href="/ca/calculators/">calculators</a>, and
         <a href="/ca/learn/real-numbers/">worked examples</a> show the arithmetic step by step.
       </p>
-    </section>
+    </details>
+  </div>
+
+  <div class="sticky-cta" id="stickyCta" hidden>
+    <span class="sc-t">Next: book your EnerGuide evaluation</span>
+    <a class="btn btn-primary btn-sm" href="#next-steps">Book my audit</a>
   </div>
 
   <script type="application/json" id="planner-data" set:html={JSON.stringify(payload)} />
+  <GlossaryRuntime country="ca" live="#results" />
 </Base>
 
 <style>
   .page-hero h1 em { font-style: normal; color: var(--heat); }
-  .planner { padding: 30px 34px 34px; margin-bottom: 24px; }
+  .plan-hero { padding-bottom: 24px; }
+  .planner { padding: 26px 34px 30px; margin-bottom: 24px; }
   .steps-nav {
-    display: flex; flex-wrap: wrap; gap: 6px 18px;
-    list-style: none; margin: 0 0 26px; padding: 0 0 18px;
+    display: flex; flex-wrap: wrap; gap: 6px 14px;
+    list-style: none; margin: 0 0 10px; padding: 0 0 14px;
     border-bottom: 1px solid var(--line);
     counter-reset: step;
   }
-  .steps-nav li {
+  .steps-nav li { counter-increment: step; }
+  .stepbtn {
     font-family: var(--mono); font-size: 12px; font-weight: 600;
     letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint);
-    counter-increment: step;
+    background: none; border: 0; padding: 4px 0; cursor: pointer;
   }
-  .steps-nav li::before { content: counter(step) " · "; }
-  .steps-nav li.on { color: var(--heat-deep); }
-  .steps-nav li.done { color: var(--pine); }
+  .stepbtn::before { content: counter(step) " · "; }
+  .stepbtn:disabled { cursor: default; }
+  .steps-nav li.on .stepbtn { color: var(--heat-deep); }
+  .steps-nav li.done .stepbtn { color: var(--pine); text-decoration: underline; text-underline-offset: 3px; }
+  .steps-nav li.done .stepbtn:hover { color: var(--pine-deep); }
+  .step-count { font-size: 13px; color: var(--muted); margin: 0 0 6px; font-weight: 600; }
+  .match-line { font-size: 14px; margin: 0 0 16px; padding: 8px 12px; background: var(--pine-tint); border-radius: 8px; color: var(--pine-deep); }
+  .postal-match { font-size: 14px; font-weight: 600; color: var(--pine-deep); margin: 8px 0 0; }
   fieldset.step { border: none; margin: 0; padding: 0; display: none; }
   fieldset.step.on { display: block; }
   legend h2 { font-size: 24px; margin-bottom: 14px; }
   .lbl { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
   .hint-inline { font-weight: 400; color: var(--faint); font-size: 0.85em; }
   .hint { margin-top: 6px; }
-  .narrow { max-width: 340px; }
-  .radio-row.big span { font-size: 15.5px; padding: 11px 20px; }
-  .radio-row.wrap { max-width: 640px; }
-  .wizard-actions { display: flex; gap: 10px; margin-top: 26px; }
-  .results-head { margin: 40px 0 18px; }
+  .narrow { max-width: 420px; }
+  .narrow select { width: 100%; }
+  .radio-row.wrap { max-width: 680px; }
+  .wizard-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .how-link { margin: 14px 0 0; }
+  .results-head { margin: 40px 0 6px; }
+  .era-note { color: var(--muted); max-width: 70ch; }
   .profile-grid { margin: 18px 0; }
   .audit-cta { border-left: 4px solid var(--heat); margin: 26px 0; }
   .disclaimer { max-width: 80ch; margin: 18px 0; color: var(--faint); }
   .assumptions { margin: 40px 0 10px; }
-  .assumptions h2 { font-size: 24px; }
+  .assumptions > summary { cursor: pointer; list-style: revert; }
+  .assumptions > summary h2 { display: inline; font-size: 22px; }
   .assumptions .tablewrap { margin: 16px 0; }
   .assumptions caption { text-align: left; font-weight: 700; padding: 14px 14px 4px; font-family: var(--display); }
-  .assumptions th[scope="row"] { text-align: left; }
   .assumptions td .small { color: var(--muted); }
   #results > .card + .card { margin-top: 18px; }
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--card); border-top: 1px solid var(--line-strong); box-shadow: 0 -4px 16px rgba(26, 36, 48, 0.08);
+  }
+  .sticky-cta .sc-t { font-size: 14px; font-weight: 600; min-width: 0; }
+  @media (min-width: 761px) { .sticky-cta { display: none !important; } }
+  @media (max-width: 600px) {
+    .planner { padding: 20px 18px 24px; }
+    legend h2 { font-size: 21px; }
+  }
 </style>
 
 <style is:global>
   /* dynamically-rendered result blocks (injected via JS, so unscoped) */
+  body.has-sticky { padding-bottom: 64px; }
+  /* keep scrolled-to blocks clear of the sticky site header */
+  #planner, #results, #results [id], #assumptions { scroll-margin-top: 84px; }
+  #matchLine .linkish { font: inherit; font-weight: 700; color: var(--pine-deep); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 2.5px; cursor: pointer; }
   .bench-card { border-left: 4px solid var(--steel); padding: 22px 26px; margin-bottom: 18px; }
   .bench-card .figures { display: flex; flex-wrap: wrap; gap: 28px; margin: 10px 0 6px; }
   .bench-card .fig .n { font-family: var(--display); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; }
@@ -486,8 +640,9 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   .watch-item:first-of-type { border-top: none; padding-top: 4px; }
   .watch-item b { display: block; }
   .watch-item.safety b::before { content: "⚠ "; color: var(--dead); }
-  .seq { counter-reset: seq; display: grid; gap: 12px; margin: 16px 0; }
-  .seq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px 18px 58px; position: relative; }
+  .seq { counter-reset: seq; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin: 16px 0; }
+  .seq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px 18px 58px; position: relative; min-width: 0; }
+  .seq-item .chip, .ns-list .chip, .prog-row .chip { white-space: normal; }
   .seq-item::before {
     counter-increment: seq; content: counter(seq);
     position: absolute; left: 18px; top: 18px;
@@ -496,11 +651,14 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     font-family: var(--display); font-weight: 800; font-size: 14px;
     display: flex; align-items: center; justify-content: center;
   }
+  .seq.later-seq .seq-item::before { background: var(--steel); content: "•"; counter-increment: none; }
   .seq-item h4 { margin: 0 0 4px; font-size: 16.5px; }
   .seq-item .why { margin: 0; font-size: 14.5px; color: var(--muted); }
   .seq-item .nums { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; font-size: 14px; align-items: center; }
   .seq-item .save { font-weight: 700; color: var(--pine); font-variant-numeric: tabular-nums; }
   .seq-item .cost { color: var(--muted); }
+  .seq-item .pay-note { flex: 1 1 100%; font-size: 13.5px; color: var(--muted); margin: 0; }
+  .order-rule { font-size: 14px; background: #F3F0E9; border-radius: 8px; padding: 10px 14px; margin: 10px 0 0; }
   .prog-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 15px; }
   .prog-row:first-of-type { border-top: none; }
   .prog-row a { font-weight: 700; text-decoration: none; color: var(--ink); }
@@ -512,22 +670,21 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   .mini-provider a:hover { color: var(--heat-deep); }
   .mini-provider .reg { color: var(--pine); font-size: 12.5px; font-weight: 600; margin: 4px 0 0; }
   .mini-provider .pr { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
-  .chip-link { text-decoration: none; }
-  .rsec { margin: 22px 0; }
+  .mini-provider .rev { color: var(--faint); font-size: 12.5px; margin: 6px 0 0; }
+  .rsec { margin: 26px 0; }
   .rsec > h3 { margin-bottom: 4px; }
   .rsec > .sub { color: var(--muted); font-size: 14.5px; margin-bottom: 10px; }
-  .issue-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .issue-chips a { display: inline-block; font-size: 14px; font-weight: 600; color: var(--steel); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 7px 16px; text-decoration: none; }
-  .issue-chips a:hover { border-color: var(--heat); color: var(--heat-deep); }
   .province-note { border-left: 4px solid var(--warn); padding: 18px 24px; }
   .field-error { color: var(--dead); font-size: 13.5px; margin-top: 8px; font-weight: 600; }
+  .field-error a { color: var(--dead); }
   .test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
   @media (max-width: 800px) { .test-grid { grid-template-columns: 1fr; } }
   .test-card {
-    display: flex; gap: 14px; align-items: flex-start;
+    display: flex; gap: 14px; align-items: flex-start; min-width: 0;
     background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
     padding: 16px 18px;
   }
+  .test-card > div { min-width: 0; }
   .test-card.health { background: var(--warn-tint); border-color: var(--warn-tint); }
   .ticon { flex-shrink: 0; width: 38px; height: 38px; border-radius: 9px; background: var(--heat-tint); color: var(--heat-deep); display: flex; align-items: center; justify-content: center; }
   .test-card.health .ticon { background: rgba(255,255,255,0.7); color: var(--warn); }
@@ -538,23 +695,32 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   .test-card .tw { margin: 0 0 6px; font-size: 14px; }
   .test-card .test-est { margin: 0 0 4px; font-size: 13px; color: var(--muted); }
   .test-card .test-est b { color: var(--pine); }
-  .spec-h { margin-top: 26px !important; }
   .test-card .tguide { margin: 8px 0 0; font-size: 14px; }
   .test-card .tguide a { text-decoration: none; color: var(--heat-deep); }
+  .tread { margin-top: 8px; font-size: 13.5px; }
+  .tread summary { cursor: pointer; font-weight: 700; color: var(--steel); }
+  .tread ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+  .tread li { border-left: 3px solid var(--line-strong); padding: 2px 0 2px 10px; }
+  .tread li.t-good { border-left-color: var(--pine); }
+  .tread li.t-mid { border-left-color: var(--warn); }
+  .tread li.t-bad { border-left-color: var(--dead); }
+  .tread .tr-l { font-weight: 700; }
+  .tread .tr-r { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .badge-legend { font-size: 13.5px; color: var(--muted); margin: 0 0 6px; }
+  .spec-h { margin-top: 26px !important; }
   .sliders { max-width: 560px; display: grid; gap: 22px; }
-  .slider-field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; }
+  .slider-field label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 15px; }
   .slider-field output { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--heat-deep); font-variant-numeric: tabular-nums; }
   .slider-hint { margin: 6px 0 0; }
   input[type='range'] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: var(--line-strong); border-radius: 999px; outline: none; margin-top: 10px; }
   input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--heat); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(26,36,48,0.3); cursor: pointer; }
   input[type='range']::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--heat); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(26,36,48,0.3); cursor: pointer; }
   input[type='range']:focus-visible { outline: 2.5px solid var(--heat); outline-offset: 4px; }
-  .mini-provider .rev { color: var(--faint); font-size: 12.5px; margin: 6px 0 0; }
   .res-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
   .res-list li { font-size: 15px; padding-left: 22px; position: relative; }
   .res-list li::before { content: "→"; position: absolute; left: 0; color: var(--heat); font-weight: 700; }
   .sys-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
-  .sys-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .sys-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
   .sys-card h4 { margin: 0 0 6px; font-size: 16px; }
   .sys-card p:last-child { margin-bottom: 0; }
   .sys-card.prev { border-left: 4px solid var(--steel); }
@@ -565,6 +731,42 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   .save-neg { color: var(--heat-deep); font-weight: 600; }
   .save-small { color: var(--muted); font-weight: 400; }
   .bill-note { margin-top: 14px; max-width: 70ch; }
+  /* next steps */
+  .next-steps { border-top: 4px solid var(--heat); padding: 24px 26px; margin: 18px 0 22px; }
+  .next-steps h3 { margin-bottom: 12px; }
+  .ns-list { list-style: none; counter-reset: ns; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .ns-list > li { counter-increment: ns; position: relative; padding-left: 44px; }
+  .ns-list > li::before {
+    content: counter(ns); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--navy); color: #fff; font: 800 15px/30px var(--display); text-align: center;
+  }
+  .ns-list p { margin: 0 0 6px; font-size: 15px; }
+  .ns-t { font-family: var(--display); font-weight: 800; font-size: 17px !important; }
+  .ns-cost { color: var(--muted); font-size: 14px !important; }
+  .ns-cta { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin-top: 8px !important; }
+  .ns-tests { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ns-tests a { font-size: 13.5px; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--steel); text-decoration: none; background: #fff; }
+  .ns-tests a:hover { border-color: var(--steel); }
+  .ns-progs { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; font-size: 15px; }
+  /* climate */
+  .climate-box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+  .cb-k { margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
+  .cb-chip { display: inline-block; padding: 3px 10px; border-radius: 999px; background: var(--heat-tint); color: var(--heat-deep); font-weight: 700; font-size: 12.5px; letter-spacing: 0.02em; text-transform: uppercase; }
+  .cb-one { font-weight: 600; font-size: 16.5px; margin: 0 0 8px; }
+  .cb-list { margin: 10px 0; padding-left: 1.2em; display: grid; gap: 8px; font-size: 15px; }
+  .cb-ask { color: var(--pine-deep); }
+  /* concerns */
+  .concern-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); margin-top: 12px; }
+  .concern { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; min-width: 0; }
+  .concern h4 { margin: 0 0 8px; font-size: 16px; }
+  .concern p { margin: 0 0 6px; font-size: 14.5px; }
+  .concern .k { font-weight: 700; }
+  @media (max-width: 600px) {
+    .next-steps { padding: 20px 18px; }
+    .seq-item { padding: 16px 16px 16px 52px; }
+    .seq-item::before { left: 14px; }
+    .climate-box { padding: 18px; }
+  }
 </style>
 
 <script>
@@ -572,9 +774,14 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   import {
     baselineDemandGJ, floorAreaM2, heatingCost, calibrate, geometry, atticMeasure, atticTargetR, wallMeasure,
     basementMeasure, windowMeasure, airMeasure, setbackMeasure, savingValue, waterHeatingDemand, waterHeaterCost,
-    coolingKwh, defaultAcTons, MODEL,
+    coolingKwh, defaultAcTons, rebateAmount, payback, MODEL,
   } from '../../../lib/calc/engine';
-  import type { SystemKey, Vintage, WindowKey, WaterHeaterKey, Prices } from '../../../lib/calc/engine';
+  import type { SystemKey, Vintage, WindowKey, WaterHeaterKey, Prices, RebateEntry } from '../../../lib/calc/engine';
+  import {
+    checkPostal, formatPostal, PROV_NAME, PROV_SLUG, LEAD_AREA, LABEL, ERA_NOTE, SYMPTOMS, SYMPTOM_LABEL, EXTRA_CONCERNS,
+    localize, localizeCost, localizeSummary, localizeScreener, watchFor, heatPumpCopy, heatPumpLaterNote, sentences,
+  } from '../../../lib/ca/plan-helpers';
+  import type { ProvCode, ClimateFlags } from '../../../lib/ca/plan-helpers';
 
   const D = JSON.parse(document.getElementById('planner-data')!.textContent!);
 
@@ -584,16 +791,23 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   const backBtn = document.getElementById('backBtn') as HTMLButtonElement;
   const resultsEl = document.getElementById('results')!;
   const plannerEl = document.getElementById('planner')!;
+  const postalEl = document.getElementById('postal') as HTMLInputElement;
+  const provEl = document.getElementById('provPick') as HTMLSelectElement;
+  const postalErr = document.getElementById('postalError')!;
+  const matchLine = document.getElementById('matchLine')!;
+  const stepCount = document.getElementById('stepCount')!;
+  const stickyCta = document.getElementById('stickyCta')!;
   const TOTAL = 6;
   let step = 1;
+  let maxVisited = 1;
   /** The upgrade sequence as shown, for saving to My Home. */
   let lastItems: Record<string, unknown>[] = [];
+  /** Test names for the checklist (both copy buttons use it). */
+  let checklist: string[] = [];
 
   const $ = (sel: string, root: ParentNode = document) => root.querySelector(sel) as HTMLElement;
-  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-  const money = (n: number) => '$' + Math.round(n / 10) * 10;
-
-  const PROVINCES: Record<string, string> = { A: 'NL', B: 'NS', C: 'PE', E: 'NB', G: 'QC', H: 'QC', J: 'QC', K: 'ON', L: 'ON', M: 'ON', N: 'ON', P: 'ON', R: 'MB', S: 'SK', T: 'AB', V: 'BC', X: 'NT', Y: 'YT' };
+  const esc = (s: string) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+  const money = (n: number) => '$' + (Math.round(n / 10) * 10).toLocaleString('en-CA');
 
   const PROVINCE_NOTES: Record<string, string> = {
     QC: 'Since October 1, 2026, Quebec’s <b>Rénoclimat</b> makes the EnerGuide evaluation optional (up to $500 back toward it) and pays for roof, wall and foundation insulation and ENERGY STAR Most Efficient windows; <b>Hydro-Québec LogisVert</b> pays for heat pumps. <a href="/ca/programs/renoclimat/">Rénoclimat 2026 →</a> · <a href="/ca/provinces/quebec/">Quebec guide →</a>',
@@ -610,39 +824,96 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     NU: 'Nunavut homeowner support runs through the <b>Nunavut Housing Corporation</b>. <a href="/ca/provinces/north/">Territories guide →</a>',
   };
 
+  // ---------- state lives in the address after # (never the query string, which analytics and logs can see) ----------
+  function readState(): URLSearchParams {
+    const h = location.hash.replace(/^#/, '');
+    if (h && /(^|&)(postal|age|prov|heat|sym|done)=/.test(h)) return new URLSearchParams(h);
+    if (location.search) {
+      const q = new URLSearchParams(location.search);
+      if ([...q.keys()].length) {
+        history.replaceState(null, '', location.pathname + '#' + q.toString());
+        return q;
+      }
+    }
+    return new URLSearchParams();
+  }
+  const initial = readState();
+
+  // In-page links (#lead-form, #assumptions …) would overwrite the plan in the address: scroll instead.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element | null)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+    if (!a) return;
+    const id = a.getAttribute('href')!.slice(1);
+    if (!id) return;
+    const t = document.getElementById(id);
+    if (!t) return;
+    e.preventDefault();
+    if (t instanceof HTMLDetailsElement) t.open = true;
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+    t.focus({ preventScroll: true });
+  });
 
   // ---------- wizard navigation ----------
   function show(n: number) {
     step = n;
+    maxVisited = Math.max(maxVisited, n);
     form.querySelectorAll('fieldset.step').forEach((f) => f.classList.toggle('on', (f as HTMLElement).dataset.step === String(n)));
     stepsNav.querySelectorAll('li').forEach((li) => {
       const s = Number((li as HTMLElement).dataset.step);
       li.classList.toggle('on', s === n);
-      li.classList.toggle('done', s < n);
+      li.classList.toggle('done', s < n || (s <= maxVisited && s !== n));
+      const b = li.querySelector('button') as HTMLButtonElement;
+      b.disabled = s > maxVisited || s === n;
+      if (s === n) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
     });
-    backBtn.hidden = n === 1;
+    stepCount.textContent = `Step ${n} of ${TOTAL}`;
     nextBtn.textContent = n === TOTAL ? 'See my plan' : 'Next';
+    backBtn.textContent = n === 1 ? '← Back' : 'Back';
+    if (n === 4) syncSymptoms();
     if (n === 6) initBillSliders();
-    $('.field-error')?.remove();
+    if (n > 1) updateMatchLine(); else { matchLine.hidden = true; updatePostalMatch(); }
+    form.querySelectorAll('.field-error:not(#postalError)').forEach((el) => el.remove());
     const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input`);
     first?.focus({ preventScroll: true });
   }
 
   function fieldVal(name: string): string {
-    const el = form.querySelector<HTMLInputElement>(`[name="${name}"]:checked, input[name="${name}"]:not([type=radio]):not([type=checkbox])`);
+    const el = form.querySelector<HTMLInputElement>(`[name="${name}"]:checked, input[name="${name}"]:not([type=radio]):not([type=checkbox]), select[name="${name}"]`);
     return el?.value.trim() ?? '';
   }
   function multiVal(name: string): string[] {
     return [...form.querySelectorAll<HTMLInputElement>(`[name="${name}"]:checked`)].map((el) => el.value);
   }
 
+  function setPostalError(html: string) {
+    postalErr.innerHTML = html;
+    postalErr.hidden = !html;
+    postalEl.setAttribute('aria-invalid', html ? 'true' : 'false');
+  }
+
   function validate(n: number): boolean {
+    if (n === 1) {
+      const chk = checkPostal(postalEl.value);
+      const prov = provEl.value;
+      if (chk.ok) { setPostalError(''); return true; }
+      if (chk.reason === 'us-zip') {
+        setPostalError(`That looks like a US ZIP code. <a href="/us/plan/#zip=${encodeURIComponent(chk.zip)}">Open the US planner with ${esc(chk.zip)} →</a>`);
+        return false;
+      }
+      if (prov) { setPostalError(''); return true; }
+      setPostalError(chk.reason === 'empty'
+        ? 'Enter your postal code (the first three characters are enough), or choose your province below.'
+        : 'That doesn’t look like a Canadian postal code. It should look like A1A 1A1, or just A1A. You can also choose your province below.');
+      postalEl.focus();
+      return false;
+    }
     if (n === 2 && !fieldVal('age')) {
       const fs = form.querySelector(`fieldset[data-step="2"] .field`)!;
       if (!fs.querySelector('.field-error')) {
         const err = document.createElement('p');
         err.className = 'field-error';
-        err.textContent = 'Pick the closest era — a rough guess still produces a good plan.';
+        err.textContent = 'Pick the closest era. A rough guess still produces a good plan.';
         fs.appendChild(err);
       }
       return false;
@@ -655,21 +926,52 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     if (step < TOTAL) show(step + 1);
     else finish();
   });
-  backBtn.addEventListener('click', () => show(Math.max(1, step - 1)));
+  backBtn.addEventListener('click', () => {
+    if (step > 1) return show(step - 1);
+    // Step 1: back to wherever the visitor came from on this site, else the home page.
+    let sameSite = false;
+    try { sameSite = Boolean(document.referrer) && new URL(document.referrer).origin === location.origin; } catch {}
+    if (sameSite && history.length > 1) history.back();
+    else location.href = '/ca/';
+  });
+  stepsNav.addEventListener('click', (e) => {
+    const b = (e.target as Element).closest('button[data-go]') as HTMLButtonElement | null;
+    if (!b || b.disabled) return;
+    const n = Number(b.dataset.go);
+    if (n > step && !validate(step)) return;
+    show(n);
+  });
+  postalEl.addEventListener('input', () => { if (!postalErr.hidden) setPostalError(''); });
+  provEl.addEventListener('change', () => { if (provEl.value) setPostalError(''); });
   form.addEventListener('submit', (e) => e.preventDefault());
 
-  // ---------- region + house model (shared engine with the calculators) ----------
+  // ---------- location → covered city, climate profile ----------
+  type Loc = { kind: 'ca'; fsa: string | null; province: ProvCode; region: any | null } | { kind: 'none' };
+  function readLoc(): Loc {
+    const chk = checkPostal(postalEl.value);
+    if (chk.ok) {
+      const region = chk.province === 'ON' ? D.regions.find((r: any) => r.fsa.some((p: string) => chk.fsa.startsWith(p))) ?? null : null;
+      return { kind: 'ca', fsa: chk.fsa, province: chk.province, region };
+    }
+    const prov = provEl.value as ProvCode;
+    if (prov) return { kind: 'ca', fsa: null, province: prov, region: null };
+    return { kind: 'none' };
+  }
+
   type Region = { slug: string; exact: boolean; name: string; prov: string; hdd: number; cdd: number; dc: number; am: number; prices: Prices };
-  function regionFor(loc: any): Region {
+  function regionFor(loc: Loc): Region {
     const C = D.calc;
     let slug: string | null = null;
     let exact = false;
     if (loc.kind === 'ca') {
-      slug = C.fsa[loc.fsa] ?? null;
-      exact = Boolean(slug);
-      if (!slug) slug = nearestByFsa(loc.fsa) ?? (loc.province ? C.provRep[loc.province] ?? null : null);
+      if (loc.fsa) {
+        slug = C.fsa[loc.fsa] ?? null;
+        exact = Boolean(slug);
+        if (!slug) slug = nearestByFsa(loc.fsa);
+      }
+      if (!slug) slug = C.provRep[loc.province] ?? null;
     }
-    if (!slug) slug = 'toronto';
+    if (!slug || !C.cities[slug]) slug = 'toronto';
     const c = C.cities[slug];
     return { slug, exact, name: c.n, prov: c.p, hdd: c.hdd, cdd: c.cdd, dc: c.dc, am: c.am, prices: c.pr };
   }
@@ -689,6 +991,65 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     return slug && D.calc.cities[slug] ? slug : null;
   }
 
+  function climateFor(slug: string) {
+    const place = D.climate.places[slug] ?? null;
+    const profile = place ? D.climate.profiles[place.profile] ?? null : null;
+    return { place, profile, key: place?.profile as string | undefined };
+  }
+  function flagsFor(slug: string): ClimateFlags {
+    const { place } = climateFor(slug);
+    return place ? { profile: place.profile, iceDams: place.iceDams, smoke: place.smoke, summerCooling: place.summerCooling } : {};
+  }
+
+  /** "Vancouver, British Columbia", "Ontario, near Barrie (the closest city we cover)" or "Nunavut (using Yellowknife’s …)". */
+  function placeText(loc: Extract<Loc, { kind: 'ca' }>, R: Region): string {
+    const prov = PROV_NAME[loc.province];
+    if (R.exact) return `${R.name}, ${prov}`;
+    if (loc.fsa && R.prov === loc.province) return `${prov}, near ${R.name} (the closest city we cover)`;
+    return `${prov} (using ${R.name}’s climate and prices)`;
+  }
+
+  function updateMatchLine() {
+    const loc = readLoc();
+    if (loc.kind !== 'ca') { matchLine.hidden = true; return; }
+    const R = regionFor(loc);
+    const { profile } = climateFor(R.slug);
+    const parts: string[] = [];
+    if (loc.fsa) parts.push(esc(formatPostal(postalEl.value)));
+    parts.push(esc(placeText(loc, R)));
+    if (profile) parts.push(`${esc(profile.label)} climate`);
+    matchLine.innerHTML = `${parts.join(' · ')} · <button type="button" class="linkish" id="changeLoc">Change</button>`;
+    matchLine.hidden = false;
+    document.getElementById('changeLoc')?.addEventListener('click', () => show(1));
+  }
+
+  /** Step 1: confirm what the postal code (or province) matched, as the visitor types. */
+  const postalMatch = document.getElementById('postalMatch')!;
+  function updatePostalMatch() {
+    const loc = readLoc();
+    if (loc.kind !== 'ca') { postalMatch.hidden = true; return; }
+    const R = regionFor(loc);
+    const { profile } = climateFor(R.slug);
+    postalMatch.textContent = `✓ ${placeText(loc, R)}${profile ? ` · ${profile.label} climate` : ''}`;
+    postalMatch.hidden = false;
+  }
+  postalEl.addEventListener('input', updatePostalMatch);
+  provEl.addEventListener('change', updatePostalMatch);
+
+  function syncSymptoms() {
+    const R = regionFor(readLoc());
+    const flags = flagsFor(R.slug);
+    for (const s of SYMPTOMS) {
+      const el = form.querySelector<HTMLElement>(`[data-sym="${s.slug}"]`);
+      if (!el) continue;
+      const on = s.show(flags);
+      el.hidden = !on;
+      const box = el.querySelector('input') as HTMLInputElement;
+      if (!on && box.checked) box.checked = false;
+    }
+  }
+
+  // ---------- house model (shared engine with the calculators) ----------
   type HeatInfo = { sys: SystemKey; label: string; screen: string; combustion: boolean; slider: 'gas' | 'elec' | 'other' };
   function heatInfo(heat: string, hage: string, age: string): HeatInfo {
     const newer = hage === 'new' || (hage === 'unsure' && ['1996-2010', '2011-plus'].includes(age));
@@ -706,11 +1067,6 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
       default: return { sys: newer ? 'gasFurnaceHigh' : 'gasFurnaceMid', label: 'a gas furnace', screen: 'gas', combustion: true, slider: 'gas' };
     }
   }
-  const HEAT_NAME: Record<string, string> = {
-    gas: 'gas furnace', gasboiler: 'gas boiler', electric: 'electric baseboard', elecfurnace: 'electric furnace/boiler',
-    heatpump: 'air-source heat pump', geothermal: 'geothermal heat pump', oil: 'oil', propane: 'propane', wood: 'wood',
-    outdoorwood: 'outdoor wood boiler', pellet: 'pellet stove',
-  };
 
   type WhKey = WaterHeaterKey | 'boiler';
   function whKey(wh: string, hi: HeatInfo): WhKey {
@@ -740,12 +1096,12 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
   }
 
   type Answers = {
-    loc: any; age: Vintage; htype: string; size: string; heat: string; hage: string; wh: string; ac: string;
+    loc: Loc; age: Vintage; htype: string; size: string; heat: string; hage: string; wh: string; ac: string;
     win: string; prev: string; sec: string[];
   };
   function readAnswers(): Answers {
     return {
-      loc: parsePostal(fieldVal('postal')),
+      loc: readLoc(),
       age: (fieldVal('age') || '1966-1980') as Vintage,
       htype: fieldVal('htype') || 'detached',
       size: fieldVal('size') || 'medium',
@@ -783,9 +1139,9 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     let acKwh = 0;
     let acNote = '';
     const S = MODEL.cooling.seerByAge as Record<string, number>;
-    if (a.ac === 'central-new') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: S['2006to2022'] }).kwh; acNote = 'SEER 13'; }
-    else if (a.ac === 'central-old') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: S['1995to2006'] }).kwh; acNote = 'SEER 10'; }
-    else if (a.ac === 'heatpump') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: MODEL.cooling.heatPumpSeer }).kwh; acNote = 'heat pump'; }
+    if (a.ac === 'central-new') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: S['2006to2022'] }).kwh; acNote = 'central AC, about SEER 13'; }
+    else if (a.ac === 'central-old') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: S['1995to2006'] }).kwh; acNote = 'older central AC, about SEER 10'; }
+    else if (a.ac === 'heatpump') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: tons * 12000, seer: MODEL.cooling.heatPumpSeer }).kwh; acNote = 'your heat pump'; }
     else if (a.ac === 'room') { acKwh = coolingKwh({ cdd18: R.cdd, designCool: R.dc, capacityBtuh: MODEL.cooling.room.capacityBtuh, room: true, units: 2 }).kwh; acNote = 'two window units'; }
     const ep = R.prices.electricity.now;
     const bills = { gas: 0, elec: baseKwh * ep + acKwh * ep, other: 0 };
@@ -833,26 +1189,45 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     const hint = document.getElementById('gasHint');
     const usesGas = g.m.bills.gas > 0;
     if (hint) hint.textContent = usesGas
-      ? `Pre-set to a typical similar home near ${g.m.R.name} — drag to match your bill`
+      ? `Pre-set to a typical similar home near ${g.m.R.name}. Drag to match your bill.`
       : '$0 = no gas service';
   }
 
-  // ---------- interpretation helpers ----------
-  function parsePostal(raw: string) {
-    const v = raw.toUpperCase().replace(/\s+/g, '');
-    if (/^\d{5}/.test(v)) return { kind: 'us' as const };
-    const m = v.match(/^([A-Z]\d[A-Z])/);
-    if (!m) return { kind: 'none' as const };
-    const fsa = m[1];
-    const province = PROVINCES[fsa[0]] ?? null;
-    const region = D.regions.find((r: any) => r.fsa.some((p: string) => fsa.startsWith(p)));
-    return { kind: 'ca' as const, fsa, province, region };
+  // ---------- rebates (same data and maths as the upgrade calculator) ----------
+  const MEASURE_KEY: Record<string, string> = {
+    'attic-insulation': 'attic', 'wall-insulation': 'walls', 'basement-insulation': 'basement', 'air-sealing': 'airSealing',
+    'windows-doors': 'windows', 'heat-pump': 'ashp', 'water-heating': 'hpwh', controls: 'thermostat',
+  };
+  const REBATE_FUEL: Record<string, string> = {
+    gas: 'gas', gasboiler: 'gas', electric: 'electricity', elecfurnace: 'electricity', heatpump: 'electricity', geothermal: 'electricity',
+    oil: 'oil', propane: 'propane', wood: 'wood', outdoorwood: 'wood', pellet: 'wood',
+  };
+  function rebateFor(cat: string, prov: string, qty: Record<string, unknown>): { amount: number; program: string } | null {
+    const list = (D.rebates[prov]?.[MEASURE_KEY[cat]] ?? []) as RebateEntry[];
+    let best: { amount: number; program: string } | null = null;
+    for (const e of list) {
+      if (e.defaultOff) continue;
+      const r = rebateAmount(e, qty as any);
+      if (r.eligible && r.amount && r.amount > 0 && (!best || r.amount > best.amount)) best = { amount: r.amount, program: e.program };
+    }
+    return best;
   }
 
-  function buildSequence(arch: any, heat: string, syms: string[], goals: string[], a: Answers) {
+  // ---------- sequence ----------
+  /** True when two texts share a run of `n` words: used to drop a second sentence that repeats the first. */
+  function sharesPhrase(a: string, b: string, n = 4): boolean {
+    const words = (s: string) => s.toLowerCase().replace(/[^a-z0-9\s-]/g, ' ').split(/\s+/).filter(Boolean);
+    const wa = words(a);
+    const wb = words(b);
+    const grams = new Set<string>();
+    for (let i = 0; i + n <= wa.length; i++) grams.add(wa.slice(i, i + n).join(' '));
+    for (let i = 0; i + n <= wb.length; i++) if (grams.has(wb.slice(i, i + n).join(' '))) return true;
+    return false;
+  }
+
+  function buildSequence(arch: any, heat: string, syms: string[], goals: string[], a: Answers, isON: boolean) {
     type Item = { category: string; action: string; why: string; score: number };
     const items: Item[] = arch.priorities.map((p: any, i: number) => ({ ...p, score: i * 10 }));
-
     const boost = (cat: string, by: number) => {
       const it = items.find((i) => i.category === cat);
       if (it) it.score -= by;
@@ -862,13 +1237,13 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     };
     const resistanceOrFuel = ['electric', 'elecfurnace', 'oil', 'propane'].includes(heat);
     if (resistanceOrFuel) {
-      ensure('heat-pump', 'Cold-climate heat pump', 'With your heating fuel, this is usually the biggest single saving available.', -50);
+      ensure('heat-pump', 'Heat pump', 'With your heating fuel, this is usually the biggest single saving available.', -50);
       boost('heat-pump', 100);
     }
     if (heat === 'heatpump' || heat === 'geothermal') {
       const idx = items.findIndex((i) => i.category === 'heat-pump');
       if (idx >= 0) items.splice(idx, 1);
-      ensure('controls', 'Optimize the heat pump you have', 'Controls, balancing, and envelope work make an existing heat pump cheaper to run.', 45);
+      ensure('controls', 'Get more from the heat pump you have', 'Controls, balancing and envelope work make an existing heat pump cheaper to run.', 45);
     }
     if (['wood', 'outdoorwood', 'pellet'].includes(heat)) {
       ensure('wood-safety', 'WETT inspection of the wood-burning system', 'Insurers usually ask for one, and it catches chimney and clearance problems before winter.', -5);
@@ -877,23 +1252,47 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     if (a.wh === 'electric' || a.wh === 'oil') ensure('water-heating', 'Heat pump water heater', 'Hot water is the second-biggest energy use in most homes, and yours is on an expensive fuel.', 35);
     if (syms.includes('ice-dams')) { boost('air-sealing', 30); boost('attic-insulation', 25); }
     if (syms.includes('drafty-rooms')) boost('air-sealing', 25);
-    if (syms.includes('cold-basement')) { boost('basement-insulation', 30); ensure('basement-insulation', 'Basement & rim joist insulation', 'Directly targets the cold-basement problem you flagged.', 25); }
+    if (syms.includes('cold-basement')) { boost('basement-insulation', 30); ensure('basement-insulation', 'Basement and rim joist insulation', 'Directly targets the cold-basement problem you flagged.', 25); }
     if (syms.includes('summer-overheating')) { boost('attic-insulation', 20); boost('heat-pump', 10); }
     if (syms.includes('cold-second-floor')) boost('air-sealing', 15);
-    if (syms.includes('condensation-mould')) ensure('ventilation', 'Ventilation check / HRV', 'Condensation and musty air are usually ventilation problems — fix the cause, not the windows.', -10);
+    if (syms.includes('condensation-mould') || syms.includes('window-frost')) ensure('ventilation', 'Ventilation check, and an HRV if humidity is the problem', 'Condensation and musty air are usually ventilation problems: fix the cause, not the windows.', -10);
+    if (syms.includes('smoke')) { boost('air-sealing', 15); ensure('ventilation', 'Ventilation and filtration for smoke days', 'Sealing leaks and filtering the air you bring in (MERV 13 where the system allows) keeps smoke out; an HRV or ERV supplies fresh air you can filter.', 20); }
+    if (syms.includes('dry-winter')) boost('air-sealing', 20);
+    if (syms.includes('humid-summer')) { boost('air-sealing', 10); boost('heat-pump', 10); }
+    if (syms.includes('outages')) { boost('air-sealing', 10); boost('attic-insulation', 5); }
     if (goals.includes('heatpump')) boost('heat-pump', 40);
-    if (goals.includes('solar')) ensure('solar', 'Rooftop solar + battery', 'On your goal list; in Ontario, Home Renovation Savings pays toward solar with a battery.', 55);
+    if (goals.includes('solar')) ensure('solar', 'Rooftop solar + battery', isON ? 'On your goal list; in Ontario, Home Renovation Savings pays toward solar with a battery.' : 'On your goal list. Get the envelope done first: the audit tells you how much load the panels need to cover.', 55);
     if (goals.includes('emissions') && (heat === 'gas' || heat === 'gasboiler')) boost('heat-pump', 20);
 
     items.sort((x, y) => x.score - y.score);
     const seen = new Set<string>();
-    return items.filter((i) => (seen.has(i.category) ? false : (seen.add(i.category), true))).slice(0, 6);
+    const list = items.filter((i) => (seen.has(i.category) ? false : (seen.add(i.category), true))).slice(0, 6);
+    // Seal before you insulate: air sealing always comes ahead of insulation work.
+    const firstIns = list.findIndex((i) => /insulation/.test(i.category));
+    const air = list.findIndex((i) => i.category === 'air-sealing');
+    if (air > firstIns && firstIns >= 0) list.splice(firstIns, 0, list.splice(air, 1)[0]);
+    // Ventilation follows air sealing ("build tight, ventilate right") unless a moisture or smoke problem was flagged.
+    if (!syms.some((s) => ['condensation-mould', 'window-frost', 'smoke'].includes(s))) {
+      const v = list.findIndex((i) => i.category === 'ventilation');
+      const air2 = list.findIndex((i) => i.category === 'air-sealing');
+      if (v >= 0 && air2 > v) { const [x] = list.splice(v, 1); list.splice(air2, 0, x); }
+    }
+    // Equipment after the envelope, so it can be sized smaller, unless the fuel is expensive or a heat pump is the goal.
+    if (!resistanceOrFuel && !goals.includes('heatpump')) {
+      const hp = list.findIndex((i) => i.category === 'heat-pump');
+      let lastEnv = -1;
+      list.forEach((i, k) => { if (i.category === 'air-sealing' || /insulation/.test(i.category)) lastEnv = k; });
+      if (hp >= 0 && lastEnv > hp) { const [x] = list.splice(hp, 1); list.splice(lastEnv, 0, x); }
+    }
+    return list;
   }
 
   // ---------- results ----------
   function finish() {
     const a = readAnswers();
-    const postal = fieldVal('postal');
+    if (a.loc.kind !== 'ca') { show(1); validate(1); return; }
+    const loc = a.loc;
+    const postal = postalEl.value.trim();
     const water = fieldVal('water') || 'municipal';
     const syms = multiVal('sym');
     const goals = multiVal('goal');
@@ -902,60 +1301,198 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     const elecBill = parseFloat(fieldVal('elecBill').replace(/[^0-9.]/g, '')) || 0;
     const otherBill = parseFloat(fieldVal('otherBill').replace(/[^0-9.]/g, '')) || 0;
 
-    const loc = a.loc;
     const arch = D.archetypes.find((x: any) => x.id === a.age);
-    const isON = loc.kind !== 'ca' ? true : loc.province === 'ON'; // Ontario-first default when unknown
-    const isToronto = loc.kind === 'ca' && loc.fsa![0] === 'M';
-    const regionName = loc.kind === 'ca' && loc.region ? loc.region.name : null;
+    const isON = loc.province === 'ON';
+    const isToronto = Boolean(loc.fsa && loc.fsa[0] === 'M');
     const m = houseModel(a);
+    const R = m.R;
+    const C = climateFor(R.slug);
+    const provSlug = PROV_SLUG[loc.province];
+    const provName = PROV_NAME[loc.province];
+    const city = D.cityInfo[R.slug];
+    const ctx = { a, loc, isON, isToronto, m, R, C, provSlug, provName, city, syms, goals, water };
 
-    $('#rTitle').textContent = `Your plan: ${arch.label.split('·')[1]?.trim() ?? arch.label} era home`;
+    $('#rTitle').textContent = `Your plan for a ${LABEL.era[a.age] === 'before 1946' ? 'pre-1946' : LABEL.era[a.age]} ${a.htype === 'condo' ? 'condo' : 'house'}`;
     $('#rSub').textContent = [
-      arch.years,
-      a.htype === 'condo' ? 'condo/apartment' : a.htype === 'semi' ? 'semi or townhome' : 'detached',
-      `heated by ${HEAT_NAME[a.heat] ?? a.heat}`,
-      regionName ?? (loc.kind === 'ca' ? (m.R.exact ? m.R.name : (loc.province ?? 'Canada')) : loc.kind === 'us' ? 'United States' : 'Ontario (assumed)'),
-    ].join(' · ');
+      LABEL.htype[a.htype] ?? a.htype,
+      `heated by ${LABEL.heat[a.heat] ?? a.heat}`,
+      R.exact ? `${R.name}, ${provName}` : loc.fsa && R.prov === loc.province ? `${provName}, near ${R.name}` : `${provName} (using ${R.name}’s climate and prices)`,
+      C.profile ? `${C.profile.label} climate` : '',
+    ].filter(Boolean).join(' · ');
+    $('#rEra').textContent = ERA_NOTE[a.age] ?? '';
 
     const bills = { gas: gasBill, elec: elecBill, other: otherBill, real: billsReal };
     const cal = calibrationFor(m, bills);
+    const picks = testPicks(a.age, m.hi.screen, syms, goals, a.htype, water, a.heat, isON);
+    renderNext(ctx, picks);
+    renderClimate(ctx);
+    renderConcerns(ctx);
     renderBenchmark(m, a, bills, cal);
-    renderProfile(arch);
-    renderSequence(arch, a, syms, goals, m, cal, isON, isToronto);
-    renderSystems(a, m);
-    renderMethod(m, cal);
-    const testsList = renderTests(a.age, m.hi.screen, syms, goals, a.htype, water);
+    renderProfile(arch, a.heat, isON);
+    renderSequence(arch, a, syms, goals, m, cal, isON, isToronto, ctx);
+    renderTests(picks, a.htype);
     renderPrograms(loc, goals, isON, isToronto);
-    renderIssues(syms);
-    renderProviders(loc);
-    renderResources(loc, syms, arch);
-    prefillLead(arch, a, syms, goals, loc, testsList, m);
+    renderProviders(ctx);
+    renderSystems(a, m, isON);
+    renderMethod(m, cal);
+    renderResources(ctx, arch);
+    renderAuditCta(ctx);
 
     plannerEl.hidden = true;
     resultsEl.hidden = false;
-    const url = new URL(location.href);
     const params: Record<string, string> = {
-      postal, age: a.age, htype: a.htype, size: a.size, heat: a.heat, hage: a.hage, wh: a.wh, ac: a.ac, win: a.win, prev: a.prev,
+      postal: checkPostal(postal).ok ? formatPostal(postal) : '', prov: checkPostal(postal).ok ? '' : loc.province,
+      age: a.age, htype: a.htype, size: a.size, heat: a.heat, hage: a.hage, wh: a.wh, ac: a.ac, win: a.win, prev: a.prev,
       sec: a.sec.join(','), water, sym: syms.join(','), goal: goals.join(','),
       gas: touched.gas && gasBill ? String(gasBill) : '', elec: touched.elec && elecBill ? String(elecBill) : '',
       other: touched.other && otherBill ? String(otherBill) : '', done: '1',
     };
-    Object.entries(params).forEach(([k, v]) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k)));
-    history.replaceState(null, '', url);
+    const hp = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => { if (v) hp.set(k, v); });
+    history.replaceState(null, '', location.pathname + '#' + hp.toString());
+    // After the address holds the full plan, so the request's "Full plan" link reopens exactly this plan.
+    prefillLead(arch, a, syms, goals, ctx, checklist, m, water);
     (window as unknown as { ayhPlan?: unknown }).ayhPlan = {
       home: {
-        postal, province: loc.kind === 'ca' ? loc.province : null,
-        city_slug: m.R.slug, city_name: m.R.name, era: a.age, home_type: a.htype, size_band: a.size,
+        postal: params.postal, province: loc.province,
+        city_slug: R.slug, city_name: R.name, era: a.age, home_type: a.htype, size_band: a.size,
         heating: a.heat, heating_age: a.hage, water_heater: a.wh, cooling: a.ac, windows: a.win,
         water_supply: water, prev_audit: a.prev, secondary: a.sec,
       },
       items: lastItems,
-      planner_query: url.search,
+      // My Home reopens saved plans from a query string; the planner moves it after # on arrival.
+      planner_query: '?' + hp.toString(),
     };
     document.dispatchEvent(new CustomEvent('ayh:plan'));
+    setupSticky();
     const t = $('#rTitle');
     t.setAttribute('tabindex', '-1');
-    t.focus({ preventScroll: false });
+    t.focus({ preventScroll: true });
+    resultsEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }
+
+  type Ctx = {
+    a: Answers; loc: Extract<Loc, { kind: 'ca' }>; isON: boolean; isToronto: boolean; m: ReturnType<typeof houseModel>; R: Region;
+    C: ReturnType<typeof climateFor>; provSlug: string; provName: string; city: any; syms: string[]; goals: string[]; water: string;
+  };
+
+  function bookingFor(ctx: Ctx) {
+    if (ctx.provSlug === 'north') return D.booking[`north-${ctx.loc.province}`] ?? D.booking.north;
+    return D.booking[ctx.provSlug];
+  }
+  const shortLabel = (s: string) => s.split(/\s+[—(]\s*/)[0];
+
+  // ---------- your next 3 steps ----------
+  function renderNext(ctx: Ctx, picks: TestPick[]) {
+    const b = bookingFor(ctx);
+    const cityName = ctx.city?.n ?? ctx.R.name;
+    const count = ctx.city?.providers ?? 0;
+    const listHref = `/ca/services/home-energy-audit/${ctx.R.slug}/#providers`;
+    const onDirectory = ctx.isON && ctx.loc.region;
+    let primary = '';
+    let secondary = '';
+    if (b?.bookWith) {
+      primary = `<a class="btn btn-primary" href="${esc(b.bookWith.href)}" rel="noopener" target="_blank">Book with ${esc(shortLabel(b.bookWith.label))} ↗</a>`;
+      secondary = `<a href="#lead-form">Or ask us to match you with a registered energy advisor</a>`;
+    } else {
+      primary = `<a class="btn btn-primary" href="#lead-form">Get matched with a registered energy advisor</a>`;
+      secondary = onDirectory
+        ? `<a href="#rProviders">Or compare the advisors serving ${esc(ctx.loc.region.name)} below</a>`
+        : count
+          ? `<a href="${listHref}">Or see the ${count} licensed organization${count === 1 ? '' : 's'} serving ${esc(cityName)}${ctx.R.exact ? '' : ' (the closest city we cover)'}</a>`
+          : `<a href="/ca/find/#${esc(ctx.provSlug)}">Or see how booking works in ${esc(ctx.provName)}</a>`;
+    }
+    const tests = picks.filter((p) => !p.health).slice(0, 4).concat(picks.filter((p) => p.health && p.level === 'strongly-flagged').slice(0, 2));
+    const testLinks = tests.map((p) => `<a href="${esc(p.href)}">${esc(p.name)}</a>`).join('');
+    let progs = (D.provPrograms[ctx.provSlug] ?? []) as { name: string; headline: string; href: string; status: string }[];
+    if (ctx.provSlug === 'north') {
+      // One record covers all three territories: keep this territory's programs only.
+      const rx = ctx.loc.province === 'YT' ? /^Yukon/i : ctx.loc.province === 'NU' ? /^Nunavut/i : /^(NWT|Northwest)/i;
+      const mine = progs.filter((p) => rx.test(p.name));
+      if (mine.length) progs = mine;
+    }
+    const progItems = progs.length
+      ? progs.slice(0, 4).map((p) => `<li><a href="${esc(p.href)}">${esc(p.name)}</a>${p.headline ? ` — ${esc(p.headline)}` : ''}${p.status === 'income' ? ' <span class="chip chip-limited">income-qualified</span>' : ''}</li>`).join('')
+      : `<li>${esc(ctx.provName)} has no province-wide home rebate right now. Check your city and utility: <a href="/ca/provinces/${esc(ctx.provSlug)}/">${esc(ctx.provName)} guide</a>.</li>`;
+    $('#rNext').innerHTML = `
+      <section class="card next-steps" id="next-steps" aria-labelledby="next-h">
+        <h3 id="next-h">Your next 3 steps</h3>
+        <ol class="ns-list">
+          <li>
+            <p class="ns-t">Book your EnerGuide evaluation (the home energy audit)</p>
+            <p>${esc(b?.how ?? 'Book the evaluation with an NRCan-licensed service organization that serves your area.')}</p>
+            ${b ? `<p class="ns-cost"><b>Cost:</b> ${esc(b.cost)}${b.help ? ` · <b>Help:</b> ${esc(b.help)}` : ''} <span class="small">(checked ${esc(b.checked)})</span></p>` : ''}
+            <p class="ns-cta">${primary}${secondary}</p>
+          </li>
+          <li>
+            <p class="ns-t">Ask your energy advisor for these tests</p>
+            <p class="ns-tests">${testLinks}</p>
+            <p><button type="button" class="btn btn-ghost btn-sm" id="copyTestsTop">Copy my test checklist</button></p>
+          </li>
+          <li>
+            <p class="ns-t">After the audit, apply for the rebates</p>
+            <ul class="ns-progs">${progItems}</ul>
+            <p class="small">Programs that use the EnerGuide evaluation need the first visit before any work starts, so book it before you sign a contract.</p>
+          </li>
+        </ol>
+      </section>`;
+    wireCopy('copyTestsTop');
+  }
+
+  // ---------- your climate ----------
+  function renderClimate(ctx: Ctx) {
+    const el = $('#rClimate');
+    const { profile, place } = ctx.C;
+    if (!profile) { el.innerHTML = ''; return; }
+    const radon = D.climate.provinces[ctx.provSlug]?.radon ?? '';
+    const cityName = ctx.city?.n ?? ctx.R.name;
+    const shown = profile.priorities.slice(0, 3);
+    const items = shown.map((p: any) =>
+      `<li><b>${esc(p.title)}.</b> ${esc(p.why)}${p.ask ? ` <span class="cb-ask">${/^ask\b/i.test(p.ask) ? '' : 'Ask: '}${esc(p.ask)}</span>` : ''}</li>`).join('');
+    const smokeLine = place?.smoke && !shown.some((p: any) => /smoke/i.test(`${p.title} ${p.why}`))
+      ? `<p class="small"><b>Wildfire smoke:</b> on smoke days, keep windows closed and filter the air, with a MERV 13 filter in the furnace or air handler where it fits, or a portable HEPA air cleaner in the room you sleep in. When the house is tightened, ask the advisor how fresh air will come in filtered.</p>`
+      : '';
+    el.innerHTML = `
+      <section class="rsec climate-box" aria-labelledby="cb-h">
+        <p class="cb-k"><span class="cb-chip">${esc(profile.label)}</span> <span>${esc(profile.regionName)}</span></p>
+        <h3 id="cb-h">What homes ${ctx.R.prov !== ctx.loc.province ? `in ${esc(ctx.provName)}` : `${ctx.R.exact ? 'in' : 'near'} ${esc(cityName)}`} need</h3>
+        <p class="cb-one">${esc(profile.oneLiner)}</p>
+        ${place?.note && ctx.R.prov === ctx.loc.province ? `<p class="small">${esc(place.note)}</p>` : ''}
+        <ol class="cb-list">${items}</ol>
+        ${smokeLine}
+        ${radon ? `<p class="small"><b>Radon in ${esc(ctx.provName)}:</b> ${esc(radon)}</p>` : ''}
+        <p class="small"><b>When to book:</b> ${esc(profile.seasonNote)}</p>
+        ${ctx.R.prov === ctx.loc.province ? `<p class="small"><a href="/ca/cities/${esc(ctx.R.slug)}/#regional-needs">Everything homes in ${esc(cityName)} need →</a></p>` : ''}
+      </section>`;
+  }
+
+  // ---------- your concerns, explained ----------
+  function renderConcerns(ctx: Ctx) {
+    const el = $('#rConcerns');
+    if (!ctx.syms.length) { el.innerHTML = ''; return; }
+    const testLink = (slug: string) => {
+      const t = D.tests.energy.find((x: any) => x.id === slug) ?? D.tests.health.find((x: any) => x.id === slug);
+      return `<a href="/ca/tests/${esc(slug)}/">${esc(t?.name ?? slug.replace(/-/g, ' '))}</a>`;
+    };
+    const cards = ctx.syms.map((s) => {
+      const label = SYMPTOM_LABEL[s] ?? s;
+      const iss = D.issues.find((i: any) => i.slug === s);
+      if (iss) {
+        return `<div class="concern"><h4>${esc(label)}</h4>
+          <p><span class="k">Usually:</span> ${esc(localize(iss.cause, ctx.isON) || iss.cause)}</p>
+          ${iss.check ? `<p><span class="k">How the audit confirms it:</span> ${esc(iss.check)}</p>` : ''}
+          ${iss.fix.length ? `<p><span class="k">Fixes, cheapest first:</span> ${iss.fix.map((f: string) => esc(f)).join(' → ')}</p>` : ''}
+          <p><a href="/ca/issues/${esc(iss.slug)}/">${esc(iss.name)}: the full guide →</a></p></div>`;
+      }
+      const c = EXTRA_CONCERNS[s];
+      if (!c) return '';
+      return `<div class="concern"><h4>${esc(label)}</h4>
+        <p><span class="k">Usually:</span> ${esc(c.cause)}</p>
+        <p><span class="k">Tests that confirm it:</span> ${c.tests.map(testLink).join(', ')}</p>
+        <p><span class="k">What fixes it:</span> ${esc(c.fix)}</p>
+        <p><a href="${esc(c.more.href)}">${esc(c.more.label)} →</a></p></div>`;
+    }).join('');
+    el.innerHTML = `<div class="rsec"><h3>Your concerns, explained</h3><p class="sub">What usually causes each problem you flagged, how the audit confirms it, and the fixes, cheapest first.</p><div class="concern-list">${cards}</div></div>`;
   }
 
   type Bills = { gas: number; elec: number; other: number; real: boolean };
@@ -978,25 +1515,25 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     const delta = Math.round(((userAnnual - typical) / typical) * 100);
     let verdict = '';
     let cls = 'bench-ok';
-    if (delta > 25) { verdict = `You're spending about <b class="bench-up">${delta}% more</b> than our estimate for a similar home here. Part of that can be how a household lives (more people, warmer settings, a hot tub), and part is the house itself; a blower door test and your bill history separate the two.`; cls = 'bench-up'; }
-    else if (delta < -25) { verdict = `You're spending about <b class="bench-ok">${Math.abs(delta)}% less</b> than our estimate for a similar home here, so the house may already have had upgrades. We've scaled the savings below down to match.`; }
-    else { verdict = `You're within the typical range for similar homes here. Targeted upgrades can still take a meaningful bite.`; }
+    if (delta > 25) { verdict = `You’re spending about <b class="bench-up">${delta}% more</b> than our estimate for a similar home here. Part of that can be how a household lives (more people, warmer settings, a hot tub), and part is the house itself; a blower door test and your bill history separate the two.`; cls = 'bench-up'; }
+    else if (delta < -25) { verdict = `You’re spending about <b class="bench-ok">${Math.abs(delta)}% less</b> than our estimate for a similar home here, so the house may already have had upgrades. We’ve scaled the savings below down to match.`; }
+    else { verdict = `You’re within the typical range for similar homes here. Targeted upgrades can still take a meaningful bite.`; }
     el.innerHTML = `
       <div class="card bench-card">
         <h3>Your bills vs. similar homes near ${esc(m.R.name)}</h3>
         <div class="figures">
           <div class="fig"><div class="n ${cls}">${money(userAnnual)}</div><div class="l">your estimated yearly energy spend</div></div>
-          <div class="fig"><div class="n">${money(lo)}–${money(hi)}</div><div class="l">typical for a ${esc(a.size === 'xlarge' ? 'very large' : a.size)} ${esc(a.age)} home with ${esc(m.hi.label)}, at local prices</div></div>
+          <div class="fig"><div class="n">${money(lo)}–${money(hi)}</div><div class="l">typical for a ${esc(LABEL.size[a.size] ?? a.size)} home built ${esc(LABEL.era[a.age])} with ${esc(m.hi.label)}, at local prices</div></div>
         </div>
         <p class="small">${verdict}</p>
         <p class="meta">Our model: about ${Math.round(m.demand)} GJ of heat a year for a house like yours (${m.R.hdd.toLocaleString('en-CA')} heating degree-days), plus hot water, cooling and about ${Math.round(m.baseKwh).toLocaleString('en-CA')} kWh for lights and appliances. ${cal.calibrated ? `Your bills put your heating at about ${Math.round(cal.actualDemandGJ)} GJ, so savings below are scaled by ${cal.factor.toFixed(2)}${cal.clamped ? ' (capped)' : ''}.` : ''}</p>
       </div>`;
   }
 
-  function renderProfile(arch: any) {
+  function renderProfile(arch: any, heat: string, isON: boolean) {
     $('#rWalls').innerHTML = `
-      <h3>What's probably behind your walls</h3>
-      <p class="small">${esc(arch.summary)}</p>
+      <h3>What’s probably behind your walls</h3>
+      <p class="small">${esc(localizeSummary(arch.summary))}</p>
       <ul class="kv">
         <li><span class="k">Walls</span><span>${esc(arch.typical.walls)}</span></li>
         <li><span class="k">Attic</span><span>${esc(arch.typical.attic)}</span></li>
@@ -1004,220 +1541,73 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         <li><span class="k">Windows</span><span>${esc(arch.typical.windows)}</span></li>
         <li><span class="k">Basement</span><span>${esc(arch.typical.basement)}</span></li>
       </ul>`;
+    const watch = watchFor(arch.watchFor, heat, isON, arch.id);
     $('#rWatch').innerHTML = `
       <h3>Watch for these</h3>
-      ${arch.watchFor.map((w: any) => `<div class="watch-item ${w.severity}"><b>${esc(w.flag)}</b>${esc(w.detail)}</div>`).join('')}`;
+      ${watch.map((w) => `<div class="watch-item ${esc(w.severity)}"><b>${esc(w.flag)}</b>${esc(w.detail)}</div>`).join('')}`;
   }
 
   /** Annual saving for one sequence item, valued at the next-unit (variable) price. */
-  function itemSaving(cat: string, a: Answers, m: ReturnType<typeof houseModel>, cal: any): { dollars: number | null; note?: string; cost?: [number, number] } {
+  function itemSaving(cat: string, a: Answers, m: ReturnType<typeof houseModel>, cal: any): { dollars: number | null; note?: string; cost?: [number, number]; qty?: Record<string, unknown> } {
     const R = m.R;
     const demand = m.demand * cal.factor;
     const storeys = a.size === 'small' ? 1 : 2;
     const g = geometry(m.area, storeys, true);
     const E = MODEL.envelope;
-    const C = MODEL.costs as any;
+    const Cc = MODEL.costs as any;
+    const fuel = REBATE_FUEL[a.heat] ?? 'gas';
     const val = (gj: number) => savingValue(gj, m.hi.sys, R.hdd, R.prices, 'variable').dollars;
     switch (cat) {
       case 'air-sealing': {
         const r = airMeasure({ volumeM3: g.volumeM3, hdd: R.hdd, demandGJ: demand, calibration: 1 });
-        return { dollars: val(r.gj), cost: [C.airSealing.low, C.airSealing.high] };
+        return { dollars: val(r.gj), cost: [Cc.airSealing.low, Cc.airSealing.high], qty: { fuel } };
       }
       case 'attic-insulation': {
         const rb = (E.atticRByVintage as Record<string, number>)[a.age];
         const t = atticTargetR(R.hdd);
         const r = atticMeasure({ areaM2: g.atticM2, rBefore: rb, rAfter: t.target, hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
         const sqft = g.atticM2 * 10.764;
-        return { dollars: r.applicable ? val(r.gj) : 0, note: `R-${rb} to R-${t.target}`, cost: [C.atticPerSqft.low * sqft, C.atticPerSqft.high * sqft] };
+        return { dollars: r.applicable ? val(r.gj) : 0, note: `from about R-${rb} to R-${t.target}`, cost: [Cc.atticPerSqft.low * sqft, Cc.atticPerSqft.high * sqft], qty: { sqft, rBefore: rb, rAfter: t.target, fuel } };
       }
       case 'wall-insulation': {
         const rb = (E.wallRsiByVintage as Record<string, number>)[a.age];
         const r = wallMeasure({ areaM2: g.wallNetM2, option: 'dense', rsiBefore: rb, hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
-        return { dollars: r.applicable ? val(r.gj) : 0 };
+        const rBefore = Math.round(rb * 5.678);
+        return { dollars: r.applicable ? val(r.gj) : 0, qty: { sqft: g.wallNetM2 * 10.764, rBefore, rAfter: Math.max(rBefore, 13), option: 'dense', fuel } };
       }
       case 'basement-insulation': {
         const rb = (E.basementRsiByVintage as Record<string, number>)[a.age];
         const r = basementMeasure({ areaM2: g.basementWallM2, rsiBefore: rb, rsiAfter: E.basementTargetRsi, hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
-        return { dollars: r.applicable ? val(r.gj) : 0 };
+        return { dollars: r.applicable ? val(r.gj) : 0, qty: { sqft: g.basementWallM2 * 10.764, rBefore: Math.round(rb * 5.678), rAfter: Math.round(E.basementTargetRsi * 5.678), fuel } };
       }
       case 'windows-doors': {
         const before = winKey(a.win, a.age);
         const r = windowMeasure({ areaM2: g.windowM2, before, after: 'energyStar', hdd: R.hdd, demandGJ: demand, calibration: cal.factor });
-        return { dollars: r.applicable ? val(r.gj) : 0, cost: [C.windowEach.low * g.windowCount, C.windowEach.high * g.windowCount], note: `${g.windowCount} windows` };
+        return { dollars: r.applicable ? val(r.gj) : 0, cost: [Cc.windowEach.low * g.windowCount, Cc.windowEach.high * g.windowCount], note: `${g.windowCount} windows`, qty: { count: g.windowCount, windowAfter: 'energyStar', fuel } };
       }
       case 'heat-pump': {
         const now = heatingCost(demand, m.hi.sys, R.hdd, R.prices, 'variable');
         const hp = heatingCost(demand, 'ashpCold', R.hdd, R.prices, 'variable');
-        if (now.cost === null || hp.cost === null) return { dollars: null };
-        return { dollars: now.cost - hp.cost, cost: [C.ashpColdDucted.low, C.ashpColdDucted.high] };
+        const ducted = ['gas', 'oil', 'propane', 'elecfurnace'].includes(a.heat);
+        const qty = { tons: m.tons, kBtu: m.tons * 12, ducted, coldClimate: true, fuel };
+        if (now.cost === null || hp.cost === null) return { dollars: null, cost: [Cc.ashpColdDucted.low, Cc.ashpColdDucted.high], qty };
+        return { dollars: now.cost - hp.cost, cost: [Cc.ashpColdDucted.low, Cc.ashpColdDucted.high], qty };
       }
       case 'water-heating': {
         if (m.wk === 'heatPump') return { dollars: 0 };
         const cur = m.wk === 'boiler' ? heatingCost(m.water.gj, m.hi.sys, R.hdd, R.prices, 'variable').cost : waterHeaterCost(m.wk, m.water.gj, R.prices, 'variable').cost;
         const alt = waterHeaterCost('heatPump', m.water.gj, R.prices, 'variable', { sys: m.hi.sys, hdd: R.hdd });
+        const whf = m.wk === 'electricTank' ? 'electricity' : m.wk === 'oilTank' ? 'oil' : m.wk === 'boiler' ? fuel : 'gas';
         if (cur === null || alt.cost === null) return { dollars: null };
-        return { dollars: cur - (alt.cost + (alt.extraCost ?? 0)) };
+        return { dollars: cur - (alt.cost + (alt.extraCost ?? 0)), qty: { waterHeaterFuel: whf, fuel } };
       }
       case 'controls': {
         const hp = m.hi.sys === 'ashpCold' || m.hi.sys === 'ashpStandard' || m.hi.sys === 'gshp';
         const r = setbackMeasure({ degrees: hp ? 2 : 3, hours: 8, demandGJ: demand, heatPump: hp });
-        return { dollars: val(r.gj) };
+        return { dollars: val(r.gj), qty: { count: 1, fuel } };
       }
     }
     return { dollars: null };
-  }
-
-  function renderSequence(arch: any, a: Answers, syms: string[], goals: string[], m: ReturnType<typeof houseModel>, cal: any, isON: boolean, isToronto: boolean) {
-    const el = $('#rSequence');
-    if (a.htype === 'condo') {
-      lastItems = [];
-      el.innerHTML = `
-        <div class="rsec"><h3>Condos work differently</h3>
-        <p class="sub">EnerGuide evaluations and most rebates target houses and townhomes — in a condo, the envelope and heating usually belong to the corporation. Your best levers: in-suite sealing, window coverings, a heat-pump conversation with your board, and pushing the corporation toward a building-level audit.</p></div>`;
-      return;
-    }
-    const seq = buildSequence(arch, a.heat, syms, goals, a);
-    const ON_REBATE: Record<string, string> = {
-        'air-sealing': 'HRSP assessment path',
-        'attic-insulation': 'HRSP insulation rebates',
-        'wall-insulation': 'HRSP insulation rebates',
-        'basement-insulation': 'HRSP insulation rebates',
-        'windows-doors': 'HRSP $100/opening',
-        'heat-pump': 'HRSP heat pump rebate',
-        'solar': 'HRSP solar + battery',
-        'water-heating': 'HRSP $500',
-        'controls': 'HRSP thermostat rebate',
-    };
-    const rebateChip = (cat: string) => {
-      if (!isON) return '';
-      const label = ON_REBATE[cat];
-      const help = isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : '';
-      return label ? `<span class="chip chip-active">${label}</span>${help}` : help;
-    };
-    const local = (t: string) => {
-      let out = isON ? t : t.split(/(?<=[.!?])\s+/).filter((x) => !/HRSP|Ontario|Enbridge|Home Renovation Savings/.test(x)).join(' ');
-      if (a.heat === 'propane') out = out.replace('Oil-heated homes', 'Oil- and propane-heated homes');
-      return out;
-    };
-    lastItems = [];
-    const rows = seq.map((item) => {
-      const sm = findMeasure(item.category, a.age, m.hi.screen);
-      const s = itemSaving(item.category, a, m, cal);
-      lastItems.push({
-        key: item.category, title: item.action, category: item.category,
-        cost_low: s.cost ? Math.round(s.cost[0]) : null, cost_high: s.cost ? Math.round(s.cost[1]) : null,
-        saving_year: s.dollars !== null && s.dollars !== undefined && s.dollars >= 15 ? Math.round(s.dollars) : null,
-        rebate: isON ? ON_REBATE[item.category] ?? null : null,
-      });
-      let saveTxt = '';
-      let payTxt = '';
-      if (s.dollars !== null && s.dollars !== undefined) {
-        if (s.dollars >= 15) {
-          saveTxt = `about ${money(s.dollars)}/yr <span class="save-range">(likely ${money(s.dollars * 0.75)}–${money(s.dollars * 1.25)})</span>`;
-          if (s.cost) {
-            const y1 = s.cost[0] / s.dollars, y2 = s.cost[1] / s.dollars;
-            if (y1 < 100) payTxt = `payback before rebates: ${Math.max(1, Math.round(y1))}–${Math.round(Math.min(y2, 99))}${y2 >= 99 ? '+' : ''} years`;
-          }
-        } else if (item.category === 'heat-pump' && s.dollars < 0) {
-          saveTxt = `<span class="save-neg">costs about ${money(-s.dollars)}/yr more to run than your current fuel at today's prices</span>`;
-        } else if (s.dollars < 15 && item.category !== 'ventilation' && item.category !== 'solar') {
-          saveTxt = `<span class="save-small">little or no bill saving for a house like yours</span>`;
-        }
-      }
-      const costTxt = s.cost ? `typical cost ${money(s.cost[0])}–${money(s.cost[1])}` : sm?.typicalCost ? `typical cost ${esc(sm.typicalCost)}` : '';
-      const hpNote = item.category === 'heat-pump' && s.dollars !== null && s.dollars < 15
-        ? ' With cheap gas, the case for a heat pump is comfort, air conditioning, lower emissions and rebates more than the bill.' : '';
-      return `
-        <div class="seq-item">
-          <h4>${esc(item.action)}${s.note ? ` <span class="small">(${esc(s.note)})</span>` : ''}</h4>
-          <p class="why">${esc(local(item.why))}${sm?.note && local(sm.note) ? ' ' + esc(local(sm.note)) : ''}${hpNote}</p>
-          <div class="nums">
-            ${saveTxt ? `<span class="save">${saveTxt}</span>` : ''}
-            ${costTxt ? `<span class="cost">${costTxt}</span>` : ''}
-            ${payTxt ? `<span class="cost">${payTxt}</span>` : ''}
-            ${rebateChip(item.category)}
-            ${item.category === 'heat-pump' && a.loc.kind !== 'us' ? '<a class="chip chip-info" href="/ca/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>' : ''}
-          </div>
-        </div>`;
-    });
-    const basis = cal.calibrated
-      ? `<span class="chip chip-active">Scaled to your bills</span> Dollar figures use your bills and ${esc(m.R.name)}-area prices and climate.`
-      : `<span class="chip chip-neutral">Typical house estimate</span> Based on a typical ${esc(a.age)} house near ${esc(m.R.name)}. <a href="#" id="addBills">Add your bills</a> to scale these to your house.`;
-    el.innerHTML = `
-      <div class="rsec">
-        <h3>Your upgrade sequence</h3>
-        <p class="sub">Ordered for your era, heating, and the problems you flagged. ${basis}</p>
-        <div class="seq">${rows.join('')}</div>
-        <p class="small">Savings don't simply add up: once the attic is insulated there is less heat left to save elsewhere. We value savings at the price of your next unit of energy and stay on the low side on purpose.</p>
-      </div>`;
-    document.getElementById('addBills')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      resultsEl.hidden = true; plannerEl.hidden = false; show(6);
-      plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  function renderSystems(a: Answers, m: ReturnType<typeof houseModel>) {
-    const el = $('#rSystems');
-    if (a.htype === 'condo') { el.innerHTML = ''; return; }
-    const R = m.R;
-    const cards: string[] = [];
-    // water heater
-    if (m.waterCost !== null) {
-      const alts: string[] = [];
-      const hpwh = waterHeaterCost('heatPump', m.water.gj, R.prices, 'now', { sys: m.hi.sys, hdd: R.hdd });
-      const tl = R.prices.gas ? waterHeaterCost('gasTankless', m.water.gj, R.prices, 'now') : null;
-      if (m.wk !== 'heatPump' && hpwh.cost !== null) alts.push(`heat pump water heater about ${money(hpwh.cost + (hpwh.extraCost ?? 0))}/yr`);
-      if (tl && tl.cost !== null && m.wk === 'gasTank') alts.push(`gas tankless about ${money(tl.cost)}/yr (US DOE: on-demand units are 24–34% more efficient than tanks in homes using up to about 155 litres a day)`);
-      cards.push(`<div class="sys-card"><h4>Hot water: ${esc(WH_NAME[m.wk] ?? m.wk)}${a.wh === 'unsure' ? ' (assumed)' : ''}</h4>
-        <p class="small">About <b>${money(m.waterCost)}/yr</b> for a household of three near ${esc(R.name)} (cold water arrives at about ${m.water.inletC.toFixed(0)} °C here).${alts.length ? ' Alternatives: ' + alts.join('; ') + '.' : ''}</p>
-        <p class="small"><a href="/ca/learn/water-heaters/">Water heaters compared →</a></p></div>`);
-    }
-    // cooling
-    if (m.acKwh > 0) {
-      const ep = R.prices.electricity.now;
-      const old = a.ac === 'central-old';
-      cards.push(`<div class="sys-card"><h4>Cooling: ${esc(m.acNote)}</h4>
-        <p class="small">About <b>${Math.round(m.acKwh).toLocaleString('en-CA')} kWh</b> a summer (${money(m.acKwh * ep)}) with ${R.cdd} cooling degree-days near ${esc(R.name)}.${old ? ' An older central air conditioner is a natural time to switch to a heat pump: one unit then cools and heats.' : ''}</p>
-        <p class="small"><a href="/ca/learn/air-conditioning/">Air conditioning and cooling →</a></p></div>`);
-    }
-    // windows
-    if (a.win !== 'unsure') {
-      const wk = winKey(a.win, a.age);
-      const msg = (wk === 'single' || wk === 'singleStorm')
-        ? 'Single glazing loses far more heat than an insulated wall, so replacement can pay here, but air sealing, attic and basement work usually pay faster. Storm windows are a cheaper middle step.'
-        : wk === 'doubleClear'
-          ? 'Older double-pane windows still work; replacing them mostly buys comfort and quiet. Do it when they fail or at a renovation, and seal around frames now.'
-          : 'Your windows are already efficient; caulk and weatherstrip, and spend elsewhere first.';
-      cards.push(`<div class="sys-card"><h4>Windows: ${esc((MODEL.envelope.windowU as any)[wk]?.label ?? wk)}</h4><p class="small">${msg}</p><p class="small"><a href="/ca/learn/windows-doors/">Windows and doors: when upgrades pay →</a></p></div>`);
-    }
-    // secondary heat
-    if (a.sec.includes('woodstove') || ['wood', 'outdoorwood', 'pellet'].includes(a.heat)) {
-      cards.push(`<div class="sys-card"><h4>Wood heat</h4><p class="small">Have a WETT-certified inspector check the stove, chimney and clearances (insurers usually ask), sweep as needed, and keep a working CO alarm. Wood and pellet costs vary too much to estimate; enter yours in the <a href="/ca/calculators/energy-costs/${esc(R.slug)}/">energy cost calculator</a>.</p><p class="small"><a href="/ca/tests/wood-burning-inspection/">Wood-burning inspections →</a></p></div>`);
-    }
-    if (a.sec.includes('spaceheaters')) {
-      const ep = R.prices.electricity.now;
-      cards.push(`<div class="sys-card"><h4>Electric space heaters</h4><p class="small">A 1,500 W heater costs about ${money(1.5 * ep * 100)} per 100 hours near ${esc(R.name)}. Needing one usually points to a draft, a cold room over a garage, or a duct problem worth finding.</p></div>`);
-    }
-    if (a.sec.includes('solar')) {
-      cards.push(`<div class="sys-card"><h4>Free heat from the sun</h4><p class="small">Sunny south windows supply real heat on clear winter days. Our estimate allows for typical solar gain; if your bills come in lower than the typical range, this is one reason. Keep low-e coatings in mind when replacing south glass.</p><p class="small"><a href="/ca/learn/heating-systems/">Heating systems and solar gain →</a></p></div>`);
-    }
-    // previous audit
-    if (a.prev === 'recent' || a.prev === 'older') {
-      cards.push(`<div class="sys-card prev"><h4>You've had an evaluation before</h4><p class="small">Dig out the report: its upgrade list and blower-door number are still useful for planning. Whether it counts for rebates depends on the program. Ontario's Home Renovation Savings needs a first assessment dated January 28, 2025 or later, done by the same approved organization as the follow-up${a.prev === 'older' ? ', and renovations since your old report change the numbers' : ''}.</p><p class="small"><a href="/ca/learn/previous-audit/">What an old EnerGuide report is still good for →</a></p></div>`);
-    }
-    el.innerHTML = cards.length ? `<div class="rsec"><h3>Your home's systems</h3><p class="sub">Estimated at ${esc(R.name)}-area prices. Every number has a calculator behind it, pre-filled for your city.</p><div class="sys-grid">${cards.join('')}</div></div>` : '';
-  }
-
-  function renderMethod(m: ReturnType<typeof houseModel>, cal: any) {
-    const R = m.R;
-    $('#rMethod').innerHTML = `
-      <details class="card card-pad method">
-        <summary><strong>How we got these numbers</strong> <span class="small">(and why they're conservative)</span></summary>
-        <p class="small">Your postal code ${R.exact ? `matched ${esc(R.name)}` : `isn't in one of the 70 cities we cover, so we used ${esc(R.name)}, the largest covered city in your province`}: ${R.hdd.toLocaleString('en-CA')} heating degree-days (NRCan HOT2000 weather data, the same data EnerGuide evaluations use) and local energy prices with taxes. A typical house like yours needs about <b>${Math.round(m.demand)} GJ</b> of heat a year (NRCan's heating need per square metre for your era, scaled to the local climate).${cal.calibrated ? ` Your bills point to about <b>${Math.round(cal.actualDemandGJ)} GJ</b>, so we scaled every saving by ${cal.factor.toFixed(2)}${cal.clamped ? ' (we cap the scaling between 0.5 and 1.6)' : ''}.` : ' Without your bills, we use the typical figure.'}</p>
-        <p class="small">Each upgrade's saving comes from the physics of that part of the house (R-values, window U-values, air leakage) at your degree-days, then we multiply by 0.75 (0.4 for basements) because sun, people and appliances already supply free heat and real installations underperform their labels. Savings are valued at the price of your <em>next</em> unit of energy, without fixed monthly charges, which is lower than your average price.</p>
-        <p class="small"><a href="/ca/calculators/upgrade-payback/${esc(R.slug)}/">Change any assumption in the upgrade calculator for ${esc(R.name)} →</a> · <a href="/ca/calculators/energy-costs/${esc(R.slug)}/">Compare heating systems →</a> · <a href="/ca/learn/real-numbers/">Worked examples with every step shown →</a></p>
-      </details>`;
   }
 
   function findMeasure(category: string, era: string, heat: string) {
@@ -1229,16 +1619,237 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         (!x.heatingTypes?.length || x.heatingTypes.includes(hk))
     );
   }
+  const parseRange = (s: string | undefined): [number, number] | null => {
+    const mm = s?.match(/\$([\d,]+)\s*[–-]\s*\$([\d,]+)/);
+    return mm ? [Number(mm[1].replace(/,/g, '')), Number(mm[2].replace(/,/g, ''))] : null;
+  };
+  const years = (p: { kind: string; years: number | null }) => (p.kind === 'immediate' ? 0 : p.years);
+  function yearsRange(cost: [number, number], rebate: number, saving: number): string {
+    const lo = years(payback(cost[0], rebate, saving));
+    const hi = years(payback(cost[1], rebate, saving));
+    if (lo === null) return '';
+    if (lo === 0 && (hi === 0 || hi === null)) return 'right away';
+    const CAP = 50;
+    const a1 = Math.max(1, Math.round(lo));
+    if (a1 >= CAP) return `more than ${CAP} years`;
+    const b1 = hi === null ? null : Math.round(hi);
+    if (b1 === null) return `${a1}+ years`;
+    if (b1 >= CAP) return `${a1} to more than ${CAP} years`;
+    return a1 === b1 ? `about ${a1} year${a1 === 1 ? '' : 's'}` : `${a1}–${b1} years`;
+  }
+  const NEUTRAL_WHY: Record<string, string> = {
+    'attic-insulation': 'Thin by modern standards. On its own the bill saving here is modest, so do it together with air sealing, or for comfort and to stop ice dams.',
+    'basement-insulation': 'Bare foundation walls lose heat all winter; the bill saving here is modest, so it often makes most sense during a basement renovation.',
+  };
+
+  function noIceDams(text: string): string {
+    if (!text || !/ice dam/i.test(text)) return text;
+    const t = text.replace(/,? or for comfort and to stop ice dams/i, ', or for comfort').replace(/ and (help )?(prevent|stop) ice dams/i, '');
+    if (!/ice dam/i.test(t)) return t;
+    const kept = sentences(t).filter((x) => !/ice dam/i.test(x));
+    return kept.length ? kept.join(' ') : t;
+  }
+
+  function renderSequence(arch: any, a: Answers, syms: string[], goals: string[], m: ReturnType<typeof houseModel>, cal: any, isON: boolean, isToronto: boolean, ctx: Ctx) {
+    const el = $('#rSequence');
+    const later = $('#rLater');
+    if (a.htype === 'condo') {
+      lastItems = [];
+      later.innerHTML = '';
+      el.innerHTML = `
+        <div class="rsec"><h3>Condos work differently</h3>
+        <p class="sub">EnerGuide evaluations and most rebates target houses and townhomes; in a condo, the envelope and heating usually belong to the corporation. Your best levers: in-suite sealing, window coverings, a heat-pump conversation with your board, and pushing the corporation toward a building-level audit.</p></div>`;
+      return;
+    }
+    const seq = buildSequence(arch, a.heat, syms, goals, a, isON);
+    const ON_REBATE: Record<string, string> = {
+      'air-sealing': 'HRSP assessment path', 'attic-insulation': 'HRSP insulation rebates', 'wall-insulation': 'HRSP insulation rebates',
+      'basement-insulation': 'HRSP insulation rebates', 'windows-doors': 'HRSP $100/opening', 'heat-pump': 'HRSP heat pump rebate',
+      solar: 'HRSP solar + battery', 'water-heating': 'HRSP $500', controls: 'HRSP thermostat rebate',
+    };
+    const prov = ctx.loc.province;
+    lastItems = [];
+    const main: string[] = [];
+    const laterRows: string[] = [];
+    for (const item of seq) {
+      const sm = findMeasure(item.category, a.age, m.hi.screen);
+      const s = itemSaving(item.category, a, m, cal);
+      const cost = s.cost ?? parseRange(localizeCost(sm?.typicalCost ?? '', isON));
+      const reb = s.qty ? rebateFor(item.category, prov, { ...s.qty, cost: cost ? cost[0] : undefined }) : null;
+      let title = item.action;
+      let why = localize(item.why, isON);
+      let note = item.category === 'heat-pump' ? '' : localize(sm?.note ?? '', isON);
+      if (item.category === 'attic-insulation' && s.note) {
+        title = `Attic insulation, ${s.note}${/after sealing/i.test(item.action) ? ' (after sealing and safety checks)' : ''}`;
+      }
+      if (item.category === 'water-heating' && !why) why = 'When your tank wears out, a heat pump water heater makes the same hot water with far less energy.';
+      if (item.category === 'solar' && !why) why = 'Worth a look if your roof faces south and isn’t shaded. Get the envelope done first.';
+      const hpCase = item.category === 'heat-pump';
+      if (hpCase) {
+        const hc = heatPumpCopy(ctx.C.key, a.heat, s.dollars, ctx.R.name);
+        title = hc.title;
+        why = hc.why;
+      }
+      if (note && why && (note.slice(0, 40).toLowerCase() === why.slice(0, 40).toLowerCase() || why.includes(note) || note.includes(why))) note = '';
+      if (note && why && note.split(' — ')[0] === why.split(' — ')[0]) note = '';
+      if (note && why && sharesPhrase(note, why)) note = '';
+      // Long paybacks contradict "cheap win" claims: say what the numbers mean instead.
+      let payTxt = '';
+      let payNote = '';
+      if (s.dollars !== null && s.dollars !== undefined && s.dollars >= 15 && cost) {
+        const before = yearsRange(cost, 0, s.dollars);
+        const after = reb ? yearsRange(cost, reb.amount, s.dollars) : '';
+        if (before) payTxt = `payback: ${before} before rebates${after ? `, ${after} after a rebate of at least ${money(reb!.amount)}` : ''}`;
+        const lowYears = years(payback(cost[0], reb?.amount ?? 0, s.dollars));
+        if (lowYears !== null && lowYears > 15) {
+          if (NEUTRAL_WHY[item.category] && /cheap win|best payback|Highest return|Cheap, fast/i.test(why)) why = NEUTRAL_WHY[item.category];
+          payNote = 'A long payback on bills alone: worth it for comfort, for stopping problems, or when it can be combined with other work.';
+        }
+      }
+      // Where ice dams aren't a local problem (mild coastal cities), don't sell upgrades on stopping them.
+      if (ctx.C.place?.iceDams === false) {
+        why = noIceDams(why);
+        note = noIceDams(note);
+      }
+      // Heat pumps that wouldn't lower the bill move to "when your system needs replacing".
+      if (hpCase && (s.dollars === null || s.dollars < 100) && !['electric', 'elecfurnace'].includes(a.heat)) {
+        laterRows.push(`
+          <div class="seq-item">
+            <h4>${esc(title)}</h4>
+            <p class="why">${esc(heatPumpLaterNote(a.heat, s.dollars, ctx.R.name, ctx.C.key, prov))}</p>
+            <p class="why">${esc(why)}</p>
+            <div class="nums">
+              ${cost ? `<span class="cost">typical cost ${money(cost[0])}–${money(cost[1])}</span>` : ''}
+              ${reb ? `<span class="chip chip-active">rebate: at least ${money(reb.amount)} (${esc(shortLabel(reb.program))})</span>` : ''}
+              <a class="chip chip-info" href="/ca/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>
+            </div>
+          </div>`);
+        lastItems.push({ key: item.category, title, category: item.category, cost_low: cost ? Math.round(cost[0]) : null, cost_high: cost ? Math.round(cost[1]) : null, saving_year: null, rebate: reb?.program ?? null });
+        continue;
+      }
+      lastItems.push({
+        key: item.category, title, category: item.category,
+        cost_low: cost ? Math.round(cost[0]) : null, cost_high: cost ? Math.round(cost[1]) : null,
+        saving_year: s.dollars !== null && s.dollars !== undefined && s.dollars >= 15 ? Math.round(s.dollars) : null,
+        rebate: reb?.program ?? (isON ? ON_REBATE[item.category] ?? null : null),
+      });
+      let saveTxt = '';
+      if (s.dollars !== null && s.dollars !== undefined) {
+        if (s.dollars >= 15) saveTxt = `about ${money(s.dollars)}/yr <span class="save-range">(likely ${money(s.dollars * 0.75)}–${money(s.dollars * 1.25)})</span>`;
+        else if (item.category !== 'ventilation' && item.category !== 'solar') saveTxt = `<span class="save-small">little or no bill saving for a house like yours</span>`;
+      }
+      if (item.category === 'ventilation') payNote = 'Bought for air quality and moisture control, not for bill savings.';
+      if (payNote && sharesPhrase(`${why} ${note}`, payNote)) payNote = '';
+      const costTxt = cost ? `typical cost ${money(cost[0])}–${money(cost[1])}` : sm?.typicalCost ? `typical cost ${esc(localizeCost(sm.typicalCost, isON))}` : '';
+      const onChip = isON && ON_REBATE[item.category] ? `<span class="chip chip-active">${ON_REBATE[item.category]}</span>${isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : ''}` : '';
+      const rebChip = !onChip && reb ? `<span class="chip chip-active">rebate: at least ${money(reb.amount)} (${esc(shortLabel(reb.program))})</span>` : '';
+      main.push(`
+        <div class="seq-item">
+          <h4>${esc(title)}${s.note && item.category !== 'attic-insulation' ? ` <span class="small">(${esc(s.note)})</span>` : ''}</h4>
+          <p class="why">${esc(why)}${note ? ' ' + esc(note) : ''}</p>
+          <div class="nums">
+            ${saveTxt ? `<span class="save">${saveTxt}</span>` : ''}
+            ${costTxt ? `<span class="cost">${costTxt}</span>` : ''}
+            ${payTxt ? `<span class="cost">${payTxt}</span>` : ''}
+            ${onChip}${rebChip}
+            ${hpCase ? '<a class="chip chip-info" href="/ca/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>' : ''}
+            ${payNote ? `<p class="pay-note">${esc(payNote)}</p>` : ''}
+          </div>
+        </div>`);
+    }
+    const basis = cal.calibrated
+      ? `<span class="chip chip-active">Scaled to your bills</span> Dollar figures use your bills and ${esc(m.R.name)}-area prices and climate.`
+      : `<span class="chip chip-neutral">Typical house estimate</span> Based on a typical house of your era near ${esc(m.R.name)}. <a href="#" id="addBills">Add your bills</a> to scale these to your house.`;
+    el.innerHTML = `
+      <div class="rsec">
+        <h3>Your upgrade sequence</h3>
+        <p class="sub">${basis}</p>
+        <p class="order-rule"><b>How we order it:</b> the way energy advisors do. Seal air leaks before you insulate, and insulate before you replace heating and cooling equipment, so the new system can be smaller. The exception is expensive heat (oil, propane or electric resistance): there a heat pump usually saves the most, so it moves up, sized with a heat-loss calculation. The problems and goals you picked move matching items up the list. <b>Payback</b> is how many years of bill savings it takes to cover the cost.</p>
+        <div class="seq">${main.join('')}</div>
+        <p class="small">Savings don’t simply add up: once the attic is insulated there’s less heat left to save elsewhere. We value savings at the price of your next unit of energy and stay on the low side on purpose.</p>
+      </div>`;
+    later.innerHTML = laterRows.length ? `
+      <div class="rsec">
+        <h3>When your furnace or boiler needs replacing</h3>
+        <p class="sub">At today’s prices these wouldn’t lower your bills, so time them for when your current system wears out.</p>
+        <div class="seq later-seq">${laterRows.join('')}</div>
+      </div>` : '';
+    document.getElementById('addBills')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      resultsEl.hidden = true; plannerEl.hidden = false; maxVisited = TOTAL; show(6);
+      setupSticky();
+      plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function renderSystems(a: Answers, m: ReturnType<typeof houseModel>, isON: boolean) {
+    const el = $('#rSystems');
+    if (a.htype === 'condo') { el.innerHTML = ''; return; }
+    const R = m.R;
+    const cards: string[] = [];
+    if (m.waterCost !== null) {
+      const alts: string[] = [];
+      const hpwh = waterHeaterCost('heatPump', m.water.gj, R.prices, 'now', { sys: m.hi.sys, hdd: R.hdd });
+      const tl = R.prices.gas ? waterHeaterCost('gasTankless', m.water.gj, R.prices, 'now') : null;
+      if (m.wk !== 'heatPump' && hpwh.cost !== null) alts.push(`heat pump water heater about ${money(hpwh.cost + (hpwh.extraCost ?? 0))}/yr`);
+      if (tl && tl.cost !== null && m.wk === 'gasTank') alts.push(`gas tankless about ${money(tl.cost)}/yr (US DOE: on-demand units are 24–34% more efficient than tanks in homes using up to about 155 litres a day)`);
+      cards.push(`<div class="sys-card"><h4>Hot water: ${esc(WH_NAME[m.wk] ?? m.wk)}${a.wh === 'unsure' ? ' (assumed)' : ''}</h4>
+        <p class="small">About <b>${money(m.waterCost)}/yr</b> for a household of three near ${esc(R.name)} (cold water arrives at about ${m.water.inletC.toFixed(0)} °C here).${alts.length ? ' Alternatives: ' + alts.join('; ') + '.' : ''}</p>
+        <p class="small"><a href="/ca/learn/water-heaters/">Water heaters compared →</a></p></div>`);
+    }
+    if (m.acKwh > 0) {
+      const ep = R.prices.electricity.now;
+      const old = a.ac === 'central-old';
+      cards.push(`<div class="sys-card"><h4>Cooling: ${esc(m.acNote)}</h4>
+        <p class="small">About <b>${Math.round(m.acKwh).toLocaleString('en-CA')} kWh</b> a summer (${money(m.acKwh * ep)}) with ${R.cdd} cooling degree-days near ${esc(R.name)}.${old ? ' An older central air conditioner is a natural time to switch to a heat pump: one unit then cools and heats.' : ''}</p>
+        <p class="small"><a href="/ca/learn/air-conditioning/">Air conditioning and cooling →</a></p></div>`);
+    }
+    if (a.win !== 'unsure') {
+      const wk = winKey(a.win, a.age);
+      const msg = (wk === 'single' || wk === 'singleStorm')
+        ? 'Single glazing loses far more heat than an insulated wall, so replacement can pay here, but air sealing, attic and basement work usually pay faster. Storm windows are a cheaper middle step.'
+        : wk === 'doubleClear'
+          ? 'Older double-pane windows still work; replacing them mostly buys comfort and quiet. Do it when they fail or at a renovation, and seal around frames now.'
+          : 'Your windows are already efficient; caulk and weatherstrip, and spend elsewhere first.';
+      cards.push(`<div class="sys-card"><h4>Windows: ${esc((MODEL.envelope.windowU as any)[wk]?.label ?? wk)}</h4><p class="small">${msg}</p><p class="small"><a href="/ca/learn/windows-doors/">Windows and doors: when upgrades pay →</a></p></div>`);
+    }
+    if (a.sec.includes('woodstove') || ['wood', 'outdoorwood', 'pellet'].includes(a.heat)) {
+      cards.push(`<div class="sys-card"><h4>Wood heat</h4><p class="small">Have a WETT-certified inspector check the stove, chimney and clearances (insurers usually ask), sweep as needed, and keep a working CO alarm. Wood and pellet costs vary too much to estimate; enter yours in the <a href="/ca/calculators/energy-costs/${esc(R.slug)}/">energy cost calculator</a>.</p><p class="small"><a href="/ca/tests/wood-burning-inspection/">Wood-burning inspections →</a></p></div>`);
+    }
+    if (a.sec.includes('spaceheaters')) {
+      const ep = R.prices.electricity.now;
+      cards.push(`<div class="sys-card"><h4>Electric space heaters</h4><p class="small">A 1,500 W heater costs about ${money(1.5 * ep * 100)} per 100 hours near ${esc(R.name)}. Needing one usually points to a draft, a cold room over a garage, or a duct problem worth finding.</p></div>`);
+    }
+    if (a.sec.includes('solar')) {
+      cards.push(`<div class="sys-card"><h4>Free heat from the sun</h4><p class="small">Sunny south windows supply real heat on clear winter days. Our estimate allows for typical solar gain; if your bills come in lower than the typical range, this is one reason. Keep low-e coatings in mind when replacing south glass.</p><p class="small"><a href="/ca/learn/heating-systems/">Heating systems and solar gain →</a></p></div>`);
+    }
+    if (a.prev === 'recent' || a.prev === 'older') {
+      const rule = isON
+        ? `Ontario’s Home Renovation Savings needs a first assessment dated January 28, 2025 or later, done by the same approved organization as the follow-up${a.prev === 'older' ? ', and renovations since your old report change the numbers' : ''}.`
+        : `Whether it counts for rebates depends on your province’s program, so ask before any work starts${a.prev === 'older' ? '; renovations since your old report change the numbers' : ''}.`;
+      cards.push(`<div class="sys-card prev"><h4>You’ve had an evaluation before</h4><p class="small">Dig out the report: its upgrade list and blower-door number are still useful for planning. ${rule}</p><p class="small"><a href="/ca/learn/previous-audit/">What an old EnerGuide report is still good for →</a></p></div>`);
+    }
+    el.innerHTML = cards.length ? `<div class="rsec"><h3>Your home’s systems</h3><p class="sub">Estimated at ${esc(R.name)}-area prices. Every number has a calculator behind it, pre-filled for your city.</p><div class="sys-grid">${cards.join('')}</div></div>` : '';
+  }
+
+  function renderMethod(m: ReturnType<typeof houseModel>, cal: any) {
+    const R = m.R;
+    $('#rMethod').innerHTML = `
+      <details class="card card-pad method">
+        <summary><strong>How we got these numbers</strong> <span class="small">(and why they’re conservative)</span></summary>
+        <p class="small">${R.exact ? `Your postal code matched ${esc(R.name)}` : `Your postal code isn’t in one of the 70 cities we cover, so we used ${esc(R.name)}, the closest covered city`}: ${R.hdd.toLocaleString('en-CA')} heating degree-days (NRCan HOT2000 weather data, the same data EnerGuide evaluations use) and local energy prices with taxes. A typical house like yours needs about <b>${Math.round(m.demand)} GJ</b> of heat a year (NRCan’s heating need per square metre for your era, scaled to the local climate).${cal.calibrated ? ` Your bills point to about <b>${Math.round(cal.actualDemandGJ)} GJ</b>, so we scaled every saving by ${cal.factor.toFixed(2)}${cal.clamped ? ' (we cap the scaling between 0.5 and 1.6)' : ''}.` : ' Without your bills, we use the typical figure.'}</p>
+        <p class="small">Each upgrade’s saving comes from the physics of that part of the house (R-values, window U-values, air leakage) at your degree-days, then we multiply by 0.75 (0.4 for basements) because sun, people and appliances already supply free heat and real installations underperform their labels. Savings are valued at the price of your <em>next</em> unit of energy, without fixed monthly charges, which is lower than your average price. Rebates are each program’s lowest published amount for a job like yours.</p>
+        <p class="small"><a href="/ca/calculators/upgrade-payback/${esc(R.slug)}/">Change any assumption in the upgrade calculator for ${esc(R.name)} →</a> · <a href="/ca/calculators/energy-costs/${esc(R.slug)}/">Compare heating systems →</a> · <a href="/ca/learn/real-numbers/">Worked examples with every step shown →</a></p>
+      </details>`;
+  }
 
   const FED_HP_NOTE = '<strong>Coming early 2027:</strong> the federal <a href="/ca/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a> will pay $2,000, or up to $10,000 below the median income, toward a cold-climate air-source heat pump. No EnerGuide evaluation is needed, and it can be combined with provincial rebates.';
-  function renderPrograms(loc: any, goals: string[], isON: boolean, isToronto: boolean) {
+  function renderPrograms(loc: Extract<Loc, { kind: 'ca' }>, goals: string[], isON: boolean, isToronto: boolean) {
     const el = $('#rPrograms');
     const byId = (id: string) => D.programs.find((p: any) => p.id === id);
     let html = '';
-    if (loc.kind === 'us') {
-      html = `<div class="card province-note"><h3>US launch is coming</h3><p class="small">Our US directory (HOMES-rebate states and audit-ordinance cities first) is in the works. Meanwhile: your utility may offer a free or cheap assessment — check before paying for one.</p></div>`;
-    } else if (loc.kind === 'ca' && loc.province && loc.province !== 'ON') {
-      html = `<div class="card province-note"><h3>Programs in ${esc(loc.province)}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary — check your utility.'}</p><p class="small">${FED_HP_NOTE}</p><p class="small"><a href="/ca/programs/">See the full program tracker →</a></p></div>`;
+    if (!isON) {
+      html = `<div class="card province-note"><h3>Programs in ${esc(PROV_NAME[loc.province])}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary, so check your utility.'}</p><p class="small">${FED_HP_NOTE}</p><p class="small"><a href="/ca/programs/">See the full program tracker →</a></p></div>`;
     } else {
       const ids = ['hrsp-assessment', 'hrsp-no-assessment', 'national-heat-pump-rebate'];
       if (isToronto) ids.push('toronto-help');
@@ -1246,23 +1857,12 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
       const rows = ids.map(byId).filter(Boolean).map((p: any) => `
         <div class="prog-row">
           <a href="/ca/programs/${p.slug}/">${esc(p.shortName)}</a>
-          <span class="chip ${p.auditRequired ? 'chip-info' : 'chip-neutral'}">${p.auditRequired ? 'audit required' : 'no audit required'}</span>
+          <span class="chip ${p.auditRequired ? 'chip-info' : 'chip-neutral'}">${p.auditRequired ? 'needs the evaluation' : 'no evaluation needed'}</span>
           <span class="hl">${esc(p.headline)}</span>
         </div>`).join('');
-      html = `<h3>Programs you likely qualify for</h3><p class="sub">Verified against official pages — <a href="/ca/programs/">full tracker here</a>.</p><div class="card card-pad">${rows}</div>`;
+      html = `<h3>Programs you likely qualify for in Ontario</h3><p class="sub">Verified against official pages. <a href="/ca/programs/">Full tracker →</a></p><div class="card card-pad">${rows}</div>`;
     }
     el.innerHTML = `<div class="rsec">${html}</div>`;
-  }
-
-  function renderIssues(syms: string[]) {
-    const el = $('#rIssues');
-    if (!syms.length) { el.innerHTML = ''; return; }
-    const chips = syms
-      .map((s) => D.issues.find((i: any) => i.slug === s))
-      .filter(Boolean)
-      .map((i: any) => `<a href="/ca/issues/${i.slug}/">${esc(i.name)} →</a>`)
-      .join('');
-    el.innerHTML = `<div class="rsec"><h3>Deep-dives on your issues</h3><p class="sub">Causes, DIY first steps, and the fix ladder for each problem you flagged.</p><div class="issue-chips">${chips}</div></div>`;
   }
 
   // ---------- diagnostic tests ----------
@@ -1283,83 +1883,121 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     water: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20v-8a5 5 0 0 1 10 0"/><path d="M4 20h16M12 3v2M12 8.5s2.2 2.6 2.2 4a2.2 2.2 0 1 1-4.4 0c0-1.4 2.2-4 2.2-4Z"/></svg>',
   };
 
-  function renderTests(age: string, heat: string, syms: string[], goals: string[], htype: string, water: string) {
-    const el = $('#rTests');
-    if (htype === 'condo') { el.innerHTML = ''; return []; }
+  type TestPick = { id: string; name: string; why: string; href: string; icon?: string; establishes?: string; cost?: string; health?: boolean; level?: string };
+  function testPicks(age: string, heat: string, syms: string[], goals: string[], htype: string, water: string, heatAnswer: string, isON: boolean): TestPick[] {
+    if (htype === 'condo') return [];
     const E = Object.fromEntries(D.tests.energy.map((t: any) => [t.id, t]));
     const H = Object.fromEntries(D.tests.health.map((t: any) => [t.id, t]));
     const older = ['pre-1946', '1946-1965', '1966-1980'].includes(age);
     const newer = ['1981-1995', '1996-2010', '2011-plus'].includes(age);
     const fuel = heat === 'gas' || heat === 'oil';
-
-    const picks: { t: any; why: string; health?: boolean }[] = [];
-    picks.push({ t: E['blower-door'], why: older ? 'Your era’s biggest unknown is air leakage — this puts a number on it and finds the entry points.' : 'Verifies the airtightness your home’s era promises — builders miss spots.' });
-    picks.push({ t: E['thermal-imaging'], why: syms.includes('drafty-rooms') ? 'Finds the cold walls you flagged without opening anything.' : 'Maps exactly which cavities are empty before you pay to fill them.' });
-    if (older || syms.includes('ice-dams')) picks.push({ t: E['attic-inspection'], why: syms.includes('ice-dams') ? 'Ice dams start in the attic — bypasses and thin insulation show up immediately.' : 'The cheapest big win of your era — this scopes it precisely.' });
-    if (fuel) picks.push({ t: E['combustion-safety'], why: 'You heat with combustion — tightening the house requires this safety check first.' });
-    if (goals.includes('heatpump') || heat === 'electric' || heat === 'oil' || syms.includes('summer-overheating')) picks.push({ t: E['heat-loss-calc'], why: heat === 'electric' ? 'Turns baseboard-to-heat-pump savings from a guess into a sized quote.' : 'Sizes the heat pump properly before anyone quotes you — oversizing is the industry’s favourite mistake.' });
-    if ((syms.includes('cold-second-floor') || syms.includes('summer-overheating')) && heat !== 'electric') picks.push({ t: E['duct-leakage'], why: 'Your hot/cold floor problem usually lives in the ducts — measure before buying bigger equipment.' });
-    if (syms.includes('condensation-mould') || newer) picks.push({ t: E['ventilation-assessment'], why: syms.includes('condensation-mould') ? 'Your condensation symptom is usually ventilation, not windows — this proves which, before you spend $20k on glass.' : 'Tighter eras need verified ventilation — humidity problems sneak up.' });
-    picks.push({ t: E['bill-analysis'], why: 'Bring 12 months of bills to the assessment — it anchors every projection to your reality.' });
-    const cards = picks.map(({ t, why }) => `
-      <div class="test-card">
-        <span class="ticon">${ICONS[t.icon] ?? ''}</span>
-        <div>
-          <h4><a class="tname" href="/ca/tests/${t.id}/">${esc(t.name)}</a></h4>
-          <p class="tw">${esc(why)}</p>
-          <p class="test-est"><b>Establishes:</b> ${esc(t.establishes)}</p>
-          <p class="meta">${esc(t.cost)}</p>
-        </div>
-      </div>`).join('');
-
-    const flags = screenSpecialtyTests({ era: age, heat, water, symptoms: syms, goals, htype });
-    const LEVEL_CHIP: Record<string, string> = {
-      'strongly-flagged': '<span class="chip chip-info">flagged for your home</span>',
-      'flagged': '<span class="chip chip-limited">flagged</span>',
-      'recommended': '<span class="chip chip-neutral">recommended</span>',
-    };
-    const flagCards = flags.map((f) => {
+    const out: TestPick[] = [];
+    const add = (t: any, why: string) => out.push({ id: t.id, name: t.name, why, href: `/ca/tests/${t.id}/`, icon: t.icon, establishes: t.establishes, cost: t.cost });
+    add(E['blower-door'], older ? 'Your era’s biggest unknown is air leakage. This puts a number on it and finds the entry points.' : 'Verifies the airtightness your home’s era promises; builders miss spots.');
+    add(E['thermal-imaging'], syms.includes('drafty-rooms') ? 'Finds the cold walls you flagged without opening anything.' : 'Maps exactly which cavities are empty before you pay to fill them.');
+    if (older || syms.includes('ice-dams')) add(E['attic-inspection'], syms.includes('ice-dams') ? 'Ice dams start in the attic: bypasses and thin insulation show up immediately.' : 'Often the cheapest big win for your era, and this scopes it precisely.');
+    if (fuel) add(E['combustion-safety'], 'You heat with combustion: tightening the house requires this safety check first.');
+    if (goals.includes('heatpump') || heat === 'electric' || heat === 'oil' || syms.includes('summer-overheating') || syms.includes('humid-summer')) add(E['heat-loss-calc'], heat === 'electric' ? 'Turns baseboard-to-heat-pump savings from a guess into a sized quote.' : 'Sizes a heat pump or air conditioner properly before anyone quotes you; oversizing is the industry’s favourite mistake.');
+    if ((syms.includes('cold-second-floor') || syms.includes('summer-overheating')) && heat !== 'electric') add(E['duct-leakage'], 'Hot or cold upstairs rooms usually come down to the ducts. Measure before buying bigger equipment.');
+    if (syms.includes('condensation-mould') || syms.includes('window-frost') || syms.includes('smoke') || newer) add(E['ventilation-assessment'], syms.includes('condensation-mould') || syms.includes('window-frost') ? 'Condensation is usually a ventilation problem, not a window problem. This proves which before you spend on glass.' : syms.includes('smoke') ? 'Checks how fresh air gets in and whether it can be filtered on smoke days.' : 'Tighter eras need verified ventilation: humidity problems sneak up.');
+    add(E['bill-analysis'], 'Bring 12 months of bills to the evaluation: it anchors every projection to your reality.');
+    const scrHeat = heatAnswer === 'propane' ? 'oil' : heat;
+    const flags = screenSpecialtyTests({ era: age, heat: scrHeat, water, symptoms: syms, goals, htype });
+    for (const f of flags) {
       const t = H[f.id] ?? {};
-      return `
-      <div class="test-card health">
-        <span class="ticon">${ICONS[t.icon] ?? ''}</span>
-        <div>
-          <h4>${esc(f.name)} ${LEVEL_CHIP[f.level]}</h4>
-          <p class="tw">${esc(f.why)}</p>
-          ${t.cost ? `<p class="meta">${esc(t.cost)}</p>` : ''}
-          <p class="tguide"><a href="${f.guide}"><strong>Full guide: how to test &amp; what to do →</strong></a></p>
-        </div>
-      </div>`;
-    }).join('');
-
-    el.innerHTML = `
-      <div class="rsec">
-        <h3>Tests that establish your requirements</h3>
-        <p class="sub">Ask your advisor for these by name — they turn "probably" into measurements. <a href="/ca/tests/">Full testing guide →</a></p>
-        <div class="test-grid">${cards}</div>
-        <h3 class="spec-h">Specialty tests flagged for your home</h3>
-        <p class="sub">Screened from your intake — era, heating, water source, and symptoms. Each links to its full guide.</p>
-        <div class="test-grid">${flagCards}</div>
-        <button type="button" class="btn btn-ghost btn-sm" id="copyTests">Copy my test checklist</button>
-      </div>`;
-
-    const names = [...picks.map((p) => p.t.name), ...flags.map((f) => f.name)];
-    document.getElementById('copyTests')?.addEventListener('click', async (e) => {
-      const btn = e.currentTarget as HTMLButtonElement;
-      try {
-        await navigator.clipboard.writeText('Tests to include in my home energy audit:\n' + names.map((n) => '• ' + n).join('\n'));
-        btn.textContent = 'Checklist copied ✓';
-        setTimeout(() => (btn.textContent = 'Copy my test checklist'), 2000);
-      } catch {}
-    });
-    return names;
+      out.push({ id: f.id, name: f.name, why: localizeScreener(f.id, f.why, isON), href: f.guide, icon: t.icon, cost: t.cost, health: true, level: f.level });
+    }
+    checklist = out.map((p) => p.name);
+    return out;
   }
 
-  function renderProviders(loc: any) {
+  function readingDetails(id: string): string {
+    const g = D.reading[id];
+    if (!g) return '';
+    const bands = g.bands.map((b: any) => `<li class="t-${esc(b.t)}"><span class="tr-l">${esc(b.l)}</span> <span class="tr-r">${esc(b.r)}</span><br>${esc(b.m)} <b>What to do:</b> ${esc(b.d)}</li>`).join('');
+    return `<details class="tread"><summary>How to read the result</summary><p class="small">${esc(g.measure)}</p><ul>${bands}</ul></details>`;
+  }
+  function healthCost(id: string, cost: string | undefined, isON: boolean) {
+    if (!cost) return '';
+    if (id === 'well-water' && !isON) return 'Bacteria tests: ask your provincial public health lab · $100–$300 for extended panels';
+    return cost;
+  }
+
+  function renderTests(picks: TestPick[], htype: string) {
+    const el = $('#rTests');
+    if (htype === 'condo' || !picks.length) { el.innerHTML = ''; return; }
+    const isON = readLoc().kind === 'ca' && (readLoc() as any).province === 'ON';
+    const cards = picks.filter((p) => !p.health).map((p) => `
+      <div class="test-card">
+        <span class="ticon">${ICONS[p.icon ?? ''] ?? ''}</span>
+        <div>
+          <h4><a class="tname" href="${esc(p.href)}">${esc(p.name)}</a></h4>
+          <p class="tw">${esc(p.why)}</p>
+          ${p.establishes ? `<p class="test-est"><b>Establishes:</b> ${esc(p.establishes)}</p>` : ''}
+          ${p.cost ? `<p class="meta">${esc(p.cost)}</p>` : ''}
+          ${readingDetails(p.id)}
+        </div>
+      </div>`).join('');
+    const LEVEL_CHIP: Record<string, string> = {
+      'strongly-flagged': '<span class="chip chip-info">flagged for your home</span>',
+      flagged: '<span class="chip chip-limited">flagged</span>',
+      recommended: '<span class="chip chip-neutral">recommended</span>',
+    };
+    const flagCards = picks.filter((p) => p.health).map((p) => `
+      <div class="test-card health">
+        <span class="ticon">${ICONS[p.icon ?? ''] ?? ''}</span>
+        <div>
+          <h4>${esc(p.name)} ${LEVEL_CHIP[p.level ?? ''] ?? ''}</h4>
+          <p class="tw">${esc(p.why)}</p>
+          ${p.cost ? `<p class="meta">${esc(healthCost(p.id, p.cost, isON))}</p>` : ''}
+          ${readingDetails(p.id)}
+          <p class="tguide"><a href="${esc(p.href)}"><strong>Full guide: how to test and what to do →</strong></a></p>
+        </div>
+      </div>`).join('');
+    el.innerHTML = `
+      <div class="rsec">
+        <h3>Tests to ask for, and how to read the results</h3>
+        <p class="sub">Ask your energy advisor for these by name: they turn “probably” into measurements. Each card says what a good or bad result looks like. <a href="/ca/tests/">Full testing guide →</a></p>
+        <div class="test-grid">${cards}</div>
+        ${flagCards ? `<h3 class="spec-h">Health and safety tests for your home</h3>
+        <p class="sub">Screened from your answers: era, heating, water source and symptoms. These aren’t part of a standard energy audit.</p>
+        <p class="badge-legend"><b>Flagged for your home:</b> your answers point straight to it. <b>Flagged:</b> likely relevant for a home like yours. <b>Recommended:</b> good practice for any home.</p>
+        <div class="test-grid">${flagCards}</div>` : ''}
+        <button type="button" class="btn btn-ghost btn-sm" id="copyTests">Copy my test checklist</button>
+      </div>`;
+    wireCopy('copyTests');
+  }
+
+  function wireCopy(id: string) {
+    document.getElementById(id)?.addEventListener('click', async (e) => {
+      const btn = e.currentTarget as HTMLButtonElement;
+      const label = btn.textContent;
+      try {
+        await navigator.clipboard.writeText('Tests to include in my home energy audit:\n' + checklist.map((n) => '• ' + n).join('\n'));
+        btn.textContent = 'Checklist copied ✓';
+        setTimeout(() => (btn.textContent = label), 2000);
+      } catch {}
+    });
+  }
+
+  function renderProviders(ctx: Ctx) {
     const el = $('#rProviders');
-    const region = loc.kind === 'ca' ? loc.region : null;
+    const region = ctx.isON ? ctx.loc.region : null;
+    const b = bookingFor(ctx);
+    const cityName = ctx.city?.n ?? ctx.R.name;
+    const count = ctx.city?.providers ?? 0;
     if (!region) {
-      el.innerHTML = `<div class="rsec"><h3>Find a registered advisor</h3><p class="sub"><a href="/ca/find/">Browse the Ontario directory</a> — every listing is an NRCan-registered service organization.</p></div>`;
+      const list = count
+        ? `<a href="/ca/services/home-energy-audit/${esc(ctx.R.slug)}/#providers">See the ${count} licensed organization${count === 1 ? '' : 's'} serving ${esc(cityName)} →</a>`
+        : `<a href="/ca/services/home-energy-audit/${esc(ctx.R.slug)}/">Home energy audits in ${esc(cityName)} →</a>`;
+      const route = b?.bookWith
+        ? `<p class="sub">In ${esc(ctx.provName)}, evaluations are booked ${esc(b.route.replace(/^Through /, 'through ').replace(/^Start with /, 'starting with '))}: <a href="${esc(b.bookWith.href)}" rel="noopener" target="_blank">${esc(shortLabel(b.bookWith.label))} ↗</a></p>`
+        : '';
+      el.innerHTML = `<div class="rsec"><h3>Find a registered energy advisor${ctx.R.exact ? ` in ${esc(cityName)}` : ''}</h3>
+        ${route}
+        <p class="sub">Every listing is an NRCan-licensed service organization whose registered energy advisors do EnerGuide evaluations.${ctx.R.exact ? '' : ` ${esc(cityName)} is the closest city we cover; organizations there often serve the surrounding area, so check their coverage.`}</p>
+        <p>${list}</p>
+        <p class="small"><a href="/ca/find/#${esc(ctx.provSlug)}">How booking works in ${esc(ctx.provName)} →</a></p></div>`;
       return;
     }
     const all = D.providers.filter((p: any) => p.serves.includes(region.slug));
@@ -1377,23 +2015,26 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
         </p>
       </div>`).join('');
     el.innerHTML = `
-      <div class="rsec">
+      <div class="rsec" id="rProvidersList">
         <h3>All ${all.length} registered advisors serving ${esc(region.name)}</h3>
         <p class="sub">Every listing is a licensed service organization. Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate. <a href="/ca/find/${region.slug}/">Full ${esc(region.name)} directory →</a></p>
         <div class="mini-providers">${cards}</div>
       </div>`;
   }
 
-  function renderResources(loc: any, syms: string[], arch: any) {
+  function renderResources(ctx: Ctx, arch: any) {
     const el = $('#rResources');
-    const region = loc.kind === 'ca' ? loc.region : null;
+    const region = ctx.isON ? ctx.loc.region : null;
+    const cityName = ctx.city?.n ?? ctx.R.name;
     const items: string[] = [];
-    if (region) items.push(`<li><a href="/ca/guides/${region.slug}/">The ${esc(region.name)} home energy guide</a> — local housing stock, rebates, and auditors in one place</li>`);
-    items.push(`<li><a href="/ca/tests/">The complete home testing guide</a> — every test from blower doors to radon, and who performs each</li>`);
-    items.push(`<li><a href="/ca/how-it-works/">What happens in an EnerGuide assessment</a> — the full walkthrough, step by step</li>`);
-    items.push(`<li><a href="/ca/cost/">What an audit costs in Ontario</a> — real numbers, and the $600 rebate math</li>`);
-    items.push(`<li><a href="/ca/programs/">The live program tracker</a> — every rebate verified against official pages</li>`);
-    items.push(`<li><a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency" rel="noopener" target="_blank">NRCan home energy efficiency hub ↗</a> — the official EnerGuide source</li>`);
+    if (region) items.push(`<li><a href="/ca/guides/${region.slug}/">The ${esc(region.name)} home energy guide</a>: local housing, rebates and auditors in one place</li>`);
+    else items.push(`<li><a href="/ca/cities/${esc(ctx.R.slug)}/">The ${esc(cityName)} home energy guide</a>: local climate, housing, rebates and advisors</li>`);
+    items.push(`<li><a href="/ca/provinces/${esc(ctx.provSlug)}/">Home energy in ${esc(ctx.provName)}</a>: every provincial program, with dates</li>`);
+    items.push(`<li><a href="/ca/tests/">The complete home testing guide</a>: every test from blower doors to radon, and who does each</li>`);
+    items.push(`<li><a href="/ca/how-it-works/">What happens in an EnerGuide evaluation</a>: the visit, step by step</li>`);
+    items.push(`<li><a href="/ca/cost/">What an EnerGuide evaluation costs in ${esc(ctx.provName)}</a>: prices and the help available, by province</li>`);
+    items.push(`<li><a href="/ca/glossary/">The glossary</a>: every term in this plan, in plain words</li>`);
+    items.push(`<li><a href="/ca/programs/">The live program tracker</a>: every rebate verified against official pages</li>`);
     el.innerHTML = `
       <div class="rsec">
         <h3>Resources for your plan</h3>
@@ -1401,34 +2042,97 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
       </div>`;
   }
 
-  function prefillLead(arch: any, a: Answers, syms: string[], goals: string[], loc: any, testsList: string[], m: ReturnType<typeof houseModel>) {
-    const where = loc.kind === 'ca' && loc.region ? loc.region.name : loc.kind === 'ca' ? (m.R.exact ? m.R.name : (loc.province ?? 'Canada')) : 'Ontario';
+  function renderAuditCta(ctx: Ctx) {
+    const b = bookingFor(ctx);
+    const local = ctx.isON
+      ? ' In Ontario, the $600 Home Renovation Savings rebate covers most of its cost if you book one of the seven HRSP-approved organizations and install at least two recommended upgrades.'
+      : b?.how ? ` ${b.how}` : '';
+    $('#rAuditCtaText').textContent = `Everything above comes from how homes like yours typically perform (scaled to your bills if you entered them), not from measurements of your house. An EnerGuide evaluation, with a blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers for your address, and it’s the first step for the biggest rebates.${local}`;
+  }
+
+  function prefillLead(arch: any, a: Answers, syms: string[], goals: string[], ctx: Ctx, testsList: string[], m: ReturnType<typeof houseModel>, water: string) {
+    const where = ctx.R.exact ? `${ctx.R.name}, ${ctx.provName}` : ctx.R.prov === ctx.loc.province ? `${ctx.provName} (near ${ctx.R.name})` : ctx.provName;
     const lines = [
       'My AuditYourHome plan summary:',
-      `• Home: ${arch.years}, ${a.htype}, ${a.size}, heated by ${HEAT_NAME[a.heat] ?? a.heat}, in ${where}`,
-      `• Water heater: ${a.wh === 'unsure' ? 'not sure' : (WH_NAME[whKey(a.wh, m.hi)] ?? a.wh)}; cooling: ${a.ac}; windows: ${a.win}`,
-      a.prev === 'recent' || a.prev === 'older' ? `• Previous EnerGuide evaluation: yes (${a.prev === 'recent' ? 'last 3 years' : 'more than 3 years ago'})` : '',
-      syms.length ? `• Issues: ${syms.join(', ')}` : '',
-      goals.length ? `• Goals: ${goals.join(', ')}` : '',
-      `• Tests to include in the audit: ${testsList.join('; ')}`,
+      `• Home: built ${LABEL.era[a.age]}, ${LABEL.htype[a.htype] ?? a.htype}, ${LABEL.size[a.size] ?? a.size}, heated by ${LABEL.heat[a.heat] ?? a.heat} (${LABEL.hage[a.hage] ?? a.hage}), in ${where}`,
+      `• Water heater: ${a.wh === 'unsure' ? 'not sure' : (WH_NAME[whKey(a.wh, m.hi)] ?? a.wh)}; cooling: ${LABEL.ac[a.ac] ?? a.ac}; windows: ${LABEL.win[a.win] ?? a.win}; ${LABEL.water[water] ?? water}`,
+      a.prev === 'recent' || a.prev === 'older' ? `• Previous EnerGuide evaluation: ${LABEL.prev[a.prev]}` : '',
+      syms.length ? `• Concerns: ${syms.map((s) => SYMPTOM_LABEL[s] ?? s).join(', ')}` : '',
+      goals.length ? `• Goals: ${goals.map((g) => LABEL.goal[g] ?? g).join(', ')}` : '',
+      `• Tests to include in the evaluation: ${testsList.join('; ')}`,
       `• Full plan: ${location.href}`,
     ].filter(Boolean);
     const summary = lines.join('\n');
-    const ta = document.querySelector<HTMLTextAreaElement>('#lead-form textarea[name="message"]');
-    if (ta && !ta.value) ta.value = summary;
-    const mailto = document.querySelector<HTMLAnchorElement>('#lead-form a[href^="mailto:"]');
+    const lf = document.getElementById('lead-form');
+    if (!lf) return;
+    const ta = lf.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    if (ta) ta.value = summary;
+    const pc = lf.querySelector<HTMLInputElement>('input[name="postal"]');
+    const chk = checkPostal(postalEl.value);
+    // Fill (or refresh after "Edit answers") unless the visitor typed their own value into the form.
+    if (pc && chk.ok && (!pc.value || pc.dataset.prefilled === '1')) {
+      pc.value = formatPostal(postalEl.value);
+      pc.dataset.prefilled = '1';
+      pc.addEventListener('input', () => { delete pc.dataset.prefilled; }, { once: true });
+    }
+    const reg = lf.querySelector<HTMLSelectElement>('select[name="region"]');
+    if (reg) {
+      const want = ctx.isON && ctx.loc.region ? ctx.loc.region.slug : LEAD_AREA[ctx.loc.province];
+      if ([...reg.options].some((o) => o.value === want)) reg.value = want;
+    }
+    const bld = lf.querySelector<HTMLSelectElement>('select[name="building"]');
+    if (bld) bld.value = a.htype === 'condo' ? 'condo-unit' : 'house';
+    const mailto = lf.querySelector<HTMLAnchorElement>('a[href^="mailto:"]');
     if (mailto) {
       const base = mailto.href.split('&body=')[0];
       mailto.href = `${base}&body=${encodeURIComponent(summary)}`;
     }
   }
 
-  // ---------- restart / share / prefill ----------
+  // ---------- sticky "Book my audit" bar on phones ----------
+  let stickyObs: IntersectionObserver | null = null;
+  function setupSticky() {
+    stickyObs?.disconnect();
+    const onResults = !resultsEl.hidden;
+    const mq = window.matchMedia('(max-width: 760px)');
+    const targets = ['next-steps', 'lead-form'].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    if (!onResults || !targets.length) { stickyCta.hidden = true; document.body.classList.remove('has-sticky'); return; }
+    const visible = new Set<Element>();
+    const update = () => {
+      const show = mq.matches && visible.size === 0;
+      stickyCta.hidden = !show;
+      document.body.classList.toggle('has-sticky', show);
+    };
+    stickyObs = new IntersectionObserver((entries) => {
+      for (const en of entries) { if (en.isIntersecting) visible.add(en.target); else visible.delete(en.target); }
+      update();
+    }, { threshold: 0.05 });
+    targets.forEach((t) => stickyObs!.observe(t));
+    mq.addEventListener?.('change', update);
+    update();
+  }
+
+  // ---------- edit / restart / share ----------
+  document.getElementById('editBtn')?.addEventListener('click', () => {
+    resultsEl.hidden = true;
+    plannerEl.hidden = false;
+    maxVisited = TOTAL;
+    setupSticky();
+    show(1);
+    plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
   document.getElementById('restartBtn')?.addEventListener('click', () => {
     resultsEl.hidden = true;
     plannerEl.hidden = false;
+    form.reset();
+    touched.gas = touched.elec = touched.other = false;
+    syncHeatAge();
+    setPostalError('');
+    maxVisited = 1;
     history.replaceState(null, '', location.pathname);
+    setupSticky();
     show(1);
+    plannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   document.getElementById('copyLink')?.addEventListener('click', async (e) => {
     const btn = e.currentTarget as HTMLButtonElement;
@@ -1439,19 +2143,21 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     } catch { btn.textContent = location.href; }
   });
 
+  // ---------- prefill from the address (quick start, screener, shared plans) ----------
   (function prefill() {
-    const q = new URLSearchParams(location.search);
-    if (!q.size) return;
+    const q = initial;
+    if (![...q.keys()].length) { show(1); return; }
     const set = (name: string, val: string | null) => {
       if (!val) return;
       const radio = form.querySelector<HTMLInputElement>(`[name="${name}"][value="${CSS.escape(val)}"]`);
       if (radio) radio.checked = true;
       else {
-        const input = form.querySelector<HTMLInputElement>(`input[name="${name}"]:not([type=radio]):not([type=checkbox])`);
+        const input = form.querySelector<HTMLInputElement | HTMLSelectElement>(`input[name="${name}"]:not([type=radio]):not([type=checkbox]), select[name="${name}"]`);
         if (input) input.value = val;
       }
     };
     set('postal', q.get('postal'));
+    set('prov', q.get('prov'));
     set('age', q.get('age'));
     set('htype', q.get('htype'));
     set('size', q.get('size'));
@@ -1470,7 +2176,22 @@ const SIZE_LABEL: Record<string, string> = { small: 'small', medium: 'medium', l
     if (q.get('other')) touched.other = true;
     (q.get('sec') ?? '').split(',').filter(Boolean).forEach((v) => set('sec', v));
     (q.get('sym') ?? '').split(',').filter(Boolean).forEach((v) => set('sym', v));
-    (q.get('goal') ?? '').split(',').filter(Boolean).forEach((v) => set('goal', v));
-    if (q.get('done') === '1' && q.get('age')) finish();
+    if (q.has('goal')) {
+      form.querySelectorAll<HTMLInputElement>('input[name="goal"]').forEach((g) => (g.checked = false));
+      (q.get('goal') ?? '').split(',').filter(Boolean).forEach((v) => set('goal', v));
+    }
+    syncHeatAge();
+    const located = checkPostal(postalEl.value).ok || Boolean(provEl.value);
+    if (q.get('done') === '1' && q.get('age') && located) { maxVisited = TOTAL; finish(); return; }
+    if (located) {
+      // Arriving from the home page quick start (or a partial link): the location is settled, carry on at step 2,
+      // and bring the wizard into view (on phones the intro fills the first screen).
+      maxVisited = 2;
+      show(2);
+      if (plannerEl.getBoundingClientRect().top > window.innerHeight * 0.4) plannerEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+      return;
+    }
+    show(1);
+    if (postalEl.value) validate(1);
   })();
 </script>

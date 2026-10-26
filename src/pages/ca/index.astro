@@ -55,6 +55,10 @@ const regionsStrip = [
   { photo: 'region-north', label: 'The North', href: '/ca/cities/#yt' },
 ];
 const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.population).slice(0, 12);
+// The quick start hands its answers to the planner after the # (never sent to a server), and the planner loads no analytics.
+const quickPrivacy = ACCOUNTS_ENABLED
+  ? 'Runs in your browser. Your answers aren’t sent anywhere unless you save your plan or ask to be matched with an advisor.'
+  : 'Runs in your browser. Your answers aren’t sent anywhere unless you ask to be matched with an advisor.';
 ---
 
 <Base title={title} description={description} schema={schema}>
@@ -77,12 +81,12 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
         </ul>
       </div>
 
-      <form class="card hero-form" action="/ca/plan/" method="GET" aria-label="Start your home energy plan">
+      <form class="card hero-form" id="quickStart" action="/ca/plan/" method="GET" aria-label="Start your home energy plan" data-clarity-mask="true">
         <h2>Get your free home energy plan</h2>
-        <p class="small">Six questions, ~90 seconds, no email required.</p>
+        <p class="small">Six short steps, about two minutes, no email needed. Start with these two.</p>
         <div class="field">
-          <label for="h-postal">Postal code</label>
-          <input id="h-postal" name="postal" type="text" placeholder="e.g. M4E 2V5" autocomplete="postal-code" />
+          <label for="h-postal">Postal code <span class="hint-sm">(the first three characters are enough)</span></label>
+          <input id="h-postal" name="postal" type="text" placeholder="e.g. A1A 1A1" autocomplete="postal-code" maxlength="7" />
         </div>
         <div class="field">
           <span class="lbl-sm">When was your home built?</span>
@@ -96,7 +100,7 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
           </div>
         </div>
         <button class="btn btn-primary" type="submit">Build my plan →</button>
-        <p class="meta">{ACCOUNTS_ENABLED ? 'Runs in your browser. Nothing is stored unless you save your plan.' : 'Runs in your browser — nothing you enter is stored.'}</p>
+        <p class="meta">{quickPrivacy}</p>
       </form>
     </div>
   </section>
@@ -311,6 +315,22 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
   </section>
 </Base>
 
+<script>
+  // Quick start → planner step 2. The answers travel after the # in the address, which browsers never send to a
+  // server or put in analytics page views. Without JavaScript the GET form still works (the planner moves it to the #).
+  const quick = document.getElementById('quickStart') as HTMLFormElement | null;
+  quick?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const p = new URLSearchParams();
+    const postal = (quick.querySelector('#h-postal') as HTMLInputElement | null)?.value.trim().toUpperCase().replace(/\s+/g, ' ') ?? '';
+    const age = quick.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value ?? '';
+    if (postal) p.set('postal', postal);
+    if (age) p.set('age', age);
+    const hash = p.toString();
+    location.href = '/ca/plan/' + (hash ? '#' + hash : '');
+  });
+</script>
+
 <style>
   .hero { padding: 64px 0 56px; }
   .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
@@ -322,6 +342,7 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
   .hero-form h2 { font-size: 21px; margin-bottom: 4px; }
   .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
   .hero-form .meta { margin-top: 10px; }
+  .hint-sm { font-weight: 400; color: var(--faint); font-size: 0.88em; }
   .steps { align-items: stretch; }
   .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
   .step-card :global(.frame) { border-radius: 0; box-shadow: none; }
