@@ -35,7 +35,7 @@ const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
       class="lfu-form"
       name={FORM_NAMES.usQuestion}
       method="POST"
-      action="/us/thanks/"
+      action="/us/thanks/?sent=1"
       data-netlify="true"
       netlify-honeypot="bot-field"
       data-context={context}
@@ -43,7 +43,7 @@ const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
       <input type="hidden" name="form-name" value={FORM_NAMES.usQuestion} />
       <input type="hidden" name="context" value={context} />
       <input type="hidden" name="subject" value={subject} />
-      <p class="lfu-hide"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <p class="lfu-hide" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
       <div class="grid-2">
         <div class="field">
           <label for={`${uid}-name`}>Name</label>

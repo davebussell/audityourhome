@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ProgramCard from '../../components/ProgramCard.astro';
 import ProviderCard from '../../components/ProviderCard.astro';
 import Photo from '../../components/Photo.astro';
 import ThermalCompare from '../../components/ThermalCompare.astro';
@@ -8,22 +7,24 @@ import EraBar from '../../components/EraBar.astro';
 import { localIndex, citiesByProvince } from '../../lib/local';
 import { SITE, ACCOUNTS_ENABLED } from '../../config/site';
 import { organizationSchema, faqSchema } from '../../lib/schema';
-import { programs, providers, regions } from '../../lib/data';
+import { providers, regions } from '../../lib/data';
+import { PROVINCE_BOOKING, openPrograms, STATUS_CHIP } from '../../lib/find';
 
 const title = 'AuditYourHome — find a certified home energy auditor in Canada';
 const description = SITE.description;
 
-const featured = programs.filter((p) => ['hrsp-assessment', 'hrsp-no-assessment', 'toronto-help'].includes(p.id));
 const featuredProviders = providers.filter((p) => ['windfall-ecology-centre', 'the-energuy', 'reep-green-solutions'].includes(p.slug));
+/** One compact card per province or territory: its first two open programs. */
+const rebateCards = PROVINCE_BOOKING.map((b) => ({ slug: b.slug, name: b.name, programs: openPrograms(b.slug).slice(0, 2) }));
 
 const faqs = [
   {
-    q: 'What does a home energy audit cost in Ontario?',
-    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies, and NRCan puts the two visits together at $600–$1,000 on average. Ontario’s Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. With one of those, the rebate covers most of a typical two-visit bill; with any other provider, you pay the full price. The follow-up has to be done by December 31, 2026.',
+    q: 'What does a home energy audit cost in Canada?',
+    a: 'It depends on the province. Where a provincial or territorial program runs the bookings, it’s subsidized: $50 in Yukon, $99 + HST in New Brunswick and PEI, a $199 program fee in Nova Scotia and $200 + GST in the NWT. Elsewhere you pay the advisor directly: about $400–$500 in BC, more than $400 in Alberta, $500–$600 in Saskatchewan and $500–$700 in Ontario for the first visit, with the follow-up extra. Manitoba rebates $400 of it, Ontario’s Home Renovation Savings Program pays $600 toward the two visits through its seven approved organizations, and Quebec’s Rénoclimat pays up to $500. See the cost guide for each province.',
   },
   {
     q: 'Is the audit actually required to get rebates?',
-    a: 'For the biggest ones, yes. The Home Renovation Savings assessment path (insulation up to $7,700, windows at $100 per opening) requires a pre- and post-retrofit EnerGuide assessment through one of the program’s seven approved service organizations. Toronto’s HELP loans require it for most projects too. Heat pump and solar rebates have a no-assessment stream.',
+    a: 'For many of the biggest ones, yes. Programs that pay on measured improvement need an EnerGuide evaluation before and after the work: BC’s Home Energy Improvement Bonus, Ontario’s Home Renovation Savings assessment path (insulation up to $7,700, windows at $100 per opening) and Nova Scotia’s assessment-path rebates are examples. Some rebates, mostly for heat pumps, have a no-evaluation stream. Your province’s page says which is which.',
   },
   {
     q: 'Who actually performs the audit?',
@@ -31,7 +32,7 @@ const faqs = [
   },
   {
     q: 'Is the Canada Greener Homes Grant still available?',
-    a: 'No — it closed to new applicants in February 2024, and the interest-free Greener Homes Loan closed October 1, 2025. Plenty of websites still advertise both. A new federal National Heat Pump Rebate ($2,000, or up to $10,000 below the median income, for cold-climate heat pumps) was announced October 8, 2026 and is expected to open early in 2027. The live money in Ontario right now is Home Renovation Savings, Toronto HELP, and the CMHC Eco premium refunds — see our program tracker for what’s verified as of ' + SITE.dataReviewDate + '.',
+    a: 'No — it closed to new applicants in February 2024, and the interest-free Greener Homes Loan closed October 1, 2025. Plenty of websites still advertise both. A new federal National Heat Pump Rebate ($2,000, or up to $10,000 below the median income, for cold-climate heat pumps) was announced October 8, 2026 and is expected to open early in 2027. Today the live money is provincial: see the rebates by province on this page and our program tracker for what’s verified as of ' + SITE.dataReviewDate + '.',
   },
 ];
 
@@ -108,8 +109,8 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
           <Photo name="attic-insulation-inspection" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
           <div class="step-body">
             <span class="step-no">1</span>
-            <h3>Profile your home</h3>
-            <p>The planner reads your home's era, heating, and symptoms — and tells you what's likely behind the walls and what it's costing you.</p>
+            <h3>Your free plan</h3>
+            <p>The planner reads your home's era, heating and symptoms, and estimates what's likely behind the walls and what it's costing you, before anyone visits.</p>
           </div>
         </div>
         <div class="step-card">
@@ -117,18 +118,22 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
           <div class="step-body">
             <span class="step-no">2</span>
             <h3>See the real money</h3>
-            <p>Estimated savings per upgrade, typical costs, and the rebates that apply — verified against official program pages, not last year's blog posts.</p>
+            <p>Your plan shows estimated savings per upgrade, typical costs and the rebates in your province, verified against official program pages.</p>
           </div>
         </div>
         <div class="step-card">
           <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
           <div class="step-body">
             <span class="step-no">3</span>
-            <h3>Book a registered advisor</h3>
-            <p>Compare licensed service organizations serving your area — credentials shown, prices where published, no shared lead lists.</p>
+            <h3>Get matched with a registered energy advisor</h3>
+            <p>To book the audit (EnerGuide evaluation): we introduce you to one licensed service organization for your area, or point you to your province's booking program.</p>
           </div>
         </div>
       </div>
+      <p class="steps-after small">
+        Then come the audit visit and report, and the upgrades and rebates.
+        <a href="/ca/how-it-works/">How a home energy audit works</a> · <a href="/ca/find/">How booking works in your province</a>
+      </p>
     </div>
   </section>
 
@@ -180,20 +185,41 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
     </div>
   </section>
 
-  <!-- PROGRAMS -->
-  <section>
+  <!-- PROGRAMS: by province -->
+  <section id="rebates">
     <div class="container">
-      <p class="eyebrow">Live in Ontario right now</p>
+      <p class="eyebrow">Rebates by province</p>
       <h2>The rebates worth planning around</h2>
       <p class="lede measure">
         Rebate programs open and close with little warning — the federal Grant and Loan are both
         gone, and half the internet hasn't noticed. The new federal
         <a href="/ca/programs/national-heat-pump-rebate/">heat pump rebate</a> was announced October 8,
-        2026 but won't open until early 2027. We verify every program against its official page and
-        stamp the date.
+        2026 but won't open until early 2027. Today the live money is provincial. We verify every
+        program against its official page and stamp the date.
       </p>
-      <div class="grid-3" style="margin-top: 28px;">
-        {featured.map((p) => <ProgramCard program={p} />)}
+      <div class="reb-grid">
+        {rebateCards.map((c) => (
+          <a class="card reb" href={`/ca/provinces/${c.slug}/`}>
+            <h3>{c.name}</h3>
+            {c.programs.length ? (
+              <ul class="reb-progs">
+                {c.programs.map((p) => {
+                  const chip = STATUS_CHIP[p.status] ?? ['chip-neutral', p.status];
+                  return (
+                    <li>
+                      <span class={`chip ${chip[0]}`}>{chip[1]}</span>
+                      <strong>{p.name}</strong>
+                      <span class="reb-h">{p.headline}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p class="reb-none">No open provincial program right now.</p>
+            )}
+            <span class="go">See the rebates →</span>
+          </a>
+        ))}
       </div>
       <p style="margin-top: 20px;"><a class="btn btn-ghost" href="/ca/programs/">See the full tracker — including what's closed</a></p>
     </div>
@@ -205,20 +231,21 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
       <p class="eyebrow">The directory</p>
       <h2>Registered advisors, on the record</h2>
       <p class="lede measure">
-        Ontario's official "find an advisor" resource is a phone list. Ours shows who serves your
-        area, their registration, their published prices where they exist — and rewards the
-        providers transparent enough to post them.
+        Canada's official way to find an energy advisor is a list of licensed service organizations by postal
+        code. Our city pages show who serves each of {localIndex.cities.length} cities, and how booking works in
+        each province. In Ontario we go further, with full provider profiles and published prices where they exist.
       </p>
+      <p class="dir-cta"><a class="btn btn-primary" href="/ca/find/">Find an auditor in your province →</a></p>
       <p class="small hrs-line">
-        Only assessments from the seven HRSP-approved organizations qualify for Ontario's $600
-        assessment rebate. Every card says whether the provider is one of them.
+        Ontario: only assessments from the seven HRSP-approved organizations qualify for the province's $600
+        assessment rebate. Every Ontario provider card says whether the provider is one of them.
         <a href="/ca/programs/home-renovation-savings-assessment/">See the seven</a>
       </p>
       <div class="grid-3">
         {featuredProviders.map((p) => <ProviderCard provider={p} />)}
       </div>
       <div class="city-links">
-        <span class="small">Browse by area:</span>
+        <span class="small">Ontario areas in depth:</span>
         {regions.map((r) => <a href={`/ca/find/${r.slug}/`}>{r.name}</a>)}
       </div>
       <p class="small guides-link">
@@ -306,6 +333,21 @@ const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.populat
     align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--card);
   }
   .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
+  .steps-after { margin: 18px 0 0; line-height: 1.8; }
+  .reb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 26px; }
+  .reb { padding: 18px 20px; display: grid; gap: 8px; align-content: start; text-decoration: none; color: var(--ink); box-shadow: none; transition: border-color 0.15s ease; }
+  .reb:hover { border-color: var(--heat); color: var(--ink); }
+  .reb h3 { font-size: 18px; margin: 0; }
+  .reb-progs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .reb-progs li { display: grid; gap: 3px; justify-items: start; font-size: 14.5px; line-height: 1.4; }
+  .reb-h { color: var(--muted); font-size: 13.5px; }
+  .reb-none { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .reb .go { font-weight: 700; font-size: 14px; color: var(--heat-deep); margin-top: 2px; }
+  @media (max-width: 700px) {
+    .reb-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .reb-grid .reb { flex: 0 0 78%; scroll-snap-align: start; }
+  }
+  .dir-cta { margin: 0 0 6px; }
   section.alt { background: #F3EFE7; }
   .hrs-line { margin: 18px 0 18px; max-width: 70ch; }
   .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }

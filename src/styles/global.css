@@ -292,6 +292,8 @@ details.faq[open] summary::after { content: "–"; }
 details.faq .faq-body { padding: 0 0 16px; color: var(--muted); max-width: 68ch; }
 
 /* ---- utility ---- */
+/* The hidden attribute always wins, even over a component's display rule (e.g. .btn's inline-flex). */
+[hidden] { display: none !important; }
 .tac { text-align: center; }
 .mt-0 { margin-top: 0; }
 .mb-0 { margin-bottom: 0; }

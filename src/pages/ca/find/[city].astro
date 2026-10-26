@@ -4,6 +4,7 @@ import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import ProviderCard from '../../../components/ProviderCard.astro';
 import LeadForm from '../../../components/LeadForm.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
 import { SITE } from '../../../config/site';
 import { breadcrumbSchema, cityDirectorySchema, faqSchema } from '../../../lib/schema';
 import { regions, providersForRegion, regionBySlug } from '../../../lib/data';
@@ -49,8 +50,10 @@ const schema = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/find/">Find an auditor</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
+      <a href="/ca/find/">Find an auditor</a> <span aria-hidden="true">/</span>
+      <a href="/ca/find/#ontario-areas">Ontario areas</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
     </nav>
+    <JourneyBar country="ca" current={2} ticks={false} compact />
     <div class="page-hero has-photo">
       <div class="hero-text">
       <h1>Home energy auditors in {region.name}</h1>

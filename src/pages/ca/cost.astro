@@ -1,35 +1,40 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/Photo.astro';
+import JourneyBar from '../../components/JourneyBar.astro';
 import { ogFor } from '../../lib/photos';
 import LeadForm from '../../components/LeadForm.astro';
-import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { PROVINCE_BOOKING } from '../../lib/find';
 
-const title = 'Home energy audit (assessment) cost in Ontario (2026): real prices and the $600 rebate | AuditYourHome';
+const title = 'Home energy audit (EnerGuide evaluation) cost in Canada (2026): prices and rebates by province | AuditYourHome';
 const description =
-  'What a home energy assessment (EnerGuide energy audit) costs in Ontario in 2026: about $500–$700 for the first visit and $200–$450 for the follow-up, the providers that publish prices, and who qualifies for the $600 Home Renovation Savings rebate.';
+  'What a home energy audit (EnerGuide evaluation) costs in each province and territory in 2026: subsidized programs from $50 to $200, full prices of about $400–$700, and the rebates that pay some of it back, including Ontario’s $600.';
 
 const faqs = [
   {
-    q: 'How much does a home energy audit or assessment cost in Ontario in 2026?',
-    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies: Windfall Ecology Centre charges $500 and $250 plus HST, Reep Green Solutions $540 and $406 with no HST, and the City-backed programs in London and Waterloo Region quote $500–$700 as typical for the first visit. NRCan puts the two visits together at $600–$1,000 on average. Larger homes cost more. The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. If an approved organization charges in the typical range, that leaves roughly $100–$550 plus HST; with any other provider you pay the full price.',
+    q: 'How much does a home energy audit cost in Canada in 2026?',
+    a: 'It depends on the province. Where a provincial or territorial program runs the bookings it’s subsidized: $50 in Yukon, $99 + HST in New Brunswick and Prince Edward Island, a $199 program fee in Nova Scotia (waived for lower incomes) and $200 + GST in the Northwest Territories. Elsewhere you pay the advisor directly: about $400–$500 in BC, more than $400 in Alberta, $500–$600 in Saskatchewan and $500–$700 in Ontario for the first visit, with the follow-up extra. Manitoba rebates $400, Ontario’s Home Renovation Savings Program pays $600 toward the two visits with an approved organization, and Quebec’s Rénoclimat pays up to $500. NRCan puts the two visits together at $600 to $1,000 on average.',
   },
   {
-    q: 'Which providers qualify for the $600 assessment rebate?',
+    q: 'How much does a home energy audit cost in Ontario?',
+    a: 'Typical Ontario prices are about $500–$700 for the initial EnerGuide evaluation and $200–$450 for the follow-up, plus HST where it applies: Windfall Ecology Centre charges $500 and $250 plus HST, Reep Green Solutions $540 and $406 with no HST. The Home Renovation Savings Program pays back $600 toward the two assessments once you install at least two recommended upgrades, but only assessments from the seven HRSP-approved organizations qualify. If an approved organization charges in the typical range, that leaves roughly $100–$550 plus HST; with any other provider you pay the full price.',
+  },
+  {
+    q: 'Which providers qualify for Ontario’s $600 assessment rebate?',
     a: 'Only the seven organizations approved for the Home Renovation Savings assessment path: AmeriSpec, Canada Energy Audit, Energy Werx, Greenbrain, NRGwise, The Energuy and The Home Inspectors Group. The same organization has to do both assessments. Book the follow-up by November 30, 2026; it must be done within 180 days of the first visit or by December 31, 2026, whichever comes first. None of the seven publishes a price, so ask for a written quote.',
   },
   {
     q: 'Why do so few providers publish prices?',
-    a: 'Habit, mostly. The industry runs on phone quotes, and NRCan itself tells homeowners prices vary by location and home size. We show published prices on each provider’s card and list those providers first; transparency is the sort we reward.',
+    a: 'Habit, mostly. The industry runs on phone quotes, and NRCan itself tells homeowners prices vary by location and home size. We show published prices where they exist, and transparency is the sort we reward.',
   },
   {
     q: 'Is a "free energy audit" real?',
-    a: 'In Ontario, a truly free EnerGuide assessment is rare — free walkthroughs are usually sales visits for insulation, windows, or HVAC. A real assessment includes a blower door test and produces an EnerGuide rating and report from an NRCan-registered advisor. If there is no blower door, it is not the audit the rebate programs require.',
+    a: 'Sometimes, through a provincial program for eligible households. But a free walk-through from an insulation, window or HVAC company is usually a sales visit. A real evaluation includes a blower door test and produces an EnerGuide rating and report from a registered energy advisor. If there’s no blower door, it isn’t the audit rebate programs ask for.',
   },
   {
     q: 'What does the price include?',
-    a: 'The initial visit takes about two hours on site: a blower door airtightness test, insulation levels in the walls, ceilings and basement, an inventory of windows and exterior doors, and the size and efficiency of your heating, cooling and water heating equipment. Afterwards you get your EnerGuide rating, label and a renovation upgrade report. The follow-up visit takes about an hour, re-tests after your upgrades and unlocks the rebates.',
+    a: 'The initial visit takes about two to three hours on site: a blower door airtightness test, insulation levels in the walls, ceilings and basement, an inventory of windows and exterior doors, and the size and efficiency of your heating, cooling and water heating equipment. Afterwards you get your EnerGuide rating, label and a renovation upgrade report. The follow-up visit, after your upgrades, re-tests the house and is what most rebates pay on. Ask whether a quote includes both visits.',
   },
 ];
 
@@ -44,20 +49,57 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>Cost guide</span>
+    </nav>
+
+    <JourneyBar country="ca" current={2} ticks={false} />
+
     <div class="page-hero has-photo">
       <div class="hero-text">
-      <p class="eyebrow">Cost guide · updated {SITE.dataReviewDate}</p>
-      <h1>Home energy audit (assessment) cost in Ontario</h1>
+      <p class="eyebrow">Cost guide · Canada</p>
+      <h1>What a home energy audit costs in Canada</h1>
       <p class="lede measure">
-        Short version: expect about <strong>$500–$700</strong> for the initial EnerGuide
-        evaluation and <strong>$200–$450</strong> for the follow-up, plus HST where it applies. Ontario's Home Renovation Savings program pays a <strong>$600
-        rebate</strong> toward the two visits, but only assessments from the seven HRSP-approved
-        organizations qualify, and only once you install at least two recommended upgrades.
+        Short version: it depends on your province. Where a provincial or territorial program runs the bookings,
+        an EnerGuide evaluation is subsidized (<strong>$50 to $200</strong>). Elsewhere expect about
+        <strong>$400–$700</strong> for the first visit, with the follow-up extra, and rebates that pay some of it
+        back: <strong>$400</strong> in Manitoba, <strong>$600</strong> through Ontario’s Home Renovation Savings and
+        up to <strong>$500</strong> from Quebec’s Rénoclimat.
       </p>
       </div>
       <Photo name={'energy-bill-analysis'} eager />
     </div>
 
+    <h2>By province and territory</h2>
+    <div class="tablewrap card">
+      <table class="stack">
+        <caption class="sr-only">Home energy audit (EnerGuide evaluation) costs by province and territory, 2026</caption>
+        <thead>
+          <tr><th>Province</th><th>Typical cost</th><th>Help with the cost</th><th>How you book</th></tr>
+        </thead>
+        <tbody>
+          {PROVINCE_BOOKING.map((b) => (
+            <tr id={`cost-${b.slug}`}>
+              <td data-label="Province"><a href={`/ca/find/#${b.slug}`}><strong>{b.name}</strong></a></td>
+              <td data-label="Typical cost">{b.cost}</td>
+              <td data-label="Help with the cost">{b.help || 'None province-wide'}</td>
+              <td data-label="How you book">{b.route}<span class="src"> · checked {b.checked}{b.sources[0] && <>: <a href={b.sources[0].href} rel="noopener" target="_blank">source&nbsp;↗</a></>}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="small after-table">
+      Prices are what programs and cities publish, not quotes: larger homes cost more, and most providers price the first
+      and follow-up visits separately. <a href="/ca/find/">How booking works in each province</a>, with the licensed
+      organizations serving 70 cities.
+    </p>
+
+    <h2 id="ontario">Ontario in detail</h2>
+    <p class="measure">
+      Ontario is the one province where the rebate depends on which organization you book: only the seven approved for the
+      Home Renovation Savings assessment path earn the $600, and only once you install at least two recommended upgrades.
+    </p>
     <div class="tablewrap card">
       <table class="stack">
         <caption class="sr-only">Ontario home energy audit costs, 2026</caption>
@@ -76,38 +118,36 @@ const schema = [
     </div>
 
     <div class="measure prose">
-      <h2>The honest context</h2>
       <p>
         NRCan says the pre- and post-retrofit evaluations together cost
         <a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/find-service-organizations-existing-homes" rel="noopener" target="_blank">$600 to $1,000 on average</a>,
-        and most providers don't publish prices. Two in our directory do: Windfall Ecology Centre
+        and most providers don't publish prices. Two in our Ontario directory do: Windfall Ecology Centre
         ($500 initial and $250 follow-up, plus HST) and Reep Green Solutions ($540 and $406, with no
         HST because it's a registered charity; Kitchener Utilities gas customers pay $490 for the
         first visit). Neither is one of the seven HRSP-approved organizations, so their evaluations
-        don't earn the $600 rebate, and none of the seven publishes a price. That opacity is an
-        industry habit, not a law of nature, and it's why we surface published prices first.
+        don't earn the $600 rebate, and none of the seven publishes a price.
       </p>
       <p>
-        Some cities add their own help. For a limited time, <a href="https://betterhomesottawa.ca/rebate-and-incentive-programs/better-homes-loan-program/" rel="noopener" target="_blank">Better Homes Ottawa</a>
+        Some Ontario cities add their own help. For a limited time, <a href="https://betterhomesottawa.ca/rebate-and-incentive-programs/better-homes-loan-program/" rel="noopener" target="_blank">Better Homes Ottawa</a>
         takes $600 off its retrofit loans for participants who aren't getting the Home Renovation
         Savings assessment rebate, and <a href="https://betterhomesptbo.ca/loan-program/" rel="noopener" target="_blank">Better Homes Peterborough</a>
         pays $600 toward an EnerGuide assessment for loan participants who finish their retrofit and
         aren't getting a similar rebate elsewhere.
       </p>
+      <h2>Two warnings, anywhere in Canada</h2>
       <p>
-        Two warnings worth their weight: first, the federal <strong>Greener Homes Grant and Loan are
-        closed</strong> — any site or salesperson promising them is out of date, including on the cost
-        of "free" evaluations those programs once subsidized. Second, a <strong>"free audit" from an
-        insulation or HVAC company is a sales visit</strong>, not an EnerGuide assessment — it won't
-        qualify you for the assessment-path rebates, and its recommendations tend to match what the
-        company sells.
+        First, the federal <strong>Greener Homes Grant and Loan are closed</strong>: any site or salesperson
+        promising them is out of date, including on the cost of "free" evaluations those programs once
+        subsidized. Second, a <strong>"free audit" from an insulation or HVAC company is a sales visit</strong>, not
+        an EnerGuide evaluation: it won't qualify you for rebates that need one, and its recommendations tend to
+        match what the company sells.
       </p>
       <p>
         Whether the audit pays for itself depends on your home, which is exactly what it measures:
         the renovation upgrade report lists the recommended upgrades with their estimated energy
         savings and your EnerGuide rating before and after them
         (<a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/after-your-energuide-home-evaluation" rel="noopener" target="_blank">NRCan ↗</a>).
-        Start with <a href="/ca/plan/">the planner</a> to see your likely numbers before you book.
+        Start with <a href="/ca/plan/">your free plan</a> to see your likely numbers before you book.
       </p>
     </div>
 
@@ -123,15 +163,19 @@ const schema = [
 
     <LeadForm
       heading="Get a real quote"
-      sub="We'll match you with a registered service organization for your area — and tell you if a published-price provider serves you."
+      sub="Tell us where you are. We'll introduce you to one licensed service organization for your area, or point you to your province's booking program."
       context="cost-guide"
     />
   </div>
 </Base>
 
 <style>
-  .tablewrap { margin-bottom: 32px; }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .prose { margin-bottom: 36px; }
-  .prose h2 { margin-top: 8px; }
+  .tablewrap { margin-bottom: 12px; }
+  .after-table { margin: 0 0 32px; max-width: 75ch; }
+  .src { color: var(--faint); font-size: 13px; }
+  .src a { color: var(--steel); }
+  td a { overflow-wrap: anywhere; }
+  .prose { margin: 20px 0 36px; }
+  .prose h2 { margin-top: 26px; }
+  #ontario { scroll-margin-top: 80px; }
 </style>
