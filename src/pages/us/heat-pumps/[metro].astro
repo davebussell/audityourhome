@@ -17,6 +17,7 @@ import { breadcrumbSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
 import { relatedMetros } from '../../../lib/us/metro-view';
 import { PRICE_META } from '../../../lib/us/data';
+import { cleanRecord, cleanStatus } from '../../../lib/us/clean';
 import type { Metro } from '../../../lib/us/data';
 import { placeClimate, climateMeaning } from '../../../lib/climate';
 import {
@@ -58,7 +59,8 @@ const breakEven = costs.elecPerMMBtu && costs.gasPerMMBtu ? costs.elecPerMMBtu /
 const cool = coolingUS(m, 1600);
 const coolTyp = cool?.rows.find((r) => r.key === 'typical');
 const cool18 = cool?.rows.find((r) => r.key === 'two');
-const progs = usRebates(m.slug);
+// research wording ("couldn't be read in our October 12 check", "Not verifiable") reads as guidance; the raw status still sets the chip
+const progs = usRebates(m.slug).map((p) => ({ ...cleanRecord(p), status: p.status, statusText: cleanStatus(p.status) }));
 const openProgs = progs.filter((p) => ['Open', 'Open · limits apply'].includes(statusChipHP(p.status).label));
 const unconfirmed = progs.filter((p) => statusChipHP(p.status).label === 'Unconfirmed').length;
 // Heat-led metros quote the cold-climate heat pump; mild and hot ones a standard heat pump.
@@ -101,7 +103,11 @@ const fmtDD = (n: number | null) => (n == null ? '—' : fmtInt(n, 'us'));
 
 let climateLine = 'Winters are mild, so almost any certified heat pump can heat the house; cooling efficiency and quiet running decide the choice.';
 if (kind === 'cold') climateLine = 'Winters here are long and cold, so the heat pump has to keep its output near 5°F.';
-else if (kind === 'hot') climateLine = 'Cooling runs most of the year here, so summer efficiency matters more than heating at 5°F.';
+else if (kind === 'hot')
+  climateLine =
+    hdd0 < 1000
+      ? 'Cooling runs most of the year and winter heating is light here, so choose a heat pump for its cooling efficiency (SEER2, and EER2 for the hottest afternoons); cold-weather ratings don’t matter.'
+      : 'Cooling runs most of the year here, so summer efficiency (SEER2 and EER2) matters most. Winters still bring hard freezes, so check the heat pump’s output at 17°F and size the backup heat for a multi-day cold snap.';
 else if (moisture === 'C')
   climateLine =
     hdd0 >= 4000
@@ -222,7 +228,7 @@ const jump: [string, string][] = [
       <div class="key card">
         <span class="k">Heat pump programs</span>
         <span class="kv-big">{openProgs.length} <small>of {progs.length} open</small></span>
-        <span class="kv-sub">{unconfirmed > 0 && `${unconfirmed} unconfirmed · `}<a href="#rebates">Amounts and equipment rules</a></span>
+        <span class="kv-sub">{unconfirmed > 0 && `${unconfirmed} without a posted status · `}<a href="#rebates">Amounts and equipment rules</a></span>
       </div>
     </div>
     {meaning && <p class="meaning measure"><strong>What this means for your house:</strong> {meaning}</p>}
@@ -357,7 +363,7 @@ const jump: [string, string][] = [
         Every heat pump program we found for the {name} area, with the equipment rule that decides which models qualify. Checked against each
         program's own page on {HP_CHECKED}. Most utility programs need an AHRI-matched system; check the exact pairing in the AHRI directory before you sign.
       </p>
-      {progs.length ? <div class="cards">{progs.map((p) => <RebateCard p={p} />)}</div> : <p>No heat pump program found in our check.</p>}
+      {progs.length ? <div class="cards">{progs.map((p) => <RebateCard p={p} />)}</div> : <p>We don’t track a heat pump program for this area yet. Ask your electric utility, and see the federal options below.</p>}
       <h3 class="sub-h">Federal</h3>
       <div class="cards">
         <article class="card c">

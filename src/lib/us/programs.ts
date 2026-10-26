@@ -47,7 +47,7 @@ export const voice = (s: string) =>
     // the notes abbreviate the trade group the pages name in full
     .replace(/\bBPA's\b|\bBPA(?= (June|March) 2026)/g, "the Building Performance Association's")
     .replace(/(^|[.!?]\s+|['‘“(]\s*)the Building Performance Association's/g, (_, lead) => `${lead}The Building Performance Association's`)
-    .replace(/\bnot verified here\b/g, 'not confirmed in our check')
+    .replace(/\bnot verified here\b/g, 'not confirmed')
     // fetch-tool details from the research log mean nothing to a reader; the plain sentence stays
     .replace(/\s*\((?:Cloudflare challenge \/ )?(?:403|fetch)[^)]*\)/g, '')
     .replace(/; content read via WebFetch\b/g, '')
@@ -163,13 +163,13 @@ const FROM_METRO: Record<string, Partial<Record<ProgKey, { metro: string; all: b
       metro: 'phoenix',
       all: true,
       sources: /efficiencyarizona\.com\/(|eligibility\/|significant-changes[^/]*\/)$/,
-      note: "Arizona's energy office site couldn't be reached for our state-by-state check, but our Phoenix research reached Efficiency Arizona, the state's HEEHR program site, on October 12, 2026. This status comes from there.",
+      note: "This status comes from Efficiency Arizona, the state's HEEHR program site, checked October 12, 2026.",
     },
     homes: {
       metro: 'phoenix',
       all: false,
       sources: /efficiencyarizona\.com\/$/,
-      note: 'From our Phoenix research on Efficiency Arizona, checked October 12, 2026.',
+      note: 'From Efficiency Arizona, the state’s program site, checked October 12, 2026.',
       status: (s) => /No HOMES[^.]*\./.exec(s)?.[0] ?? null,
     },
   },
@@ -178,7 +178,7 @@ const FROM_METRO: Record<string, Partial<Record<ProgKey, { metro: string; all: b
       metro: 'los-angeles',
       all: false,
       sources: /techcleanca\.com\/incentives\/(heehrarebates\/)?$/,
-      note: "The California Energy Commission's Q&A still says multifamily HEEHRA rebates are available, but the incentives page of TECH Clean California, which runs Phase I for the state, says they were fully reserved as of September 1, 2026. This status follows TECH, as checked for our California city pages on October 12, 2026.",
+      note: "The California Energy Commission's Q&A still says multifamily HEEHRA rebates are available, but TECH Clean California, which runs Phase I for the state, says they were fully reserved as of September 1, 2026. This status follows TECH (checked October 12, 2026).",
     },
   },
 };
@@ -279,10 +279,10 @@ export const GROUPS: Record<GroupKey, { label: string; cls: string; desc: string
   },
   closed: { label: 'Closed', cls: 'chip-closed', anchor: 'closed', desc: 'Launched, then closed to new applicants once the money was reserved.' },
   'not-open': {
-    label: 'Not launched or unconfirmed',
+    label: 'Not launched or no status posted',
     cls: 'chip-info',
     anchor: 'not-launched',
-    desc: 'No rebates yet, or no state page could confirm the status.',
+    desc: 'No rebates yet, or no status posted by the state.',
   },
 };
 export const statesIn = (g: GroupKey) => STATES.filter((s) => s.group === g);
@@ -311,11 +311,11 @@ export function stateLede(s: StateView): string {
     if (c.status === 'limited') return c.label === 'Paused' ? 'are paused' : c.label === 'Waitlist' ? 'have only a waitlist' : 'are open with limits';
     if (c.status === 'closed') return 'are closed to new applicants';
     if (c.status === 'not-open') return "haven't launched";
-    return "aren't confirmed on any state page we could check";
+    return 'have no status posted by the state';
   };
   const a = verb(s.hear);
   const b = verb(s.homes);
-  if (s.mapOnly) return `We couldn't confirm the status of the federal Home Energy Rebates in ${nameIn(s)} on a state page.`;
+  if (s.mapOnly) return `${NameStart(s)} hasn’t posted a status for the federal Home Energy Rebates on a state page we can link to, so ask the state energy office before you count on them.`;
   if (a === b && s.hear.chip.status === 'not-open') return `${NameStart(s)} hasn't launched either federal Home Energy Rebate program: HEEHR for electric appliances or HOMES for whole-home upgrades.`;
   if (a === b) return `In ${nameIn(s)}, HEEHR rebates for electric appliances and HOMES rebates for whole-home upgrades ${a}.`;
   return `In ${nameIn(s)}, HEEHR rebates for electric appliances ${a}, and HOMES rebates for whole-home upgrades ${b}.`;
@@ -324,7 +324,7 @@ export function stateLede(s: StateView): string {
 /** What the trade-group map says, and whether it disagrees with the state's page. */
 export function baselineNote(s: StateView): string {
   const map = `The Building Performance Association's June 2026 map, a trade-group source and the only national list since DOE stopped publishing one, lists ${nameIn(s)} as “${s.baseline}”.`;
-  if (s.mapOnly) return `${map} We couldn't check a program page for ${nameIn(s)}, so that map is the only status we have.`;
+  if (s.mapOnly) return `${map} It is the only status we have for ${nameIn(s)}, so ask the state energy office before you count on it.`;
   if (s.differs) return `${map} The state's own page, checked ${fmtISO(s.hear.checked)}, says otherwise, and this page reports the state's version.`;
   return map;
 }

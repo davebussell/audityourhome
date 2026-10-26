@@ -1,0 +1,35 @@
+---
+/**
+ * "← Back to your plan" on the pages a US plan links out to (/us/find/, /us/programs/, /us/cost/).
+ * The plan lives in the planner page's #fragment, so the link only shows when the visitor arrived
+ * from their plan on this site, and it goes back in history, which restores that exact plan.
+ * Nothing is stored. Without a plan to return to, the journey bar's stage 1 starts a new one.
+ */
+---
+
+<p class="back-plan" data-back-plan hidden><a href="/us/plan/">← Back to your plan</a></p>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-back-plan]').forEach((el) => {
+    let from: URL | null = null;
+    try {
+      from = document.referrer ? new URL(document.referrer) : null;
+    } catch {
+      from = null;
+    }
+    if (!from || from.origin !== location.origin || !from.pathname.startsWith('/us/plan')) return;
+    el.hidden = false;
+    el.querySelector('a')?.addEventListener('click', (e) => {
+      if (history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    });
+  });
+</script>
+
+<style>
+  .back-plan { margin: 10px 0 0; font-size: 14.5px; }
+  .back-plan a { font-weight: 700; color: var(--steel); text-decoration: none; }
+  .back-plan a:hover { text-decoration: underline; }
+</style>

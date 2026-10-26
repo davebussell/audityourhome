@@ -14,6 +14,7 @@ import StatusLine from '../../../components/us/StatusLine.astro';
 import FaqList from '../../../components/us/FaqList.astro';
 import CreditsEnded from '../../../components/us/CreditsEnded.astro';
 import WapNote from '../../../components/us/WapNote.astro';
+import PlanPrompt from '../../../components/us/PlanPrompt.astro';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
 import { METROS, FEDERAL, US_VERIFIED, fmtInt } from '../../../lib/us/data';
@@ -115,7 +116,7 @@ if (main) {
       `Cost: ${costPart}`,
       main.whoQualifies ? `Who qualifies: ${sentence(main.whoQualifies)}` : '',
       main.howToBook ? `How to book: ${sentence(main.howToBook)}` : '',
-      `Our research lists ${audits.length} audit program${audits.length === 1 ? '' : 's'} for the ${name} metro, checked ${US_VERIFIED}; all of them are on this page.`,
+      `We track ${audits.length} audit program${audits.length === 1 ? '' : 's'} for the ${name} metro, checked ${US_VERIFIED}; all of them are on this page.`,
     ].filter(Boolean).join(' '),
   });
 }
@@ -141,7 +142,7 @@ if (income.length) {
   if (homes.length) {
     parts.push(`${homes.length === 1 ? 'One rule reaches' : `${homes.length} rules reach`} ordinary homeowners.`);
     for (const r of homes) parts.push(`${sentence(r.name)} Who it applies to: ${appliesTo(r.appliesTo)}`);
-  } else parts.push('No local energy rule in our research applies to ordinary existing homes.');
+  } else parts.push('None of the local energy rules we track applies to ordinary existing homes.');
   if (build.length) parts.push(`${andList(build.map((r) => r.name))} ${build.length === 1 ? 'applies' : 'apply'} only to new buildings or permitted work.`);
   if (indirect.length) parts.push(`${andList(indirect.map((r) => r.name))} ${indirect.length === 1 ? 'affects' : 'affect'} homeowners only indirectly.`);
   if (large.length) parts.push(`${large.length === 1 ? `One ${homes.length || build.length ? 'other ' : ''}rule applies` : `${large.length} ${homes.length || build.length ? 'other ' : ''}rules apply`} only to larger buildings.`);
@@ -192,6 +193,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
       <span>{name}</span>
     </nav>
 
+    <PlanPrompt forWhat={`a home in the ${name} area`} />
+
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">{stateNames.join(' · ')} · #{m.rank} metro by population</p>
@@ -215,7 +218,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
             <span class="kv-sub">{main.name}{auditTags(main).length > 0 && ` · ${auditTags(main).join(' · ')}`}</span>
           </>
         ) : (
-          <span class="kv-sub">No audit program in our research is open right now. See the notes below.</span>
+          <span class="kv-sub">None of the audit programs we track is open right now. Ask your utility first, then book a certified auditor (see below).</span>
         )}
       </div>
       <div class="key card">
@@ -224,8 +227,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
         <span class="kv-sub">
           {[
             counts.closed > 0 ? `${counts.closed} closed or fully reserved` : '',
-            counts.total - counts.live - counts.closed > 0 ? `${counts.total - counts.live - counts.closed} unconfirmed or not open yet` : '',
-          ].filter(Boolean).join('; ') || 'All the offers in our research are open.'}
+            counts.total - counts.live - counts.closed > 0 ? `${counts.total - counts.live - counts.closed} not open yet or without a posted status` : '',
+          ].filter(Boolean).join('; ') || 'All the offers we track are open.'}
         </span>
       </div>
       <div class="key card">
@@ -345,7 +348,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
     <section id="audits" class="sec">
       <h2>How to get a home energy audit in {name}</h2>
       <p class="measure">
-        {audits.length} program{audits.length === 1 ? '' : 's'} in our research, open ones first. Prices are as each program
+        {audits.length} program{audits.length === 1 ? '' : 's'} we track, open ones first. Prices are as each program
         publishes them. If you want a full diagnostic audit outside these programs, look for a certified auditor:
         <a href="/us/find/">how to find one</a> and <a href="/us/cost/">what audits cost</a>.
       </p>
@@ -358,7 +361,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
     <section id="rebates" class="sec">
       <h2>Rebates and incentives now</h2>
       <p class="measure">
-        {counts.total} offers in our research for the {name} metro; {counts.live} {counts.live === 1 ? 'is' : 'are'} open as of {US_VERIFIED}.
+        {counts.total} offers we track for the {name} metro; {counts.live} {counts.live === 1 ? 'is' : 'are'} open as of {US_VERIFIED}.
         Many require the program’s own contractor or an audit first, so read the terms before you buy.
       </p>
       <CreditsEnded />
@@ -431,7 +434,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
           ))}
         </div>
       ) : (
-        <p class="measure">Our research found no income-qualified program specific to this metro.</p>
+        <p class="measure">We don’t track an income-qualified program specific to this metro; the federal program below covers every state.</p>
       )}
       <WapNote />
     </section>
@@ -473,8 +476,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
 
     <!-- SOURCES -->
     <section id="sources" class="sec">
-      <div class="card card-pad srcs">
-        <h2>Sources</h2>
+      <details class="card card-pad srcs">
+        <summary><h2>Sources and checks</h2></summary>
         <p class="small">Every source below was opened and checked on {US_VERIFIED}.</p>
         <ul>
           {(d.sources ?? []).map((s: any) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></li>)}
@@ -484,12 +487,12 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
         </ul>
         {limits.length > 0 && (
           <div class="limits">
-            <h3>Sources and limits</h3>
-            <p class="small">What this guide couldn’t confirm when we checked on {US_VERIFIED}. Ask the program or your utility directly about these:</p>
+            <h3>Worth confirming</h3>
+            <p class="small">Ask the program or your utility about these before you count on them:</p>
             <ul>{limits.map((s) => <li>{s}</li>)}</ul>
           </div>
         )}
-      </div>
+      </details>
     </section>
 
     <div class="lf-wrap">
@@ -590,7 +593,10 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
   .t-mean { color: var(--ink) !important; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px !important; }
 
   .srcs { border-left: 4px solid var(--steel); box-shadow: none; }
-  .srcs h2 { font-size: 22px; margin-bottom: 4px; }
+  .srcs h2 { font-size: 22px; margin-bottom: 4px; display: inline; }
+  .srcs summary { cursor: pointer; list-style-position: outside; }
+  .srcs summary::marker { color: var(--steel); }
+  .srcs[open] summary { margin-bottom: 10px; }
   .srcs ul { margin: 0; padding-left: 20px; columns: 2 340px; column-gap: 32px; font-size: 13.5px; }
   .srcs li { break-inside: avoid; margin-bottom: 6px; }
   .srcs a { overflow-wrap: anywhere; }

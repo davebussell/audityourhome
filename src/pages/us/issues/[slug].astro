@@ -8,6 +8,7 @@ import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
 import LeadFormUS from '../../../components/us/LeadFormUS.astro';
 import FaqList from '../../../components/us/FaqList.astro';
+import PlanPrompt from '../../../components/us/PlanPrompt.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import {
@@ -60,6 +61,8 @@ const schema = [
       <a href="/us/">Home</a> <span aria-hidden="true">/</span> <a href="/us/issues/">Common problems</a>
       <span aria-hidden="true">/</span> <span>{issue.name}</span>
     </nav>
+
+    <PlanPrompt forWhat="your house" />
 
     <div class={`page-hero ${issue.photo ? 'has-photo' : 'is-glance'}`}>
       <div class="hero-text">

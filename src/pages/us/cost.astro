@@ -9,6 +9,8 @@ import FaqList from '../../components/us/FaqList.astro';
 import LeadFormUS from '../../components/us/LeadFormUS.astro';
 import StatusLine from '../../components/us/StatusLine.astro';
 import CreditsEnded from '../../components/us/CreditsEnded.astro';
+import JourneyBar from '../../components/JourneyBar.astro';
+import BackToPlan from '../../components/us/BackToPlan.astro';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 import { ogFor } from '../../lib/photos';
 import { METROS, FEDERAL, US_VERIFIED } from '../../lib/us/data';
@@ -54,7 +56,7 @@ const description = `There’s no official national price for a home energy audi
 const faqs = [
   {
     q: 'How much does a home energy audit cost in 2026?',
-    a: `No DOE, EPA or HUD page states a national typical price, and DOE says Home Energy Score fees vary across the country. Across the ${n} largest U.S. metros, ${kinds.free} of the ${all.length} audit programs in our research list the assessment as free (some only for income-qualified households or as an online tool), and the published fees we found run from $49 (SRP’s in-home visit in Phoenix) to $100 (Home Performance with ENERGY STAR in Maryland, Minnesota’s Energy Planner visit and Xcel’s Squad Plus in Colorado). For private audits, Nicor Gas says an energy audit may cost between $100 and $500 or more, and Austin Energy estimates about $200–$300 for a typical home of 1,800 sq ft or less.`,
+    a: `No DOE, EPA or HUD page states a national typical price, and DOE says Home Energy Score fees vary across the country. Across the ${n} largest U.S. metros, ${kinds.free} of the ${all.length} audit programs we track list the assessment as free (some only for income-qualified households or as an online tool), and the published fees we found run from $49 (SRP’s in-home visit in Phoenix) to $100 (Home Performance with ENERGY STAR in Maryland, Minnesota’s Energy Planner visit and Xcel’s Squad Plus in Colorado). For private audits, Nicor Gas says an energy audit may cost between $100 and $500 or more, and Austin Energy estimates about $200–$300 for a typical home of 1,800 sq ft or less.`,
   },
   {
     q: 'Why do some audits cost nothing?',
@@ -88,6 +90,9 @@ const schema = [
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>What an audit costs</span>
     </nav>
+
+    <JourneyBar country="us" current={2} ticks={false} compact />
+    <BackToPlan />
 
     <div class="page-hero has-photo">
       <div class="hero-text">
@@ -135,7 +140,7 @@ const schema = [
 
       <h2 class="h2b">What private audits cost</h2>
       <p class="measure">
-        Few official sources give a price for a private audit. Two in our research do: Nicor Gas, in the Chicago area, says an energy
+        Few official sources give a price for a private audit. Two do: Nicor Gas, in the Chicago area, says an energy
         audit “may cost between $100 and $500 or more,” and Austin Energy estimates about $200–$300 for the audit Austin requires
         at most home sales, for a typical single-family home of 1,800 sq ft or less with one A/C system.
         {austin?.url && <a href={austin.url} rel="noopener" target="_blank">Austin Energy&nbsp;↗</a>}

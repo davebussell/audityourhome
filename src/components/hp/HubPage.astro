@@ -75,7 +75,7 @@ const picks = [
   },
   {
     title: 'Budget brands',
-    why: 'Value lines and makers our research rated budget. Check installer support before you buy.',
+    why: 'Value lines and makers we rate as budget. Check installer support before you buy.',
     brands: budget.map((s) => ({ slug: s, brand: brandInfo(s).name })),
     href: '#compare',
   },
@@ -361,8 +361,8 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
         <>
           <p class="sec-intro">
             The federal 25C tax credit ended for heat pumps placed in service after December 31, 2025. The federal Home Electrification and Appliance
-            Rebates, where a state runs them, require an ENERGY STAR certified heat pump. Utilities and cities add their own rules. Open counts are from our
-            check on {HP_CHECKED}.
+            Rebates, where a state runs them, require an ENERGY STAR certified heat pump. Utilities and cities add their own rules. Open counts are as of
+            {HP_CHECKED}.
           </p>
           <div class="tablewrap card">
             <table class="stack dt">
@@ -416,7 +416,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
         <p class="small">
           Model data: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a> ({fmtInt(ESTAR.rows, market)} pairings,
           updated {updated}), filtered to pairings certified for {country}. We leave out listings with physically impossible ratings and placeholder
-          entries. Leaderboards use R-454B and R-32 systems only. Brand facts and rebate rules were researched from makers' and programs' own pages on
+          entries. Leaderboards use R-454B and R-32 systems only. Brand facts and rebate rules come from makers' and programs' own pages, checked
           {HP_CHECKED}; each brand page lists its sources. Running-cost comparisons on the {isCA ? 'province' : 'metro'} pages use
           {isCA ? ' the provincial energy prices from our calculators and seasonal COP planning values from Dunsky/CCI (2024), adjusted for field studies.' : ' EIA state energy prices and seasonal COP planning values from Dunsky/CCI (2024), set slightly below modeled results and chosen by heating degree days. Cooling estimates scale EIA’s 2020 household survey (RECS) benchmarks by each system’s SEER2.'}
         </p>

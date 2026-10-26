@@ -9,6 +9,7 @@
  * federal.json), verified October 12, 2026, and are passed in from the page's build-time payload.
  */
 import type { Vintage } from '../calc/engine';
+import { stateLine } from './state-text';
 
 export const VINTAGES: Vintage[] = ['pre-1946', '1946-1965', '1966-1980', '1981-1995', '1996-2010', '2011-plus'];
 
@@ -790,13 +791,19 @@ const ZONE_DESC: Record<number, string> = {
   3: 'Zone 3 (low potential)',
 };
 
-/** Research-note wording ("not confirmed", "per NCSL") → a homeowner action. */
-function coNote(raw: string | null | undefined, stateName: string): string | undefined {
+/** The state's CO alarm rule as guidance: a real law is stated plainly; no statewide law (or none confirmed) becomes an action. */
+export function coNote(raw: string | null | undefined, stateName: string, st: string): string | undefined {
   if (!raw) return undefined;
-  if (/not (been )?(confirmed|verified)|unverified|no statute|NCSL|only child-care/i.test(raw)) {
-    return `We couldn’t confirm ${/^[AEIOU]/.test(stateName) ? 'an' : 'a'} ${stateName} law requiring CO alarms in existing homes, but CPSC recommends one on every level and outside sleeping areas, so put them in before any air sealing.`;
+  const anyway = 'Whatever the law says, CPSC recommends a CO alarm on every level and outside sleeping areas, so put them in before any air sealing.';
+  if (/only child-care/i.test(raw)) {
+    return `In ${stateName}, the statewide CO alarm law covers only child-care facilities, so ask your city whether its building code requires alarms in homes. ${anyway}`;
   }
-  return raw.replace(/\s*\([^()]*\)/g, '').replace(/\s+([,.;])/g, '$1');
+  if (/not (been )?(confirmed|verified)|unverified|no statute/i.test(raw)) {
+    return `${stateName} has no statewide law we know of requiring CO alarms in existing homes, so ask your city whether its code does. ${anyway}`;
+  }
+  const prefix = raw.match(/^In [^:]+:\s*/)?.[0] ?? '';
+  const body = stateLine(raw.slice(prefix.length), st).replace(/\s*\([^()]*\)/g, '').replace(/\s+([,.;])/g, '$1');
+  return body ? prefix + body : undefined;
 }
 
 /** Specialty health tests, screened from the intake, sorted strongest first. */
@@ -827,7 +834,7 @@ export function specialtyTests(t: TestInput, f: TestFacts): TestPick[] {
     why: fuel
       ? 'You have fuel-burning equipment. CPSC recommends CO alarms on every level of the home and outside sleeping areas, and tightening the house makes the audit’s spillage check essential.'
       : 'No fuel-burning heating, but a gas range, fireplace or attached garage still calls for working CO alarms. CPSC recommends them on every level and outside sleeping areas.',
-    note: coNote(f.coLaw[t.state], t.stateName),
+    note: coNote(f.coLaw[t.state], t.stateName, t.state),
   });
 
   // Asbestos and vermiculite

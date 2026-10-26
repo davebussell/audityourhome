@@ -9,10 +9,12 @@ import Photo from '../../../components/Photo.astro';
 import FaqList from '../../../components/us/FaqList.astro';
 import LeadFormUS from '../../../components/us/LeadFormUS.astro';
 import StatusLine from '../../../components/us/StatusLine.astro';
+import JourneyBar from '../../../components/JourneyBar.astro';
+import BackToPlan from '../../../components/us/BackToPlan.astro';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
 import { METROS, FEDERAL, US_VERIFIED } from '../../../lib/us/data';
-import { mainAudit, hasFreeVisitForAll, auditTags, metrosByRegion } from '../../../lib/us/metro-view';
+import { mainAudit, hasFreeVisitForAll, auditTags, metrosByRegion, mainUtilities } from '../../../lib/us/metro-view';
 import testsData from '../../../data/us/tests.json';
 
 const n = METROS.length;
@@ -20,6 +22,8 @@ const creds = FEDERAL.credentials as any[];
 const T = testsData as any;
 const freeVisit = METROS.filter(hasFreeVisitForAll).length;
 const rows = METROS.map((m) => ({ m, p: mainAudit(m) }));
+/** the main utilities to ask first where the open program is for income-qualified households only */
+const askFirst = (m: (typeof METROS)[number]) => mainUtilities(m, 2).join(' or ');
 const regions = metrosByRegion();
 
 const hersVerify = 'https://www.hersindex.com/rater-verification/';
@@ -73,6 +77,9 @@ const schema = [
       <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>Find an auditor</span>
     </nav>
 
+    <JourneyBar country="us" current={2} ticks={false} compact />
+    <BackToPlan />
+
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">Find a certified auditor · verified {US_VERIFIED}</p>
@@ -98,7 +105,7 @@ const schema = [
         In {freeVisit} of the {n} metros we cover, a utility or state program offers a free in-person assessment open to all
         incomes. Others charge a published fee or pay back part of a private audit. Programs often require their own
         assessment or participating contractor before they pay rebates, so check this first. The table shows where most
-        homeowners in each metro can start; each metro guide lists every program we found.
+        homeowners in each metro can start; each metro guide lists every program we track.
       </p>
       <div class="tablewrap card">
         <table class="stack" aria-label={`First audit program to try in each of the ${n} metros, verified ${US_VERIFIED}`}>
@@ -107,7 +114,7 @@ const schema = [
           </thead>
           <tbody>
             {rows.map(({ m, p }) => (
-              <tr>
+              <tr id={m.slug}>
                 <td data-label="Metro"><a href={`/us/cities/${m.slug}/`}><strong>{m.data.name}</strong></a> <span class="st">{(m.data.states ?? []).join(' · ')}</span></td>
                 <td data-label="Where to start">
                   {p ? (
@@ -115,8 +122,11 @@ const schema = [
                       {p.url ? <a href={p.url} rel="noopener" target="_blank">{p.name}&nbsp;↗</a> : p.name}
                       {p.runBy && <span class="by"> {p.runBy}</span>}
                       {auditTags(p).length > 0 && <span class="tags"> {auditTags(p).join(' · ')}</span>}
+                      {p.audience === 'income' && (
+                        <span class="iq-next">Not income-qualified? Ask {askFirst(m) || 'your utility'} first, then hire a certified auditor (<a href="#credentials">step 2</a>).</span>
+                      )}
                     </span>
-                  ) : 'No open program in our research'}
+                  ) : <span>No open program we track. Ask {askFirst(m) || 'your utility'} first, then hire a certified auditor (<a href="#credentials">step 2</a>).</span>}
                 </td>
                 <td data-label="Cost"><span class:list={['cost', { free: p?.cost.kind === 'free' }]}>{p?.cost.label ?? '—'}</span></td>
                 <td data-label="Status">{p && <StatusLine text={p.statusText} chip={p.chip} />}</td>
@@ -147,7 +157,7 @@ const schema = [
             {c.findAProUrl ? (
               <div class="cred-find"><a class="btn btn-ghost btn-sm" href={c.findAProUrl} rel="noopener" target="_blank">Find one&nbsp;↗</a></div>
             ) : (
-              !c.notes && <p class="cred-note">No public directory verified.</p>
+              !c.notes && <p class="cred-note">No public directory: ask the auditor for their certificate number and check it with the certifying body.</p>
             )}
             <p class="cred-src">
               Sources: {(c.sources as any[]).map((s, i) => <span>{i > 0 && ' · '}<a href={s.href} rel="noopener" target="_blank">{s.label}&nbsp;↗</a></span>)}
@@ -222,7 +232,7 @@ const schema = [
           <h3>Anyone selling the federal tax credits</h3>
           <p>
             The 25C and 25D credits don’t cover work done after December 31, 2025, including the $150 audit credit. Some
-            pages are out of date: our research found utility, city and partner pages in Los Angeles, Chicago, South Florida
+            pages are out of date: utility, city and partner pages in Los Angeles, Chicago, South Florida
             and San Antonio still pointing people to the old credits.
           </p>
           <p class="flag-src">{credIrs && <a href={credIrs} rel="noopener" target="_blank">IRS&nbsp;↗</a>} · <a href="/us/programs/federal-tax-credits/">What ended</a></p>
@@ -295,6 +305,9 @@ const schema = [
   td .st { font-family: var(--mono); font-size: 11.5px; color: var(--faint); white-space: nowrap; }
   td .by { display: block; font-size: 13px; color: var(--faint); }
   td .tags { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  td .iq-next { display: block; margin-top: 4px; font-size: 13.5px; color: var(--ink); }
+  tr[id] { scroll-margin-top: 80px; }
+  tr:target { background: var(--heat-tint); }
   td a { overflow-wrap: anywhere; }
   .cost { font-family: var(--display); font-weight: 800; font-size: 15px; }
   .cost.free { color: var(--pine); }

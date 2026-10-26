@@ -48,7 +48,7 @@ const faqs = [
   },
   {
     q: 'What does a home energy audit cost?',
-    a: `No DOE, EPA or HUD page gives a national typical price, and DOE says Home Energy Score fees vary across the country. Utility and state programs often pay for most or all of an assessment: in our research, ${freeVisit} of the ${n} largest metros have a free in-person utility or state assessment open to all incomes. Where a fee is published it is modest, for example $49 for an SRP in-home assessment in Phoenix, $70 or $100 for a Home Energy Squad visit in Minnesota and $100 for a Home Performance with ENERGY STAR audit from BGE or Pepco in Maryland. For a private audit, Nicor Gas says an energy audit may cost between $100 and $500 or more, and Austin Energy estimates about $200–$300 for the audit Austin requires at most home sales (a typical home of 1,800 sq ft or less).`,
+    a: `No DOE, EPA or HUD page gives a national typical price, and DOE says Home Energy Score fees vary across the country. Utility and state programs often pay for most or all of an assessment: in ${freeVisit} of the ${n} largest metros, a free in-person utility or state assessment is open to all incomes. Where a fee is published it is modest, for example $49 for an SRP in-home assessment in Phoenix, $70 or $100 for a Home Energy Squad visit in Minnesota and $100 for a Home Performance with ENERGY STAR audit from BGE or Pepco in Maryland. For a private audit, Nicor Gas says an energy audit may cost between $100 and $500 or more, and Austin Energy estimates about $200–$300 for the audit Austin requires at most home sales (a typical home of 1,800 sq ft or less).`,
   },
   {
     q: 'Who is qualified to do a home energy audit?',
@@ -93,12 +93,13 @@ const tests = [
         </ul>
       </div>
 
-      <form class="card hero-form" id="usQuick" action="/us/plan/" method="GET" aria-label="Start your home energy plan">
+      <form class="card hero-form" id="usQuick" action="/us/plan/" method="GET" aria-label="Start your home energy plan" novalidate>
         <h2>Start your home energy plan</h2>
         <p class="small">6 short steps, about 2 minutes, no email: the upgrades, programs, rebates and tests that matter for your home and climate.</p>
         <div class="field">
           <label for="h-zip">ZIP code</label>
-          <input id="h-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 60614" autocomplete="postal-code" required title="Five-digit ZIP code" />
+          <input id="h-zip" name="zip" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 60614" autocomplete="postal-code" aria-describedby="h-zip-msg" />
+          <p class="zip-msg" id="h-zip-msg" aria-live="polite"></p>
         </div>
         <div class="field">
           <span class="lbl-sm" id="h-age-l">When was your home built? <span class="opt">(optional)</span></span>
@@ -206,8 +207,8 @@ const tests = [
           <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
           <div class="step-body">
             <span class="step-no">3</span>
-            <h3>You get a plan, then rebates</h3>
-            <p>The report ranks upgrades for your house. Take it to the program’s contractors and rebates.</p>
+            <h3>The auditor’s report, then rebates</h3>
+            <p>The auditor’s report ranks the upgrades for your house. Take it to the program’s contractors and rebates.</p>
           </div>
         </div>
       </div>
@@ -263,6 +264,10 @@ const tests = [
   .hero-form .meta a { color: var(--steel); }
   .hero-form .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
   .hero-form .opt { font-weight: 400; color: var(--faint); font-size: 13px; }
+  .hero-form .zip-msg { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink); }
+  .hero-form .zip-msg:empty { display: none; }
+  .hero-form .zip-msg.err { color: var(--dead); font-weight: 600; }
+  .hero-form .zip-msg a { font-weight: 700; color: var(--steel); }
   .hero-form .radio-pill span { padding: 7px 13px; font-size: 14px; }
 
   .changed { padding: 56px 0; }
@@ -310,10 +315,40 @@ const tests = [
   // Quick start: hand the ZIP code (and build year) to the planner in the #fragment, which never
   // reaches a server, and let the planner open at step 2. Without JavaScript the form's GET still works.
   const quick = document.getElementById('usQuick') as HTMLFormElement | null;
+  const zipIn = quick?.querySelector<HTMLInputElement>('#h-zip');
+  const zipMsg = quick?.querySelector<HTMLElement>('#h-zip-msg');
+  const caPostal = (raw: string) => {
+    const m = raw.trim().toUpperCase().match(/^([ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z])\s?-?(\d[ABCEGHJ-NPRSTV-Z]\d)$/);
+    return m ? `${m[1]} ${m[2]}` : null;
+  };
+  const say = (html: string, error = false) => {
+    if (!zipMsg) return;
+    zipMsg.innerHTML = html;
+    zipMsg.classList.toggle('err', error);
+    zipIn?.setAttribute('aria-invalid', error ? 'true' : 'false');
+  };
+  zipIn?.addEventListener('input', () => {
+    // point Canadians to their planner as soon as the code is recognizable
+    const ca = caPostal(zipIn.value);
+    if (ca) say(caLink(ca));
+    else if (zipMsg?.textContent) say('');
+  });
+  function caLink(postal: string) {
+    const q = new URLSearchParams({ postal });
+    const age = quick?.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value;
+    if (age) q.set('age', age);
+    return `That looks like a Canadian postal code. This planner covers US homes; <a href="/ca/plan/#${q.toString()}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).`;
+  }
   quick?.addEventListener('submit', (e) => {
-    const zip = (quick.querySelector('#h-zip') as HTMLInputElement | null)?.value.trim() ?? '';
-    if (!/^\d{5}$/.test(zip)) return;
+    const raw = zipIn?.value.trim() ?? '';
+    const zip = raw.replace(/\s+/g, '').match(/^(\d{5})(?:-?\d{4})?$/)?.[1];
     e.preventDefault();
+    if (!zip) {
+      const ca = caPostal(raw);
+      say(ca ? caLink(ca) : raw ? 'Enter a 5-digit ZIP code, like 60614.' : 'Enter the home’s 5-digit ZIP code.', !ca);
+      zipIn?.focus();
+      return;
+    }
     const q = new URLSearchParams({ zip });
     const age = quick.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value;
     if (age) q.set('age', age);

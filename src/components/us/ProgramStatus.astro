@@ -5,6 +5,7 @@
  */
 import { statusChip } from '../../lib/us/data';
 import { clean, type Chip } from '../../lib/us/programs';
+import { cleanStatus } from '../../lib/us/clean';
 
 interface Props {
   /** the source's status wording */
@@ -17,14 +18,14 @@ interface Props {
   label?: string;
   class?: string;
 }
-const { text, chip, empty = 'No status stated on any state page we could check.', label, class: cls } = Astro.props;
+const { text, chip, empty = 'No state page gives a status yet; ask the state energy office before you count on it.', label, class: cls } = Astro.props;
 const c = chip ?? statusChip(text);
 ---
 
 <p class:list={['pstat', cls]}>
   {label && <span class="plab">{label}</span>}
   <span class={`chip ${c.cls}`}>{c.label}</span>
-  <span class="pwords">{text ? clean(text) : empty}</span>
+  <span class="pwords">{text ? clean(cleanStatus(text)) : empty}</span>
 </p>
 
 <style>

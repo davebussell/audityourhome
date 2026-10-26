@@ -1,0 +1,30 @@
+---
+/**
+ * The way into the audit journey from a guide page (/us/cities/<metro>/, /us/issues/<slug>/):
+ * the four stages, compact, with stage 1 marked as the place to start, and the planner link.
+ */
+import JourneyBar from '../JourneyBar.astro';
+
+interface Props {
+  /** "the Phoenix area", "a house with high summer bills": finishes the sentence beside the button */
+  forWhat?: string;
+}
+const { forWhat } = Astro.props;
+---
+
+<div class="plan-prompt">
+  <JourneyBar country="us" current={1} ticks={false} compact hereLabel="Start here" />
+  <p class="pp-cta">
+    <a class="btn btn-primary btn-sm" href="/us/plan/">Get your free plan →</a>
+    <span class="pp-why">
+      Six short steps{forWhat ? ` for ${forWhat}` : ''}: what to fix first, the tests to ask for and the programs open to you. No email.
+    </span>
+  </p>
+</div>
+
+<style>
+  .plan-prompt { margin: 4px 0 8px; }
+  .plan-prompt :global(.journey) { margin-top: 10px; }
+  .pp-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 10px 0 0; }
+  .pp-why { flex: 1 1 260px; min-width: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+</style>

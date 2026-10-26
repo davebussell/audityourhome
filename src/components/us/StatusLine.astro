@@ -5,6 +5,7 @@
  */
 import { statusChip } from '../../lib/us/data';
 import { fmtISO, sameAsChip } from '../../lib/us/metro-text';
+import { cleanStatus } from '../../lib/us/clean';
 
 interface Props {
   /** the record's status text, as published */
@@ -25,7 +26,7 @@ const showWords = !bare && !sameAsChip(text, chip.label);
 
 <div class="status-line">
   <span class={`chip ${chip.cls}`}>{chip.label}</span>
-  {showWords && <span class="sl-words">{text ? text : 'The source gives no status.'}</span>}
+  {showWords && <span class="sl-words">{text ? cleanStatus(text) : 'The program page gives no status; ask the program before you count on it.'}</span>}
   {(href || checked) && (
     <span class="sl-meta">
       {href && <a href={href} rel="noopener" target="_blank">{srcLabel}&nbsp;↗</a>}

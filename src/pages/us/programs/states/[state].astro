@@ -8,6 +8,7 @@ import ProgramSources from '../../../../components/us/ProgramSources.astro';
 import AuditFirst from '../_AuditFirst.astro';
 import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
 import { statusChip } from '../../../../lib/us/data';
+import { cleanStatus } from '../../../../lib/us/clean';
 import {
   STATES, stateBySlug, stateLede, baselineNote, metroProgramsFor, metroName, nameIn, NameStart,
   PROG_LABEL, TAX, BPA_SOURCE, src, dedupe, clean, fmtISO, VERIFIED, takesApplications, type ProgView,
@@ -43,7 +44,7 @@ const S = {
   rebateFinder: src(/energystar\.gov\/rebate-finder/),
 };
 
-const words = (p: ProgView) => (p.status ? clean(p.status).replace(/\.$/, '') : 'no status stated on any state page we could check');
+const words = (p: ProgView) => (p.status ? clean(cleanStatus(p.status)).replace(/\.$/, '') : 'no status posted by the state');
 const admins = [...new Set(progs.map((p) => p.administrator).filter(Boolean))] as string[];
 const faqs = [
   {
@@ -54,7 +55,7 @@ const faqs = [
     q: `Who runs Home Energy Rebates in ${nameIn(s)}?`,
     a:
       admins.length === 0
-        ? `No administrator is named on any ${s.name} page we could check.`
+        ? `No administrator is named on a ${s.name} state page yet; the state energy office can tell you who runs the rebates.`
         : admins.length === 1
           ? `${clean(admins[0])}.`
           : `HEEHR: ${clean(s.hear.administrator)}. HOMES: ${clean(s.homes.administrator)}.`,
@@ -146,7 +147,7 @@ const auditPoints = [
       {progs.map((p) => (
         <article class={`card card-pad spc s-${p.chip.status}`} id={anchor(p)}>
           <p class="eyebrow">{p.short} · {PROG_LABEL[p.key].what}</p>
-          <h2 class="spc-h">{p.programName ? clean(p.programName) : 'No program page found'}</h2>
+          <h2 class="spc-h">{p.programName ? clean(p.programName) : 'No program page yet'}</h2>
           <ProgramStatus text={p.status} chip={p.chip} />
           <dl class="up-kv">
             {p.administrator && <><dt>Run by</dt><dd>{clean(p.administrator)}</dd></>}
@@ -155,7 +156,7 @@ const auditPoints = [
           </dl>
           {p.via && <p class="via">{p.via.note}</p>}
           <p class="up-meta">
-            {p.url ? <a href={p.url} rel="noopener" target="_blank">Official page&nbsp;↗</a> : <span>No official program page found</span>}
+            {p.url ? <a href={p.url} rel="noopener" target="_blank">Official page&nbsp;↗</a> : <span>No official program page yet</span>}
             {p.via && p.via.sources.length > 0 && p.via.sources.map((v) => <> · <a href={v.href} rel="noopener" target="_blank">{v.label}&nbsp;↗</a></>)}
             {' · '}verified {fmtISO(p.checked)}
           </p>
@@ -168,9 +169,8 @@ const auditPoints = [
       <p>{s.notes}</p>
       {viaProgs.length > 0 && (
         <p class="small">
-          <strong>Note:</strong> the {viaProgs.map((p) => p.short).join(' and ')} {viaProgs.length > 1 ? 'statuses' : 'status'} above
-          {' '}{viaProgs.length > 1 ? 'come' : 'comes'} from our {[...new Set(viaProgs.map((p) => metroName(p.via!.metro)))].join(' and ')} research,
-          as explained on {viaProgs.length > 1 ? 'those cards' : 'that card'}; the paragraph above is from our state-by-state check.
+          The {viaProgs.map((p) => p.short).join(' and ')} {viaProgs.length > 1 ? 'statuses' : 'status'} above
+          {' '}{viaProgs.length > 1 ? 'come' : 'comes'} from the program’s own site, as each card says.
         </p>
       )}
       <p class="small">{baselineNote(s)}</p>
@@ -182,7 +182,7 @@ const auditPoints = [
       <section class="up-s" id="metros" aria-labelledby="metros-h">
         <h2 class="up-sec" id="metros-h">Local programs in {nameIn(s)}</h2>
         <p class="up-intro">
-          Utility and local programs from our metro research that are open now, each linked to its official page.
+          Utility and local programs we track that are open now, each linked to its official page.
           Terms, limits and weatherization agencies are on each metro guide.
         </p>
         <div class="mcs">
@@ -216,8 +216,8 @@ const auditPoints = [
               ) : (
                 <p class="small">
                   {mp.primary
-                    ? `Our ${metroName(mp.metro)} research lists no programs with an open status.`
-                    : `Part of the ${metroName(mp.metro)} metro area reaches into ${nameIn(s)}. None of the programs in our ${metroName(mp.metro)} research are specific to ${nameIn(s)}.`}
+                    ? `None of the ${metroName(mp.metro)} programs we track is open right now.`
+                    : `Part of the ${metroName(mp.metro)} metro area reaches into ${nameIn(s)}. None of the ${metroName(mp.metro)} programs we track is specific to ${nameIn(s)}.`}
                 </p>
               )}
               {mp.notOpen > 0 && <p class="small">{mp.notOpen} more listed for this area {mp.notOpen === 1 ? 'is' : 'are'} closed, paused or unconfirmed.</p>}

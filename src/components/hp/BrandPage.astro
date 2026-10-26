@@ -12,6 +12,7 @@ import {
   HP_CHECKED, fmtInt, fmtPct, fmtCop, fmt1, fmtDate, tierLabel, channelLabel, warrantyHeadline, registrationNote, at5, TYPE_LABEL,
   CA_REGIONS, US_METROS, metroName, hostOf, usText, usList,
 } from '../../lib/heatpumps';
+import { cleanRecord } from '../../lib/us/clean';
 import '../../styles/hp.css';
 
 interface Props {
@@ -21,7 +22,8 @@ interface Props {
 const { market, slug } = Astro.props;
 const isCA = market === 'ca';
 const country = isCA ? 'Canada' : 'the US';
-const b = brandInfo(slug);
+// US pages: research wording ("couldn't be read", "terms not verified") becomes guidance; Canadian pages keep theirs
+const b = isCA ? brandInfo(slug) : cleanRecord(brandInfo(slug));
 const st = statsFor(market, slug)!;
 const t5 = at5(market);
 const updated = fmtDate(ESTAR.datasetUpdated, market);
