@@ -348,7 +348,7 @@ function guides() {
   const out: Record<string, { u: string; b: { l: string; r: string; m: string; d: string }[] }> = {};
   for (const [slug, g] of Object.entries((guidesJson as any).tests as Record<string, any>)) {
     const bands = (g.bands as any[]).filter((b) => (b.countries ?? []).includes('us')).map((b) => ({ l: b.label, r: b.range, m: b.means, d: b.do }));
-    const unit = (String(g.unit ?? '').split(' · ').find((x: string) => !/Canada/.test(x)) ?? String(g.unit ?? '')).replace(/\s*\(US\)/g, '');
+    const unit = g.usUnit ?? (String(g.unit ?? '').split(' · ').find((x: string) => !/Canada/.test(x)) ?? String(g.unit ?? '')).replace(/\s*\(US\)/g, '');
     if (bands.length) out[slug] = { u: unit, b: bands };
   }
   for (const s of ['blower-door', 'duct-leakage', 'radon', 'mold-iaq']) must(out[s], `reading guide for ${s}`);

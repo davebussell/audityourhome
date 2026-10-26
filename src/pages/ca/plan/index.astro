@@ -159,13 +159,13 @@ const MID = ['Moderate', 'Consider fixing', 'CO detected', 'Below target', 'Belo
 const BAD = ['Leaky', 'Above guideline', 'Fix', 'Elevated', 'Dangerous', 'Spillage', 'High flue CO', 'Stop', 'Little or none', 'Vermiculite', 'Streaks',
   'Too humid', 'Coliforms found', 'E. coli found', 'Nitrate high', 'Pre-1960 or lead found', 'Lead-based paint', 'Vermiculite present', 'Asbestos confirmed', 'Unsafe'];
 const tone = (l: string, test: string) => (l === 'Low' ? (test === 'radon' ? 'good' : 'mid') : GOOD.includes(l) ? 'good' : MID.includes(l) ? 'mid' : BAD.includes(l) ? 'bad' : 'neutral');
-type Guide = { measure: string; unit: string; countries?: string[]; bands: { label: string; range: string; means: string; do: string; countries?: string[] }[]; caNote?: string };
+type Guide = { measure: string; unit: string; caMeasure?: string; caUnit?: string; countries?: string[]; bands: { label: string; range: string; means: string; do: string; countries?: string[] }[]; caNote?: string };
 const reading: Record<string, unknown> = {};
 for (const [slug, g] of Object.entries((readingGuides as unknown as { tests: Record<string, Guide> }).tests)) {
   if (g.countries && !g.countries.includes('ca')) continue;
   const bands = g.bands.filter((b) => !b.countries || b.countries.includes('ca'));
   if (!bands.length) continue;
-  reading[slug] = { measure: g.measure, unit: g.unit, note: g.caNote ?? '', bands: bands.map((b) => ({ l: b.label, r: b.range, m: b.means, d: b.do, t: tone(b.label, slug) })) };
+  reading[slug] = { measure: g.caMeasure ?? g.measure, unit: g.caUnit ?? g.unit, note: g.caNote ?? '', bands: bands.map((b) => ({ l: b.label, r: b.range, m: b.means, d: b.do, t: tone(b.label, slug) })) };
 }
 (payload as Record<string, unknown>).reading = reading;
 
@@ -1324,6 +1324,8 @@ const privacyLine = ACCOUNTS_ENABLED
     const otherBill = parseFloat(fieldVal('otherBill').replace(/[^0-9.]/g, '')) || 0;
 
     const arch = D.archetypes.find((x: any) => x.id === a.age);
+    // Province-scoped glossary terms (e.g. Ontario's HRSP "assessment path") link only in that province's plan.
+    resultsEl.setAttribute('data-gl-province', loc.province);
     const isON = loc.province === 'ON';
     const isToronto = Boolean(loc.fsa && loc.fsa[0] === 'M');
     const m = houseModel(a);
