@@ -25,8 +25,8 @@ const heading = Astro.props.heading ?? 'Get heat pump quotes';
 const sub =
   Astro.props.sub ??
   (isCA
-    ? 'Tell us about your home and what you want to heat. We match you with one heating and cooling contractor or registered energy advisor who serves your area and knows the rebates.'
-    : 'Tell us about your home and what you want to heat. A person reads every request and replies with the contractors and rebate programs that serve your ZIP code.');
+    ? 'Tell us about your home and what you want to heat or cool. We match you with one heating and cooling contractor or registered energy advisor who serves your area and knows the rebates.'
+    : 'Tell us about your home and what you want to heat or cool. A person reads every request and replies with the contractors and rebate programs that serve your ZIP code.');
 const onNetlify = NETLIFY_FORMS;
 const action = `/${market}/heat-pumps/thanks/?sent=1`;
 const uid = `hpq-${Math.random().toString(36).slice(2, 8)}`;
@@ -123,7 +123,7 @@ const consent = isCA
         <div class="field">
           <label for={`${uid}-want`}>What you want</label>
           <select id={`${uid}-want`} name="project">
-            <option value="whole-home">Heat the whole home with a heat pump</option>
+            <option value="whole-home">Heat and cool the whole home with a heat pump</option>
             <option value="some-rooms">Heat or cool some rooms (mini-split)</option>
             <option value="replace-ac">Replace my air conditioner with a heat pump</option>
             <option value="dual-fuel">Add a heat pump to my furnace (dual fuel)</option>
@@ -152,8 +152,8 @@ const consent = isCA
         <input id={`${uid}-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
       </div>
       <div class="field">
-        <label for={`${uid}-msg`}>Anything else? <span class="optional">(optional)</span></label>
-        <textarea id={`${uid}-msg`} name="message" rows="3" maxlength="2000" placeholder={isCA ? 'e.g. 1960s bungalow, electric baseboards, want to qualify for the provincial heat pump rebate' : 'e.g. 1980s two-story, gas furnace and an old AC, want a cold-climate heat pump'}></textarea>
+        <label for={`${uid}-msg`}>Anything else, like rooms that run hot or cold? <span class="optional">(optional)</span></label>
+        <textarea id={`${uid}-msg`} name="message" rows="3" maxlength="2000" placeholder={isCA ? 'e.g. 1960s bungalow, electric baseboards, want to qualify for the provincial heat pump rebate' : 'e.g. 1980s two-story, gas furnace and a 15-year-old AC, upstairs runs hot, want a heat pump that heats and cools'}></textarea>
       </div>
       <label class="hpq-check"><input type="checkbox" name="consent" value="yes" required /> <span>{consent}</span></label>
       <button class="btn btn-primary" type="submit">Request quotes</button>
@@ -162,8 +162,8 @@ const consent = isCA
   ) : (
     <div class="hpq-fallback">
       <p>
-        Email us your {isCA ? 'postal code' : 'ZIP code'}, the type of home, how it's heated now, whether it has ducts and what you
-        want to heat. A person reads every message and replies with {isCA ? 'a contractor or registered energy advisor who serves your area' : 'the contractors and programs that serve your area'}.
+        Email us your {isCA ? 'postal code' : 'ZIP code'}, the type of home, how it's heated and cooled now, whether it has ducts and what you
+        want to heat or cool, including rooms that run hot or cold. A person reads every message and replies with {isCA ? 'a contractor or registered energy advisor who serves your area' : 'the contractors and programs that serve your area'}.
       </p>
       <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
       <p class="meta">{isCA ? 'Participating contractors and advisors pay us a referral fee; you pay nothing.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/">Privacy</a></p>

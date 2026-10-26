@@ -1,0 +1,348 @@
+---
+/**
+ * One US common-problem guide: what the symptom usually means, the likely causes in each climate,
+ * the tests that confirm it, the fix ladder, when to call a pro, the words worth knowing and the
+ * metro guides where the climate research lists it. Data: src/data/us/issues.json via ./_issues.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import LeadFormUS from '../../../components/us/LeadFormUS.astro';
+import FaqList from '../../../components/us/FaqList.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import {
+  ISSUES,
+  GROUPS,
+  GROUP_ORDER,
+  COST_LEGEND,
+  ISSUES_CHECKED,
+  issueBySlug,
+  commonGroups,
+  metrosFor,
+  glossaryFor,
+  testsFor,
+} from './_issues';
+
+export function getStaticPaths() {
+  return ISSUES.map((i) => ({ params: { slug: i.slug } }));
+}
+
+const { slug } = Astro.params;
+const issue = issueBySlug(slug!)!;
+const common = commonGroups(issue);
+const metroGroups = metrosFor(issue);
+const terms = glossaryFor(issue);
+const tests = testsFor(issue);
+const related = issue.related.map((r) => issueBySlug(r)!).filter(Boolean);
+const avoid = issue.avoid ?? [];
+const checked = new Date(`${ISSUES_CHECKED}T12:00:00Z`).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const title = `${issue.name}: causes by climate and what to fix first | AuditYourHome`;
+const description = issue.metaDescription;
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/us/' },
+    { name: 'Common problems', path: '/us/issues/' },
+    { name: issue.name, path: `/us/issues/${issue.slug}/` },
+  ]),
+  faqSchema(issue.faq),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor(issue.photo ?? 'blower-door-test')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <a href="/us/issues/">Common problems</a>
+      <span aria-hidden="true">/</span> <span>{issue.name}</span>
+    </nav>
+
+    <div class={`page-hero ${issue.photo ? 'has-photo' : 'is-glance'}`}>
+      <div class="hero-text">
+        <p class="eyebrow">Common problems</p>
+        <h1>{issue.name}</h1>
+        <p class="lede measure">{issue.symptom}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#audit">What an audit checks</a>
+          <a class="btn btn-ghost" href="#climate">Causes in your climate</a>
+          <a class="btn btn-ghost" href="#fix">The fixes</a>
+        </div>
+      </div>
+      {issue.photo ? (
+        <Photo name={issue.photo} hud={false} eager />
+      ) : (
+        <aside class="card card-pad glance" aria-label="At a glance">
+          <p class="g-h">At a glance</p>
+          {common.length > 0 && (
+            <a class="g-row" href="#climate">
+              <span class="g-k">Most common in</span>
+              <span class="g-v">{common.map((g) => GROUPS[g].label).join(' · ')}</span>
+            </a>
+          )}
+          <a class="g-row" href="#audit">
+            <span class="g-k">First test to ask for</span>
+            <span class="g-v">{tests[0].name}</span>
+          </a>
+          <a class="g-row" href="#fix">
+            <span class="g-k">Cheapest first step</span>
+            <span class="g-v">{issue.diyFirst[0]}</span>
+          </a>
+        </aside>
+      )}
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-pad">
+        <h2 class="ct">What it usually means</h2>
+        <ul class="clean">
+          {issue.meaning.map((m) => <li>{m}</li>)}
+        </ul>
+      </div>
+      <div class="card card-pad where">
+        <h2 class="ct">Where it’s most common</h2>
+        {metroGroups.length > 0 ? (
+          <>
+            <p class="small">
+              Our climate research lists this as a common problem in these metro areas. Each guide covers what homes there
+              need, local audit programs and rebates.
+            </p>
+            <ul class="mg">
+              {metroGroups.map((g) => (
+                <li>
+                  <span class="mg-l">{g.label}</span>
+                  {g.metros.map((m, i) => <>{i > 0 && ' · '}<a href={m.href}>{m.name}</a></>)}
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p class="small">This can happen anywhere; the causes below are sorted by climate.</p>
+        )}
+        <p class="small mb-0">Somewhere else? <a href="/us/cities/">Find your metro guide</a>.</p>
+      </div>
+    </div>
+
+    <section class="blk" id="climate" aria-labelledby="climate-h">
+      <h2 id="climate-h" class="sh">Likely causes, by climate</h2>
+      <p class="measure">
+        The same symptom has different causes in Miami, Phoenix and Minneapolis. Find your climate below; the tag marks
+        the climates where this problem is most common.
+      </p>
+      <div class="causes">
+        {GROUP_ORDER.map((g) => (
+          <div class={`card cause${common.includes(g) ? ' is-common' : ''}`} id={`in-${g}`}>
+            <p class="cause-h">
+              <strong>{GROUPS[g].label}</strong>
+              <span class="cw">{GROUPS[g].where}</span>
+              {common.includes(g) && <span class="chip chip-info">Common here</span>}
+            </p>
+            <p class="mb-0">{issue.causes[g]}</p>
+          </div>
+        ))}
+      </div>
+      <p class="small">
+        Not sure which climate you’re in? Your <a href="/us/cities/">metro guide</a> says, and the
+        <a href="/us/glossary/iecc-climate-zone/">climate zone</a> entry explains the map builders use.
+      </p>
+    </section>
+
+    <section class="blk" id="audit" aria-labelledby="audit-h">
+      <h2 id="audit-h" class="sh">How an audit confirms it</h2>
+      <p class="measure">
+        Guessing is how people end up with new equipment that doesn’t fix the problem. These tests measure the cause. Ask
+        for them by name when you book; each guide explains what the results mean and what to do next.
+      </p>
+      <ol class="tests">
+        {tests.map((t) => (
+          <li>
+            <a href={t.href}><strong>{t.name}</strong></a>
+            <span>{t.why}</span>
+          </li>
+        ))}
+      </ol>
+      <ul class="links">
+        <li><a href="/us/find/">Find a certified auditor</a></li>
+        <li><a href="/us/how-it-works/">What happens in an audit</a></li>
+        <li><a href="/us/cost/">What an audit costs</a></li>
+      </ul>
+    </section>
+
+    <div class="grid-2 blk" id="fix">
+      <div class="card card-pad">
+        <h2 class="ct">Try first (cheap or free)</h2>
+        <ul class="clean check">
+          {issue.diyFirst.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h2 class="ct">The fix ladder</h2>
+        <p class="small">From the cheapest step to the biggest. Work up only as far as you need to, and test again after.</p>
+        <ol class="ladder">
+          {issue.fixLadder.map((f) => (
+            <li>
+              <span>{f.step}</span>
+              <span class="cost meta">{f.cost}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="meta mb-0">{COST_LEGEND}</p>
+      </div>
+    </div>
+
+    <div class="grid-2 g2">
+      <div class="card card-pad pro">
+        <h2 class="ct">When to call a pro</h2>
+        <ul class="clean">
+          {issue.callPro.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      {avoid.length > 0 && (
+        <div class="card card-pad avoid">
+          <h2 class="ct">Common mistakes</h2>
+          <ul class="clean">
+            {avoid.map((c) => <li>{c}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+
+    <div class="card card-pad pay">
+      <h2 class="ct">Paying for the fixes</h2>
+      <p class="mb-0">
+        Utility programs often pay toward audits, duct sealing, insulation and heat pumps, and some require an audit
+        first. Your <a href="/us/cities/">metro guide</a> lists the programs near you, and
+        <a href="/us/programs/states/">your state’s page</a> covers state and federal rebates.
+      </p>
+    </div>
+
+    <section class="blk" aria-labelledby="words-h">
+      <h2 id="words-h" class="sh">Words worth knowing</h2>
+      <dl class="terms">
+        {terms.map((t) => (
+          <div>
+            <dt><a href={t.href}>{t.term}</a></dt>
+            <dd>{t.short}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="small"><a href="/us/glossary/">The glossary</a> explains every term on the site.</p>
+    </section>
+
+    <FaqList faqs={issue.faq} />
+
+    {related.length > 0 && (
+      <section class="blk" aria-labelledby="rel-h">
+        <h2 id="rel-h" class="sh">Related problems</h2>
+        <div class="rel-grid">
+          {related.map((r) => (
+            <a class="card rel-card" href={`/us/issues/${r.slug}/`}>
+              <strong>{r.name}</strong>
+              <span class="small">{r.short}</span>
+            </a>
+          ))}
+        </div>
+        <p class="small"><a href="/us/issues/">All common problems</a></p>
+      </section>
+    )}
+
+    <section class="blk srcs" aria-labelledby="src-h">
+      <h2 id="src-h" class="ct">Sources</h2>
+      <p class="small">
+        Where each problem is common comes from our regional climate research (NOAA climate normals, EPA, PNNL, FEMA and
+        others), cited on each metro guide. The guidance on this page follows these sources, checked {checked}:
+      </p>
+      <ul class="small">
+        {issue.sources.map((s) => (
+          <li><a href={s.url} rel="noopener">{s.label}&nbsp;↗</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <LeadFormUS
+      heading="Want it diagnosed properly?"
+      sub="Email us your ZIP code and what you’re noticing. A person reads every message and replies with certified auditors who can test for this in your area."
+      context={`issue-${issue.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .ct { font-size: 19px; margin: 0 0 12px; }
+  .sh { font-size: clamp(22px, 3vw, 27px); margin: 0 0 10px; }
+  .blk { margin-top: 40px; padding: 0; }
+  .is-glance { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px 48px; align-items: center; }
+  @media (max-width: 860px) { .is-glance { grid-template-columns: 1fr; padding-top: 32px; } }
+  .is-glance .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .glance { display: grid; gap: 2px; }
+  .g-h {
+    margin: 0 0 4px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .g-row { display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .g-row:hover .g-v { color: var(--heat-deep); }
+  .g-k { font-size: 12.5px; color: var(--muted); }
+  .g-v { font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .g2 { margin-top: 18px; }
+  ul.clean { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+  ul.clean.check { list-style: none; padding-left: 0; }
+  ul.clean.check li { padding-left: 26px; position: relative; }
+  ul.clean.check li::before { content: "✓"; position: absolute; left: 0; color: var(--pine); font-weight: 700; }
+  .ladder { margin: 0 0 12px; padding-left: 22px; display: grid; gap: 10px; font-size: 15px; }
+  .ladder li { display: flex; justify-content: space-between; gap: 14px; }
+  .ladder .cost { white-space: nowrap; flex-shrink: 0; }
+  .mg { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 10px; font-size: 15px; }
+  .mg-l {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .causes { display: grid; gap: 12px; margin: 14px 0 12px; }
+  .cause { padding: 16px 20px; }
+  .cause.is-common { border-left: 4px solid var(--heat); }
+  .cause-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 6px; }
+  .cause-h .cw { color: var(--muted); font-size: 14px; }
+  .tests { margin: 14px 0 0; padding-left: 22px; display: grid; gap: 12px; max-width: 80ch; }
+  .tests li span { display: block; color: var(--muted); font-size: 15px; margin-top: 2px; }
+  .links { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .links a {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--card);
+  }
+  .links a:hover { border-color: var(--ink); }
+  .pro { border-left: 4px solid var(--pine); }
+  .avoid { border-left: 4px solid var(--warn); }
+  .pay { border-left: 4px solid var(--steel); margin-top: 18px; }
+  .terms { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px 22px; margin: 14px 0 10px; }
+  .terms div { border-top: 1px solid var(--line); padding-top: 10px; }
+  .terms dt { font-weight: 700; }
+  .terms dd { margin: 4px 0 0; font-size: 14.5px; color: var(--muted); }
+  .rel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 14px; margin-top: 14px; }
+  .rel-card { padding: 18px 20px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; color: var(--ink); }
+  .rel-card:hover { border-color: var(--heat); }
+  .rel-card .small { margin: 0; }
+  .srcs ul { padding-left: 20px; display: grid; gap: 4px; }
+  .srcs a { overflow-wrap: anywhere; }
+  @media (max-width: 640px) {
+    .ladder li { flex-direction: column; gap: 2px; }
+  }
+</style>

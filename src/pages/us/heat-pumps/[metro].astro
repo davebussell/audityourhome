@@ -1,8 +1,10 @@
 ---
 /**
- * Heat pumps in one US metro: climate (degree days, IECC zone), what heat costs with each fuel at the
- * state's EIA prices, the heat pump programs and their equipment rules (researched October 19, 2026),
- * and the certified systems that suit the climate, cooling-first in hot metros.
+ * Heat pumps in one US metro: climate (degree days, IECC zone), what cooling and heating cost at the
+ * state's EIA prices (cooling first where cooling degree days outweigh heating), the heat pump
+ * programs and their equipment rules (researched October 19, 2026), the climate profile's equipment
+ * advice, and the certified systems that suit the climate: cold-weather picks only where winters
+ * are cold enough to need them (4,000+ heating degree days), cooling efficiency elsewhere.
  */
 import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
@@ -10,14 +12,16 @@ import ModelTable from '../../../components/hp/ModelTable.astro';
 import CostTable from '../../../components/hp/CostTable.astro';
 import RebateCard from '../../../components/hp/RebateCard.astro';
 import QuoteForm from '../../../components/hp/QuoteForm.astro';
+import RegionalNeeds from '../../../components/RegionalNeeds.astro';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
 import { relatedMetros } from '../../../lib/us/metro-view';
 import { PRICE_META } from '../../../lib/us/data';
 import type { Metro } from '../../../lib/us/data';
+import { placeClimate, climateMeaning } from '../../../lib/climate';
 import {
-  US_METROS, metroName, metroState, stateName, usRebates, usClimateKind, costsUS, leaders, brandsBySize, brandInfo, statsFor, brandHref,
-  HP_CHECKED, REBATES_US, COP_NOTE, fmtInt, fmtCop, fmt1, tierLabel, statusChipHP, type ModelRow,
+  US_METROS, metroName, metroState, stateName, usRebates, usClimateKind, costsUS, coolingUS, leaders, brandsBySize, brandInfo, statsFor, brandHref,
+  HP_CHECKED, REBATES_US, COP_NOTE_US, fmtInt, fmtCop, fmt1, tierLabel, statusChipHP, type ModelRow,
 } from '../../../lib/heatpumps';
 import '../../../styles/hp.css';
 
@@ -37,13 +41,23 @@ const cdd = c?.cdd65 ?? null;
 const zone = c?.iecc2021ClimateZone ?? null;
 const moisture = zone?.slice(-1) ?? '';
 const kind = usClimateKind(m);
-const heatLed = kind === 'cold' || (hdd ?? 0) >= 4000;
+const hdd0 = hdd ?? 0;
+const cdd0 = cdd ?? 0;
+/** Cold-weather details (5°F ratings, cold-climate lists) only where winters are cold enough to need them. */
+const coldInfo = hdd0 >= 4000;
+const heatLed = coldInfo;
+/** Cooling leads the page where cooling degree days outweigh heating degree days. */
+const coolingLed = cdd0 > hdd0;
+const dry = moisture === 'B';
 const costs = costsUS(st, hdd ?? 3000);
 const gasCost = costs.rows.find((x) => x.key === 'gas');
 const hpCost = costs.rows.find((x) => x.key === 'hp-cold');
 const hpStd = costs.rows.find((x) => x.key === 'hp-std');
 const elecCost = costs.rows.find((x) => x.key === 'elec');
 const breakEven = costs.elecPerMMBtu && costs.gasPerMMBtu ? costs.elecPerMMBtu / costs.gasPerMMBtu : null;
+const cool = coolingUS(m, 1600);
+const coolTyp = cool?.rows.find((r) => r.key === 'typical');
+const cool18 = cool?.rows.find((r) => r.key === 'two');
 const progs = usRebates(m.slug);
 const openProgs = progs.filter((p) => ['Open', 'Open · limits apply'].includes(statusChipHP(p.status).label));
 const unconfirmed = progs.filter((p) => statusChipHP(p.status).label === 'Unconfirmed').length;
@@ -55,20 +69,29 @@ const photoKey = heatLed ? 'heat-loss-calculation' : 'energy-bill-analysis';
 const photoHud = heatLed ? 'Load calculation · Manual J' : 'Running costs';
 const L = leaders('us');
 const fed = REBATES_US.federal ?? {};
+const pc = placeClimate('us', m.slug);
+const meaning = climateMeaning('us', { hdd, cdd });
+const money = (n: number | null | undefined) => (n == null ? '—' : `$${Math.round(n).toLocaleString('en-US')}`);
+const roundKwh = (n: number) => Math.round(n / 100) * 100;
 
-// Which certified systems lead depends on the climate: heating in the cold, cooling in hot metros.
+// Which certified systems lead depends on the climate: heating in the cold, cooling elsewhere.
+const byEer2 = (rows: ModelRow[]) => rows.slice().sort((a, b) => (b.eer2 ?? 0) - (a.eer2 ?? 0) || (b.seer2 ?? 0) - (a.seer2 ?? 0));
 const TABLES: Record<string, { h: string; rows: ModelRow[]; cooling: boolean }> = {
   coldDucted: { h: 'Central systems that heat best in the cold (2 tons and up)', rows: L.coldDucted, cooling: false },
   coldDuctless: { h: 'Mini-splits that heat best in the cold', rows: L.coldDuctless, cooling: false },
-  coolDucted: { h: 'Central systems that cool most efficiently', rows: L.coolDucted, cooling: true },
-  coolDuctless: { h: 'Mini-splits that cool most efficiently', rows: L.coolDuctless, cooling: true },
+  coolDucted: { h: dry && !coldInfo ? 'Central systems that cool most efficiently on hot afternoons' : 'Central systems that cool most efficiently', rows: dry && !coldInfo ? byEer2(L.coolDucted) : L.coolDucted, cooling: true },
+  coolDuctless: { h: dry && !coldInfo ? 'Mini-splits that cool most efficiently on hot afternoons' : 'Mini-splits that cool most efficiently', rows: dry && !coldInfo ? byEer2(L.coolDuctless) : L.coolDuctless, cooling: true },
 };
-const order = kind === 'hot' ? ['coolDucted', 'coolDuctless'] : heatLed ? ['coldDucted', 'coldDuctless', 'coolDucted'] : ['coolDucted', 'coldDucted', 'coolDuctless'];
+const order = coldInfo ? ['coldDucted', 'coldDuctless', 'coolDucted'] : ['coolDucted', 'coolDuctless'];
 
 const ranked = brandsBySize('us')
   .map((s) => ({ s, st: statsFor('us', s)! }))
   .sort((a, b) =>
-    kind === 'hot' ? (b.st.bestSeer2 ?? 0) - (a.st.bestSeer2 ?? 0) || b.st.outdoorModels - a.st.outdoorModels : b.st.coldOutdoorModels - a.st.coldOutdoorModels,
+    coldInfo
+      ? b.st.coldOutdoorModels - a.st.coldOutdoorModels
+      : dry
+        ? (b.st.bestEer2 ?? 0) - (a.st.bestEer2 ?? 0) || (b.st.bestSeer2 ?? 0) - (a.st.bestSeer2 ?? 0)
+        : (b.st.bestSeer2 ?? 0) - (a.st.bestSeer2 ?? 0) || b.st.outdoorModels - a.st.outdoorModels,
   )
   .slice(0, 12);
 
@@ -76,8 +99,6 @@ const sameState = relatedMetros(m);
 const sameKind = US_METROS.filter((o) => o.slug !== m.slug && !sameState.includes(o) && usClimateKind(o) === kind).slice(0, 8);
 const fmtDD = (n: number | null) => (n == null ? '—' : fmtInt(n, 'us'));
 
-const hdd0 = hdd ?? 0;
-const cdd0 = cdd ?? 0;
 let climateLine = 'Winters are mild, so almost any certified heat pump can heat the house; cooling efficiency and quiet running decide the choice.';
 if (kind === 'cold') climateLine = 'Winters here are long and cold, so the heat pump has to keep its output near 5°F.';
 else if (kind === 'hot') climateLine = 'Cooling runs most of the year here, so summer efficiency matters more than heating at 5°F.';
@@ -97,12 +118,22 @@ const moistureLine =
       : moisture === 'C'
         ? 'This is a marine climate: mild all year, so a small system sized to the real load runs quietly and efficiently.'
         : '';
+const coolHumidLine =
+  moisture === 'A'
+    ? "In this humid climate, part of the air conditioner's job is pulling moisture out of the air. A right-sized variable-speed system runs longer at low speed and removes more of it; an oversized one cools quickly, shuts off and leaves the house clammy."
+    : moisture === 'B'
+      ? 'In this dry climate, check EER2 as well as SEER2: EER2 rates efficiency on the hottest afternoons, when your bill and the power grid peak.'
+      : moisture === 'C'
+        ? 'In this marine climate, cooling is a small and occasional load, so a system sized to the real load matters more than a top efficiency rating.'
+        : '';
 
-const heroCostLine = hpLead
-  ? ` At ${stateName(st)} prices ${heatLed ? 'a cold-climate' : 'an efficient'} heat pump delivers heat for about $${hpLead.cost.toFixed(2)} per million Btu${
-      gasCost ? `, against $${gasCost.cost.toFixed(2)} for a high-efficiency gas furnace` : ''
-    }.`
-  : '';
+const heroCostLine = coolingLed && coolTyp && cool18
+  ? ` A typical 1,600 sq ft house here uses about ${fmtInt(roundKwh(coolTyp.kwh), 'us')} kWh a year for air conditioning${coolTyp.cost != null ? `, about ${money(coolTyp.cost)} at ${stateName(st)} prices` : ''}; an 18 SEER2 heat pump would cut that to about ${money(cool18.cost)}.`
+  : hpLead
+    ? ` At ${stateName(st)} prices ${heatLed ? 'a cold-climate' : 'an efficient'} heat pump delivers heat for about $${hpLead.cost.toFixed(2)} per million Btu${
+        gasCost ? `, against $${gasCost.cost.toFixed(2)} for a high-efficiency gas furnace` : ''
+      }.`
+    : '';
 const breakEvenKey = breakEven == null ? 'no gas price in our data'
   : breakEven > hpLeadCop ? `gas costs less to run here; a heat pump would need a seasonal COP of ${breakEven.toFixed(1)} to match it`
   : `a heat pump beats gas here above a seasonal COP of ${breakEven.toFixed(1)}`;
@@ -112,9 +143,16 @@ if (breakEven && breakEven <= hpLeadCop) {
 } else if (breakEven) {
   breakEvenLine = ` Here a heat pump needs a seasonal COP above ${breakEven.toFixed(1)} to beat a 95% gas furnace, so at these prices gas stays cheaper to run; the case for a heat pump rests on replacing the air conditioner, cutting emissions or a time-of-use rate.`;
 }
+const heatIntro = coolingLed
+  ? `Heating is a small part of the bill here: with about ${fmtDD(hdd)} heating degree days a year, a house needs only a fraction of the heat a northern house does, so the cooling costs above matter more.`
+  : kind === 'cold'
+    ? 'In a climate this cold, heating is usually the biggest energy cost in an older house, so the price of each unit of heat matters.'
+    : 'Heating and cooling both count here: winters are real, so the price of each unit of heat matters, but so does summer efficiency.';
 
 const title = `Heat pumps in ${name}: costs, rebates and the right systems | AuditYourHome`;
-const description = `What a heat pump costs to run in ${name} against gas and electric heat, the ${progs.length} heat pump program${progs.length === 1 ? '' : 's'} and their equipment rules, and the certified systems that suit the climate.`;
+const description = coolingLed
+  ? `What a heat pump costs to run in ${name}, cooling first, against gas and electric heat, the ${progs.length} heat pump program${progs.length === 1 ? '' : 's'} and their equipment rules, and the certified systems that suit the climate.`
+  : `What a heat pump costs to run in ${name} against gas and electric heat, the ${progs.length} heat pump program${progs.length === 1 ? '' : 's'} and their equipment rules, and the certified systems that suit the climate.`;
 const schema = [
   breadcrumbSchema([
     { name: 'Home', path: '/us/' },
@@ -122,9 +160,13 @@ const schema = [
     { name, path: `/us/heat-pumps/${m.slug}/` },
   ]),
 ];
+const costJump: [string, string][] = cool
+  ? coolingLed ? [['cooling', 'Cooling costs'], ['costs', 'Heating costs']] : [['costs', 'Heating costs'], ['cooling', 'Cooling costs']]
+  : [['costs', 'Running costs']];
 const jump: [string, string][] = [
   ['climate', 'Climate and sizing'],
-  ['costs', 'Running costs'],
+  ...(pc ? ([['needs', 'What to look for']] as [string, string][]) : []),
+  ...costJump,
   ['rebates', 'Rebates'],
   ['systems', 'Systems that suit'],
   ['brands', 'Brands'],
@@ -150,22 +192,40 @@ const jump: [string, string][] = [
         <span class="kv-big">{zone ? `Zone ${zone}` : '—'}</span>
         <span class="kv-sub">{fmtDD(hdd)} heating and {fmtDD(cdd)} cooling degree days a year</span>
       </div>
-      <div class="key card">
-        <span class="k">{hpLeadLabel}</span>
-        <span class="kv-big">${hpLead ? hpLead.cost.toFixed(2) : '—'} <small>per million Btu</small></span>
-        <span class="kv-sub">seasonal COP {fmt1(hpLeadCop)} for this climate</span>
-      </div>
-      <div class="key card">
-        <span class="k">{gasCost ? 'Gas furnace (95%)' : 'Electric furnace'}</span>
-        <span class="kv-big">${(gasCost ?? elecCost)?.cost.toFixed(2) ?? '—'} <small>per million Btu</small></span>
-        <span class="kv-sub">{breakEvenKey}</span>
-      </div>
+      {coolingLed && coolTyp && cool18 ? (
+        <Fragment>
+          <div class="key card">
+            <span class="k">Cooling a typical house</span>
+            <span class="kv-big">{money(coolTyp.cost)} <small>a year</small></span>
+            <span class="kv-sub">about {fmtInt(roundKwh(coolTyp.kwh), 'us')} kWh with today's typical system, 1,600 sq ft</span>
+          </div>
+          <div class="key card">
+            <span class="k">With an 18 SEER2 heat pump</span>
+            <span class="kv-big">{money(cool18.cost)} <small>a year</small></span>
+            <span class="kv-sub">{coolTyp.cost != null && cool18.cost != null ? `about ${money(coolTyp.cost - cool18.cost)} a year less to cool` : 'less electricity for the same cooling'} · <a href="#cooling">how we worked it out</a></span>
+          </div>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <div class="key card">
+            <span class="k">{hpLeadLabel}</span>
+            <span class="kv-big">${hpLead ? hpLead.cost.toFixed(2) : '—'} <small>per million Btu</small></span>
+            <span class="kv-sub">seasonal COP {fmt1(hpLeadCop)} for this climate</span>
+          </div>
+          <div class="key card">
+            <span class="k">{gasCost ? 'Gas furnace (95%)' : 'Electric furnace'}</span>
+            <span class="kv-big">${(gasCost ?? elecCost)?.cost.toFixed(2) ?? '—'} <small>per million Btu</small></span>
+            <span class="kv-sub">{breakEvenKey}</span>
+          </div>
+        </Fragment>
+      )}
       <div class="key card">
         <span class="k">Heat pump programs</span>
         <span class="kv-big">{openProgs.length} <small>of {progs.length} open</small></span>
         <span class="kv-sub">{unconfirmed > 0 && `${unconfirmed} unconfirmed · `}<a href="#rebates">Amounts and equipment rules</a></span>
       </div>
     </div>
+    {meaning && <p class="meaning measure"><strong>What this means for your house:</strong> {meaning}</p>}
 
     <nav class="jump" aria-label="On this page">
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
@@ -182,26 +242,114 @@ const jump: [string, string][] = [
         <div><dt>Heating degree days (65°F)</dt><dd>{fmtDD(hdd)}</dd></div>
         <div><dt>Cooling degree days (65°F)</dt><dd>{fmtDD(cdd)}</dd></div>
         <div><dt>Weather station</dt><dd>{c?.station?.name ?? '—'}</dd></div>
-        <div><dt>Seasonal COP for planning</dt><dd>{fmt1(costs.band.coldClimate)} cold-climate · {fmt1(costs.band.standard)} standard</dd></div>
+        {coolTyp && <div><dt>Cooling a typical 1,600 sq ft house</dt><dd>about {fmtInt(roundKwh(coolTyp.kwh), 'us')} kWh a year</dd></div>}
+        {!coolingLed && <div><dt>Seasonal COP for planning</dt><dd>{coldInfo ? `${fmt1(costs.band.coldClimate)} cold-climate · ${fmt1(costs.band.standard)} standard` : `${fmt1(costs.band.standard)} for a standard heat pump`}</dd></div>}
         <div><dt>Typical home</dt><dd>{c?.medianYearBuilt ? `built around ${c.medianYearBuilt}` : '—'}{c?.ownerOccupiedShare != null ? `; ${Math.round(c.ownerOccupiedShare * 100)}% owner-occupied` : ''}</dd></div>
       </dl>
       <p class="tnote">
         Degree days: NOAA 1991–2020 climate normals. Climate zone: IECC 2021 (PNNL county list). Housing: Census American Community Survey.
-        Seasonal COP: {COP_NOTE}
+        {!coolingLed && <Fragment> Seasonal COP: {COP_NOTE_US}</Fragment>}
       </p>
     </section>
+
+    {pc && (
+      <RegionalNeeds country="us" profile={pc.profile} place={pc.place} placeName={name} variant="heatpump" id="needs" moreHref={`/us/cities/${m.slug}/#regional-needs`} />
+    )}
+
+    {cool && coolingLed && (
+      <section id="cooling" class="sec">
+        <h2>What cooling costs in {name}</h2>
+        <p class="sec-intro">
+          Air conditioning for a typical 1,600 sq ft single-family house with central air, at {stateName(st)}'s average residential electricity
+          price{cool.centsPerKwh != null ? ` (${cool.centsPerKwh.toFixed(1)}¢ per kWh, EIA, ${PRICE_META.electricity.month})` : ''}. {coolHumidLine}
+        </p>
+        <div class="tablewrap card">
+          <table class="stack dt">
+            <caption class="sr-only">Yearly cooling electricity and cost by system efficiency in {name}</caption>
+            <thead>
+              <tr>
+                <th scope="col">System</th>
+                <th scope="col" class="num">Rated efficiency</th>
+                <th scope="col" class="num">Electricity a year</th>
+                <th scope="col" class="num">Cost a year</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cool.rows.map((r) => (
+                <tr>
+                  <td>{r.label}</td>
+                  <td class="num" data-label="Rated efficiency">{r.seer2 != null ? `${fmt1(r.seer2)} SEER2` : `about ${fmt1(cool.seerRef)} SEER`}</td>
+                  <td class="num" data-label="Electricity a year">{fmtInt(roundKwh(r.kwh), 'us')} kWh</td>
+                  <td class="num" data-label="Cost a year"><strong>{money(r.cost)}</strong></td>
+                  <td data-label="Notes" class="muted">{r.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="tnote">
+          How to read this: SEER2 is the season-long cooling efficiency on the yellow EnergyGuide label; a higher number means less electricity for the
+          same cooling. A real house can use about 30% less to 35% more than the typical figure, depending on its size, insulation, ducts, thermostat
+          setting and how long the AC runs. The cheapest cooling is the heat you keep out: sealed and insulated attic ducts, attic insulation and shade on
+          sun-facing windows often cut more than a new system does.
+        </p>
+        <p class="tnote">
+          Estimate from {cool.basis}: single-family homes with central air, indoor fan included, rescaled to {name}'s 1991–2020 normal cooling degree
+          days. Sources: {cool.sources.map((s, i) => <Fragment>{i > 0 && ' · '}<a href={s.url} rel="noopener" target="_blank">{s.label}</a></Fragment>)}.
+        </p>
+      </section>
+    )}
 
     <section id="costs" class="sec">
       <h2>What heat costs to run in {name}</h2>
       <p class="sec-intro">
-        Cost per million Btu of heat delivered into the house, at {stateName(st)}'s average residential prices from the EIA (electricity for
-        {' '}{PRICE_META.electricity.month}, gas as an annual average). A typical older house in a cold climate uses 50 to 100 million Btu of heat a
-        year; a house in the South uses far less.{breakEvenLine}
+        {heatIntro} Cost per million Btu of heat delivered into the house, at {stateName(st)}'s average residential prices from the EIA (electricity for
+        {' '}{PRICE_META.electricity.month}, gas as an annual average).{breakEvenLine}
       </p>
-      <CostTable rows={costs.rows} market="us" caption={`Delivered heat cost by fuel in ${name}`} />
+      <CostTable rows={coldInfo ? costs.rows : costs.rows.filter((x) => x.key !== 'hp-cold')} market="us" caption={`Delivered heat cost by fuel in ${name}`} />
       {hpStd && elecCost && <p class="tnote">Against electric resistance heat (baseboards or an electric furnace), even a standard heat pump cuts the heating bill by about {Math.round((1 - hpStd.cost / elecCost.cost) * 100)}%.</p>}
       <p class="tnote">Prices: <a href={PRICE_META.electricity.url} rel="noopener" target="_blank">EIA electricity</a> · <a href={PRICE_META.gas.url} rel="noopener" target="_blank">EIA natural gas</a>. Your own rate plan may differ, especially on a time-of-use or heat pump rate.</p>
+      {coolingLed && <p class="tnote">Seasonal COP: {COP_NOTE_US}</p>}
     </section>
+
+    {cool && !coolingLed && (
+      <section id="cooling" class="sec">
+        <h2>What cooling costs in {name}</h2>
+        <p class="sec-intro">
+          Summer matters too. Air conditioning for a typical 1,600 sq ft single-family house with central air, at {stateName(st)}'s average residential
+          electricity price{cool.centsPerKwh != null ? ` (${cool.centsPerKwh.toFixed(1)}¢ per kWh, EIA, ${PRICE_META.electricity.month})` : ''}. {coolHumidLine}
+        </p>
+        <div class="tablewrap card">
+          <table class="stack dt">
+            <caption class="sr-only">Yearly cooling electricity and cost by system efficiency in {name}</caption>
+            <thead>
+              <tr>
+                <th scope="col">System</th>
+                <th scope="col" class="num">Rated efficiency</th>
+                <th scope="col" class="num">Electricity a year</th>
+                <th scope="col" class="num">Cost a year</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cool.rows.map((r) => (
+                <tr>
+                  <td>{r.label}</td>
+                  <td class="num" data-label="Rated efficiency">{r.seer2 != null ? `${fmt1(r.seer2)} SEER2` : `about ${fmt1(cool.seerRef)} SEER`}</td>
+                  <td class="num" data-label="Electricity a year">{fmtInt(roundKwh(r.kwh), 'us')} kWh</td>
+                  <td class="num" data-label="Cost a year"><strong>{money(r.cost)}</strong></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="tnote">
+          SEER2 is the season-long cooling efficiency on the yellow EnergyGuide label. A real house can use about {moisture === 'C' ? 'half to 1.6 times' : '30% less to 35% more than'} the
+          typical figure. Estimate from {cool.basis}, rescaled to {name}'s 1991–2020 normal cooling degree days. Sources:
+          {' '}{cool.sources.map((s, i) => <Fragment>{i > 0 && ' · '}<a href={s.url} rel="noopener" target="_blank">{s.label}</a></Fragment>)}.
+        </p>
+      </section>
+    )}
 
     <section id="rebates" class="sec">
       <h2>Heat pump rebates in {name}</h2>
@@ -234,24 +382,34 @@ const jump: [string, string][] = [
     <section id="systems" class="sec">
       <h2>Systems that suit {name}</h2>
       <p class="sec-intro">
-        {kind === 'hot'
-          ? "The certified systems with the highest SEER2, on current refrigerants, from ENERGY STAR's US listings. Each row keeps its cold-weather numbers too."
-          : "The certified systems that heat most efficiently at 5°F, and those that cool most efficiently, on current refrigerants, from ENERGY STAR's US listings."}
+        {coldInfo
+          ? "The certified systems that heat most efficiently at 5°F, and those that cool most efficiently, on current refrigerants, from ENERGY STAR's US listings."
+          : dry
+            ? "Winters here don't call for cold-weather ratings, so these are the certified systems with the highest EER2 (efficiency on the hottest afternoons) and SEER2, on current refrigerants, from ENERGY STAR's US listings."
+            : "Winters here don't call for cold-weather ratings, so these are the certified systems with the highest SEER2, on current refrigerants, from ENERGY STAR's US listings."}
         {' '}Rebadged twins with identical ratings are folded into one row.
+      </p>
+      <p class="tnote">
+        How to read the tables: SEER2 is cooling efficiency over a season and EER2 on the hottest afternoons; HSPF2 is heating efficiency over a
+        season{coldInfo ? ', and COP at 5°F shows how efficiently the system still heats in deep cold' : ''}. Size is the rated output in BTU/h (12,000 BTU/h is
+        one ton). The AHRI number identifies the exact certified pairing for rebates. Full definitions: <a href="/us/heat-pumps/#numbers">how to read the numbers</a>.
       </p>
       {order.map((k) => (
         <>
           <h3 class="sub-h">{TABLES[k].h}</h3>
-          <ModelTable rows={TABLES[k].rows.slice(0, 8)} market="us" caption={`${TABLES[k].h} for ${name}`} showBrand cooling={TABLES[k].cooling} />
+          <ModelTable rows={TABLES[k].rows.slice(0, 8)} market="us" caption={`${TABLES[k].h} for ${name}`} showBrand cooling={TABLES[k].cooling} coldInfo={coldInfo} />
         </>
       ))}
     </section>
 
     <section id="brands" class="sec">
-      <h2>{kind === 'hot' ? 'Brands with the most efficient cooling' : 'Brands with the most cold-climate models'}</h2>
+      <h2>{coldInfo ? 'Brands with the most cold-climate models' : dry ? 'Brands with the best hot-afternoon efficiency' : 'Brands with the most efficient cooling'}</h2>
       <p class="sec-intro">
-        {kind === 'hot' ? 'Brands by the best SEER2 among their certified systems.' : 'Outdoor models that meet ENERGY STAR Cold Climate, by brand.'} Each brand page has the
-        warranty, product lines and best models.
+        {coldInfo
+          ? 'Outdoor models that meet ENERGY STAR Cold Climate, by brand.'
+          : dry
+            ? 'Brands by the best EER2 among their certified systems, then SEER2.'
+            : 'Brands by the best SEER2 among their certified systems.'} Each brand page has the warranty, product lines and best models.
       </p>
       <div class="tablewrap card">
         <table class="stack dt">
@@ -259,8 +417,17 @@ const jump: [string, string][] = [
           <thead>
             <tr>
               <th scope="col">Brand</th>
-              <th scope="col" class="num">{kind === 'hot' ? 'Best SEER2' : 'ENERGY STAR Cold Climate'}</th>
-              <th scope="col" class="num">{kind === 'hot' ? 'Best COP at 5°F' : 'Best COP at 5°F'}</th>
+              {coldInfo ? (
+                <>
+                  <th scope="col" class="num">ENERGY STAR Cold Climate</th>
+                  <th scope="col" class="num">Best COP at 5°F</th>
+                </>
+              ) : (
+                <>
+                  <th scope="col" class="num">Best SEER2</th>
+                  <th scope="col" class="num">Best EER2</th>
+                </>
+              )}
               <th scope="col" class="num">All certified models</th>
               <th scope="col">Price tier</th>
             </tr>
@@ -269,8 +436,17 @@ const jump: [string, string][] = [
             {ranked.map(({ s, st: b }) => (
               <tr>
                 <td class="brand-cell"><a href={brandHref('us', s)}>{brandInfo(s).name}</a></td>
-                <td class="num" data-label={kind === 'hot' ? 'Best SEER2' : 'ENERGY STAR Cold Climate'}>{kind === 'hot' ? fmt1(b.bestSeer2) : fmtInt(b.coldOutdoorModels, 'us')}</td>
-                <td class="num" data-label="Best COP at 5°F">{fmtCop(b.bestCop5)}</td>
+                {coldInfo ? (
+                  <>
+                    <td class="num" data-label="ENERGY STAR Cold Climate">{fmtInt(b.coldOutdoorModels, 'us')}</td>
+                    <td class="num" data-label="Best COP at 5°F">{fmtCop(b.bestCop5)}</td>
+                  </>
+                ) : (
+                  <>
+                    <td class="num" data-label="Best SEER2">{fmt1(b.bestSeer2)}</td>
+                    <td class="num" data-label="Best EER2">{fmt1(b.bestEer2)}</td>
+                  </>
+                )}
                 <td class="num" data-label="All certified models">{fmtInt(b.outdoorModels, 'us')}</td>
                 <td data-label="Price tier">{tierLabel(brandInfo(s).priceTier)}</td>
               </tr>
@@ -294,3 +470,7 @@ const jump: [string, string][] = [
     </section>
   </div>
 </Base>
+
+<style>
+  .meaning { margin: 4px 0 18px; padding: 10px 14px; background: var(--pine-tint); border-left: 4px solid var(--pine); border-radius: 6px; font-size: 15.5px; }
+</style>

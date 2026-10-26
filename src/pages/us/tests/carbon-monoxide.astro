@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import TestStateTable from '../../../components/us/TestStateTable.astro';
 import TestGear from '../../../components/us/TestGear.astro';
 import { S, coStateRows } from '../../../lib/us/tests';
@@ -162,6 +163,8 @@ const sources = [src.cpsc, src.ul, src.bpi, src.ncsl];
     />
     <TestCite src={src.ncsl} labels={['NCSL CO detector requirements (updated Sep 29, 2025)']} />
   </section>
+
+  <ReadingGuide country="us" test="carbon-monoxide" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If an alarm sounds</h2>

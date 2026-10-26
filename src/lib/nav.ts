@@ -311,6 +311,7 @@ export const NAV_US: NavItem[] = [
       {
         title: 'Words & numbers',
         links: [
+          { href: '/us/issues/', label: 'Common problems', desc: 'Start from the symptom, by climate' },
           { href: '/us/glossary/', label: 'Glossary', desc: 'Every term and acronym explained' },
           { href: '/us/how-it-works/', label: 'How an audit works', desc: 'What happens at the visit' },
         ],

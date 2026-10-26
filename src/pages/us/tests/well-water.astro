@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import TestGear from '../../../components/us/TestGear.astro';
 import { S } from '../../../lib/us/tests';
 
@@ -173,6 +174,8 @@ const sources = [src.wells, src.protect, src.contaminants, src.labs, src.labsPdf
     </ul>
     <TestCite src={[src.labs, src.labsPdf]} labels={['EPA lab certification contacts (updated Aug 11, 2026)', 'EPA state programs PDF']} />
   </section>
+
+  <ReadingGuide country="us" test="well-water" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If a result comes back high</h2>

@@ -10,7 +10,7 @@ import { breadcrumbSchema } from '../../lib/schema';
 import {
   type Market, type Warranty, brandInfo, statsFor, brandHref, brandSlugs, FAMILIES, ESTAR, ESTAR_URL, AHRI_URL, NRCAN_LIST_URL,
   HP_CHECKED, fmtInt, fmtPct, fmtCop, fmt1, fmtDate, tierLabel, channelLabel, warrantyHeadline, registrationNote, at5, TYPE_LABEL,
-  CA_REGIONS, US_METROS, metroName, hostOf,
+  CA_REGIONS, US_METROS, metroName, hostOf, usText, usList,
 } from '../../lib/heatpumps';
 import '../../styles/hp.css';
 
@@ -32,7 +32,9 @@ const owner = family?.owner ?? b.parent.split(/[.(;]/)[0].trim();
 const types = Object.keys(st.top).sort((a, x) => (a === 'ductless' ? -1 : 1) - (x === 'ductless' ? -1 : 1));
 const r = st.refrigerants;
 const a2l = (r['R-454B'] ?? 0) + (r['R-32'] ?? 0);
-const coldLines = b.lines.filter((l) => l.coldClimate);
+// US pages leave out product lines sold only in Canada.
+const lines = isCA ? b.lines : b.lines.filter((l) => !/\bCanada[- ]only\b|\(Canada\b/i.test(`${l.name} ${l.claim ?? ''}`));
+const coldLines = lines.filter((l) => l.coldClimate);
 const name = b.name;
 
 // compare-with: family first, then same tier
@@ -65,13 +67,19 @@ const jump: [string, string][] = [
   ['warranty', 'Warranty'],
   ['verdict', 'Strengths and watch-outs'],
   ['rebates', 'Rebate fit'],
-  ...(b.recentNews.length ? ([['news', 'News']] as [string, string][]) : []),
+  ...(b.recentNews.length && (isCA || b.recentNews.some((n) => usText(n.text))) ? ([['news', 'News']] as [string, string][]) : []),
   ['quote', 'Get quotes'],
 ];
 const wCard = (label: string, x: Warranty | null) => ({ label, x });
 const warrantyCards = b.warrantyVariants?.length
   ? b.warrantyVariants.map((v) => wCard(v.label, v[market])).filter((c) => c.x)
   : [wCard(`In ${country}`, w)];
+// Brand facts were researched for both countries; US pages keep only the US-relevant parts, in °F.
+const tx = (s: string | null | undefined) => (isCA ? s ?? '' : usText(s));
+const strengths = isCA ? b.strengths : usList(b.strengths);
+const watchouts = isCA ? b.watchouts : usList(b.watchouts);
+const news = (isCA ? b.recentNews : b.recentNews.map((n) => ({ ...n, text: usText(n.text) })).filter((n) => n.text))
+  .slice().sort((x, y) => (x.date < y.date ? 1 : -1)).slice(0, 8);
 ---
 
 <Base title={title} description={description} schema={schema}>
@@ -107,7 +115,7 @@ const warrantyCards = b.warrantyVariants?.length
       <div class="key card">
         <span class="k">Warranty in {country}</span>
         <span class="kv-big" style="font-size:19px">{warrantyHeadline(w)}</span>
-        <span class="kv-sub">{registrationNote(w) || 'see terms below'}</span>
+        <span class="kv-sub">{tx(registrationNote(w)) || 'see terms below'}</span>
       </div>
     </div>
 
@@ -118,12 +126,12 @@ const warrantyCards = b.warrantyVariants?.length
     <section id="glance" class="sec">
       <h2>{name} at a glance</h2>
       <dl class="glance card">
-        <div><dt>Who owns it</dt><dd>{b.parent}</dd></div>
+        <div><dt>Who owns it</dt><dd>{isCA ? b.parent : usText(b.parent) || b.parent}</dd></div>
         {b.sisterBrands.length > 0 && <div><dt>Sister brands</dt><dd>{b.sisterBrands.join(', ')}</dd></div>}
         {b.headquarters && <div><dt>Headquarters</dt><dd>{b.headquarters}</dd></div>}
-        {b.manufacturing && <div><dt>Where it's made</dt><dd>{b.manufacturing}</dd></div>}
+        {b.manufacturing && <div><dt>Where it's made</dt><dd>{isCA ? b.manufacturing : usText(b.manufacturing) || b.manufacturing}</dd></div>}
         <div><dt>How it's sold</dt><dd>{channelLabel(b.channel)}</dd></div>
-        <div><dt>Price tier</dt><dd><strong>{tierLabel(b.priceTier)}.</strong> {b.priceNote}</dd></div>
+        <div><dt>Price tier</dt><dd><strong>{tierLabel(b.priceTier)}.</strong> {tx(b.priceNote)}</dd></div>
         <div><dt>What it makes</dt><dd>{b.productTypes.join(', ')}</dd></div>
         <div><dt>Names on ENERGY STAR's list</dt><dd>{st.names.join(', ')} <span class="muted">(certified by {st.partners.join('; ')})</span></dd></div>
       </dl>
@@ -131,18 +139,18 @@ const warrantyCards = b.warrantyVariants?.length
 
     <section id="lines" class="sec">
       <h2>Product lines</h2>
-      <p class="sec-intro">The current residential heat pump lines we found on {name}'s own pages, with the low-temperature claim in the maker's words.{coldLines.length ? ` ${coldLines.length} of ${b.lines.length} are sold as cold-climate.` : ''}</p>
+      <p class="sec-intro">The current residential heat pump lines we found on {name}'s own pages, with the low-temperature claim in the maker's words.{coldLines.length ? ` ${coldLines.length} of ${lines.length} are sold as cold-climate.` : ''}</p>
       <div class="tablewrap card">
         <table class="stack dt lines-t">
           <caption class="sr-only">{name} heat pump lines</caption>
           <thead><tr><th scope="col">Line</th><th scope="col">Type</th><th scope="col">Cold-climate</th><th scope="col">Maker's low-temperature claim</th><th scope="col">Refrigerant</th></tr></thead>
           <tbody>
-            {b.lines.map((l) => (
+            {lines.map((l) => (
               <tr>
                 <td>{l.url ? <a href={l.url} rel="noopener" target="_blank">{l.name}</a> : l.name}</td>
                 <td data-label="Type">{l.type}</td>
                 <td data-label="Cold-climate">{l.coldClimate ? <span class="yes">Yes</span> : <span class="no">No</span>}</td>
-                <td data-label="Maker's claim">{l.claim ?? 'No low-temperature figure published'}</td>
+                <td data-label="Maker's claim">{l.claim ? (isCA ? l.claim : usText(l.claim) || 'No US figure found') : 'No low-temperature figure published'}</td>
                 <td data-label="Refrigerant">{l.refrigerant ?? '—'}</td>
               </tr>
             ))}
@@ -183,12 +191,12 @@ const warrantyCards = b.warrantyVariants?.length
           <div class="card">
             <span class="lbl">{label}</span>
             <span class="big">{warrantyHeadline(x)}</span>
-            {x?.ifNotRegistered && <p><strong>Registration:</strong> {x.ifNotRegistered}</p>}
-            {x?.labour && <p><strong>Labour:</strong> {x.labour}</p>}
+            {x?.ifNotRegistered && tx(x.ifNotRegistered) && <p><strong>Registration:</strong> {tx(x.ifNotRegistered)}</p>}
+            {x?.labour && tx(x.labour) && <p><strong>{isCA ? 'Labour' : 'Labor'}:</strong> {tx(x.labour)}</p>}
             {x?.url && <p class="meta"><a href={x.url} rel="noopener" target="_blank">Warranty terms ({hostOf(x.url)})&nbsp;↗</a></p>}
           </div>
         ))}
-        {!b.warrantyVariants?.length && otherW && (
+        {isCA && !b.warrantyVariants?.length && otherW && (
           <div class="card">
             <span class="lbl">For comparison: {isCA ? 'in the US' : 'in Canada'}</span>
             <span class="big">{warrantyHeadline(otherW)}</span>
@@ -204,11 +212,11 @@ const warrantyCards = b.warrantyVariants?.length
       <div class="pros">
         <div class="card good">
           <h3>Strengths</h3>
-          <ul>{b.strengths.map((s) => <li>{s}</li>)}</ul>
+          <ul>{strengths.map((s) => <li>{s}</li>)}</ul>
         </div>
         <div class="card watch">
           <h3>Watch-outs</h3>
-          <ul>{b.watchouts.map((s) => <li>{s}</li>)}</ul>
+          <ul>{watchouts.map((s) => <li>{s}</li>)}</ul>
         </div>
       </div>
     </section>
@@ -242,11 +250,11 @@ const warrantyCards = b.warrantyVariants?.length
       )}
     </section>
 
-    {b.recentNews.length > 0 && (
+    {news.length > 0 && (
       <section id="news" class="sec">
         <h2>Recent news</h2>
         <ul class="news">
-          {b.recentNews.slice().sort((x, y) => (x.date < y.date ? 1 : -1)).slice(0, 8).map((n) => (
+          {news.map((n) => (
             <li><time>{n.date}</time><span>{n.text}{n.url && <> <a href={n.url} rel="noopener" target="_blank">{hostOf(n.url)}&nbsp;↗</a></>}</span></li>
           ))}
         </ul>
@@ -272,7 +280,7 @@ const warrantyCards = b.warrantyVariants?.length
         <h2>Sources</h2>
         <p class="small">Model counts and ratings: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a>, updated {updated}. Brand facts checked {HP_CHECKED} on:</p>
         <ul>
-          {b.sources.slice(0, 24).map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.title || hostOf(s.url)}</a></li>)}
+          {(isCA ? b.sources : b.sources.filter((s) => !/\b(Canad(a|ian)|Qu[ée]bec|Ontario)\b|\.ca\//i.test(`${s.title ?? ''} ${s.url}`))).slice(0, 24).map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.title || hostOf(s.url)}</a></li>)}
         </ul>
       </div>
     </section>

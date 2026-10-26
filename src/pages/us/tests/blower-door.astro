@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S } from '../../../lib/us/tests';
 
 const src = {
@@ -70,7 +71,7 @@ const sources = [
     { k: 'Test pressure', v: '50 pascals', src: src.basc, srcLabel: 'DOE BASC' },
     { k: '2021 IECC, zones 0–2', v: '5.0 ACH50 max', src: src.slides21, srcLabel: 'DOE' },
     { k: '2021 IECC, zones 3–8', v: '3.0 ACH50 max', src: src.slides21, srcLabel: 'DOE' },
-    { k: 'Typical cost', v: 'Not published' },
+    { k: 'Typical cost', v: 'Usually part of an audit' },
   ]}
   faqs={faqs}
   sources={sources}
@@ -155,8 +156,11 @@ const sources = [
       better: 70 means 30% more efficient than that reference home, and 0 means net zero energy.
     </p>
     <p>
-      What it costs: no official source publishes a price for a blower door test, so we don’t quote
-      one. See <a href="/us/cost/">what an audit costs</a> for how audit pricing works.
+      What it costs: no official source publishes a price for a blower door test on its own, so we don’t quote
+      one. Most homeowners get it as part of a full home energy audit, and many utility audit programs include it at no
+      extra charge: <a href="/us/cities/">your metro guide</a> lists the programs near you, and <a href="/us/cost/">what an audit costs</a>
+      explains how pricing works. When you compare quotes, ask whether a blower door test before and after the work is
+      included, and whether you get the ACH50 number in writing.
     </p>
     <ul class="linkrow">
       <li><a href="/us/find/">Find a certified auditor</a></li>
@@ -164,6 +168,8 @@ const sources = [
     </ul>
     <TestCite src={[src.doe, src.e1186, src.hers, src.hersScore]} labels={['DOE professional assessments', 'ASTM E1186', 'RESNET HERS Index', 'HERS score explained']} />
   </section>
+
+  <ReadingGuide country="us" test="blower-door" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If your home is leaky</h2>

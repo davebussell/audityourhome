@@ -5,6 +5,7 @@ import QuoteForm from './QuoteForm.astro';
 import { breadcrumbSchema } from '../../lib/schema';
 import {
   type Market, TYPES, HP_CHECKED, brandHref, statsFor, CA_REGIONS, caRebates, US_METROS, usRebates, metroName, hostOf, statusChipHP,
+  usText, usList,
 } from '../../lib/heatpumps';
 import '../../styles/hp.css';
 
@@ -18,6 +19,12 @@ const geo = TYPES.geothermal;
 const win = TYPES['window-heat-pumps'];
 const gradient = TYPES.gradient;
 const isGeo = (p: any) => /ground|geotherm/i.test(`${p.name} ${p.heatPumpRebate ?? ''}`);
+// US pages: drop Canada-only clauses and give temperatures in °F (Canadian pages keep the research wording).
+const tx = (s: string | null | undefined) => (isCA ? (s ?? '') : usText(s) || (s ?? ''));
+const geoLines = (geo.lines as any[]).map((l) => ({ ...l, claim: l.claim ? tx(l.claim) : l.claim }));
+const geoStrengths: string[] = isCA ? geo.strengths : usList(geo.strengths);
+const geoWatchouts: string[] = isCA ? geo.watchouts : usList(geo.watchouts);
+const loopTemp = isCA ? '5–10°C' : '41–50°F (5–10°C)';
 const geoPrograms = isCA
   ? CA_REGIONS.map((r) => ({ place: r.name, href: `/ca/heat-pumps/${r.slug}/`, progs: caRebates(r).filter(isGeo) })).filter((x) => x.progs.length)
   : US_METROS.map((m) => ({ place: metroName(m), href: `/us/heat-pumps/${m.slug}/`, progs: usRebates(m.slug).filter(isGeo) })).filter((x) => x.progs.length);
@@ -64,12 +71,12 @@ const winIntro = isCA
     <section id="geothermal" class="sec">
       <h2>Geothermal (ground-source) heat pump makers</h2>
       <p class="sec-intro">
-        A ground loop keeps the heat pump's source near 5–10°C all winter, so capacity doesn't fall in a cold snap. The loop (drilled or trenched) is
+        A ground loop keeps the heat pump's source near {loopTemp} all winter, so capacity doesn't fall in a cold snap. The loop (drilled or trenched) is
         most of the cost, and its design decides how well the system works. Geothermal units aren't in ENERGY STAR's air-source list, so this section
         uses the makers' own pages.
       </p>
       <div class="cards">
-        {geo.lines.map((l: any) => (
+        {geoLines.map((l: any) => (
           <article class="card c">
             <h3>{l.name}</h3>
             <p>{l.claim ?? 'Warranty terms not published on the pages we could read.'}</p>
@@ -78,10 +85,10 @@ const winIntro = isCA
         ))}
       </div>
       <div class="pros">
-        <div class="card good"><h3>Why people choose it</h3><ul>{geo.strengths.map((s: string) => <li>{s}</li>)}</ul></div>
-        <div class="card watch"><h3>Watch-outs</h3><ul>{geo.watchouts.map((s: string) => <li>{s}</li>)}</ul></div>
+        <div class="card good"><h3>Why people choose it</h3><ul>{geoStrengths.map((s: string) => <li>{s}</li>)}</ul></div>
+        <div class="card watch"><h3>Watch-outs</h3><ul>{geoWatchouts.map((s: string) => <li>{s}</li>)}</ul></div>
       </div>
-      <p class="tnote">{geo.priceNote}</p>
+      <p class="tnote">{tx(geo.priceNote)}</p>
 
       <h3 class="sub-h">Rebates that cover ground-source systems</h3>
       {geoPrograms.length ? (
@@ -114,16 +121,16 @@ const winIntro = isCA
         {win.lines.map((l: any) => (
           <article class="card c">
             <h3>{l.name}</h3>
-            <p>{l.claim ?? 'No low-temperature figure published.'}</p>
+            <p>{l.claim ? tx(l.claim) : 'No low-temperature figure published.'}</p>
             {l.url && <p class="meta"><a href={l.url} rel="noopener" target="_blank">{hostOf(l.url)}&nbsp;↗</a></p>}
           </article>
         ))}
       </div>
       <div class="pros">
-        <div class="card good"><h3>Where they make sense</h3><ul>{win.strengths.map((s: string) => <li>{s}</li>)}</ul></div>
-        <div class="card watch"><h3>Watch-outs</h3><ul>{[...win.watchouts, ...(gradient?.watchouts ?? []).slice(0, 1)].map((s: string) => <li>{s}</li>)}</ul></div>
+        <div class="card good"><h3>Where they make sense</h3><ul>{(isCA ? win.strengths : usList(win.strengths)).map((s: string) => <li>{s}</li>)}</ul></div>
+        <div class="card watch"><h3>Watch-outs</h3><ul>{(isCA ? [...win.watchouts, ...(gradient?.watchouts ?? []).slice(0, 1)] : usList([...win.watchouts, ...(gradient?.watchouts ?? []).slice(0, 1)])).map((s: string) => <li>{s}</li>)}</ul></div>
       </div>
-      {win.priceNote && <p class="tnote">{win.priceNote}</p>}
+      {win.priceNote && <p class="tnote">{tx(win.priceNote)}</p>}
     </section>
 
     <section id="no-outdoor-unit" class="sec">

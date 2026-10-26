@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import ThermalCompare from '../../../components/ThermalCompare.astro';
 import { S } from '../../../lib/us/tests';
 
@@ -48,7 +49,7 @@ const sources = [src.c1060, src.e1186, src.doe, src.hersFind, src.energyStar, sr
     { k: 'Insulation practice', v: 'ASTM C1060-23', src: src.c1060, srcLabel: 'ASTM' },
     { k: 'Air-leak practice', v: 'ASTM E1186-22', src: src.e1186, srcLabel: 'ASTM' },
     { k: 'Pair it with', v: 'A blower door test', src: src.e1186, srcLabel: 'ASTM E1186' },
-    { k: 'Typical cost', v: 'Not published' },
+    { k: 'Typical cost', v: 'Often part of an audit' },
   ]}
   faqs={faqs}
   sources={sources}
@@ -83,7 +84,7 @@ const sources = [src.c1060, src.e1186, src.doe, src.hersFind, src.energyStar, sr
   <section class="sec" aria-labelledby="see-h">
     <h2 id="see-h">What it looks like</h2>
     <div class="tc-wrap">
-      <ThermalCompare caption="Illustration, not a measurement: the same house in visible light and as an infrared camera might show it on a cold night. Drag to compare." />
+      <ThermalCompare caption="Illustration, not a measurement: the same house in visible light and as an infrared camera might show it on a cold winter night, when lost heat glows. In summer, with the air conditioning on, the pattern flips: missing insulation shows up as warm patches inside. Drag to compare." />
     </div>
   </section>
 
@@ -94,9 +95,19 @@ const sources = [src.c1060, src.e1186, src.doe, src.hersFind, src.energyStar, sr
       scan. Ask for the scan to be done while the blower door holds the house under pressure, as
       ASTM E1186 describes.
     </p>
+    <h3>When to scan, in winter and in summer</h3>
     <p>
-      What it costs: no official source publishes a price, so we don’t quote one. See
-      <a href="/us/cost/">what an audit costs</a> for how audit pricing works.
+      The camera needs a temperature difference between inside and outside. In heating season that’s easy: scan on a cold
+      day. In hot climates, scan on a hot afternoon with the air conditioning running. To see missing insulation, the
+      difference should be about 18°F (10°C) or more for several hours before the scan, so you may need to set the
+      thermostat a few degrees cooler that morning. Air leaks show up at smaller differences while a blower door holds the
+      house under pressure. Ask the auditor to avoid walls in direct sun, which hide what’s behind them.
+    </p>
+    <p>
+      What it costs: no official source publishes a price for a scan on its own, so we don’t quote one. DOE says many
+      professional assessments include one, so most homeowners get it as part of a full audit, and some utility audit programs
+      include it: <a href="/us/cities/">your metro guide</a> lists the programs near you, and <a href="/us/cost/">what an audit costs</a>
+      explains pricing. Ask whether the scan is done under blower door pressure and whether the images come with the report.
     </p>
     <ul class="linkrow">
       <li><a href="/us/find/">Find a certified auditor</a></li>
@@ -104,6 +115,8 @@ const sources = [src.c1060, src.e1186, src.doe, src.hersFind, src.energyStar, sr
     </ul>
     <TestCite src={[src.doe, src.e1186]} labels={['DOE professional assessments', 'ASTM E1186']} />
   </section>
+
+  <ReadingGuide country="us" test="thermal-imaging" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If the scan finds a problem</h2>

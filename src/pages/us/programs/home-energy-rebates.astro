@@ -7,6 +7,7 @@ import ProgramStatus from '../../../components/us/ProgramStatus.astro';
 import ProgramStateTable from '../../../components/us/ProgramStateTable.astro';
 import ProgramFaq from '../../../components/us/ProgramFaq.astro';
 import ProgramSources from '../../../components/us/ProgramSources.astro';
+import AuditFirst from './_AuditFirst.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { statusChip } from '../../../lib/us/data';
@@ -195,6 +196,16 @@ const schema = [
         </article>
       </div>
     </section>
+
+    <AuditFirst
+      answer="For HOMES, yes. For HEEHR, not a full audit, but expect an insulation and air sealing check."
+      points={[
+        'HOMES rebates are set by modeled or measured energy savings, so a HOMES project starts with an energy assessment, usually by an assessor enrolled in your state’s program. It can carry a fee: Georgia warns of possible costs, Wisconsin gives low-income households up to $500 toward it, and North Carolina’s is free.',
+        'HEEHR rebates are set per item, up to the caps above, not by modeled savings. But under DOE’s May 29, 2026 rules, insulation and air sealing come before heating and cooling upgrades unless your home already meets a level the state sets, so someone has to check yours first.',
+        'If your household qualifies for the Weatherization Assistance Program, its energy audit is part of the service, so apply there before paying for one.',
+        'Even where no rebate requires one, an audit shows which upgrades save the most before you spend, and a blower door test before and after shows what the work achieved.',
+      ]}
+    />
 
     <section class="up-s" id="changes" aria-labelledby="changes-h">
       <h2 class="up-sec" id="changes-h">What changed on May 29, 2026</h2>

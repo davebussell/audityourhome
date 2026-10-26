@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S } from '../../../lib/us/tests';
 
 const src = {
@@ -111,6 +112,8 @@ const sources = [src.yardstick, src.saveAtHome, src.gb, src.gba, src.bpi, src.ir
     </p>
     <TestCite src={src.bpi} labels={['BPI standards']} />
   </section>
+
+  <ReadingGuide country="us" test="bill-analysis" />
 
   <section class="sec prose" aria-labelledby="next-h">
     <h2 id="next-h">If the bills look high</h2>

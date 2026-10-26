@@ -1,6 +1,7 @@
 ---
 import TestPage from '../../../components/us/TestPage.astro';
 import TestCite from '../../../components/us/TestCite.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { S, T, ZONE_SOURCES, metrosByClimateZone, metroName, metroHref } from '../../../lib/us/tests';
 
 const src = {
@@ -173,6 +174,8 @@ const sources = [src.es, ZONE_SOURCES.climate, src.verm, src.c1060, src.caz, src
     </ul>
     <TestCite src={[src.es, src.c1060]} labels={['ENERGY STAR R-values', 'ASTM C1060']} />
   </section>
+
+  <ReadingGuide country="us" test="attic-inspection" />
 
   <section class="sec prose" aria-labelledby="fix-h">
     <h2 id="fix-h">If you’re short of the target</h2>

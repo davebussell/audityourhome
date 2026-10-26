@@ -1,0 +1,41 @@
+---
+/**
+ * "Do you need an audit first?" box for the US program pages (not a route: Astro skips files that start
+ * with an underscore). Each page passes a short answer and the points its own data supports; the links
+ * explain what an audit involves, what it costs and who does them.
+ */
+interface Props {
+  /** One-line answer, e.g. "For HOMES, yes." */
+  answer: string;
+  points: string[];
+  id?: string;
+}
+const { answer, points, id = 'audit-first' } = Astro.props;
+---
+
+<aside class="card card-pad af" id={id} aria-labelledby={`${id}-h`}>
+  <p class="af-k">Before you apply</p>
+  <h2 class="af-h" id={`${id}-h`}>Do you need an audit first?</h2>
+  <p class="af-a">{answer}</p>
+  <ul class="af-l">
+    {points.map((p) => <li>{p}</li>)}
+  </ul>
+  <slot />
+  <p class="af-links">
+    <a href="/us/how-it-works/">What happens in an audit</a>
+    <a href="/us/cost/">What an audit costs</a>
+    <a href="/us/find/">Find a certified auditor</a>
+    <a href="/us/cities/">Utility audit programs by metro</a>
+  </p>
+</aside>
+
+<style>
+  .af { border-left: 4px solid var(--heat); margin: 28px 0 8px; max-width: 900px; }
+  .af-k { margin: 0 0 4px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .af-h { font-size: 21px; margin: 0 0 6px; }
+  .af-a { font-weight: 700; margin: 0 0 8px; }
+  .af-l { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15px; }
+  .af-links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 14px 0 0; font-size: 14px; font-weight: 600; }
+  .af-links a { color: var(--heat-deep); text-decoration: none; }
+  .af-links a:hover { text-decoration: underline; }
+</style>
