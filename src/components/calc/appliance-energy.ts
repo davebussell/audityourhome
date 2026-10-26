@@ -136,7 +136,21 @@ export function renderTotals(r: ApResult, p: AppliancePayload): string {
       <p class="res-sub">About ${qty(r.totalKwh)} kWh a year at ${r.price !== null ? `$${r.price.toFixed(3)}` : '—'} per kWh in ${esc(p.city.name)}.</p>
     </div>
     ${r.saveKwh > 0 ? `<div class="verdict"><p>The savings shown in green on the ticked rows (a newer model, a timer, or switching off) add up to about <strong>${qty(r.saveKwh)} kWh</strong>, or <strong>${money(r.saveCost)} a year</strong>.</p></div>` : '<p class="small">Set a row to its older model to see what a newer one would save.</p>'}
-    <p class="small foot">We use the price of one more kWh because switching an appliance off doesn't change your fixed charges. Rated figures come from standard tests; real use depends on habits and where the appliance sits.</p>`;
+    <p class="small foot">We use the price of one more kWh because switching an appliance off doesn't change your fixed charges. Rated figures come from standard tests; real use depends on habits and where the appliance sits.</p>
+    ${apTodo(r, p)}`;
+}
+
+/** Next step under the total: the single biggest saving, and how to check the estimate against real use. */
+function apTodo(r: ApResult, p: AppliancePayload): string {
+  const best = r.rows
+    .filter((x) => x.on && x.saveCost !== null && x.saveCost > 0.5)
+    .sort((a, b) => (b.saveCost ?? 0) - (a.saveCost ?? 0))[0];
+  const lead = best && best.item.label
+    ? `the biggest saving here is the ${esc(best.item.label.charAt(0).toLowerCase() + best.item.label.slice(1))} (about ${money(best.saveCost)} a year), so start there.`
+    : best
+      ? `the biggest saving is about ${money(best.saveCost)} a year on one item in the list, so start there.`
+    : 'set the rows that match your home to their older model or habit to see which change saves the most.';
+  return `<p class="todo"><strong>What to do with this number:</strong> ${lead} Then check the estimate against your utility's online account, which shows your real hourly or daily use. <a href="/ca/services/energy-bill-analysis/${esc(p.city.slug)}/">Energy bill analysis in ${esc(p.city.name)}</a>.</p>`;
 }
 
 export { int };

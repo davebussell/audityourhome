@@ -104,6 +104,27 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
       </div>
     </div>
 
+    {p.auditRequired && (
+      <section class="card card-pad eval-first" id="energuide-first" aria-labelledby="eval-h">
+        <h2 id="eval-h">Do you need an EnerGuide evaluation first?</h2>
+        <p>
+          {p.status === 'closed'
+            ? `${p.shortName} required one, and most programs that replaced it do too.`
+            : `Yes: ${p.shortName} requires one, so book it before you sign a contract or buy equipment.`}
+          {' '}An EnerGuide evaluation is a home energy assessment by a registered energy advisor who works for a
+          service organization licensed by Natural Resources Canada (NRCan). The advisor measures the house,
+          including a blower-door test for air leakage, models it in HOT2000 (NRCan's energy software) and gives
+          you an EnerGuide rating with a list of recommended upgrades.
+        </p>
+        <p class="mb-0">
+          Most programs that require one want the evaluation before any work starts, and many want a second one
+          afterwards to confirm what was done; the note above says what this program asks for.
+          <a href="/ca/services/home-energy-audit/">Find an energy advisor near you</a> ·
+          <a href="/ca/tests/blower-door/">What the blower-door test measures</a>
+        </p>
+      </section>
+    )}
+
     {p.howToApply && p.howToApply.length > 0 && (
       <>
         <h2 class="sec">{p.status === 'closed' ? 'What to do instead' : p.status === 'announced' ? 'How it will work' : 'How to apply, step by step'}</h2>
@@ -178,6 +199,9 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
 <style>
   .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
   .crumbs a { color: var(--muted); }
+  .eval-first { margin-top: 18px; border-left: 4px solid var(--pine); }
+  .eval-first h2 { font-size: 21px; margin: 0 0 8px; }
+  .eval-first p { max-width: 78ch; font-size: 15px; }
   .headrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .headrow h1 { margin-bottom: 0; }
   .amounts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }

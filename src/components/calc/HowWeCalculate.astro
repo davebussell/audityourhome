@@ -4,8 +4,17 @@ import { MODEL, VINTAGE_LABEL, VINTAGES, systemEfficiency, climateZone } from '.
 import type { CalcSlug } from '../../lib/calc/data';
 import { int } from '../../lib/calc/format';
 
-interface Props { calc: CalcSlug; cityName: string; hdd: number; annualMean?: number; prov?: string }
-const { calc, cityName, hdd, annualMean } = Astro.props;
+interface Props { calc: CalcSlug; cityName: string; hdd: number; annualMean?: number; prov?: string; nights10?: number }
+const { calc, cityName, hdd, annualMean, nights10 } = Astro.props;
+/** Mild-coast winters (fewer than 3 nights a year below −10 °C): no cold-weather humidity rule, no backup-heat warning. */
+const mild = typeof nights10 === 'number' ? nights10 < 3 : hdd < 3000;
+/** Plain-English version, always visible; the formulas sit behind the toggle. */
+const SUMMARY: Record<CalcSlug, string> = {
+  'energy-costs': `We estimate the heat a typical house of your age and size needs in ${cityName}'s climate (${int(hdd)} heating degree-days), scale it to your bills if you enter them, then work out how much fuel or electricity each system uses to supply that heat and what it costs at local prices. Savings use the price of one more unit of energy, which leaves fixed charges out and keeps them on the low side.`,
+  'upgrade-payback': `We estimate how much heat each upgrade stops from escaping in ${cityName}'s climate, trim it with conservative factors, cap the total so overlapping upgrades are not double-counted, and turn it into dollars at the price of one more unit of your fuel. Payback is the number of years those savings take to repay the cost after rebates.`,
+  'home-health': `Radon results are compared with Health Canada's guideline. For windows, we work out how cold the glass gets at ${cityName}'s winter temperatures and compare it with the dew point of your indoor air. Alarm counts apply your province's rules to the layout you enter, and the mould sizes follow Health Canada and CMHC.`,
+  'appliance-energy': `Each appliance's yearly electricity use, from standard tests or utility data, is multiplied by the price of one more kWh at your utility; savings compare an older model or habit with the efficient option.`,
+};
 const D = MODEL.demand;
 const E = MODEL.envelope;
 const W = MODEL.water;
@@ -16,7 +25,10 @@ const zone = climateZone(hdd);
 
 <section class="sec" id="how-we-calculate" aria-labelledby="how-h">
   <h2 id="how-h">How we calculate this</h2>
-  <div class="card card-pad how">
+  <p class="how-sum">{SUMMARY[calc]}</p>
+  <details class="card how-toggle">
+    <summary>Show the formulas and assumptions</summary>
+    <div class="card-pad how">
     {calc === 'energy-costs' && (
       <>
         <h3>1. The heat your house needs</h3>
@@ -68,7 +80,7 @@ const zone = climateZone(hdd);
         <code class="formula">heat saved = drop in natural air changes × house volume × 1.21 kJ/m³·°C × degree-days × 24 ÷ 10⁶ × 0.75</code>
         <p>We assume a 20% reduction (15% if the house is already under 4 ACH50); rebate programs pay for measured cuts of 10%, 20% and 30%.</p>
         <h3>4. Thermostat setbacks</h3>
-        <p>NRCan: “A drop of 1°C (2°F) over an eight-hour period can save about 2 percent on your heating energy consumption.” Saving = 2% × degrees × hours ÷ 8. Heat pumps are limited to a 2 °C setback, NRCan's advice, because deep setbacks can bring on backup heat.</p>
+        <p>NRCan: “A drop of 1°C (2°F) over an eight-hour period can save about 2 percent on your heating energy consumption.” Saving = 2% × degrees × hours ÷ 8. Heat pumps are limited to a 2 °C setback, NRCan's advice{mild ? '.' : ', because deep setbacks can bring on backup heat.'}</p>
         <h3>5. Caps, overlap and your bills</h3>
         <p>No single measure may save more than 35% of the heating need, and all of them together no more than 60%. Measures overlap (a better attic leaves less heat for new windows to save), so the combined saving is 1 − (1 − a)(1 − b)…, always less than the simple sum. If you enter bills, every saving is scaled by how your use compares with a typical house (between 0.5× and 1.6×).</p>
         <h3>6. Dollars, rebates and payback</h3>
@@ -82,7 +94,7 @@ const zone = climateZone(hdd);
         <p>1 pCi/L = 37 Bq/m³ (Health Canada). The Canadian guideline is 200 Bq/m³; above it Health Canada recommends fixing your home within 1 year, sooner the higher the level. Only a long-term test (at least 3 months, ideally in the heating season) tells you your annual average.</p>
         <h3>Window condensation</h3>
         <code class="formula">glass temperature = indoor − U × (indoor − outdoor) ÷ 8.33</code>
-        <p>8.33 W/m²·°C is the indoor air film from the National Building Code (RSI 0.12). The dew point comes from the Magnus formula the US National Weather Service publishes; condensation forms when the glass is colder than the dew point. These are centre-of-glass figures: the bottom edge and metal frames run colder, which is why we show CMHC's simpler rule beside them (30% indoor humidity when it is below −10 °C outside, as low as 25% in extreme cold).</p>
+        <p>8.33 W/m²·°C is the indoor air film from the National Building Code (RSI 0.12). The dew point comes from the Magnus formula the US National Weather Service publishes; condensation forms when the glass is colder than the dew point. These are centre-of-glass figures: the bottom edge and metal frames run colder, {mild ? `so keep some margin below the figure shown, within Health Canada's 30% to 50% range.` : `which is why we show CMHC's simpler rule beside them (30% indoor humidity when it is below −10 °C outside, as low as 25% in extreme cold).`}</p>
         <h3>Smoke and CO alarms</h3>
         <p>“Required by law” applies your province's fire code to the layout you enter. “Recommended” is the new-home standard in the National Building Code (an alarm on every storey, in every bedroom and outside sleeping areas) and NRCan's CO advice (one near the furnace or other fuel-burning appliance and one in each bedroom area). Municipal by-laws can add to provincial rules.</p>
         <h3>Well water and mould</h3>
@@ -110,5 +122,17 @@ const zone = climateZone(hdd);
         <p>Rated figures come from standard tests; your own use depends on habits, room temperature and how full the fridge is. Your utility's online account shows your actual hourly or daily use.</p>
       </>
     )}
-  </div>
+    </div>
+  </details>
 </section>
+
+<style>
+  .how-sum { max-width: 75ch; font-size: 15.5px; margin: 0 0 12px; }
+  .how-toggle { padding: 0; overflow: hidden; }
+  .how-toggle > summary { cursor: pointer; list-style: none; padding: 12px 16px; font-weight: 700; font-size: 15.5px; }
+  .how-toggle > summary::-webkit-details-marker { display: none; }
+  .how-toggle > summary::before { content: "+ "; color: var(--heat); font-family: var(--mono); }
+  .how-toggle[open] > summary::before { content: "– "; }
+  .how-toggle[open] > summary { border-bottom: 1px solid var(--line); }
+  .how-toggle > .how { border-radius: 0; }
+</style>

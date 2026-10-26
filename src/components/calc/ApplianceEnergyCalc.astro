@@ -13,7 +13,8 @@ const hasVersion = (it: ApItem) =>
   (it.kind === 'perHour' && Boolean(it.lowKwhPerHour));
 const priceStr = String(Number(payload.price.toFixed(4)));
 // the browser only needs the numbers; labels and hints are already in the HTML
-const clientPayload = { ...payload, items: payload.items.map(({ label, hint, oldLabel, newLabel, useLabel, useUnit, ...rest }) => (void [label, hint, oldLabel, newLabel, useLabel, useUnit], rest)) };
+// labels stay: the "What to do with this number" line names the item with the biggest saving
+const clientPayload = { ...payload, items: payload.items.map(({ hint, oldLabel, newLabel, useLabel, useUnit, ...rest }) => (void [hint, oldLabel, newLabel, useLabel, useUnit], rest)) };
 ---
 
 <section class="calc" id="calculator" aria-labelledby="calc-h">

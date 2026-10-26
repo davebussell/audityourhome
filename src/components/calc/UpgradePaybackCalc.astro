@@ -108,7 +108,7 @@ const C = MODEL.costs;
           </fieldset>
         </fieldset>
       </div>
-      <div class="calc-out" id="up-summary" aria-live="polite" set:html={renderSummary(r)} />
+      <div class="calc-out" id="up-summary" aria-live="polite" set:html={renderSummary(r, payload)} />
     </div>
 
     <div class="calc-block measures-block">
@@ -326,7 +326,7 @@ const C = MODEL.costs;
     syncDerived(s);
     s = read();
     const r = computeUpgrade(s, P);
-    document.getElementById('up-summary')!.innerHTML = renderSummary(r);
+    document.getElementById('up-summary')!.innerHTML = renderSummary(r, P);
     document.getElementById('up-table')!.innerHTML = renderTable(r);
     for (const o of r.measures) {
       const el = form.querySelector(`[data-out="${o.key}"]`);

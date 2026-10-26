@@ -5,6 +5,7 @@ import ThermalCompare from '../../../components/ThermalCompare.astro';
 import { ogFor, TEST_PHOTO } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
 import GearStrip from '../../../components/GearStrip.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { SITE } from '../../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import guideData from '../../../data/test-guides.json';
@@ -73,6 +74,8 @@ const schema = [
       <h2>How to get it done</h2>
       <p>{g.getIt}</p>
     </div>
+
+    <ReadingGuide country="ca" test={g.slug} />
 
     <div class="rem">
       <h2>If it finds a problem: your remediation options</h2>

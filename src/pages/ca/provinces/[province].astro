@@ -7,6 +7,8 @@ import { localCities } from '../../../lib/local';
 import LeadForm from '../../../components/LeadForm.astro';
 import { SITE } from '../../../config/site';
 import { breadcrumbSchema } from '../../../lib/schema';
+import RegionalNeeds from '../../../components/RegionalNeeds.astro';
+import { provinceClimate, placeClimate } from '../../../lib/climate';
 import data from '../../../data/provinces.json';
 
 export function getStaticPaths() {
@@ -38,6 +40,14 @@ const provCities = localCities.filter((c) => c.provSlug === p.slug).sort((a, b) 
 // Federal notes can differ by province (e.g. OHPA paid up to $15,000 + $250 where co-delivered, $10,000 where NRCan delivered it directly).
 type FedItem = { note: string; noteByProvince?: Record<string, string> };
 const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
+
+// Climate profiles found in this province, each with the covered cities that fall in it.
+const pc = provinceClimate(p.slug);
+const climateGroups = (pc?.profileList ?? []).map((pr) => ({
+  profile: pr,
+  cities: provCities.filter((c) => placeClimate('ca', c.slug)?.profile.key === pr.key),
+}));
+const cityProfileLabel = (slug: string) => placeClimate('ca', slug)?.profile.label;
 ---
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor(PROV_SLUG_PHOTO[p.slug] ?? 'home-hero')}>
@@ -56,6 +66,33 @@ const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
       <h2>The housing stock, read like an auditor</h2>
       <p>{p.housing}</p>
     </div>
+
+    {pc && (
+      <section class="climates" id="climate">
+        <h2 class="sec">{climateGroups.length > 1 ? `The climates of ${p.name}` : `${p.name}’s climate`}: what homes here need</h2>
+        {pc.note && <p class="measure">{pc.note}</p>}
+        {pc.radon && <p class="measure radon-line"><strong>Radon:</strong> {pc.radon}</p>}
+        {climateGroups.map((g) => (
+          <div class="cgroup">
+            {g.cities.length > 0 && (
+              <p class="cg-cities">
+                <strong>{g.profile.label}</strong> covers {g.cities.length === 1 ? 'this city we cover' : `${g.cities.length} cities we cover`}:{' '}
+                {g.cities.map((c, i) => <span>{i > 0 && ', '}<a href={`/ca/cities/${c.slug}/#regional-needs`}>{c.name}</a></span>)}
+              </p>
+            )}
+            <RegionalNeeds
+              country="ca"
+              profile={g.profile}
+              placeName={g.cities[0]?.name ?? p.name}
+              variant="compact"
+              heading={`What homes need in ${g.profile.regionName}`}
+              moreHref={g.cities[0] ? `/ca/cities/${g.cities[0].slug}/#regional-needs` : undefined}
+              id={`climate-${g.profile.key}`}
+            />
+          </div>
+        ))}
+      </section>
+    )}
 
     <h2 class="sec">Programs in {p.name}: what's actually live</h2>
     <div class="prog-grid">
@@ -103,6 +140,8 @@ const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
         <p class="small measure">
           Each city page covers 16 audit and testing services with that city's own climate, housing
           age and service organizations. The bar shows its houses by construction era, oldest first.
+          HDD is heating degree-days: the higher the number, the longer and colder the heating season.
+          The share built before 1961 matters because older houses usually leak more and have less insulation.
         </p>
         <div class="pc-grid">
           {provCities.map((c) => (
@@ -110,6 +149,7 @@ const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
               <span class="pcn">{c.name}</span>
               <EraBar era={c.facts.era} name={c.name} />
               <span class="pcf">{c.facts.hdd.toLocaleString('en-CA')} HDD · {Math.round(c.facts.housesPre1961 ?? 0)}% pre-1961</span>
+              {cityProfileLabel(c.slug) && <span class="pcp">{cityProfileLabel(c.slug)}</span>}
             </a>
           ))}
         </div>
@@ -167,6 +207,13 @@ const fedNote = (f: FedItem) => f.noteByProvince?.[p.slug] ?? f.note;
   .pc:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
   .pcn { font-family: var(--display); font-weight: 700; font-size: 16px; }
   .pcf { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .pcp { font-size: 12px; color: var(--heat-deep); font-weight: 600; }
+  .climates { margin-top: 8px; }
+  .radon-line { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--steel); border-radius: var(--radius); padding: 10px 14px; }
+  .cgroup { margin-top: 10px; }
+  .cgroup :global(.rn) { margin: 12px 0 30px; }
+  .cg-cities { margin: 22px 0 0; font-size: 15px; color: var(--muted); }
+  .cg-cities a { overflow-wrap: anywhere; }
   .prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 14px 0 18px; }
   .pcard { display: grid; gap: 6px; align-content: start; }
   .pcard.s-active { border-left: 4px solid var(--pine); }

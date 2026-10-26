@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
@@ -116,6 +117,8 @@ const schema = [
         or musty air in the planner, this is why it routed you here.
       </p>
     </div>
+
+    <ReadingGuide country="ca" test="mold-iaq" />
 
     <GearStrip categories={['dehumidifiers-hygrometers', 'air-quality-monitors', 'air-purifiers']} heading="Measure and manage the air" />
 

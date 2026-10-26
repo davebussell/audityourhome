@@ -14,6 +14,8 @@ import { calBadge, calNote, pickRebate, type RebateOption } from './energy-costs
 
 export interface UpgradePayload {
   city: { slug: string; name: string; prov: string; provName: string; hdd: number; zone: string };
+  /** Summer note for cities with moderate or hot summers (from the climate data at build time); null where summers are cool. */
+  summerLine?: string | null;
   prices: Prices;
   defaultSystem: SystemKey;
   rebates: Record<'attic' | 'walls' | 'basement' | 'airSealing' | 'windows' | 'thermostat', RebateEntry[]>;
@@ -289,7 +291,23 @@ export function pbRange(lo: Payback, hi: Payback): string {
   return `${a} to ${b}`;
 }
 
-export function renderSummary(r: UpgradeResult): string {
+/** Next step under the result: which upgrade to do first, and where to get an EnerGuide evaluation. */
+function upgradeTodo(r: UpgradeResult, p?: UpgradePayload): string {
+  const yearsOf = (b: Payback): number | null => (b.kind === 'immediate' ? 0 : b.kind === 'years' && b.years !== null ? b.years : null);
+  const ranked = r.measures
+    .filter((m) => m.on && m.m.applicable && (m.dollars ?? 0) > 0 && yearsOf(m.pbLow) !== null)
+    .sort((a, b) => (yearsOf(a.pbLow) as number) - (yearsOf(b.pbLow) as number));
+  const firstTwo = ranked.slice(0, 2).map((m) => MEASURE_LABEL[m.key].toLowerCase());
+  const lead = firstTwo.length
+    ? `start with the upgrade${firstTwo.length > 1 ? 's' : ''} that pay${firstTwo.length > 1 ? '' : 's'} back fastest here (${esc(firstTwo.join(' and '))}), and get quotes for the rest.`
+    : 'get quotes for the upgrades you are considering and enter them above.';
+  const link = p
+    ? `<a href="/ca/services/home-energy-audit/${esc(p.city.slug)}/">Energy audits in ${esc(p.city.name)}</a>`
+    : '<a href="/ca/services/home-energy-audit/">Energy audits near you</a>';
+  return `<p class="todo"><strong>What to do with this number:</strong> ${lead} Book an EnerGuide evaluation before any work: it measures your house, and most rebates require one. ${link}.</p>`;
+}
+
+export function renderSummary(r: UpgradeResult, p?: UpgradePayload): string {
   const c = r.combined;
   const n = r.measures.filter((m) => m.on && m.m.applicable).length;
   const sysLabel = MODEL.systems[r.s.system].short.toLowerCase();
@@ -321,7 +339,9 @@ export function renderSummary(r: UpgradeResult): string {
     </dl>
     ${missingNote}
     ${overlap}
-    <p class="small res-note">${esc(calNote(r.cal, r.modelDemand))} Most rebates need an EnerGuide evaluation before and after the work; their conditions are listed further down this page.</p>`;
+    <p class="small res-note">${esc(calNote(r.cal, r.modelDemand))} Most rebates need an EnerGuide evaluation before and after the work; their conditions are listed further down this page.</p>
+    ${p?.summerLine ? `<p class="small res-note summer-note">${esc(p.summerLine)}</p>` : ''}
+    ${upgradeTodo(r, p)}`;
 }
 
 export function renderMeasureLine(o: MeasureOut): string {
@@ -354,7 +374,7 @@ export function renderTable(r: UpgradeResult): string {
       <tbody>${rows}</tbody>
     </table>
   </div>
-  <p class="small foot">Savings use the price of one more unit of energy, not your average price. Each upgrade is shown on its own against your house as it is now; the total above accounts for overlap. Payback = (cost − rebate) ÷ yearly saving; the 20-year figure has no price increases or discounting.</p>`;
+  <p class="small foot">Savings use the price of one more unit of energy, not your average price. Each upgrade is shown on its own against your house as it is now; the total above accounts for overlap. Payback is the number of years the yearly saving takes to repay the cost after rebates; the 20-year figure has no price increases or discounting. The formulas are under <a href="#how-we-calculate">How we calculate this</a>.</p>`;
 }
 
 export { VINTAGE_LABEL, climateZone, rToRsi };

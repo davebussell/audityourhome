@@ -7,6 +7,8 @@ const { page, cityName, provName } = Astro.props;
 const g = page.glance;
 const w = g.wells as Record<string, unknown> | undefined;
 const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : typeof v === 'string' ? v : 'Not confirmed');
+/** The research notes end with "Left null." / "so this is left null": data-entry wording, not for readers. */
+const cleanNote = (t: unknown) => String(t ?? '').replace(/,? so this is left null\./gi, '.').replace(/\s*Left null\./g, '').trim();
 ---
 
 <section class="sec" id="at-a-glance" aria-labelledby="glance-h">
@@ -38,7 +40,7 @@ const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : typeof 
           ))}
         </tbody>
       </table>
-      <p class="glance-note" style="padding:0 14px 12px">Centre of the glass, from the National Building Code's indoor air film and the Magnus dew point formula. January average from ECCC normals; the cold-snap column is NRCan's winter design temperature. Window edges fog sooner, so follow CMHC: about 30% humidity below −10 °C, which {cityName} sees on about {int(g.cl.nights10)} nights a year.</p>
+      <p class="glance-note" style="padding:0 14px 12px">Centre of the glass, from the National Building Code's indoor air film and the Magnus dew point formula. January average from ECCC normals; the cold-snap column is NRCan's winter design temperature. Window edges fog sooner, {g.cl.nights10 < 3 ? `so if they do, bring humidity toward the low end of Health Canada's 30% to 50% range; ${cityName} ${g.cl.nights10 < 1 ? 'almost never' : 'rarely'} drops below −10 °C.` : `so follow CMHC: about 30% humidity below −10 °C, which ${cityName} sees on about ${int(g.cl.nights10)} nights a year.`}</p>
     </div>
   </div>
 
@@ -53,7 +55,7 @@ const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : typeof 
     <div class="card rule-card">
       <h3>Carbon monoxide alarms in {provName}</h3>
       <p>{String(g.co.summary ?? '')}</p>
-      {g.co.note ? <p class="small">{String(g.co.note)}</p> : null}
+      {g.co.note && cleanNote(g.co.note) ? <p class="small">{cleanNote(g.co.note)}</p> : null}
       {g.co.source ? <p class="small"><a href={String(g.co.source)} rel="noopener">Official source ↗</a></p> : null}
     </div>
   </div>

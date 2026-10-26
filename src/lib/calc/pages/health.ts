@@ -64,6 +64,9 @@ export function healthPage(city: CalcCity) {
     design: Math.floor(maxRhNoCondensation(21, cl.designHeat, MODEL.envelope.windowU[k].u, HEALTH.humidity.hIn)),
   }));
   const dc = winRows.find((w) => w.key === 'doubleClear')!;
+  // Mild-coast cities (fewer than 3 nights a year below −10 °C): the cold-weather 30% humidity rule never applies.
+  const mild = cl.nights10 < 3;
+  const rarely = cl.nights10 < 1 ? 'almost never' : 'rarely';
   const smoke = al.smoke as Record<string, unknown>;
   const co = al.co as Record<string, unknown>;
   const coWord = co.existingHomes === true ? 'requires' : co.existingHomes === false ? 'does not require' : 'has no rule we could confirm for';
@@ -84,12 +87,12 @@ export function healthPage(city: CalcCity) {
   const radonLine = r12.pct !== null && r12.pct !== undefined
     ? `In Health Canada's 2012 survey, <strong>${num(r12.pct, 1)}%</strong> of ${int(r12.tested)} homes tested in the ${r12.region} region were above the 200 Bq/m³ radon guideline${lr.item ? `; the 2024 Cross-Canada survey found ${lr.item.figure.split(';')[0]} for ${scopeName(lr.item.scope)}` : ''}.`
     : '';
-  const lede = `${radonLine} ${name}'s January averages <strong>${degC(cl.janMean)}</strong> (ECCC), with about ${int(cl.nights10)} nights a year below −10 °C, when CMHC advises keeping indoor humidity near 30% to stop window condensation. ${city.provName} ${coWord} carbon monoxide alarms in existing houses.`;
+  const lede = `${radonLine} ${name}'s January averages <strong>${degC(cl.janMean)}</strong> (ECCC), ${mild ? `and it ${rarely} drops below −10 °C, so the winter risk here is damp rather than dry air: keep indoor humidity between 30% and 50% (Health Canada) and run bath and kitchen fans to stop window condensation and mould.` : `with about ${int(cl.nights10)} nights a year below −10 °C, when CMHC advises keeping indoor humidity near 30% to stop window condensation.`} ${city.provName} ${coWord} carbon monoxide alarms in existing houses.`;
 
   const facts: Fact[] = [
     { k: 'Radon, 2012 survey', v: r12.pct !== null && r12.pct !== undefined ? `${num(r12.pct, 1)}%` : '—', s: `above 200 Bq/m³ (${int(r12.tested)} homes)` },
     { k: 'Radon, 2024 survey', v: lr.item ? (lr.item.figure.match(/^([0-9.]+%)/)?.[1] ?? '—') : '—', s: lr.item ? scopeName(lr.item.scope) : 'no figure for this area' },
-    { k: 'January average', v: degC(cl.janMean), s: `${int(cl.nights10)} nights a year below −10 °C` },
+    { k: 'January average', v: degC(cl.janMean), s: mild ? `${rarely} below −10 °C` : `${int(cl.nights10)} nights a year below −10 °C` },
     { k: 'Private wells', v: city.wells.level ? city.wells.level.charAt(0).toUpperCase() + city.wells.level.slice(1) : '—', s: `in ${name}` },
   ];
 
@@ -100,7 +103,7 @@ export function healthPage(city: CalcCity) {
   });
   faqs.push({
     q: `What indoor humidity should I keep in winter in ${name}?`,
-    a: `Health Canada and CMHC advise 30% to 50%, and CMHC says to keep it at about 30% when it is below −10 °C outside (as low as 25% in extreme cold). ${name} averages ${int(cl.nights10)} nights a year below −10 °C. At the January average of ${degC(cl.janMean)}, clear double-glazed windows start to fog at about ${dc.jan}% humidity at the centre of the glass, and at about ${dc.design}% in a cold snap of ${degC(cl.designHeat)}; the edges fog sooner.`,
+    a: `${mild ? `Health Canada and CMHC advise 30% to 50%. ${name}'s winters are mild: it ${rarely} drops below −10 °C, and its design temperature, the cold day heating systems are sized for, is ${degC(cl.designHeat)}. The usual problem here is too much moisture, so keep humidity toward the low end of that range if windows fog.` : `Health Canada and CMHC advise 30% to 50%, and CMHC says to keep it at about 30% when it is below −10 °C outside (as low as 25% in extreme cold). ${name} averages ${int(cl.nights10)} nights a year below −10 °C.`} At the January average of ${degC(cl.janMean)}, clear double-glazed windows start to fog at about ${dc.jan}% humidity at the centre of the glass, and at about ${dc.design}% in a cold snap of ${degC(cl.designHeat)}; the edges fog sooner.`,
   });
   faqs.push({
     q: `How many smoke alarms does a house need in ${city.provName}?`,

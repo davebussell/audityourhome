@@ -4,29 +4,46 @@ import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
 import GearStrip from '../../../components/GearStrip.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { SITE } from '../../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import rules from '../../../data/local/rules.json';
+import calcSources from '../../../data/calc/sources.json';
 
-const title = 'Carbon monoxide alarms in Ontario — the law, placement, and the spillage check | AuditYourHome';
+/** Province-by-province rules: src/data/local/rules.json, written by tools/local-pages/gen_pages.py. */
+const SRC = calcSources as Record<string, { title: string; url: string }>;
+const required = rules.provinces.filter((p) => p.co.existingHomes === true).map((p) => p.code);
+const requiredNames = rules.provinces.filter((p) => p.co.existingHomes === true).map((p) => p.name);
+const listJoin = (a: string[]) => (a.length <= 1 ? a.join('') : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`);
+const badge = (v: boolean | null) =>
+  v === true ? { cls: 'req', label: 'Required in existing homes' }
+  : v === false ? { cls: 'rec', label: 'Not required in existing homes' }
+  : { cls: 'none', label: 'No rule found for existing homes' };
+
+const title = 'Carbon monoxide alarms in Canada — rules by province, placement and the spillage check | AuditYourHome';
 const description =
-  'Ontario\'s Hawkins-Gignac Act requires CO alarms near sleeping areas in homes with fuel-burning appliances, fireplaces, or attached garages. Where alarms go, why they expire, what the audit\'s combustion spillage check adds, and why it all matters more as you air-seal.';
+  "Which provinces require CO alarms in existing homes, where alarms go, why they expire, and what an energy audit's combustion spillage check adds after air sealing.";
 
 const faqs = [
   {
+    q: 'Is a CO alarm required in my home?',
+    a: `In an existing home, ${listJoin(requiredNames)} require them for homes with a fuel-burning appliance or an attached garage (Saskatchewan's rule covers residential buildings of any age). The National Building Code requires them in new homes with a fuel-burning appliance or an attached garage, and some municipalities add their own by-laws. Where no rule applies, NRCan's advice is the same: every home with a combustion appliance should have CO alarms.`,
+  },
+  {
     q: 'Where exactly do CO alarms have to go?',
-    a: 'Ontario\'s law requires a CO alarm adjacent to each sleeping area — practically, in the hallway outside the bedrooms, so it wakes you. If your fuel-burning appliance or attached garage is on another storey, adding an alarm there too is cheap insurance. Follow the manufacturer\'s height guidance; unlike smoke, CO mixes with air, so wall-outlet height is fine for plug-in models.',
+    a: "It depends on your province, but the national advice is the same everywhere: NRCan suggests one near the furnace or other fuel-burning appliance and one in each bedroom area, where it will wake you. Ontario, as one provincial example, requires an alarm next to each sleeping area and, since January 1, 2026, on every storey without one. Follow the manufacturer's height guidance; unlike smoke, CO mixes with air, so wall-outlet height is fine for plug-in models.",
   },
   {
     q: 'My home is all-electric. Do I still need one?',
-    a: 'The law applies if you have any fuel-burning appliance, a fireplace, or an attached garage — a gas water heater, gas range, or wood stove counts even if your heat is electric. A truly all-electric home with no garage and no fireplace isn\'t required to have one, but at $40–$80 many owners keep one anyway for portable generators, future appliances, and resale simplicity.',
+    a: "Where CO alarms are required, the rules apply to homes with a fuel-burning appliance, a fireplace or an attached garage (check your province's wording below). A gas water heater, gas range or wood stove counts even if your heat is electric. A truly all-electric home with no garage and no fireplace usually isn't required to have one, but at $40–$80 many owners keep one anyway for portable generators, future appliances and resale.",
   },
   {
     q: 'Why do CO alarms expire?',
-    a: 'The electrochemical sensor inside degrades whether or not it ever alarms. Every unit has an end-of-life date — typically 7–10 years from manufacture — after which it may fail silently. Check the date printed on the back of yours today; many homes are running alarms that expired years ago. Newer units chirp an end-of-life warning, older ones just stop protecting you.',
+    a: 'The electrochemical sensor inside degrades whether or not it ever alarms. Every unit has an end-of-life date, typically 7–10 years from manufacture, after which it may fail silently. Check the date printed on the back of yours today; many homes are running alarms that expired years ago. Newer units chirp an end-of-life warning; older ones just stop protecting you.',
   },
   {
     q: 'What do I do if the alarm sounds?',
-    a: 'Treat it as real: get everyone (pets included) outside or to fresh air, call 911 from outside, and don\'t re-enter until the fire service clears the home. Headache, dizziness, and nausea that improve outdoors are classic CO signs. Afterward, have a licensed gas technician find the source before the appliances run again.',
+    a: "Treat it as real: get everyone (pets included) outside or to fresh air, call 911 from outside, and don't re-enter until the fire service clears the home. Headache, dizziness and nausea that improve outdoors are classic CO signs. Afterward, have a licensed gas technician find the source before the appliances run again.",
   },
 ];
 
@@ -46,21 +63,21 @@ const schema = [
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
-      <h1>Carbon monoxide: the alarm the law requires, and the check the audit adds</h1>
+      <h1>Carbon monoxide: the alarm every fuel-burning home needs, and the check the audit adds</h1>
       <p class="lede measure">
-        CO is what incomplete combustion makes — odourless, colourless, and lethal in a sealed
-        house. Ontario answered a Woodstock family's death with the Hawkins-Gignac Act, which makes
-        CO alarms mandatory near sleeping areas in any home with a fuel-burning appliance,
-        fireplace, or attached garage. The alarm is your last line of defence; the audit's
-        combustion spillage check works on the first line — whether your appliances backdraft
-        at all.
+        CO is what incomplete combustion makes: odourless, colourless and deadly in a tight house.
+        The National Building Code requires CO alarms in new homes that have a fuel-burning appliance
+        or an attached garage. For existing homes the rules differ by province: {listJoin(requiredNames)}
+        require them, and elsewhere it is up to you unless a municipal by-law says otherwise. The alarm
+        is your last line of defence; the audit's combustion spillage check works on the first line:
+        whether your appliances backdraft at all.
       </p>
       </div>
       <Photo name={'carbon-monoxide-testing'} eager />
     </div>
 
     <div class="glance">
-      <div class="g"><p class="k">Ontario law</p><p class="v">Alarms near sleeping areas</p></div>
+      <div class="g"><p class="k">Existing homes</p><p class="v">Required in {listJoin(required)}</p></div>
       <div class="g"><p class="k">Cost</p><p class="v">$40–$80 per alarm</p></div>
       <div class="g"><p class="k">Alarm lifespan</p><p class="v">~7–10 yrs (dated)</p></div>
       <div class="g"><p class="k">Spillage check</p><p class="v">Included in audits</p></div>
@@ -74,41 +91,71 @@ const schema = [
       <li>
         <h3>Inventory your combustion sources</h3>
         <p>Furnace, boiler, gas or propane water heater, gas range, gas or wood fireplace, wood
-        stove, attached garage. Any one of them puts your home under Ontario's CO alarm
-        requirement — and on the list for the audit's spillage check.</p>
+        stove, attached garage. Any one of them is a reason for a CO alarm, a legal requirement
+        in some provinces, and puts your home on the list for the audit's spillage check.</p>
       </li>
       <li>
-        <h3>Verify an alarm outside every sleeping area</h3>
-        <p>Hallway outside the bedrooms, per the law. CSA-6.19-certified units only. Combination
-        smoke/CO units count. If bedrooms sit on multiple floors, each sleeping area needs
-        coverage.</p>
+        <h3>Put an alarm outside every sleeping area</h3>
+        <p>The national advice (NRCan) is one near the furnace or other fuel-burning appliance and
+        one in each bedroom area, where it will wake you. Some provinces ask for more: Ontario, for
+        example, now also requires one on every storey without bedrooms. Use alarms certified to
+        CSA 6.19; combination smoke/CO units count.</p>
       </li>
       <li>
         <h3>Check every end-of-life date</h3>
-        <p>Flip each alarm over — the manufacture or replace-by date is printed on the back.
+        <p>Flip each alarm over: the manufacture or replace-by date is printed on the back.
         Expired or undated (old) units get replaced today, not eventually. Test buttons monthly;
         batteries when the clocks change.</p>
       </li>
       <li>
         <h3>Book annual servicing for fuel appliances</h3>
-        <p>A licensed gas technician (or WETT sweep for wood) confirms clean burn and clear
-        venting once a year. Most CO incidents trace to blocked vents, cracked heat exchangers,
-        or corroded flues — all findable before they matter.</p>
+        <p>A licensed gas technician (or a WETT-certified sweep for wood) confirms clean burn and
+        clear venting once a year. Most CO incidents trace to blocked vents, cracked heat
+        exchangers or corroded flues, all findable before they matter.</p>
       </li>
       <li>
         <h3>Get the spillage check with your energy audit</h3>
         <p>During the assessment, your advisor checks whether water heater and furnace exhaust
-        spills back into the house under depressurization — the exact condition air-sealing and
+        spills back into the house under depressurization, the exact condition air sealing and
         big exhaust fans create. It's included when you have combustion appliances; make sure it
         happens.</p>
       </li>
     </ol>
 
+    <section class="rules" id="province-rules" aria-labelledby="rules-h">
+      <h2 id="rules-h">CO alarm rules, province by province</h2>
+      <div class="card card-pad nat measure">
+        <h3>The national advice, wherever you live</h3>
+        <p>NRCan's advice is that every home with a combustion appliance should have CO alarms:
+        typically one near the furnace or other fuel-burning appliance and one in each bedroom area,
+        so the alarm can be heard.</p>
+        <p class="mb-0">{rules.coNbc}</p>
+      </div>
+      <p class="measure small rules-intro">What each province and territory says about existing homes, as we read the
+      official sources on {rules.checked}. Municipal by-laws can add to these, so ask your local fire service too.</p>
+      <div class="rule-grid">
+        {rules.provinces.map((p) => {
+          const b = badge(p.co.existingHomes);
+          return (
+            <details class="card rule">
+              <summary><span class="rname">{p.name}</span><span class={`rbadge ${b.cls}`}>{b.label}</span></summary>
+              <ul>{p.co.install.map((t) => <li>{t}</li>)}</ul>
+              <p class="small mb-0"><a href={p.co.source} rel="noopener">Official source ↗</a></p>
+            </details>
+          );
+        })}
+      </div>
+      <p class="measure small">Nunavut, or a rule you can't find here: check your province's or territory's
+      fire code, or ask your local fire department, and follow the national advice above in the meantime.</p>
+    </section>
+
+    <ReadingGuide country="ca" test="carbon-monoxide" />
+
     <div class="card card-pad callout measure">
       <h3>Why tightening the house raises the stakes</h3>
       <p class="mb-0">
-        Older, naturally-vented appliances rely on a leaky house for draft. Seal the leaks — the
-        single best energy upgrade — and a bathroom fan, range hood, or dryer can now pull harder
+        Older, naturally vented appliances rely on a leaky house for draft. Seal the leaks, the
+        single best energy upgrade, and a bathroom fan, range hood or dryer can pull harder
         than the chimney, dragging exhaust back inside. This is why the
         <a href="/ca/plan/">retrofit sequence</a> pairs air sealing with a combustion safety check,
         and why the cleanest long-term answer is sealed-combustion (direct-vent) equipment or a
@@ -128,15 +175,20 @@ const schema = [
     <div class="card card-pad srcs">
       <h3>Sources</h3>
       <ul>
-        <li><a href="https://get.on.ca/uploads/userfiles/files/ontario-coalarm-law_guide.pdf" rel="noopener">Ontario Association of Fire Chiefs — Ontario's CO alarm law (Hawkins-Gignac Act) guide (verified {SITE.dataReviewDate})</a></li>
-        <li><a href="https://www.kiddecanada.com/en/support/help-center/hawkins-gignac-act/" rel="noopener">Kidde Canada — the Hawkins-Gignac Act explained (verified {SITE.dataReviewDate})</a></li>
+        {SRC['nrcan-kthi-s2-co'] && <li><a href={SRC['nrcan-kthi-s2-co'].url} rel="noopener">NRCan, Keeping the Heat In, Section 2: CO alarms near the furnace and in each bedroom area (verified {SITE.dataReviewDate})</a></li>}
+        {SRC['nbc-2020'] && <li><a href={SRC['nbc-2020'].url} rel="noopener">National Building Code of Canada 2020: CO alarms in new houses (Article 9.32.3.9)</a></li>}
+        {rules.provinces.map((p) => (
+          <li><a href={p.co.source} rel="noopener">{p.name}: carbon monoxide alarm rule (read {rules.checked})</a></li>
+        ))}
+        <li><a href="https://get.on.ca/uploads/userfiles/files/ontario-coalarm-law_guide.pdf" rel="noopener">Ontario example: Ontario Association of Fire Chiefs guide to the Hawkins-Gignac Act (verified {SITE.dataReviewDate})</a></li>
       </ul>
     </div>
 
     <div class="related">
       <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
       <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/mold-iaq/">Next guide: mold &amp; indoor air</a>
+      <a class="btn btn-ghost" href="/ca/tests/combustion-safety/">The combustion safety test</a>
+      <a class="btn btn-ghost" href="/ca/tests/mold-iaq/">Next guide: mould &amp; indoor air</a>
     </div>
 
     <LeadForm
@@ -161,8 +213,26 @@ const schema = [
   .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 14px; }
   .steps h3 { margin: 0 0 4px; font-size: 16.5px; }
   .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .rules { margin: 36px 0 0; }
+  .nat { border-left: 4px solid var(--pine); margin: 10px 0 14px; }
+  .nat h3 { font-size: 17px; margin: 0 0 6px; }
+  .nat p { font-size: 15px; }
+  .rules-intro { margin: 0 0 12px; }
+  .rule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; align-items: start; }
+  .rule { padding: 0; min-width: 0; }
+  .rule > summary { cursor: pointer; list-style: none; padding: 12px 14px; display: grid; gap: 4px; }
+  .rule > summary::-webkit-details-marker { display: none; }
+  .rule[open] > summary { border-bottom: 1px solid var(--line); }
+  .rname { font-weight: 700; }
+  .rname::before { content: "+ "; color: var(--heat); font-family: var(--mono); }
+  .rule[open] .rname::before { content: "– "; }
+  .rbadge { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .rbadge.req { color: var(--pine); }
+  .rule ul { margin: 10px 14px 8px; padding-left: 18px; display: grid; gap: 6px; font-size: 14.5px; }
+  .rule > p { padding: 0 14px 12px; }
   .callout { border-left: 4px solid var(--heat); margin: 26px 0; }
   .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
   .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
   .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
 </style>

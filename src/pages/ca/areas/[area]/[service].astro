@@ -3,6 +3,8 @@ import Base from '../../../../layouts/Base.astro';
 import LeadForm from '../../../../components/LeadForm.astro';
 import Photo from '../../../../components/Photo.astro';
 import HousingPortrait from '../../../../components/HousingPortrait.astro';
+import RegionalNeeds from '../../../../components/RegionalNeeds.astro';
+import { placeClimate, TEST_FOR_CA_SERVICE } from '../../../../lib/climate';
 import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
 import { areaIndex, loadArea, fmt } from '../../../../lib/areas';
 import type { Area, AreaPage, AreaService, AreaProviders } from '../../../../lib/areas';
@@ -63,6 +65,15 @@ const statusChip: Record<string, [string, string]> = {
 };
 const provBlocks = [pg.providers, pg.providersSection].filter(Boolean) as AreaProviders[];
 const photoKey = service.photo || area.photo;
+
+// Climate profile from the area's main nearby city (none for Northern BC).
+const mainCity = area.nearbyCities[0];
+const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
+const climTest = TEST_FOR_CA_SERVICE[service.slug] ?? (service.slug === 'wood-burning-inspection' ? 'wood-burning-inspection' : undefined);
+const climHasTest = !!clim && !!climTest && (clim.profile.tests.some((t) => t.test === climTest)
+  || clim.profile.priorities.some((x) => x.tests.includes(climTest)));
+const climVariant: 'compact' | 'service' | null = !clim ? null
+  : service.slug === 'home-energy-audit' ? 'compact' : climHasTest ? 'service' : null;
 ---
 
 <Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(photoKey)}>
@@ -114,6 +125,18 @@ const photoKey = service.photo || area.photo;
             <div class="prose" set:html={s.html} />
           </section>
         ))}
+
+        {clim && mainCity && climVariant && (
+          <RegionalNeeds
+            country="ca"
+            profile={clim.profile}
+            placeName={mainCity.name}
+            variant={climVariant}
+            testSlug={climVariant === 'service' ? climTest : undefined}
+            heading={climVariant === 'compact' ? `${area.inName}’s climate: ${clim.profile.label}` : `What this means in ${area.inName}’s climate`}
+            moreHref={`/ca/cities/${mainCity.slug}/#regional-needs`}
+          />
+        )}
 
         <section class="sec comms" id="communities" data-communities={allNames.join('|')}>
           <h2>Communities we cover in {area.inName}</h2>

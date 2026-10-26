@@ -4,6 +4,8 @@ import LeadForm from '../../../../components/LeadForm.astro';
 import Photo from '../../../../components/Photo.astro';
 import HousingPortrait from '../../../../components/HousingPortrait.astro';
 import ThermalCompare from '../../../../components/ThermalCompare.astro';
+import RegionalNeeds from '../../../../components/RegionalNeeds.astro';
+import { placeClimate, TEST_FOR_CA_SERVICE } from '../../../../lib/climate';
 import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
 import { localIndex, loadCity, services, CAT_LABEL } from '../../../../lib/local';
 import type { LocalPage, LocalService, LocalCity } from '../../../../lib/local';
@@ -61,6 +63,16 @@ const statusChip: Record<string, [string, string]> = {
   announced: ['chip-info', 'Announced · opens 2027'],
   closed: ['chip-closed', 'Closed'],
 };
+
+// What this test means in the city's climate: the profile's own note on the test, or the compact
+// profile for the full audit. Skipped where the climate has nothing specific to add (and for buildings).
+const clim = placeClimate('ca', city.slug);
+const climTest = TEST_FOR_CA_SERVICE[service.slug];
+const climHasTest = !!clim && !!climTest && (clim.profile.tests.some((t) => t.test === climTest)
+  || clim.profile.priorities.some((x) => x.tests.includes(climTest)));
+const climVariant: 'compact' | 'service' | null = !clim ? null
+  : service.slug === 'home-energy-audit' ? 'compact'
+  : climHasTest ? 'service' : null;
 ---
 
 <Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(service.slug)}>
@@ -86,7 +98,7 @@ const statusChip: Record<string, [string, string]> = {
 
     <div class="glance">
       {pg.glance.map((x) => (
-        <div class="g"><p class="k">{x.k}</p><p class="v">{x.v}</p>{x.sub && <p class="s">{x.sub}</p>}</div>
+        <div class="g"><p class="k">{x.k}</p><p class="v">{x.v}</p>{x.sub && <p class="s">{x.sub}</p>}{x.note && <p class="n">{x.note}</p>}</div>
       ))}
     </div>
 
@@ -115,6 +127,20 @@ const statusChip: Record<string, [string, string]> = {
             )}
           </>
         ))}
+
+        {clim && climVariant && (
+          <RegionalNeeds
+            country="ca"
+            profile={clim.profile}
+            place={clim.place}
+            placeName={city.name}
+            citySlug={city.slug}
+            variant={climVariant}
+            testSlug={climVariant === 'service' ? climTest : undefined}
+            heading={climVariant === 'compact' ? `${city.name}’s climate: ${clim.profile.label}` : undefined}
+            moreHref={`/ca/cities/${city.slug}/#regional-needs`}
+          />
+        )}
 
         {pg.communities && (
           <section class="sec comms" id="communities" data-communities={pg.communities.names.join('|')}>
@@ -194,7 +220,7 @@ const statusChip: Record<string, [string, string]> = {
         <div class="card card-pad snap">
           <p class="eyebrow">Local snapshot · {city.name}</p>
           <dl>
-            {pg.snapshot.map((x) => (<><dt>{x.k}</dt><dd>{x.v}</dd></>))}
+            {pg.snapshot.map((x) => (<><dt>{x.k}{x.note && <span class="sn">{x.note}</span>}</dt><dd>{x.v}</dd></>))}
           </dl>
           <a class="more" href={`/ca/cities/${city.slug}/`}>All 16 services in {city.name} →</a>
         </div>
@@ -237,6 +263,7 @@ const statusChip: Record<string, [string, string]> = {
   .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
   .glance .v { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--ink); margin: 0; overflow-wrap: anywhere; }
   .glance .s { font-size: 12.5px; color: var(--muted); margin: 2px 0 0; line-height: 1.35; }
+  .glance .n { font-size: 13px; color: var(--ink); margin: 6px 0 0; line-height: 1.4; padding-top: 6px; border-top: 1px dashed var(--line); }
   @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
 
   .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start; }
@@ -276,6 +303,7 @@ const statusChip: Record<string, [string, string]> = {
   @media (max-width: 960px) { .side { position: static; } }
   .snap dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-size: 14px; }
   .snap dt { color: var(--muted); }
+  .snap .sn { display: block; font-size: 12.5px; color: var(--faint); line-height: 1.35; margin-top: 1px; }
   .snap dd { margin: 0; font-family: var(--mono); font-weight: 600; font-size: 13.5px; text-align: right; }
   .snap .more { display: inline-block; margin-top: 14px; font-weight: 600; font-size: 14px; }
   .rel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; font-size: 14px; }

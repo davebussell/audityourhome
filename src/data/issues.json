@@ -179,7 +179,20 @@
     ],
     "categories": ["attic-insulation", "air-sealing", "heat-pump"],
     "programIds": ["hrsp-no-assessment", "hrsp-assessment"],
-    "metaDescription": "Why upstairs won't cool, the attic and duct fixes that beat a bigger AC, and how a heat pump swap earns Ontario rebates."
+    "metaDescription": "Why upstairs won't cool, the attic and duct fixes that beat a bigger AC, and how a heat pump swap earns Ontario rebates.",
+    "regional": [
+      { "region": "Coastal BC", "text": "Most homes here were built without cooling, and the 2021 heat dome showed what that costs: 98% of BC's heat deaths happened indoors, mostly in homes without adequate cooling. Before the next heat wave, make sure at least one room can be kept cool (a heat pump or portable unit, shades on west and south windows, a fan), and check on neighbours who live alone." },
+      { "region": "Southern Ontario and the St. Lawrence valley", "text": "Summers are hot and humid, so cooling is as much about removing moisture as heat. An oversized air conditioner cools the air quickly but shuts off before it dries it, leaving rooms clammy; a cooling load calculation sizes a new air conditioner or heat pump properly, and Health Canada's 30% to 50% indoor humidity range is the target." },
+      { "region": "BC Interior, the Prairies and the North", "text": "Hot spells often come with wildfire smoke, so windows have to stay shut just when the house needs cooling. Plan cooling and filtration together: see the wildfire smoke guide." }
+    ],
+    "related": [
+      { "label": "Wildfire smoke getting into the house", "href": "/ca/issues/wildfire-smoke/" },
+      { "label": "Heat-loss and cooling load calculation", "href": "/ca/tests/heat-loss-calc/" }
+    ],
+    "sources": [
+      { "label": "BC Coroners Service — review of heat-related deaths in the 2021 heat dome", "url": "https://news.gov.bc.ca/releases/2022PSSG0042-000903" },
+      { "label": "Health Canada — Reduce humidity, moisture and mould (30% to 50% indoor humidity)", "url": "https://www.canada.ca/en/health-canada/services/air-quality/indoor-air-contaminants/reduce-humidity-moisture-mould.html" }
+    ]
   },
   {
     "slug": "switching-to-heat-pump",
@@ -255,5 +268,49 @@
     "categories": ["air-sealing", "attic-insulation", "heat-pump", "basement-insulation"],
     "programIds": ["hrsp-assessment", "cmhc-eco-improvement", "toronto-help"],
     "metaDescription": "Why an energy audit belongs in your home purchase: real operating costs, a rebate-priced renovation roadmap, and the 25% CMHC premium refund."
+  },
+  {
+    "slug": "wildfire-smoke",
+    "name": "Wildfire smoke getting into the house",
+    "symptom": "On smoky days the house smells of smoke, eyes sting indoors, and opening a window isn't an option.",
+    "likelyCauses": [
+      "Outdoor air leaking in around doors, windows, the attic hatch and the rim joist: the leakier the house, the more smoke comes in with it",
+      "A furnace or air-handler filter too coarse to catch fine smoke particles, or one that's clogged",
+      "Bathroom and kitchen fans, the dryer and an HRV or ERV pulling outdoor air into the house while the smoke is thick"
+    ],
+    "auditMeasures": [
+      "A blower-door test measures how leaky the house is, and a thermal camera or smoke pencil shows where outdoor air gets in",
+      "The advisor looks at your furnace or air handler and ventilation, so you know what filter the system can take and how the HRV or ERV is set up"
+    ],
+    "diyFirst": [
+      "Keep windows and doors closed as much as you can, and limit bathroom and kitchen exhaust fans while the smoke is heavy (Government of Canada)",
+      "Use the best filter your system can handle; BC health authorities suggest MERV 13 or higher where the furnace or air handler allows it, and change filters more often during smoke events",
+      "Run a certified portable air cleaner with a HEPA filter, sized for the room, in the room where you sleep, and avoid models that make ozone",
+      "An HRV or ERV brings in outdoor air: check the manual or ask the installer how to run yours on smoky days, then ventilate the house once the air clears",
+      "Watch the Air Quality Health Index (InfoSmog in Quebec), and if you cannot keep the air clean or cool at home, ask your local authority about cleaner air spaces"
+    ],
+    "fixLadder": [
+      { "step": "MERV 13 furnace filter (if the system can take it) and a HEPA air cleaner for the bedroom", "cost": "$" },
+      { "step": "Air sealing guided by a blower-door test", "cost": "$$" },
+      { "step": "A heat pump, so you can keep windows shut and still stay cool", "cost": "$$$" }
+    ],
+    "categories": ["air-sealing", "ventilation", "heat-pump"],
+    "programIds": [],
+    "metaDescription": "Keeping wildfire smoke out of your home: MERV 13 filters, HEPA air cleaners, air sealing, running an HRV or ERV on smoky days, and who to call.",
+    "whoToCall": [
+      "9-1-1 for an emergency or urgent medical need (Government of Canada).",
+      "Your local authority or public health office, for cleaner air spaces when your home cannot be kept clean or cool.",
+      "An HVAC contractor, to confirm which filter your furnace or air handler can take and how your HRV or ERV should run on smoky days.",
+      "A registered energy advisor, for a blower-door test that shows where outdoor air gets in."
+    ],
+    "related": [
+      { "label": "House won't stay cool in summer", "href": "/ca/issues/summer-overheating/" },
+      { "label": "The blower door test", "href": "/ca/tests/blower-door/" },
+      { "label": "Ventilation assessment", "href": "/ca/tests/ventilation-assessment/" }
+    ],
+    "sources": [
+      { "label": "Government of Canada — Wildfire smoke, air quality and your health: protecting your physical and mental health (modified 2026-07-20)", "url": "https://www.canada.ca/en/services/health/healthy-living/environment/air-quality/wildfire-smoke/protecting-your-physical-mental-health.html" },
+      { "label": "Island Health, Health Emergency Management BC and First Nations Health Authority — Wildfire smoke information for community health partners and local governments (MERV 13 filters, HEPA air cleaners)", "url": "https://www.islandhealth.ca/sites/default/files/environment/documents/wildfire-smoke-letter.pdf" }
+    ]
   }
 ]

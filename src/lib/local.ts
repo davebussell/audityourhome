@@ -10,7 +10,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import indexJson from '../data/local/index.json';
 
-export interface KV { k: string; v: string; sub?: string }
+/** A tile: label, value, optional sub-line, and an optional plain "what this means for your house" note. */
+export interface KV { k: string; v: string; sub?: string; note?: string }
 export interface LinkItem { href: string; label: string; km?: number }
 export interface SourceItem { href: string; label: string }
 
@@ -49,6 +50,8 @@ export interface LocalService {
   guideLabel: string;
   blurb: string;
   cost: string;
+  /** What the number shown under each city on the service hub means */
+  metricNote?: string | null;
 }
 
 export interface IndexCity {
@@ -130,7 +133,7 @@ export interface LocalCity {
     housing: string | null;
     heating: string | null;
     radon: string | null;
-    services: { slug: string; name: string; cat: string; metric: string }[];
+    services: { slug: string; name: string; cat: string; metric: string; note?: string | null }[];
     sources: SourceItem[];
     communities?: CommunitiesBlock | null;
   };

@@ -13,14 +13,24 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 const issue = issuesData.find((i) => i.slug === slug)!;
-const related = programs.filter((p) => issue.programIds.includes(p.id) && p.status !== 'closed');
+const related = programs.filter((p) => (issue.programIds as string[]).includes(p.id) && p.status !== 'closed');
+/** Optional fields: regional notes, who to call, related guides and sources (wildfire smoke, summer overheating). */
+const extra = issue as typeof issue & {
+  regional?: { region: string; text: string }[];
+  whoToCall?: string[];
+  related?: { label: string; href: string }[];
+  sources?: { label: string; url: string }[];
+};
 
-const title = `${issue.name} — causes, fixes, and Ontario rebates | AuditYourHome`;
+const title = issue.programIds.length
+  ? `${issue.name} — causes, fixes, and Ontario rebates | AuditYourHome`
+  : `${issue.name} — causes, fixes and who to call | AuditYourHome`;
 const description = issue.metaDescription;
 
 const faqs = [
   { q: `What causes ${issue.name.toLowerCase()}?`, a: issue.likelyCauses.join(' ') },
   { q: 'What would an energy audit find?', a: issue.auditMeasures.join(' ') },
+  ...(extra.whoToCall?.length ? [{ q: 'Who should I call?', a: extra.whoToCall.join(' ') }] : []),
 ];
 
 const schema = [
@@ -42,6 +52,7 @@ const ISSUE_PHOTO: Record<string, string> = {
   'switching-to-heat-pump': 'heat-loss-calculation',
   'planning-solar': 'energy-bill-analysis',
   'buying-a-home': 'home-hero',
+  'wildfire-smoke': 'ventilation-assessment',
 };
 const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
 ---
@@ -96,6 +107,32 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
       </div>
     </div>
 
+    {extra.regional && extra.regional.length > 0 && (
+      <section class="card card-pad regional" aria-labelledby="regional-h">
+        <h3 id="regional-h">Where you live changes the answer</h3>
+        <div class="reg-grid">
+          {extra.regional.map((r) => (
+            <div class="reg"><p class="reg-name">{r.region}</p><p class="mb-0">{r.text}</p></div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {extra.whoToCall && extra.whoToCall.length > 0 && (
+      <div class="card card-pad who">
+        <h3>Who to call</h3>
+        <ul class="clean">
+          {extra.whoToCall.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+    )}
+
+    {extra.related && extra.related.length > 0 && (
+      <div class="issue-related">
+        {extra.related.map((r) => <a class="btn btn-ghost" href={r.href}>{r.label} →</a>)}
+      </div>
+    )}
+
     {related.length > 0 && (
       <div class="card card-pad rel">
         <h3>Rebates that apply</h3>
@@ -105,6 +142,15 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
               <a href={`/ca/programs/${p.slug}/`}><strong>{p.shortName}</strong></a> — {p.headline}
             </li>
           ))}
+        </ul>
+      </div>
+    )}
+
+    {extra.sources && extra.sources.length > 0 && (
+      <div class="card card-pad srcs">
+        <h3>Sources</h3>
+        <ul class="clean">
+          {extra.sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}
         </ul>
       </div>
     )}
@@ -127,4 +173,14 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
   .ladder { margin: 0 0 10px; padding-left: 22px; display: grid; gap: 10px; font-size: 15px; }
   .ladder li { display: flex; justify-content: space-between; gap: 14px; }
   .rel { border-left: 4px solid var(--pine); margin-top: 18px; }
+  .regional { margin-top: 18px; border-left: 4px solid var(--heat); }
+  .reg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 8px; }
+  .reg { min-width: 0; }
+  .reg-name { font-weight: 700; margin: 0 0 4px; }
+  .reg p { font-size: 15px; }
+  .who { margin-top: 18px; border-left: 4px solid var(--steel); }
+  .issue-related { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
+  .srcs { margin-top: 18px; border-left: 4px solid var(--steel); }
+  .srcs ul.clean { font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
 </style>

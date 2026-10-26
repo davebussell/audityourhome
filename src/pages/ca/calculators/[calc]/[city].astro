@@ -15,12 +15,12 @@ import HowWeCalculate from '../../../../components/calc/HowWeCalculate.astro';
 import CityIndex from '../../../../components/calc/CityIndex.astro';
 import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
 import { ogFor } from '../../../../lib/photos';
-import { CALC_META, CALC_SLUGS, CALC_CITIES, cityBySlug, cityName, type CalcSlug } from '../../../../lib/calc/data';
+import { CALC_META, CALC_SLUGS, CALC_CITIES, cityBySlug, cityName, climateOf, type CalcSlug } from '../../../../lib/calc/data';
 import { energyPage } from '../../../../lib/calc/pages/energy';
 import { upgradePage } from '../../../../lib/calc/pages/upgrade';
 import { healthPage } from '../../../../lib/calc/pages/health';
 import { appliancePage } from '../../../../lib/calc/pages/appliance';
-import { LEAD_AREA, SERVICE_LINKS, otherCalcs } from '../../../../lib/calc/pages/common';
+import { LEAD_AREA, SERVICE_LINKS, UNITS_LINE, otherCalcs } from '../../../../lib/calc/pages/common';
 import { stationName } from '../../../../lib/calc/format';
 
 export function getStaticPaths() {
@@ -76,6 +76,8 @@ const others = otherCalcs(calc, city);
     {calc === 'home-health' && <HomeHealthCalc payload={page.payload} cityName={name} />}
     {calc === 'appliance-energy' && <ApplianceEnergyCalc payload={page.payload} cityName={name} priceNote={page.priceNote} />}
 
+    <p class="calc-units"><strong>Units and terms:</strong> <Fragment set:html={UNITS_LINE[calc]} /> <a href="#how-we-calculate">How we calculate this</a>.</p>
+
     {calc === 'energy-costs' && <EnergyGlance page={page} cityName={name} />}
     {calc === 'upgrade-payback' && <UpgradeGlance page={page} cityName={name} provName={city.provName} />}
     {calc === 'home-health' && <HealthGlance page={page} cityName={name} provName={city.provName} />}
@@ -90,7 +92,7 @@ const others = otherCalcs(calc, city);
       </div>
     </section>
 
-    <HowWeCalculate calc={calc} cityName={name} hdd={city.hot2000.hdd} annualMean={city.eccc.annualMean} prov={city.prov} />
+    <HowWeCalculate calc={calc} cityName={name} hdd={city.hot2000.hdd} annualMean={city.eccc.annualMean} prov={city.prov} nights10={climateOf(city).nights10} />
 
     <section class="sec" aria-labelledby="more-h">
       <h2 id="more-h">More for {name}</h2>
@@ -136,4 +138,6 @@ const others = otherCalcs(calc, city);
   .calc-hero { padding-bottom: 22px; }
   .calc-hero .lede { max-width: 72ch; font-size: 18px; }
   .lead-wrap { margin: 36px 0 30px; }
+  .calc-units { max-width: 80ch; margin: 16px 0 0; font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+  .calc-units strong { color: var(--ink); }
 </style>

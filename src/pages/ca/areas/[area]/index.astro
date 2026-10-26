@@ -3,6 +3,8 @@ import Base from '../../../../layouts/Base.astro';
 import Photo from '../../../../components/Photo.astro';
 import HousingPortrait from '../../../../components/HousingPortrait.astro';
 import LeadForm from '../../../../components/LeadForm.astro';
+import RegionalNeeds from '../../../../components/RegionalNeeds.astro';
+import { placeClimate } from '../../../../lib/climate';
 import { breadcrumbSchema } from '../../../../lib/schema';
 import { areaIndex, loadArea, fmt } from '../../../../lib/areas';
 import type { Area } from '../../../../lib/areas';
@@ -45,6 +47,10 @@ const allNames = [
   ...(area.nearbyGroup ? area.nearbyGroup.municipalities.flatMap((m) => [m.name, ...m.communities]) : []),
 ];
 const guides = area.services.filter((s) => s.guide);
+// The area's climate profile comes from its main nearby city (Ontario areas: Great Lakes–St. Lawrence;
+// Okanagan: BC Southern Interior). Northern BC has no covered city, so it gets no profile.
+const mainCity = area.nearbyCities[0];
+const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
 ---
 
 <Base title={title} description={hub.description} schema={schema} ogImage={ogFor(area.photo)}>
@@ -86,6 +92,18 @@ const guides = area.services.filter((s) => s.guide);
     />
 
     <p class="scope small measure">{area.scope}</p>
+
+    {clim && mainCity && (
+      <RegionalNeeds
+        country="ca"
+        profile={clim.profile}
+        placeName={mainCity.name}
+        variant="compact"
+        heading={`${area.inName}’s climate: ${clim.profile.label}`}
+        moreHref={`/ca/cities/${mainCity.slug}/#regional-needs`}
+        id="regional-needs"
+      />
+    )}
 
     <section class="svc" id="services">
       <h2>Six local guides for {area.inName}</h2>

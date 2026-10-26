@@ -49,6 +49,7 @@ const others = services.filter((s) => s.slug !== service.slug);
     <section id="cities" class="cities">
       <h2>Choose your city</h2>
       <p class="small intro">Each city page covers local prices and rules, the climate and housing stock that shape the job, and who does the work there. The bar under each city shows its houses by construction era, oldest first.</p>
+      {service.metricNote && <p class="small intro metric-note"><strong>What the figure under each city means:</strong> {service.metricNote}</p>}
       {groups.map((g) => (
         <div class="prov">
           <h3><a href={`/ca/provinces/${g.provSlug}/`}>{g.provName}</a></h3>
@@ -87,6 +88,7 @@ const others = services.filter((s) => s.slug !== service.slug);
   .cost { margin: 10px 0 0; }
   .cities { padding: 20px 0 10px; }
   .intro { max-width: 70ch; margin-bottom: 18px; }
+  .metric-note { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--heat); border-radius: var(--radius); padding: 10px 14px; color: var(--ink); }
   .prov { margin: 22px 0 8px; }
   .prov h3 { font-size: 15px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 10px; }
   .prov h3 a { color: var(--muted); text-decoration: none; }

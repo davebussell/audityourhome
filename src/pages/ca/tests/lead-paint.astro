@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
@@ -114,6 +115,8 @@ const schema = [
         you whether you need to.
       </p>
     </div>
+
+    <ReadingGuide country="ca" test="lead-paint" />
 
     <GearStrip categories={['air-purifiers']} heading="During the work: keep dust down" />
 

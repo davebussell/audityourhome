@@ -4,6 +4,31 @@ import { resolvePrices, enginePrices, defaultSystem, rebatesCompact, rebatesFull
 import { money, unitPrice, int, gj, longDate, pct, range } from '../format';
 import { TYPICAL_LINE, srcs, addSrc, type Fact, type Faq, type SourceRef, fit } from './common';
 import { upgradeDefaults, computeUpgrade, pbRange, MEASURE_LABEL, type UpgradePayload, type UpgradeResult } from '../../../components/calc/upgrade-payback';
+import { placeClimate } from '../../climate';
+
+const capFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** The summer side of insulation, shading and heat pumps, for cities whose climate data says summers are moderate or hot. */
+function summerSide(city: CalcCity, name: string): { line: string; faq: string; coastal: boolean } | null {
+  const pc = placeClimate('ca', city.slug);
+  const level = pc?.place.summerCooling;
+  if (!pc || !level || level === 'low') return null;
+  const key = pc.profile.key;
+  const interior = key === 'bc-southern-interior';
+  const why = key === 'coastal-bc'
+    ? `most ${name} summers are mild, but in the 2021 heat dome 98% of BC's heat deaths happened indoors, mostly in homes without adequate cooling`
+    : interior
+      ? `${name}'s summers are hot and often smoky`
+      : level === 'high'
+        ? `${name}'s summers are hot and humid`
+        : `heat waves reach ${name} too`;
+  const how = `attic insulation and air sealing slow heat${interior ? ' and smoke' : level === 'high' ? ' and humid air' : ''} getting in, exterior shades or awnings on sunny windows block the sun before it heats the room, and a heat pump adds cooling${level === 'high' ? ' and can replace the air conditioner' : ''}`;
+  return {
+    line: `Summer counts too: ${why}. ${capFirst(how)}. These savings count heating only${level === 'high' ? ', so if you run air conditioning the real payback is a little shorter' : ''}.`,
+    faq: `Yes. ${capFirst(why)}. The upgrades that keep heat in during winter keep it out in summer: ${how}. The calculator counts heating savings only, so ${level === 'high' ? 'with air conditioning the real payback is a little shorter' : 'its payback is on the cautious side'}.`,
+    coastal: key === 'coastal-bc',
+  };
+}
 
 export function upgradePayload(city: CalcCity): UpgradePayload {
   const rp = resolvePrices(city);
@@ -11,6 +36,7 @@ export function upgradePayload(city: CalcCity): UpgradePayload {
   const reb = rebatesCompact(city, ['attic', 'walls', 'basement', 'airSealing', 'windows', 'thermostat']);
   return {
     city: { slug: city.slug, name: cityName(city), prov: city.prov, provName: city.provName, hdd: cl.hdd, zone: cl.zone },
+    summerLine: summerSide(city, cityName(city))?.line ?? null,
     prices: enginePrices(rp),
     defaultSystem: defaultSystem(city),
     rebates: {
@@ -101,11 +127,15 @@ export function upgradePage(city: CalcCity) {
     a: `Cutting air leakage by 20% saves about ${money(airF.dollars)} a year in a typical ${fuelWord}-heated house here (NRCan: about a quarter of heat loss is air leakage), and turning the thermostat down 3 °C for 8 hours a night saves about ${money(sbF.dollars)} a year (NRCan: about 2% per degree over eight hours). Heat pumps should be set back no more than 2 °C.`,
   });
 
+  const summer = summerSide(city, name);
+  if (summer) faqs.push({ q: `Do these upgrades help keep the house cool in summer in ${name}?`, a: summer.faq });
+
   const sources: SourceRef[] = srcs(['nrcan-hot2000-map', 'nrcan-ceud-t33', 'nrcan-hwg', 'nrcan-kthi-s2', 'nrcan-kthi-s3', 'nrcan-kthi-s5', 'nrcan-kthi-s6', 'nrcan-kthi-s7', 'nrcan-kthi-s8', 'nrcan-kthi-s9', 'nbc-2020', 'nrcan-windows-2003', 'energystar-windows-v5', 'wikipedia-blower-door', 'wikipedia-ach', 'wikipedia-shc', 'nrcan-heat-pump-guide', 'nrcan-energystar-wh', 'hq-consumption-by-use', 'homestars-attic', 'homestars-windows', 'dunsky-cci-2024']);
   for (const arr of Object.values(full)) for (const e of arr) addSrc(sources, `${shortProgram(e.program)} (checked ${e.checked ?? rp.asOf})`, e.source);
   addSrc(sources, `Electricity price: ${rp.elec.utility.split('(')[0].trim()}`, rp.elec.source);
   if (rp.gas) addSrc(sources, `Natural gas price: ${rp.gas.utility.split('(')[0].trim()}`, rp.gas.source);
   if (rp.oil) addSrc(sources, 'Heating oil price: Statistics Canada table 18-10-0001-01', rp.oil.source);
+  if (summer?.coastal) addSrc(sources, 'BC Coroners Service, review of heat-related deaths in the 2021 heat dome', 'https://news.gov.bc.ca/releases/2022PSSG0042-000903');
 
   return {
     title, description, h1, kicker, lede, facts, faqs, sources, payload, rp,

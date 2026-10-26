@@ -25,6 +25,9 @@ NAT = D['national']
 INCENT = D['incentives']
 UTIL = D['utilities']
 PROGRAMS = json.load(open(f'{REPO}/src/data/programs.json'))
+# Regional climate profiles: per-city profile plus summerCooling / smoke / iceDams flags (src/data/climate/ca.json,
+# written from ECCC normals, the NBC, Health Canada and NRCan sources it lists; checked 2026-10-26).
+CLIM = json.load(open(f'{REPO}/src/data/climate/ca.json', encoding='utf-8'))
 
 # Provider-list adjustments from the October 2026 fact-check (applied here so build_data.py needn't re-run):
 # - Reep Green Solutions' own service-area page (reepgreen.ca/energyevaluation/, checked 2026-10-02) lists Waterloo
@@ -154,6 +157,9 @@ SRC = {
                  'https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/industry-innovation-and-leadership/industry-expertise/indigenous-housing/develop-manage-indigenous-housing/maintenance-solutions/mould-in-housing/pdfs/mould-info-kit-en-acc.pdf'),
     'nbc2020': ('National Research Council — National Building Code of Canada 2020 (Article 9.33.5.1 and Table 1.3.1.2: CSA F280-12; Article 9.32.3.9: CO alarms)',
                 'https://doi.org/10.4224/w324-hv93'),
+    # added October 26, 2026 (regional climate update)
+    'gc-smoke': ('Government of Canada — Wildfire smoke, air quality and your health: protecting your physical and mental health (modified 2026-07-20)',
+                 'https://www.canada.ca/en/services/health/healthy-living/environment/air-quality/wildfire-smoke/protecting-your-physical-mental-health.html'),
 }
 
 # Radon mitigation facts (Health Canada, Radon reduction guide for Canadians, February 2023; guideline page, 2025), shared with tools/areas/gen_areas.py
@@ -538,7 +544,9 @@ def municipal_for(c, types=None):
             continue
         if c['slug'] == 'toronto' and 'HELP' in m['name']:
             continue  # shown as a program card already
-        out.append({'name': m['name'], 'href': m['url'], 'summary': m['summary'], 'status': m['status'], 'kind': 'Municipal'})
+        # research notes sometimes say "the amount (null)": drop the placeholder so it never reaches the page
+        summary = m['summary'].replace(' (null)', '')
+        out.append({'name': m['name'], 'href': m['url'], 'summary': summary, 'status': m['status'], 'kind': 'Municipal'})
     return out
 
 
@@ -569,9 +577,106 @@ def climate_src_phrase(c):
 
 
 def climate_sentence(c):
+    """Climate numbers with what they mean and where they come from, in plain words (used once per page)."""
     cl = c['climate']
-    return (f"{c['name']} gets about {n(cl['hdd'])} heating degree-days a year and has a winter design temperature of "
-            f"{deg(cl['designHeat'])}, according to {climate_src_phrase(c)}.")
+    where = (cl['station'] if cl['km'] <= 20 and not cl.get('override') else
+             f"{cl['station']}, the closest comparable location in that data set ({cl['km']} km away)")
+    return (f"{c['name']} gets about {n(cl['hdd'])} heating degree-days a year, a measure of how much heating its climate needs, "
+            f"and its winter design temperature, the cold day heating systems are sized for, is {deg(cl['designHeat'])}. "
+            f"Those figures come from the climate data for {where} in HOT2000, the home-energy software Natural Resources Canada (NRCan) gives energy advisors.")
+
+
+# ------------------------------------------------------------------ regional climate (src/data/climate/ca.json)
+def place(c):
+    return CLIM['places'].get(c['slug'], {})
+
+
+def mild_coast(c):
+    """Coastal BC: rain rather than snow, no ice dams, under 3,000 heating degree-days."""
+    return place(c).get('iceDams') is False and c['climate']['hdd'] < 3000
+
+
+def summer_level(c):
+    return place(c).get('summerCooling') or 'low'
+
+
+def hot_summer(c):
+    return summer_level(c) in ('moderate', 'high')
+
+
+def smoky(c):
+    return bool(place(c).get('smoke'))
+
+
+def ice_dams(c):
+    return place(c).get('iceDams') is not False
+
+
+def humid_summer(c):
+    """Great Lakes–St. Lawrence cities with hot, humid summers (dehumidification matters)."""
+    return place(c).get('profile') == 'great-lakes-st-lawrence' and summer_level(c) == 'high'
+
+
+# Same wording as climateMeaning('ca') in src/lib/climate.ts, so tiles, sections and the climate guide agree.
+def hdd_meaning(c):
+    hdd = c['climate']['hdd']
+    if hdd < 3000:
+        return 'Mild, wet winters: heating bills are modest, so moisture control and comfort matter as much as cutting heat loss.'
+    if hdd < 4000:
+        return 'A moderate heating season with warm summers: fixes should cut heating bills and keep the house cool.'
+    if hdd < 5000:
+        return 'A long heating season: air sealing and insulation pay back well, and every leak costs money for months.'
+    if hdd < 6000:
+        return 'Cold winters: heating is the biggest energy cost, so stopping leaks and insulating come first.'
+    if hdd < 7000:
+        return 'Very cold winters: heating dominates, and a heat pump needs cold-climate ratings and backup heat.'
+    return 'Extreme cold and a very long heating season: envelope work comes first, and heating reliability is a safety issue.'
+
+
+def hdd_short(c):
+    """Tile-sized version of hdd_meaning()."""
+    hdd = c['climate']['hdd']
+    return ('Mild winters by Canadian standards' if hdd < 3000 else 'A moderate heating season' if hdd < 4000 else
+            'A long heating season' if hdd < 5000 else 'Cold winters: heating dominates' if hdd < 6000 else
+            'Very cold winters' if hdd < 7000 else 'Extreme cold, very long winters')
+
+
+NOTE_DESIGN = 'The cold day heating is sized for'
+NOTE_OLD = 'Older houses usually leak more and have less insulation'
+NOTE_NEW = 'Tighter houses that usually rely on an HRV or ERV'
+NOTE_SO = 'Companies NRCan licenses to do EnerGuide evaluations'
+NOTE_RADON = "Neighbours' results don't predict yours: test"
+
+
+def tile(k, v, note=None, sub=None):
+    t = {'k': k, 'v': v}
+    if sub:
+        t['sub'] = sub
+    if note:
+        t['note'] = note
+    return t
+
+
+def summer_sentence(c):
+    """The summer side of an energy upgrade, where summers are warm enough to matter (None elsewhere)."""
+    lvl = summer_level(c)
+    if lvl == 'high':
+        return (f"{c['name']} summers are hot{' and humid' if humid_summer(c) else ''}, so the air sealing and insulation that cut heating bills "
+                "also keep the house cooler, and a heat pump can do the cooling more efficiently than an old air conditioner.")
+    if lvl == 'moderate':
+        return (f"{c['name']} also gets hot spells and heat waves, so plan how the house will stay cool: air sealing, attic insulation and "
+                "shading help, and a heat pump adds efficient cooling.")
+    return None
+
+
+def smoke_sentence(c, src=None):
+    """Government of Canada wildfire-smoke advice, where smoke is a recurring summer problem (None elsewhere)."""
+    if not smoky(c):
+        return None
+    if src is not None:
+        src.add('gc-smoke')
+    return (f"Wildfire smoke reaches {c['name']} in some summers. The Government of Canada's advice is to keep windows and doors closed, "
+            "limit exhaust fans and use the best filter your system can handle, so ask the advisor what your furnace or HRV can take.")
 
 
 def hdd_context(c):
@@ -792,9 +897,15 @@ SV = {s['slug']: s for s in SERVICES}
 
 
 # ------------------------------------------------------------------ helpers for page assembly
+SO_EXPLAIN = ("A service organization is a company that Natural Resources Canada (NRCan) licenses to deliver EnerGuide evaluations; "
+              "its registered energy advisors do the home visit.")
+
+
 def providers_block(c, svc):
     provs = c['providers']
     note = PROVIDER_NOTE.get(svc, '').format(city=c['name'])
+    if note:
+        note = f"{SO_EXPLAIN} {note}"
     items = [{'name': x['name'], 'phone': x['phone'], 'coverage': x['coverage'],
               'profile': f"/ca/providers/{x['profile']}/" if x['profile'] else None,
               'hrs': x['hrs'], 'gcc': x['gcc']} for x in provs]
@@ -837,10 +948,10 @@ def snapshot(c, src):
     h = c['housing']
     cl = c['climate']
     items = [
-        {'k': 'Heating degree-days', 'v': n(cl['hdd'])},
-        {'k': 'Winter design temperature', 'v': deg(cl['designHeat'])},
-        {'k': 'Houses built before 1961', 'v': pct(h['housesPre1961Pct'])},
-        {'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])},
+        tile('Heating degree-days', n(cl['hdd']), hdd_short(c)),
+        tile('Winter design temperature', deg(cl['designHeat']), NOTE_DESIGN),
+        tile('Houses built before 1961', pct(h['housesPre1961Pct']), NOTE_OLD),
+        tile('Houses built before 1991', pct(h['housesPre1991Pct'])),
     ]
     if elec_util(c):
         items.append({'k': 'Electricity distributor', 'v': elec_util(c)})
@@ -898,17 +1009,25 @@ def gen_home_energy_audit(c, src):
     pg['description'] = (f"Book a home energy assessment (EnerGuide evaluation) in {c['name']}: {who}, local prices, {c['provName']} rebates and what "
                          f"{pct(h['housesPre1991Pct'])} pre-1991 housing means for your upgrade list.")
     pg['lede'] = lede
-    glance = [{'k': 'Licensed organizations', 'v': str(k) if k else 'Via Efficiency NS'},
-              {'k': 'Typical cost', 'v': ev_short},
-              {'k': 'Heating degree-days', 'v': n(c['climate']['hdd'])},
-              {'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])}]
+    glance = [tile('Licensed organizations', str(k) if k else 'Via Efficiency NS', NOTE_SO if k else None),
+              tile('Typical cost', ev_short),
+              tile('Heating degree-days', n(c['climate']['hdd']), hdd_short(c)),
+              tile('Houses built before 1991', pct(h['housesPre1991Pct']), NOTE_OLD)]
     if subs:
-        glance[1] = {'k': 'Local help', 'v': 'City subsidy available'}
+        glance[1] = tile('Local help', 'City subsidy available')
     pg['glance'] = glance
     secs = []
     why = [p(housing_sentence(c), f"The typical {c['name']} house dates from {median_era(c)}, and an evaluation is how you find out what that means for yours: "
              "the blower door measures air leakage, the advisor inspects the attic, walls, basement, windows and heating system, and the report ranks upgrades by what they'd save.")]
-    why.append(p(climate_sentence(c), hdd_context(c) + '.', "The more heating a climate needs, the more each fix is worth, which is why the evaluation's ranked list matters more in some cities than others."))
+    if mild_coast(c):
+        worth = ("With winters this mild, an evaluation is as much about comfort, damp and planning a heat pump that also cools "
+                 "as it is about cutting the heating bill.")
+    else:
+        worth = hdd_meaning(c)
+    why.append(p(climate_sentence(c), hdd_context(c) + '.', worth))
+    extra = [x for x in (summer_sentence(c), smoke_sentence(c, src)) if x]
+    if extra:
+        why.append(p(*extra))
     hs = heating_sentence(c)
     if hs:
         why.append(p(hs, 'The heating system on the report shapes the recommendations: a forced-air furnace invites a ducted heat pump, electric baseboards a ductless one.'))
@@ -939,6 +1058,10 @@ def gen_home_energy_audit(c, src):
                if k else "NRCan's list shows no separate service organizations for Nova Scotia; assessments are booked through Efficiency Nova Scotia's Home Energy Assessment program.")},
         {'q': 'How long does an EnerGuide evaluation take?', 'a': 'The initial visit usually takes two to three hours, including the blower door test. The follow-up visit after upgrades is shorter.'},
     ]
+    if hot_summer(c):
+        faq.append({'q': f'Does an energy audit help with summer heat in {c["name"]}?',
+                    'a': ("Yes. The advisor's upgrade list covers air sealing, attic insulation and windows, which slow summer heat gain as well as winter heat loss, "
+                          "and the evaluation's measurements are the starting point for sizing a heat pump that also cools.")})
     progs = programs_for(c, need_audit=True)
     if progs:
         faq.append({'q': f'Which rebates need an EnerGuide evaluation in {c["provName"]}?',
@@ -971,16 +1094,31 @@ def gen_blower_door(c, src):
     cl = c['climate']
     ev_text, ev_short = eval_price(c, src)
     pg['title'] = f"Blower door test in {c['name']}: cost, who does it and why it matters here"
-    pg['description'] = (f"Where to get a blower door test in {c['name']}, what it costs, and why air leakage matters with "
-                         f"{n(cl['hdd'])} heating degree-days a year and {pct(h['housesPre1961Pct'])} of houses built before 1961.")
-    pg['lede'] = (f"A blower door test measures how leaky a house is and shows where the leaks are. In {c['name']}, with about "
-                  f"{n(cl['hdd'])} heating degree-days a year, every leak runs up the heating bill for most of the year.")
-    pg['glance'] = [{'k': 'Cost', 'v': 'Included in an evaluation'}, {'k': 'Evaluation price', 'v': ev_short},
-                    {'k': 'Licensed organizations', 'v': str(k) if k else 'Via Efficiency NS'},
-                    {'k': 'Houses built before 1961', 'v': pct(h['housesPre1961Pct'])}]
+    if mild_coast(c):
+        pg['description'] = (f"Where to get a blower door test in {c['name']}, what it costs, and why air leakage matters in {c['name']}'s mild, wet climate, "
+                             f"with {pct(h['housesPre1961Pct'])} of houses built before 1961.")
+        pg['lede'] = (f"A blower door test measures how leaky a house is and shows where the leaks are. {c['name']}'s winters are mild "
+                      f"(about {n(cl['hdd'])} heating degree-days a year), so sealing leaks is as much about drafts, damp and summer heat as about the heating bill.")
+    else:
+        pg['description'] = (f"Where to get a blower door test in {c['name']}, what it costs, and why air leakage matters with "
+                             f"{n(cl['hdd'])} heating degree-days a year and {pct(h['housesPre1961Pct'])} of houses built before 1961.")
+        season = ('every leak runs up the heating bill for most of the year' if cl['hdd'] >= 4000 else
+                  'every leak adds to the heating bill all winter')
+        summer = (', and in summer the same leaks let hot, humid air in' if humid_summer(c) else
+                  ', and in summer the same leaks let hot air in' if summer_level(c) == 'high' else '')
+        pg['lede'] = (f"A blower door test measures how leaky a house is and shows where the leaks are. In {c['name']}, with about "
+                      f"{n(cl['hdd'])} heating degree-days a year, {season}{summer}.")
+    pg['glance'] = [tile('Cost', 'Included in an evaluation'), tile('Evaluation price', ev_short),
+                    tile('Licensed organizations', str(k) if k else 'Via Efficiency NS', NOTE_SO if k else None),
+                    tile('Houses built before 1961', pct(h['housesPre1961Pct']), NOTE_OLD)]
     secs = []
-    secs.append({'h2': f"Why air leakage matters in {c['name']}", 'html': p(climate_sentence(c), hdd_context(c) + '.') +
-                 p(housing_sentence(c), 'Older houses usually test leakier than newer ones, and an EnerGuide report compares your result with homes of the same era, so you can see whether your house is typical or a problem.')})
+    why_leaks = [p(climate_sentence(c), hdd_context(c) + '.', hdd_meaning(c))]
+    extra = [x for x in ((("Leaks also let damp air into walls and attics, so the coast's wet winters are a reason to find them before adding insulation.")
+                          if mild_coast(c) else None), summer_sentence(c), smoke_sentence(c, src)) if x]
+    if extra:
+        why_leaks.append(p(*extra))
+    why_leaks.append(p(housing_sentence(c), 'Older houses usually test leakier than newer ones, and an EnerGuide report compares your result with homes of the same era, so you can see whether your house is typical or a problem.'))
+    secs.append({'h2': f"Why air leakage matters in {c['name']}", 'html': ''.join(why_leaks)})
     after = []
     if heat_share(c, 'gas') or heat_share(c, 'oil'):
         fuel = join_and([x for x in [f"natural gas for {heat_share(c, 'gas')}" if heat_share(c, 'gas') else None,
@@ -1075,9 +1213,9 @@ def gen_thermal(c, src):
                   f"at least 10°C colder outside than inside. " +
                   (f"{c['name']}'s mild winters make timing the scan the main thing to plan." if mild else
                    f"{c['name']}'s long heating season gives you months of good scanning weather."))
-    pg['glance'] = [{'k': 'Cost', 'v': 'Usually included; confirm'}, {'k': 'Best conditions', 'v': '≥10°C inside/outside difference'},
-                    {'k': 'Winter design temperature', 'v': deg(cl['designHeat'])},
-                    {'k': 'Houses built before 1961', 'v': pct(h['housesPre1961Pct'])}]
+    pg['glance'] = [tile('Cost', 'Usually included; confirm'), tile('Best conditions', '≥10°C inside/outside difference', 'Too little difference and leaks barely show'),
+                    tile('Winter design temperature', deg(cl['designHeat']), NOTE_DESIGN),
+                    tile('Houses built before 1961', pct(h['housesPre1961Pct']), NOTE_OLD)]
     secs = []
     if mild:
         timing = p(climate_sentence(c), f"With winters that mild, a 10°C difference isn't guaranteed every day, so book the scan for a cold morning or evening, and ask the advisor to reschedule if the forecast is too warm.")
@@ -1117,8 +1255,8 @@ def gen_heat_loss(c, src):
                          f"why it matters for heat pumps, what it costs and who does it.")
     pg['lede'] = (f"The heat loss calculation is how a heat pump or furnace gets sized for your house, and the key input is the design temperature: "
                   f"{deg(dt)} for {c['name']}, from {climate_src_phrase(c)}.")
-    pg['glance'] = [{'k': 'Design temperature', 'v': deg(dt)}, {'k': 'Heating degree-days', 'v': n(cl['hdd'])},
-                    {'k': 'Standard', 'v': 'CSA F280-12'}, {'k': 'Typical cost', 'v': '$150–$400 standalone'}]
+    pg['glance'] = [tile('Design temperature', deg(dt), NOTE_DESIGN), tile('Heating degree-days', n(cl['hdd']), hdd_short(c)),
+                    tile('Standard', 'CSA F280-12', 'The national method for sizing heating and cooling'), tile('Typical cost', '$150–$400 standalone')]
     secs = []
     colder = DT_RANK[c['slug']]
     rank_txt = (f"the {ordinal(colder)}-coldest design temperature of the {NCITY} cities we cover" if colder <= NCITY // 2
@@ -1134,6 +1272,9 @@ def gen_heat_loss(c, src):
     if hs:
         body.append(p(hs))
         src.add('heating')
+    if hot_summer(c):
+        body.append(p(f"{c['name']}'s {'hot' if summer_level(c) == 'high' else 'warm'} summers make the cooling side count too. CSA F280 covers cooling capacity as well as heating, "
+                      "so ask for both numbers: a heat pump sized only for winter can be too big for summer, which leaves rooms cool but clammy."))
     secs.append({'h2': f"Why the design temperature matters in {c['name']}", 'html': ''.join(body)})
     src.add('nbc2020')
     secs.append({'h2': 'What CSA F280-12 asks for', 'html': p("The National Building Code 2020 requires the heating capacity for a house to be worked out with CSA F280, "
@@ -1172,9 +1313,13 @@ def gen_duct(c, src):
                    f"or those adding a ducted heat pump.")
     else:
         fa_line = f"Duct testing matters in {c['name']} homes that have forced-air heating or a ducted heat pump."
-    pg['lede'] = "If some rooms never get warm, the problem is often the ductwork, not the furnace. " + fa_line
-    pg['glance'] = [{'k': 'Typical cost', 'v': '$200–$450'}, {'k': 'Forced-air furnaces', 'v': fa or 'Not published'},
-                    {'k': 'Electric baseboards', 'v': bb or 'Not published'}, {'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])}]
+    if summer_level(c) == 'high':
+        pg['lede'] = ("If some rooms never get warm in winter or cool in summer, the problem is often the ductwork, not the furnace or air conditioner. " + fa_line)
+    else:
+        pg['lede'] = "If some rooms never get warm, the problem is often the ductwork, not the furnace. " + fa_line
+    pg['glance'] = [tile('Typical cost', '$200–$450'), tile('Forced-air furnaces', fa or 'Not published', 'Homes with ducts that can leak' if fa else None),
+                    tile('Electric baseboards', bb or 'Not published', 'No ducts to test in these homes' if bb else None),
+                    tile('Houses built before 1991', pct(h['housesPre1991Pct']), NOTE_OLD)]
     body = []
     hs = heating_sentence(c)
     if hs:
@@ -1183,6 +1328,10 @@ def gen_duct(c, src):
     if bb and fa and float(bb.replace('about ', '').rstrip('%')) > float(fa.replace('about ', '').rstrip('%')):
         body.append(p(f"Electric baseboards outnumber furnaces here, and a baseboard-heated house has no ducts to test. The test matters if you have forced air, or before you add a ducted heat pump to existing ductwork."))
     body.append(p(housing_sentence(c), "Ducts in older houses often run through unheated spaces with taped or unsealed joints, and supply runs to the far rooms are the first to suffer."))
+    if hot_summer(c):
+        body.append(p(f"The same leaks cost you in summer when the ducts carry cooling: air from a central air conditioner or heat pump that escapes into an attic, "
+                      f"garage or crawlspace is cooling you paid for{', and leaky return ducts can pull in humid air' if humid_summer(c) else ''}. "
+                      "Sealing and balancing the ducts helps in both seasons, and it's worth doing before a new heat pump goes onto old ductwork."))
     pg['sections'] = [
         {'h2': f"Who needs it in {c['name']}", 'html': ''.join(body)},
         {'h2': 'What the test shows', 'html': ul(['Total duct leakage, as a share of the system\'s airflow, measured by pressure-testing the ductwork with a calibrated duct-pressurization fan.',
@@ -1216,8 +1365,11 @@ def gen_combustion(c, src):
     pg['lede'] = ("A combustion safety test checks that your furnace, water heater and fireplace vent their exhaust outside instead of into the house, "
                   "which matters most right before and after you tighten the house up." +
                   (f" In {heating_area(c)}, the main heating energy is {join_and(fuel_bits)} of households." if fuel_bits else ''))
-    pg['glance'] = [{'k': 'Cost', 'v': 'Included with an evaluation'}, {'k': 'Natural gas heat', 'v': gas or ('No piped gas' if not gu else 'Not published')},
-                    {'k': 'Gas distributor', 'v': gu or 'No piped gas'}, {'k': 'CO alarms required (existing homes)', 'v': {True: 'Yes', False: 'No', None: 'None found'}[co_req]}]
+    pg['glance'] = [tile('Cost', 'Included with an evaluation'),
+                    tile('Natural gas heat', gas or ('No piped gas' if not gu else 'Not published'), 'Homes whose furnace must vent safely' if gas else None),
+                    tile('Gas distributor', gu or 'No piped gas'),
+                    tile('CO alarms required (existing homes)', {True: 'Yes', False: 'No', None: 'None found'}[co_req],
+                         None if co_req else 'Install them anyway: they are the backstop')]
     body = []
     hs = heating_sentence(c)
     if hs:
@@ -1255,13 +1407,22 @@ def gen_ventilation(c, src):
                          f"and when an HRV or ERV makes sense. {pct(h['housesSince2001Pct'])} of local houses were built since 2001.")
     pg['lede'] = (f"Condensation on windows, musty basements and stuffy bedrooms are ventilation and humidity problems, and they're easy to confuse with insulation problems. "
                   f"A ventilation assessment measures which one you have.")
-    pg['glance'] = [{'k': 'Cost', 'v': 'Part of an evaluation'}, {'k': 'Houses built since 2001', 'v': pct(h['housesSince2001Pct'])},
-                    {'k': 'Houses built before 1961', 'v': pct(h['housesPre1961Pct'])}, {'k': 'Winter design temperature', 'v': deg(cl['designHeat'])}]
+    pg['glance'] = [tile('Cost', 'Part of an evaluation'), tile('Houses built since 2001', pct(h['housesSince2001Pct']), NOTE_NEW),
+                    tile('Houses built before 1961', pct(h['housesPre1961Pct']), NOTE_OLD),
+                    tile('Winter design temperature', deg(cl['designHeat']), 'Colder days mean more window condensation')]
     body = [p(climate_sentence(c),
               ("Mild, damp winters mean indoor humidity rarely has a chance to dry out on its own, so fans that actually vent outside matter." if coastal else
                f"On {c['name']}'s coldest days, window glass and poorly insulated corners get cold enough for condensation at humidity levels that feel normal indoors, so winter humidity needs to stay at the lower end of the comfortable range."))]
     body.append(p(housing_sentence(c), f"Newer houses ({pct(h['housesSince2001Pct'])} of {c['name']}'s were built since 2001) are tight and usually have an HRV or ERV that needs balancing and cleaning. "
                   "Older houses that get air-sealed can lose the accidental ventilation they used to rely on."))
+    if humid_summer(c):
+        src.add('hc-mould-home')
+        body.append(p(f"{c['name']}'s humid summers bring the opposite problem: warm, moist air condenses in cool basements. Health Canada recommends keeping indoor "
+                      "relative humidity between 30% and 50%; in summer that usually means a dehumidifier in the basement and an air conditioner that isn't oversized, "
+                      "since an HRV or ERV doesn't take moisture out of the air."))
+    sm = smoke_sentence(c, src)
+    if sm:
+        body.append(p(sm, "An HRV or ERV brings in outdoor air, so ask the installer or check the maker's instructions for how to run yours on smoky days."))
     pg['sections'] = [{'h2': f"Why {c['name']} homes get humidity problems", 'html': ''.join(body)},
                       {'h2': 'What the assessment measures', 'html': ul(['Relative humidity in living areas and the basement.',
                                                                          'Actual airflow from bath and kitchen fans, and whether they vent outside rather than into the attic.',
@@ -1287,10 +1448,19 @@ def gen_attic(c, src):
                          f"{n(cl['hdd'])} heating degree-days, and the rebates for topping it up.")
     pg['lede'] = (f"The attic is usually the cheapest big energy fix in a house, and the inspection decides how to do it: how much insulation is there, "
                   f"where air leaks through the ceiling, and whether anything up there must not be disturbed.")
-    pg['glance'] = [{'k': 'Cost', 'v': 'Included in an evaluation'}, {'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])},
-                    {'k': 'Heating degree-days', 'v': n(cl['hdd'])}, {'k': 'Common finding', 'v': 'R-10–20 vs R-50–60 target'}]
+    pg['glance'] = [tile('Cost', 'Included in an evaluation'), tile('Houses built before 1991', pct(h['housesPre1991Pct']), NOTE_OLD),
+                    tile('Heating degree-days', n(cl['hdd']), hdd_short(c)),
+                    tile('Common finding', 'R-10–20 vs R-50–60 target', 'Higher R-value means more insulation')]
+    if mild_coast(c):
+        pays = ("With winters this mild, extra attic insulation pays back more slowly on heating alone; "
+                "keeping upstairs rooms cooler in summer and stopping damp air reaching the roof deck count too.")
+    elif hot_summer(c):
+        pays = ("The colder the climate, the faster added attic insulation pays for itself, and in a hot summer the same insulation "
+                "keeps attic heat out of the bedrooms below.")
+    else:
+        pays = 'The colder the climate, the faster added attic insulation pays for itself.'
     body = [p(housing_sentence(c), "Attics in older houses commonly have a fraction of today's recommended insulation, and top-ups done over the years often buried air leaks instead of sealing them first."),
-            p(climate_sentence(c), hdd_context(c) + '.', 'The colder the climate, the faster added attic insulation pays for itself.')]
+            p(climate_sentence(c), hdd_context(c) + '.', pays)]
     body.append(p("<strong>Vermiculite.</strong> Loose, pebbly, grey-brown or silver-gold insulation may contain asbestos. Health Canada's advice is not to disturb it; have it sampled before any attic work. " +
                   a(f"/ca/services/asbestos-testing/{c['slug']}/", f"Asbestos and vermiculite testing in {c['name']}")))
     src.add('hc-vermiculite')
@@ -1303,7 +1473,11 @@ def gen_attic(c, src):
     pg['faq'] = [
         {'q': f'How much attic insulation should a {c["name"]} house have?', 'a': 'Advisors commonly target around R-50 to R-60 in attics. Your EnerGuide report gives the recommendation for your house.'},
         {'q': 'Can I top up the insulation myself?', 'a': 'Only after the air leaks are sealed and you\'ve confirmed there is no vermiculite. The inspection tells you both.'},
-        {'q': 'Will more insulation stop ice dams?', 'a': 'Insulation helps, but ice dams are mostly caused by warm air leaking into the attic. Air sealing is the bigger fix.'},
+        ({'q': 'Will more insulation stop ice dams?', 'a': 'Insulation helps, but ice dams are mostly caused by warm air leaking into the attic. Air sealing is the bigger fix.'}
+         if ice_dams(c) else
+         {'q': 'Does attic insulation help in summer?',
+          'a': ('Yes. Sealing and insulating the attic floor slows the heat that builds up under the roof from reaching the rooms below, so upstairs bedrooms stay cooler. '
+                'Keep the soffit vents clear with baffles so the attic can still dry out in damp months.')}),
     ]
     return pg
 
@@ -1319,8 +1493,8 @@ def gen_bills(c, src):
                          f"{n(c['climate']['hdd'])} heating degree-days.")
     pg['lede'] = (f"Your own bills are the most accurate starting point for any energy plan. In {c['name']}, that means "
                   f"{'electricity from ' + el if el else 'your electricity utility'}" + (f" and natural gas from {gs}" if gs else ' (there is no piped natural gas for homes)') + '.')
-    pg['glance'] = [{'k': 'Electricity', 'v': el or 'n/a'}, {'k': 'Natural gas', 'v': gs or 'No piped gas'},
-                    {'k': 'Heating degree-days', 'v': n(c['climate']['hdd'])}, {'k': 'Cost', 'v': 'Free to do yourself'}]
+    pg['glance'] = [tile('Electricity', el or 'n/a'), tile('Natural gas', gs or 'No piped gas'),
+                    tile('Heating degree-days', n(c['climate']['hdd']), hdd_short(c)), tile('Cost', 'Free to do yourself')]
     items = []
     for name in [x.strip() for x in (el or '').split('/')] + ([gs] if gs else []):
         if not name:
@@ -1341,6 +1515,8 @@ def gen_bills(c, src):
     pg['sections'] = [{'h2': f"Getting your usage history in {c['name']}", 'html': ''.join(body)},
                       {'h2': 'What the analysis shows', 'html': p(climate_sentence(c),
                        "Weather-normalizing your bills against those degree-days separates heating from baseload (lights, appliances, hot water), so you can see how much of the bill a heating upgrade can actually touch, and compare a mild year with a harsh one fairly.") +
+                       (p(f"In {c['name']}, summer air conditioning also shows up on the electricity bill: compare your July and August use with a spring month "
+                          "to see roughly what cooling costs, and how much a heat pump or better attic insulation could take off it.") if hot_summer(c) else '') +
                        p(a(SV['energy-bill-analysis']['guide'], 'How the 12-month bill analysis works') + '.')}]
     pg['providers'] = providers_block(c, 'energy-bill-analysis')
     pg['programs'] = {'heading': f'Programs in {c["name"]}', 'items': programs_for(c, need_audit=True)}
@@ -1348,7 +1524,9 @@ def gen_bills(c, src):
     pg['faq'] = [
         {'q': f'How do I download my energy usage in {c["name"]}?', 'a': strip(' '.join(items)) if items else 'Log in to your utility account and look for usage history or a data download.'},
         {'q': 'What is Green Button?', 'a': 'A standard format for downloading your own energy data. Ontario electricity utilities have been required to offer Green Button Download My Data since November 1, 2023.'},
-        {'q': 'Why weather-normalize bills?', 'a': 'A cold winter raises heating bills even if nothing about the house changed. Normalizing to heating degree-days lets you compare years fairly and measure real savings.'},
+        {'q': 'Why weather-normalize bills?', 'a': ('A cold winter raises heating bills even if nothing about the house changed'
+                                                     + (', and a hot summer raises cooling bills' if hot_summer(c) else '')
+                                                     + '. Normalizing to degree-days lets you compare years fairly and measure real savings.')},
     ]
     return pg
 
@@ -1377,7 +1555,11 @@ def gen_radon(c, src):
     else:
         g2 = ({'k': '2024 survey', 'v': short_pct(nw['figure']), 'sub': scope_label(nw['scope'])}
               if nw else {'k': 'Test length', 'v': '91+ days', 'sub': 'in the heating season'})
-    pg['glance'] = [g1, g2, {'k': 'Guideline', 'v': '200 Bq/m³'}, {'k': 'Mitigation', 'v': '$2,000–$3,000', 'sub': 'Health Canada'}]
+    g2 = dict(g2, note=NOTE_RADON) if g2.get('k') in ('2024 survey', 'City kit program') else g2
+    if g1.get('k', '').startswith('2012') and 'note' not in g2:
+        g1 = dict(g1, note=NOTE_RADON)
+    pg['glance'] = [g1, g2, tile('Guideline', '200 Bq/m³', "Health Canada's level for fixing a home"),
+                    tile('Mitigation', '$2,000–$3,000', sub='Health Canada')]
     secs = []
     body = [p(radon_line(c, src))]
     if nw and r['pct'] is not None and c['slug'] not in RADON_CITY_PROGRAM:
@@ -1462,8 +1644,10 @@ def gen_co(c, src):
     src.add('nbc2020')
     lede_rule = CITY_CO[c['slug']][0] if c['slug'] in CITY_CO else strip(co_text)
     pg['lede'] = f"Carbon monoxide is odourless and can kill. {lede_rule}"
-    pg['glance'] = [{'k': 'CO alarm rule', 'v': req_label}, {'k': 'Natural gas heat', 'v': gas or ('No piped gas' if not gu else 'Not published')},
-                    {'k': 'Single-detached share', 'v': pct(h['singleDetachedPct'])}, {'k': 'Alarm cost', 'v': '$40–$80 each'}]
+    pg['glance'] = [tile('CO alarm rule', req_label), tile('Natural gas heat', gas or ('No piped gas' if not gu else 'Not published'),
+                                                            'Each gas appliance is a possible CO source' if gas else None),
+                    tile('Single-detached share', pct(h['singleDetachedPct']), 'Many have attached garages, another CO source'),
+                    tile('Alarm cost', '$40–$80 each')]
     body = [p(co_text)]
     if c['slug'] in CITY_CO:
         body.append(p(CITY_CO[c['slug']][0]))
@@ -1517,11 +1701,16 @@ def gen_mold(c, src):
                          f"winters cause condensation, the CMHC and Health Canada size rules for cleanup, and when to hire a remediation contractor.")
     pg['lede'] = ("Mould sampling tells you whether there's a hidden mould problem and roughly where. It doesn't tell you why, and fixing the moisture source is the actual cure. "
                   f"Here's how to inspect a home in {c['name']}, when air quality testing helps, and how much cleanup you can safely do yourself.")
-    pg['glance'] = [{'k': 'Houses built before 1991', 'v': pct(h['housesPre1991Pct'])}, {'k': 'Clean it yourself', 'v': 'Up to 3 patches', 'sub': 'each under 1 m²'},
-                    {'k': 'Hire a contractor', 'v': 'Over 3 m²', 'sub': 'or if it keeps coming back'}, {'k': 'Lab accreditation', 'v': 'AIHA EMLAP'}]
+    pg['glance'] = [tile('Houses built before 1991', pct(h['housesPre1991Pct']), 'Older basements and walls have more damp spots'),
+                    tile('Clean it yourself', 'Up to 3 patches', sub='each under 1 m²'),
+                    tile('Hire a contractor', 'Over 3 m²', sub='or if it keeps coming back'),
+                    tile('Lab accreditation', 'AIHA EMLAP', 'Ask which accredited lab reads the samples')]
     body = [p(climate_sentence(c),
               ("Mild, wet winters keep materials damp, so poorly vented bathrooms, basements and crawlspaces are the usual suspects." if coastal else
                f"On cold days, exterior corners, closets on outside walls and window frames get cold enough for condensation, which is where mould usually starts in {c['name']} houses."))]
+    if humid_summer(c):
+        body.append(p(f"Summer is the second mould season in {c['name']}: warm, humid outdoor air condenses on cool basement walls and floors. "
+                      "A dehumidifier that keeps the basement in Health Canada's 30–50% humidity range is the usual fix."))
     body.append(p(housing_sentence(c), "Older basements without a moisture barrier and houses that were air-sealed without adding ventilation are common trouble spots."))
     if c['prov'] == 'QC':
         prov_note = p("Quebec has a voluntary standard for handling mould in homes (BNQ 3009-600, 2020); no province has a mandatory residential mould standard.")
@@ -1569,8 +1758,8 @@ def gen_asbestos(c, src):
                          f"the {c['provName']} rules for renovation, and what abatement and removal involve if a test is positive.")
     pg['lede'] = (f"About {n(round(n91, -2)) if n91 else 'many'} {c['name']} houses ({pct(pre91)}) were built before 1991, when asbestos still turned up in "
                   "insulation, flooring, plaster and duct wrap. A lab test before renovation is the only way to know.")
-    pg['glance'] = [{'k': 'Houses built before 1991', 'v': pct(pre91)}, {'k': 'Lab sample', 'v': '$50–$150'},
-                    {'k': 'Houses built before 1961', 'v': pct(h['housesPre1961Pct'])}, {'k': 'Vermiculite', 'v': "Don't disturb it"}]
+    pg['glance'] = [tile('Houses built before 1991', pct(pre91), 'Asbestos still turned up in materials until then'), tile('Lab sample', '$50–$150'),
+                    tile('Houses built before 1961', pct(h['housesPre1961Pct'])), tile('Vermiculite', "Don't disturb it", 'Have it sampled before attic work')]
     pg['sections'] = [
         {'h2': f"Where asbestos shows up in {c['name']} houses", 'html': p(housing_sentence(c)) +
          ul(['Vermiculite attic insulation: loose, pebbly, grey-brown or silver-gold granules.',
@@ -1609,8 +1798,9 @@ def gen_lead(c, src):
                          "and how to renovate safely.")
     pg['lede'] = (f"Health Canada says a home built before 1960 probably has lead paint somewhere. That's {pct(pre61)} of {c['name']}'s houses "
                   f"(built before 1961, per the 2021 Census), plus exterior paint on many of the {pct(mid)} built from 1961 to 1990.")
-    pg['glance'] = [{'k': 'Houses built before 1961', 'v': pct(pre61)}, {'k': 'Built 1961–1990', 'v': pct(mid)},
-                    {'k': 'Swab kits', 'v': '$15–$40'}, {'k': 'Lab accreditation', 'v': 'AIHA ELLAP'}]
+    pg['glance'] = [tile('Houses built before 1961', pct(pre61), 'Probably has lead paint somewhere (Health Canada)'),
+                    tile('Built 1961–1990', pct(mid), 'Exterior paint may contain lead'),
+                    tile('Swab kits', '$15–$40', 'A quick screen, not proof'), tile('Lab accreditation', 'AIHA ELLAP')]
     pg['sections'] = [
         {'h2': f"Which {c['name']} homes are at risk", 'html': p(housing_sentence(c)) +
          ul(['Built before 1960: probably has lead-based paint (Health Canada).',
@@ -1659,8 +1849,9 @@ def gen_wells(c, src):
     pg['description'] = (f"Private well water testing in {c['name']}: {status_txt}. How {c['provName']}'s bacteria testing for E. coli and total coliforms works, "
                          f"what it costs and how often to test.")
     pg['lede'] = (w.get('sentence') or f"Some {c['name']} homes are on private wells.") + ' ' + ("If yours is, here's how testing works in " + c['provName'] + '.')
-    pg['glance'] = [{'k': 'Private wells in ' + c['name'], 'v': label}, {'k': 'Testing cost', 'v': pt['wellCost']},
-                    {'k': 'Test for', 'v': 'Bacteria yearly or more'}, {'k': 'Extended panels', 'v': 'Nitrate, metals, more'}]
+    pg['glance'] = [tile('Private wells in ' + c['name'], label, 'These tests matter only if your home has a well'),
+                    tile('Testing cost', pt['wellCost']),
+                    tile('Test for', 'Bacteria yearly or more', 'E. coli and total coliforms'), tile('Extended panels', 'Nitrate, metals, more')]
     local = []
     if w.get('localProgram'):
         lp = w['localProgram']
@@ -1805,6 +1996,60 @@ def hub_metric(c, svc):
     return ''
 
 
+def hub_note(c, svc):
+    """One plain line under a service card's number on the city hub: what the number means for a house."""
+    if svc in ('blower-door-test', 'thermal-imaging'):
+        return hdd_short(c)
+    if svc == 'home-energy-audit':
+        return NOTE_SO if c['providers'] else None
+    if svc == 'energy-bill-analysis':
+        return 'Download 12 months of usage from your account'
+    if svc == 'duct-leakage-testing':
+        return 'Share of homes with ducts that can leak' if heat_share(c, 'forcedAir') else None
+    if svc == 'combustion-safety-test':
+        return 'Gas appliances need a venting check' if heat_share(c, 'gas') else None
+    if svc == 'attic-insulation-inspection':
+        return 'Older attics usually need more insulation'
+    if svc == 'ventilation-assessment':
+        return 'Newer, tighter homes rely on fans or an HRV'
+    if svc == 'heat-loss-calculation':
+        return NOTE_DESIGN
+    if svc == 'radon-testing':
+        return NOTE_RADON
+    if svc == 'carbon-monoxide-testing':
+        return None if PT[c['prov']]['co'][0] or c['slug'] in CITY_CO else 'Install alarms anyway'
+    if svc == 'mold-testing':
+        return 'Older homes have more damp spots'
+    if svc == 'asbestos-testing':
+        return 'Common in materials until about 1990'
+    if svc == 'lead-paint-testing':
+        return 'Pre-1960 paint probably contains lead'
+    if svc == 'well-water-testing':
+        return 'Only homes on private wells need it'
+    return None
+
+
+# What the number under each city means on the /ca/services/<service>/ hubs
+METRIC_NOTE = {
+    'home-energy-audit': "The number is how many NRCan-licensed service organizations list the city's postal codes.",
+    'blower-door-test': 'The number is heating degree-days: the higher it is, the longer and colder the heating season, and the more each air leak costs.',
+    'thermal-imaging': 'The number is heating degree-days: the higher it is, the longer the season with good conditions for an infrared scan.',
+    'heat-loss-calculation': 'The number is the winter design temperature: the cold day a heat pump or furnace is sized for.',
+    'duct-leakage-testing': 'The number is the share of households heating with a forced-air furnace, the homes whose ducts can leak.',
+    'combustion-safety-test': 'The number is the share of households heating with natural gas, whose appliances need a venting check.',
+    'ventilation-assessment': 'The number is the share of houses built since 2001: tighter homes that rely on fans or an HRV for fresh air.',
+    'attic-insulation-inspection': 'The number is the share of houses built before 1991, whose attics usually have less insulation than today’s targets.',
+    'energy-bill-analysis': 'The name is the electricity distributor whose usage history you would download.',
+    'radon-testing': "The figure is the latest survey result for the area. Every house differs, so test yours either way.",
+    'carbon-monoxide-testing': 'The label says whether provincial or city rules require CO alarms in existing homes.',
+    'mold-testing': 'The number is the share of houses built before 1991, which have more of the damp spots mould starts in.',
+    'asbestos-testing': 'The number is the share of houses built before 1991, when asbestos still turned up in building materials.',
+    'lead-paint-testing': 'The number is the share of houses built before 1961; Health Canada says homes built before 1960 probably have lead paint.',
+    'well-water-testing': 'The label says how common private wells are in the city.',
+    'commercial-energy-audit': 'The number is how many audit or study incentive programs we found for buildings in the city.',
+}
+
+
 # ------------------------------------------------------------------ communities served (search-coverage upgrade, October 2026)
 # Places people search for, resolved to a municipality (tools/areas/research/towns.json: CGNDB names, LIO municipal
 # boundaries, BC open data), and the /areas/ guides (tools/areas/areas.json). Run tools/areas/gen_areas.py first so
@@ -1920,11 +2165,13 @@ def build():
             'title': f"Home energy audits and home testing in {c['name']}: 16 local service guides",
             'description': (f"Local guides to 16 home energy and health services in {c['name']}, {c['provName']}: EnerGuide evaluations, radon, asbestos, "
                             f"heat pump sizing and more, with {n(c['climate']['hdd'])} degree-days and {pct(c['housing']['housesPre1991Pct'])} pre-1991 houses."),
-            'lede': (f"{c['name']} gets about {n(c['climate']['hdd'])} heating degree-days a year, {pct(c['housing']['housesPre1961Pct'])} of its houses were built before 1961, "
+            'lede': (f"{c['name']} gets about {n(c['climate']['hdd'])} heating degree-days a year ({hdd_short(c)[0].lower() + hdd_short(c)[1:]}), "
+                     f"{pct(c['housing']['housesPre1961Pct'])} of its houses were built before 1961, "
                      f"and {hub_provider_phrase(c)}. Pick a service for the local details."),
-            'climate': climate_sentence(c), 'housing': housing_sentence(c), 'heating': heating_sentence(c),
+            'climate': climate_sentence(c) + ' ' + hdd_meaning(c), 'housing': housing_sentence(c), 'heating': heating_sentence(c),
             'radon': radon_line(c, hub_src),
-            'services': [{'slug': s['slug'], 'name': s['name'], 'cat': s['cat'], 'metric': hub_metric(c, s['slug'])} for s in SERVICES],
+            'services': [{'slug': s['slug'], 'name': s['name'], 'cat': s['cat'], 'metric': hub_metric(c, s['slug']),
+                          'note': hub_note(c, s['slug'])} for s in SERVICES],
             'communities': communities_block(c),
         }
         if hub['communities']:
@@ -1945,11 +2192,25 @@ def build():
                              'provSlug': c['provSlug'], 'population': c['population'], 'facts': facts,
                              'metrics': {s['slug']: hub_metric(c, s['slug']) for s in SERVICES}})
     index = {'checked': CHECKED, 'checkedISO': CHECKED_ISO,
-             'services': [{k: s[k] for k in ('slug', 'name', 'h1', 'cat', 'guide', 'guideLabel', 'blurb', 'cost')} for s in SERVICES],
+             'services': [dict({k: s[k] for k in ('slug', 'name', 'h1', 'cat', 'guide', 'guideLabel', 'blurb', 'cost')},
+                               metricNote=METRIC_NOTE.get(s['slug'])) for s in SERVICES],
              'cities': index_cities,
              'provinceOrder': ['BC', 'AB', 'SK', 'MB', 'ON', 'QC', 'NB', 'NS', 'PE', 'NL', 'YT', 'NT']}
     json.dump(index, open(f'{outdir}/index.json', 'w'), ensure_ascii=False, indent=1)
-    sizes = [os.path.getsize(f'{outdir}/cities/{c["slug"]}.json') for c in CITIES]
+    # Province-by-province CO alarm and well-water rules for the national test guides (/ca/tests/carbon-monoxide/, /ca/tests/well-water/).
+    prov_meta = {}
+    for c in CITIES:
+        prov_meta.setdefault(c['prov'], {'name': c['provName'], 'slug': c['provSlug']})
+    rules = {'checked': CHECKED, 'checkedISO': CHECKED_ISO, 'coNbc': CO_NBC, 'provinces': []}
+    for code in index['provinceOrder']:
+        pt = PT[code]
+        rules['provinces'].append({
+            'code': code, 'name': prov_meta[code]['name'], 'slug': prov_meta[code]['slug'],
+            'co': {'existingHomes': pt['co'][0], 'text': pt['co'][1], 'source': pt['co'][2], 'install': CO_INSTALL.get(code, [])},
+            'wells': {'text': pt['wells'][0], 'source': pt['wells'][1], 'cost': pt.get('wellCost')},
+        })
+    json.dump(rules, open(f'{outdir}/rules.json', 'w'), ensure_ascii=False, indent=1)
+    sizes =[os.path.getsize(f'{outdir}/cities/{c["slug"]}.json') for c in CITIES]
     print('cities', len(CITIES), 'pages', len(CITIES) * len(SERVICES), 'total KB', sum(sizes) // 1024, 'max KB', max(sizes) // 1024)
 
 

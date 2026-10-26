@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
@@ -124,6 +125,8 @@ const schema = [
         itself is its own C-NRPP certification — ask for it by name when getting quotes.
       </p>
     </div>
+
+    <ReadingGuide country="ca" test="radon" />
 
     <GearStrip categories={['radon-monitors']} heading="Radon gear worth owning" />
 

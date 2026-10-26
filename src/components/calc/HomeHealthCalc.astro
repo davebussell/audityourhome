@@ -97,7 +97,7 @@ const L = s.layout;
           <p class="hint">Example values shown. 1 m² is about 10.8 sq ft.</p>
         </fieldset>
       </div>
-      <div class="calc-out" id="hh-mould-out" aria-live="polite" set:html={renderMould(s)} />
+      <div class="calc-out" id="hh-mould-out" aria-live="polite" set:html={renderMould(s, payload)} />
     </div>
   </form>
 </section>
@@ -138,7 +138,7 @@ const L = s.layout;
     document.getElementById('hh-radon-out')!.innerHTML = renderRadon(s, P);
     document.getElementById('hh-hum-out')!.innerHTML = renderHumidity(s, P);
     document.getElementById('hh-alarm-out')!.innerHTML = renderAlarms(s, P);
-    document.getElementById('hh-mould-out')!.innerHTML = renderMould(s);
+    document.getElementById('hh-mould-out')!.innerHTML = renderMould(s, P);
   }
   onChange(form, update);
   update();

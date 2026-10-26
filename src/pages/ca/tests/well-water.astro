@@ -4,29 +4,38 @@ import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import LeadForm from '../../../components/LeadForm.astro';
 import GearStrip from '../../../components/GearStrip.astro';
+import ReadingGuide from '../../../components/ReadingGuide.astro';
 import { SITE } from '../../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import rules from '../../../data/local/rules.json';
+import health from '../../../data/calc/health.json';
 
-const title = 'Well water testing in Ontario — free bacterial tests, how often, and what else to check | AuditYourHome';
+/** Province-by-province well testing: src/data/local/rules.json (gen_pages.py); lab fees: src/data/calc/health.json. */
+const freeBacteria = rules.provinces.filter((p) => /free/i.test(p.wells.cost ?? ''));
+const listJoin = (a: string[]) => (a.length <= 1 ? a.join('') : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`);
+const fees = health.wells.labCosts;
+const dollars = (v: number) => `$${Number.isInteger(v) ? v : v.toFixed(2)}`;
+
+const title = 'Well water testing in Canada — free and low-cost tests by province, how often, and what else to check | AuditYourHome';
 const description =
-  'Public Health Ontario tests private well water for E. coli and total coliforms free of charge. How to collect and submit a sample within the 48-hour window, how often rural homes should test, and when to pay a private lab for nitrates, arsenic, and other chemistry.';
+  'Testing a private well in Canada: free and low-cost bacteria tests by province, sampling tips, how often to test, and when to pay a lab for chemistry.';
 
 const faqs = [
   {
     q: 'How often should I test?',
-    a: 'Public Health Ontario\'s guidance is to test often, because well water quality changes — many Ontario health units suggest a seasonal rhythm along the lines of spring, summer, and fall, and Ontario\'s well guidance singles out spring snowmelt and heavy-rain periods as the moments contamination sneaks in. Shallow and older dug wells need more frequent checks than deep drilled wells with sound casings. Since the bacterial test is free, frequency costs you only the drive to a drop-off.',
+    a: "Provincial advice ranges from once a year (British Columbia, Saskatchewan, Manitoba, Nova Scotia, Prince Edward Island and Yukon) to twice a year (Alberta, Quebec and New Brunswick) and three times in Ontario, where local health units suggest spring, summer and fall. Test after spring snowmelt and heavy rain, when contamination is most likely to get in, and more often for shallow or older dug wells. Where the bacteria test is free, frequency costs you only the trip to a drop-off.",
   },
   {
     q: 'My result came back positive for coliforms. Now what?',
-    a: 'Stop drinking it untreated (boil or use bottled), resample to rule out collection error, and look for the cause: a damaged or unsealed well cap, casing cracks, surface water pooling at the wellhead, or a nearby septic issue. Shock chlorination plus repairs often clears it — then retest until you have consecutive clean results. Your local health unit will walk you through it; that\'s literally their job.',
+    a: "Stop drinking it untreated (boil it or use bottled water), resample to rule out a collection error, and look for the cause: a damaged or unsealed well cap, casing cracks, surface water pooling at the wellhead, or a nearby septic problem. Shock chlorination plus repairs often clears it; then retest until you have consecutive clean results. Your provincial health or environment office will walk you through it (in Ontario, your local public health unit).",
   },
   {
     q: 'Do I need the paid chemistry tests too?',
-    a: 'Periodically, yes. The free test covers bacteria only — it says nothing about nitrates (a real concern near farmland), arsenic or uranium (bedrock geology), sodium, fluoride, or metals. Ontario\'s guidance is to run those through a private accredited lab: a baseline panel when you move in or drill, again every few years, and any time taste, colour, or smell changes. Budget $100–$300 depending on the panel.',
+    a: `Periodically, yes. A bacteria test says nothing about nitrate (a concern near farmland), arsenic or uranium (from bedrock), sodium, fluoride or metals. Alberta and Prince Edward Island test chemistry free; elsewhere it goes to an accredited lab, about ${dollars(Math.round(fees.fullChemistryPanelCAD.low))}–${dollars(Math.round(fees.fullChemistryPanelCAD.high))} for a full panel at the public-lab prices we found. Provinces suggest a baseline when the well is drilled or you move in, then every 1 to 5 years, and any time taste, colour or smell changes.`,
   },
   {
-    q: 'Buying a rural home — what should I ask for?',
-    a: 'Test before closing (make it a condition), and ask the sellers for their testing history — a documented record of clean results is worth real money, and its absence is worth a question. Include a chemistry panel, not just the free bacterial test, plus a well record: depth, age, casing, and the flow test. Our planner folds the well test into your audit request automatically for rural homes.',
+    q: 'Buying a rural home: what should I ask for?',
+    a: 'Test before closing (make it a condition), and ask the sellers for their testing history: a documented record of clean results is worth real money, and its absence is worth a question. Include a chemistry panel, not just the bacteria test, plus a well record: depth, age, casing and the flow test. Our planner folds the well test into your audit request automatically for rural homes.',
   },
 ];
 
@@ -46,23 +55,24 @@ const schema = [
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
-      <h1>Well water: the free test rural Ontario keeps forgetting</h1>
+      <h1>Well water: the test nobody does for you</h1>
       <p class="lede measure">
-        If your water comes from a private well, nobody is testing it but you. Ontario makes the
-        important half effortless — Public Health Ontario analyzes private well samples for
-        E.&nbsp;coli and total coliforms <strong>free of charge</strong> — and the discipline is
-        simply doing it regularly, plus a paid chemistry panel every few years for what bacteria
-        tests can't see.
+        If your water comes from a private well, nobody is testing it but you. Most provinces make
+        the important half easy: the bacteria test (E.&nbsp;coli and total coliforms) is
+        <strong>free</strong> in {listJoin(freeBacteria.map((p) => p.name))}, and costs
+        {dollars(fees.bacteriaTestCAD.low)}–{dollars(fees.bacteriaTestCAD.high)} at the public labs that charge.
+        The discipline is simply testing regularly, plus a chemistry panel every few years for what
+        bacteria tests can't see.
       </p>
       </div>
       <Photo name={'well-water-testing'} eager />
     </div>
 
     <div class="glance">
-      <div class="g"><p class="k">Bacterial test</p><p class="v">Free (PHO)</p></div>
-      <div class="g"><p class="k">Sample window</p><p class="v">Drop off within 24 h</p></div>
-      <div class="g"><p class="k">Rhythm</p><p class="v">Test often — seasonal</p></div>
-      <div class="g"><p class="k">Chemistry panel</p><p class="v">$100–$300, private lab</p></div>
+      <div class="g"><p class="k">Bacteria test</p><p class="v">Free in {listJoin(freeBacteria.map((p) => p.code))}</p></div>
+      <div class="g"><p class="k">Elsewhere</p><p class="v">{dollars(fees.bacteriaTestCAD.low)}–{dollars(fees.bacteriaTestCAD.high)} at public labs</p></div>
+      <div class="g"><p class="k">How often</p><p class="v">1–3 times a year</p></div>
+      <div class="g"><p class="k">Chemistry panel</p><p class="v">Every 1–5 years</p></div>
     </div>
 
     <div class="measure prose">
@@ -71,9 +81,10 @@ const schema = [
 
     <ol class="steps measure">
       <li>
-        <h3>Pick up the free kit</h3>
-        <p>Sterile sample bottles come from your nearest Public Health Ontario laboratory, your
-        local health unit, or a designated pickup location — no charge, no appointment.</p>
+        <h3>Get the sample bottles</h3>
+        <p>Sterile bottles come from your provincial or public-health lab or one of its pickup
+        points (in Ontario, a Public Health Ontario lab or your health unit), or from an accredited
+        private lab where there's no public service. The list below shows who tests in your province.</p>
       </li>
       <li>
         <h3>Collect the sample properly</h3>
@@ -82,32 +93,49 @@ const schema = [
         line, cap immediately.</p>
       </li>
       <li>
-        <h3>Get it to a drop-off within 24 hours, kept cool</h3>
-        <p>Public Health Ontario has to test the sample within 48 hours of collection, so aim to
-        drop it off within 24. Keep it in the dark at 2–8 °C, in a cooler with ice packs that
-        don't touch the bottle: frozen samples are refused, and anything that arrives above 25 °C
-        isn't tested. PHO labs take routine samples weekdays 8:30 a.m. to 4:30 p.m., except
-        statutory holidays (and the day before one that falls on a weekday); many health units
-        run local drop-off points with their own hours.</p>
+        <h3>Get it to the lab fast, kept cool</h3>
+        <p>Bacteria samples have to be tested soon after collection: Public Health Ontario, for
+        example, must test within 48 hours, so it asks for samples within 24. Keep the bottle in the
+        dark at 2–8 °C, in a cooler with ice packs that don't touch it; frozen samples are refused.
+        Check your lab's drop-off days and hours before you collect.</p>
       </li>
       <li>
-        <h3>Read the result — the target is zero</h3>
+        <h3>Read the result: the target is zero</h3>
         <p>Safe well water shows no total coliforms and no E. coli. Any detection means
         investigate: wellhead condition, casing, surface drainage, septic distance. Resample
-        after any fix, and after every spring melt if your well has history.</p>
+        after any fix, and after every spring melt if your well has a history.</p>
       </li>
       <li>
-        <h3>Every few years, pay for the chemistry</h3>
-        <p>An accredited private lab panel for nitrates, arsenic, uranium, sodium, and metals —
-        the free test says nothing about these. Baseline it when you buy or drill, repeat every
-        few years or when taste, colour, or smell changes.</p>
+        <h3>Every few years, test the chemistry</h3>
+        <p>A lab panel for nitrate, arsenic, uranium, sodium and metals: the bacteria test says
+        nothing about these. Provinces suggest a baseline when the well is drilled or you move in,
+        then every 1 to 5 years, and any time taste, colour or smell changes.</p>
       </li>
       <li>
         <h3>Keep every report</h3>
         <p>A dated file of clean results documents your water the way an EnerGuide label
-        documents your energy — it answers a buyer's hardest rural question before it's asked.</p>
+        documents your energy: it answers a buyer's hardest rural question before it's asked.</p>
       </li>
     </ol>
+
+    <section class="rules" id="province-rules" aria-labelledby="rules-h">
+      <h2 id="rules-h">Who tests well water, province by province</h2>
+      <p class="measure small rules-intro">Where to send samples, what it costs and how often to test, as we read
+      each official source on {rules.checked}. Fees change, so confirm with the lab before you collect.</p>
+      <div class="rule-grid">
+        {rules.provinces.map((p) => (
+          <details class="card rule">
+            <summary><span class="rname">{p.name}</span><span class={`rbadge ${/free/i.test(p.wells.cost ?? '') ? 'free' : ''}`}>{p.wells.cost}</span></summary>
+            <p class="rtext">{p.wells.text}</p>
+            <p class="small mb-0"><a href={p.wells.source} rel="noopener">Official source ↗</a></p>
+          </details>
+        ))}
+      </div>
+      <p class="measure small">Nunavut, or a province whose page has changed: check your provincial or territorial
+      health or environment department for the current lab and fees, and follow the routine above.</p>
+    </section>
+
+    <ReadingGuide country="ca" test="well-water" />
 
     <div class="card card-pad callout measure">
       <h3>The rural audit connection</h3>
@@ -120,7 +148,7 @@ const schema = [
       </p>
     </div>
 
-    <GearStrip categories={['water-testing']} heading="Kits for what the free test skips" />
+    <GearStrip categories={['water-testing']} heading="Kits for what the bacteria test skips" />
 
     <h2>Common questions</h2>
     <div class="measure">
@@ -132,10 +160,13 @@ const schema = [
     <div class="card card-pad srcs">
       <h3>Sources</h3>
       <ul>
-        <li><a href="https://www.publichealthontario.ca/en/Laboratory-Services/Well-Water-Testing" rel="noopener">Public Health Ontario — Well water testing (free service, what's tested, kits &amp; drop-offs) (verified {SITE.dataReviewDate})</a></li>
-        <li><a href="https://www.publichealthontario.ca/en/laboratory-services/test-information-index/drinking-water-testing-private-citizen" rel="noopener">Public Health Ontario — Drinking water testing for private citizens (48-hour testing rule, 2–8 °C storage, lab hours) (verified {SITE.dataReviewDate})</a></li>
-        <li><a href="https://www.ontario.ca/page/testing-and-treating-private-water-wells" rel="noopener">Ontario — Testing and treating private water wells (chemistry via private labs, snowmelt risk, disinfection) (verified {SITE.dataReviewDate})</a></li>
+        {rules.provinces.map((p) => (
+          <li><a href={p.wells.source} rel="noopener">{p.name}: private well water testing (read {rules.checked})</a></li>
+        ))}
+        <li><a href="https://www.publichealthontario.ca/en/laboratory-services/test-information-index/drinking-water-testing-private-citizen" rel="noopener">Ontario example: Public Health Ontario, drinking water testing for private citizens (48-hour rule, 2–8 °C storage) (verified {SITE.dataReviewDate})</a></li>
+        <li><a href="https://www.publichealthontario.ca/en/Laboratory-Services/Well-Water-Testing" rel="noopener">Ontario example: Public Health Ontario, well water testing (verified {SITE.dataReviewDate})</a></li>
       </ul>
+      <p class="small mb-0">Lab fees: {fees.bacteriaTestCAD.basis} {fees.fullChemistryPanelCAD.basis}</p>
     </div>
 
     <div class="related">
@@ -146,7 +177,7 @@ const schema = [
 
     <LeadForm
       heading="Rural home, full picture"
-      sub="Tell us where you are — we'll match you with an advisor who covers the whole rural checklist: envelope, heating, radon, and the well."
+      sub="Tell us where you are and we'll match you with an advisor who covers the whole rural checklist: envelope, heating, radon and the well."
       context="guide-well"
     />
   </div>
@@ -156,9 +187,9 @@ const schema = [
   .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
   .crumbs a { color: var(--muted); }
   .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 26px; }
-  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
   .glance .k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
-  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; }
+  .glance .v { font-family: var(--mono); font-weight: 600; font-size: 15px; color: var(--ink); margin: 0; overflow-wrap: anywhere; }
   @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
   .prose h2 { font-size: 23px; margin: 26px 0 10px; }
   .steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 6px; display: grid; gap: 12px; }
@@ -166,8 +197,23 @@ const schema = [
   .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 14px; }
   .steps h3 { margin: 0 0 4px; font-size: 16.5px; }
   .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .rules { margin: 36px 0 0; }
+  .rules-intro { margin: 0 0 12px; }
+  .rule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; align-items: start; }
+  .rule { padding: 0; min-width: 0; }
+  .rule > summary { cursor: pointer; list-style: none; padding: 12px 14px; display: grid; gap: 4px; }
+  .rule > summary::-webkit-details-marker { display: none; }
+  .rule[open] > summary { border-bottom: 1px solid var(--line); }
+  .rname { font-weight: 700; }
+  .rname::before { content: "+ "; color: var(--heat); font-family: var(--mono); }
+  .rule[open] .rname::before { content: "– "; }
+  .rbadge { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .rbadge.free { color: var(--pine); }
+  .rule .rtext { margin: 10px 14px 8px; font-size: 14.5px; }
+  .rule > p.small { padding: 0 14px 12px; }
   .callout { border-left: 4px solid var(--heat); margin: 26px 0; }
   .srcs { border-left: 4px solid var(--steel); margin: 30px 0 10px; }
-  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
   .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
 </style>
