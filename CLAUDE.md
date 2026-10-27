@@ -10,6 +10,9 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
    Never deploy anything that is not pushed first: on 2026-10-26 GitHub was two weeks and 300 files behind the live site because
    deploys had been uploaded from chat workspaces without a push.
 
+## State (2026-10-27)
+- Live deploy `6ae0a1236ceaccd2859a083d` (2026-10-27) = `main` at `045017b` (regional rewrite). Earlier: `6ad7e24cad90198c04485fa1`.
+
 ## State (2026-10-26)
 - `main` holds the source of the live deploy `6ad7e24cad90198c04485fa1` (2026-10-20 21:51 UTC), taken from Netlify's "Download source
   code" for that deploy and committed on 2026-10-26. Before that, `main` was the 2026-10-12 GitHub Pages version.
