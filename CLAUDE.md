@@ -40,7 +40,7 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
 
 ## Netlify
 - Project `audityourhome` (`ac0a6bef-3d1a-4b0c-9234-5da336851fcd`) serves audityourhome.com from `dist-ca/` (`netlify.toml`).
-- Project `audityourhouse` (id: `<record after creation>`) serves audityourhouse.com from `dist-us/` (`netlify.us.toml`).
+- Project `audityourhouse` (`dc8d8fbd-a528-48ac-b03a-584577f7c33b`, created 2026-10-29, forms enabled) serves audityourhouse.com from `dist-us/` (`netlify.us.toml`).
 - **Neither is linked to this repo**: deploys are uploads, so a push changes nothing live. Never create another Netlify site.
 - Both tomls: `npm run build`, Node 22, `FORMS=netlify` (renders the forms as Netlify Forms) and `AYH_SITE=ca|us`, which postbuild checks
   against Netlify's `SITE_NAME` so the wrong toml can't publish one site's pages to the other.
