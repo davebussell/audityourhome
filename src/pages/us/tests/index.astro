@@ -12,7 +12,7 @@ import {
   type UsTest,
 } from '../../../lib/us/tests';
 
-const title = 'The US home testing guide: radon, lead, mold, blower door and more | AuditYourHome';
+const title = 'The US home testing guide: radon, lead, mold, blower door and more | AuditYourHouse';
 const description =
   'Thirteen tests your home might need, from radon and lead paint to blower door and Manual J. What each one finds, the federal standard behind it, who does it and state rules.';
 
@@ -85,8 +85,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Testing guide', path: '/us/tests/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
   ]),
   faqSchema(faqs.map((f) => ({ q: f.q, a: f.a }))),
 ];
@@ -112,8 +112,8 @@ const displayLabel = (l: string) => l.replace(' - ', ': ');
           change the answer. Every number links to its official source.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="/us/tests/screener/">Which tests does my home need? →</a>
-          <a class="btn btn-ghost" href="/us/find/">Find a certified auditor</a>
+          <a class="btn btn-primary" href="/tests/screener/">Which tests does my home need? →</a>
+          <a class="btn btn-ghost" href="/find/">Find a certified auditor</a>
         </div>
         <p class="small mb-0">The screener takes about a minute and runs in your browser; your answers aren’t stored or sent anywhere.</p>
       </div>
@@ -150,7 +150,7 @@ const displayLabel = (l: string) => l.replace(' - ', ': ');
               <h3>Not sure which of these apply to your home?</h3>
               <p class="mb-0 small">Year built, location, water source, fuel and a few symptoms are enough to sort it out.</p>
             </div>
-            <a class="btn btn-primary" href="/us/tests/screener/">Run the screener →</a>
+            <a class="btn btn-primary" href="/tests/screener/">Run the screener →</a>
           </div>
         )}
       </section>
@@ -161,23 +161,23 @@ const displayLabel = (l: string) => l.replace(' - ', ': ');
       <ol class="steps">
         <li>
           <h3>Start a radon test now</h3>
-          <p>EPA says every home should be tested, and its first step is a short-term test of 2 to 90 days. <a href="/us/tests/radon/">Radon guide</a></p>
+          <p>EPA says every home should be tested, and its first step is a short-term test of 2 to 90 days. <a href="/tests/radon/">Radon guide</a></p>
         </li>
         <li>
           <h3>Check your CO alarms today</h3>
-          <p>CPSC recommends one on every level and outside sleeping areas, replaced at the age given in the product literature. <a href="/us/tests/carbon-monoxide/">CO guide</a></p>
+          <p>CPSC recommends one on every level and outside sleeping areas, replaced at the age given in the product literature. <a href="/tests/carbon-monoxide/">CO guide</a></p>
         </li>
         <li>
           <h3>Before any work in an older home, check for lead and vermiculite</h3>
-          <p>Built before 1978? Most paid work that disturbs paint needs a lead-safe certified firm. Vermiculite in the attic? EPA says leave it undisturbed. <a href="/us/tests/lead-paint/">Lead</a> · <a href="/us/tests/asbestos-vermiculite/">Asbestos and vermiculite</a></p>
+          <p>Built before 1978? Most paid work that disturbs paint needs a lead-safe certified firm. Vermiculite in the attic? EPA says leave it undisturbed. <a href="/tests/lead-paint/">Lead</a> · <a href="/tests/asbestos-vermiculite/">Asbestos and vermiculite</a></p>
         </li>
         <li>
           <h3>Book the energy assessment and ask for tests by name</h3>
-          <p>DOE says many assessments include a blower door test and an infrared scan. Add duct testing, and a Manual J if new equipment is on the way. <a href="/us/tests/blower-door/">Blower door</a> · <a href="/us/tests/heat-loss-calc/">Manual J</a></p>
+          <p>DOE says many assessments include a blower door test and an infrared scan. Add duct testing, and a Manual J if new equipment is on the way. <a href="/tests/blower-door/">Blower door</a> · <a href="/tests/heat-loss-calc/">Manual J</a></p>
         </li>
         <li>
           <h3>Pair air sealing with combustion safety</h3>
-          <p>DOE calls for combustion appliance zone testing in homes with natural-draft furnaces, boilers or water heaters, at the end of each workday of air sealing. <a href="/us/tests/combustion-safety/">Combustion safety</a></p>
+          <p>DOE calls for combustion appliance zone testing in homes with natural-draft furnaces, boilers or water heaters, at the end of each workday of air sealing. <a href="/tests/combustion-safety/">Combustion safety</a></p>
         </li>
       </ol>
       <TestCite src={[src.citizen, src.cpsc, src.rrp, src.verm, src.doe, src.caz]} labels={['EPA radon guide', 'CPSC', 'EPA RRP', 'EPA vermiculite', 'DOE assessments', 'DOE BASC']} />
@@ -196,10 +196,10 @@ const displayLabel = (l: string) => l.replace(' - ', ': ');
           <thead>
             <tr>
               <th scope="col">State</th>
-              <th scope="col"><a href="/us/tests/radon/#state-rules">Radon credential</a></th>
-              <th scope="col"><a href="/us/tests/mold-iaq/#state-rules">Mold credential</a></th>
-              <th scope="col"><a href="/us/tests/carbon-monoxide/#state-rules">CO alarm law</a></th>
-              <th scope="col"><a href="/us/tests/lead-paint/#state-rules">Lead programs run by</a></th>
+              <th scope="col"><a href="/tests/radon/#state-rules">Radon credential</a></th>
+              <th scope="col"><a href="/tests/mold-iaq/#state-rules">Mold credential</a></th>
+              <th scope="col"><a href="/tests/carbon-monoxide/#state-rules">CO alarm law</a></th>
+              <th scope="col"><a href="/tests/lead-paint/#state-rules">Lead programs run by</a></th>
             </tr>
           </thead>
           <tbody>

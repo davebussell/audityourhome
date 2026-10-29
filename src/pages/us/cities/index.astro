@@ -17,15 +17,15 @@ const groups = metrosByRegion();
 const freeVisit = METROS.filter(hasFreeVisitForAll).length;
 const herLive = METROS.filter((m) => isOpenChip(herStatus(m).chip)).length;
 
-const title = `Home energy audits in the ${n} largest U.S. metro areas (2026) | AuditYourHome`;
+const title = `Home energy audits in the ${n} largest U.S. metro areas (2026) | AuditYourHouse`;
 const description = `Audit programs, prices, utilities and federal Home Energy Rebates status for the ${n} largest U.S. metro areas, from New York to Portland. Checked against official sources on ${US_VERIFIED}.`;
-const schema = [breadcrumbSchema([{ name: 'Home', path: '/us/' }, { name: 'Cities', path: '/us/cities/' }])];
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cities', path: '/cities/' }])];
 ---
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>Cities</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span>Cities</span>
     </nav>
 
     <div class="page-hero has-photo">
@@ -52,7 +52,7 @@ const schema = [breadcrumbSchema([{ name: 'Home', path: '/us/' }, { name: 'Citie
       </div>
       <div class="fact card">
         <span class="big">$0</span>
-        <span>federal tax credit for a 2026 audit. The $150 audit credit (25C) ended with 2025. <a href="/us/cost/">What audits cost</a></span>
+        <span>federal tax credit for a 2026 audit. The $150 audit credit (25C) ended with 2025. <a href="/cost/">What audits cost</a></span>
       </div>
     </div>
 

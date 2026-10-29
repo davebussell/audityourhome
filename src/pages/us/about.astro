@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { ogFor } from '../../lib/photos';
+import { SITE, SITES } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+
+const title = 'About AuditYourHouse — and how we handle data | AuditYourHouse';
+const description =
+  'Why AuditYourHouse exists, how auditor and program listings are compiled and checked, how program data stays current, and the editorial rules we hold ourselves to.';
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about/' },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-hero')}>
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+      <p class="eyebrow">About</p>
+      <h1>Why this site exists</h1>
+      <p class="lede measure">
+        Official tools for finding an energy auditor are bare lists. Utility and state programs open,
+        pause and close while half the internet keeps advertising them. And the big lead-gen platforms
+        sell "energy audit" leads to solar and HVAC reps. Homeowners deserved a better front door, so
+        we built one: this site for the United States, and
+        <a href={`${SITES.ca.url}/?site=ca`}>{SITES.ca.domain}</a> for Canada.
+      </p>
+      </div>
+      <Photo name={'home-hero'} eager />
+    </div>
+
+    <div class="measure prose">
+      <h2>The rules we operate by</h2>
+      <p>
+        <strong>Only real auditors.</strong> We point you to certified energy auditors (BPI Building
+        Analysts and Energy Auditors, RESNET HERS raters) and to the utility, state and federal programs
+        that serve your area, with the program's own page linked so you can check it yourself. We do
+        not list contractors whose "free audit" is a sales pitch, and we say so out loud.
+      </p>
+      <p>
+        <strong>No pay-to-rank.</strong> Ordering favours transparency (published prices first) and
+        community and utility programs — never payment. If we ever sell placement, it will be labelled
+        as such, separately from organic listings.
+      </p>
+      <p>
+        <strong>How we make money.</strong> On this site there are no referral fees: questions and heat
+        pump quote requests come to us by email and we answer them ourselves, without passing your
+        details to contractors. Some gear guides carry Amazon links that may earn us a commission; the
+        pages that do say so. (Our Canadian site routes homeowner requests to one licensed advisor who
+        pays a referral fee; that is explained there.)
+      </p>
+      <p>
+        <strong>Dated claims.</strong> Program facts carry the date we checked them against the official
+        page. We list paused and closed programs on purpose, because "still advertising a rebate that
+        ran out of money" is the fastest way to spot a stale source, and the Home Energy Rebates roll out
+        state by state on different timetables.
+      </p>
+      <p>
+        <strong>Estimates labelled as estimates.</strong> The free plan's savings figures are ranges
+        based on how similar homes typically perform in your climate, and the energy prices, usage
+        benchmarks and savings ranges behind them are listed on the <a href="/plan/">planner page</a>.
+        A home energy audit of your actual house replaces them — that's the point.
+      </p>
+      <p>
+        <strong>Corrections are fast.</strong> Listings are compiled from public sources (linked on
+        each page). If something's wrong, email
+        <a href={`mailto:${SITE.contactEmail}`}> {SITE.contactEmail}</a> and we'll fix or remove it
+        promptly. Auditors and program managers can claim or correct their listings free.
+      </p>
+      <h2>What's next</h2>
+      <p>
+        More metro areas, auditor profiles verified by the auditors themselves, and online booking. If
+        you want any of that sooner, <a href={`mailto:${SITE.contactEmail}`}> tell us</a>.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .prose h2 { margin-top: 28px; }
+</style>

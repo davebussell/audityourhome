@@ -33,14 +33,14 @@ export function getStaticPaths() {
 }
 
 const { x } = Astro.props as { x: Article };
-const path = `/ca/articles/${x.slug}/`;
+const path = `/articles/${x.slug}/`;
 const region = x.region ? regionBySlug(x.region) : undefined;
 const advisors = x.region ? providersForRegion(x.region) : [];
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Articles', path: '/ca/articles/' },
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
     { name: x.crumb, path },
   ]),
   faqSchema(x.faq),
@@ -78,7 +78,7 @@ const heroPhoto = ART_PHOTO[x.slug] ?? 'home-energy-audit';
 
 <Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/articles/">Articles</a> <span aria-hidden="true">/</span> <span>{x.crumb}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>{x.crumb}</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">{x.kicker} · verified {x.verified}</p>
@@ -104,7 +104,7 @@ const heroPhoto = ART_PHOTO[x.slug] ?? 'home-energy-audit';
           NRCan-licensed service organizations, with review links. Only assessments from the seven
           HRSP-approved organizations (marked “HRSP-approved: Yes”) qualify for the $600 Home
           Renovation Savings rebate and its assessment-path upgrade rebates.
-          <a href={`/ca/find/${region.slug}/`}>Full {region.name} directory →</a>
+          <a href={`/find/${region.slug}/`}>Full {region.name} directory →</a>
         </p>
         <div class="provider-grid">
           {advisors.map((p) => <ProviderCard provider={p} compact />)}
@@ -132,7 +132,7 @@ const heroPhoto = ART_PHOTO[x.slug] ?? 'home-energy-audit';
     {x.related.length > 0 && (
       <div class="related">
         {x.related.map((r) => <a class="btn btn-ghost" href={r.href}>{r.label}</a>)}
-        <a class="btn btn-ghost" href="/ca/articles/">All articles</a>
+        <a class="btn btn-ghost" href="/articles/">All articles</a>
       </div>
     )}
 

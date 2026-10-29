@@ -1,5 +1,5 @@
 /**
- * View helpers for the US metro pages (/us/cities/…), the US home page and the cost and find
+ * View helpers for the US metro pages (/cities/…), the US home page and the cost and find
  * pages. Everything is read from the research records through src/lib/us/data.ts; this file only
  * sorts, groups and labels. Labels come from metro-text.ts, which never adds facts.
  */
@@ -38,7 +38,7 @@ export interface StateRef {
 export function stateRef(code: string): StateRef {
   const name = STATE_NAMES[code] ?? code;
   const slug = stateSlug(name);
-  return { code, name, slug, href: `/us/programs/states/${slug}/` };
+  return { code, name, slug, href: `/programs/states/${slug}/` };
 }
 
 export const metroStates = (m: Metro): StateRef[] => ((m.data.states ?? []) as string[]).map(stateRef);

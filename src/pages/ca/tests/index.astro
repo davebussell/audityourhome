@@ -32,8 +32,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
   ]),
   faqSchema(faqs),
 ];
@@ -51,8 +51,8 @@ const schema = [
         ask for it by name. Measurements first, purchases second.
       </p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="/ca/tests/screener/">Screen my home — which tests do I need? →</a>
-        <a class="btn btn-ghost" href="/ca/plan/">Build the full plan</a>
+        <a class="btn btn-primary" href="/tests/screener/">Screen my home — which tests do I need? →</a>
+        <a class="btn btn-ghost" href="/plan/">Build the full plan</a>
       </div>
       <p class="small">
         The 30-second screener flags the specialty tests your home calls for; the planner folds
@@ -71,13 +71,13 @@ const schema = [
     <div class="test-list">
       {tests.energy.map((t) => (
         <article class="card trow" id={t.id}>
-          {TEST_PHOTO[t.id] && <a class="tthumb" href={`/ca/tests/${t.id}/`} tabindex="-1" aria-hidden="true"><Photo name={TEST_PHOTO[t.id]} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 240px" /></a>}
+          {TEST_PHOTO[t.id] && <a class="tthumb" href={`/tests/${t.id}/`} tabindex="-1" aria-hidden="true"><Photo name={TEST_PHOTO[t.id]} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 240px" /></a>}
           <div class="tbody">
           <h3>{t.name}</h3>
           <p>{t.what}</p>
           <p class="est"><strong>What it establishes:</strong> {t.establishes}</p>
           <p class="meta">Performed by: {t.who} · {t.cost}</p>
-          <p class="gl"><a href={`/ca/tests/${t.id}/`}><strong>Full guide: what's involved, how to get it done, the fixes →</strong></a></p>
+          <p class="gl"><a href={`/tests/${t.id}/`}><strong>Full guide: what's involved, how to get it done, the fixes →</strong></a></p>
           </div>
         </article>
       ))}
@@ -92,13 +92,13 @@ const schema = [
     <div class="test-list">
       {tests.health.map((t) => (
         <article class="card trow health" id={t.id}>
-          {TEST_PHOTO[t.id] && <a class="tthumb" href={`/ca/tests/${t.id}/`} tabindex="-1" aria-hidden="true"><Photo name={TEST_PHOTO[t.id]} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 240px" /></a>}
+          {TEST_PHOTO[t.id] && <a class="tthumb" href={`/tests/${t.id}/`} tabindex="-1" aria-hidden="true"><Photo name={TEST_PHOTO[t.id]} hud={false} plain sizes="(max-width: 700px) calc(100vw - 44px), 240px" /></a>}
           <div class="tbody">
           <h3>{t.name}</h3>
           <p>{t.what}</p>
           <p class="est"><strong>What it establishes:</strong> {t.establishes}</p>
           <p class="meta">Performed by: {t.who} · {t.cost}</p>
-          <p class="gl"><a href={`/ca/tests/${t.id}/`}><strong>Full guide: how to test, thresholds, and fixes →</strong></a></p>
+          <p class="gl"><a href={`/tests/${t.id}/`}><strong>Full guide: how to test, thresholds, and fixes →</strong></a></p>
           </div>
         </article>
       ))}

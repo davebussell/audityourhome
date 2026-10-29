@@ -1,0 +1,81 @@
+---
+/**
+ * "You're on the Canadian site" / "You're on the US site" bar for visitors who look like they belong
+ * on the other site. Nothing redirects: both home pages stay crawlable, and the bar is advice.
+ *
+ * How the visitor's country is known: /geo.json is a Netlify rewrite (tools/country/postbuild.mjs writes
+ * the rules) that serves /geo/us.json, /geo/ca.json or /geo/other.json by the request's country.
+ * The bar shows only when that country is the other site's, no choice cookie is set, and the page
+ * wasn't reached through the switcher (?site=<code>, which records the choice). Without Netlify
+ * (local builds) the fetch fails and nothing shows.
+ */
+import { COUNTRIES, CHOICE_COOKIE, type Country } from '../lib/country';
+import { SITES } from '../config/site';
+
+interface Props { country: Country }
+const { country } = Astro.props;
+const other: Country = country === 'ca' ? 'us' : 'ca';
+const here = country === 'ca' ? 'the Canadian site' : 'the US site';
+const there = COUNTRIES[other].name === 'United States' ? 'the United States' : 'Canada';
+---
+
+<div class="osb" id="other-site" hidden data-country={country} data-other={other} data-cookie={CHOICE_COOKIE} role="region" aria-label="Other country site">
+  <div class="container osb-in">
+    <p>
+      <strong>You're on {here}.</strong> In {there}? <span class="osb-blurb">{SITES[other].blurb}</span>
+      <a class="osb-go" href={`${COUNTRIES[other].origin}/?site=${other}`} rel="noopener">Go to {SITES[other].domain} →</a>
+    </p>
+    <button type="button" class="osb-stay" id="other-site-stay">Stay here</button>
+  </div>
+</div>
+
+<style>
+  .osb { background: var(--navy); color: #fff; font-size: 14.5px; line-height: 1.45; }
+  .osb-in { display: flex; align-items: center; gap: 12px; padding-top: 9px; padding-bottom: 9px; }
+  .osb p { margin: 0; flex: 1; min-width: 0; }
+  .osb-go { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+  .osb-stay {
+    flex: none; background: transparent; color: #fff; border: 1.5px solid rgba(255, 255, 255, 0.55); border-radius: 999px;
+    padding: 6px 12px; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .osb-stay:hover { background: rgba(255, 255, 255, 0.12); }
+  @media (max-width: 600px) {
+    .osb { font-size: 13.5px; }
+    .osb-in { align-items: center; }
+    .osb-blurb { display: none; }
+    .osb-go { white-space: normal; display: block; margin-top: 2px; }
+  }
+</style>
+
+<script>
+  const bar = document.getElementById('other-site') as HTMLElement | null;
+  if (bar) {
+    const cookie = bar.dataset.cookie || 'ayh_site';
+    const mine = bar.dataset.country || '';
+    const other = bar.dataset.other || '';
+    const choose = (code: string) => { document.cookie = `${cookie}=${code}; path=/; max-age=31536000; samesite=lax`; };
+    const chosen = () => new RegExp(`(?:^|; )${cookie}=`).test(document.cookie);
+    const params = new URLSearchParams(location.search);
+    if (params.has('site')) {
+      // Arrived through the other site's switcher or bar: record the choice and tidy the address.
+      choose(mine);
+      params.delete('site');
+      const q = params.toString();
+      history.replaceState(null, '', `${location.pathname}${q ? `?${q}` : ''}${location.hash}`);
+    } else if (!chosen()) {
+      fetch('/geo.json', { credentials: 'omit', cache: 'no-store' })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((g: { country?: string } | null) => {
+          if (!g || g.country !== other) return;
+          // Same page on the other site when it exists (from the hreflang alternates), else its home.
+          const locale = other === 'ca' ? 'en-ca' : 'en-us';
+          const alt = [...document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]')].find((l) => l.hreflang.toLowerCase() === locale);
+          const go = bar.querySelector<HTMLAnchorElement>('.osb-go');
+          if (alt && go) { const u = new URL(alt.href); u.searchParams.set('site', other); go.href = u.href; }
+          bar.hidden = false;
+        })
+        .catch(() => {});
+    }
+    document.getElementById('other-site-stay')?.addEventListener('click', () => { choose(mine); bar.hidden = true; });
+  }
+</script>

@@ -56,8 +56,8 @@ export function renderRadon(s: HealthState, p: HealthPayload): string {
   }
   const ratio = Math.min(1, bq / 800);
   const radonTodo = bq > g
-    ? '<strong>What to do with this number:</strong> get quotes from C-NRPP-certified radon mitigation professionals, then retest once the system is running to confirm it worked. See <a href="/ca/tests/radon/">radon testing and results, explained</a>.'
-    : '<strong>What to do with this number:</strong> only a long-term test of your own house counts, because homes on the same street can differ a lot. If you have not tested yet, run a 3-month test during the heating season: <a href="/ca/tests/radon/">how radon testing works</a>.';
+    ? '<strong>What to do with this number:</strong> get quotes from C-NRPP-certified radon mitigation professionals, then retest once the system is running to confirm it worked. See <a href="/tests/radon/">radon testing and results, explained</a>.'
+    : '<strong>What to do with this number:</strong> only a long-term test of your own house counts, because homes on the same street can differ a lot. If you have not tested yet, run a 3-month test during the heating season: <a href="/tests/radon/">how radon testing works</a>.';
   return `<div class="res-head">
       <p class="res-big"><span class="money ${bq > g ? 'more' : ''}">${int(bq)}</span><span class="res-unit">Bq/m³ (${num(pci, 1)} pCi/L)</span></p>
       <div class="bar" aria-hidden="true"><span style="width:${(ratio * 100).toFixed(0)}%;${bq > g ? 'background:var(--dead)' : ''}"></span></div>
@@ -95,7 +95,7 @@ export function renderHumidity(s: HealthState, p: HealthPayload): string {
     ? `Health Canada and CMHC: keep indoor humidity between 30% and 50%. ${esc(p.city.name)} ${p.city.nights10 < 1 ? 'almost never gets' : 'rarely gets'} colder than −10 °C; its design temperature, the cold day heating systems are sized for, is ${degC(p.city.designHeat)}. In mild, damp winters the usual risk is too much moisture, not too little.`
     : cmhcStd;
   const cap = Math.max(0, Math.min(50, Math.floor(maxRh)));
-  const condLink = '<a href="/ca/issues/condensation-mould/">condensation and mould: causes and fixes</a>';
+  const condLink = '<a href="/issues/condensation-mould/">condensation and mould: causes and fixes</a>';
   const todo = cap < 25
     ? `<strong>What to do with this number:</strong> at ${degC(tOut)} these windows fog at almost any comfortable humidity, so better glazing or tight storm windows are the lasting fix; until then run bath and kitchen fans longer and wipe the glass dry. Read ${condLink}.`
     : wet
@@ -134,7 +134,7 @@ export function renderAlarms(s: HealthState, p: HealthPayload): string {
     <p class="small" style="margin-top:10px">${coLaw}</p>
     ${p.alarms.municipal ? `<p class="small">${esc(p.alarms.municipal)}</p>` : ''}
     <p class="small foot">“Full coverage” follows the National Building Code for new homes: one on every storey including the basement, one in each bedroom and one outside each sleeping area, interconnected. CO: NRCan advises one near the furnace or other fuel-burning appliance and one in each bedroom area.</p>
-    <p class="todo"><strong>What to do with this number:</strong> add any missing alarms before the heating season, press each one's test button every month, and replace any alarm past the date printed on it. See <a href="/ca/tests/carbon-monoxide/">carbon monoxide alarms, testing and the rules</a>.</p>`;
+    <p class="todo"><strong>What to do with this number:</strong> add any missing alarms before the heating season, press each one's test button every month, and replace any alarm past the date printed on it. See <a href="/tests/carbon-monoxide/">carbon monoxide alarms, testing and the rules</a>.</p>`;
 }
 
 /* ------------------------------------------------------------------ mould */
@@ -157,8 +157,8 @@ export function renderMould(s: HealthState, p?: HealthPayload): string {
   }
   const pro = cls !== 'verdict';
   const mouldTodo = pro
-    ? `<strong>What to do with this number:</strong> book a mould inspection or remediation contractor, and ask how they will find the moisture source, contain the work area and check the result. ${p ? `<a href="/ca/services/mold-testing/${esc(p.city.slug)}/">Mould inspection in ${esc(p.city.name)}</a>` : '<a href="/ca/tests/mold-iaq/">Mould and indoor air, explained</a>'}.`
-    : '<strong>What to do with this number:</strong> find and fix what is feeding the mould (a leak, condensation or high humidity) before you clean, or it will grow back. See <a href="/ca/issues/condensation-mould/">condensation and mould: causes and fixes</a>.';
+    ? `<strong>What to do with this number:</strong> book a mould inspection or remediation contractor, and ask how they will find the moisture source, contain the work area and check the result. ${p ? `<a href="/services/mold-testing/${esc(p.city.slug)}/">Mould inspection in ${esc(p.city.name)}</a>` : '<a href="/tests/mold-iaq/">Mould and indoor air, explained</a>'}.`
+    : '<strong>What to do with this number:</strong> find and fix what is feeding the mould (a leak, condensation or high humidity) before you clean, or it will grow back. See <a href="/issues/condensation-mould/">condensation and mould: causes and fixes</a>.';
   return `<div class="${cls}"><p><strong>${title}</strong></p><p>${body}</p></div>
     <p class="small foot">Fix the moisture source first. Testing for mould types is usually unnecessary (Health Canada). You entered ${patches} patch${patches === 1 ? '' : 'es'}, the largest about ${num(m2, 1)} m².</p>
     <p class="todo">${mouldTodo}</p>`;

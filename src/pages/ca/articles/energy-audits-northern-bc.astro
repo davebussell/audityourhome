@@ -27,9 +27,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Articles', path: '/ca/articles/' },
-    { name: 'Energy audits in Northern BC', path: '/ca/articles/energy-audits-northern-bc/' },
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Energy audits in Northern BC', path: '/articles/energy-audits-northern-bc/' },
   ]),
   faqSchema(faqs),
 ];
@@ -37,7 +37,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('region-north')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audits in Northern BC</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audits in Northern BC</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Article · updated October 19, 2026</p>
@@ -60,7 +60,7 @@ const schema = [
         dollars — and the region's housing (1970s–90s subdivisions, rural properties on propane and
         wood, converted seasonal cabins around the lakes) is full of exactly the empty walls, thin
         attics, and rim-joist leakage an EnerGuide evaluation quantifies. Wood-heat homes get one
-        extra reason: the <a href="/ca/tests/#combustion-safety">combustion safety and spillage
+        extra reason: the <a href="/tests/#combustion-safety">combustion safety and spillage
         check</a> matters before any tightening.
       </p>
 
@@ -103,11 +103,11 @@ const schema = [
       <h2>Booking it in the north</h2>
       <p>
         Supply is thinner than the Lower Mainland's but real: province-wide service organizations
-        — including <a href="/ca/providers/the-energuy/">The Energuy</a>, active across BC — cover
+        — including <a href="/providers/the-energuy/">The Energuy</a>, active across BC — cover
         Prince George, Dawson Creek, and the Highway 16/97 corridors, and Better Homes BC keeps an
         <a href="https://betterhomesbc.ca/get-support/energy-advisors/" rel="noopener">energy
         advisor list ↗</a> you can filter by area. Our full BC directory is in the works; meanwhile
-        the <a href="/ca/plan/">planner</a> reads any BC postal code and returns the current program
+        the <a href="/plan/">planner</a> reads any BC postal code and returns the current program
         stack for your situation.
       </p>
     </div>

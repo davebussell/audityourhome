@@ -49,9 +49,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Carbon monoxide', path: '/ca/tests/carbon-monoxide/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Carbon monoxide', path: '/tests/carbon-monoxide/' },
   ]),
   faqSchema(faqs),
 ];
@@ -59,7 +59,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('carbon-monoxide-testing')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Carbon monoxide</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Carbon monoxide</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
@@ -157,9 +157,9 @@ const schema = [
         Older, naturally vented appliances rely on a leaky house for draft. Seal the leaks, the
         single best energy upgrade, and a bathroom fan, range hood or dryer can pull harder
         than the chimney, dragging exhaust back inside. This is why the
-        <a href="/ca/plan/">retrofit sequence</a> pairs air sealing with a combustion safety check,
+        <a href="/plan/">retrofit sequence</a> pairs air sealing with a combustion safety check,
         and why the cleanest long-term answer is sealed-combustion (direct-vent) equipment or a
-        <a href="/ca/issues/switching-to-heat-pump/">heat pump</a>, which makes the whole question moot.
+        <a href="/issues/switching-to-heat-pump/">heat pump</a>, which makes the whole question moot.
       </p>
     </div>
 
@@ -185,10 +185,10 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/combustion-safety/">The combustion safety test</a>
-      <a class="btn btn-ghost" href="/ca/tests/mold-iaq/">Next guide: mould &amp; indoor air</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/combustion-safety/">The combustion safety test</a>
+      <a class="btn btn-ghost" href="/tests/mold-iaq/">Next guide: mould &amp; indoor air</a>
     </div>
 
     <LeadForm

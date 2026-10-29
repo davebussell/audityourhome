@@ -1,10 +1,10 @@
 ---
 /** My Home: sign-in and the homeowner dashboard (client-rendered; noindex). */
-import Base from '../../layouts/Base.astro';
-import { ACCOUNTS_ENABLED } from '../../config/site';
-import localIndex from '../../data/local/index.json';
-import updates from '../../data/program-updates.json';
-import '../../styles/account.css';
+import Base from '../../../layouts/Base.astro';
+import { ACCOUNTS_ENABLED } from '../../../config/site';
+import localIndex from '../../../data/local/index.json';
+import updates from '../../../data/program-updates.json';
+import '../../../styles/account.css';
 
 const cities = (localIndex.cities as { slug: string; name: string; prov: string }[])
   .map((c) => ({ slug: c.slug, name: c.name, prov: c.prov }))
@@ -32,7 +32,7 @@ const boot = JSON.stringify({ enabled: ACCOUNTS_ENABLED, cities, updates: update
 </Base>
 
 <script>
-  import { initAccountApp } from '../../lib/account/app';
+  import { initAccountApp } from '../../../lib/account/app';
   const boot = JSON.parse(document.getElementById('acct-boot')!.textContent || '{}');
   initAccountApp(document.getElementById('acct-app')!, boot);
 </script>

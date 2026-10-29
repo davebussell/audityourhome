@@ -36,12 +36,12 @@ const page: any =
   : calc === 'home-health' ? healthPage(city)
   : calc === 'appliance-energy' ? appliancePage(city)
   : energyPage(city);
-const path = `/ca/calculators/${calc}/${city.slug}/`;
+const path = `/calculators/${calc}/${city.slug}/`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Calculators', path: '/ca/calculators/' },
-    { name: meta.name, path: `/ca/calculators/${calc}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Calculators', path: '/calculators/' },
+    { name: meta.name, path: `/calculators/${calc}/` },
     { name, path },
   ]),
   faqSchema(page.faqs),
@@ -54,8 +54,8 @@ const others = otherCalcs(calc, city);
   <CalcStyles />
   <div class="container cpage">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/calculators/">Calculators</a> <span aria-hidden="true">/</span>
-      <a href={`/ca/calculators/${calc}/`}>{meta.name}</a> <span aria-hidden="true">/</span>
+      <a href="/calculators/">Calculators</a> <span aria-hidden="true">/</span>
+      <a href={`/calculators/${calc}/`}>{meta.name}</a> <span aria-hidden="true">/</span>
       <span>{name}</span>
     </nav>
 
@@ -102,10 +102,10 @@ const others = otherCalcs(calc, city);
         ))}
       </div>
       <div class="linkrow">
-        <a class="primary" href="/ca/plan/">Build your upgrade plan →</a>
-        <a href={`/ca/cities/${city.slug}/`}>All home services in {name}</a>
-        {SERVICE_LINKS[calc].map((s) => <a href={`/ca/services/${s.slug}/${city.slug}/`}>{s.label} in {name}</a>)}
-        <a href={`/ca/provinces/${city.provSlug}/`}>{city.provName} rebates and programs</a>
+        <a class="primary" href="/plan/">Build your upgrade plan →</a>
+        <a href={`/cities/${city.slug}/`}>All home services in {name}</a>
+        {SERVICE_LINKS[calc].map((s) => <a href={`/services/${s.slug}/${city.slug}/`}>{s.label} in {name}</a>)}
+        <a href={`/provinces/${city.provSlug}/`}>{city.provName} rebates and programs</a>
       </div>
     </section>
 

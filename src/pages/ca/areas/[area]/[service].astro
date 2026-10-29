@@ -31,14 +31,14 @@ const { page: pg, area, service } = Astro.props;
 
 /** City services that exist as /services/<svc>/<city>/ pages */
 const CITY_SERVICES = new Set(['home-energy-audit', 'heat-loss-calculation', 'radon-testing', 'mold-testing', 'well-water-testing']);
-const cityHref = (slug: string) => (CITY_SERVICES.has(service.slug) ? `/ca/services/${service.slug}/${slug}/` : `/ca/cities/${slug}/`);
+const cityHref = (slug: string) => (CITY_SERVICES.has(service.slug) ? `/services/${service.slug}/${slug}/` : `/cities/${slug}/`);
 
-const path = `/ca/areas/${area.slug}/${service.slug}/`;
+const path = `/areas/${area.slug}/${service.slug}/`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Areas', path: '/ca/areas/' },
-    { name: area.name, path: `/ca/areas/${area.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Areas', path: '/areas/' },
+    { name: area.name, path: `/areas/${area.slug}/` },
     { name: service.name, path },
   ]),
   faqSchema(pg.faq),
@@ -79,8 +79,8 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
 <Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(photoKey)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/areas/">Areas</a> <span aria-hidden="true">/</span>
-      <a href={`/ca/areas/${area.slug}/`}>{area.name}</a> <span aria-hidden="true">/</span>
+      <a href="/areas/">Areas</a> <span aria-hidden="true">/</span>
+      <a href={`/areas/${area.slug}/`}>{area.name}</a> <span aria-hidden="true">/</span>
       <span>{service.name}</span>
     </nav>
 
@@ -134,7 +134,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
             variant={climVariant}
             testSlug={climVariant === 'service' ? climTest : undefined}
             heading={climVariant === 'compact' ? `${area.inName}’s climate: ${clim.profile.label}` : `What this means in ${area.inName}’s climate`}
-            moreHref={`/ca/cities/${mainCity.slug}/#regional-needs`}
+            moreHref={`/cities/${mainCity.slug}/#regional-needs`}
           />
         )}
 
@@ -186,7 +186,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
             {area.prov === 'ON' && (
               <p class="small hrs-line">
                 Only assessments from the seven HRSP-approved organizations qualify for the $600
-                <a href="/ca/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebate
+                <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebate
                 and its assessment-path upgrade rebates; each listing below says whether it's one of them.
               </p>
             )}
@@ -197,7 +197,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
                     {p.profile ? <a href={p.profile}><strong>{p.name}</strong></a> : <strong>{p.name}</strong>}
                     <span class="chips">
                       {area.prov === 'ON' && (p.hrs
-                        ? <a class="chip chip-active" href="/ca/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path">HRSP-approved: Yes</a>
+                        ? <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path">HRSP-approved: Yes</a>
                         : <span class="chip chip-neutral" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path">HRSP-approved: No</span>)}
                       {p.gcc && <span class="chip chip-neutral" title="Member of the Green Communities Canada non-profit network">Non-profit network</span>}
                       {p.profile && <span class="chip chip-info">Profile</span>}
@@ -244,7 +244,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
           <dl>
             {pg.snapshot.map((x) => (<><dt>{x.k}</dt><dd>{x.v}</dd></>))}
           </dl>
-          <a class="more" href={`/ca/areas/${area.slug}/`}>The {area.name} area guide →</a>
+          <a class="more" href={`/areas/${area.slug}/`}>The {area.name} area guide →</a>
         </div>
         <nav class="card card-pad rel" aria-label={`Other services in ${area.inName}`}>
           <p class="eyebrow">More in {area.name}</p>

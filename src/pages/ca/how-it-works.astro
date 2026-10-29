@@ -19,8 +19,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'How it works', path: '/ca/how-it-works/' },
+    { name: 'Home', path: '/' },
+    { name: 'How it works', path: '/how-it-works/' },
   ]),
   faqSchema(faqs),
 ];
@@ -31,7 +31,7 @@ const before: Step[] = [
     n: '01',
     h: 'Book a registered energy advisor',
     p: 'EnerGuide evaluations are done by energy advisors registered with Natural Resources Canada (NRCan), working for licensed service organizations: the only providers whose reports count for rebates. In most provinces you book them directly; in others (Nova Scotia, New Brunswick, PEI, Yukon and the NWT) you go through the provincial or territorial program, which subsidizes the visit.',
-    link: { href: '/ca/find/', label: 'How booking works in your province' },
+    link: { href: '/find/', label: 'How booking works in your province' },
   },
 ];
 const visit: Step[] = [
@@ -39,19 +39,19 @@ const visit: Step[] = [
     n: '02',
     h: 'The walk-through and measurements',
     p: 'The advisor measures insulation in the attic, walls and basement, records your windows and doors, notes your heating, cooling and water-heating equipment, and photographs it all for quality assurance.',
-    link: { href: '/ca/tests/', label: 'What each test checks' },
+    link: { href: '/tests/', label: 'What each test checks' },
   },
   {
     n: '03',
     h: 'The blower door test',
     p: 'A calibrated fan depressurizes the house to measure air leakage precisely. While it runs, you and the advisor can feel where outside air gets in: the attic hatch, the rim joists, pot lights, trim. It’s the moment the house stops being a mystery.',
-    link: { href: '/ca/tests/blower-door/', label: 'The blower door test in detail' },
+    link: { href: '/tests/blower-door/', label: 'The blower door test in detail' },
   },
   {
     n: '04',
     h: 'Your rating and upgrade report',
     p: 'You get an EnerGuide rating (in gigajoules a year: lower is better), an official label, and a renovation upgrade report that ranks improvements by what they’d save in your house.',
-    link: { href: '/ca/learn/energuide-ratings/', label: 'How to read your EnerGuide rating' },
+    link: { href: '/learn/energuide-ratings/', label: 'How to read your EnerGuide rating' },
   },
 ];
 const after: Step[] = [
@@ -59,13 +59,13 @@ const after: Step[] = [
     n: '05',
     h: 'Do the upgrades and claim your rebates',
     p: 'What you can claim depends on your province. For example, BC’s Home Energy Improvement Bonus pays for the measured improvement between two evaluations, Manitoba rebates $400 on the evaluation itself, and in Ontario the Home Renovation Savings Program pays $600 toward the two assessments when you install at least two recommended upgrades and both visits come from one of its seven approved organizations. Most programs count only work done after the first evaluation.',
-    link: { href: '/ca/programs/', label: 'Rebates and programs by province' },
+    link: { href: '/programs/', label: 'Rebates and programs by province' },
   },
   {
     n: '06',
     h: 'The follow-up confirms it',
     p: 'For rebates that pay on measured results, the advisor comes back after the work, re-tests the house and documents the improvement, and that report is what the program pays on. Deadlines vary by program (Ontario’s follow-up, for instance, must be done by December 31, 2026). You keep the before-and-after numbers, which are useful at resale.',
-    link: { href: '/ca/programs/home-renovation-savings-assessment/', label: 'Example: Ontario’s follow-up rules' },
+    link: { href: '/programs/home-renovation-savings-assessment/', label: 'Example: Ontario’s follow-up rules' },
   },
 ];
 ---
@@ -73,7 +73,7 @@ const after: Step[] = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
     </nav>
 
     <JourneyBar country="ca" current={3} ticks={false} hereLabel="Explained here" />
@@ -88,15 +88,15 @@ const after: Step[] = [
           upgrades. Here’s the whole arc, from booking to rebate cheque.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/ca/plan/">Start with your free plan</a>
-          <a class="btn btn-ghost" href="/ca/find/">Find an advisor in your province</a>
+          <a class="btn btn-primary" href="/plan/">Start with your free plan</a>
+          <a class="btn btn-ghost" href="/find/">Find an advisor in your province</a>
         </div>
       </div>
       <Photo name={'blower-door-test'} eager />
     </div>
 
     <p class="plan-note card card-pad">
-      <strong>Before anyone visits:</strong> the <a href="/ca/plan/">free planner</a> gives you an estimate of what
+      <strong>Before anyone visits:</strong> the <a href="/plan/">free planner</a> gives you an estimate of what
       your house likely needs, what it could save and which tests to ask for. It’s a starting point; the evaluation
       measures your actual house.
     </p>

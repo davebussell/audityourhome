@@ -1,8 +1,8 @@
 ---
 /** Admin console for match requests and alerts (client-rendered; noindex). */
-import Base from '../../layouts/Base.astro';
-import { ACCOUNTS_ENABLED } from '../../config/site';
-import '../../styles/account.css';
+import Base from '../../../layouts/Base.astro';
+import { ACCOUNTS_ENABLED } from '../../../config/site';
+import '../../../styles/account.css';
 
 type CityFile = { slug: string; name: string; prov: string; providers?: { name: string; phone?: string | null }[] };
 const files = import.meta.glob<CityFile>('../../data/local/cities/*.json', { eager: true, import: 'default' });
@@ -28,7 +28,7 @@ const boot = JSON.stringify({ enabled: ACCOUNTS_ENABLED, providers, provinceProv
 </Base>
 
 <script>
-  import { initAdmin } from '../../lib/account/admin';
+  import { initAdmin } from '../../../lib/account/admin';
   const boot = JSON.parse(document.getElementById('adm-boot')!.textContent || '{}');
   initAdmin(document.getElementById('adm-app')!, boot);
 </script>

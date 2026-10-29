@@ -515,12 +515,12 @@ def programs_for(c, need_audit=None):
             continue
         if need_audit is not None and bool(x.get('auditRequired')) != need_audit:
             continue
-        out.append({'name': x['name'], 'href': f'/ca/programs/{s}/', 'summary': x['headline'],
+        out.append({'name': x['name'], 'href': f'/programs/{s}/', 'summary': x['headline'],
                     'status': x['status'], 'kind': 'Provincial' if c['prov'] not in ('YT', 'NT') else 'Territorial',
                     'audit': bool(x.get('auditRequired'))})
     if c['slug'] == 'toronto' and need_audit in (None, True):
         x = PROG['toronto-home-energy-loan-program']
-        out.append({'name': x['name'], 'href': '/ca/programs/toronto-home-energy-loan-program/', 'summary': x['headline'],
+        out.append({'name': x['name'], 'href': '/programs/toronto-home-energy-loan-program/', 'summary': x['headline'],
                     'status': x['status'], 'kind': 'Municipal', 'audit': True})
     for s in FEDERAL:
         x = PROG[s]
@@ -530,7 +530,7 @@ def programs_for(c, need_audit=None):
             continue
         if need_audit is not None and bool(x.get('auditRequired')) != need_audit:
             continue
-        out.append({'name': x['name'], 'href': f'/ca/programs/{s}/', 'summary': x['headline'], 'status': x['status'],
+        out.append({'name': x['name'], 'href': f'/programs/{s}/', 'summary': x['headline'], 'status': x['status'],
                     'kind': 'Federal', 'audit': bool(x.get('auditRequired'))})
     return out
 
@@ -829,67 +829,67 @@ PROVIDER_NOTE = {
 # ------------------------------------------------------------------ service definitions
 SERVICES = [
     dict(slug='home-energy-audit', name='Home energy audit', h1='Home energy audits', cat='energy', icon='home',
-         guide='/ca/articles/what-is-a-home-energy-audit/', guideLabel='What a home energy audit involves',
+         guide='/articles/what-is-a-home-energy-audit/', guideLabel='What a home energy audit involves',
          blurb='An EnerGuide evaluation by an NRCan-registered energy advisor: blower door test, full house inspection, an energy rating and a ranked upgrade list.',
          cost='Varies by province'),
     dict(slug='blower-door-test', name='Blower door test', h1='Blower door testing', cat='energy', icon='wind',
-         guide='/ca/tests/blower-door/', guideLabel='The blower door test, step by step',
+         guide='/tests/blower-door/', guideLabel='The blower door test, step by step',
          blurb='A calibrated fan depressurizes the house to measure air leakage and show where the leaks are.',
          cost='Included in an EnerGuide evaluation'),
     dict(slug='thermal-imaging', name='Thermal imaging inspection', h1='Thermal imaging (thermographic) inspections', cat='energy', icon='camera',
-         guide='/ca/tests/thermal-imaging/', guideLabel='How an infrared scan works',
+         guide='/tests/thermal-imaging/', guideLabel='How an infrared scan works',
          blurb='An infrared (thermographic) camera maps cold and warm surfaces to find missing insulation, thermal bridges and hidden moisture.',
          cost='Usually included with an evaluation; confirm'),
     dict(slug='heat-loss-calculation', name='Heat loss calculation', h1='Heat loss calculations', cat='energy', icon='gauge',
-         guide='/ca/tests/heat-loss-calc/', guideLabel='The CSA F280 heat-loss calculation',
+         guide='/tests/heat-loss-calc/', guideLabel='The CSA F280 heat-loss calculation',
          blurb='A room-by-room CSA F280-12 calculation of heat loss at the local design temperature: the right way to size a heat pump or furnace.',
          cost='About $150–$400 standalone'),
     dict(slug='duct-leakage-testing', name='Duct leakage testing', h1='Duct leakage and ductwork pressure testing', cat='energy', icon='duct',
-         guide='/ca/tests/duct-leakage/', guideLabel='Duct leakage and airflow testing',
+         guide='/tests/duct-leakage/', guideLabel='Duct leakage and airflow testing',
          blurb='Ductwork pressure testing plus airflow at each register, to find where heated air disappears.',
          cost='About $200–$450'),
     dict(slug='combustion-safety-test', name='Combustion safety test', h1='Combustion safety testing', cat='energy', icon='flame',
-         guide='/ca/tests/combustion-safety/', guideLabel='The combustion safety and spillage check',
+         guide='/tests/combustion-safety/', guideLabel='The combustion safety and spillage check',
          blurb='Checks that furnaces, water heaters and fireplaces vent safely, especially before a house is tightened.',
          cost='Included with an evaluation when you have fuel-burning appliances'),
     dict(slug='ventilation-assessment', name='Ventilation and humidity assessment', h1='Ventilation and humidity assessments', cat='energy', icon='fan',
-         guide='/ca/tests/ventilation-assessment/', guideLabel='The ventilation and humidity assessment',
+         guide='/tests/ventilation-assessment/', guideLabel='The ventilation and humidity assessment',
          blurb='Measures air exchange and humidity and checks that bath and kitchen fans actually move air outside.',
          cost='Included in an evaluation; HRV sizing may be extra'),
     dict(slug='attic-insulation-inspection', name='Attic insulation inspection', h1='Attic insulation inspections', cat='energy', icon='attic',
-         guide='/ca/tests/attic-inspection/', guideLabel='What an attic inspection checks',
+         guide='/tests/attic-inspection/', guideLabel='What an attic inspection checks',
          blurb='Insulation depth and condition, air bypasses and ventilation, plus red flags like vermiculite before anyone disturbs it.',
          cost='Included in an EnerGuide evaluation'),
     dict(slug='energy-bill-analysis', name='Energy bill analysis', h1='Energy bill analysis', cat='energy', icon='chart',
-         guide='/ca/tests/bill-analysis/', guideLabel='The 12-month bill analysis',
+         guide='/tests/bill-analysis/', guideLabel='The 12-month bill analysis',
          blurb='Twelve months of electricity and gas use, weather-normalized and split into heating and baseload: the baseline every savings estimate needs.',
          cost='Free to do yourself; part of an evaluation'),
     dict(slug='radon-testing', name='Radon testing', h1='Radon testing and long-term monitoring', cat='health', icon='radon',
-         guide='/ca/tests/radon/', guideLabel='The radon testing guide',
+         guide='/tests/radon/', guideLabel='The radon testing guide',
          blurb="A long-term test (at least 91 days, in the heating season) measures radon against Canada's 200 Bq/m³ guideline; monitors keep watching after mitigation.",
          cost='$30–$80 for a DIY long-term kit'),
     dict(slug='carbon-monoxide-testing', name='Carbon monoxide testing', h1='Carbon monoxide testing and CO alarms', cat='health', icon='co',
-         guide='/ca/tests/carbon-monoxide/', guideLabel='The carbon monoxide guide',
+         guide='/tests/carbon-monoxide/', guideLabel='The carbon monoxide guide',
          blurb='CO alarms where the provincial rules put them, plus a check that fuel-burning appliances vent safely.',
          cost='$40–$80 per alarm'),
     dict(slug='mold-testing', name='Mould and indoor air quality testing', h1='Mould and indoor air quality testing', cat='health', icon='mold',
-         guide='/ca/tests/mold-iaq/', guideLabel='The mould and indoor air quality guide',
+         guide='/tests/mold-iaq/', guideLabel='The mould and indoor air quality guide',
          blurb='Mould inspection and air or surface sampling when you suspect hidden mould, a hunt for the moisture that feeds it, and the size rules for cleanup.',
          cost='No published price; get written quotes'),
     dict(slug='asbestos-testing', name='Asbestos and vermiculite testing', h1='Asbestos testing and inspection', cat='health', icon='asbestos',
-         guide='/ca/tests/asbestos-vermiculite/', guideLabel='The asbestos and vermiculite guide',
+         guide='/tests/asbestos-vermiculite/', guideLabel='The asbestos and vermiculite guide',
          blurb='Inspection and lab analysis of suspect insulation, tiles, plaster or duct wrap before renovation disturbs them, and what abatement involves.',
          cost='About $50–$150 per lab sample'),
     dict(slug='lead-paint-testing', name='Lead paint testing', h1='Lead paint testing', cat='health', icon='paint',
-         guide='/ca/tests/lead-paint/', guideLabel='The lead paint guide',
+         guide='/tests/lead-paint/', guideLabel='The lead paint guide',
          blurb='Swab kits screen painted surfaces; a lab or an X-ray reading confirms before renovation disturbs old paint, and safe removal follows.',
          cost='$15–$40 for swab kits'),
     dict(slug='well-water-testing', name='Well water testing', h1='Well water testing', cat='health', icon='water',
-         guide='/ca/tests/well-water/', guideLabel='The well water guide',
+         guide='/tests/well-water/', guideLabel='The well water guide',
          blurb='Bacteria testing (E. coli and total coliforms) at least once a year and periodic chemistry for homes on private wells.',
          cost='Varies by province'),
     dict(slug='commercial-energy-audit', name='Commercial energy audit', h1='Commercial energy audits', cat='commercial', icon='building',
-         guide='/ca/articles/commercial-energy-audits-ontario/', guideLabel='How commercial energy audits work',
+         guide='/articles/commercial-energy-audits-ontario/', guideLabel='How commercial energy audits work',
          blurb='An engineering audit of an office, apartment, retail or industrial building, scoped to ASHRAE Standard 211 levels 1 to 3.',
          cost='Priced by building size and audit level'),
 ]
@@ -907,7 +907,7 @@ def providers_block(c, svc):
     if note:
         note = f"{SO_EXPLAIN} {note}"
     items = [{'name': x['name'], 'phone': x['phone'], 'coverage': x['coverage'],
-              'profile': f"/ca/providers/{x['profile']}/" if x['profile'] else None,
+              'profile': f"/providers/{x['profile']}/" if x['profile'] else None,
               'hrs': x['hrs'], 'gcc': x['gcc']} for x in provs]
     special = None
     if c['prov'] == 'NS' and not provs:
@@ -961,9 +961,9 @@ def snapshot(c, src):
 
 
 def related_links(c, svc):
-    other = [{'href': f"/ca/services/{s['slug']}/{c['slug']}/", 'label': f"{s['name']} in {c['name']}"}
+    other = [{'href': f"/services/{s['slug']}/{c['slug']}/", 'label': f"{s['name']} in {c['name']}"}
              for s in SERVICES if s['slug'] != svc]
-    nearby = [{'href': f"/ca/services/{svc}/{x['slug']}/", 'label': f"{SV[svc]['name']} in {x['name']}", 'km': x['km']}
+    nearby = [{'href': f"/services/{svc}/{x['slug']}/", 'label': f"{SV[svc]['name']} in {x['name']}", 'km': x['km']}
               for x in c['nearby'][:5]]
     return other, nearby
 
@@ -1123,10 +1123,10 @@ def gen_blower_door(c, src):
     if heat_share(c, 'gas') or heat_share(c, 'oil'):
         fuel = join_and([x for x in [f"natural gas for {heat_share(c, 'gas')}" if heat_share(c, 'gas') else None,
                                      f"oil for {heat_share(c, 'oil')}" if heat_share(c, 'oil') else None]])
-        after.append(f"<strong>Combustion safety.</strong> In {heating_area(c)}, the main heating energy is {fuel} of households. A tighter house changes how fuel-burning appliances vent, so the spillage check should be repeated after serious air sealing. " + a(f"/ca/services/combustion-safety-test/{c['slug']}/", f"Combustion safety testing in {c['name']}"))
+        after.append(f"<strong>Combustion safety.</strong> In {heating_area(c)}, the main heating energy is {fuel} of households. A tighter house changes how fuel-burning appliances vent, so the spillage check should be repeated after serious air sealing. " + a(f"/services/combustion-safety-test/{c['slug']}/", f"Combustion safety testing in {c['name']}"))
         src.add('heating')
     rn = radon_newer(c)
-    after.append(f"<strong>Radon.</strong> Sealing shifts the pressure balance between the house and the soil. {radon_line(c, src)} Test before and after big air-sealing jobs. " + a(f"/ca/services/radon-testing/{c['slug']}/", f"Radon testing in {c['name']}"))
+    after.append(f"<strong>Radon.</strong> Sealing shifts the pressure balance between the house and the soil. {radon_line(c, src)} Test before and after big air-sealing jobs. " + a(f"/services/radon-testing/{c['slug']}/", f"Radon testing in {c['name']}"))
     secs.append({'h2': 'After you seal: two checks', 'html': ul(after)})
     secs.append({'h2': f"What it costs in {c['name']}", 'html': p("A blower door test is part of every EnerGuide evaluation rather than a separate purchase.", ev_text)})
     secs.append({'h2': 'How the test works', 'html': ul([
@@ -1427,8 +1427,8 @@ def gen_ventilation(c, src):
                       {'h2': 'What the assessment measures', 'html': ul(['Relative humidity in living areas and the basement.',
                                                                          'Actual airflow from bath and kitchen fans, and whether they vent outside rather than into the attic.',
                                                                          'How much fresh air the house gets, and whether an HRV or ERV is balanced.']) + p(a(SV['ventilation-assessment']['guide'], 'The ventilation and humidity assessment in detail') + '.')},
-                      {'h2': 'Related tests in ' + c['name'], 'html': p(a(f"/ca/services/mold-testing/{c['slug']}/", f"Mold and air quality testing in {c['name']}") + ' · ' +
-                                                                        a(f"/ca/services/radon-testing/{c['slug']}/", f"Radon testing in {c['name']}"))}]
+                      {'h2': 'Related tests in ' + c['name'], 'html': p(a(f"/services/mold-testing/{c['slug']}/", f"Mold and air quality testing in {c['name']}") + ' · ' +
+                                                                        a(f"/services/radon-testing/{c['slug']}/", f"Radon testing in {c['name']}"))}]
     pg['providers'] = providers_block(c, 'ventilation-assessment')
     pg['programs'] = {'heading': f'Programs in {c["name"]}', 'items': programs_for(c, need_audit=True)}
     pg['faq'] = [
@@ -1462,7 +1462,7 @@ def gen_attic(c, src):
     body = [p(housing_sentence(c), "Attics in older houses commonly have a fraction of today's recommended insulation, and top-ups done over the years often buried air leaks instead of sealing them first."),
             p(climate_sentence(c), hdd_context(c) + '.', pays)]
     body.append(p("<strong>Vermiculite.</strong> Loose, pebbly, grey-brown or silver-gold insulation may contain asbestos. Health Canada's advice is not to disturb it; have it sampled before any attic work. " +
-                  a(f"/ca/services/asbestos-testing/{c['slug']}/", f"Asbestos and vermiculite testing in {c['name']}")))
+                  a(f"/services/asbestos-testing/{c['slug']}/", f"Asbestos and vermiculite testing in {c['name']}")))
     src.add('hc-vermiculite')
     pg['sections'] = [{'h2': f"What inspections find in {c['name']} attics", 'html': ''.join(body)},
                       {'h2': 'The right order for the work', 'html': ul(['Seal the air leaks first: top plates, pot lights, plumbing stacks, the hatch.',
@@ -1666,7 +1666,7 @@ def gen_co(c, src):
                       {'h2': 'What a CO check involves', 'html': ul(['Alarms next to sleeping areas and on every storey, tested monthly and replaced by their end-of-life date (usually 7 to 10 years).',
                                                                      'Annual service of fuel-burning appliances by a licensed technician.',
                                                                      'A combustion spillage test during an energy evaluation, which catches a venting problem before it produces CO.']) +
-                       p(a(SV['carbon-monoxide-testing']['guide'], 'Our carbon monoxide guide') + ' · ' + a(f"/ca/services/combustion-safety-test/{c['slug']}/", f"Combustion safety testing in {c['name']}"))}]
+                       p(a(SV['carbon-monoxide-testing']['guide'], 'Our carbon monoxide guide') + ' · ' + a(f"/services/combustion-safety-test/{c['slug']}/", f"Combustion safety testing in {c['name']}"))}]
     pg['providers'] = None
     pg['programs'] = None
     pg['faq'] = [
@@ -1728,7 +1728,7 @@ def gen_mold(c, src):
                       {'h2': 'Choosing a tester, lab or remediation contractor', 'html': p(f"Ask any {c['name']} tester which lab analyzes their samples, and look for one accredited under AIHA's EMLAP program for environmental microbiology. "
                                                                                           "Pair sampling with a ventilation and humidity assessment, which finds the cause. For remediation, get two or three written quotes "
                                                                                           "that describe containment, what will be removed and how the area is cleaned.") +
-                       p(a(f"/ca/services/ventilation-assessment/{c['slug']}/", f"Ventilation and humidity assessments in {c['name']}") + ' · ' + a(SV['mold-testing']['guide'], 'Our mould and indoor air quality guide'))}]
+                       p(a(f"/services/ventilation-assessment/{c['slug']}/", f"Ventilation and humidity assessments in {c['name']}") + ' · ' + a(SV['mold-testing']['guide'], 'Our mould and indoor air quality guide'))}]
     pg['providers'] = None
     pg['programs'] = None
     pg['faq'] = [
@@ -1768,7 +1768,7 @@ def gen_asbestos(c, src):
         {'h2': f"The rules in {c['provName']}", 'html': p(t) + p("Whatever the rules, don't sand, cut or remove suspect material yourself before it's tested.")},
         {'h2': 'Testing and labs', 'html': p("A trained assessor takes small samples, and an accredited lab analyzes them; plan on about $50–$150 per sample. "
                                              "Asbestos labs in Canada are typically accredited under NIST's NVLAP program" + (" or recognized by the IRSST in Quebec" if c['prov'] == 'QC' else '') + '.') +
-         p(a(SV['asbestos-testing']['guide'], 'Our asbestos and vermiculite guide') + ' · ' + a(f"/ca/services/attic-insulation-inspection/{c['slug']}/", f"Attic inspections in {c['name']}"))},
+         p(a(SV['asbestos-testing']['guide'], 'Our asbestos and vermiculite guide') + ' · ' + a(f"/services/attic-insulation-inspection/{c['slug']}/", f"Attic inspections in {c['name']}"))},
         {'h2': "If it's positive: abatement and removal", 'html': p("Leave the material alone until a plan is in place. For vermiculite, Health Canada says not to use the attic for storage, "
                                                                     "to keep children out and to seal gaps around the attic hatch, light fixtures and outlets, and to hire professionals "
                                                                     "trained to handle asbestos if you plan to renovate.") +
@@ -2029,7 +2029,7 @@ def hub_note(c, svc):
     return None
 
 
-# What the number under each city means on the /ca/services/<service>/ hubs
+# What the number under each city means on the /services/<service>/ hubs
 METRIC_NOTE = {
     'home-energy-audit': "The number is how many NRCan-licensed service organizations list the city's postal codes.",
     'blower-door-test': 'The number is heating degree-days: the higher it is, the longer and colder the heating season, and the more each air leak costs.',
@@ -2121,7 +2121,7 @@ def communities_block(c, svc=None):
     if d['areas']:
         links = []
         for ar in d['areas']:
-            href = f"/ca/areas/{ar['slug']}/{svc}/" if svc in AREA_SERVICES else f"/ca/areas/{ar['slug']}/"
+            href = f"/areas/{ar['slug']}/{svc}/" if svc in AREA_SERVICES else f"/areas/{ar['slug']}/"
             label = f"{SV[svc]['name']} in {ar['inName']}" if svc in AREA_SERVICES else f"{ar['name']} area guide"
             links.append(f"{a(href, esc(label))} ({esc(', '.join(ar['titleNames'][:4]))} and more)")
         parts.append(p(f"{'Area guides' if len(links) > 1 else 'Area guide'} for the surrounding region, with every town and hamlet listed: " + '; '.join(links) + '.'))
@@ -2197,7 +2197,7 @@ def build():
              'cities': index_cities,
              'provinceOrder': ['BC', 'AB', 'SK', 'MB', 'ON', 'QC', 'NB', 'NS', 'PE', 'NL', 'YT', 'NT']}
     json.dump(index, open(f'{outdir}/index.json', 'w'), ensure_ascii=False, indent=1)
-    # Province-by-province CO alarm and well-water rules for the national test guides (/ca/tests/carbon-monoxide/, /ca/tests/well-water/).
+    # Province-by-province CO alarm and well-water rules for the national test guides (/tests/carbon-monoxide/, /tests/well-water/).
     prov_meta = {}
     for c in CITIES:
         prov_meta.setdefault(c['prov'], {'name': c['provName'], 'slug': c['provSlug']})

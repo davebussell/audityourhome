@@ -28,7 +28,7 @@ const S = {
 
 const local = METROS.map((m) => ({ m, ...weatherizationFor(m) })).filter((x) => x.wap.length + x.other.length > 0);
 
-const title = 'Weatherization Assistance Program (WAP) 2026: who qualifies and how to apply | AuditYourHome';
+const title = 'Weatherization Assistance Program (WAP) 2026: who qualifies and how to apply | AuditYourHouse';
 const description = 'Who qualifies for DOE’s Weatherization Assistance Program (200% of poverty guidelines), its 2026 funding, LIHEAP, and local agencies in 26 metro areas.';
 
 const faqs = [
@@ -54,9 +54,9 @@ const sources = dedupe([...WAP.sources, ...LIHEAP.sources]);
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Rebates & programs', path: '/us/programs/' },
-    { name: 'Weatherization Assistance Program', path: '/us/programs/weatherization-assistance-program/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: 'Weatherization Assistance Program', path: '/programs/weatherization-assistance-program/' },
   ]),
   faqSchema(faqs),
 ];
@@ -67,7 +67,7 @@ const open = statusChip('open');
   <ProgramStyles />
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Weatherization Assistance Program</span>
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Weatherization Assistance Program</span>
     </nav>
 
     <div class="page-hero has-photo">
@@ -244,7 +244,7 @@ const open = statusChip('open');
                   <p class="loc-s">{clean(x.summary)}</p>
                 </div>
               ))}
-              <p class="loc-f"><a href={`/us/cities/${m.slug}/`}>{metroName(m)} guide: all local programs →</a></p>
+              <p class="loc-f"><a href={`/cities/${m.slug}/`}>{metroName(m)} guide: all local programs →</a></p>
             </div>
           </details>
         ))}
@@ -303,10 +303,10 @@ const open = statusChip('open');
     <ProgramSources sources={sources} verified={VERIFIED} />
 
     <p class="up-related">
-      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
-      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">Home Energy Rebates</a>
-      <a class="btn btn-ghost" href="/us/programs/states/">Rebates by state</a>
-      <a class="btn btn-ghost" href="/us/cities/">All metro guides</a>
+      <a class="btn btn-ghost" href="/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/programs/home-energy-rebates/">Home Energy Rebates</a>
+      <a class="btn btn-ghost" href="/programs/states/">Rebates by state</a>
+      <a class="btn btn-ghost" href="/cities/">All metro guides</a>
     </p>
   </div>
 </Base>

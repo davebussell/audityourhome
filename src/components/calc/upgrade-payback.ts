@@ -302,8 +302,8 @@ function upgradeTodo(r: UpgradeResult, p?: UpgradePayload): string {
     ? `start with the upgrade${firstTwo.length > 1 ? 's' : ''} that pay${firstTwo.length > 1 ? '' : 's'} back fastest here (${esc(firstTwo.join(' and '))}), and get quotes for the rest.`
     : 'get quotes for the upgrades you are considering and enter them above.';
   const link = p
-    ? `<a href="/ca/services/home-energy-audit/${esc(p.city.slug)}/">Energy audits in ${esc(p.city.name)}</a>`
-    : '<a href="/ca/services/home-energy-audit/">Energy audits near you</a>';
+    ? `<a href="/services/home-energy-audit/${esc(p.city.slug)}/">Energy audits in ${esc(p.city.name)}</a>`
+    : '<a href="/services/home-energy-audit/">Energy audits near you</a>';
   return `<p class="todo"><strong>What to do with this number:</strong> ${lead} Book an EnerGuide evaluation before any work: it measures your house, and most rebates require one. ${link}.</p>`;
 }
 

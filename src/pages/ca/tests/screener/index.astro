@@ -10,9 +10,9 @@ const description =
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Specialty test screener', path: '/ca/tests/screener/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Specialty test screener', path: '/tests/screener/' },
   ]),
 ];
 
@@ -28,7 +28,7 @@ const eras = [
 
 <Base title={title} description={description} schema={schema}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Specialty test screener</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Specialty test screener</span></nav>
     <div class="page-hero">
       <p class="eyebrow">Free tool · 30 seconds</p>
       <h1>Which specialty tests does your home need?</h1>
@@ -104,7 +104,7 @@ const eras = [
           over (add your postal code to start), and the same test flags go into your audit request.
         </p>
       </div>
-      <a class="btn btn-primary" id="toPlanner" href="/ca/plan/">Build my full plan →</a>
+      <a class="btn btn-primary" id="toPlanner" href="/plan/">Build my full plan →</a>
     </div>
   </div>
   <GlossaryRuntime country="ca" live="#screenerResults" />
@@ -145,7 +145,7 @@ const eras = [
     if (sym.length) p.set('sym', sym.join(','));
     const goals = vals('s-goal');
     if (goals.length) p.set('goal', ['bills', ...goals].join(','));
-    return '/ca/plan/#' + p.toString();
+    return '/plan/#' + p.toString();
   }
   function syncPlannerLinks() {
     const href = plannerHref();
@@ -189,7 +189,7 @@ const eras = [
         <p class="small rsub">Sorted by how strongly your answers call for them.</p>
       </div>
       ${section('strongly-flagged')}${section('flagged')}${section('recommended')}
-      <p class="meta rfoot">Take this list with you: the <a href="/ca/plan/" data-plan>planner</a> starts with these answers and puts the list straight into your audit request.</p>`;
+      <p class="meta rfoot">Take this list with you: the <a href="/plan/" data-plan>planner</a> starts with these answers and puts the list straight into your audit request.</p>`;
     syncPlannerLinks();
     el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });

@@ -1,21 +1,25 @@
-# AuditYourHome
+# AuditYourHome (audityourhome.com) and AuditYourHouse (audityourhouse.com)
 
-Ontario-first directory + planning engine for home energy audits. Astro 5, fully static,
-data-driven from JSON files — built to be the trust layer the gap analysis identified:
-verified providers, live program data, honest estimates.
+Directory + planning engine for home energy audits: one Astro 5 codebase, fully static,
+data-driven from JSON files, published as two sites. `src/pages/ca/` is the Canadian site
+(AuditYourHome, audityourhome.com) and `src/pages/us/` the US site (AuditYourHouse,
+audityourhouse.com); each is served from the root of its own domain, so every link in the
+source is written in root form (`/tests/radon/`), never with a country prefix.
 
 ## Quick start
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321
-npm run build      # outputs to dist/
-npm run preview    # serve the built site
+npm run dev        # http://localhost:4321/ca/... and /us/... (the dev server keeps the prefixes)
+npm run build      # dist/ (unified) → dist-ca/ and dist-us/, one per site
+npx http-server dist-ca   # or dist-us: preview a built site
 ```
 
-Deploy `dist/` to any static host — Cloudflare Pages, Netlify, Vercel (framework preset:
-Astro, build `npm run build`, output `dist`). Set the domain to audityourhome.com and the
-sitemap/canonical URLs (already pointing there via `astro.config.mjs → site`) go live correctly.
+`npm run build` runs `astro build`, then `tools/glossary/link.mjs` (glossary links) and
+`tools/country/postbuild.mjs`, which splits `dist/` into `dist-ca/` and `dist-us/` with each
+site's hreflang links, sitemap, robots.txt, 404.html and Netlify `_redirects`. Deploy
+`dist-ca/` to the audityourhome Netlify site and `dist-us/` to audityourhouse (CLAUDE.md has
+the procedure; `netlify.toml` is the Canadian site's config, `netlify.us.toml` the US one).
 
 ## Where everything lives
 

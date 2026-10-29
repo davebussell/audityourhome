@@ -126,9 +126,9 @@ export function testName(c: Country, slug: string): string {
   if (!n) return slug.replace(/-/g, ' ');
   return typeof n === 'string' ? n : n[c];
 }
-export const testHref = (c: Country, slug: string): string | null => (TEST_PAGES[c].has(slug) ? `/${c}/tests/${slug}/` : null);
+export const testHref = (c: Country, slug: string): string | null => (TEST_PAGES[c].has(slug) ? `/tests/${slug}/` : null);
 
-/** CA local service page slug for a test slug (the city-level pages under /ca/services/<service>/<city>/). */
+/** CA local service page slug for a test slug (the city-level pages under /services/<service>/<city>/). */
 export const CA_SERVICE_FOR_TEST: Record<string, string> = {
   'blower-door': 'blower-door-test',
   'thermal-imaging': 'thermal-imaging',

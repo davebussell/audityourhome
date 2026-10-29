@@ -13,7 +13,7 @@ import { METROS, FEDERAL, US_VERIFIED, STATE_NAMES } from '../../lib/us/data';
 import { hasFreeVisitForAll, andList } from '../../lib/us/metro-view';
 import { STATES } from '../../lib/us/programs';
 
-const title = 'AuditYourHome: find a certified home energy auditor in the United States';
+const title = 'AuditYourHouse: find a certified home energy auditor in the United States';
 const description = `Find a certified home energy auditor, see what audits cost in the ${METROS.length} largest U.S. metro areas and check which rebates are open after the 2026 changes. Every fact links to its official source, verified ${US_VERIFIED}.`;
 
 // ---------------------------------------------------------------- 2026 changes, from federal.json
@@ -60,7 +60,7 @@ const faqs = [
   },
 ];
 
-const schema = [organizationSchema(), faqSchema(faqs)];
+const schema = [organizationSchema('us'), faqSchema(faqs)];
 
 const tests = [
   { slug: 'blower-door', photo: 'blower-door-test', name: 'Blower door test', note: 'Airtightness measured at 50 pascals' },
@@ -93,7 +93,7 @@ const tests = [
         </ul>
       </div>
 
-      <form class="card hero-form" id="usQuick" action="/us/plan/" method="GET" aria-label="Start your home energy plan" novalidate>
+      <form class="card hero-form" id="usQuick" action="/plan/" method="GET" aria-label="Start your home energy plan" novalidate>
         <h2>Start your home energy plan</h2>
         <p class="small">6 short steps, about 2 minutes, no email: the upgrades, programs, rebates and tests that matter for your home and climate.</p>
         <div class="field">
@@ -113,7 +113,7 @@ const tests = [
           </div>
         </div>
         <button class="btn btn-primary" type="submit">Build my plan →</button>
-        <p class="meta">Runs in your browser; nothing you enter is stored. Or browse <a href="/us/cities/">the {n} metro guides</a>.</p>
+        <p class="meta">Runs in your browser; nothing you enter is stored. Or browse <a href="/cities/">the {n} metro guides</a>.</p>
       </form>
     </div>
   </section>
@@ -132,7 +132,7 @@ const tests = [
             work after December 31, 2025. Public Law 119-21, signed July 4, 2025, moved their end dates up from 2032 and 2034.
           </p>
           <p class="links">
-            <a href="/us/programs/federal-tax-credits/">What ended and when</a>
+            <a href="/programs/federal-tax-credits/">What ended and when</a>
             {irs25c && <span> · <a href={irs25c.href} rel="noopener" target="_blank">IRS&nbsp;↗</a></span>}
           </p>
         </article>
@@ -145,7 +145,7 @@ const tests = [
             Programs already running had about three months to comply.
           </p>
           <p class="links">
-            <a href="/us/programs/home-energy-rebates/">How the rebates work now</a>
+            <a href="/programs/home-energy-rebates/">How the rebates work now</a>
             {pn262 && <span> · <a href={pn262.href} rel="noopener" target="_blank">DOE notice&nbsp;↗</a></span>}
           </p>
         </article>
@@ -157,7 +157,7 @@ const tests = [
             {andList(OPEN_STATES)}, often with income limits or only some measures. Elsewhere they’re paused, closed or not launched.
           </p>
           <p class="links">
-            <a href="/us/programs/states/">Your state’s status</a>
+            <a href="/programs/states/">Your state’s status</a>
             {doeHer && <span> · <a href={doeHer.href} rel="noopener" target="_blank">DOE&nbsp;↗</a></span>}
           </p>
         </article>
@@ -177,7 +177,7 @@ const tests = [
       <ul class="mgrid">
         {METROS.map((m) => <li><MetroCard m={m} variant="main" /></li>)}
       </ul>
-      <p class="more"><a class="btn btn-ghost" href="/us/cities/">Compare all {n} metros →</a></p>
+      <p class="more"><a class="btn btn-ghost" href="/cities/">Compare all {n} metros →</a></p>
     </div>
   </section>
 
@@ -212,7 +212,7 @@ const tests = [
           </div>
         </div>
       </div>
-      <p class="more"><a class="btn btn-ghost" href="/us/how-it-works/">What happens in an audit →</a> <a class="btn btn-ghost" href="/us/cost/">What it costs →</a></p>
+      <p class="more"><a class="btn btn-ghost" href="/how-it-works/">What happens in an audit →</a> <a class="btn btn-ghost" href="/cost/">What it costs →</a></p>
     </div>
   </section>
 
@@ -227,7 +227,7 @@ const tests = [
       </p>
       <div class="uc-row">
         {tests.map((t) => (
-          <a class="pcard-link uc" href={`/us/tests/${t.slug}/`}>
+          <a class="pcard-link uc" href={`/tests/${t.slug}/`}>
             <Photo name={t.photo} hud={t.hud ?? true} sizes="(max-width: 700px) 70vw, 300px" />
             <div class="pcard-body">
               <h3>{t.name}</h3>
@@ -237,8 +237,8 @@ const tests = [
         ))}
       </div>
       <p class="more">
-        <a class="btn btn-ghost" href="/us/tests/">The complete testing guide →</a>
-        <a class="btn btn-ghost" href="/us/tests/screener/">Which tests does my home need? →</a>
+        <a class="btn btn-ghost" href="/tests/">The complete testing guide →</a>
+        <a class="btn btn-ghost" href="/tests/screener/">Which tests does my home need? →</a>
       </p>
     </div>
   </section>
@@ -337,7 +337,7 @@ const tests = [
     const q = new URLSearchParams({ postal });
     const age = quick?.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value;
     if (age) q.set('age', age);
-    return `That looks like a Canadian postal code. This planner covers US homes; <a href="/ca/plan/#${q.toString()}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).`;
+    return `That looks like a Canadian postal code. This planner covers US homes; <a href="https://audityourhome.com/plan/?site=ca#${q.toString()}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).`;
   }
   quick?.addEventListener('submit', (e) => {
     const raw = zipIn?.value.trim() ?? '';
@@ -352,6 +352,6 @@ const tests = [
     const q = new URLSearchParams({ zip });
     const age = quick.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value;
     if (age) q.set('age', age);
-    location.href = `/us/plan/#${q.toString()}`;
+    location.href = `/plan/#${q.toString()}`;
   });
 </script>

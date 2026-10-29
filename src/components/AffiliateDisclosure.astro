@@ -1,10 +1,13 @@
 ---
-import { HAS_AFFILIATE } from '../config/site';
+import { HAS_AFFILIATE, siteFor } from '../config/site';
+import { countryOf } from '../lib/country';
+
+const brand = siteFor(countryOf(Astro.url.pathname)).name;
 ---
 
 {HAS_AFFILIATE && (
   <p class="disclosure">
-    Some links here are affiliate links — as an Amazon Associate, AuditYourHome earns from
+    Some links here are affiliate links — as an Amazon Associate, {brand} earns from
     qualifying purchases, at no extra cost to you. Picks are chosen on merit; no manufacturer
     pays for placement, and prices shown are planning bands, not quotes.
   </p>

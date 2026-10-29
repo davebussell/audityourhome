@@ -12,31 +12,31 @@ const description =
 
 const handWritten = [
   {
-    href: '/ca/articles/what-is-a-home-energy-audit/',
+    href: '/articles/what-is-a-home-energy-audit/',
     kicker: 'The foundation',
     title: 'What is a home energy audit?',
     blurb: 'The measured definition: what happens, what it establishes, what it isn\'t — with a switcher that localizes programs and requirements to your region.',
   },
   {
-    href: '/ca/articles/energy-audit-requirements-ontario/',
+    href: '/articles/energy-audit-requirements-ontario/',
     kicker: 'Rules & standards',
     title: 'When is an energy audit required in Ontario?',
     blurb: 'The honest split between mandatory and voluntary — the selling-your-home myth, EWRB for large buildings, and the standards stack from CGSB to SB-12 decoded.',
   },
   {
-    href: '/ca/articles/energy-audit-services-toronto/',
+    href: '/articles/energy-audit-services-toronto/',
     kicker: 'Toronto buildings',
     title: 'Energy audit and energy management services in Toronto',
     blurb: 'For owners of commercial and multi-unit buildings: ASHRAE audit levels, monitoring and retro-commissioning, provincial and City reporting rules, and the Save on Energy, Enbridge and City programs that pay.',
   },
   {
-    href: '/ca/articles/home-renovation-loans-toronto/',
+    href: '/articles/home-renovation-loans-toronto/',
     kicker: 'Financing',
     title: 'Home renovation loans in Toronto',
     blurb: 'HELP up to $125,000 at posted rates, refinancing and home equity options, the CMHC 25% refund, the closed federal loan, and the sequence that stacks them.',
   },
   {
-    href: '/ca/articles/energy-audits-northern-bc/',
+    href: '/articles/energy-audits-northern-bc/',
     kicker: 'Northern BC',
     title: 'Energy audits in Prince George, Dawson Creek & Northern BC',
     blurb: 'Why -30° winters sharpen the payback math, how BC\'s Improvement Bonus pays, and booking an evaluation up north.',
@@ -44,34 +44,34 @@ const handWritten = [
 ];
 
 type Card = { href: string; kicker: string; title: string; blurb: string };
-const fromData = (articlesJson as any[]).map((x) => ({ href: `/ca/articles/${x.slug}/`, kicker: x.kicker, title: x.h1, blurb: x.blurb, slug: x.slug }));
+const fromData = (articlesJson as any[]).map((x) => ({ href: `/articles/${x.slug}/`, kicker: x.kicker, title: x.h1, blurb: x.blurb, slug: x.slug }));
 const bySlug = (s: string) => fromData.find((x) => x.slug === s)!;
 const byHref = (h: string) => handWritten.find((x) => x.href === h)!;
 const articles: Card[] = [
-  byHref('/ca/articles/what-is-a-home-energy-audit/'),
+  byHref('/articles/what-is-a-home-energy-audit/'),
   bySlug('home-energy-audit-ontario'),
   bySlug('home-energy-audit-cost'),
   bySlug('energy-audit-companies-ontario'),
-  byHref('/ca/articles/energy-audit-requirements-ontario/'),
-  byHref('/ca/articles/energy-audit-services-toronto/'),
+  byHref('/articles/energy-audit-requirements-ontario/'),
+  byHref('/articles/energy-audit-services-toronto/'),
   bySlug('commercial-energy-audits-ontario'),
   bySlug('energy-audits-multi-unit-buildings'),
   bySlug('heat-pump-rebates-canada'),
   bySlug('heat-pump-rebates-toronto-ontario'),
-  byHref('/ca/articles/home-renovation-loans-toronto/'),
+  byHref('/articles/home-renovation-loans-toronto/'),
   bySlug('vermiculite-insulation'),
   bySlug('home-energy-assessment-winnipeg'),
   bySlug('alberta-energy-efficiency-rebates'),
   bySlug('saskatchewan-energy-efficiency-rebates'),
   bySlug('bc-home-energy-testing-faq'),
-  byHref('/ca/articles/energy-audits-northern-bc/'),
+  byHref('/articles/energy-audits-northern-bc/'),
 ];
 const london = fromData.filter((x) => x.slug.endsWith('-london'));
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Articles', path: '/ca/articles/' },
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
   ]),
 ];
 ---
@@ -117,8 +117,8 @@ const schema = [
     <div class="card card-pad more">
       <h3>Looking for your city?</h3>
       <p class="mb-0">
-        The <a href="/ca/guides/">regional guides</a> cover twelve Ontario areas neighbourhood-deep,
-        and the <a href="/ca/tests/">testing guide</a> walks every instrument from blower doors to
+        The <a href="/guides/">regional guides</a> cover twelve Ontario areas neighbourhood-deep,
+        and the <a href="/tests/">testing guide</a> walks every instrument from blower doors to
         radon kits.
       </p>
     </div>

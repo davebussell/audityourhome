@@ -9,15 +9,15 @@ import { US_VERIFIED } from '../../../../lib/us/data';
 import { screenerFacts, SUMMARY_STATES, stateName, ZONE_SOURCES } from '../../../../lib/us/tests';
 import { screenUsTests, renderResultHtml, ZONE_TEXT, type ScreenerInput } from '../../../../lib/us/screener';
 
-const title = 'Which home tests do you need? A US screener for radon, lead, mold and more | AuditYourHome';
+const title = 'Which home tests do you need? A US screener for radon, lead, mold and more | AuditYourHouse';
 const description =
   'Answer a few questions about your home’s age, location, water, fuel and plans, and get the specialty tests to consider, each with the EPA, CPSC or DOE reason.';
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Testing guide', path: '/us/tests/' },
-    { name: 'Test screener', path: '/us/tests/screener/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Test screener', path: '/tests/screener/' },
   ]),
 ];
 
@@ -62,7 +62,7 @@ const planOpts = [
   <TestStyles />
   <div class="container ust">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Test screener</span>
+      <a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Test screener</span>
     </nav>
     <div class="page-hero">
       <p class="eyebrow">Free tool · about a minute · verified {US_VERIFIED}</p>
@@ -156,7 +156,7 @@ const planOpts = [
     </div>
 
     <noscript>
-      <p class="card card-pad">The screener needs JavaScript to update. Every test has a full guide on the <a href="/us/tests/">testing guide</a> page.</p>
+      <p class="card card-pad">The screener needs JavaScript to update. Every test has a full guide on the <a href="/tests/">testing guide</a> page.</p>
     </noscript>
 
     <section class="sec prose" aria-labelledby="how-h">
@@ -166,7 +166,7 @@ const planOpts = [
         <li><strong>Carbon monoxide</strong> alarms are recommended for every home; fuel-burning appliances, a fireplace or an attached garage move them to the top.</li>
         <li><strong>Lead</strong> comes up for homes built before 1978 (the 1966–1980 band included, since most of it predates 1978), or when you’re not sure of the year.</li>
         <li><strong>Asbestos and vermiculite</strong> come up for homes built before 1990, the end of the period when Libby, Montana vermiculite dominated U.S. sales (the 1981–1995 band included), or whenever you’ve seen vermiculite.</li>
-        <li>The year bands match the <a href="/us/plan/">Home Energy Planner</a>’s, and the results end with a link that carries your answers over to it.</li>
+        <li>The year bands match the <a href="/plan/">Home Energy Planner</a>’s, and the results end with a link that carries your answers over to it.</li>
         <li><strong>Mold</strong> comes up when you report moisture or a musty odor; <strong>well water</strong> when you’re on a private well.</li>
         <li>Energy work adds tests that protect it: a <strong>combustion safety test</strong> when air sealing a home with fuel-burning appliances, and a <strong>Manual J</strong> when replacing heating or cooling.</li>
       </ul>

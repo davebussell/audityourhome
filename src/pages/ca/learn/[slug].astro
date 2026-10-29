@@ -45,7 +45,7 @@ export function getStaticPaths() {
 }
 
 const { x, prev, next } = Astro.props as { x: LearnTopic; prev: LearnTopic | null; next: LearnTopic | null };
-const path = `/ca/learn/${x.slug}/`;
+const path = `/learn/${x.slug}/`;
 
 /** Hero photo per topic; no two neighbouring topics share one. */
 const LEARN_PHOTO: Record<string, string> = {
@@ -76,20 +76,20 @@ const wrapTables = (h: string) =>
 const envelopeOrAir = x.group === 'The envelope' || x.group === 'Air and moisture';
 const calc = envelopeOrAir
   ? {
-      href: '/ca/calculators/upgrade-payback/',
+      href: '/calculators/upgrade-payback/',
       label: 'Upgrade payback calculator',
       text: 'See what this kind of upgrade could pay back at your city’s energy prices, then put the work in a sensible order in your home plan.',
     }
   : {
-      href: '/ca/calculators/energy-costs/',
+      href: '/calculators/energy-costs/',
       label: 'Energy cost calculator',
       text: 'Compare what heating, cooling and hot water cost to run at your city’s energy prices, then put any upgrade in order in your home plan.',
     };
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Learn', path: '/ca/learn/' },
+    { name: 'Home', path: '/' },
+    { name: 'Learn', path: '/learn/' },
     { name: x.topic, path },
   ]),
   faqSchema(x.faq),
@@ -110,7 +110,7 @@ const schema = [
 
 <Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema} ogImage={ogImage}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/learn/">Learn</a> <span aria-hidden="true">/</span> <span>{x.topic}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/learn/">Learn</a> <span aria-hidden="true">/</span> <span>{x.topic}</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">{x.group} · verified {x.verified}</p>
@@ -146,7 +146,7 @@ const schema = [
       </div>
       <div class="run-btns">
         <a class="btn btn-primary" href={calc.href}>{calc.label} →</a>
-        <a class="btn btn-ghost" href="/ca/plan/">Build my plan</a>
+        <a class="btn btn-ghost" href="/plan/">Build my plan</a>
       </div>
     </div>
 
@@ -170,13 +170,13 @@ const schema = [
     {(prev || next) && (
       <nav class="pager" aria-label={`More in ${x.group}`}>
         {prev ? (
-          <a class="card pg" href={`/ca/learn/${prev.slug}/`}>
+          <a class="card pg" href={`/learn/${prev.slug}/`}>
             <span class="pg-dir">← Previous topic</span>
             <span class="pg-title">{prev.topic}</span>
           </a>
         ) : <span class="pg-empty" aria-hidden="true"></span>}
         {next ? (
-          <a class="card pg pg-next" href={`/ca/learn/${next.slug}/`}>
+          <a class="card pg pg-next" href={`/learn/${next.slug}/`}>
             <span class="pg-dir">Next topic →</span>
             <span class="pg-title">{next.topic}</span>
           </a>
@@ -188,7 +188,7 @@ const schema = [
       <h2 class="rel-h">Related on AuditYourHome</h2>
       <div class="rel-links">
         {x.related.map((r) => <a class="btn btn-ghost btn-sm" href={r.href}>{r.label}</a>)}
-        <a class="btn btn-ghost btn-sm" href="/ca/learn/">All “Keeping the heat in” topics</a>
+        <a class="btn btn-ghost btn-sm" href="/learn/">All “Keeping the heat in” topics</a>
       </div>
     </div>
 

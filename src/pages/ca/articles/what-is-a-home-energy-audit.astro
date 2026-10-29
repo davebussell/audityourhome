@@ -32,9 +32,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Articles', path: '/ca/articles/' },
-    { name: 'What is a home energy audit?', path: '/ca/articles/what-is-a-home-energy-audit/' },
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'What is a home energy audit?', path: '/articles/what-is-a-home-energy-audit/' },
   ]),
   faqSchema(faqs),
 ];
@@ -42,7 +42,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/articles/">Articles</a> <span aria-hidden="true">/</span> <span>What is a home energy audit?</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>What is a home energy audit?</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Article · verified {SITE.dataReviewDate}</p>
@@ -73,14 +73,14 @@ const schema = [
 
       <h2>What gets measured</h2>
       <p>
-        The centrepiece is the <a href="/ca/tests/#blower-door"><strong>blower door test</strong></a> —
+        The centrepiece is the <a href="/tests/#blower-door"><strong>blower door test</strong></a> —
         a calibrated fan depressurizes the house and measures exactly how leaky it is, to the
         national CGSB airtightness testing standard. Most advisors pair it with
-        <a href="/ca/tests/#thermal-imaging"><strong>infrared imaging</strong></a>, which maps missing
+        <a href="/tests/#thermal-imaging"><strong>infrared imaging</strong></a>, which maps missing
         insulation and hidden moisture without opening walls, plus attic inspection, equipment
         inventory, and — when a heat pump is in play — the
-        <a href="/ca/tests/#heat-loss-calc"><strong>CSA F280 heat-loss calculation</strong></a> that
-        sizes it correctly. Our <a href="/ca/tests/">complete testing guide</a> covers every
+        <a href="/tests/#heat-loss-calc"><strong>CSA F280 heat-loss calculation</strong></a> that
+        sizes it correctly. Our <a href="/tests/">complete testing guide</a> covers every
         instrument, including the ones (like radon) the energy audit doesn't include.
       </p>
 
@@ -107,10 +107,10 @@ const schema = [
     <div class="measure prose">
       <h2>How to get one</h2>
       <p>
-        Start with the <a href="/ca/plan/">Home Energy Planner</a> — six questions, and it tells you
+        Start with the <a href="/plan/">Home Energy Planner</a> — six questions, and it tells you
         what your home's era likely needs, which tests to request by name, and every registered
         advisor serving your area with their reviews. Or go straight to the
-        <a href="/ca/find/">directory</a>. Either way: measurements first, purchases second.
+        <a href="/find/">directory</a>. Either way: measurements first, purchases second.
       </p>
     </div>
 

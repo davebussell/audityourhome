@@ -1,5 +1,5 @@
 /**
- * US program tracker (/us/programs/): state-by-state Home Energy Rebate status, the federal
+ * US program tracker (/programs/): state-by-state Home Energy Rebate status, the federal
  * program records and the metro links those pages share.
  *
  * Facts come only from the research files read through ./data (federal.json and metros/*.json,

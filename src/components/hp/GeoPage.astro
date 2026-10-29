@@ -27,16 +27,16 @@ const geoStrengths: string[] = isCA ? geo.strengths : usList(geo.strengths);
 const geoWatchouts: string[] = isCA ? geo.watchouts : usList(geo.watchouts);
 const loopTemp = isCA ? '5–10°C' : '41–50°F (5–10°C)';
 const geoPrograms = isCA
-  ? CA_REGIONS.map((r) => ({ place: r.name, href: `/ca/heat-pumps/${r.slug}/`, progs: caRebates(r).filter(isGeo) })).filter((x) => x.progs.length)
-  : US_METROS.map((m) => ({ place: metroName(m), href: `/us/heat-pumps/${m.slug}/`, progs: usRebates(m.slug).filter(isGeo).map((p) => cleanRecord(p)) })).filter((x) => x.progs.length);
+  ? CA_REGIONS.map((r) => ({ place: r.name, href: `/heat-pumps/${r.slug}/`, progs: caRebates(r).filter(isGeo) })).filter((x) => x.progs.length)
+  : US_METROS.map((m) => ({ place: metroName(m), href: `/heat-pumps/${m.slug}/`, progs: usRebates(m.slug).filter(isGeo).map((p) => cleanRecord(p)) })).filter((x) => x.progs.length);
 const innovaHere = statsFor(market, 'innova');
-const title = `Geothermal, window and no-outdoor-unit heat pumps (${isCA ? 'Canada' : 'US'}) | AuditYourHome`;
+const title = `Geothermal, window and no-outdoor-unit heat pumps (${isCA ? 'Canada' : 'US'}) | ${isCA ? 'AuditYourHome' : 'AuditYourHouse'}`;
 const description = `Who makes ground-source heat pumps for ${country} and what they warrant, the rebates that cover them, plus window and no-outdoor-unit heat pumps for apartments.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: `/${market}/` },
-    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
-    { name: 'Geothermal and other types', path: `/${market}/heat-pumps/geothermal/` },
+    { name: 'Home', path: `/` },
+    { name: 'Heat pumps', path: `/heat-pumps/` },
+    { name: 'Geothermal and other types', path: `/heat-pumps/geothermal/` },
   ]),
 ];
 const clip = (s: string, n = 300) => (s.length > n ? `${s.slice(0, n).replace(/\s+\S*$/, '')}…` : s);
@@ -57,7 +57,7 @@ const winIntro = isCA
 
 <Base title={title} description={description} schema={schema}>
   <div class="container hp">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/${market}/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span> <span>Geothermal and other types</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span> <span>Geothermal and other types</span></nav>
     <div class="page-hero">
       <div class="hero-text">
         <p class="eyebrow">Heat pump types · checked {HP_CHECKED}</p>
@@ -160,7 +160,7 @@ const winIntro = isCA
       <QuoteForm market={market} context="types" heading="Get quotes for a geothermal or specialty heat pump" />
     </div>
     <section class="related">
-      <div class="nb"><a class="all" href={`/${market}/heat-pumps/`}>Back to the comparison guide →</a></div>
+      <div class="nb"><a class="all" href={`/heat-pumps/`}>Back to the comparison guide →</a></div>
     </section>
   </div>
 </Base>

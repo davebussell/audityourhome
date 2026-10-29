@@ -38,9 +38,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Find an auditor', path: '/ca/find/' },
-    { name: region.name, path: `/ca/find/${region.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Find an auditor', path: '/find/' },
+    { name: region.name, path: `/find/${region.slug}/` },
   ]),
   cityDirectorySchema(region, list.map((p) => p.name)),
   faqSchema(faqs),
@@ -50,8 +50,8 @@ const schema = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/find/">Find an auditor</a> <span aria-hidden="true">/</span>
-      <a href="/ca/find/#ontario-areas">Ontario areas</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
+      <a href="/find/">Find an auditor</a> <span aria-hidden="true">/</span>
+      <a href="/find/#ontario-areas">Ontario areas</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
     </nav>
     <JourneyBar country="ca" current={2} ticks={false} compact />
     <div class="page-hero has-photo">
@@ -61,8 +61,8 @@ const schema = [
       <p class="small">
         {list.length} registered service organization{list.length === 1 ? '' : 's'} · compiled from
         public sources, checked {SITE.dataReviewDate} ·
-        <a href={`/ca/guides/${region.slug}/`}>read the full {region.name} guide</a> ·
-        <a href="/ca/plan/">or start with the planner</a>
+        <a href={`/guides/${region.slug}/`}>read the full {region.name} guide</a> ·
+        <a href="/plan/">or start with the planner</a>
       </p>
       </div>
       <Photo name={'home-energy-audit'} eager />
@@ -80,7 +80,7 @@ const schema = [
           : ` ${hrsCount} of the ${list.length} providers below ${hrsCount === 1 ? 'is' : 'are'} marked “HRSP-approved: Yes.”`}
       Every provider here delivers official EnerGuide evaluations for everything else, from
       financing to heat pump sizing.
-      <a href="/ca/programs/home-renovation-savings-assessment/">See the seven and the deadlines</a>
+      <a href="/programs/home-renovation-savings-assessment/">See the seven and the deadlines</a>
     </p>
 
     <div class="provider-grid">

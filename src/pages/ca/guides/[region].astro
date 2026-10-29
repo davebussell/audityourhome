@@ -34,9 +34,9 @@ const description = g.metaDescription;
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Guides', path: '/ca/guides/' },
-    { name: region.name, path: `/ca/guides/${slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/guides/' },
+    { name: region.name, path: `/guides/${slug}/` },
   ]),
   faqSchema(g.faq),
 ];
@@ -52,7 +52,7 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
 <Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/guides/">Guides</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
+      <a href="/guides/">Guides</a> <span aria-hidden="true">/</span> <span>{region.name}</span>
     </nav>
 
     <div class="page-hero has-photo">
@@ -79,12 +79,12 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
       <div class="card card-pad">
         <h3>Tests to ask for by name</h3>
         <ul class="findings">
-          <li><a href="/ca/tests/blower-door/">Blower door test</a> — the leakage number that reorders your plan</li>
-          <li><a href="/ca/tests/thermal-imaging/">Infrared scan</a> — finds the empty walls without opening them</li>
-          <li><a href="/ca/tests/heat-loss-calc/">CSA F280 heat-loss calculation</a> — before any heat pump quote</li>
-          <li><a href="/ca/tests/radon/">Radon test</a> — Health Canada recommends it for every home</li>
+          <li><a href="/tests/blower-door/">Blower door test</a> — the leakage number that reorders your plan</li>
+          <li><a href="/tests/thermal-imaging/">Infrared scan</a> — finds the empty walls without opening them</li>
+          <li><a href="/tests/heat-loss-calc/">CSA F280 heat-loss calculation</a> — before any heat pump quote</li>
+          <li><a href="/tests/radon/">Radon test</a> — Health Canada recommends it for every home</li>
         </ul>
-        <p class="small mb-0"><a href="/ca/plan/">Run the planner</a> for the full test list matched to your house — it carries into your audit request automatically.</p>
+        <p class="small mb-0"><a href="/plan/">Run the planner</a> for the full test list matched to your house — it carries into your audit request automatically.</p>
       </div>
     </div>
 
@@ -103,7 +103,7 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
         <p class="small measure">
           Beyond energy, every area has its own home-health checklist — driven by local geology,
           water sources, housing eras, and weather. Here's {region.name}'s, each item linked to
-          its full guide. The <a href="/ca/tests/screener/">30-second screener</a> personalizes this
+          its full guide. The <a href="/tests/screener/">30-second screener</a> personalizes this
           to your exact house.
         </p>
         <div class="hh-grid">
@@ -115,7 +115,7 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
           ))}
         </div>
         <p class="small hh-foot">
-          The gear side — monitors, alarms, kits — lives in the <a href="/ca/products/">gear guides</a>.
+          The gear side — monitors, alarms, kits — lives in the <a href="/products/">gear guides</a>.
         </p>
       </>
     )}
@@ -125,7 +125,7 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
         <h2 class="sec">{region.name} neighbourhoods, era by era</h2>
         <p class="small">
           Your street's construction era predicts what an audit will find. Jump to yours — then
-          <a href="/ca/plan/"> run the planner</a> with your exact profile.
+          <a href="/plan/"> run the planner</a> with your exact profile.
         </p>
         <div class="hood-grid">
           {(g as any).neighbourhoods.map((n: any) => (
@@ -145,7 +145,7 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
       All {list.length} are NRCan-licensed service organizations — with direct links to their
       Google, HomeStars, and BBB reviews. Only assessments from the seven HRSP-approved
       organizations qualify for the $600 Home Renovation Savings rebate; each card says whether the
-      provider is one of them. <a href={`/ca/find/${slug}/`}>Full directory view →</a>
+      provider is one of them. <a href={`/find/${slug}/`}>Full directory view →</a>
     </p>
     <div class="provider-grid">
       {list.map((p) => <ProviderCard provider={p} compact />)}
@@ -153,7 +153,7 @@ const heroPhoto = GUIDE_PHOTO[slug ?? ''] ?? 'region-ontario';
 
     <h2 class="sec">Common {region.name} problems, diagnosed</h2>
     <div class="issue-chips">
-      {topIssues.map((i) => <a href={`/ca/issues/${i.slug}/`}>{i.name} →</a>)}
+      {topIssues.map((i) => <a href={`/issues/${i.slug}/`}>{i.name} →</a>)}
     </div>
 
     <h2 class="sec">Local questions</h2>

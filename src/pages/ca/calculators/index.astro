@@ -14,7 +14,7 @@ const what: Record<CalcSlug, string[]> = {
   'appliance-energy': ['Fridges, freezers, laundry, TVs, hot tubs, EVs', 'Block heaters, with your city\'s cold nights', 'What a newer model or a timer saves'],
 };
 
-const schema = [breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Calculators', path: '/ca/calculators/' }])];
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Calculators', path: '/calculators/' }])];
 ---
 
 <Base
@@ -34,7 +34,7 @@ const schema = [breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Calcu
 
     <div class="idx-grid">
       {CALC_SLUGS.map((c) => (
-        <a class="card idx-card" href={`/ca/calculators/${c}/`} data-calc-link={c}>
+        <a class="card idx-card" href={`/calculators/${c}/`} data-calc-link={c}>
           <h2>{CALC_META[c].name}</h2>
           <p>{CALC_META[c].blurb}</p>
           <ul>{what[c].map((w) => <li>{w}</li>)}</ul>
@@ -50,11 +50,11 @@ const schema = [breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Calcu
         <p>Where a number has to be assumed, such as how much insulation a 1970s attic has, the calculator says so and lets you change it. Savings use the price of one more unit of energy, without fixed charges, which keeps them on the low side. An EnerGuide evaluation measures your house and replaces those assumptions.</p>
       </div>
       <div class="linkrow">
-        <a class="primary" href="/ca/plan/">Build your upgrade plan →</a>
-        <a href="/ca/programs/">Rebates and programs</a>
-        <a href="/ca/issues/high-heating-bills/">High heating bills</a>
-        <a href="/ca/issues/switching-to-heat-pump/">Switching to a heat pump</a>
-        <a href="/ca/issues/condensation-mould/">Condensation and mould</a>
+        <a class="primary" href="/plan/">Build your upgrade plan →</a>
+        <a href="/programs/">Rebates and programs</a>
+        <a href="/issues/high-heating-bills/">High heating bills</a>
+        <a href="/issues/switching-to-heat-pump/">Switching to a heat pump</a>
+        <a href="/issues/condensation-mould/">Condensation and mould</a>
       </div>
     </section>
   </div>

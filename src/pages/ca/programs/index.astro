@@ -41,8 +41,8 @@ const byProv = PROVINCES.map((pr) => ({
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Rebates & programs', path: '/ca/programs/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
   ]),
 ];
 ---
@@ -72,7 +72,7 @@ const schema = [
 
     <p class="small measure how">
       Most of these pay only after an EnerGuide evaluation: book the first visit before you sign a contract or start any work.
-      <a href="/ca/find/">How booking works in your province →</a>
+      <a href="/find/">How booking works in your province →</a>
     </p>
 
     {announced.length > 0 && (
@@ -99,7 +99,7 @@ const schema = [
         ) : (
           <p class="small measure">No open province-wide home rebate we track right now. Check your city and utility programs in the province guide.</p>
         )}
-        <p class="small prov-more"><a href={`/ca/provinces/${pr.slug}/`}>Everything for homes in {pr.name} →</a></p>
+        <p class="small prov-more"><a href={`/provinces/${pr.slug}/`}>Everything for homes in {pr.name} →</a></p>
       </section>
     ))}
 
@@ -118,7 +118,7 @@ const schema = [
         Every entry is verified against its official page and stamped with the date — including the
         closed programs, because stale promises are how homeowners get burned. Your province's full
         picture (housing stock, what to monitor, every program) lives in the
-        <a href="/ca/provinces/">province guides</a>, and the <a href="/ca/plan/">planner</a> matches
+        <a href="/provinces/">province guides</a>, and the <a href="/plan/">planner</a> matches
         programs to your specific home from your postal code.
       </p>
     </div>

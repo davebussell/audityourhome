@@ -40,9 +40,9 @@ const faqs = p.faq && p.faq.length > 0
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Rebates & programs', path: '/ca/programs/' },
-    { name: p.shortName, path: `/ca/programs/${p.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: p.shortName, path: `/programs/${p.slug}/` },
   ]),
   faqSchema(faqs),
 ];
@@ -63,8 +63,8 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
 <Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
-      {province && <><a href={`/ca/provinces/${province.slug}/`}>{province.name}</a> <span aria-hidden="true">/</span></>}
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
+      {province && <><a href={`/provinces/${province.slug}/`}>{province.name}</a> <span aria-hidden="true">/</span></>}
       <span>{p.shortName}</span>
     </nav>
 
@@ -119,8 +119,8 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
         <p class="mb-0">
           Most programs that require one want the evaluation before any work starts, and many want a second one
           afterwards to confirm what was done; the note above says what this program asks for.
-          <a href="/ca/services/home-energy-audit/">Find an energy advisor near you</a> ·
-          <a href="/ca/tests/blower-door/">What the blower-door test measures</a>
+          <a href="/services/home-energy-audit/">Find an energy advisor near you</a> ·
+          <a href="/tests/blower-door/">What the blower-door test measures</a>
         </p>
       </section>
     )}
@@ -175,15 +175,15 @@ const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.p
 
     <div class="related">
       {isHeatPump && (
-        <a class="btn btn-primary" href={province ? `/ca/heat-pumps/${province.slug}/` : '/ca/heat-pumps/'}>
+        <a class="btn btn-primary" href={province ? `/heat-pumps/${province.slug}/` : '/heat-pumps/'}>
           {province ? `Heat pumps in ${province.name}: costs and qualifying systems →` : 'Compare the heat pumps that qualify →'}
         </a>
       )}
-      {province && <a class="btn btn-ghost" href={`/ca/provinces/${province.slug}/`}>All {province.name} programs &amp; guide →</a>}
+      {province && <a class="btn btn-ghost" href={`/provinces/${province.slug}/`}>All {province.name} programs &amp; guide →</a>}
       {relatedProgs.map((r) => (
-        <a class="btn btn-ghost" href={`/ca/programs/${r!.slug}/`}>Related: {r!.shortName}</a>
+        <a class="btn btn-ghost" href={`/programs/${r!.slug}/`}>Related: {r!.shortName}</a>
       ))}
-      <a class="btn btn-ghost" href="/ca/programs/">Full tracker</a>
+      <a class="btn btn-ghost" href="/programs/">Full tracker</a>
     </div>
 
     {p.status !== 'closed' && p.auditRequired && (

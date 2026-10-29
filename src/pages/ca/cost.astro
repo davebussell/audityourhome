@@ -40,8 +40,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Cost guide', path: '/ca/cost/' },
+    { name: 'Home', path: '/' },
+    { name: 'Cost guide', path: '/cost/' },
   ]),
   faqSchema(faqs),
 ];
@@ -50,7 +50,7 @@ const schema = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>Cost guide</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span>Cost guide</span>
     </nav>
 
     <JourneyBar country="ca" current={2} ticks={false} />
@@ -80,7 +80,7 @@ const schema = [
         <tbody>
           {PROVINCE_BOOKING.map((b) => (
             <tr id={`cost-${b.slug}`}>
-              <td data-label="Province"><a href={`/ca/find/#${b.slug}`}><strong>{b.name}</strong></a></td>
+              <td data-label="Province"><a href={`/find/#${b.slug}`}><strong>{b.name}</strong></a></td>
               <td data-label="Typical cost">{b.cost}</td>
               <td data-label="Help with the cost">{b.help || 'None province-wide'}</td>
               <td data-label="How you book">{b.route}<span class="src"> · checked {b.checked}{b.sources[0] && <>: <a href={b.sources[0].href} rel="noopener" target="_blank">source&nbsp;↗</a></>}</span></td>
@@ -91,7 +91,7 @@ const schema = [
     </div>
     <p class="small after-table">
       Prices are what programs and cities publish, not quotes: larger homes cost more, and most providers price the first
-      and follow-up visits separately. <a href="/ca/find/">How booking works in each province</a>, with the licensed
+      and follow-up visits separately. <a href="/find/">How booking works in each province</a>, with the licensed
       organizations serving 70 cities.
     </p>
 
@@ -147,7 +147,7 @@ const schema = [
         the renovation upgrade report lists the recommended upgrades with their estimated energy
         savings and your EnerGuide rating before and after them
         (<a href="https://natural-resources.canada.ca/energy-efficiency/product-energy-ratings/energuide/after-your-energuide-home-evaluation" rel="noopener" target="_blank">NRCan ↗</a>).
-        Start with <a href="/ca/plan/">your free plan</a> to see your likely numbers before you book.
+        Start with <a href="/plan/">your free plan</a> to see your likely numbers before you book.
       </p>
     </div>
 

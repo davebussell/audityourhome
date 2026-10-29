@@ -18,7 +18,7 @@ interface Props {
 const { states, wording = false, split = false, caption } = Astro.props;
 const half = Math.ceil(states.length / 2);
 const parts = !wording && split && states.length > 8 ? [states.slice(0, half), states.slice(half)] : [states];
-const href = (s: StateView) => `/us/programs/states/${s.slug}/`;
+const href = (s: StateView) => `/programs/states/${s.slug}/`;
 ---
 
 {wording ? (

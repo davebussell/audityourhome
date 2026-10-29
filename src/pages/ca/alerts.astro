@@ -27,7 +27,7 @@ const faqs = [
 const title = 'Free home energy alerts: rebate changes, deadlines and checks | AuditYourHome';
 const description = 'Free email alerts for Canadian homeowners: rebate and program changes in your province, reminders before your EnerGuide and rebate deadlines, and a short monthly home checklist.';
 const schema = [
-  breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Free alerts', path: '/ca/alerts/' }]),
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Free alerts', path: '/alerts/' }]),
   faqSchema(faqs),
 ];
 const examples: Record<string, { label: string; title: string; body: string; foot?: string }> = {
@@ -74,7 +74,7 @@ const examples: Record<string, { label: string; title: string; body: string; foo
     ) : (
       <div class="card card-pad al-soon" id="get-alerts">
         <h2>Opening soon</h2>
-        <p class="small">Alerts are almost ready. In the meantime, the <a href="/ca/updates/">program changes page</a> lists every change we track.</p>
+        <p class="small">Alerts are almost ready. In the meantime, the <a href="/updates/">program changes page</a> lists every change we track.</p>
       </div>
     )}
 
@@ -82,7 +82,7 @@ const examples: Record<string, { label: string; title: string; body: string; foo
       <h2>Also free: My Home</h2>
       <p class="measure">
         Signing up creates a My Home account where you can keep your EnerGuide results and test records,
-        save the <a href="/ca/plan/">Home Energy Planner</a>’s upgrade sequence and tick things off, and ask to be
+        save the <a href="/plan/">Home Energy Planner</a>’s upgrade sequence and tick things off, and ask to be
         matched with an energy advisor or contractor when you’re ready. We introduce you to one company,
         never a list. <a href="/account/">See what it looks like →</a>
       </p>
@@ -92,10 +92,10 @@ const examples: Record<string, { label: string; title: string; body: string; foo
       <h2>Recent program changes</h2>
       <ul>
         {updates.slice(0, 4).map((u) => (
-          <li><span class="meta">{fmt(u.date)}</span> <a href={`/ca/updates/#${u.slug}`}>{u.title}</a></li>
+          <li><span class="meta">{fmt(u.date)}</span> <a href={`/updates/#${u.slug}`}>{u.title}</a></li>
         ))}
       </ul>
-      <p class="small"><a href="/ca/updates/">All program changes →</a></p>
+      <p class="small"><a href="/updates/">All program changes →</a></p>
     </section>
 
     <section class="al-faq">

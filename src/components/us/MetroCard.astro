@@ -19,7 +19,7 @@ const her = variant === 'cheapest' ? herStatus(m) : null;
 const utils = variant === 'cheapest' ? mainUtilities(m, 3) : [];
 ---
 
-<a class:list={['mc', `mc-${variant}`]} href={`/us/cities/${m.slug}/`}>
+<a class:list={['mc', `mc-${variant}`]} href={`/cities/${m.slug}/`}>
   <span class="mc-top">
     <span class="mc-name">{m.data.name}</span>
     <span class="mc-rank" title="Rank by 2025 Census population estimate">#{m.rank}</span>

@@ -25,9 +25,9 @@ const description = g.lede.length > 155 ? g.lede.slice(0, 152).trimEnd() + '…'
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: g.name, path: `/ca/tests/${g.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: g.name, path: `/tests/${g.slug}/` },
   ]),
   faqSchema(g.faqs),
 ];
@@ -35,7 +35,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor(TEST_PHOTO[g.slug] ?? 'home-energy-audit')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>{g.name}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>{g.name}</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Energy test guide · verified {SITE.dataReviewDate}</p>
@@ -94,7 +94,7 @@ const schema = [
           <p class="mb-0">{g.remediation.footer}</p>
         </div>
       )}
-      <p class="meta">Example: Ontario planning bands as of {SITE.dataReviewDate}. Quotes vary with the house and the province; use them to budget, not to negotiate. <a href="/ca/cost/">What an audit costs in other provinces</a>.</p>
+      <p class="meta">Example: Ontario planning bands as of {SITE.dataReviewDate}. Quotes vary with the house and the province; use them to budget, not to negotiate. <a href="/cost/">What an audit costs in other provinces</a>.</p>
     </div>
 
     {g.gear.length > 0 && <GearStrip categories={g.gear} heading="Gear that pairs with this test" />}
@@ -116,10 +116,10 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
       {g.related.map((r) => (
-        <a class="btn btn-ghost" href={`/ca/tests/${r}/`}>Related: {allNames[r] ?? r}</a>
+        <a class="btn btn-ghost" href={`/tests/${r}/`}>Related: {allNames[r] ?? r}</a>
       ))}
     </div>
 

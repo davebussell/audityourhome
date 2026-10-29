@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { COUNTRIES } from '../../lib/country';
+
+const title = 'Page not found | AuditYourHouse';
+const description = 'That page has gone missing — like cooled air through a leaky duct.';
+---
+
+<Base title={title} description={description} indexable={false}>
+  <div class="container">
+    <div class="page-hero tac">
+      <p class="eyebrow">404</p>
+      <h1>This page leaked out</h1>
+      <p class="lede">Like conditioned air through a leaky duct. Let's get you somewhere sealed:</p>
+      <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+        <a class="btn btn-primary" href="/">Home</a>
+        <a class="btn btn-primary" href="/plan/">Start your free plan</a>
+      </p>
+      <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn btn-ghost" href="/find/">Find a certified auditor</a>
+        <a class="btn btn-ghost" href="/programs/">Rebates, tax credits &amp; programs</a>
+        <a class="btn btn-ghost" href={`${COUNTRIES.ca.origin}/?site=ca`}>Looking for the Canadian site?</a>
+      </p>
+    </div>
+  </div>
+</Base>

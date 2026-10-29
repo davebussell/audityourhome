@@ -209,7 +209,7 @@ export const bodyFor = (e, c) => pick(e, 'body', 'bodyCa', 'bodyUs', c);
 export const whyFor = (e, c) => (c === 'us' ? e.whyUs : e.whyCa) ?? localize(e.whyItMatters, c);
 /** URL segment for a country. */
 export const slugFor = (e, c) => (c === 'us' ? e.slugUs : e.slugCa) ?? e.slug;
-export const hrefFor = (e, c) => `/${c}/glossary/${slugFor(e, c)}/`;
+export const hrefFor = (e, c) => `/glossary/${slugFor(e, c)}/`;
 
 // ------------------------------------------------------------------ "What is …?" phrasing
 

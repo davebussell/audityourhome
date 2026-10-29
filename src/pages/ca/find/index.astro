@@ -30,8 +30,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Find an auditor', path: '/ca/find/' },
+    { name: 'Home', path: '/' },
+    { name: 'Find an auditor', path: '/find/' },
   ]),
   faqSchema(faqs),
 ];
@@ -43,7 +43,7 @@ const coveredCities = localCities.length;
 <Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>Find an auditor</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span>Find an auditor</span>
     </nav>
 
     <JourneyBar country="ca" current={2} ticks={false} />
@@ -60,7 +60,7 @@ const coveredCities = localCities.length;
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#provinces">Choose your province</a>
-          <a class="btn btn-ghost" href="/ca/plan/">Get your free plan first</a>
+          <a class="btn btn-ghost" href="/plan/">Get your free plan first</a>
         </div>
       </div>
       <Photo name={'home-energy-audit'} eager />
@@ -91,7 +91,7 @@ const coveredCities = localCities.length;
               <ul class="city-grid">
                 {s.cities.map((c) => (
                   <li>
-                    <a href={`/ca/services/home-energy-audit/${c.slug}/`}>
+                    <a href={`/services/home-energy-audit/${c.slug}/`}>
                       <span class="cn">{c.label ?? c.name}</span>
                       <span class="cc">{providerCountLabel(c)}</span>
                     </a>
@@ -101,7 +101,7 @@ const coveredCities = localCities.length;
             </div>
           )}
           <p class="prov-links small">
-            <a href={`/ca/provinces/${s.slug}/`}>{s.name} rebates and programs</a>
+            <a href={`/provinces/${s.slug}/`}>{s.name} rebates and programs</a>
             {s.slug === 'ontario' && <span> · <a href="#ontario-areas">Ontario areas we cover in depth</a></span>}
             <span class="src"> · Checked {s.checked}: {s.sources.map((src, i) => (
               <span>{i > 0 && ', '}<a href={src.href} rel="noopener" target="_blank">{src.label}&nbsp;↗</a></span>
@@ -123,7 +123,7 @@ const coveredCities = localCities.length;
         {regions.map((r) => {
           const count = providersForRegion(r.slug).length;
           return (
-            <a class="card region-card" href={`/ca/find/${r.slug}/`}>
+            <a class="card region-card" href={`/find/${r.slug}/`}>
               <h3>{r.name}</h3>
               <p class="small">{count} registered provider{count === 1 ? '' : 's'}</p>
               <span class="go">Browse →</span>
@@ -139,7 +139,7 @@ const coveredCities = localCities.length;
         The {coveredCities} city lists above come from NRCan’s register of licensed service organizations
         (checked {CITY_DATA_CHECKED}), and those organizations serve postal codes around each city too, so the
         nearest city is a good place to start. Or <a href={`mailto:${SITE.contactEmail}`}>email us your postal
-        code</a> and we’ll tell you who serves it. If you haven’t yet, <a href="/ca/plan/">get your free plan</a>
+        code</a> and we’ll tell you who serves it. If you haven’t yet, <a href="/plan/">get your free plan</a>
         first: it lists the tests to ask for.
       </p>
     </div>

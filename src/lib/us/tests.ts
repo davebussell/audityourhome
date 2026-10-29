@@ -1,5 +1,5 @@
 /**
- * US testing guide data layer (/us/tests/).
+ * US testing guide data layer (/tests/).
  *
  * Every fact on those pages comes from src/data/us/tests.json, verified against official
  * sources on October 12, 2026. Page names, one-line summaries and photo labels live in
@@ -46,7 +46,7 @@ export const usTest = (slug: string): UsTest => {
   return t;
 };
 export const testsIn = (group: TestGroup) => US_TESTS.filter((t) => t.group === group);
-export const guideHref = (slug: string) => `/us/tests/${slug}/`;
+export const guideHref = (slug: string) => `/tests/${slug}/`;
 
 // ---------------------------------------------------------------- sources
 export type Section =
@@ -112,10 +112,10 @@ export function uniqSources(list: Src[]): Src[] {
 
 // ---------------------------------------------------------------- states
 export const stateName = (st: string) => STATE_NAMES[st] ?? st;
-/** Slug for the planned /us/programs/states/<slug>/ pages: "New York" → "new-york". */
+/** Slug for the planned /programs/states/<slug>/ pages: "New York" → "new-york". */
 export const stateSlug = (st: string) =>
   stateName(st).toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
-export const stateProgramsHref = (st: string) => `/us/programs/states/${stateSlug(st)}/`;
+export const stateProgramsHref = (st: string) => `/programs/states/${stateSlug(st)}/`;
 
 const SUMMARY = T.stateSummary as any[];
 const byName = (a: string, b: string) => stateName(a).localeCompare(stateName(b));
@@ -269,7 +269,7 @@ export const listStates = (codes: string[]) => {
 
 // ---------------------------------------------------------------- metros
 export const metroName = (m: Metro) => (m.data?.name as string) ?? m.msa;
-export const metroHref = (m: Metro) => `/us/cities/${m.slug}/`;
+export const metroHref = (m: Metro) => `/cities/${m.slug}/`;
 
 /** Metros grouped by IECC 2021 climate zone of the principal county, coldest last. */
 export function metrosByClimateZone(): { zone: string; num: number; metros: Metro[] }[] {

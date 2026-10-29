@@ -200,7 +200,7 @@ export function watchFor(era: Era, o: { cls: ClimClass | null; heat: string }): 
 
 /* ------------------------------------------------------------------ symptoms and concerns */
 
-/** Homeowner problems, in the words of the /us/issues/<slug>/ pages. */
+/** Homeowner problems, in the words of the /issues/<slug>/ pages. */
 export const SYMPTOMS: { value: string; label: string }[] = [
   { value: 'high-summer-bills', label: 'High summer (cooling) bills' },
   { value: 'humid-indoors', label: 'Humid or sticky indoors' },

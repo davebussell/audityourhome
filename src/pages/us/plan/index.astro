@@ -1,7 +1,7 @@
 ---
 /**
- * US Home Energy Planner (/us/plan/). Target of every "Check my home" button on the US site, of the
- * ZIP form on /us/ (/us/plan/#zip=12345&age=…) and of the test screener's hand-off. The planner runs
+ * US Home Energy Planner (/plan/). Target of every "Check my home" button on the US site, of the
+ * ZIP form on the home page (/plan/#zip=12345&age=…) and of the test screener's hand-off. The planner runs
  * entirely in the browser (src/lib/us/plan-client.ts) on a payload built here from the US research
  * files; analytics are off on this page so nothing a visitor enters leaves the browser.
  */
@@ -23,7 +23,7 @@ import testsJson from '../../../data/us/tests.json';
 import zip3Json from '../../../data/us/zip3.json';
 import coolingJson from '../../../data/us/cooling-model.json';
 
-const title = 'US Home Energy Planner: what your home needs and what it saves | AuditYourHome';
+const title = 'US Home Energy Planner: what your home needs and what it saves | AuditYourHouse';
 const description =
   'Six short steps, about 2 minutes. Get an upgrade plan with conservative heating and cooling savings for your climate and state energy prices, the tests worth asking for, and which rebates and assessment programs are open where you live. Nothing you enter leaves your browser.';
 
@@ -31,8 +31,8 @@ const payload = buildPlanPayload();
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'Home Energy Planner', path: '/us/plan/' },
+    { name: 'Home', path: '/' },
+    { name: 'Home Energy Planner', path: '/plan/' },
   ]),
 ];
 
@@ -394,7 +394,7 @@ const leadSub = NETLIFY_FORMS
           ranges into numbers for <em>your</em> address. The federal $150 audit tax credit ended with
           2025, but utility and state programs commonly pay for most or all of an assessment.
         </p>
-        <p class="cta-links"><a href="/us/find/">Our guide to finding an auditor →</a> <a href="/us/how-it-works/">How an audit works →</a> <a href="/us/cost/">What an audit costs →</a></p>
+        <p class="cta-links"><a href="/find/">Our guide to finding an auditor →</a> <a href="/how-it-works/">How an audit works →</a> <a href="/cost/">What an audit costs →</a></p>
       </div>
 
       <LeadFormUS heading="Want a person to look at your plan?" sub={leadSub} context="us-planner" />
@@ -415,7 +415,7 @@ const leadSub = NETLIFY_FORMS
       </div>
 
       <div class="sticky-book" id="stickyBook">
-        <a class="btn btn-primary" id="stickyBookBtn" href="/us/find/">Book my audit</a>
+        <a class="btn btn-primary" id="stickyBookBtn" href="/find/">Book my audit</a>
         <a class="sb-next" href="#rNext">My next 3 steps</a>
       </div>
     </div>
@@ -539,7 +539,7 @@ const leadSub = NETLIFY_FORMS
             <tbody>
               {metroRows.map(({ m, ac }) => (
                 <tr>
-                  <td data-label="Metro area"><a href={`/us/cities/${m.slug}/`}>{m.data.name}</a></td>
+                  <td data-label="Metro area"><a href={`/cities/${m.slug}/`}>{m.data.name}</a></td>
                   <td data-label="Heating degree days">{int(m.climate?.hdd65 ?? 0)}</td>
                   <td data-label="Cooling degree days">{int(m.climate?.cdd65 ?? 0)}</td>
                   <td data-label="IECC zone">{m.climate?.iecc2021ClimateZone ?? '—'}</td>

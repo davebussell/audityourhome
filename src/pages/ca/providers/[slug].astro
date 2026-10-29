@@ -28,9 +28,9 @@ const rv = reviewLinks(p);
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Find an auditor', path: '/ca/find/' },
-    { name: p.name, path: `/ca/providers/${p.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Find an auditor', path: '/find/' },
+    { name: p.name, path: `/providers/${p.slug}/` },
   ]),
   ...(inactive ? [] : [providerSchema(p)]),
 ];
@@ -39,7 +39,7 @@ const schema = [
 <Base title={title} description={description} schema={schema}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/find/">Find an auditor</a> <span aria-hidden="true">/</span> <span>{p.name}</span>
+      <a href="/find/">Find an auditor</a> <span aria-hidden="true">/</span> <span>{p.name}</span>
     </nav>
 
     <div class="page-hero">
@@ -48,8 +48,8 @@ const schema = [
         <span class="chip chip-neutral">{typeLabel}</span>
         {inactive && <span class="chip chip-closed">No longer offering evaluations</span>}
         {!inactive && (p.hrsApproved
-          ? <a class="chip chip-active hrs-chip" href="/ca/programs/home-renovation-savings-assessment/">HRSP-approved: Yes</a>
-          : <a class="chip chip-neutral hrs-chip" href="/ca/programs/home-renovation-savings-assessment/">HRSP-approved: No</a>)}
+          ? <a class="chip chip-active hrs-chip" href="/programs/home-renovation-savings-assessment/">HRSP-approved: Yes</a>
+          : <a class="chip chip-neutral hrs-chip" href="/programs/home-renovation-savings-assessment/">HRSP-approved: No</a>)}
       </div>
       {inactive ? (
         <div class="card card-pad inactive-note">
@@ -59,7 +59,7 @@ const schema = [
             <p class="mb-0">
               <strong>Serving this area now:</strong>{' '}
               {alternatives.map((a, i) => (
-                <span>{i > 0 && ' · '}<a href={`/ca/providers/${a!.slug}/`}>{a!.name}</a></span>
+                <span>{i > 0 && ' · '}<a href={`/providers/${a!.slug}/`}>{a!.name}</a></span>
               ))}
             </p>
           )}
@@ -77,7 +77,7 @@ const schema = [
       {p.hrsApproved && !inactive && (
         <p class="small hrs-note measure">
           One of the seven service organizations approved for Ontario's
-          <a href="/ca/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>,
+          <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>,
           so its EnerGuide assessments can qualify for the $600 assessment rebate (paid once you install at
           least two recommended upgrades) and the insulation, window and air-sealing rebates. The same
           organization has to do both visits, and the follow-up must be booked by November 30, 2026 and
@@ -87,7 +87,7 @@ const schema = [
       {!p.hrsApproved && !inactive && (
         <p class="small hrs-note measure">
           Not one of the seven organizations approved for Ontario's
-          <a href="/ca/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>.
+          <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings assessment path</a>.
           Its EnerGuide evaluations are official and still count for planning, financing and other
           programs, but only assessments from the seven HRSP-approved organizations qualify for the $600
           rebate and the assessment-path upgrade rebates.
@@ -104,7 +104,7 @@ const schema = [
           <p class="small">
             Directory areas:
             {servedRegions.map((r, i) => (
-              <span>{i > 0 && ', '}<a href={`/ca/find/${r!.slug}/`}>{r!.name}</a></span>
+              <span>{i > 0 && ', '}<a href={`/find/${r!.slug}/`}>{r!.name}</a></span>
             ))}
           </p>
         )}
@@ -162,7 +162,7 @@ const schema = [
         ))}) and checked {p.checkedOn}. {SITE.name} verification — where providers confirm
         registration, insurance, and pricing with us directly — is rolling out; verified profiles
         will be marked. Spot an error? <a href={`mailto:${SITE.contactEmail}`}>Tell us</a> and we'll
-        fix it fast. This provider can <a href="/ca/for-professionals/">claim this profile</a>.
+        fix it fast. This provider can <a href="/for-professionals/">claim this profile</a>.
       </p>
     </div>
 

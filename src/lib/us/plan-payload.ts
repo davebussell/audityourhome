@@ -1,5 +1,5 @@
 /**
- * Build-time data for the US Home Energy Planner (/us/plan/). Everything comes from the US
+ * Build-time data for the US Home Energy Planner (/plan/). Everything comes from the US
  * research files (src/data/us/, verified October 12, 2026) through the helpers in data.ts and
  * programs.ts, the cooling model (src/data/us/cooling-model.json, checked October 26, 2026), the
  * regional climate profiles (src/data/climate/us.json), the test reading guides
@@ -8,7 +8,7 @@
  * enters is sent anywhere.
  *
  * Federal Home Energy Rebate status comes from programs.ts STATES, the same records
- * /us/programs/states/<state>/ and the /us/ home page read, including the metro research that
+ * /programs/states/<state>/ and the US home page read, including the metro research that
  * programs.ts folds in (Arizona's status comes from our Phoenix research on Efficiency Arizona).
  */
 import { STATE_NAMES, METROS, statePrices, statusChip, PRICE_META, FEDERAL, US_VERIFIED, type Metro } from './data';

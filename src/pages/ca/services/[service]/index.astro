@@ -20,9 +20,9 @@ const title = `${service.h1} in ${n} Canadian cities: local costs, rules and pro
 const description = `${service.blurb} Local guides for ${n} cities from Victoria to St. John's, with climate, housing-age and program details for each.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Services', path: '/ca/services/' },
-    { name: service.h1, path: `/ca/services/${service.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+    { name: service.h1, path: `/services/${service.slug}/` },
   ]),
 ];
 const others = services.filter((s) => s.slug !== service.slug);
@@ -30,7 +30,7 @@ const others = services.filter((s) => s.slug !== service.slug);
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor(service.slug)}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/services/">Services</a> <span aria-hidden="true">/</span> <span>{service.h1}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/services/">Services</a> <span aria-hidden="true">/</span> <span>{service.h1}</span></nav>
 
     <div class="page-hero has-photo">
       <div class="hero-text">
@@ -52,11 +52,11 @@ const others = services.filter((s) => s.slug !== service.slug);
       {service.metricNote && <p class="small intro metric-note"><strong>What the figure under each city means:</strong> {service.metricNote}</p>}
       {groups.map((g) => (
         <div class="prov">
-          <h3><a href={`/ca/provinces/${g.provSlug}/`}>{g.provName}</a></h3>
+          <h3><a href={`/provinces/${g.provSlug}/`}>{g.provName}</a></h3>
           <ul class="clist">
             {g.cities.map((c) => (
               <li>
-                <a href={`/ca/services/${service.slug}/${c.slug}/`}>
+                <a href={`/services/${service.slug}/${c.slug}/`}>
                   <span class="cn">{c.name}</span>
                   <span class="cm">{c.metrics[service.slug]}</span>
                   <EraBar era={c.facts.era} name={c.name} />
@@ -78,7 +78,7 @@ const others = services.filter((s) => s.slug !== service.slug);
     <section class="others">
       <h2>Other services</h2>
       <div class="olist">
-        {others.map((s) => <a href={`/ca/services/${s.slug}/`}>{s.h1}</a>)}
+        {others.map((s) => <a href={`/services/${s.slug}/`}>{s.h1}</a>)}
       </div>
     </section>
   </div>

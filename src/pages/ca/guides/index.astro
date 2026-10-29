@@ -12,8 +12,8 @@ const description =
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Guides', path: '/ca/guides/' },
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/guides/' },
   ]),
 ];
 ---
@@ -34,19 +34,19 @@ const schema = [
     </div>
 
     <div class="featured-row">
-      <a class="card feat" href="/ca/tests/">
+      <a class="card feat" href="/tests/">
         <p class="eyebrow">Featured guide</p>
         <h2>The complete home testing guide</h2>
         <p class="small">Every test from blower doors and infrared scans to radon, CO, and vermiculite — what each establishes, who performs it, what it costs.</p>
         <span class="go">Read it →</span>
       </a>
-      <a class="card feat" href="/ca/issues/">
+      <a class="card feat" href="/issues/">
         <p class="eyebrow">Symptom-first</p>
         <h2>Fix an issue</h2>
         <p class="small">Ice dams, drafts, condensation, cold basements — diagnose from the symptom and follow the fix ladder.</p>
         <span class="go">Browse issues →</span>
       </a>
-      <a class="card feat" href="/ca/articles/">
+      <a class="card feat" href="/articles/">
         <p class="eyebrow">Deep dives</p>
         <h2>Articles</h2>
         <p class="small">Cited long-reads: what an audit is, when it's required, Toronto services &amp; financing, Northern BC — every claim dated and sourced.</p>
@@ -60,7 +60,7 @@ const schema = [
         const region = regionBySlug(g.slug);
         const count = providersForRegion(g.slug).length;
         return (
-          <a class="card gcard" href={`/ca/guides/${g.slug}/`}>
+          <a class="card gcard" href={`/guides/${g.slug}/`}>
             <h3>{region?.name ?? g.slug}</h3>
             <p class="small">{g.intro.slice(0, 110)}…</p>
             <span class="meta">{count} registered advisors · rebates · local findings</span>

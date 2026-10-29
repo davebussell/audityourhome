@@ -358,7 +358,7 @@ export function plannerHref(input: ScreenerInput): string {
   if (input.plans.includes('reno')) goals.push('reno');
   if (input.plans.includes('sale')) goals.push('buying');
   q.set('goal', goals.join(','));
-  return `/us/plan/#${q.toString()}`;
+  return `/plan/#${q.toString()}`;
 }
 
 function cite(list: Src[], verified: string): string {
@@ -366,14 +366,14 @@ function cite(list: Src[], verified: string): string {
   return `<p class="cite">${list.length > 1 ? 'Sources' : 'Source'}: ${links} · verified ${esc(verified)}</p>`;
 }
 
-/** Result panel markup. Every string is escaped; links point only at /us/ pages and cited sources. */
+/** Result panel markup. Every string is escaped; links point only at US-site pages and cited sources. */
 export function renderResultHtml(input: ScreenerInput, r: ScreenerResult, facts: ScreenerFacts): string {
   const where: string[] = [BUILT_TEXT[input.built]];
   if (r.metro) {
     const bits = [r.metro.county, r.metro.radonZone ? `EPA radon Zone ${r.metro.radonZone}` : '', r.metro.climateZone ? `IECC zone ${r.metro.climateZone}` : '']
       .filter(Boolean)
       .join(', ');
-    where.push(`<a href="/us/cities/${esc(r.metro.slug)}/">${esc(r.metro.name)}</a>${bits ? ` (${esc(bits)})` : ''}`);
+    where.push(`<a href="/cities/${esc(r.metro.slug)}/">${esc(r.metro.name)}</a>${bits ? ` (${esc(bits)})` : ''}`);
   } else if (r.zone) {
     where.push(`EPA radon Zone ${r.zone}`);
   }
@@ -390,7 +390,7 @@ export function renderResultHtml(input: ScreenerInput, r: ScreenerResult, facts:
         r.state.checked
           ? 'one of the 20 jurisdictions we checked in full; its rules are in the cards below.'
           : 'not one of the 20 jurisdictions we checked in full, so state rules below are only what turned up in national reviews.'
-      } <a href="/us/programs/states/${esc(r.state.slug)}/">Home energy rebates in ${esc(r.state.name)} →</a></p>`
+      } <a href="/programs/states/${esc(r.state.slug)}/">Home energy rebates in ${esc(r.state.name)} →</a></p>`
     : '<p class="rstate">Pick your state to see its radon, mold, carbon monoxide and lead rules.</p>';
 
   const groups = (['start', 'next', 'good'] as Level[])
@@ -403,10 +403,10 @@ export function renderResultHtml(input: ScreenerInput, r: ScreenerResult, facts:
           .map(
             (f) => `
           <article class="card sflag lvl-${lvl}">
-            <h4><a href="/us/tests/${esc(f.slug)}/">${esc(f.name)}</a> <span class="chip ${CHIP[lvl]}">${esc(LEVELS[lvl].label)}</span></h4>
+            <h4><a href="/tests/${esc(f.slug)}/">${esc(f.name)}</a> <span class="chip ${CHIP[lvl]}">${esc(LEVELS[lvl].label)}</span></h4>
             <ul class="why">${f.reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
             ${cite(f.sources, facts.verified)}
-            <p class="go"><a href="/us/tests/${esc(f.slug)}/">Full guide: ${esc(f.name)} →</a></p>
+            <p class="go"><a href="/tests/${esc(f.slug)}/">Full guide: ${esc(f.name)} →</a></p>
           </article>`,
           )
           .join('')}`;
@@ -414,6 +414,6 @@ export function renderResultHtml(input: ScreenerInput, r: ScreenerResult, facts:
     .join('');
 
   return `${head}${stateNote}${groups}
-    <p class="rfoot">Take this list to your auditor or tester. <a href="/us/find/">Our guide to finding an auditor →</a></p>
+    <p class="rfoot">Take this list to your auditor or tester. <a href="/find/">Our guide to finding an auditor →</a></p>
     <p class="rfoot rplan"><b>Want the energy side too?</b> The Home Energy Planner adds your ZIP code, heating and cooling to these answers and gives you an upgrade plan with savings, the energy tests and the programs open where you live. <a href="${esc(plannerHref(input))}">Build my full plan, with these answers carried over →</a></p>`;
 }

@@ -215,7 +215,7 @@ export function startPlanner() {
     zipFb.className = 'zip-feedback';
     if (r.error === 'empty') { zipFb.innerHTML = showErrors ? '<p class="field-error">Enter the home’s 5-digit ZIP code.</p>' : ''; return r; }
     if (r.error === 'canada') {
-      zipFb.innerHTML = `<p class="zip-ca">That looks like a Canadian postal code. This planner covers US homes; <a href="/ca/plan/#postal=${encodeURIComponent(r.postal!)}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).</p>`;
+      zipFb.innerHTML = `<p class="zip-ca">That looks like a Canadian postal code. This planner covers US homes; <a href="/plan/#postal=${encodeURIComponent(r.postal!)}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).</p>`;
       return r;
     }
     if (r.error === 'format') { zipFb.innerHTML = showErrors ? '<p class="field-error">Enter a 5-digit ZIP code, like 60614 or 60614-1234.</p>' : ''; return r; }
@@ -702,12 +702,12 @@ export function startPlanner() {
     return { audit: best, pick: false, perUtil: [], others: [] };
   }
   const othersLine = (others: string[], perUtil: { u: string }[]) =>
-    `<li><b>${perUtil.some((x) => /electric or gas$/.test(x.u)) || !others.length ? 'Everyone else' : `${esc(others.join(', '))} and other customers`}:</b> book a certified auditor directly; <a href="/us/find/">our guide to finding an auditor</a> shows how.</li>`;
+    `<li><b>${perUtil.some((x) => /electric or gas$/.test(x.u)) || !others.length ? 'Everyone else' : `${esc(others.join(', '))} and other customers`}:</b> book a certified auditor directly; <a href="/find/">our guide to finding an auditor</a> shows how.</li>`;
 
   /* ------------------------------------------------------------------ results */
 
   let lastSeq: SeqItem[] = [];
-  let bookHref = '/us/find/';
+  let bookHref = '/find/';
   /** the sticky bar's words when the primary button isn't a booking link */
   let bookLabel = '';
 
@@ -832,7 +832,7 @@ export function startPlanner() {
         bookHref = `tel:+1${phone[1]}${phone[2]}${phone[3]}`;
         cta = `<a class="btn btn-primary" href="${bookHref}" data-book>Book my audit: call ${phone[1]}-${phone[2]}-${phone[3]}</a>${x.url ? ` <span class="small">${ext(x.url, x.ul ?? 'The program page')}</span>` : ''}`;
       } else {
-        bookHref = x.url ?? '/us/find/';
+        bookHref = x.url ?? '/find/';
         cta = x.url ? `<a class="btn btn-primary" href="${esc(x.url)}" rel="noopener" target="_blank" data-book>Book my audit&nbsp;↗</a>` : '';
       }
     } else {
@@ -851,7 +851,7 @@ export function startPlanner() {
     }
     const top = energy.slice(0, 3);
     const tests = top.length
-      ? `<p>${top.map((t) => `<a href="/us/tests/${t.slug}/">${esc(t.name)}</a>`).join(', ')}${energy.length > 3 ? `, plus ${energy.length - 3} more below` : ''}.</p>
+      ? `<p>${top.map((t) => `<a href="/tests/${t.slug}/">${esc(t.name)}</a>`).join(', ')}${energy.length > 3 ? `, plus ${energy.length - 3} more below` : ''}.</p>
         <p class="small">Ask for them by name when you book, and ask whether the visit includes them. <button type="button" class="linkish" data-copy-tests>Copy my test checklist</button></p>`
       : '<p>In a condo or apartment, ask the association about a building-level audit; the health checks below still apply to your unit.</p>';
     const reb = nextRebates(c, seq);
@@ -898,8 +898,8 @@ export function startPlanner() {
 
   function herLine(c: Ctx): string {
     const her = c.loc.st.her;
-    if (her?.taking) return `<p>${esc(her.lede)} <a href="/us/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and how to apply →</a></p>`;
-    return `<p>We found no open rebate for your top upgrades in the programs we track. <a href="/us/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and programs →</a>${D.rebateFinderUrl ? ` ENERGY STAR’s ${ext(D.rebateFinderUrl, 'Rebate Finder')} searches utility offers by ZIP code.` : ''}</p>`;
+    if (her?.taking) return `<p>${esc(her.lede)} <a href="/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and how to apply →</a></p>`;
+    return `<p>We found no open rebate for your top upgrades in the programs we track. <a href="/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and programs →</a>${D.rebateFinderUrl ? ` ENERGY STAR’s ${ext(D.rebateFinderUrl, 'Rebate Finder')} searches utility offers by ZIP code.` : ''}</p>`;
   }
 
   /* ---------------------------------------------------------------- 2. what homes here need */
@@ -921,7 +921,7 @@ export function startPlanner() {
         ${p.smoke ? `<p class="small needs-smoke"><b>Smoke days:</b> ${esc(p.smoke)} Sealing air leaks keeps more smoke outside; ask the auditor whether your system can take a MERV 13 filter.</p>` : ''}
         <p class="small"><b>When to book:</b> ${esc(p.season)}</p>
         ${here && n.note ? `<p class="small">${esc(n.note)}</p>` : ''}
-        <p class="small links">${here ? `<a href="/us/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a> <a href="/us/heat-pumps/${c.loc.metro}/">Heat pumps in ${esc(areaShort(c.loc.metro!))} →</a>` : `<a href="/us/cities/${c.loc.clim}/">The ${esc(metroName(c.loc.clim))} metro guide →</a>`}</p>
+        <p class="small links">${here ? `<a href="/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a> <a href="/heat-pumps/${c.loc.metro}/">Heat pumps in ${esc(areaShort(c.loc.metro!))} →</a>` : `<a href="/cities/${c.loc.clim}/">The ${esc(metroName(c.loc.clim))} metro guide →</a>`}</p>
       </div>`;
   }
 
@@ -932,7 +932,7 @@ export function startPlanner() {
     'combustion-safety': 'Combustion safety test', 'heat-loss-calc': 'Manual J load calculation', 'bill-analysis': '12-month bill analysis',
     'attic-inspection': 'Attic inspection', 'mold-iaq': 'Mold and humidity check', radon: 'Radon test', 'carbon-monoxide': 'Carbon monoxide check',
   };
-  const testLink = (slug: string) => `<a href="/us/tests/${slug}/">${esc(TEST_NAME[slug] ?? slug.replace(/-/g, ' '))}</a>`;
+  const testLink = (slug: string) => `<a href="/tests/${slug}/">${esc(TEST_NAME[slug] ?? slug.replace(/-/g, ' '))}</a>`;
 
   function renderConcerns(c: Ctx) {
     const el = $('#rConcerns');
@@ -949,7 +949,7 @@ export function startPlanner() {
             <p class="small"><b>${t!.tests.length > 1 ? 'Tests that confirm it' : 'The test that confirms it'}:</b> ${t!.tests.map(testLink).join(', ')}.</p>
             <p class="small"><b>Fixes, cheapest first:</b></p>
             <ol class="ladder">${t!.ladder.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
-            <p class="small"><a href="/us/issues/${s}/">More on ${esc(lcfirst(t!.label))} →</a></p>
+            <p class="small"><a href="/issues/${s}/">More on ${esc(lcfirst(t!.label))} →</a></p>
           </div>`).join('')}</div>
       </div>`;
   }
@@ -1048,7 +1048,7 @@ export function startPlanner() {
     if (her) {
       const prog = ['heat-pump', 'water-heating'].includes(cat) ? her.heehr : ['air-sealing', 'attic-insulation', 'duct-sealing', 'wall-insulation'].includes(cat) ? her.homes : null;
       if (prog && ['open', 'limited'].includes(prog.chip.status) && !['Paused', 'Waitlist'].includes(prog.chip.label)) {
-        out.push(`<span class="rebate"><span class="chip ${prog.chip.cls}">${esc(prog.chip.label)}</span> <a href="/us/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))}’s federal ${prog === her.heehr ? 'HEEHR' : 'HOMES'} rebates</a>${prog.name ? ` <span class="small">(${esc(prog.name.replace(/\s*\(.*$/, ''))}; income limits apply)</span>` : ' <span class="small">(income limits apply)</span>'}</span>`);
+        out.push(`<span class="rebate"><span class="chip ${prog.chip.cls}">${esc(prog.chip.label)}</span> <a href="/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))}’s federal ${prog === her.heehr ? 'HEEHR' : 'HOMES'} rebates</a>${prog.name ? ` <span class="small">(${esc(prog.name.replace(/\s*\(.*$/, ''))}; income limits apply)</span>` : ' <span class="small">(income limits apply)</span>'}</span>`);
       }
     }
     return out.length ? `<div class="rebates">${out.join('')}</div>` : '';
@@ -1199,7 +1199,7 @@ export function startPlanner() {
       <div class="test-card${health ? ' health' : ''}">
         <span class="ticon" aria-hidden="true">${ICONS[t.icon] ?? ''}</span>
         <div>
-          <h4><a class="tname" href="/us/tests/${t.slug}/">${esc(t.name)}</a>${t.level ? ` <span class="chip ${LEVEL[t.level].cls}">${LEVEL[t.level].label}</span>` : ''}</h4>
+          <h4><a class="tname" href="/tests/${t.slug}/">${esc(t.name)}</a>${t.level ? ` <span class="chip ${LEVEL[t.level].cls}">${LEVEL[t.level].label}</span>` : ''}</h4>
           <p class="tw">${esc(t.why)}</p>
           ${noteOut}
           ${inc.length ? `<p class="test-inc"><b>Included in:</b> ${inc.map((x) => `${ext(x.url, x.n)}${x.cost ? ` <span class="small">(${esc(x.cost)})</span>` : ''}`).join('; ')}</p>` : ''}
@@ -1214,7 +1214,7 @@ export function startPlanner() {
     el.innerHTML = `
       <div class="rsec">
         ${energy.length ? `<h3>Tests to ask your auditor for</h3>
-        <p class="sub">Ask for these by name; they turn “probably” into measurements. Each card says what a good or bad result looks like and what to do about it. <a href="/us/tests/">The complete testing guide →</a></p>
+        <p class="sub">Ask for these by name; they turn “probably” into measurements. Each card says what a good or bad result looks like and what to do about it. <a href="/tests/">The complete testing guide →</a></p>
         <div class="test-grid">${energy.map((t) => testCard(t, false, c)).join('')}</div>` : ''}
         <h3 class="${energy.length ? 'spec-h' : ''}">Health and safety checks</h3>
         <p class="sub">Screened from your answers: era, heating, water source and the problems you flagged.</p>
@@ -1246,7 +1246,7 @@ export function startPlanner() {
   function renderPrograms(c: Ctx) {
     const el = $('#rPrograms');
     const st = c.loc.st;
-    const stLink = `/us/programs/states/${st.slug}/`;
+    const stLink = `/programs/states/${st.slug}/`;
     const metro = c.metro;
     const her = st.her;
     const herRow = (label: string, prog: HerProg) => `
@@ -1286,7 +1286,7 @@ export function startPlanner() {
               ${x.ul && x.url ? `<span class="hl hl-link">${ext(x.url, x.ul)}</span>` : ''}
             </div>`).join('')}
           ${list.some((x) => x.open) ? '' : `<p class="nothing-open"><b>Nothing open:</b> none of the assessment programs we track for ${esc(areaShort(c.loc.metro!))} is taking sign-ups right now.</p>`}
-          <p class="small"><a href="/us/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a></p>
+          <p class="small"><a href="/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a></p>
         </div>`;
     } else {
       const near = c.loc.near;
@@ -1294,7 +1294,7 @@ export function startPlanner() {
         <div class="card card-pad prog-card">
           <h4>Home energy assessments near you</h4>
           <p class="small">We’ve checked assessment programs metro by metro, and your ZIP code is outside the 26 metro areas we cover, so we have none to list for it. Utility and state programs commonly pay for most or all of an assessment, so ask your electric and gas utilities first.${near ? ` The ${esc(metroName(near))} programs we track may not serve your address, but their guide shows what to look for.` : ''}</p>
-          ${near ? `<p class="small"><a href="/us/cities/${near}/">The ${esc(metroName(near))} metro guide →</a></p>` : ''}
+          ${near ? `<p class="small"><a href="/cities/${near}/">The ${esc(metroName(near))} metro guide →</a></p>` : ''}
         </div>`;
     }
 
@@ -1312,7 +1312,7 @@ export function startPlanner() {
         ${local.length ? `<p class="small">Each upgrade above shows the rebates that pay for it.</p>${local.slice(0, 4).map(row).join('')}` : `<p class="small">None of the rebate programs we track for ${esc(areaShort(c.loc.metro!))} is confirmed open for your answers right now.</p>`}
         ${local.length > 4 ? `<details class="more-rows"><summary>${local.length - 4} more open rebate${local.length - 4 === 1 ? '' : 's'}</summary>${local.slice(4, 14).map(row).join('')}</details>` : ''}
         ${unsure.length ? `<details class="more-rows"><summary>${unsure.length} more whose status the program page doesn’t state</summary>${unsure.slice(0, 10).map(row).join('')}</details>` : ''}
-        <p class="small"><a href="/us/cities/${c.loc.metro}/">All of them in the ${esc(metroName(c.loc.metro))} metro guide →</a></p>
+        <p class="small"><a href="/cities/${c.loc.metro}/">All of them in the ${esc(metroName(c.loc.metro))} metro guide →</a></p>
       </div>` : '';
 
     const credits = `
@@ -1336,7 +1336,7 @@ export function startPlanner() {
     el.innerHTML = `
       <div class="rsec">
         <h3>Programs for your area</h3>
-        <p class="sub">Checked against official pages on ${esc(D.verified)}. Program details change, so confirm before spending. <a href="/us/programs/">All US programs →</a></p>
+        <p class="sub">Checked against official pages on ${esc(D.verified)}. Program details change, so confirm before spending. <a href="/programs/">All US programs →</a></p>
         <div class="prog-grid">${auditCard}${rebateCard}${herCard}${help}${credits}</div>
       </div>`;
   }
@@ -1362,7 +1362,7 @@ export function startPlanner() {
       <div class="rsec">
         <h3>Find a certified auditor</h3>
         ${lead}
-        <p class="sub">${lead ? 'Or hire an independent certified auditor. ' : ''}Ask which credential the auditor holds and whether the visit includes a blower door test${c.hot || c.coolDom ? ' and a duct leakage test' : ''}. These official finders search by location; <a href="/us/find/">our guide to finding an auditor</a> explains the credentials and the red flags.</p>
+        <p class="sub">${lead ? 'Or hire an independent certified auditor. ' : ''}Ask which credential the auditor holds and whether the visit includes a blower door test${c.hot || c.coolDom ? ' and a duct leakage test' : ''}. These official finders search by location; <a href="/find/">our guide to finding an auditor</a> explains the credentials and the red flags.</p>
         <ul class="res-list">${items}</ul>
       </div>`;
   }
@@ -1632,20 +1632,20 @@ export function startPlanner() {
         <p class="small">${where} Heating: ${heatTxt}${coolTxt}</p>
         <p class="small">Each upgrade’s heating saving comes from the physics of that part of the house (R-values, window U-factors, air leakage) at your degree days, multiplied by 0.75 (0.4 for basements) because sun, people and appliances already supply free heat and real installations underperform their labels; no single upgrade is credited with more than 35% of your heating, and all of them together with no more than 60%. Cooling savings are percentages of the air-conditioning estimate from field studies and NREL’s ResStock models, and they overlap: attic insulation, a radiant barrier and a cool roof all block the same attic heat, so we never add them at full value.</p>
         <p class="small">Savings are valued at EIA’s average prices, which include fixed monthly charges, so they can run a little high: one more therm or kilowatt-hour usually costs less than the average, though tiered summer rates can cost more.</p>
-        <p class="small"><a href="#assumptions">Every assumption and source →</a> · <a href="/us/how-it-works/">How a home energy audit works →</a> · <a href="/us/glossary/">Glossary of audit terms →</a></p>
+        <p class="small"><a href="#assumptions">Every assumption and source →</a> · <a href="/how-it-works/">How a home energy audit works →</a> · <a href="/glossary/">Glossary of audit terms →</a></p>
       </details>`;
     wireClimPickers(c);
   }
 
   function renderResources(c: Ctx) {
     const items = [
-      `<li><a href="/us/how-it-works/">How a home energy audit works</a>: what happens during the visit, step by step</li>`,
-      `<li><a href="/us/cost/">What an audit costs</a>, and who pays for some or all of it</li>`,
-      `<li><a href="/us/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and programs</a>, checked against official pages</li>`,
-      c.loc.metro ? `<li><a href="/us/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide</a>: utilities, assessments and local rules</li>` : '',
-      `<li><a href="/us/tests/">The complete testing guide</a>: every test from blower doors to radon, and who performs it</li>`,
-      `<li><a href="/us/glossary/">The glossary</a>: every audit term in plain language</li>`,
-      `<li><a href="/us/products/">Monitoring and testing gear</a>: radon, CO and humidity monitors</li>`,
+      `<li><a href="/how-it-works/">How a home energy audit works</a>: what happens during the visit, step by step</li>`,
+      `<li><a href="/cost/">What an audit costs</a>, and who pays for some or all of it</li>`,
+      `<li><a href="/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and programs</a>, checked against official pages</li>`,
+      c.loc.metro ? `<li><a href="/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide</a>: utilities, assessments and local rules</li>` : '',
+      `<li><a href="/tests/">The complete testing guide</a>: every test from blower doors to radon, and who performs it</li>`,
+      `<li><a href="/glossary/">The glossary</a>: every audit term in plain language</li>`,
+      `<li><a href="/products/">Monitoring and testing gear</a>: radon, CO and humidity monitors</li>`,
     ].filter(Boolean);
     $('#rResources').innerHTML = `<div class="rsec"><h3>Resources for your plan</h3><ul class="res-list">${items.join('')}</ul></div>`;
   }
@@ -1655,7 +1655,7 @@ export function startPlanner() {
   function planSummary(c: Ctx, seq: SeqItem[]): string {
     const a = c.a;
     const lines = [
-      'From the AuditYourHome planner (a pre-audit estimate):',
+      'From the AuditYourHouse planner (a pre-audit estimate):',
       `Home: built ${lcfirst(pickedLabel('age', a.age))}, ${pickedLabel('htype', a.htype).toLowerCase()}, ${lcfirst(pickedLabel('size', a.size).replace(/\s*sq ft$/, ''))} sq ft, ${a.found === 'unsure' ? 'foundation not sure' : pickedLabel('found', a.found).toLowerCase()}; ZIP ${c.loc.zip5}${c.loc.metro ? ` (${metroName(c.loc.metro)} metro area)` : ''}`,
       `Heating: ${pickedLabel('heat', a.heat)} · Cooling: ${pickedLabel('ac', a.ac)} · Water heater: ${pickedLabel('wh', a.wh)}`,
     ];

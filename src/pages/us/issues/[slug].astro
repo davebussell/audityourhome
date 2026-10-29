@@ -42,14 +42,14 @@ const checked = new Date(`${ISSUES_CHECKED}T12:00:00Z`).toLocaleDateString('en-U
   year: 'numeric',
   timeZone: 'UTC',
 });
-const title = `${issue.name}: causes by climate and what to fix first | AuditYourHome`;
+const title = `${issue.name}: causes by climate and what to fix first | AuditYourHouse`;
 const description = issue.metaDescription;
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'Common problems', path: '/us/issues/' },
-    { name: issue.name, path: `/us/issues/${issue.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Common problems', path: '/issues/' },
+    { name: issue.name, path: `/issues/${issue.slug}/` },
   ]),
   faqSchema(issue.faq),
 ];
@@ -58,7 +58,7 @@ const schema = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor(issue.photo ?? 'blower-door-test')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <a href="/us/issues/">Common problems</a>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/issues/">Common problems</a>
       <span aria-hidden="true">/</span> <span>{issue.name}</span>
     </nav>
 
@@ -125,7 +125,7 @@ const schema = [
         ) : (
           <p class="small">This can happen anywhere; the causes below are sorted by climate.</p>
         )}
-        <p class="small mb-0">Somewhere else? <a href="/us/cities/">Find your metro guide</a>.</p>
+        <p class="small mb-0">Somewhere else? <a href="/cities/">Find your metro guide</a>.</p>
       </div>
     </div>
 
@@ -148,8 +148,8 @@ const schema = [
         ))}
       </div>
       <p class="small">
-        Not sure which climate you’re in? Your <a href="/us/cities/">metro guide</a> says, and the
-        <a href="/us/glossary/iecc-climate-zone/">climate zone</a> entry explains the map builders use.
+        Not sure which climate you’re in? Your <a href="/cities/">metro guide</a> says, and the
+        <a href="/glossary/iecc-climate-zone/">climate zone</a> entry explains the map builders use.
       </p>
     </section>
 
@@ -168,9 +168,9 @@ const schema = [
         ))}
       </ol>
       <ul class="links">
-        <li><a href="/us/find/">Find a certified auditor</a></li>
-        <li><a href="/us/how-it-works/">What happens in an audit</a></li>
-        <li><a href="/us/cost/">What an audit costs</a></li>
+        <li><a href="/find/">Find a certified auditor</a></li>
+        <li><a href="/how-it-works/">What happens in an audit</a></li>
+        <li><a href="/cost/">What an audit costs</a></li>
       </ul>
     </section>
 
@@ -217,8 +217,8 @@ const schema = [
       <h2 class="ct">Paying for the fixes</h2>
       <p class="mb-0">
         Utility programs often pay toward audits, duct sealing, insulation and heat pumps, and some require an audit
-        first. Your <a href="/us/cities/">metro guide</a> lists the programs near you, and
-        <a href="/us/programs/states/">your state’s page</a> covers state and federal rebates.
+        first. Your <a href="/cities/">metro guide</a> lists the programs near you, and
+        <a href="/programs/states/">your state’s page</a> covers state and federal rebates.
       </p>
     </div>
 
@@ -232,7 +232,7 @@ const schema = [
           </div>
         ))}
       </dl>
-      <p class="small"><a href="/us/glossary/">The glossary</a> explains every term on the site.</p>
+      <p class="small"><a href="/glossary/">The glossary</a> explains every term on the site.</p>
     </section>
 
     <FaqList faqs={issue.faq} />
@@ -242,13 +242,13 @@ const schema = [
         <h2 id="rel-h" class="sh">Related problems</h2>
         <div class="rel-grid">
           {related.map((r) => (
-            <a class="card rel-card" href={`/us/issues/${r.slug}/`}>
+            <a class="card rel-card" href={`/issues/${r.slug}/`}>
               <strong>{r.name}</strong>
               <span class="small">{r.short}</span>
             </a>
           ))}
         </div>
-        <p class="small"><a href="/us/issues/">All common problems</a></p>
+        <p class="small"><a href="/issues/">All common problems</a></p>
       </section>
     )}
 

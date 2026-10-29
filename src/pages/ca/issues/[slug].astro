@@ -38,9 +38,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Fix an issue', path: '/ca/issues/' },
-    { name: issue.name, path: `/ca/issues/${issue.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Fix an issue', path: '/issues/' },
+    { name: issue.name, path: `/issues/${issue.slug}/` },
   ]),
   faqSchema(faqs),
 ];
@@ -63,14 +63,14 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
 <Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/issues/">Fix an issue</a> <span aria-hidden="true">/</span> <span>{issue.name}</span>
+      <a href="/issues/">Fix an issue</a> <span aria-hidden="true">/</span> <span>{issue.name}</span>
     </nav>
 
     <div class="page-hero has-photo">
       <div class="hero-text">
       <h1>{issue.name}</h1>
       <p class="lede measure">{issue.symptom}</p>
-      <p class="small plan-link">See how this fits your house: <a href="/ca/plan/">get your free plan →</a> (six short steps, no email)</p>
+      <p class="small plan-link">See how this fits your house: <a href="/plan/">get your free plan →</a> (six short steps, no email)</p>
       </div>
       <Photo name={heroPhoto} eager />
     </div>
@@ -145,14 +145,14 @@ const heroPhoto = ISSUE_PHOTO[slug ?? ''] ?? 'home-hero';
         <ul class="clean">
           {related.map((p) => (
             <li>
-              <a href={`/ca/programs/${p.slug}/`}><strong>{p.shortName}</strong></a>
+              <a href={`/programs/${p.slug}/`}><strong>{p.shortName}</strong></a>
               {JURIS[p.jurisdiction] && <span class="chip chip-neutral juris">{JURIS[p.jurisdiction]}</span>} — {p.headline}
             </li>
           ))}
         </ul>
         <p class="small rel-more">
           {related.some((p) => p.jurisdiction === 'ontario' || p.jurisdiction === 'toronto') && 'Outside Ontario? '}
-          <a href="/ca/programs/">See the rebates in your province or territory →</a>
+          <a href="/programs/">See the rebates in your province or territory →</a>
         </p>
       </div>
     )}

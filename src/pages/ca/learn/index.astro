@@ -42,7 +42,7 @@ const headline = (
   ] as const
 ).map(([slug, i]) => {
   const t = bySlug(slug);
-  return { href: `/ca/learn/${slug}/`, topic: t.topic, ...t.stats[i] };
+  return { href: `/learn/${slug}/`, topic: t.topic, ...t.stats[i] };
 });
 
 const GROUP_INTRO: Record<string, string> = {
@@ -60,15 +60,15 @@ const groups = [...new Set(topics.map((t) => t.group))].map((name) => ({
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Learn', path: '/ca/learn/' },
+    { name: 'Home', path: '/' },
+    { name: 'Learn', path: '/learn/' },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Keeping the heat in',
     description,
-    url: `${SITE.url}/ca/learn/`,
+    url: `/learn/`,
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: topics.length,
@@ -76,7 +76,7 @@ const schema = [
         '@type': 'ListItem',
         position: i + 1,
         name: t.topic,
-        url: `${SITE.url}/ca/learn/${t.slug}/`,
+        url: `/learn/${t.slug}/`,
       })),
     },
   },
@@ -96,8 +96,8 @@ const schema = [
           sources, with the sources listed on every page.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/ca/calculators/">Run the numbers for your city →</a>
-          <a class="btn btn-ghost" href="/ca/plan/">Build my plan</a>
+          <a class="btn btn-primary" href="/calculators/">Run the numbers for your city →</a>
+          <a class="btn btn-ghost" href="/plan/">Build my plan</a>
         </div>
       </div>
       <Photo name="home-hero-thermal" eager />
@@ -129,7 +129,7 @@ const schema = [
       The last two guides explain what it tells you.
     </p>
 
-    <a class="card card-pad worked" href="/ca/learn/real-numbers/">
+    <a class="card card-pad worked" href="/learn/real-numbers/">
       <span class="eyebrow">Worked examples</span>
       <span class="wk-title">What upgrades really save: four houses, every number shown →</span>
       <span class="small">A 1970s gas-heated house in Ottawa, a 1950s electric bungalow in Winnipeg, a 1920s oil-heated house in Halifax and a 2000s Toronto semi, run through the same model as our calculators, step by step.</span>
@@ -148,7 +148,7 @@ const schema = [
           {g.items.map((t) => {
             const k = t.stats[t.keyStat] ?? t.stats[0];
             return (
-              <a class="card lcard" href={`/ca/learn/${t.slug}/`}>
+              <a class="card lcard" href={`/learn/${t.slug}/`}>
                 <h3>{t.topic}</h3>
                 <p class="blurb">{t.blurb}</p>
                 <p class="knum">
@@ -166,15 +166,15 @@ const schema = [
     <section class="next" aria-labelledby="next-h">
       <h2 id="next-h">Put the numbers to work</h2>
       <div class="next-grid">
-        <a class="card nx nx-main" href="/ca/calculators/">
+        <a class="card nx nx-main" href="/calculators/">
           <span class="nx-title">Run the numbers for your city →</span>
           <span class="small">Energy costs and upgrade payback at your local energy prices.</span>
         </a>
-        <a class="card nx" href="/ca/plan/">
+        <a class="card nx" href="/plan/">
           <span class="nx-title">Build your home plan →</span>
           <span class="small">Put upgrades in a sensible order for your house, before anyone visits.</span>
         </a>
-        <a class="card nx" href="/ca/tests/">
+        <a class="card nx" href="/tests/">
           <span class="nx-title">See the testing guide →</span>
           <span class="small">Blower door, thermal imaging, radon and more: what each test measures.</span>
         </a>

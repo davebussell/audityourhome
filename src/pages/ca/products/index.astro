@@ -13,8 +13,8 @@ const description =
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Gear guides', path: '/ca/products/' },
+    { name: 'Home', path: '/' },
+    { name: 'Gear guides', path: '/products/' },
   ]),
 ];
 
@@ -36,7 +36,7 @@ const ELEMENT_LABEL: Record<string, string> = {
         The measuring instruments of home health — radon monitors, air quality sensors, CO alarms,
         hygrometers, water kits — plus the gear that acts on what they find. Three vetted picks per
         category, what each is for, and the honest notes nobody puts on the box. Guides inform;
-        the <a href="/ca/tests/screener/">screener</a> tells you which categories your home
+        the <a href="/tests/screener/">screener</a> tells you which categories your home
         actually needs.
       </p>
       </div>
@@ -45,7 +45,7 @@ const ELEMENT_LABEL: Record<string, string> = {
 
     <div class="cat-grid">
       {productsData.categories.map((c) => (
-        <a class="card card-pad cat" href={`/ca/products/${c.slug}/`}>
+        <a class="card card-pad cat" href={`/products/${c.slug}/`}>
           <p class="el">{ELEMENT_LABEL[c.element] ?? c.element}</p>
           <h2>{c.name}</h2>
           <p class="short">{c.short}</p>
@@ -61,8 +61,8 @@ const ELEMENT_LABEL: Record<string, string> = {
         Picks are the category benchmarks — the models that keep earning the recommendation on
         performance, filter cost, and reliability — with price bands as of {SITE.dataReviewDate}.
         Measurement comes first: every category links back to the
-        <a href="/ca/tests/">testing guide</a> that tells you whether you need it at all, and the
-        <a href="/ca/plan/">planner</a> folds the right categories into your home's plan.
+        <a href="/tests/">testing guide</a> that tells you whether you need it at all, and the
+        <a href="/plan/">planner</a> folds the right categories into your home's plan.
       </p>
     </div>
 

@@ -56,7 +56,7 @@ const pse = prog('seattle', 'PSE In-Home');
 const nyPlan = prog('new-york', 'Home Energy Plan');
 const gaHer = prog('atlanta', 'Home Efficiency Rebates');
 
-const title = 'How a home energy audit works in the U.S.: types, tests and what comes next | AuditYourHome';
+const title = 'How a home energy audit works in the U.S.: types, tests and what comes next | AuditYourHouse';
 const description = `What happens in a U.S. home energy audit: utility assessments, BPI diagnostic audits, HERS ratings and the DOE Home Energy Score, the blower door, infrared and combustion safety tests, how long it takes and what you get. Verified ${US_VERIFIED}.`;
 
 const faqs = [
@@ -80,8 +80,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'How it works', path: '/us/how-it-works/' },
+    { name: 'Home', path: '/' },
+    { name: 'How it works', path: '/how-it-works/' },
   ]),
   faqSchema(faqs),
 ];
@@ -111,7 +111,7 @@ const atticSome = atticLevels('some');
 <Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span>
     </nav>
 
     <JourneyBar country="us" current={3} ticks={false} hereLabel="Explained here" />
@@ -126,7 +126,7 @@ const atticSome = atticLevels('some');
           U.S. audit includes, how long it takes and what comes next.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/us/plan/">Start with your free plan</a>
+          <a class="btn btn-primary" href="/plan/">Start with your free plan</a>
           <a class="btn btn-ghost" href="#kinds">The four kinds</a>
           <a class="btn btn-ghost" href="#visit">The visit</a>
         </div>
@@ -136,19 +136,19 @@ const atticSome = atticLevels('some');
 
     <div class="plan-note card card-pad">
       <p>
-        <strong>Before anyone visits:</strong> the <a href="/us/plan/">free planner</a> estimates what your house likely
+        <strong>Before anyone visits:</strong> the <a href="/plan/">free planner</a> estimates what your house likely
         needs, what it could save and which tests to ask for. It’s a starting point; the audit measures your actual house.
       </p>
       <p class="mb-0">
         <strong>Your first stop is usually your utility.</strong> Many utilities offer a free or low-cost assessment, and
-        your <a href="/us/cities/">metro guide</a> lists the one that serves your area, with what it includes and costs.
+        your <a href="/cities/">metro guide</a> lists the one that serves your area, with what it includes and costs.
       </p>
     </div>
 
     <!-- KINDS -->
     <section id="kinds" class="sec">
       <h2>Four kinds of home energy audit</h2>
-      <p class="measure">They differ in who does them, what gets measured and what you get at the end. Prices are on <a href="/us/cost/">what an audit costs</a>.</p>
+      <p class="measure">They differ in who does them, what gets measured and what you get at the end. Prices are on <a href="/cost/">what an audit costs</a>.</p>
       <div class="kinds">
         <article class="card kind">
           <span class="kn">1</span>
@@ -252,7 +252,7 @@ const atticSome = atticLevels('some');
       <h2>The visit: the tests</h2>
       <p class="measure">DOE says many professional assessments include a blower door test and an infrared scan. These are the tests worth asking about, with links to our full guides.</p>
       <div class="tests">
-        <a class="test card" href="/us/tests/blower-door/">
+        <a class="test card" href="/tests/blower-door/">
           <h3>Blower door test</h3>
           <p>
             Depressurizes the house, usually to 50 pascals, to measure air leakage. ACH50 = airflow at 50 Pa (cfm) × 60 ÷ house
@@ -260,7 +260,7 @@ const atticSome = atticLevels('some');
           </p>
           <span class="go">Blower door guide →</span>
         </a>
-        <a class="test card" href="/us/tests/thermal-imaging/">
+        <a class="test card" href="/tests/thermal-imaging/">
           <h3>Infrared scan</h3>
           <p>
             Shows missing, partial or damaged insulation in framed walls and ceilings (ASTM C1060). With the house depressurized,
@@ -268,7 +268,7 @@ const atticSome = atticLevels('some');
           </p>
           <span class="go">Infrared guide →</span>
         </a>
-        <a class="test card" href="/us/tests/combustion-safety/">
+        <a class="test card" href="/tests/combustion-safety/">
           <h3>Combustion safety</h3>
           <p>
             Checks gas appliances for spillage and carbon monoxide under worst-case depressurization. BPI’s ambient CO levels:
@@ -276,7 +276,7 @@ const atticSome = atticLevels('some');
           </p>
           <span class="go">Combustion safety guide →</span>
         </a>
-        <a class="test card" href="/us/tests/duct-leakage/">
+        <a class="test card" href="/tests/duct-leakage/">
           <h3>Duct leakage</h3>
           <p>
             Tests the ducts at 25 pascals with the registers sealed. The 2021 IECC limit for new homes is 4.0 cfm25 per
@@ -284,7 +284,7 @@ const atticSome = atticLevels('some');
           </p>
           <span class="go">Duct leakage guide →</span>
         </a>
-        <a class="test card" href="/us/tests/heat-loss-calc/">
+        <a class="test card" href="/tests/heat-loss-calc/">
           <h3>Heating and cooling load calculation</h3>
           <p>
             ACCA Manual J works out room-by-room heating and cooling loads; Manual S sizes the equipment from them and Manual D
@@ -292,7 +292,7 @@ const atticSome = atticLevels('some');
           </p>
           <span class="go">Load calculation guide →</span>
         </a>
-        <a class="test card" href="/us/tests/attic-inspection/">
+        <a class="test card" href="/tests/attic-inspection/">
           <h3>Attic inspection</h3>
           <p>
             Measures insulation depth against ENERGY STAR’s retrofit levels for your climate zone. For an attic with no
@@ -300,14 +300,14 @@ const atticSome = atticLevels('some');
           </p>
           <span class="go">Attic guide →</span>
         </a>
-        <a class="test card" href="/us/tests/bill-analysis/">
+        <a class="test card" href="/tests/bill-analysis/">
           <h3>Utility bill analysis</h3>
           <p>
             A year of bills sets the baseline. Utilities that use the Green Button standard let you download your own usage data.
           </p>
           <span class="go">Bill analysis guide →</span>
         </a>
-        <a class="test card" href="/us/tests/">
+        <a class="test card" href="/tests/">
           <h3>Home health tests</h3>
           <p>
             Radon, carbon monoxide, lead paint, asbestos, mold and well water need their own tests and specialists.
@@ -368,7 +368,7 @@ const atticSome = atticLevels('some');
             Rebates, insulation and air sealing come before heating and cooling upgrades, and the federal appliance rebates no
             longer pay for switching from gas, oil or propane to electric. Your metro guide lists what’s open.
           </p>
-          <p class="links"><a href="/us/cities/">Metro guides</a> · <a href="/us/programs/">Rebates and programs</a>{pn262 && <span> · <a href={pn262.href} rel="noopener" target="_blank">DOE notice&nbsp;↗</a></span>}</p>
+          <p class="links"><a href="/cities/">Metro guides</a> · <a href="/programs/">Rebates and programs</a>{pn262 && <span> · <a href={pn262.href} rel="noopener" target="_blank">DOE notice&nbsp;↗</a></span>}</p>
         </article>
         <article class="card nx">
           <h3>Contractors</h3>
@@ -377,7 +377,7 @@ const atticSome = atticLevels('some');
             program-approved contractor, and Mass Save’s heat pump rebates need a Heat Pump Installer Network contractor. Ask
             before you sign.
           </p>
-          <p class="links"><a href="/us/find/">Finding a certified pro</a></p>
+          <p class="links"><a href="/find/">Finding a certified pro</a></p>
         </article>
         <article class="card nx">
           <h3>Financing</h3>
@@ -398,7 +398,7 @@ const atticSome = atticLevels('some');
             The federal 25C and 25D credits ended for work after December 31, 2025, including the $150 audit credit. Some state
             and utility pages haven’t caught up.
           </p>
-          <p class="links"><a href="/us/programs/federal-tax-credits/">What ended and when</a></p>
+          <p class="links"><a href="/programs/federal-tax-credits/">What ended and when</a></p>
         </article>
       </div>
       <WapNote heading="Lower income? The Weatherization Assistance Program includes the audit" />

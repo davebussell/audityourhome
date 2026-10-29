@@ -37,12 +37,12 @@ const PROV_AREA: Record<string, string> = {
 };
 const area = city.prov === 'ON' ? city.onRegion ?? 'other-ontario' : PROV_AREA[city.prov] ?? '';
 
-const path = `/ca/services/${service.slug}/${city.slug}/`;
+const path = `/services/${service.slug}/${city.slug}/`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Services', path: '/ca/services/' },
-    { name: service.h1, path: `/ca/services/${service.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+    { name: service.h1, path: `/services/${service.slug}/` },
     { name: city.name, path },
   ]),
   faqSchema(pg.faq),
@@ -78,8 +78,8 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
 <Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(service.slug)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/services/">Services</a> <span aria-hidden="true">/</span>
-      <a href={`/ca/services/${service.slug}/`}>{service.h1}</a> <span aria-hidden="true">/</span>
+      <a href="/services/">Services</a> <span aria-hidden="true">/</span>
+      <a href={`/services/${service.slug}/`}>{service.h1}</a> <span aria-hidden="true">/</span>
       <span>{city.name}</span>
     </nav>
 
@@ -138,7 +138,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
             variant={climVariant}
             testSlug={climVariant === 'service' ? climTest : undefined}
             heading={climVariant === 'compact' ? `${city.name}’s climate: ${clim.profile.label}` : undefined}
-            moreHref={`/ca/cities/${city.slug}/#regional-needs`}
+            moreHref={`/cities/${city.slug}/#regional-needs`}
           />
         )}
 
@@ -159,7 +159,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
                 {city.prov === 'ON' && (
                   <p class="small hrs-line">
                     Only assessments from the seven HRSP-approved organizations qualify for the $600
-                    <a href="/ca/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebate
+                    <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebate
                     and its assessment-path upgrade rebates; each listing below says whether it's one of them.
                   </p>
                 )}
@@ -170,7 +170,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
                         {p.profile ? <a href={p.profile}><strong>{p.name}</strong></a> : <strong>{p.name}</strong>}
                         <span class="chips">
                           {city.prov === 'ON' && (p.hrs
-                            ? <a class="chip chip-active" href="/ca/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
+                            ? <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
                             : <span class="chip chip-neutral" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments don't qualify for the $600 rebate">HRSP-approved: No</span>)}
                           {p.gcc && <span class="chip chip-neutral" title="Member of the Green Communities Canada non-profit network">Non-profit network</span>}
                           {p.profile && <span class="chip chip-info">Profile</span>}
@@ -222,7 +222,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
           <dl>
             {pg.snapshot.map((x) => (<><dt>{x.k}{x.note && <span class="sn">{x.note}</span>}</dt><dd>{x.v}</dd></>))}
           </dl>
-          <a class="more" href={`/ca/cities/${city.slug}/`}>All 16 services in {city.name} →</a>
+          <a class="more" href={`/cities/${city.slug}/`}>All 16 services in {city.name} →</a>
         </div>
         <nav class="card card-pad rel" aria-label={`Other services in ${city.name}`}>
           <p class="eyebrow">More in {city.name}</p>
@@ -240,7 +240,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
           {pg.nearby.map((n) => (
             <a href={n.href}><span>{n.label}</span>{typeof n.km === 'number' && <span class="km">{n.km} km</span>}</a>
           ))}
-          <a class="all" href={`/ca/services/${service.slug}/`}>All {localIndex.cities.length} cities →</a>
+          <a class="all" href={`/services/${service.slug}/`}>All {localIndex.cities.length} cities →</a>
         </div>
       </section>
     )}

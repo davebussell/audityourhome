@@ -31,12 +31,12 @@ for (const v of views) {
   byLetter.set(l, [...(byLetter.get(l) ?? []), v]);
 }
 const cats = CATEGORY_ORDER.filter((k) => views.some((v) => v.category === k));
-const path = `/${c}/glossary/`;
-const home = `/${c}/`;
-const setName = c === 'us' ? 'AuditYourHome home energy audit glossary (United States)' : 'AuditYourHome energy audit glossary (Canada)';
+const path = `/glossary/`;
+const home = `/`;
+const setName = c === 'us' ? 'AuditYourHouse home energy audit glossary (United States)' : 'AuditYourHome energy audit glossary (Canada)';
 const title =
   c === 'us'
-    ? 'Home energy audit glossary: every term explained | AuditYourHome'
+    ? 'Home energy audit glossary: every term explained | AuditYourHouse'
     : 'Energy audit glossary: every term explained | AuditYourHome';
 const examples = c === 'us' ? 'ACH50, SEER2, Manual J and HERS scores' : 'ACH50, design temperatures, HOT2000 and EnerGuide ratings';
 const description = `Plain-language definitions of the ${views.length} terms you meet in a home energy audit, from ${examples}: what each means, why it matters and what good looks like.`;
@@ -131,15 +131,15 @@ const searchText = (v: (typeof views)[number]) => withSpellings([v.term, ...v.ak
     <section class="gx-next" aria-labelledby="gx-next-h">
       <h2 id="gx-next-h">Put the words to work</h2>
       <div class="gx-next-grid">
-        <a class="card card-pad" href={`/${c}/plan/`}>
+        <a class="card card-pad" href={`/plan/`}>
           <strong>Get your home energy plan →</strong>
           <span class="small">Six short steps: what your house likely needs, in what order, before anyone visits.</span>
         </a>
-        <a class="card card-pad" href={`/${c}/tests/`}>
+        <a class="card card-pad" href={`/tests/`}>
           <strong>See what each test measures →</strong>
           <span class="small">Blower door, infrared, radon and more, with what a good result looks like.</span>
         </a>
-        <a class="card card-pad" href={`/${c}/how-it-works/`}>
+        <a class="card card-pad" href={`/how-it-works/`}>
           <strong>How an audit works →</strong>
           <span class="small">What happens before, during and after the visit, and how rebates fit in.</span>
         </a>

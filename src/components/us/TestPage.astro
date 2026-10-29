@@ -1,6 +1,6 @@
 ---
 /**
- * Shell for one US test guide (/us/tests/<slug>/): breadcrumb, hero with photo, at-a-glance
+ * Shell for one US test guide (/tests/<slug>/): breadcrumb, hero with photo, at-a-glance
  * tiles, the page body (default slot), then FAQ (with FAQPage schema), sources, related
  * guides and the US contact card. Pass the lede in the "lede" slot.
  */
@@ -47,8 +47,8 @@ const kind = t.group === 'health' ? 'Home health test guide' : 'Energy test guid
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Testing guide', path: '/us/tests/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
     { name: t.crumb, path: guideHref(slug) },
   ]),
   faqSchema(faqs.map((f) => ({ q: f.q, a: f.a }))),
@@ -62,7 +62,7 @@ const displayLabel = (l: string) => l.replace(' - ', ': ');
   <TestStyles />
   <div class="container ust">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>{t.crumb}</span>
+      <a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>{t.crumb}</span>
     </nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
@@ -113,8 +113,8 @@ const displayLabel = (l: string) => l.replace(' - ', ': ');
     </section>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/us/tests/screener/">Which tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/us/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
       {related.map((r) => (
         <a class="btn btn-ghost" href={guideHref(r.slug)}>Related: {r.name}</a>
       ))}

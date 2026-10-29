@@ -66,9 +66,9 @@ const title = `Heat pumps in ${r.name}: costs, rebates and cold-climate picks | 
 const description = `What a heat pump costs to run in ${place} against gas, oil and baseboards, the ${progs.length} heat pump programs and their equipment rules, design temperatures by city and the certified systems that suit them.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Heat pumps', path: '/ca/heat-pumps/' },
-    { name: r.name, path: `/ca/heat-pumps/${r.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Heat pumps', path: '/heat-pumps/' },
+    { name: r.name, path: `/heat-pumps/${r.slug}/` },
   ]),
 ];
 const jump: [string, string][] = [
@@ -84,7 +84,7 @@ const jump: [string, string][] = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor(heatPhoto)}>
   <div class="container hp">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{r.name}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{r.name}</span></nav>
     <div class:list={['page-hero', { 'has-photo': heatPhoto }]}>
       <div class="hero-text">
         <p class="eyebrow">Heat pumps by province · checked {HP_CHECKED}</p>
@@ -151,7 +151,7 @@ const jump: [string, string][] = [
           <tbody>
             {byCity.map(({ c, k }) => (
               <tr>
-                <td><a href={`/ca/cities/${c.slug}/`}>{c.name}</a></td>
+                <td><a href={`/cities/${c.slug}/`}>{c.name}</a></td>
                 <td class="num" data-label="Design temperature">{fmtT(c.designHeat)}</td>
                 <td class="num" data-label="Heating degree days">{fmtInt(c.hdd18)}</td>
                 <td class="num" data-label="Nights below −20°C">{c.nightsBelowMinus20 == null ? '—' : c.nightsBelowMinus20.toFixed(1)}</td>
@@ -178,7 +178,7 @@ const jump: [string, string][] = [
             variant="heatpump"
             id={`needs-${p.key}`}
             heading={provClimate.profileList.length > 1 ? `Choosing equipment in ${p.regionName}` : undefined}
-            moreHref={r.slug === 'north' ? '/ca/provinces/north/' : `/ca/provinces/${r.slug}/`}
+            moreHref={r.slug === 'north' ? '/provinces/north/' : `/provinces/${r.slug}/`}
           />
         ))}
       </div>
@@ -194,7 +194,7 @@ const jump: [string, string][] = [
             {breakEvenLine}
           </p>
           <CostTable rows={costs.rows} market="ca" caption={`Delivered heat cost by fuel in ${main.name}`} />
-          <p class="tnote">Prices and their sources are on our <a href="/ca/calculators/energy-costs/">energy cost calculator</a>, which works the numbers for your own home.</p>
+          <p class="tnote">Prices and their sources are on our <a href="/calculators/energy-costs/">energy cost calculator</a>, which works the numbers for your own home.</p>
         </>
       ) : (
         <p>We don't have price data for this region yet.</p>
@@ -216,7 +216,7 @@ const jump: [string, string][] = [
       <div class="cards">
         {fed.map((p) => (
           <article class="card c">
-            <h3><a href={`/ca/programs/${p.slug}/`}>{p.name}</a></h3>
+            <h3><a href={`/programs/${p.slug}/`}>{p.name}</a></h3>
             <p class="muted">{(p as any).headline}</p>
           </article>
         ))}
@@ -224,7 +224,7 @@ const jump: [string, string][] = [
       {guides.length > 0 && (
         <>
           <h3 class="sub-h">Our full program guides</h3>
-          <div class="pills">{guides.map((g) => <a href={`/ca/programs/${g.slug}/`}>{g.name}</a>)}</div>
+          <div class="pills">{guides.map((g) => <a href={`/programs/${g.slug}/`}>{g.name}</a>)}</div>
         </>
       )}
       <p class="tnote"><a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan's Eligible Products List&nbsp;↗</a></p>
@@ -266,7 +266,7 @@ const jump: [string, string][] = [
           </tbody>
         </table>
       </div>
-      <p class="tnote"><a href="/ca/heat-pumps/">Compare every brand</a> · <a href="/ca/heat-pumps/brands/">All {fmtInt(brandsBySize('ca').length)} brand pages and every certified name</a></p>
+      <p class="tnote"><a href="/heat-pumps/">Compare every brand</a> · <a href="/heat-pumps/brands/">All {fmtInt(brandsBySize('ca').length)} brand pages and every certified name</a></p>
     </section>
 
     <div class="lf-wrap">
@@ -276,8 +276,8 @@ const jump: [string, string][] = [
     <section class="related">
       <h2>Other provinces and territories</h2>
       <div class="nb">
-        {CA_REGIONS.filter((x) => x.slug !== r.slug).map((x) => <a href={`/ca/heat-pumps/${x.slug}/`}>{x.name}</a>)}
-        <a class="all" href={`/ca/provinces/${r.slug}/`}>Everything else in {place} →</a>
+        {CA_REGIONS.filter((x) => x.slug !== r.slug).map((x) => <a href={`/heat-pumps/${x.slug}/`}>{x.name}</a>)}
+        <a class="all" href={`/provinces/${r.slug}/`}>Everything else in {place} →</a>
       </div>
     </section>
   </div>

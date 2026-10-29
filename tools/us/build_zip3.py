@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build src/data/us/zip3.json: ZIP code prefix (first three digits) -> state and metro.
 
-The US Home Energy Planner (/us/plan/) reads this table in the browser, so a ZIP code never
+The US Home Energy Planner (/plan/) reads this table in the browser, so a ZIP code never
 leaves the visitor's device. Each prefix maps to:
 
   * the state that holds most of the prefix's population, and

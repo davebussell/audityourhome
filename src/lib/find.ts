@@ -1,7 +1,7 @@
 /**
  * How booking a home energy audit (EnerGuide evaluation) works in each province and territory,
  * and what it costs. One record per province page slug (src/data/provinces.json), used by the
- * national /ca/find/ and /ca/cost/ pages. Facts come from the provincial price table behind the
+ * national /find/ and /cost/ pages. Facts come from the provincial price table behind the
  * city pages (tools/local-pages/gen_pages.py, checked September 2026) and the province program
  * records (src/data/provinces.json, checked October 2026); each record names its sources.
  */

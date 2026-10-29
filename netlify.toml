@@ -1,8 +1,11 @@
-# audityourhome.com on Netlify. Redirect rules (country auto-select for "/" and 301s for the
-# old pre-/ca/ addresses) are written to dist/_redirects by tools/country/postbuild.mjs.
+# audityourhome.com (the Canadian site) on Netlify, project "audityourhome".
+# One `npm run build` builds both sites: dist-ca/ (this one) and dist-us/ (audityourhouse.com, deployed
+# with netlify.us.toml copied over this file; see CLAUDE.md). Redirect rules (old /ca/ and /us/ addresses,
+# the geo endpoint for the "other site" bar) are written to dist-ca/_redirects by tools/country/postbuild.mjs.
 [build]
   command = "npm run build"
-  publish = "dist"
+  publish = "dist-ca"
   # FORMS=netlify renders the site's forms as Netlify Forms (form detection is on for this site);
   # submissions are emailed to dave@clickshift.ca by the form notification set in the Netlify UI.
-  environment = { NODE_VERSION = "22", FORMS = "netlify" }
+  # AYH_SITE lets the build refuse to run against the wrong Netlify site.
+  environment = { NODE_VERSION = "22", FORMS = "netlify", AYH_SITE = "ca" }

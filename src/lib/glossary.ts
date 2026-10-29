@@ -1,10 +1,11 @@
 /**
  * The glossary: every technical term on the site, explained for homeowners, with its own page per
- * country (/ca/glossary/<slug>/, /us/glossary/<slug>/). The build-time linker (tools/glossary/link.mjs)
+ * country (/glossary/<slug>/ on each site). The build-time linker (tools/glossary/link.mjs)
  * links the first use of each term on every page to its entry; public/gl.js shows the short definition.
  * Data: src/data/glossary.json (written by tools/glossary/import.mjs).
  */
 import data from '../data/glossary.json';
+import { siteFor } from '../config/site';
 import {
   termFor,
   shortFor,
@@ -95,16 +96,16 @@ export function letterOf(t: string) {
 // Pages that explain a term in depth. Paths are checked against the build by tools/glossary/link.mjs,
 // which reports any that don't exist.
 type PageRef = { ca?: string; us?: string; label: string; labelUs?: string };
-const T = (test: string, label: string): PageRef => ({ ca: `/ca/tests/${test}/`, us: `/us/tests/${test}/`, label });
-const L = (slug: string, label: string): PageRef => ({ ca: `/ca/learn/${slug}/`, label });
-const I = (slug: string, label: string): PageRef => ({ ca: `/ca/issues/${slug}/`, label });
-const P = (cat: string, label: string): PageRef => ({ ca: `/ca/products/${cat}/`, us: `/us/products/${cat}/`, label });
+const T = (test: string, label: string): PageRef => ({ ca: `/tests/${test}/`, us: `/tests/${test}/`, label });
+const L = (slug: string, label: string): PageRef => ({ ca: `/learn/${slug}/`, label });
+const I = (slug: string, label: string): PageRef => ({ ca: `/issues/${slug}/`, label });
+const P = (cat: string, label: string): PageRef => ({ ca: `/products/${cat}/`, us: `/products/${cat}/`, label });
 
 const PAGES = {
   audit: [
-    { ca: '/ca/how-it-works/', us: '/us/how-it-works/', label: 'How a home energy audit works' },
-    { ca: '/ca/cost/', us: '/us/cost/', label: 'What an audit costs' },
-    { ca: '/ca/tests/', us: '/us/tests/', label: 'The complete testing guide' },
+    { ca: '/how-it-works/', us: '/how-it-works/', label: 'How a home energy audit works' },
+    { ca: '/cost/', us: '/cost/', label: 'What an audit costs' },
+    { ca: '/tests/', us: '/tests/', label: 'The complete testing guide' },
   ],
   blower: [T('blower-door', 'The blower door test, step by step'), L('air-sealing', 'Air sealing: where the leaks are'), I('drafty-rooms', 'Drafty rooms: causes and fixes')],
   infrared: [T('thermal-imaging', 'The infrared scan: what it finds'), L('walls', 'Walls: insulation and thermal bridges')],
@@ -119,56 +120,56 @@ const PAGES = {
   iceDam: [I('ice-dams', 'Ice dams: causes and fixes'), L('roofs-attics', 'Roofs and attics')],
   vermiculite: [T('asbestos-vermiculite', 'Asbestos and vermiculite testing')],
   heatPumps: [
-    { ca: '/ca/heat-pumps/', us: '/us/heat-pumps/', label: 'Heat pump comparison guide' },
+    { ca: '/heat-pumps/', us: '/heat-pumps/', label: 'Heat pump comparison guide' },
     L('heating-systems', 'Heating systems compared'),
     I('switching-to-heat-pump', 'Switching to a heat pump'),
   ],
-  geothermal: [{ ca: '/ca/heat-pumps/geothermal/', us: '/us/heat-pumps/geothermal/', label: 'Geothermal and other heat pump types' }],
+  geothermal: [{ ca: '/heat-pumps/geothermal/', us: '/heat-pumps/geothermal/', label: 'Geothermal and other heat pump types' }],
   heating: [L('heating-systems', 'Heating systems compared'), L('hvac-maintenance', 'HVAC maintenance')],
   sizing: [T('heat-loss-calc', 'Sizing heating and cooling: the load calculation')],
   filters: [P('air-purifiers', 'Air purifiers and filters'), L('hvac-maintenance', 'HVAC maintenance')],
-  ventilation: [L('hrv-erv', 'HRVs and ERVs'), L('ventilation', 'Ventilation'), { ca: '/ca/tests/ventilation-assessment/', label: 'Ventilation and humidity assessment' }],
+  ventilation: [L('hrv-erv', 'HRVs and ERVs'), L('ventilation', 'Ventilation'), { ca: '/tests/ventilation-assessment/', label: 'Ventilation and humidity assessment' }],
   dehumid: [P('dehumidifiers-hygrometers', 'Dehumidifiers and hygrometers'), L('moisture-control', 'Moisture and humidity')],
   thermostats: [L('thermostats', 'Thermostats and setbacks')],
   water: [L('water-heaters', 'Water heaters compared')],
-  bills: [T('bill-analysis', 'Utility bill analysis'), { ca: '/ca/calculators/energy-costs/', label: 'Energy cost calculator' }],
-  baseload: [T('bill-analysis', 'Utility bill analysis'), { ca: '/ca/calculators/appliance-energy/', label: 'Appliance cost calculator' }],
-  climate: [{ ca: '/ca/cities/', us: '/us/cities/', label: 'Climate and programs city by city' }, T('heat-loss-calc', 'How climate sets equipment size')],
+  bills: [T('bill-analysis', 'Utility bill analysis'), { ca: '/calculators/energy-costs/', label: 'Energy cost calculator' }],
+  baseload: [T('bill-analysis', 'Utility bill analysis'), { ca: '/calculators/appliance-energy/', label: 'Appliance cost calculator' }],
+  climate: [{ ca: '/cities/', us: '/cities/', label: 'Climate and programs city by city' }, T('heat-loss-calc', 'How climate sets equipment size')],
   energuide: [L('energuide-ratings', 'EnerGuide ratings explained'), L('previous-audit', 'Had an audit before?')],
-  hers: [{ us: '/us/how-it-works/', label: 'How a home energy audit works' }, { us: '/us/programs/home-energy-score/', label: 'Home Energy Score' }],
-  hes: [{ us: '/us/programs/home-energy-score/', label: 'Home Energy Score' }],
-  ratings: [{ ca: '/ca/heat-pumps/', us: '/us/heat-pumps/', label: 'Heat pump comparison guide' }],
-  payback: [{ ca: '/ca/calculators/upgrade-payback/', label: 'Upgrade payback calculator' }, { ca: '/ca/learn/real-numbers/', label: 'What upgrades really save: worked examples' }],
+  hers: [{ us: '/how-it-works/', label: 'How a home energy audit works' }, { us: '/programs/home-energy-score/', label: 'Home Energy Score' }],
+  hes: [{ us: '/programs/home-energy-score/', label: 'Home Energy Score' }],
+  ratings: [{ ca: '/heat-pumps/', us: '/heat-pumps/', label: 'Heat pump comparison guide' }],
+  payback: [{ ca: '/calculators/upgrade-payback/', label: 'Upgrade payback calculator' }, { ca: '/learn/real-numbers/', label: 'What upgrades really save: worked examples' }],
   radon: [T('radon', 'Radon testing and fixes'), P('radon-monitors', 'Radon monitors and kits')],
   iaq: [T('mold-iaq', 'Mould and indoor air quality'), P('air-quality-monitors', 'Air quality monitors'), P('air-purifiers', 'Air purifiers')],
   asbestos: [T('asbestos-vermiculite', 'Asbestos and vermiculite testing')],
   lead: [T('lead-paint', 'Lead paint testing')],
   well: [T('well-water', 'Well water testing'), P('water-testing', 'Water test kits')],
   advisors: [
-    { ca: '/ca/how-it-works/', label: 'How an EnerGuide evaluation works' },
-    { ca: '/ca/find/', label: 'Find an energy advisor' },
+    { ca: '/how-it-works/', label: 'How an EnerGuide evaluation works' },
+    { ca: '/find/', label: 'Find an energy advisor' },
     L('energuide-ratings', 'EnerGuide ratings explained'),
   ],
-  cghap: [{ ca: '/ca/programs/canada-greener-homes-affordability-program/', label: 'Canada Greener Homes Affordability Program' }],
+  cghap: [{ ca: '/programs/canada-greener-homes-affordability-program/', label: 'Canada Greener Homes Affordability Program' }],
   hrsp: [
-    { ca: '/ca/programs/home-renovation-savings-assessment/', label: 'Home Renovation Savings: assessment stream' },
-    { ca: '/ca/programs/home-renovation-savings-direct/', label: 'Home Renovation Savings: direct rebates' },
+    { ca: '/programs/home-renovation-savings-assessment/', label: 'Home Renovation Savings: assessment stream' },
+    { ca: '/programs/home-renovation-savings-direct/', label: 'Home Renovation Savings: direct rebates' },
   ],
-  greenerGrant: [{ ca: '/ca/programs/canada-greener-homes-grant/', label: 'Canada Greener Homes Grant (closed)' }],
-  greenerLoan: [{ ca: '/ca/programs/canada-greener-homes-loan/', label: 'Canada Greener Homes Loan (closed)' }],
-  ohpa: [{ ca: '/ca/programs/oil-to-heat-pump-affordability/', label: 'Oil to Heat Pump Affordability' }],
+  greenerGrant: [{ ca: '/programs/canada-greener-homes-grant/', label: 'Canada Greener Homes Grant (closed)' }],
+  greenerLoan: [{ ca: '/programs/canada-greener-homes-loan/', label: 'Canada Greener Homes Loan (closed)' }],
+  ohpa: [{ ca: '/programs/oil-to-heat-pump-affordability/', label: 'Oil to Heat Pump Affordability' }],
   usRebates: [
-    { us: '/us/programs/home-energy-rebates/', label: 'Federal home energy rebates (HOMES and HEEHR)' },
-    { us: '/us/programs/states/', label: 'Home energy rebates by state' },
+    { us: '/programs/home-energy-rebates/', label: 'Federal home energy rebates (HOMES and HEEHR)' },
+    { us: '/programs/states/', label: 'Home energy rebates by state' },
   ],
-  usCredits: [{ us: '/us/programs/federal-tax-credits/', label: 'Federal tax credits: what ended and when' }],
-  wap: [{ us: '/us/programs/weatherization-assistance-program/', label: 'Weatherization Assistance Program' }],
-  usAuditors: [{ us: '/us/find/', label: 'How to find a certified auditor' }, { us: '/us/how-it-works/', label: 'How a home energy audit works' }],
-  programs: [{ ca: '/ca/programs/', us: '/us/programs/', label: 'Rebates and programs' }],
+  usCredits: [{ us: '/programs/federal-tax-credits/', label: 'Federal tax credits: what ended and when' }],
+  wap: [{ us: '/programs/weatherization-assistance-program/', label: 'Weatherization Assistance Program' }],
+  usAuditors: [{ us: '/find/', label: 'How to find a certified auditor' }, { us: '/how-it-works/', label: 'How a home energy audit works' }],
+  programs: [{ ca: '/programs/', us: '/programs/', label: 'Rebates and programs' }],
   financing: [
-    { ca: '/ca/programs/toronto-home-energy-loan-program/', label: 'Toronto Home Energy Loan Program' },
-    { ca: '/ca/programs/alberta-clean-energy-improvement-program/', label: 'Alberta Clean Energy Improvement Program' },
-    { us: '/us/programs/', label: 'Rebates, credits and financing' },
+    { ca: '/programs/toronto-home-energy-loan-program/', label: 'Toronto Home Energy Loan Program' },
+    { ca: '/programs/alberta-clean-energy-improvement-program/', label: 'Alberta Clean Energy Improvement Program' },
+    { us: '/programs/', label: 'Rebates, credits and financing' },
   ],
 } satisfies Record<string, PageRef[]>;
 
@@ -295,11 +296,11 @@ export function viewFor(e: GlossaryEntry, c: Country): GlossaryView {
   };
 }
 
-/** SEO title "What is <term>? <paraphrase> | AuditYourHome", kept near 65 characters. */
-export function seoTitle(v: GlossaryView) {
+/** SEO title "What is <term>? <paraphrase> | AuditYourHome" (or AuditYourHouse on the US site), kept near 65 characters. */
+export function seoTitle(v: GlossaryView, country: Country = 'ca') {
   const { lead, paren, parenIsAcronym, acronym } = questionParts(v.term);
   const para = acronym && paren && !parenIsAcronym && !/\s(?:and|vs)\s/.test(paren) ? paren.charAt(0).toUpperCase() + paren.slice(1) : null;
-  const brand = ' | AuditYourHome';
+  const brand = ` | ${siteFor(country).name}`;
   const opts = [
     para ? `${lead} ${para}${brand}` : null,
     `${lead} Meaning and why it matters${brand}`,

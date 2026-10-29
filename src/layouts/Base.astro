@@ -1,9 +1,10 @@
 ---
-import { SITE } from '../config/site';
-import { websiteSchema } from '../lib/schema';
-import { countryOf, COUNTRIES } from '../lib/country';
+import { siteFor } from '../config/site';
+import { websiteSchema, absolutize } from '../lib/schema';
+import { countryOf, publicPath, COUNTRIES } from '../lib/country';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import OtherSite from '../components/OtherSite.astro';
 import '../styles/global.css';
 import '../styles/glossary.css';
 
@@ -21,18 +22,19 @@ interface Props {
 }
 
 const { title, description, schema = [], indexable = true, ogImage, analytics = true } = Astro.props;
-const pageCountry = countryOf(Astro.url.pathname);
-const ogDefault = pageCountry === 'us' ? '/og-default-us.png' : pageCountry === 'ca' ? '/og-default.png' : '/og-default-global.png';
-const ogUrl = new URL(ogImage ?? ogDefault, SITE.url).href;
-const canonical = new URL(Astro.url.pathname, SITE.url).href;
+/* Pages are built under /ca/ and /us/ and published at the root of each country's own domain. */
 const country = countryOf(Astro.url.pathname);
-const blocks = [websiteSchema(country), ...schema];
+const site = siteFor(country);
+const ogDefault = country === 'us' ? '/og-default-us.png' : '/og-default.png';
+const ogUrl = new URL(ogImage ?? ogDefault, site.url).href;
+const canonical = new URL(publicPath(Astro.url.pathname), site.url).href;
+const blocks = [websiteSchema(country), ...schema].map((b) => absolutize(b, site.url));
 const lang = country ? COUNTRIES[country].locale : 'en';
 const contentGroup = country ?? 'global';
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-country={country ?? 'ca'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,7 +48,7 @@ const contentGroup = country ?? 'global';
     <meta property="og:type" content="website" />
     {country && <meta property="og:locale" content={COUNTRIES[country].ogLocale} />}
     <meta name="ayh-country" content={contentGroup} />
-    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -86,6 +88,7 @@ const contentGroup = country ?? 'global';
     {blocks.map((b) => <script type="application/ld+json" set:html={JSON.stringify(b)} />)}
   </head>
   <body>
+    <OtherSite country={country ?? 'ca'} />
     <Header />
     <main id="main">
       <slot />

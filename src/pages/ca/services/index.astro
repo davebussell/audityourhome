@@ -8,7 +8,7 @@ import { ogFor } from '../../../lib/photos';
 const n = localIndex.cities.length;
 const title = `Home energy audit and home testing services in ${n} Canadian cities | AuditYourHome`;
 const description = `Sixteen home energy and home health services, from EnerGuide evaluations and blower door tests to radon, asbestos and well water testing, with local guides for ${n} cities across Canada.`;
-const schema = [breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Services', path: '/ca/services/' }])];
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }])];
 
 const GROUPS = [
   { cat: 'energy', title: 'Energy: find where the heat and money go', note: 'Usually done during an EnerGuide evaluation by an NRCan-registered energy advisor.' },
@@ -30,8 +30,8 @@ const groups = citiesByProvince();
           what it costs, and who does the work.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/ca/cities/">Start with your city</a>
-          <a class="btn btn-ghost" href="/ca/tests/screener/">Which tests do I need?</a>
+          <a class="btn btn-primary" href="/cities/">Start with your city</a>
+          <a class="btn btn-ghost" href="/tests/screener/">Which tests do I need?</a>
         </div>
       </div>
       <Photo name="home-energy-audit" eager />
@@ -43,7 +43,7 @@ const groups = citiesByProvince();
         <p class="small note">{g.note}</p>
         <div class="pcards">
           {services.filter((s) => s.cat === g.cat).map((s) => (
-            <a class="pcard-link" href={`/ca/services/${s.slug}/`}>
+            <a class="pcard-link" href={`/services/${s.slug}/`}>
               <Photo name={s.slug} sizes="(max-width: 560px) calc(100vw - 44px), 280px" hud={false} plain />
               <div class="pcard-body">
                 <h3>{s.h1}</h3>
@@ -60,7 +60,7 @@ const groups = citiesByProvince();
       <h2>Or start with your city</h2>
       <div class="plist">
         {groups.map((g) => (
-          <p><strong>{g.provName}:</strong> {g.cities.map((c, i) => (<>{i > 0 && ', '}<a href={`/ca/cities/${c.slug}/`}>{c.name}</a></>))}</p>
+          <p><strong>{g.provName}:</strong> {g.cities.map((c, i) => (<>{i > 0 && ', '}<a href={`/cities/${c.slug}/`}>{c.name}</a></>))}</p>
         ))}
       </div>
     </section>

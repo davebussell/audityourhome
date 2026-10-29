@@ -17,16 +17,16 @@ const title = 'Home energy rebate changes in Canada (2026) | AuditYourHome';
 const description = `What changed in home energy rebates and programs across Canada, newest first: ${items.slice(0, 3).map((u) => u.title.split(':')[0]).join(', ')} and more.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Rebates & programs', path: '/ca/programs/' },
-    { name: 'Program changes', path: '/ca/updates/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: 'Program changes', path: '/updates/' },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Home energy rebate and program changes in Canada',
     description,
-    url: `${SITE.url}/ca/updates/`,
+    url: `/updates/`,
     dateModified: latest,
     mainEntity: {
       '@type': 'ItemList',
@@ -38,7 +38,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/programs/">Rebates &amp; programs</a> / Program changes</nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/programs/">Rebates &amp; programs</a> / Program changes</nav>
     <div class="page-hero">
       <p class="eyebrow">Latest change {fmt(latest)}</p>
       <h1>Rebate and program changes</h1>
@@ -47,7 +47,7 @@ const schema = [
         province by province, with a link to our full guide and to the official page for each one.
       </p>
       {ACCOUNTS_ENABLED && (
-        <p><a class="btn btn-primary" href="/ca/alerts/">Email me when my province changes</a></p>
+        <p><a class="btn btn-primary" href="/alerts/">Email me when my province changes</a></p>
       )}
     </div>
 
@@ -78,7 +78,7 @@ const schema = [
         the official page before you spend money. Something we missed? Email
         <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
       </p>
-      <p class="small"><a href="/ca/programs/">All rebates and programs →</a></p>
+      <p class="small"><a href="/programs/">All rebates and programs →</a></p>
     </section>
   </div>
 </Base>

@@ -1,4 +1,5 @@
-// After the build: link the first use of each glossary term on every /ca/ and /us/ page to its glossary
+// After `astro build` (before tools/country/postbuild.mjs splits dist/ into the two sites): link the first
+// use of each glossary term on every page under dist/ca/ and dist/us/ to its glossary
 // entry, add the short definitions the tooltips need, and check the glossary pages' internal links.
 // Usage: node tools/glossary/link.mjs [distDir]
 //
@@ -266,7 +267,8 @@ function main() {
   const stats = { pages: 0, linkedPages: 0, links: 0, skipped: 0 };
   const termCount = new Map();
   const ownByPath = { ca: new Map(), us: new Map() };
-  for (const e of entries) for (const c of e.countries) ownByPath[c].set(`/${c}/glossary/${slugFor(e, c)}/`, e.slug);
+  // Pages are still under their country prefix here; links are written in root form (hrefFor).
+  for (const e of entries) for (const c of e.countries) ownByPath[c].set(`/${c}${hrefFor(e, c)}`, e.slug);
 
   for (const c of ['ca', 'us']) {
     const cache = new Map();
@@ -310,7 +312,8 @@ function main() {
       const m = html.indexOf('<main');
       const body = m < 0 ? html : html.slice(m, html.lastIndexOf('</main>'));
       for (const [, href] of body.matchAll(/href="(\/[^"#?]*)/g)) {
-        const target = join(DIST, href, href.endsWith('/') ? 'index.html' : '');
+        // root-form link on the published site = /<country>/... in this build
+        const target = join(DIST, c, href, href.endsWith('/') ? 'index.html' : '');
         if (!existsSync(target)) broken.push(`${file.slice(DIST.length)} -> ${href}`);
       }
     }

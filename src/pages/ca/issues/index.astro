@@ -11,8 +11,8 @@ const description =
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Fix an issue', path: '/ca/issues/' },
+    { name: 'Home', path: '/' },
+    { name: 'Fix an issue', path: '/issues/' },
   ]),
 ];
 ---
@@ -35,7 +35,7 @@ const schema = [
 
     <div class="issue-grid">
       {issues.map((i) => (
-        <a class="card issue-card" href={`/ca/issues/${i.slug}/`}>
+        <a class="card issue-card" href={`/issues/${i.slug}/`}>
           <h2>{i.name}</h2>
           <p class="small">{i.symptom}</p>
           <span class="go">Diagnose it →</span>
@@ -46,7 +46,7 @@ const schema = [
     <div class="card card-pad more">
       <h3>Not sure which problem is yours?</h3>
       <p class="mb-0">
-        <a href="/ca/plan/">The planner</a> profiles your whole house in six questions and sequences
+        <a href="/plan/">The planner</a> profiles your whole house in six questions and sequences
         the fixes — symptoms included.
       </p>
     </div>

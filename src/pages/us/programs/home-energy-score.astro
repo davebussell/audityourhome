@@ -48,7 +48,7 @@ const S = {
   freddie: src(/greenchoice-mortgages$/),
 };
 
-const title = 'DOE Home Energy Score: the 1–10 rating and where it’s required (2026) | AuditYourHome';
+const title = 'DOE Home Energy Score: the 1–10 rating and where it’s required (2026) | AuditYourHouse';
 const description = 'DOE’s 1–10 Home Energy Score: how it works, who can give one, and where it’s required, including Portland, Oregon and Berkeley, California. Checked October 12, 2026.';
 
 const faqs = [
@@ -83,9 +83,9 @@ const sources: Source[] = dedupe([
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Rebates & programs', path: '/us/programs/' },
-    { name: 'Home Energy Score', path: '/us/programs/home-energy-score/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: 'Home Energy Score', path: '/programs/home-energy-score/' },
   ]),
   faqSchema(faqs),
 ];
@@ -97,7 +97,7 @@ const ext = { rel: 'noopener', target: '_blank' };
   <ProgramStyles />
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Home Energy Score</span>
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Home Energy Score</span>
     </nav>
 
     <div class="page-hero has-photo">
@@ -156,7 +156,7 @@ const ext = { rel: 'noopener', target: '_blank' };
             <a href={S.assessor.href} {...ext}>DOE: become an assessor&nbsp;↗</a> ·
             <a href={S.faq.href} {...ext}>DOE FAQ&nbsp;↗</a> · verified {VERIFIED}
           </p>
-          <p class="side-links"><a href="/us/find/">Find a certified auditor →</a></p>
+          <p class="side-links"><a href="/find/">Find a certified auditor →</a></p>
         </div>
       </div>
     </section>
@@ -184,7 +184,7 @@ const ext = { rel: 'noopener', target: '_blank' };
             <a href={pdxRule.url} {...ext}>City of Portland&nbsp;↗</a> ·
             <a href={S.pdxAbout.href} {...ext}>Policy history&nbsp;↗</a> · verified {VERIFIED}
           </p>
-          <p class="lk"><a href="/us/cities/portland/">Portland guide →</a></p>
+          <p class="lk"><a href="/cities/portland/">Portland guide →</a></p>
         </article>
 
         <article class="card card-pad rq">
@@ -195,7 +195,7 @@ const ext = { rel: 'noopener', target: '_blank' };
           <p class="up-meta">
             <a href={beso.url} {...ext}>City of Berkeley&nbsp;↗</a> · verified {VERIFIED}
           </p>
-          <p class="lk"><a href="/us/cities/san-francisco/">San Francisco Bay Area guide →</a></p>
+          <p class="lk"><a href="/cities/san-francisco/">San Francisco Bay Area guide →</a></p>
         </article>
 
         <article class="card card-pad rq">
@@ -208,7 +208,7 @@ const ext = { rel: 'noopener', target: '_blank' };
             <a href={hesCa.url} {...ext}>Home Energy Score California&nbsp;↗</a> · verified {VERIFIED}
           </p>
           <p class="lk">
-            {hesCaMetros.map((m, i) => (<>{i > 0 && ' · '}<a href={`/us/cities/${m.slug}/`}>{metroName(m)}</a></>))}
+            {hesCaMetros.map((m, i) => (<>{i > 0 && ' · '}<a href={`/cities/${m.slug}/`}>{metroName(m)}</a></>))}
           </p>
         </article>
 
@@ -253,7 +253,7 @@ const ext = { rel: 'noopener', target: '_blank' };
       <p class="up-intro">Selling elsewhere? These local rules ask for an audit, a different score or energy information instead.</p>
       <div class="up-two">
         <article class="card card-pad orl">
-          <h3><a href="/us/cities/austin/">Austin, Texas: ECAD audit</a></h3>
+          <h3><a href="/cities/austin/">Austin, Texas: ECAD audit</a></h3>
           <p>
             Sellers of homes 10 or more years old inside Austin city limits and served by Austin Energy must give the
             buyer an ECAD home energy audit from a registered Energy Professional, or show qualifying Austin Energy
@@ -262,12 +262,12 @@ const ext = { rel: 'noopener', target: '_blank' };
           <p class="up-meta"><a href={ecad.url} {...ext}>Austin Energy&nbsp;↗</a> · verified {VERIFIED}</p>
         </article>
         <article class="card card-pad orl">
-          <h3><a href="/us/cities/minneapolis/">Minneapolis: TISH energy disclosure</a></h3>
+          <h3><a href="/cities/minneapolis/">Minneapolis: TISH energy disclosure</a></h3>
           <p>{clean(tish.summary)}</p>
           <p class="up-meta"><a href={tish.url} {...ext}>City of Minneapolis&nbsp;↗</a> · verified {VERIFIED}</p>
         </article>
         <article class="card card-pad orl">
-          <h3><a href="/us/cities/new-york/">New York State: Truth in Heating</a></h3>
+          <h3><a href="/cities/new-york/">New York State: Truth in Heating</a></h3>
           <p>{clean(nyHeat.summary)}</p>
           <p class="up-meta"><a href={nyHeat.url} {...ext}>NY Energy Law §17-103&nbsp;↗</a> · verified {VERIFIED}</p>
         </article>
@@ -275,7 +275,7 @@ const ext = { rel: 'noopener', target: '_blank' };
           <h3>Florida: energy rating disclosure</h3>
           <p>{clean(flAct.summary)}</p>
           <p class="up-meta"><a href={flAct.url} {...ext}>Florida Statutes s. 553.996&nbsp;↗</a> · verified {VERIFIED}</p>
-          <p class="lk">{flMetros.map((m, i) => (<>{i > 0 && ' · '}<a href={`/us/cities/${m.slug}/`}>{metroName(m)}</a></>))}</p>
+          <p class="lk">{flMetros.map((m, i) => (<>{i > 0 && ' · '}<a href={`/cities/${m.slug}/`}>{metroName(m)}</a></>))}</p>
         </article>
       </div>
     </section>
@@ -289,9 +289,9 @@ const ext = { rel: 'noopener', target: '_blank' };
     <ProgramSources sources={sources} verified={VERIFIED} />
 
     <p class="up-related">
-      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
-      <a class="btn btn-ghost" href="/us/tests/">Home tests explained</a>
-      <a class="btn btn-ghost" href="/us/cost/">What an audit costs</a>
+      <a class="btn btn-ghost" href="/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/tests/">Home tests explained</a>
+      <a class="btn btn-ghost" href="/cost/">What an audit costs</a>
     </p>
   </div>
 </Base>

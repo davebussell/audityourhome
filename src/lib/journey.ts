@@ -62,13 +62,13 @@ const ORDER: JourneyStageKey[] = ['plan', 'book', 'visit', 'upgrades'];
 export function journeyHref(country: JourneyCountry, key: JourneyStageKey): string {
   switch (key) {
     case 'plan':
-      return `/${country}/plan/`;
+      return `/plan/`;
     case 'book':
-      return `/${country}/find/`;
+      return `/find/`;
     case 'visit':
-      return `/${country}/how-it-works/#visit`;
+      return `/how-it-works/#visit`;
     case 'upgrades':
-      return `/${country}/programs/`;
+      return `/programs/`;
   }
 }
 

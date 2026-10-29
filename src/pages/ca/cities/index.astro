@@ -10,7 +10,7 @@ const n = localIndex.cities.length;
 const groups = citiesByProvince();
 const title = `Home energy audits and home testing in ${n} Canadian cities | AuditYourHome`;
 const description = `Local guides to 16 home energy and home health services in ${n} Canadian cities, each with its climate, housing age, provincial rules and who does the work.`;
-const schema = [breadcrumbSchema([{ name: 'Home', path: '/ca/' }, { name: 'Cities', path: '/ca/cities/' }])];
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cities', path: '/cities/' }])];
 const fmt = (v: number) => v.toLocaleString('en-CA');
 ---
 
@@ -46,13 +46,13 @@ const fmt = (v: number) => v.toLocaleString('en-CA');
           <div class="pthumb"><Photo name={PROV_PHOTO[g.prov]} hud={false} plain sizes="96px" ratio="1 / 1" /></div>
           <div>
             <h2>{g.provName}</h2>
-            <a class="small" href={`/ca/provinces/${g.provSlug}/`}>Programs and rebates in {g.provName} →</a>
+            <a class="small" href={`/provinces/${g.provSlug}/`}>Programs and rebates in {g.provName} →</a>
           </div>
         </div>
         <ul class="clist">
           {g.cities.map((c) => (
             <li>
-              <a href={`/ca/cities/${c.slug}/`}>
+              <a href={`/cities/${c.slug}/`}>
                 <span class="cn">{c.name}</span>
                 <EraBar era={c.facts.era} name={c.name} />
                 <span class="cf">

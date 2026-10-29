@@ -153,7 +153,7 @@ const EXAMPLES = DEFS.map(build);
 
 const title = 'What upgrades really save: four worked examples | AuditYourHome';
 const description = 'Four Canadian houses run through our energy model with every number shown: heating need, local prices, insulation, air sealing, windows and heat pumps.';
-const path = '/ca/learn/real-numbers/';
+const path = '/learn/real-numbers/';
 const faqs = [
   { q: 'Are these real customers?', a: 'No. They are modelled examples: typical houses run through the same calculations our planner and calculators use, with local prices and climate data. We show every step so you can check the arithmetic, and the calculators let you replace any assumption with your own numbers.' },
   { q: 'Why are the savings smaller than some contractors quote?', a: 'We stay conservative on purpose. Savings are reduced by a factor of 0.75 (0.4 for basements) for free heat from the sun, people and appliances and for real-world installation, valued at the price of your next unit of energy without fixed charges, and no upgrade is credited with more than 35% of heating (60% for all of them together).' },
@@ -162,8 +162,8 @@ const faqs = [
 ];
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Learn', path: '/ca/learn/' },
+    { name: 'Home', path: '/' },
+    { name: 'Learn', path: '/learn/' },
     { name: 'Worked examples', path },
   ]),
   faqSchema(faqs),
@@ -176,15 +176,15 @@ const unitWord = (u: string) => (u === 'm³' ? 'm³ of gas' : u === 'kWh' ? 'kWh
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/learn/">Learn</a> <span aria-hidden="true">/</span> <span>Worked examples</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/learn/">Learn</a> <span aria-hidden="true">/</span> <span>Worked examples</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">Keeping the heat in · worked examples · prices as of October 8, 2026</p>
         <h1>What upgrades really save: four houses, every number shown</h1>
         <p class="lede measure">
           Estimates only build confidence if you can see where they come from. Here are four typical
-          Canadian houses run through the same model our <a href="/ca/plan/">planner</a> and
-          <a href="/ca/calculators/">calculators</a> use: local climate, today's local prices, and the
+          Canadian houses run through the same model our <a href="/plan/">planner</a> and
+          <a href="/calculators/">calculators</a> use: local climate, today's local prices, and the
           physics of each upgrade, with nothing hidden. They are modelled examples, not customer stories.
         </p>
       </div>
@@ -279,7 +279,7 @@ const unitWord = (u: string) => (u === 'm³' ? 'm³ of gas' : u === 'kWh' ? 'kWh
         <div class="card card-pad takeaway">
           <h3>What this house tells you</h3>
           <p class="mb-0">{x.d.takeaway}</p>
-          <p class="small mb-0 tk-links"><a href={`/ca/calculators/upgrade-payback/${x.d.city}/`}>Run your own {x.cityName} numbers →</a> · <a href={`/ca/calculators/energy-costs/${x.d.city}/`}>Compare heating systems in {x.cityName} →</a></p>
+          <p class="small mb-0 tk-links"><a href={`/calculators/upgrade-payback/${x.d.city}/`}>Run your own {x.cityName} numbers →</a> · <a href={`/calculators/energy-costs/${x.d.city}/`}>Compare heating systems in {x.cityName} →</a></p>
         </div>
       </section>
     ))}
@@ -305,7 +305,7 @@ const unitWord = (u: string) => (u === 'm³' ? 'm³ of gas' : u === 'kWh' ? 'kWh
         which is lower than your average price. Costs are published installed-cost ranges (HomeStars,
         FurnacePrices.ca) where a reliable figure exists, and "get quotes" where it doesn't. Rebates
         aren't subtracted here because they depend on your province and program rules: the
-        <a href="/ca/calculators/upgrade-payback/">upgrade payback calculator</a> applies the ones that are open.
+        <a href="/calculators/upgrade-payback/">upgrade payback calculator</a> applies the ones that are open.
       </p>
     </section>
 
@@ -320,15 +320,15 @@ const unitWord = (u: string) => (u === 'm³' ? 'm³ of gas' : u === 'kWh' ? 'kWh
       <h3>Sources</h3>
       <ul>
         {SRC.map((s) => <li><a href={s.url} rel="noopener">{s.title}</a></li>)}
-        <li>Energy prices: provincial utility tariffs, Hydro-Québec's comparison of electricity prices, and Statistics Canada table 18-10-0001-01 for heating oil, as listed on each <a href="/ca/calculators/energy-costs/">city calculator page</a>.</li>
+        <li>Energy prices: provincial utility tariffs, Hydro-Québec's comparison of electricity prices, and Statistics Canada table 18-10-0001-01 for heating oil, as listed on each <a href="/calculators/energy-costs/">city calculator page</a>.</li>
       </ul>
       <p class="small mb-0">Prices and program details checked October 8, 2026.</p>
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/learn/">Keeping the heat in</a>
-      <a class="btn btn-ghost" href="/ca/plan/">Plan your own house</a>
-      <a class="btn btn-ghost" href="/ca/calculators/">All calculators</a>
+      <a class="btn btn-ghost" href="/learn/">Keeping the heat in</a>
+      <a class="btn btn-ghost" href="/plan/">Plan your own house</a>
+      <a class="btn btn-ghost" href="/calculators/">All calculators</a>
     </div>
 
     <LeadForm heading="Want real numbers for your house?" sub="An EnerGuide evaluation measures your house instead of estimating it. Tell us where you are and we'll connect you with a registered advisor." context="learn-real-numbers" />

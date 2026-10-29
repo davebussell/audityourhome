@@ -3,12 +3,13 @@ import Logo from './Logo.astro';
 import CountrySwitch from './CountrySwitch.astro';
 import { navFor } from '../lib/nav';
 import { ACCOUNTS_ENABLED } from '../config/site';
-import { countryOf, COUNTRIES } from '../lib/country';
+import { countryOf, publicPath } from '../lib/country';
 
-const path = Astro.url.pathname;
-const country = countryOf(path);
+/* Build path is /ca/... or /us/...; nav links are written in root form, so compare the public path. */
+const country = countryOf(Astro.url.pathname);
+const path = publicPath(Astro.url.pathname);
 const NAV = navFor(country);
-const home = country ? COUNTRIES[country].home : '/';
+const home = '/';
 
 /** plain-link active state */
 const isActive = (href?: string) => !!href && path.startsWith(href);

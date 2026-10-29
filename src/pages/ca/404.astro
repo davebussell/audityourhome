@@ -1,5 +1,6 @@
 ---
-import Base from '../layouts/Base.astro';
+import Base from '../../layouts/Base.astro';
+import { COUNTRIES } from '../../lib/country';
 
 const title = 'Page not found | AuditYourHome';
 const description = 'That page has gone missing — like heat through an uninsulated attic.';
@@ -12,12 +13,13 @@ const description = 'That page has gone missing — like heat through an uninsul
       <h1>This page leaked out</h1>
       <p class="lede">Like heat through an uninsulated attic. Let's get you somewhere sealed:</p>
       <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
-        <a class="btn btn-primary" href="/ca/">Canadian site</a>
-        <a class="btn btn-primary" href="/us/">US site</a>
+        <a class="btn btn-primary" href="/">Home</a>
+        <a class="btn btn-primary" href="/plan/">Start your free plan</a>
       </p>
       <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
-        <a class="btn btn-ghost" href="/ca/find/">Find an auditor in Canada</a>
-        <a class="btn btn-ghost" href="/us/find/">Find an auditor in the US</a>
+        <a class="btn btn-ghost" href="/find/">Find an auditor in Canada</a>
+        <a class="btn btn-ghost" href="/programs/">Rebates &amp; programs</a>
+        <a class="btn btn-ghost" href={`${COUNTRIES.us.origin}/?site=us`}>Looking for the US site?</a>
       </p>
     </div>
   </div>

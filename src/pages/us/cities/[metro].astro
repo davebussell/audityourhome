@@ -162,9 +162,9 @@ if (income.length) {
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'Cities', path: '/us/cities/' },
-    { name, path: `/us/cities/${m.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Cities', path: '/cities/' },
+    { name, path: `/cities/${m.slug}/` },
   ]),
   faqSchema(faqs),
 ];
@@ -188,8 +188,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
 <Base title={title} description={description} schema={schema} ogImage={ogFor(photoKey)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/">Home</a> <span aria-hidden="true">/</span>
-      <a href="/us/cities/">Cities</a> <span aria-hidden="true">/</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span>
+      <a href="/cities/">Cities</a> <span aria-hidden="true">/</span>
       <span>{name}</span>
     </nav>
 
@@ -281,7 +281,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
           <p>
             {g.radonZone ? `${RADON_ZONE[g.radonZone] ?? ''}${g.county ? ` (${g.county})` : ''}. ` : ''}
             EPA says not to use the zone to decide whether to test: high levels turn up in all three zones, so test every home.
-            <a href="/us/tests/radon/">Radon testing guide</a> · <a href={RADON_ZONE_SOURCE.href} rel="noopener" target="_blank">EPA&nbsp;↗</a>
+            <a href="/tests/radon/">Radon testing guide</a> · <a href={RADON_ZONE_SOURCE.href} rel="noopener" target="_blank">EPA&nbsp;↗</a>
           </p>
         </div>
       </div>
@@ -299,9 +299,9 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
         </p>
         <ul class="prob-list">
           {probs.map((i) => (
-            <li><a href={`/us/issues/${i.slug}/${probGroup ? `#in-${probGroup}` : ''}`}>{i.name}</a></li>
+            <li><a href={`/issues/${i.slug}/${probGroup ? `#in-${probGroup}` : ''}`}>{i.name}</a></li>
           ))}
-          <li><a href="/us/issues/">All common problems →</a></li>
+          <li><a href="/issues/">All common problems →</a></li>
         </ul>
       </section>
     )}
@@ -350,7 +350,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
       <p class="measure">
         {audits.length} program{audits.length === 1 ? '' : 's'} we track, open ones first. Prices are as each program
         publishes them. If you want a full diagnostic audit outside these programs, look for a certified auditor:
-        <a href="/us/find/">how to find one</a> and <a href="/us/cost/">what audits cost</a>.
+        <a href="/find/">how to find one</a> and <a href="/cost/">what audits cost</a>.
       </p>
       <div class="ap-grid">
         {audits.map((p) => <AuditProgram p={p} />)}
@@ -373,8 +373,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
           </div>
         </div>
       ))}
-      <p class="small more">Statewide rebate programs and federal options: <a href="/us/programs/">rebates and programs</a>.</p>
-      <a class="card card-pad hp-link" href={`/us/heat-pumps/${m.slug}/`}>
+      <p class="small more">Statewide rebate programs and federal options: <a href="/programs/">rebates and programs</a>.</p>
+      <a class="card card-pad hp-link" href={`/heat-pumps/${m.slug}/`}>
         <span class="hp-t">Heat pumps in {name} →</span>
         <span class="hp-d">What a heat pump costs to run here for cooling and heating, each heat pump rebate with the equipment rule that decides which models qualify, and the certified systems and brands that suit the climate.</span>
       </a>
@@ -416,7 +416,7 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
           </tbody>
         </table>
       </div>
-      <p class="small more">How the programs work: <a href="/us/programs/home-energy-rebates/">Home Energy Rebates explained</a> · <a href="/us/programs/states/">every state’s status</a>.</p>
+      <p class="small more">How the programs work: <a href="/programs/home-energy-rebates/">Home Energy Rebates explained</a> · <a href="/programs/states/">every state’s status</a>.</p>
     </section>
 
     <!-- INCOME-QUALIFIED -->
@@ -502,8 +502,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
     <section class="related">
       <h2>{sameState.length > 0 ? `Other metros in ${andList(stateNames)}` : `Other metros in the ${region}`}</h2>
       <div class="nb">
-        {related.map((o) => <a href={`/us/cities/${o.slug}/`}>{o.data.name} <span class="st">{(o.data.states ?? []).join(' · ')}</span></a>)}
-        <a class="all" href="/us/cities/">All {METROS.length} metros →</a>
+        {related.map((o) => <a href={`/cities/${o.slug}/`}>{o.data.name} <span class="st">{(o.data.states ?? []).join(' · ')}</span></a>)}
+        <a class="all" href="/cities/">All {METROS.length} metros →</a>
       </div>
     </section>
   </div>

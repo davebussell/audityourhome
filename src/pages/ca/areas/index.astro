@@ -16,8 +16,8 @@ const title = `Area guides: home energy audits, radon and well water testing in 
 const description = `County and regional guides for ${areas.length} areas around the cities we cover, from Simcoe County and Muskoka to the Okanagan and Northern BC: EnerGuide audits, heat loss calculations, radon, mould, well water and WETT inspections, with local health-unit, climate and census data.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Areas', path: '/ca/areas/' },
+    { name: 'Home', path: '/' },
+    { name: 'Areas', path: '/areas/' },
   ]),
 ];
 const SHOW = 14;
@@ -25,7 +25,7 @@ const SHOW = 14;
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('region-ontario')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/">Home</a> <span aria-hidden="true">/</span> <span>Areas</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Areas</span></nav>
 
     <div class="page-hero has-photo">
       <div class="hero-text">
@@ -38,7 +38,7 @@ const SHOW = 14;
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#ontario">Ontario areas ↓</a>
-          <a class="btn btn-ghost" href="/ca/cities/">Browse the 70 city guides</a>
+          <a class="btn btn-ghost" href="/cities/">Browse the 70 city guides</a>
         </div>
       </div>
       <Photo name="region-ontario" eager />
@@ -59,16 +59,16 @@ const SHOW = 14;
         <div class="alist">
           {areas.filter((a) => a.prov === p.code).map((a) => (
             <article class="card acard" data-communities={a.communities.join('|')}>
-              <h3><a href={`/ca/areas/${a.slug}/`}>{a.name}</a></h3>
+              <h3><a href={`/areas/${a.slug}/`}>{a.name}</a></h3>
               <p class="kind small">{a.kind}</p>
               <p class="nums"><span>{fmt(a.pop)} people</span><span>{a.communityCount} communities</span></p>
               <p class="cm">
                 {a.communities.slice(0, SHOW).join(', ')}{a.communities.length > SHOW ? `, and ${a.communities.length - SHOW} more` : ''}.
               </p>
               {a.coveredCities.length > 0 && (
-                <p class="small cc">City pages nearby: {a.coveredCities.map((c, i) => <>{i > 0 && ', '}<a href={`/ca/cities/${c.slug}/`}>{c.name}</a></>)}</p>
+                <p class="small cc">City pages nearby: {a.coveredCities.map((c, i) => <>{i > 0 && ', '}<a href={`/cities/${c.slug}/`}>{c.name}</a></>)}</p>
               )}
-              <a class="go" href={`/ca/areas/${a.slug}/`}>Open the {a.name} guide →</a>
+              <a class="go" href={`/areas/${a.slug}/`}>Open the {a.name} guide →</a>
             </article>
           ))}
         </div>

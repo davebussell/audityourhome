@@ -38,9 +38,9 @@ const area = city.prov === 'ON' ? city.onRegion ?? 'other-ontario' : PROV_AREA[c
 const title = `${hub.title} | AuditYourHome`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Cities', path: '/ca/cities/' },
-    { name: city.name, path: `/ca/cities/${city.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Cities', path: '/cities/' },
+    { name: city.name, path: `/cities/${city.slug}/` },
   ]),
 ];
 const byCat = (cat: string) => hub.services.filter((s) => s.cat === cat);
@@ -61,8 +61,8 @@ const clim = placeClimate('ca', city.slug);
 <Base title={title} description={hub.description} schema={schema} ogImage={ogFor(photoKey)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/cities/">Cities</a> <span aria-hidden="true">/</span>
-      <a href={`/ca/provinces/${city.provSlug}/`}>{city.provName}</a> <span aria-hidden="true">/</span>
+      <a href="/cities/">Cities</a> <span aria-hidden="true">/</span>
+      <a href={`/provinces/${city.provSlug}/`}>{city.provName}</a> <span aria-hidden="true">/</span>
       <span>{city.name}</span>
     </nav>
 
@@ -72,10 +72,10 @@ const clim = placeClimate('ca', city.slug);
         <h1>Home energy audits and home testing in {city.name}</h1>
         <p class="lede">{hub.lede}</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href={`/ca/services/home-energy-audit/${city.slug}/`}>Energy audits in {city.name} →</a>
+          <a class="btn btn-primary" href={`/services/home-energy-audit/${city.slug}/`}>Energy audits in {city.name} →</a>
           <a class="btn btn-ghost" href="#services">All 16 services</a>
         </div>
-        <p class="small plan-link">Not sure what your house needs? <a href="/ca/plan/">Get your free plan →</a> (six short steps, no email)</p>
+        <p class="small plan-link">Not sure what your house needs? <a href="/plan/">Get your free plan →</a> (six short steps, no email)</p>
       </div>
       <Photo name={photoKey} eager />
     </div>
@@ -128,7 +128,7 @@ const clim = placeClimate('ca', city.slug);
           <h3>{c.title}</h3>
           <div class="pcards">
             {byCat(c.cat).map((s) => (
-              <a class="pcard-link" href={`/ca/services/${s.slug}/${city.slug}/`}>
+              <a class="pcard-link" href={`/services/${s.slug}/${city.slug}/`}>
                 <Photo name={s.slug} sizes="(max-width: 560px) calc(100vw - 44px), 280px" hud={false} plain />
                 <div class="pcard-body">
                   <h3>{s.name}</h3>
@@ -148,11 +148,11 @@ const clim = placeClimate('ca', city.slug);
       {provCount > 0 && (
         <p class="measure">
           {provCount === 1 ? 'One NRCan-licensed service organization lists' : `${provCount} NRCan-licensed service organizations list`} {city.name} postal codes.
-          <a href={`/ca/services/home-energy-audit/${city.slug}/#providers`}>See the list with phone numbers and coverage →</a>
+          <a href={`/services/home-energy-audit/${city.slug}/#providers`}>See the list with phone numbers and coverage →</a>
         </p>
       )}
       {onRegion && (
-        <p class="measure small">Ontario directory: <a href={`/ca/find/${onRegion.slug}/`}>verified advisor profiles for {onRegion.name}</a>, with prices where published.</p>
+        <p class="measure small">Ontario directory: <a href={`/find/${onRegion.slug}/`}>verified advisor profiles for {onRegion.name}</a>, with prices where published.</p>
       )}
     </section>
 
@@ -191,9 +191,9 @@ const clim = placeClimate('ca', city.slug);
         <h2>Cities near {city.name}</h2>
         <div class="nb">
           {city.nearby.map((n) => (
-            <a href={`/ca/cities/${n.slug}/`}><span>{n.name}</span><span class="km">{n.km} km</span></a>
+            <a href={`/cities/${n.slug}/`}><span>{n.name}</span><span class="km">{n.km} km</span></a>
           ))}
-          <a class="all" href="/ca/cities/">All {localIndex.cities.length} cities →</a>
+          <a class="all" href="/cities/">All {localIndex.cities.length} cities →</a>
         </div>
       </section>
     )}

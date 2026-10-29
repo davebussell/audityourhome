@@ -150,7 +150,7 @@ function apTodo(r: ApResult, p: AppliancePayload): string {
     : best
       ? `the biggest saving is about ${money(best.saveCost)} a year on one item in the list, so start there.`
     : 'set the rows that match your home to their older model or habit to see which change saves the most.';
-  return `<p class="todo"><strong>What to do with this number:</strong> ${lead} Then check the estimate against your utility's online account, which shows your real hourly or daily use. <a href="/ca/services/energy-bill-analysis/${esc(p.city.slug)}/">Energy bill analysis in ${esc(p.city.name)}</a>.</p>`;
+  return `<p class="todo"><strong>What to do with this number:</strong> ${lead} Then check the estimate against your utility's online account, which shows your real hourly or daily use. <a href="/services/energy-bill-analysis/${esc(p.city.slug)}/">Energy bill analysis in ${esc(p.city.name)}</a>.</p>`;
 }
 
 export { int };

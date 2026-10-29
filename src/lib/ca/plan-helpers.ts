@@ -29,7 +29,7 @@ export const PROV_NAME: Record<ProvCode, string> = {
   NT: 'Northwest Territories', NU: 'Nunavut',
 };
 
-/** Province page slug (src/data/provinces.json, /ca/provinces/<slug>/). The territories share one page. */
+/** Province page slug (src/data/provinces.json, /provinces/<slug>/). The territories share one page. */
 export const PROV_SLUG: Record<ProvCode, string> = {
   BC: 'bc', AB: 'alberta', SK: 'saskatchewan', MB: 'manitoba', ON: 'ontario', QC: 'quebec', NB: 'new-brunswick',
   NS: 'nova-scotia', PE: 'pei', NL: 'newfoundland-labrador', YT: 'north', NT: 'north', NU: 'north',
@@ -129,7 +129,7 @@ export interface ClimateFlags {
 export interface SymptomDef {
   slug: string;
   label: string;
-  /** /ca/issues/<slug>/ deep-dive, when one exists */
+  /** /issues/<slug>/ deep-dive, when one exists */
   issue?: string;
   /** Show this chip for a place? */
   show: (c: ClimateFlags) => boolean;
@@ -165,37 +165,37 @@ export interface Concern {
   more: { label: string; href: string };
 }
 
-/** Plain explanations for symptoms that don't have their own /ca/issues/ page. */
+/** Plain explanations for symptoms that don't have their own /issues/ page. */
 export const EXTRA_CONCERNS: Record<string, Concern> = {
   'humid-summer': {
     cause: 'Humid outdoor air leaking in, a damp basement, or an air conditioner too big for the house: it cools quickly and shuts off before it has dried the air.',
     tests: ['ventilation-assessment', 'heat-loss-calc', 'duct-leakage'],
     fix: 'Seal air leaks, dry the basement (grading, downspouts, a dehumidifier), and size any new heat pump or air conditioner to the house so it runs long, drying cycles.',
-    more: { label: 'Air conditioning and cooling', href: '/ca/learn/air-conditioning/' },
+    more: { label: 'Air conditioning and cooling', href: '/learn/air-conditioning/' },
   },
   smoke: {
     cause: 'Smoke gets in through the same gaps that let heat out, and through windows opened to cool the house.',
     tests: ['blower-door', 'ventilation-assessment'],
     fix: 'Seal air leaks, use a MERV 13 filter in the furnace or HRV if it can take one, run a portable HEPA filter in a bedroom, and plan cooling so you can keep windows shut on smoke days.',
-    more: { label: 'Ventilation and fresh air', href: '/ca/learn/ventilation/' },
+    more: { label: 'Ventilation and fresh air', href: '/learn/ventilation/' },
   },
   'window-frost': {
     cause: 'More indoor humidity than the coldest glass can handle, or cold window edges and frames.',
     tests: ['ventilation-assessment', 'thermal-imaging'],
     fix: 'Run bath and kitchen fans, keep indoor humidity toward the low end of 30–50% on very cold days, check that the HRV works, and upgrade the worst windows later.',
-    more: { label: 'Window condensation and musty air', href: '/ca/issues/condensation-mould/' },
+    more: { label: 'Window condensation and musty air', href: '/issues/condensation-mould/' },
   },
   'dry-winter': {
     cause: 'Very cold outdoor air holds little moisture, and a leaky house swaps indoor air for that dry air all winter.',
     tests: ['blower-door', 'ventilation-assessment'],
     fix: 'Air sealing keeps the moisture you already have; add humidity only in moderation (too much frosts windows), and ask whether an ERV suits your house better than an HRV.',
-    more: { label: 'Moisture control', href: '/ca/learn/moisture-control/' },
+    more: { label: 'Moisture control', href: '/learn/moisture-control/' },
   },
   outages: {
     cause: 'Storms and freezing rain cut power, and most heating systems, even gas furnaces, need electricity to run.',
     tests: ['blower-door', 'combustion-safety'],
     fix: 'A tighter, better-insulated house holds its heat for longer. Plan a backup heat source, keep CO alarms on every floor, and never run a generator or barbecue indoors.',
-    more: { label: 'Heating systems and backup heat', href: '/ca/learn/heating-systems/' },
+    more: { label: 'Heating systems and backup heat', href: '/learn/heating-systems/' },
   },
 };
 

@@ -1,8 +1,10 @@
 ---
 /**
- * Canada / United States switcher. Links go to the same page in the other country when one
- * exists (read at runtime from the page's hreflang alternates), otherwise to that country's home.
- * Choosing a country remembers it in a cookie, which Netlify reads to send "/" there next time.
+ * Canada / United States switcher. Each country is its own site (audityourhome.com and
+ * audityourhouse.com), so the links cross domains: to the same page on the other site when one
+ * exists (read at runtime from the page's hreflang alternates), otherwise to that site's home.
+ * The link carries ?site=<code> so the other site records the choice and skips its "other site"
+ * banner; see OtherSite.astro.
  */
 import { COUNTRIES, type Country } from '../lib/country';
 
@@ -12,15 +14,17 @@ interface Props {
 }
 const { current, variant = 'desk' } = Astro.props;
 const list = [COUNTRIES.ca, COUNTRIES.us];
+const hrefFor = (c: (typeof list)[number]) => (c.code === current ? '/' : `${c.origin}/?site=${c.code}`);
 ---
 
 <div class:list={['ctry', variant]} role="group" aria-label="Country">
   {variant === 'mobile' && <span class="ctry-t">Country</span>}
   {list.map((c) => (
     <a
-      href={c.home}
+      href={hrefFor(c)}
       data-ctry={c.code}
       data-locale={c.locale}
+      data-origin={c.origin}
       aria-current={current === c.code ? 'true' : undefined}
       title={c.name}
     >
@@ -48,19 +52,24 @@ const list = [COUNTRIES.ca, COUNTRIES.us];
 </style>
 
 <script>
-  const COOKIE = { ca: 'ayh_ca', us: 'ayh_us' } as const;
-  function remember(code: 'ca' | 'us') {
-    const other = code === 'ca' ? 'us' : 'ca';
-    document.cookie = `${COOKIE[code]}=1; path=/; max-age=31536000; samesite=lax`;
-    document.cookie = `${COOKIE[other]}=; path=/; max-age=0; samesite=lax`;
-  }
+  import { CHOICE_COOKIE } from '../lib/country';
+  const current = document.documentElement.dataset.country;
   const alt: Record<string, string> = {};
   document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]').forEach((l) => {
-    alt[l.hreflang.toLowerCase()] = new URL(l.href, location.href).pathname;
+    alt[l.hreflang.toLowerCase()] = l.href;
   });
   document.querySelectorAll<HTMLAnchorElement>('.ctry a[data-ctry]').forEach((a) => {
+    const code = a.dataset.ctry || '';
+    if (code === current) return;
     const locale = (a.dataset.locale || '').toLowerCase();
-    if (alt[locale]) a.href = alt[locale];
-    a.addEventListener('click', () => remember(a.dataset.ctry as 'ca' | 'us'));
+    if (alt[locale]) {
+      const u = new URL(alt[locale]);
+      u.searchParams.set('site', code);
+      a.href = u.href;
+    }
+    a.addEventListener('click', () => {
+      // Staying is also a choice: the banner on this site should not nag after a deliberate switch back.
+      document.cookie = `${CHOICE_COOKIE}=${code}; path=/; max-age=31536000; samesite=lax`;
+    });
   });
 </script>

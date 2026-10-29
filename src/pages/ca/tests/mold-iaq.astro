@@ -33,9 +33,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Mold & indoor air quality', path: '/ca/tests/mold-iaq/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Mold & indoor air quality', path: '/tests/mold-iaq/' },
   ]),
   faqSchema(faqs),
 ];
@@ -43,7 +43,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('mold-testing')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Mold &amp; indoor air quality</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Mold &amp; indoor air quality</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
@@ -111,7 +111,7 @@ const schema = [
       <h3>Mold and your retrofit — never insulate over an active problem</h3>
       <p class="mb-0">
         Insulating or air-sealing over damp, mouldy assemblies locks the problem in and can make
-        it invisible until it's structural. The <a href="/ca/plan/">retrofit sequence</a> puts
+        it invisible until it's structural. The <a href="/plan/">retrofit sequence</a> puts
         moisture diagnosis before envelope work for exactly this reason — and ventilation
         upgrades (an HRV in a tightened house) are how the fix holds. If you flagged condensation
         or musty air in the planner, this is why it routed you here.
@@ -137,9 +137,9 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/issues/condensation-mould/">The condensation &amp; mould issue page</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/issues/condensation-mould/">The condensation &amp; mould issue page</a>
     </div>
 
     <LeadForm

@@ -50,9 +50,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Wood-burning inspection', path: '/ca/tests/wood-burning-inspection/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Wood-burning inspection', path: '/tests/wood-burning-inspection/' },
   ]),
   faqSchema(faqs),
 ];
@@ -68,7 +68,7 @@ const areas = areaIndex.areas;
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('home-hero')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Wood-burning inspection</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Wood-burning inspection</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">Specialty test guide · checked {CHECKED}</p>
@@ -203,8 +203,8 @@ const areas = areaIndex.areas;
         <li>Burn dry wood: the US EPA says wood burns best below 20% moisture, and a moisture meter tells you.</li>
         <li>Keep anything combustible out of the clearance space around the stove and flue pipe.</li>
         <li>Have the chimney inspected after any chimney fire, and whenever you add or replace an appliance.</li>
-        <li>Put a CO alarm in the room. For new houses, the National Building Code 2020 requires one in any room with a solid-fuel-burning appliance; see the <a href="/ca/tests/carbon-monoxide/">carbon monoxide guide</a> for your province’s rules.</li>
-        <li>Tightening the house changes how chimneys draw, so pair air sealing with a <a href="/ca/tests/combustion-safety/">combustion safety check</a>.</li>
+        <li>Put a CO alarm in the room. For new houses, the National Building Code 2020 requires one in any room with a solid-fuel-burning appliance; see the <a href="/tests/carbon-monoxide/">carbon monoxide guide</a> for your province’s rules.</li>
+        <li>Tightening the house changes how chimneys draw, so pair air sealing with a <a href="/tests/combustion-safety/">combustion safety check</a>.</li>
       </ul>
     </div>
 
@@ -212,8 +212,8 @@ const areas = areaIndex.areas;
       <h2>Wood-burning inspections near you</h2>
       <p class="small measure">Local versions of this guide, with each area’s climate, housing and, in B.C., wood-smoke programs:</p>
       <div class="nb">
-        {areas.map((a) => <a href={`/ca/areas/${a.slug}/wood-burning-inspection/`}><span>{a.name}</span></a>)}
-        <a class="all" href="/ca/areas/">All area guides →</a>
+        {areas.map((a) => <a href={`/areas/${a.slug}/wood-burning-inspection/`}><span>{a.name}</span></a>)}
+        <a class="all" href="/areas/">All area guides →</a>
       </div>
     </section>
 
@@ -235,9 +235,9 @@ const areas = areaIndex.areas;
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/carbon-monoxide/">Next guide: carbon monoxide</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/carbon-monoxide/">Next guide: carbon monoxide</a>
     </div>
 
     <LeadForm

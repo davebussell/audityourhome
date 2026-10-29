@@ -81,7 +81,7 @@ export const SERVICE_LINKS: Record<CalcSlug, { slug: string; label: string }[]> 
 };
 
 /** One visible line under each calculator that explains its units and terms (HTML, glossary links). */
-const g = (slug: string, label: string) => `<a href="/ca/glossary/${slug}/">${label}</a>`;
+const g = (slug: string, label: string) => `<a href="/glossary/${slug}/">${label}</a>`;
 export const UNITS_LINE: Record<CalcSlug, string> = {
   'energy-costs': `${g('gigajoule', 'GJ')} (gigajoule) measures heat: 1 GJ is about 278 kWh. Natural gas is sold by the ${g('cubic-metre-gas', 'm³')} (cubic metre, about 37.5 MJ or 10.4 kWh of energy), oil and propane by the litre, and electricity by the ${g('kwh', 'kWh')} (1,000 watts for one hour). Seasonal efficiency is the share of the fuel that ends up as heat over a winter; for heat pumps it is the ${g('seasonal-cop', 'seasonal COP')}, the heat delivered per unit of electricity (2.5 means 2.5 kWh of heat for each kWh). Water heaters are rated by ${g('uef', 'UEF')} (uniform energy factor): the higher it is, the less energy each litre of hot water takes.`,
   'upgrade-payback': `Savings are shown in ${g('gigajoule', 'GJ')} of heat (1 GJ is about 278 kWh) and in your fuel's own units: ${g('cubic-metre-gas', 'm³')} of natural gas, litres of oil or propane, or ${g('kwh', 'kWh')} of electricity. ${g('rsi', 'RSI')} is the metric R-value (RSI 1 is about R-5.7), and higher insulates better; a window's ${g('u-factor', 'U-value')} works the other way, lower loses less heat. ${g('ach50', 'ACH50')} is the air leakage a blower-door test measures, and a heat pump's ${g('seasonal-cop', 'seasonal COP')} is the heat it delivers per unit of electricity over a winter.`,
@@ -92,7 +92,7 @@ export const UNITS_LINE: Record<CalcSlug, string> = {
 export function otherCalcs(calc: CalcSlug, city: CalcCity) {
   return (Object.keys(CALC_META) as CalcSlug[])
     .filter((c) => c !== calc)
-    .map((c) => ({ href: `/ca/calculators/${c}/${city.slug}/`, label: `${CALC_META[c].short} in ${cityName(city)}`, blurb: CALC_META[c].blurb }));
+    .map((c) => ({ href: `/calculators/${c}/${city.slug}/`, label: `${CALC_META[c].short} in ${cityName(city)}`, blurb: CALC_META[c].blurb }));
 }
 
 /** "about $1,350" style for prose */

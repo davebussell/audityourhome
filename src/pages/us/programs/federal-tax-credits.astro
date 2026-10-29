@@ -56,7 +56,7 @@ const credits = [
   },
 ];
 
-const title = 'Federal energy tax credits ended: 25C, 25D and 45L in 2026 | AuditYourHome';
+const title = 'Federal energy tax credits ended: 25C, 25D and 45L in 2026 | AuditYourHouse';
 const description = '25C and 25D, including the $150 audit credit, ended for work after December 31, 2025; 45L ended June 30, 2026. What you can still claim on a 2025 return.';
 
 const faqs = [
@@ -90,9 +90,9 @@ const sources = dedupe([...C.sources, ...D.sources, ...L.sources, S.rebateFinder
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Rebates & programs', path: '/us/programs/' },
-    { name: 'Federal tax credits', path: '/us/programs/federal-tax-credits/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: 'Federal tax credits', path: '/programs/federal-tax-credits/' },
   ]),
   faqSchema(faqs),
 ];
@@ -102,7 +102,7 @@ const schema = [
   <ProgramStyles />
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Federal tax credits</span>
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Federal tax credits</span>
     </nav>
 
     <div class="page-hero has-photo">
@@ -174,7 +174,7 @@ const schema = [
           <p class="up-meta">
             <a href={S.doeQcp.href} rel="noopener" target="_blank">DOE qualified certification programs&nbsp;↗</a> · verified {VERIFIED}
           </p>
-          <p class="side-links"><a href="/us/cost/">What an audit costs →</a> <a href="/us/find/">Find a certified auditor →</a></p>
+          <p class="side-links"><a href="/cost/">What an audit costs →</a> <a href="/find/">Find a certified auditor →</a></p>
         </div>
       </div>
     </section>
@@ -197,19 +197,19 @@ const schema = [
       <h2 class="up-sec" id="left-h">What’s left: state and utility programs, not federal credits</h2>
       <div class="up-two">
         <article class="card card-pad lft">
-          <h3><a href="/us/programs/home-energy-rebates/">Home Energy Rebates (HOMES and HEEHR)</a></h3>
+          <h3><a href="/programs/home-energy-rebates/">Home Energy Rebates (HOMES and HEEHR)</a></h3>
           <p>Federal money, run by states. Taking applications in {taking}; HEEHR no longer pays to replace gas or other fuel-burning equipment.</p>
-          <p class="lk"><a href="/us/programs/states/">Your state’s status →</a></p>
+          <p class="lk"><a href="/programs/states/">Your state’s status →</a></p>
         </article>
         <article class="card card-pad lft">
-          <h3><a href="/us/cities/">Utility rebates and audits</a></h3>
+          <h3><a href="/cities/">Utility rebates and audits</a></h3>
           <p>Our 26 metro guides list utility audit offers and rebates, each with its status as checked on {VERIFIED}.</p>
-          <p class="lk"><a href="/us/cities/">Find your metro →</a></p>
+          <p class="lk"><a href="/cities/">Find your metro →</a></p>
         </article>
         <article class="card card-pad lft">
-          <h3><a href="/us/programs/weatherization-assistance-program/">Weatherization Assistance Program</a></h3>
+          <h3><a href="/programs/weatherization-assistance-program/">Weatherization Assistance Program</a></h3>
           <p>Pays for efficiency work for households at or below 200% of federal poverty guidelines, through state and local agencies. Funded for FY2026.</p>
-          <p class="lk"><a href="/us/programs/weatherization-assistance-program/">Who qualifies →</a></p>
+          <p class="lk"><a href="/programs/weatherization-assistance-program/">Who qualifies →</a></p>
         </article>
         <article class="card card-pad lft">
           <h3>State credits and rebate finders</h3>
@@ -219,7 +219,7 @@ const schema = [
               show it as a discount on your invoice: for installs from January 1, 2026, the air-source heat pump
               credit is $1,000, with at least $333 discounted to the customer.
               <a class="up-ext" href={coCredit.url} rel="noopener" target="_blank">Colorado Energy Office&nbsp;↗</a>
-              <a class="up-ext" href="/us/cities/denver/">Denver guide →</a>
+              <a class="up-ext" href="/cities/denver/">Denver guide →</a>
             </p>
           )}
           <p>
@@ -239,9 +239,9 @@ const schema = [
     <ProgramSources sources={sources} verified={VERIFIED} />
 
     <p class="up-related">
-      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
-      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">Home Energy Rebates</a>
-      <a class="btn btn-ghost" href="/us/programs/states/">Rebates by state</a>
+      <a class="btn btn-ghost" href="/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/programs/home-energy-rebates/">Home Energy Rebates</a>
+      <a class="btn btn-ghost" href="/programs/states/">Rebates by state</a>
     </p>
   </div>
 </Base>

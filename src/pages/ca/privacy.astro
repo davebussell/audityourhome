@@ -1,10 +1,10 @@
 ---
-import Base from '../layouts/Base.astro';
-import { SITE, ACCOUNTS, ACCOUNTS_ENABLED } from '../config/site';
+import Base from '../../layouts/Base.astro';
+import { SITE, ACCOUNTS, ACCOUNTS_ENABLED } from '../../config/site';
 
 const title = 'Privacy | AuditYourHome';
-const description = 'What AuditYourHome collects, why, where it is stored, who sees it, and how to download or delete it. Plain language, updated October 26, 2026.';
-const updated = 'October 26, 2026';
+const description = 'What AuditYourHome collects, why, where it is stored, who sees it, and how to download or delete it. Plain language, updated October 29, 2026.';
+const updated = 'October 29, 2026';
 const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
 ---
 
@@ -23,10 +23,10 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
         Write to him for any question, request or complaint about your information.
       </p>
 
-      <h2>The planners and calculators</h2>
+      <h2>The planner and calculators</h2>
       <p>
-        The home energy planners (Canada and US) and the calculators run in your browser. Postal codes, ZIP codes,
-        bills and answers you enter are worked out on your device and aren’t sent to us{ACCOUNTS_ENABLED ? ', unless you choose to save your plan to a free account or ask to be matched' : ''}.
+        The home energy planner and the calculators run in your browser. Postal codes, bills and answers you enter
+        are worked out on your device and aren’t sent to us{ACCOUNTS_ENABLED ? ', unless you choose to save your plan to a free account or ask to be matched' : ''}.
         Your answers stay in your browser: the planners keep them in the part of the page address after the
         “#” sign, which browsers don’t send to our servers, and our page-view analytics don’t receive them. They’re
         shared only if you copy the link to your plan and send it to someone yourself.
@@ -78,14 +78,14 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
         <Fragment>
           <h2>Requests and questions</h2>
           <p>
-            In Canada, if you send us a request through a form on this site, or by email, to be matched, we use your
-            details to connect you with one licensed service organization or contractor serving your area, and for no
-            other purpose. Participating companies pay us a referral fee for these introductions; you pay nothing. We
-            don’t sell contact lists, and we never share your request with more than one company.
+            If you send us a request through a form on this site, or by email, to be matched, we use your details to
+            connect you with one licensed service organization or contractor serving your area, and for no other
+            purpose. Participating companies pay us a referral fee for these introductions; you pay nothing. We don’t
+            sell contact lists, and we never share your request with more than one company. Heat pump quote requests
+            and general questions are answered by email by us.
           </p>
           <p>
-            In the US, questions and heat pump quote requests are answered by email by us; we don’t pass them to anyone
-            unless you ask us to.
+            Our US site, <a href="https://audityourhouse.com/privacy/">audityourhouse.com</a>, has its own privacy page.
           </p>
           <p>
             Forms are handled by Netlify, the company that hosts this site. It stores what you submit in the United
@@ -102,6 +102,12 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
         you type in our forms hidden. Neither receives your planner answers, and neither runs on account
         pages{ACCOUNTS_ENABLED ? ' (My Home, the admin console and the unsubscribe page)' : ''}.
         You can block them with your browser’s privacy settings or an ad blocker; the site works the same.
+      </p>
+
+      <h2>Cookies we set ourselves</h2>
+      <p>
+        One: a cookie that remembers that you chose this site over our US one, so we stop suggesting the switch. It
+        holds no personal information and expires after a year.
       </p>
 
       <h2>Your rights</h2>

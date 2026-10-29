@@ -20,20 +20,20 @@ const rows = directory(market);
 const pages = brandsBySize(market);
 const t5 = at5(market);
 const updated = fmtDate(ESTAR.datasetUpdated, market);
-const title = `All ${T.brands} heat pump brands certified for ${isCA ? 'Canada' : 'the US'} | AuditYourHome`;
+const title = `All ${T.brands} heat pump brands certified for ${isCA ? 'Canada' : 'the US'} | ${isCA ? 'AuditYourHome' : 'AuditYourHouse'}`;
 const description = `Every heat pump brand name on ENERGY STAR's list for ${country}, with the company that certifies it, how many models, cold-climate counts and best ratings. ${pages.length} have full brand pages.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: `/${market}/` },
-    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
-    { name: 'All brands', path: `/${market}/heat-pumps/brands/` },
+    { name: 'Home', path: `/` },
+    { name: 'Heat pumps', path: `/heat-pumps/` },
+    { name: 'All brands', path: `/heat-pumps/brands/` },
   ]),
 ];
 ---
 
 <Base title={title} description={description} schema={schema}>
   <div class="container hp">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/${market}/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span> <span>All brands</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span> <span>All brands</span></nav>
     <div class="page-hero">
       <div class="hero-text">
         <p class="eyebrow">Brand directory · ENERGY STAR data updated {updated}</p>
@@ -104,8 +104,8 @@ const schema = [
     <section class="related">
       <h2>Keep comparing</h2>
       <div class="nb">
-        <a href={`/${market}/heat-pumps/`} class="all">The heat pump comparison guide →</a>
-        <a href={`/${market}/heat-pumps/geothermal/`}>Geothermal makers</a>
+        <a href={`/heat-pumps/`} class="all">The heat pump comparison guide →</a>
+        <a href={`/heat-pumps/geothermal/`}>Geothermal makers</a>
       </div>
     </section>
   </div>

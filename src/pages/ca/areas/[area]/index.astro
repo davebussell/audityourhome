@@ -25,9 +25,9 @@ const hub = area.hub;
 const title = `${hub.title} | AuditYourHome`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Areas', path: '/ca/areas/' },
-    { name: area.name, path: `/ca/areas/${area.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Areas', path: '/areas/' },
+    { name: area.name, path: `/areas/${area.slug}/` },
   ]),
 ];
 const byCat = (cat: string) => hub.services.filter((s) => s.cat === cat);
@@ -56,7 +56,7 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
 <Base title={title} description={hub.description} schema={schema} ogImage={ogFor(area.photo)}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/ca/areas/">Areas</a> <span aria-hidden="true">/</span>
+      <a href="/areas/">Areas</a> <span aria-hidden="true">/</span>
       <span>{area.name}</span>
     </nav>
 
@@ -66,7 +66,7 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
         <h1>{hub.h1}</h1>
         <p class="lede">{hub.lede}</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href={`/ca/areas/${area.slug}/home-energy-audit/`}>Energy audits in {area.inName} →</a>
+          <a class="btn btn-primary" href={`/areas/${area.slug}/home-energy-audit/`}>Energy audits in {area.inName} →</a>
           <a class="btn btn-ghost" href="#communities">All {area.communityCount} communities</a>
         </div>
       </div>
@@ -100,7 +100,7 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
         placeName={mainCity.name}
         variant="compact"
         heading={`${area.inName}’s climate: ${clim.profile.label}`}
-        moreHref={`/ca/cities/${mainCity.slug}/#regional-needs`}
+        moreHref={`/cities/${mainCity.slug}/#regional-needs`}
         id="regional-needs"
       />
     )}
@@ -112,7 +112,7 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
           <h3>{c.title}</h3>
           <div class="pcards">
             {byCat(c.cat).map((s) => (
-              <a class="pcard-link" href={`/ca/areas/${area.slug}/${s.slug}/`}>
+              <a class="pcard-link" href={`/areas/${area.slug}/${s.slug}/`}>
                 <Photo name={s.photo} sizes="(max-width: 560px) calc(100vw - 44px), 280px" hud={false} plain />
                 <div class="pcard-body">
                   <h3>{s.name}</h3>
@@ -166,7 +166,7 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
           <h3>Covered on city pages</h3>
           <ul class="mlist">
             {area.coveredCities.map((c) => (
-              <li><a href={`/ca/cities/${c.slug}/`}><strong>{c.name}</strong></a> <span class="pop">{fmt(c.pop)}</span><span class="cm">{c.why}</span></li>
+              <li><a href={`/cities/${c.slug}/`}><strong>{c.name}</strong></a> <span class="pop">{fmt(c.pop)}</span><span class="cm">{c.why}</span></li>
             ))}
           </ul>
         </>
@@ -176,10 +176,10 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
     <section class="who">
       <h2>Who does the work in {area.inName}</h2>
       <ul class="measure wlist">
-        <li><strong>Energy evaluations and heat loss calculations:</strong> NRCan's list (checked {area.checked}) shows {provCount} registered service organizations for postal codes in {provTowns.join(', ')}. <a href={`/ca/areas/${area.slug}/home-energy-audit/#providers`}>See them with phone numbers</a>; confirm they travel to your community.</li>
+        <li><strong>Energy evaluations and heat loss calculations:</strong> NRCan's list (checked {area.checked}) shows {provCount} registered service organizations for postal codes in {provTowns.join(', ')}. <a href={`/areas/${area.slug}/home-energy-audit/#providers`}>See them with phone numbers</a>; confirm they travel to your community.</li>
         <li><strong>Radon:</strong> certified measurement and mitigation professionals are listed in the <a href="https://c-nrpp.ca/find-a-professional/" rel="noopener">C-NRPP directory ↗</a>.</li>
-        <li><strong>Wood stoves and chimneys:</strong> WETT-certified professionals are listed in the <a href="https://www.wettinc.ca/" rel="noopener">WETT directory ↗</a>; see <a href={`/ca/areas/${area.slug}/wood-burning-inspection/`}>wood-burning inspections in {area.inName}</a>.</li>
-        <li><strong>Well water:</strong> {area.prov === 'ON' ? 'free bacteria tests through the local public health unit; chemistry through a licensed private lab.' : 'a qualified private lab (search the CALA directory).'} <a href={`/ca/areas/${area.slug}/well-water-testing/`}>Details for {area.inName}</a>.</li>
+        <li><strong>Wood stoves and chimneys:</strong> WETT-certified professionals are listed in the <a href="https://www.wettinc.ca/" rel="noopener">WETT directory ↗</a>; see <a href={`/areas/${area.slug}/wood-burning-inspection/`}>wood-burning inspections in {area.inName}</a>.</li>
+        <li><strong>Well water:</strong> {area.prov === 'ON' ? 'free bacteria tests through the local public health unit; chemistry through a licensed private lab.' : 'a qualified private lab (search the CALA directory).'} <a href={`/areas/${area.slug}/well-water-testing/`}>Details for {area.inName}</a>.</li>
       </ul>
     </section>
 
@@ -202,11 +202,11 @@ const clim = mainCity ? placeClimate('ca', mainCity.slug) : null;
     <section class="nearby">
       <h2>Nearby city pages and guides</h2>
       <div class="nb">
-        {area.nearbyCities.map((c) => <a href={`/ca/cities/${c.slug}/`}><span>{c.name}</span></a>)}
+        {area.nearbyCities.map((c) => <a href={`/cities/${c.slug}/`}><span>{c.name}</span></a>)}
         {area.articles.map((x) => <a href={x.href}><span>{x.label}</span></a>)}
         {area.sitePages.map((x) => <a href={x.href}><span>{x.label}</span></a>)}
         {guides.map((s) => <a href={s.guide}><span>{s.guideLabel}</span></a>)}
-        <a class="all" href="/ca/areas/">All area guides →</a>
+        <a class="all" href="/areas/">All area guides →</a>
       </div>
     </section>
 

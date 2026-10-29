@@ -155,15 +155,15 @@ const heatIntro = coolingLed
     ? 'In a climate this cold, heating is usually the biggest energy cost in an older house, so the price of each unit of heat matters.'
     : 'Heating and cooling both count here: winters are real, so the price of each unit of heat matters, but so does summer efficiency.';
 
-const title = `Heat pumps in ${name}: costs, rebates and the right systems | AuditYourHome`;
+const title = `Heat pumps in ${name}: costs, rebates and the right systems | AuditYourHouse`;
 const description = coolingLed
   ? `What a heat pump costs to run in ${name}, cooling first, against gas and electric heat, the ${progs.length} heat pump program${progs.length === 1 ? '' : 's'} and their equipment rules, and the certified systems that suit the climate.`
   : `What a heat pump costs to run in ${name} against gas and electric heat, the ${progs.length} heat pump program${progs.length === 1 ? '' : 's'} and their equipment rules, and the certified systems that suit the climate.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'Heat pumps', path: '/us/heat-pumps/' },
-    { name, path: `/us/heat-pumps/${m.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Heat pumps', path: '/heat-pumps/' },
+    { name, path: `/heat-pumps/${m.slug}/` },
   ]),
 ];
 const costJump: [string, string][] = cool
@@ -182,7 +182,7 @@ const jump: [string, string][] = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor(photoKey)}>
   <div class="container hp">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/us/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{name}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{name}</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
         <p class="eyebrow">Heat pumps by metro · {states.map(stateName).join(' · ')} · checked {HP_CHECKED}</p>
@@ -259,7 +259,7 @@ const jump: [string, string][] = [
     </section>
 
     {pc && (
-      <RegionalNeeds country="us" profile={pc.profile} place={pc.place} placeName={name} variant="heatpump" id="needs" moreHref={`/us/cities/${m.slug}/#regional-needs`} />
+      <RegionalNeeds country="us" profile={pc.profile} place={pc.place} placeName={name} variant="heatpump" id="needs" moreHref={`/cities/${m.slug}/#regional-needs`} />
     )}
 
     {cool && coolingLed && (
@@ -382,7 +382,7 @@ const jump: [string, string][] = [
           {fed.HEARUrl && <p class="meta"><a href={fed.HEARUrl} rel="noopener" target="_blank">Program rules&nbsp;↗</a></p>}
         </article>
       </div>
-      <p class="tnote">Audit programs, other rebates and help for lower-income homes: <a href={`/us/cities/${m.slug}/`}>our {name} guide</a>.</p>
+      <p class="tnote">Audit programs, other rebates and help for lower-income homes: <a href={`/cities/${m.slug}/`}>our {name} guide</a>.</p>
     </section>
 
     <section id="systems" class="sec">
@@ -398,7 +398,7 @@ const jump: [string, string][] = [
       <p class="tnote">
         How to read the tables: SEER2 is cooling efficiency over a season and EER2 on the hottest afternoons; HSPF2 is heating efficiency over a
         season{coldInfo ? ', and COP at 5°F shows how efficiently the system still heats in deep cold' : ''}. Size is the rated output in BTU/h (12,000 BTU/h is
-        one ton). The AHRI number identifies the exact certified pairing for rebates. Full definitions: <a href="/us/heat-pumps/#numbers">how to read the numbers</a>.
+        one ton). The AHRI number identifies the exact certified pairing for rebates. Full definitions: <a href="/heat-pumps/#numbers">how to read the numbers</a>.
       </p>
       {order.map((k) => (
         <>
@@ -460,7 +460,7 @@ const jump: [string, string][] = [
           </tbody>
         </table>
       </div>
-      <p class="tnote"><a href="/us/heat-pumps/">Compare every brand</a> · <a href="/us/heat-pumps/brands/">All {fmtInt(brandsBySize('us').length, 'us')} brand pages and every certified name</a></p>
+      <p class="tnote"><a href="/heat-pumps/">Compare every brand</a> · <a href="/heat-pumps/brands/">All {fmtInt(brandsBySize('us').length, 'us')} brand pages and every certified name</a></p>
     </section>
 
     <div class="lf-wrap">
@@ -470,8 +470,8 @@ const jump: [string, string][] = [
     <section class="related">
       <h2>{sameState.length ? `Other metros in ${states.length === 1 ? stateName(st) : 'the same states'}` : 'Metros with a similar climate'}</h2>
       <div class="nb">
-        {(sameState.length ? [...sameState, ...sameKind.slice(0, 4)] : sameKind).map((o) => <a href={`/us/heat-pumps/${o.slug}/`}>{metroName(o)} <span class="st">{(o.data.states ?? []).join(' · ')}</span></a>)}
-        <a class="all" href={`/us/cities/${m.slug}/`}>Audits and other rebates in {name} →</a>
+        {(sameState.length ? [...sameState, ...sameKind.slice(0, 4)] : sameKind).map((o) => <a href={`/heat-pumps/${o.slug}/`}>{metroName(o)} <span class="st">{(o.data.states ?? []).join(' · ')}</span></a>)}
+        <a class="all" href={`/cities/${m.slug}/`}>Audits and other rebates in {name} →</a>
       </div>
     </section>
   </div>

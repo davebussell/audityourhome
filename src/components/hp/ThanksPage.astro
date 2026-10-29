@@ -16,7 +16,7 @@ const { market } = Astro.props;
 const isCA = market === 'ca';
 ---
 
-<Base title="Your heat pump quote request | AuditYourHome" description="What happens after you ask for heat pump quotes." indexable={false}>
+<Base title={`Your heat pump quote request | ${isCA ? 'AuditYourHome' : 'AuditYourHouse'}`} description="What happens after you ask for heat pump quotes." indexable={false}>
   <div class="container hp" style="padding-bottom:48px">
     <JourneyBar country={market} current={2} ticks={false} />
     <div class="page-hero">
@@ -36,7 +36,7 @@ const isCA = market === 'ca';
         <p class="lede measure">
           If you sent a request from our quote form, a person reads it and replies by email, usually within one business
           day. If you landed here another way, nothing has been sent yet:
-          <a href={`/${market}/heat-pumps/#quote`}>the quote form is on the heat pump guide</a>.
+          <a href={`/heat-pumps/#quote`}>the quote form is on the heat pump guide</a>.
         </p>
       </div>
     </div>
@@ -57,10 +57,10 @@ const isCA = market === 'ca';
       <article class="card c">
         <h3>Rebates first</h3>
         <p>{isCA ? 'Some rebates need pre-approval or an evaluation before you buy. Check your province’s rules before you sign anything.' : 'Some utility rebates need a participating contractor or pre-approval. Check your metro’s rules before you sign anything.'}</p>
-        <p class="meta"><a href={`/${market}/heat-pumps/#rebates`}>Rebates by {isCA ? 'province' : 'metro'}</a></p>
+        <p class="meta"><a href={`/heat-pumps/#rebates`}>Rebates by {isCA ? 'province' : 'metro'}</a></p>
       </article>
     </div>
-    <p style="margin-top:22px"><a class="btn btn-ghost" href={`/${market}/heat-pumps/`}>Back to the heat pump guide</a></p>
+    <p style="margin-top:22px"><a class="btn btn-ghost" href={`/heat-pumps/`}>Back to the heat pump guide</a></p>
   </div>
 </Base>
 

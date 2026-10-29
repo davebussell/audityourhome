@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE, ACCOUNTS } from '../../config/site';
+
+const title = 'Privacy | AuditYourHouse';
+const description = 'What AuditYourHouse collects, why, where it is stored, who sees it, and how to get it corrected or deleted. Plain language, updated October 29, 2026.';
+const updated = 'October 29, 2026';
+const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec, Canada';
+---
+
+<Base title={title} description={description}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Updated {updated}</p>
+      <h1>Privacy, plainly</h1>
+      <p class="lede">What we collect, why, where it’s kept, who sees it, and how to get it corrected or deleted.</p>
+    </div>
+    <div class="measure prose">
+      <h2>Who we are</h2>
+      <p>
+        AuditYourHouse is operated by Click Shift Marketing, {address}. The person in charge of protecting
+        personal information is Dave Bussell, owner: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        Write to him for any question, request or complaint about your information.
+      </p>
+
+      <h2>The planner and calculators</h2>
+      <p>
+        The home energy planner and the calculators run in your browser. ZIP codes, bills and answers you enter are
+        worked out on your device and aren’t sent to us. Your answers stay in your browser: the planner keeps them in
+        the part of the page address after the “#” sign, which browsers don’t send to our servers, and our page-view
+        analytics don’t receive them. They’re shared only if you copy the link to your plan and send it to someone
+        yourself.
+      </p>
+
+      <h2>Questions and quote requests</h2>
+      <p>
+        If you send us a question or a heat pump quote request through a form on this site, or by email, we use your
+        details to answer you, and for no other purpose. We answer ourselves; we don’t pass your request to a
+        contractor or an auditor unless you ask us to, we don’t sell contact lists, and no company pays us for your
+        details.
+      </p>
+      <p>
+        Forms are handled by Netlify, the company that hosts this site. It stores what you submit in the United
+        States and emails it to us, and we keep it only as long as we need to deal with your request. If you email
+        us, we have your email address; we use it to reply.
+      </p>
+
+      <h2>Analytics</h2>
+      <p>
+        We use Google Analytics and Microsoft Clarity to see which pages are useful and where people get stuck. They
+        set cookies and record how pages are used; Clarity can replay a visit, with what you type in our forms hidden.
+        Neither receives your planner answers. You can block them with your browser’s privacy settings or an ad
+        blocker; the site works the same.
+      </p>
+
+      <h2>Cookies we set ourselves</h2>
+      <p>
+        One: a cookie that remembers that you chose this site over our Canadian one, so we stop suggesting the
+        switch. It holds no personal information and expires after a year.
+      </p>
+
+      <h2>Affiliate links</h2>
+      <p>
+        Some gear guides link to Amazon through the Amazon Associates program. If you buy something after following
+        one of those links we may earn a commission; Amazon’s own privacy notice covers what happens on its site.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        You can ask what we hold about you, correct it, get a copy, or have it deleted, whatever state you live in;
+        we answer every request the same way. Email <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        Because we are based in Canada, the information you send us is handled there and, through Netlify, in the
+        United States.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>Emails and form submissions are kept as long as needed to deal with them, then deleted.</p>
+
+      <p class="small">
+        If we change how we handle personal information, we’ll update this page and the date at the top.
+        Questions: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+    </div>
+  </div>
+</Base>
+<style>
+  .prose p { margin-bottom: 16px; }
+  .prose h2 { font-size: 22px; margin: 28px 0 8px; }
+  .prose h2:first-child { margin-top: 0; }
+  .prose { padding-bottom: 56px; }
+</style>

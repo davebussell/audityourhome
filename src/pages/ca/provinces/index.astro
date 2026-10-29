@@ -12,8 +12,8 @@ const description =
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Provinces', path: '/ca/provinces/' },
+    { name: 'Home', path: '/' },
+    { name: 'Provinces', path: '/provinces/' },
   ]),
 ];
 
@@ -44,7 +44,7 @@ const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
 
     <div class="prov-grid">
       {data.provinces.map((p) => (
-        <a class="card card-pad prov" href={`/ca/provinces/${p.slug}/`}>
+        <a class="card card-pad prov" href={`/provinces/${p.slug}/`}>
           <h2>{p.name}</h2>
           <div class="chips">
             {p.programs.slice(0, 3).map((pr) => (
@@ -81,7 +81,7 @@ const STATUS_CHIP: Record<string, { cls: string; label: string }> = {
           alongside the tests and upgrades your house actually calls for.
         </p>
       </div>
-      <a class="btn btn-primary" href="/ca/plan/">Check my home →</a>
+      <a class="btn btn-primary" href="/plan/">Check my home →</a>
     </div>
   </div>
 </Base>

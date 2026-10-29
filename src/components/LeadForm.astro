@@ -148,7 +148,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   ) : hasEndpoint ? (
     <form
       method="POST"
-      action={netlifyForm ? '/ca/thanks/?sent=1' : SITE.formEndpoint}
+      action={netlifyForm ? '/thanks/?sent=1' : SITE.formEndpoint}
       name={netlifyForm ? FORM_NAMES.auditRequest : undefined}
       data-netlify={netlifyForm ? 'true' : undefined}
       netlify-honeypot={netlifyForm ? 'bot-field' : undefined}

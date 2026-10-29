@@ -131,7 +131,7 @@ const provPrograms: Record<string, unknown> = {};
 for (const b of PROVINCE_BOOKING) {
   provPrograms[b.slug] = openPrograms(b.slug).map((p) => ({
     name: p.name, headline: p.headline, status: p.status, city: p.city ?? null,
-    href: p.programSlug && programSlugs.has(p.programSlug) ? `/ca/programs/${p.programSlug}/` : p.url,
+    href: p.programSlug && programSlugs.has(p.programSlug) ? `/programs/${p.programSlug}/` : p.url,
   }));
 }
 (payload as Record<string, unknown>).provPrograms = provPrograms;
@@ -181,8 +181,8 @@ const pricesAsOf = new Date(String(MODEL.asOf) + 'T12:00:00').toLocaleDateString
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Home Energy Planner', path: '/ca/plan/' },
+    { name: 'Home', path: '/' },
+    { name: 'Home Energy Planner', path: '/plan/' },
   ]),
 ];
 
@@ -548,8 +548,8 @@ const privacyLine = ACCOUNTS_ENABLED
         medium house, scaled by size. Hot water uses 75 litres per person a day, heated from your
         area’s average cold-water temperature to 55 °C. Air conditioning uses NRCan’s cooling-hours
         method with your area’s cooling degree-days, times 0.8. Every city’s numbers, sources and
-        formulas are laid out in the <a href="/ca/calculators/">calculators</a>, and
-        <a href="/ca/learn/real-numbers/">worked examples</a> show the arithmetic step by step.
+        formulas are laid out in the <a href="/calculators/">calculators</a>, and
+        <a href="/learn/real-numbers/">worked examples</a> show the arithmetic step by step.
       </p>
     </details>
   </div>
@@ -831,18 +831,18 @@ const privacyLine = ACCOUNTS_ENABLED
   const money = (n: number) => '$' + (Math.round(n / 10) * 10).toLocaleString('en-CA');
 
   const PROVINCE_NOTES: Record<string, string> = {
-    QC: 'Since October 1, 2026, Quebec’s <b>Rénoclimat</b> makes the EnerGuide evaluation optional (up to $500 back toward it) and pays for roof, wall and foundation insulation and ENERGY STAR Most Efficient windows; <b>Hydro-Québec LogisVert</b> pays for heat pumps. <a href="/ca/programs/renoclimat/">Rénoclimat 2026 →</a> · <a href="/ca/provinces/quebec/">Quebec guide →</a>',
-    MB: '<b>Efficiency Manitoba</b> pays a $400 EnerGuide evaluation rebate, insulation rebates by R-value, $100 per triple-pane ENERGY STAR window or door and up to $2,000 for a cold-climate heat pump. <a href="/ca/programs/efficiency-manitoba-rebates/">Manitoba rebates →</a>',
-    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> starts with a Home Energy Evaluation ($99 + HST for both visits) and pays published amounts for insulation, air sealing, windows and heat pumps. <a href="/ca/programs/nb-total-home-energy-savings/">NB program →</a>',
-    NS: '<b>Efficiency Nova Scotia</b> runs a $199 home energy assessment (waived under its income threshold) with rebates for insulation, air sealing and heat pumps; the federal oil-to-heat-pump intake closed July 2, 2026. <a href="/ca/programs/efficiency-nova-scotia-rebates/">Nova Scotia rebates →</a>',
-    PE: 'efficiencyPEI offers <b>$99 + HST</b> home energy assessments and pays for insulation, air sealing and windows ($125 per opening). Its heat pump rebates ended April 15, 2026. <a href="/ca/programs/efficiency-pei-rebates/">PEI rebates →</a>',
-    BC: 'BC’s <b>Home Renovation Rebate</b> pays for insulation, windows and heat pump water heaters, and heat pumps when they replace electric heat (more in the north); the income-tiered <b>CleanBC Energy Savings Program</b> pays more. <a href="/ca/programs/cleanbc-energy-savings-program/">CleanBC rebates →</a> · <a href="/ca/provinces/bc/">BC guide →</a>',
-    AB: 'Alberta has no provincial home rebate. <b>Clean Energy Improvement (CEIP)</b> financing runs in some municipalities and requires an EnerGuide evaluation (Calgary closed until winter 2026/27, Edmonton waitlisting). <a href="/ca/articles/alberta-energy-efficiency-rebates/">Alberta rebates in 2026 →</a>',
-    SK: 'Saskatchewan’s Home Efficiency Retrofit Rebate ended in April 2026. The provincial <b>Home Renovation Tax Credit</b> (10.5% of eligible costs above $1,000, up to $420) still applies. <a href="/ca/articles/saskatchewan-energy-efficiency-rebates/">Saskatchewan options in 2026 →</a>',
-    NL: '<b>takeCHARGE</b> pays insulation and air sealing rebates, and the Oil to Electric program pays up to $9,000 for a central heat pump ($22,000 if income-qualified). <a href="/ca/programs/takecharge-nl/">takeCHARGE NL →</a>',
-    NT: 'The <b>Arctic Energy Alliance</b> runs EnerGuide evaluations ($200 + GST) and pays insulation and wood or pellet stove rebates. <a href="/ca/provinces/north/">Territories guide →</a>',
-    YT: 'Yukon’s <b>Good Energy</b> rebates pay half of a heat pump (up to $10,500) plus insulation, air sealing and window rebates. <a href="/ca/provinces/north/">Territories guide →</a>',
-    NU: 'Nunavut homeowner support runs through the <b>Nunavut Housing Corporation</b>. <a href="/ca/provinces/north/">Territories guide →</a>',
+    QC: 'Since October 1, 2026, Quebec’s <b>Rénoclimat</b> makes the EnerGuide evaluation optional (up to $500 back toward it) and pays for roof, wall and foundation insulation and ENERGY STAR Most Efficient windows; <b>Hydro-Québec LogisVert</b> pays for heat pumps. <a href="/programs/renoclimat/">Rénoclimat 2026 →</a> · <a href="/provinces/quebec/">Quebec guide →</a>',
+    MB: '<b>Efficiency Manitoba</b> pays a $400 EnerGuide evaluation rebate, insulation rebates by R-value, $100 per triple-pane ENERGY STAR window or door and up to $2,000 for a cold-climate heat pump. <a href="/programs/efficiency-manitoba-rebates/">Manitoba rebates →</a>',
+    NB: 'New Brunswick’s <b>Total Home Energy Savings Program</b> starts with a Home Energy Evaluation ($99 + HST for both visits) and pays published amounts for insulation, air sealing, windows and heat pumps. <a href="/programs/nb-total-home-energy-savings/">NB program →</a>',
+    NS: '<b>Efficiency Nova Scotia</b> runs a $199 home energy assessment (waived under its income threshold) with rebates for insulation, air sealing and heat pumps; the federal oil-to-heat-pump intake closed July 2, 2026. <a href="/programs/efficiency-nova-scotia-rebates/">Nova Scotia rebates →</a>',
+    PE: 'efficiencyPEI offers <b>$99 + HST</b> home energy assessments and pays for insulation, air sealing and windows ($125 per opening). Its heat pump rebates ended April 15, 2026. <a href="/programs/efficiency-pei-rebates/">PEI rebates →</a>',
+    BC: 'BC’s <b>Home Renovation Rebate</b> pays for insulation, windows and heat pump water heaters, and heat pumps when they replace electric heat (more in the north); the income-tiered <b>CleanBC Energy Savings Program</b> pays more. <a href="/programs/cleanbc-energy-savings-program/">CleanBC rebates →</a> · <a href="/provinces/bc/">BC guide →</a>',
+    AB: 'Alberta has no provincial home rebate. <b>Clean Energy Improvement (CEIP)</b> financing runs in some municipalities and requires an EnerGuide evaluation (Calgary closed until winter 2026/27, Edmonton waitlisting). <a href="/articles/alberta-energy-efficiency-rebates/">Alberta rebates in 2026 →</a>',
+    SK: 'Saskatchewan’s Home Efficiency Retrofit Rebate ended in April 2026. The provincial <b>Home Renovation Tax Credit</b> (10.5% of eligible costs above $1,000, up to $420) still applies. <a href="/articles/saskatchewan-energy-efficiency-rebates/">Saskatchewan options in 2026 →</a>',
+    NL: '<b>takeCHARGE</b> pays insulation and air sealing rebates, and the Oil to Electric program pays up to $9,000 for a central heat pump ($22,000 if income-qualified). <a href="/programs/takecharge-nl/">takeCHARGE NL →</a>',
+    NT: 'The <b>Arctic Energy Alliance</b> runs EnerGuide evaluations ($200 + GST) and pays insulation and wood or pellet stove rebates. <a href="/provinces/north/">Territories guide →</a>',
+    YT: 'Yukon’s <b>Good Energy</b> rebates pay half of a heat pump (up to $10,500) plus insulation, air sealing and window rebates. <a href="/provinces/north/">Territories guide →</a>',
+    NU: 'Nunavut homeowner support runs through the <b>Nunavut Housing Corporation</b>. <a href="/provinces/north/">Territories guide →</a>',
   };
 
   // ---------- state lives in the address after # (never the query string, which analytics and logs can see) ----------
@@ -920,7 +920,7 @@ const privacyLine = ACCOUNTS_ENABLED
       if (chk.ok) { setPostalError(''); return true; }
       if (chk.reason === 'us-zip') {
         const ageNow = fieldVal('age');
-        setPostalError(`That looks like a US ZIP code. <a href="/us/plan/#zip=${encodeURIComponent(chk.zip)}${ageNow ? `&age=${encodeURIComponent(ageNow)}` : ''}">Open the US planner with ${esc(chk.zip)} →</a>`);
+        setPostalError(`That looks like a US ZIP code. <a href="https://audityourhouse.com/plan/?site=us#zip=${encodeURIComponent(chk.zip)}${ageNow ? `&age=${encodeURIComponent(ageNow)}` : ''}">Open the US planner with ${esc(chk.zip)} →</a>`);
         return false;
       }
       if (prov) { setPostalError(''); return true; }
@@ -954,7 +954,7 @@ const privacyLine = ACCOUNTS_ENABLED
     let sameSite = false;
     try { sameSite = Boolean(document.referrer) && new URL(document.referrer).origin === location.origin; } catch {}
     if (sameSite && history.length > 1) history.back();
-    else location.href = '/ca/';
+    else location.href = '/';
   });
   stepsNav.addEventListener('click', (e) => {
     const b = (e.target as Element).closest('button[data-go]') as HTMLButtonElement | null;
@@ -1410,7 +1410,7 @@ const privacyLine = ACCOUNTS_ENABLED
     const b = bookingFor(ctx);
     const cityName = ctx.city?.n ?? ctx.R.name;
     const count = ctx.city?.providers ?? 0;
-    const listHref = `/ca/services/home-energy-audit/${ctx.R.slug}/#providers`;
+    const listHref = `/services/home-energy-audit/${ctx.R.slug}/#providers`;
     const onDirectory = ctx.isON && ctx.loc.region;
     let primary = '';
     let secondary = '';
@@ -1442,7 +1442,7 @@ const privacyLine = ACCOUNTS_ENABLED
         ? `<a href="#rProviders">Or compare the advisors serving ${esc(ctx.loc.region.name)} below</a>`
         : count
           ? `<a href="${listHref}">Or see the ${count} licensed organization${count === 1 ? '' : 's'} serving ${esc(cityName)}${ctx.R.exact ? '' : ' (the closest city we cover)'}</a>`
-          : `<a href="/ca/find/#${esc(ctx.provSlug)}">Or see how booking works in ${esc(ctx.provName)}</a>`;
+          : `<a href="/find/#${esc(ctx.provSlug)}">Or see how booking works in ${esc(ctx.provName)}</a>`;
     }
     const tests = picks.filter((p) => !p.health).slice(0, 4).concat(picks.filter((p) => p.health && p.level === 'strongly-flagged').slice(0, 2));
     const testLinks = tests.map((p) => `<a href="${esc(p.href)}">${esc(p.name)}</a>`).join('');
@@ -1457,7 +1457,7 @@ const privacyLine = ACCOUNTS_ENABLED
     }
     const progItems = progs.length
       ? progs.slice(0, 4).map((p) => `<li><a href="${esc(p.href)}">${esc(p.name)}</a>${p.headline ? ` — ${esc(p.headline)}` : ''}${p.status === 'income' ? ' <span class="chip chip-limited">income-qualified</span>' : ''}</li>`).join('')
-      : `<li>${esc(ctx.provName)} has no province-wide home rebate right now. Check your city and utility: <a href="/ca/provinces/${esc(ctx.provSlug)}/">${esc(ctx.provName)} guide</a>.</li>`;
+      : `<li>${esc(ctx.provName)} has no province-wide home rebate right now. Check your city and utility: <a href="/provinces/${esc(ctx.provSlug)}/">${esc(ctx.provName)} guide</a>.</li>`;
     $('#rNext').innerHTML = `
       <section class="card next-steps" id="next-steps" aria-labelledby="next-h">
         <h3 id="next-h">Your next 3 steps</h3>
@@ -1506,7 +1506,7 @@ const privacyLine = ACCOUNTS_ENABLED
         ${smokeLine}
         ${radon ? `<p class="small"><b>Radon in ${esc(ctx.provName)}:</b> ${esc(radon)}</p>` : ''}
         <p class="small"><b>When to book:</b> ${esc(profile.seasonNote)}</p>
-        ${ctx.R.prov === ctx.loc.province ? `<p class="small"><a href="/ca/cities/${esc(ctx.R.slug)}/#regional-needs">Everything homes in ${esc(cityName)} need →</a></p>` : ''}
+        ${ctx.R.prov === ctx.loc.province ? `<p class="small"><a href="/cities/${esc(ctx.R.slug)}/#regional-needs">Everything homes in ${esc(cityName)} need →</a></p>` : ''}
       </section>`;
   }
 
@@ -1516,7 +1516,7 @@ const privacyLine = ACCOUNTS_ENABLED
     if (!ctx.syms.length) { el.innerHTML = ''; return; }
     const testLink = (slug: string) => {
       const t = D.tests.energy.find((x: any) => x.id === slug) ?? D.tests.health.find((x: any) => x.id === slug);
-      return `<a href="/ca/tests/${esc(slug)}/">${esc(t?.name ?? slug.replace(/-/g, ' '))}</a>`;
+      return `<a href="/tests/${esc(slug)}/">${esc(t?.name ?? slug.replace(/-/g, ' '))}</a>`;
     };
     const cards = ctx.syms.map((s) => {
       const label = SYMPTOM_LABEL[s] ?? s;
@@ -1526,7 +1526,7 @@ const privacyLine = ACCOUNTS_ENABLED
           <p><span class="k">Usually:</span> ${esc(localize(iss.cause, ctx.isON) || iss.cause)}</p>
           ${iss.check ? `<p><span class="k">How the audit confirms it:</span> ${esc(iss.check)}</p>` : ''}
           ${iss.fix.length ? `<p><span class="k">Fixes, cheapest first:</span> ${iss.fix.map((f: string) => esc(f)).join(' → ')}</p>` : ''}
-          <p><a href="/ca/issues/${esc(iss.slug)}/">${esc(iss.name)}: the full guide →</a></p></div>`;
+          <p><a href="/issues/${esc(iss.slug)}/">${esc(iss.name)}: the full guide →</a></p></div>`;
       }
       const c = EXTRA_CONCERNS[s];
       if (!c) return '';
@@ -1773,7 +1773,7 @@ const privacyLine = ACCOUNTS_ENABLED
             <div class="nums">
               ${cost ? `<span class="cost">typical cost ${money(cost[0])}–${money(cost[1])}</span>` : ''}
               ${reb ? `<span class="chip chip-active">rebate: at least ${money(reb.amount)} (${esc(shortLabel(reb.program))})</span>` : ''}
-              <a class="chip chip-info" href="/ca/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>
+              <a class="chip chip-info" href="/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>
             </div>
           </div>`);
         lastItems.push({ key: item.category, title, category: item.category, cost_low: cost ? Math.round(cost[0]) : null, cost_high: cost ? Math.round(cost[1]) : null, saving_year: null, rebate: reb?.program ?? null });
@@ -1806,7 +1806,7 @@ const privacyLine = ACCOUNTS_ENABLED
             ${costTxt ? `<span class="cost">${costTxt}</span>` : ''}
             ${payTxt ? `<span class="cost">${payTxt}</span>` : ''}
             ${onChip}${rebChip}
-            ${hpCase ? '<a class="chip chip-info" href="/ca/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>' : ''}
+            ${hpCase ? '<a class="chip chip-info" href="/programs/national-heat-pump-rebate/">+ federal rebate, opens early 2027</a>' : ''}
             ${payNote ? `<p class="pay-note">${esc(payNote)}</p>` : ''}
           </div>
         </div>`);
@@ -1849,14 +1849,14 @@ const privacyLine = ACCOUNTS_ENABLED
       if (tl && tl.cost !== null && m.wk === 'gasTank') alts.push(`gas tankless about ${money(tl.cost)}/yr (US DOE: on-demand units are 24–34% more efficient than tanks in homes using up to about 155 litres a day)`);
       cards.push(`<div class="sys-card"><h4>Hot water: ${esc(WH_NAME[m.wk] ?? m.wk)}${a.wh === 'unsure' ? ' (assumed)' : ''}</h4>
         <p class="small">About <b>${money(m.waterCost)}/yr</b> for a household of three near ${esc(R.name)} (cold water arrives at about ${m.water.inletC.toFixed(0)} °C here).${alts.length ? ' Alternatives: ' + alts.join('; ') + '.' : ''}</p>
-        <p class="small"><a href="/ca/learn/water-heaters/">Water heaters compared →</a></p></div>`);
+        <p class="small"><a href="/learn/water-heaters/">Water heaters compared →</a></p></div>`);
     }
     if (m.acKwh > 0) {
       const ep = R.prices.electricity.now;
       const old = a.ac === 'central-old';
       cards.push(`<div class="sys-card"><h4>Cooling: ${esc(m.acNote)}</h4>
         <p class="small">About <b>${Math.round(m.acKwh).toLocaleString('en-CA')} kWh</b> a summer (${money(m.acKwh * ep)}) with ${R.cdd} cooling degree-days near ${esc(R.name)}.${old ? ' An older central air conditioner is a natural time to switch to a heat pump: one unit then cools and heats.' : ''}</p>
-        <p class="small"><a href="/ca/learn/air-conditioning/">Air conditioning and cooling →</a></p></div>`);
+        <p class="small"><a href="/learn/air-conditioning/">Air conditioning and cooling →</a></p></div>`);
     }
     if (a.win !== 'unsure') {
       const wk = winKey(a.win, a.age);
@@ -1865,23 +1865,23 @@ const privacyLine = ACCOUNTS_ENABLED
         : wk === 'doubleClear'
           ? 'Older double-pane windows still work; replacing them mostly buys comfort and quiet. Do it when they fail or at a renovation, and seal around frames now.'
           : 'Your windows are already efficient; caulk and weatherstrip, and spend elsewhere first.';
-      cards.push(`<div class="sys-card"><h4>Windows: ${esc((MODEL.envelope.windowU as any)[wk]?.label ?? wk)}</h4><p class="small">${msg}</p><p class="small"><a href="/ca/learn/windows-doors/">Windows and doors: when upgrades pay →</a></p></div>`);
+      cards.push(`<div class="sys-card"><h4>Windows: ${esc((MODEL.envelope.windowU as any)[wk]?.label ?? wk)}</h4><p class="small">${msg}</p><p class="small"><a href="/learn/windows-doors/">Windows and doors: when upgrades pay →</a></p></div>`);
     }
     if (a.sec.includes('woodstove') || ['wood', 'outdoorwood', 'pellet'].includes(a.heat)) {
-      cards.push(`<div class="sys-card"><h4>Wood heat</h4><p class="small">Have a WETT-certified inspector check the stove, chimney and clearances (insurers usually ask), sweep as needed, and keep a working CO alarm. Wood and pellet costs vary too much to estimate; enter yours in the <a href="/ca/calculators/energy-costs/${esc(R.slug)}/">energy cost calculator</a>.</p><p class="small"><a href="/ca/tests/wood-burning-inspection/">Wood-burning inspections →</a></p></div>`);
+      cards.push(`<div class="sys-card"><h4>Wood heat</h4><p class="small">Have a WETT-certified inspector check the stove, chimney and clearances (insurers usually ask), sweep as needed, and keep a working CO alarm. Wood and pellet costs vary too much to estimate; enter yours in the <a href="/calculators/energy-costs/${esc(R.slug)}/">energy cost calculator</a>.</p><p class="small"><a href="/tests/wood-burning-inspection/">Wood-burning inspections →</a></p></div>`);
     }
     if (a.sec.includes('spaceheaters')) {
       const ep = R.prices.electricity.now;
       cards.push(`<div class="sys-card"><h4>Electric space heaters</h4><p class="small">A 1,500 W heater costs about ${money(1.5 * ep * 100)} per 100 hours near ${esc(R.name)}. Needing one usually points to a draft, a cold room over a garage, or a duct problem worth finding.</p></div>`);
     }
     if (a.sec.includes('solar')) {
-      cards.push(`<div class="sys-card"><h4>Free heat from the sun</h4><p class="small">Sunny south windows supply real heat on clear winter days. Our estimate allows for typical solar gain; if your bills come in lower than the typical range, this is one reason. Keep low-e coatings in mind when replacing south glass.</p><p class="small"><a href="/ca/learn/heating-systems/">Heating systems and solar gain →</a></p></div>`);
+      cards.push(`<div class="sys-card"><h4>Free heat from the sun</h4><p class="small">Sunny south windows supply real heat on clear winter days. Our estimate allows for typical solar gain; if your bills come in lower than the typical range, this is one reason. Keep low-e coatings in mind when replacing south glass.</p><p class="small"><a href="/learn/heating-systems/">Heating systems and solar gain →</a></p></div>`);
     }
     if (a.prev === 'recent' || a.prev === 'older') {
       const rule = isON
         ? `Ontario’s Home Renovation Savings needs a first assessment dated January 28, 2025 or later, done by the same approved organization as the follow-up${a.prev === 'older' ? ', and renovations since your old report change the numbers' : ''}.`
         : `Whether it counts for rebates depends on your province’s program, so ask before any work starts${a.prev === 'older' ? '; renovations since your old report change the numbers' : ''}.`;
-      cards.push(`<div class="sys-card prev"><h4>You’ve had an evaluation before</h4><p class="small">Dig out the report: its upgrade list and blower-door number are still useful for planning. ${rule}</p><p class="small"><a href="/ca/learn/previous-audit/">What an old EnerGuide report is still good for →</a></p></div>`);
+      cards.push(`<div class="sys-card prev"><h4>You’ve had an evaluation before</h4><p class="small">Dig out the report: its upgrade list and blower-door number are still useful for planning. ${rule}</p><p class="small"><a href="/learn/previous-audit/">What an old EnerGuide report is still good for →</a></p></div>`);
     }
     el.innerHTML = cards.length ? `<div class="rsec"><h3>Your home’s systems</h3><p class="sub">Estimated at ${esc(R.name)}-area prices. Every number has a calculator behind it, pre-filled for your city.</p><div class="sys-grid">${cards.join('')}</div></div>` : '';
   }
@@ -1893,28 +1893,28 @@ const privacyLine = ACCOUNTS_ENABLED
         <summary><strong>How we got these numbers</strong> <span class="small">(and why they’re conservative)</span></summary>
         <p class="small">${R.exact ? `Your postal code matched ${esc(R.name)}` : `Your postal code isn’t in one of the 70 cities we cover, so we used ${esc(R.name)}, the closest covered city`}: ${R.hdd.toLocaleString('en-CA')} heating degree-days (NRCan HOT2000 weather data, the same data EnerGuide evaluations use) and local energy prices with taxes. A typical house like yours needs about <b>${Math.round(m.demand)} GJ</b> of heat a year (NRCan’s heating need per square metre for your era, scaled to the local climate).${cal.calibrated ? ` Your bills point to about <b>${Math.round(cal.actualDemandGJ)} GJ</b>, so we scaled every saving by ${cal.factor.toFixed(2)}${cal.clamped ? ' (we cap the scaling between 0.5 and 1.6)' : ''}.` : ' Without your bills, we use the typical figure.'}</p>
         <p class="small">Each upgrade’s saving comes from the physics of that part of the house (R-values, window U-values, air leakage) at your degree-days, then we multiply by 0.75 (0.4 for basements) because sun, people and appliances already supply free heat and real installations underperform their labels. Savings are valued at the price of your <em>next</em> unit of energy, without fixed monthly charges, which is lower than your average price. Rebates are each program’s lowest published amount for a job like yours.</p>
-        <p class="small"><a href="/ca/calculators/upgrade-payback/${esc(R.slug)}/">Change any assumption in the upgrade calculator for ${esc(R.name)} →</a> · <a href="/ca/calculators/energy-costs/${esc(R.slug)}/">Compare heating systems →</a> · <a href="/ca/learn/real-numbers/">Worked examples with every step shown →</a></p>
+        <p class="small"><a href="/calculators/upgrade-payback/${esc(R.slug)}/">Change any assumption in the upgrade calculator for ${esc(R.name)} →</a> · <a href="/calculators/energy-costs/${esc(R.slug)}/">Compare heating systems →</a> · <a href="/learn/real-numbers/">Worked examples with every step shown →</a></p>
       </details>`;
   }
 
-  const FED_HP_NOTE = '<strong>Coming early 2027:</strong> the federal <a href="/ca/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a> will pay $2,000, or up to $10,000 below the median income, toward a cold-climate air-source heat pump. No EnerGuide evaluation is needed, and it can be combined with provincial rebates.';
+  const FED_HP_NOTE = '<strong>Coming early 2027:</strong> the federal <a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a> will pay $2,000, or up to $10,000 below the median income, toward a cold-climate air-source heat pump. No EnerGuide evaluation is needed, and it can be combined with provincial rebates.';
   function renderPrograms(loc: Extract<Loc, { kind: 'ca' }>, goals: string[], isON: boolean, isToronto: boolean) {
     const el = $('#rPrograms');
     const byId = (id: string) => D.programs.find((p: any) => p.id === id);
     let html = '';
     if (!isON) {
-      html = `<div class="card province-note"><h3>Programs in ${esc(PROV_NAME[loc.province])}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary, so check your utility.'}</p><p class="small">${FED_HP_NOTE}</p><p class="small"><a href="/ca/programs/">See the full program tracker →</a></p></div>`;
+      html = `<div class="card province-note"><h3>Programs in ${esc(PROV_NAME[loc.province])}</h3><p class="small">${PROVINCE_NOTES[loc.province] ?? 'Provincial programs vary, so check your utility.'}</p><p class="small">${FED_HP_NOTE}</p><p class="small"><a href="/programs/">See the full program tracker →</a></p></div>`;
     } else {
       const ids = ['hrsp-assessment', 'hrsp-no-assessment', 'national-heat-pump-rebate'];
       if (isToronto) ids.push('toronto-help');
       if (goals.includes('buying')) ids.push('cmhc-eco-improvement');
       const rows = ids.map(byId).filter(Boolean).map((p: any) => `
         <div class="prog-row">
-          <a href="/ca/programs/${p.slug}/">${esc(p.shortName)}</a>
+          <a href="/programs/${p.slug}/">${esc(p.shortName)}</a>
           <span class="chip ${p.auditRequired ? 'chip-info' : 'chip-neutral'}">${p.auditRequired ? 'needs the evaluation' : 'no evaluation needed'}</span>
           <span class="hl">${esc(p.headline)}</span>
         </div>`).join('');
-      html = `<h3>Programs you likely qualify for in Ontario</h3><p class="sub">Verified against official pages. <a href="/ca/programs/">Full tracker →</a></p><div class="card card-pad">${rows}</div>`;
+      html = `<h3>Programs you likely qualify for in Ontario</h3><p class="sub">Verified against official pages. <a href="/programs/">Full tracker →</a></p><div class="card card-pad">${rows}</div>`;
     }
     el.innerHTML = `<div class="rsec">${html}</div>`;
   }
@@ -1946,7 +1946,7 @@ const privacyLine = ACCOUNTS_ENABLED
     const newer = ['1981-1995', '1996-2010', '2011-plus'].includes(age);
     const fuel = heat === 'gas' || heat === 'oil';
     const out: TestPick[] = [];
-    const add = (t: any, why: string) => out.push({ id: t.id, name: t.name, why, href: `/ca/tests/${t.id}/`, icon: t.icon, establishes: t.establishes, cost: t.cost });
+    const add = (t: any, why: string) => out.push({ id: t.id, name: t.name, why, href: `/tests/${t.id}/`, icon: t.icon, establishes: t.establishes, cost: t.cost });
     add(E['blower-door'], older ? 'Your era’s biggest unknown is air leakage. This puts a number on it and finds the entry points.' : 'Verifies the airtightness your home’s era promises; builders miss spots.');
     add(E['thermal-imaging'], syms.includes('drafty-rooms') ? 'Finds the cold walls you flagged without opening anything.' : 'Maps exactly which cavities are empty before you pay to fill them.');
     if (older || syms.includes('ice-dams')) add(E['attic-inspection'], syms.includes('ice-dams') ? 'Ice dams start in the attic: bypasses and thin insulation show up immediately.' : 'Often the cheapest big win for your era, and this scopes it precisely.');
@@ -2019,7 +2019,7 @@ const privacyLine = ACCOUNTS_ENABLED
     el.innerHTML = `
       <div class="rsec">
         <h3>Tests to ask for, and how to read the results</h3>
-        <p class="sub">Ask your energy advisor for these by name: they turn “probably” into measurements. Each card says what a good or bad result looks like. <a href="/ca/tests/">Full testing guide →</a></p>
+        <p class="sub">Ask your energy advisor for these by name: they turn “probably” into measurements. Each card says what a good or bad result looks like. <a href="/tests/">Full testing guide →</a></p>
         <details class="rsec-collapse">
           <summary>Show the ${nEnergy} energy tests and what each result means</summary>
           <div class="test-grid">${cards}</div>
@@ -2057,8 +2057,8 @@ const privacyLine = ACCOUNTS_ENABLED
     const count = ctx.city?.providers ?? 0;
     if (!region) {
       const list = count
-        ? `<a href="/ca/services/home-energy-audit/${esc(ctx.R.slug)}/#providers">See the ${count} licensed organization${count === 1 ? '' : 's'} serving ${esc(cityName)} →</a>`
-        : `<a href="/ca/services/home-energy-audit/${esc(ctx.R.slug)}/">Home energy audits in ${esc(cityName)} →</a>`;
+        ? `<a href="/services/home-energy-audit/${esc(ctx.R.slug)}/#providers">See the ${count} licensed organization${count === 1 ? '' : 's'} serving ${esc(cityName)} →</a>`
+        : `<a href="/services/home-energy-audit/${esc(ctx.R.slug)}/">Home energy audits in ${esc(cityName)} →</a>`;
       const route = b?.bookWith
         ? `<p class="sub">In ${esc(ctx.provName)}, evaluations are booked ${esc(b.route.replace(/^Through /, 'through ').replace(/^Start with /, 'starting with '))}: <a href="${esc(b.bookWith.href)}" rel="noopener" target="_blank">${esc(shortLabel(b.bookWith.label))} ↗</a></p>`
         : '';
@@ -2066,7 +2066,7 @@ const privacyLine = ACCOUNTS_ENABLED
         ${route}
         <p class="sub">Every listing is an NRCan-licensed service organization whose registered energy advisors do EnerGuide evaluations.${ctx.R.exact ? '' : ` ${esc(cityName)} is the closest city we cover; organizations there often serve the surrounding area, so check their coverage.`}</p>
         <p>${list}</p>
-        <p class="small"><a href="/ca/find/#${esc(ctx.provSlug)}">How booking works in ${esc(ctx.provName)} →</a></p></div>`;
+        <p class="small"><a href="/find/#${esc(ctx.provSlug)}">How booking works in ${esc(ctx.provName)} →</a></p></div>`;
       return;
     }
     const all = D.providers.filter((p: any) => p.serves.includes(region.slug));
@@ -2076,7 +2076,7 @@ const privacyLine = ACCOUNTS_ENABLED
     const FIRST = 4;
     const card = (p: any) => `
       <div class="mini-provider">
-        <a href="/ca/providers/${p.slug}/">${esc(p.name)}</a>
+        <a href="/providers/${p.slug}/">${esc(p.name)}</a>
         <p class="reg">✓ ${esc(p.registration)}</p>
         <p class="pr">${p.hrsApproved ? '<span class="chip chip-active">HRSP-approved: Yes</span>' : '<span class="chip chip-neutral">HRSP-approved: No</span>'}</p>
         ${p.pricing ? `<p class="pr">${esc(p.pricing)}</p>` : ''}
@@ -2097,7 +2097,7 @@ const privacyLine = ACCOUNTS_ENABLED
     el.innerHTML = `
       <div class="rsec" id="rProvidersList">
         <h3>${all.length} registered advisors in our ${esc(region.name)} directory${count > all.length ? ` (of ${count} NRCan-licensed organizations serving ${esc(cityName)})` : ''}</h3>
-        <p class="sub">Every listing is a licensed service organization. Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate. <a href="/ca/find/${region.slug}/">Full ${esc(region.name)} directory →</a>${count > all.length ? ` · <a href="/ca/services/home-energy-audit/${esc(ctx.R.slug)}/#providers">See the ${count} licensed organizations serving ${esc(cityName)} →</a>` : ''}</p>
+        <p class="sub">Every listing is a licensed service organization. Only assessments from the seven HRSP-approved organizations qualify for the $600 Home Renovation Savings rebate. <a href="/find/${region.slug}/">Full ${esc(region.name)} directory →</a>${count > all.length ? ` · <a href="/services/home-energy-audit/${esc(ctx.R.slug)}/#providers">See the ${count} licensed organizations serving ${esc(cityName)} →</a>` : ''}</p>
         <div class="mini-providers">${sorted.slice(0, FIRST).map(card).join('')}</div>
         ${more}
       </div>`;
@@ -2108,14 +2108,14 @@ const privacyLine = ACCOUNTS_ENABLED
     const region = ctx.isON ? ctx.loc.region : null;
     const cityName = ctx.city?.n ?? ctx.R.name;
     const items: string[] = [];
-    if (region) items.push(`<li><a href="/ca/guides/${region.slug}/">The ${esc(region.name)} home energy guide</a>: local housing, rebates and auditors in one place</li>`);
-    else items.push(`<li><a href="/ca/cities/${esc(ctx.R.slug)}/">The ${esc(cityName)} home energy guide</a>: local climate, housing, rebates and advisors</li>`);
-    items.push(`<li><a href="/ca/provinces/${esc(ctx.provSlug)}/">Home energy in ${esc(ctx.provName)}</a>: every provincial program, with dates</li>`);
-    items.push(`<li><a href="/ca/tests/">The complete home testing guide</a>: every test from blower doors to radon, and who does each</li>`);
-    items.push(`<li><a href="/ca/how-it-works/">What happens in an EnerGuide evaluation</a>: the visit, step by step</li>`);
-    items.push(`<li><a href="/ca/cost/">What an EnerGuide evaluation costs in ${esc(ctx.provName)}</a>: prices and the help available, by province</li>`);
-    items.push(`<li><a href="/ca/glossary/">The glossary</a>: every term in this plan, in plain words</li>`);
-    items.push(`<li><a href="/ca/programs/">The live program tracker</a>: every rebate verified against official pages</li>`);
+    if (region) items.push(`<li><a href="/guides/${region.slug}/">The ${esc(region.name)} home energy guide</a>: local housing, rebates and auditors in one place</li>`);
+    else items.push(`<li><a href="/cities/${esc(ctx.R.slug)}/">The ${esc(cityName)} home energy guide</a>: local climate, housing, rebates and advisors</li>`);
+    items.push(`<li><a href="/provinces/${esc(ctx.provSlug)}/">Home energy in ${esc(ctx.provName)}</a>: every provincial program, with dates</li>`);
+    items.push(`<li><a href="/tests/">The complete home testing guide</a>: every test from blower doors to radon, and who does each</li>`);
+    items.push(`<li><a href="/how-it-works/">What happens in an EnerGuide evaluation</a>: the visit, step by step</li>`);
+    items.push(`<li><a href="/cost/">What an EnerGuide evaluation costs in ${esc(ctx.provName)}</a>: prices and the help available, by province</li>`);
+    items.push(`<li><a href="/glossary/">The glossary</a>: every term in this plan, in plain words</li>`);
+    items.push(`<li><a href="/programs/">The live program tracker</a>: every rebate verified against official pages</li>`);
     el.innerHTML = `
       <div class="rsec">
         <h3>Resources for your plan</h3>

@@ -1,6 +1,6 @@
 ---
 /**
- * The way into the audit journey from a guide page (/us/cities/<metro>/, /us/issues/<slug>/):
+ * The way into the audit journey from a guide page (/cities/<metro>/, /us/issues/<slug>/):
  * the four stages, compact, with stage 1 marked as the place to start, and the planner link.
  */
 import JourneyBar from '../JourneyBar.astro';
@@ -15,7 +15,7 @@ const { forWhat } = Astro.props;
 <div class="plan-prompt">
   <JourneyBar country="us" current={1} ticks={false} compact hereLabel="Start here" />
   <p class="pp-cta">
-    <a class="btn btn-primary btn-sm" href="/us/plan/">Get your free plan →</a>
+    <a class="btn btn-primary btn-sm" href="/plan/">Get your free plan →</a>
     <span class="pp-why">
       Six short steps{forWhat ? ` for ${forWhat}` : ''}: what to fix first, the tests to ask for and the programs open to you. No email.
     </span>

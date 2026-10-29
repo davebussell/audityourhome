@@ -1,7 +1,7 @@
 ---
 /** One-click unsubscribe from the link in every alert email (no sign-in needed). */
-import Base from '../../layouts/Base.astro';
-import { ACCOUNTS_ENABLED, SITE } from '../../config/site';
+import Base from '../../../layouts/Base.astro';
+import { ACCOUNTS_ENABLED, SITE } from '../../../config/site';
 ---
 
 <Base title="Unsubscribe from alerts | AuditYourHome" description="Stop AuditYourHome alert emails." indexable={false}
@@ -31,7 +31,7 @@ import { ACCOUNTS_ENABLED, SITE } from '../../config/site';
     if (!box.dataset.enabled) return done('Alerts aren’t running yet', 'There is nothing to unsubscribe from.');
     if (!/^[0-9a-f-]{36}$/i.test(token)) return done('This link is incomplete', 'Use the full unsubscribe link from the email, or sign in to My Home to change your alerts.');
     try {
-      const { rpc } = await import('../../lib/account/client');
+      const { rpc } = await import('../../../lib/account/client');
       const ok = await rpc<boolean>('unsubscribe_by_token', { p_token: token });
       if (ok) done('You’re unsubscribed', 'We won’t send you any more alert emails. Requests you made, like a match, can still email you about that request.');
       else done('We couldn’t find that subscription', 'It may already be cancelled. Sign in to My Home to check your alert settings.');

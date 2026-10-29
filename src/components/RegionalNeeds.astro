@@ -33,7 +33,7 @@ const {
 } = Astro.props;
 
 const tHref = (slug: string) => {
-  if (country === 'ca' && citySlug && CA_SERVICE_FOR_TEST[slug]) return `/ca/services/${CA_SERVICE_FOR_TEST[slug]}/${citySlug}/`;
+  if (country === 'ca' && citySlug && CA_SERVICE_FOR_TEST[slug]) return `/services/${CA_SERVICE_FOR_TEST[slug]}/${citySlug}/`;
   return testHref(country, slug);
 };
 const tests = p.tests.filter((t) => testName(country, t.test));

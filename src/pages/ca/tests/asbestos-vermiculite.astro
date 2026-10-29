@@ -32,9 +32,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Asbestos & vermiculite', path: '/ca/tests/asbestos-vermiculite/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Asbestos & vermiculite', path: '/tests/asbestos-vermiculite/' },
   ]),
   faqSchema(faqs),
 ];
@@ -42,7 +42,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('asbestos-testing')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Asbestos &amp; vermiculite</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Asbestos &amp; vermiculite</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
@@ -110,7 +110,7 @@ const schema = [
         Attic insulation is usually the first big-win upgrade in an older home — and vermiculite
         sits exactly where that work happens. Discovering it mid-job shuts the site down;
         discovering it first just reorders the budget. That's why the
-        <a href="/ca/plan/">planner</a> flags this test for every pre-1990 era and why insulation
+        <a href="/plan/">planner</a> flags this test for every pre-1990 era and why insulation
         rebate programs expect suspect material dealt with before top-ups. Sequence:
         sample → clear or abate → air-seal → insulate.
       </p>
@@ -135,9 +135,9 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/lead-paint/">Next guide: lead paint</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/lead-paint/">Next guide: lead paint</a>
     </div>
 
     <LeadForm

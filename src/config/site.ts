@@ -1,8 +1,13 @@
 import accountsJson from './accounts.json';
+import type { Country } from '../lib/country';
 
 /**
  * Central site configuration.
- * Swap brand, contact, or form endpoint here — nothing else needs editing.
+ *
+ * Two sites are built from this one codebase (since 2026-10-29): audityourhome.com is the Canadian
+ * site (AuditYourHome) and audityourhouse.com is the US site (AuditYourHouse). `SITE` is the
+ * Canadian configuration (and the operator's details, shared by both); `SITES` has both, and
+ * `siteFor(country)` picks the right one for a page. Swap brand, contact, or form endpoint here.
  */
 export const SITE = {
   name: 'AuditYourHome',
@@ -31,6 +36,45 @@ export const SITE = {
   /** v1 scope */
   launchRegion: 'Ontario',
 } as const;
+
+export interface SiteInfo {
+  /** Brand as written (no space), e.g. in og:site_name and the wordmark */
+  name: string;
+  domain: string;
+  /** Origin without a trailing slash */
+  url: string;
+  tagline: string;
+  description: string;
+  /** Short line for the "other site" banner and the country switcher */
+  blurb: string;
+}
+
+/** One brand and domain per country. The Canadian entry mirrors `SITE`. */
+export const SITES: Record<Country, SiteInfo> = {
+  ca: {
+    name: SITE.name,
+    domain: SITE.domain,
+    url: SITE.url,
+    tagline: SITE.tagline,
+    description: SITE.description,
+    blurb: 'NRCan-registered energy advisors, EnerGuide evaluations and live provincial and federal rebates.',
+  },
+  us: {
+    name: 'AuditYourHouse',
+    domain: 'audityourhouse.com',
+    url: 'https://audityourhouse.com',
+    tagline: 'Find a certified home energy auditor. Verified credentials, real prices, live rebates and tax credits.',
+    description:
+      'AuditYourHouse helps US homeowners find HERS raters and BPI professionals, see what a home energy audit costs, and check which rebates, tax credits and utility programs are open right now, metro by metro.',
+    blurb: 'HERS raters and BPI professionals, audit costs and the rebates, tax credits and utility programs open in your state.',
+  },
+};
+
+/** The site a page belongs to. Pages outside both country trees (none since 2026-10-29) count as Canadian. */
+export const siteFor = (country: Country | null | undefined): SiteInfo => SITES[country ?? 'ca'];
+
+/** Absolute URL on a country's site for a root-form path like `/tests/radon/`. */
+export const siteUrl = (country: Country | null | undefined, path = '/'): string => `${siteFor(country).url}${path}`;
 
 /**
  * Free homeowner accounts (sign-in, My Home, alerts, matching) on Supabase.

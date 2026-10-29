@@ -1,7 +1,7 @@
 ---
 /**
  * Where the Canadian audit-request form lands after a Netlify submission (the form posts to
- * /ca/thanks/?sent=1). Without the flag (a bookmark, a reload, a direct visit) the page doesn't
+ * /thanks/?sent=1). Without the flag (a bookmark, a reload, a direct visit) the page doesn't
  * claim anything was sent. Not indexed.
  */
 import Base from '../../layouts/Base.astro';
@@ -25,7 +25,7 @@ import { SITE } from '../../config/site';
         <p class="lede measure">
           If you sent a request from one of our forms, a person reads it and replies by email, usually within one
           business day. If you landed here another way, nothing has been sent yet: you can ask from any
-          <a href="/ca/find/">city’s advisor list</a>, or <a href="/ca/plan/">start with your free plan</a>.
+          <a href="/find/">city’s advisor list</a>, or <a href="/plan/">start with your free plan</a>.
         </p>
       </div>
     </div>
@@ -65,13 +65,13 @@ import { SITE } from '../../config/site';
         </li>
       </ul>
       <p class="links small">
-        <a href="/ca/how-it-works/#visit">What happens at the visit</a> ·
-        <a href="/ca/find/">How booking works in your province</a> ·
-        <a href="/ca/programs/">Rebates and programs</a>
+        <a href="/how-it-works/#visit">What happens at the visit</a> ·
+        <a href="/find/">How booking works in your province</a> ·
+        <a href="/programs/">Rebates and programs</a>
       </p>
     </section>
 
-    <p class="back"><a class="btn btn-ghost" href="/ca/">Back to the home page</a></p>
+    <p class="back"><a class="btn btn-ghost" href="/">Back to the home page</a></p>
   </div>
 </Base>
 

@@ -24,7 +24,7 @@ const viaProgs = progs.filter((p) => p.via);
 const lede = stateLede(s);
 const checked = fmtISO(s.hear.checked);
 
-const title = `${s.name} home energy rebates (2026): HOMES and HEEHR status | AuditYourHome`;
+const title = `${s.name} home energy rebates (2026): HOMES and HEEHR status | AuditYourHouse`;
 const description = lede.length > 120 ? `${lede} Checked ${VERIFIED}.` : `${lede} Program names, amounts and official links, checked ${VERIFIED}.`;
 
 const metros = s.metros
@@ -69,10 +69,10 @@ const faqs = [
 const sources = dedupe([...s.sources, BPA_SOURCE]);
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Rebates & programs', path: '/us/programs/' },
-    { name: 'Rebates by state', path: '/us/programs/states/' },
-    { name: s.name, path: `/us/programs/states/${s.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: 'Rebates by state', path: '/programs/states/' },
+    { name: s.name, path: `/programs/states/${s.slug}/` },
   ]),
   faqSchema(faqs),
 ];
@@ -109,8 +109,8 @@ const auditPoints = [
   <ProgramStyles />
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
-      <a href="/us/programs/states/">States</a> <span aria-hidden="true">/</span>
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>
+      <a href="/programs/states/">States</a> <span aria-hidden="true">/</span>
       <span>{s.name}</span>
     </nav>
 
@@ -132,11 +132,11 @@ const auditPoints = [
             <span class={`chip ${p.chip.cls}`}>{p.chip.label}</span>
           </a>
         ))}
-        <a class="g-row" href="/us/programs/federal-tax-credits/">
+        <a class="g-row" href="/programs/federal-tax-credits/">
           <span class="g-k">Federal tax credits (25C, 25D)<small>Ended for work after Dec. 31, 2025</small></span>
           <span class={`chip ${closed.cls}`}>{closed.label}</span>
         </a>
-        <a class="g-row" href="/us/programs/weatherization-assistance-program/">
+        <a class="g-row" href="/programs/weatherization-assistance-program/">
           <span class="g-k">Weatherization Assistance<small>Funded for FY2026, income-qualified</small></span>
           <span class={`chip ${open.cls}`}>{open.label}</span>
         </a>
@@ -188,7 +188,7 @@ const auditPoints = [
         <div class="mcs">
           {metros.map((mp) => (
             <article class="card card-pad mc">
-              <h3><a href={`/us/cities/${mp.metro.slug}/`}>{metroName(mp.metro)}</a></h3>
+              <h3><a href={`/cities/${mp.metro.slug}/`}>{metroName(mp.metro)}</a></h3>
               <p class="mc-s">{mp.metro.msa}{!mp.primary && ` · the ${s.name} side`}</p>
               {(mp.electric.length > 0 || mp.gas.length > 0) && (
                 <p class="mc-u">
@@ -221,7 +221,7 @@ const auditPoints = [
                 </p>
               )}
               {mp.notOpen > 0 && <p class="small">{mp.notOpen} more listed for this area {mp.notOpen === 1 ? 'is' : 'are'} closed, paused or unconfirmed.</p>}
-              <p class="up-meta mc-f">Status checked {VERIFIED} · <a href={`/us/cities/${mp.metro.slug}/`}>{metroName(mp.metro)} guide →</a></p>
+              <p class="up-meta mc-f">Status checked {VERIFIED} · <a href={`/cities/${mp.metro.slug}/`}>{metroName(mp.metro)} guide →</a></p>
             </article>
           ))}
         </div>
@@ -235,24 +235,24 @@ const auditPoints = [
           <span class={`chip ${closed.cls}`}>{closed.label}</span>
           <strong>Federal tax credits (25C and 25D):</strong> ended for work after December 31, 2025 (Public Law 119-21).
           2025 work is claimed on 2025 returns with IRS Form 5695.
-          {' '}<a href="/us/programs/federal-tax-credits/">What ended →</a> <a href={S.fs.href} rel="noopener" target="_blank">IRS&nbsp;↗</a>
+          {' '}<a href="/programs/federal-tax-credits/">What ended →</a> <a href={S.fs.href} rel="noopener" target="_blank">IRS&nbsp;↗</a>
         </p>
         <p class="fed-line">
           <span class={`chip ${open.cls}`}>{open.label}</span>
           <strong>Weatherization Assistance Program:</strong> funded for FY2026; pays for efficiency work, starting with an
           energy audit, for households at or below 200% of federal poverty guidelines. Apply through {nameIn(s)}’s
           weatherization agency.
-          {' '}<a href="/us/programs/weatherization-assistance-program/">Who qualifies →</a> <a href={S.wap.href} rel="noopener" target="_blank">DOE&nbsp;↗</a>
+          {' '}<a href="/programs/weatherization-assistance-program/">Who qualifies →</a> <a href={S.wap.href} rel="noopener" target="_blank">DOE&nbsp;↗</a>
         </p>
         <p class="fed-line">
           <span class={`chip ${open.cls}`}>{open.label}</span>
           <strong>LIHEAP:</strong> funded for FY2026; helps pay heating and cooling bills through {nameIn(s)}’s LIHEAP
-          office. <a href="/us/programs/weatherization-assistance-program/#liheap">LIHEAP →</a>
+          office. <a href="/programs/weatherization-assistance-program/#liheap">LIHEAP →</a>
         </p>
         {hesRules.map(({ rule }) => (
           <p class="fed-line">
             <strong>Local rule · {rule.name}:</strong> {clean(rule.summary).split('. ')[0].replace(/\.$/, '')}.
-            {' '}<a href="/us/programs/home-energy-score/">Home Energy Score →</a> <a href={rule.url} rel="noopener" target="_blank">Official&nbsp;↗</a>
+            {' '}<a href="/programs/home-energy-score/">Home Energy Score →</a> <a href={rule.url} rel="noopener" target="_blank">Official&nbsp;↗</a>
           </p>
         ))}
         <p class="fed-line">
@@ -276,14 +276,14 @@ const auditPoints = [
     <ProgramSources sources={sources} verified={checked} />
 
     <p class="up-related">
-      <a class="btn btn-ghost" href="/us/programs/states/">All states</a>
-      <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">How HOMES and HEEHR work</a>
-      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/programs/states/">All states</a>
+      <a class="btn btn-ghost" href="/programs/home-energy-rebates/">How HOMES and HEEHR work</a>
+      <a class="btn btn-ghost" href="/programs/">Full program tracker</a>
     </p>
 
     <p class="up-also">
       Other states:
-      {others.map((o, i) => (<>{i > 0 && ' · '}<a href={`/us/programs/states/${o.slug}/`}>{o.name}</a></>))}
+      {others.map((o, i) => (<>{i > 0 && ' · '}<a href={`/programs/states/${o.slug}/`}>{o.name}</a></>))}
     </p>
   </div>
 </Base>

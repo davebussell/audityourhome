@@ -1,23 +1,28 @@
 ---
-import { countryOf, COUNTRIES } from '../lib/country';
+import { countryOf } from '../lib/country';
+import { siteFor } from '../config/site';
 
 interface Props {
   /** Renders the wordmark light-on-dark (footer) */
   onDark?: boolean;
-  /** Where the logo links; defaults to the current country's home */
+  /** Where the logo links; defaults to the site's home page */
   href?: string;
 }
-const country = countryOf(Astro.url.pathname);
-const { onDark = false, href = country ? COUNTRIES[country].home : '/' } = Astro.props;
-/* Logo red = Canadian flag red, Pantone 032 (sRGB #EF3340) */
+const country = countryOf(Astro.url.pathname) ?? 'ca';
+const site = siteFor(country);
+const { onDark = false, href = '/' } = Astro.props;
+/* House and accent: Canadian flag red, Pantone 032 (sRGB #EF3340) on AuditYourHome; Old Glory red (#B22234) on AuditYourHouse. */
+const red = country === 'us' ? '#B22234' : '#EF3340';
+/* Wordmark: Audit·Your·Home or Audit·Your·House */
+const last = site.name.replace(/^AuditYour/, '');
 ---
 
-<a href={href} class:list={['logo', { dark: onDark }]} aria-label="AuditYourHome — home">
+<a href={href} class:list={['logo', { dark: onDark }]} aria-label={`${site.name} — home`} style={`--logo-red:${red}`}>
   <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
     <!-- house — flag red (PMS 032) -->
     <path
       d="M16 3.5 3.5 14.2a1.6 1.6 0 0 0-.5 1.2v11a2.6 2.6 0 0 0 2.6 2.6h20.8a2.6 2.6 0 0 0 2.6-2.6v-11c0-.46-.18-.9-.5-1.2L16 3.5Z"
-      fill="#EF3340"
+      fill={red}
     />
     <!-- checkmark -->
     <path
@@ -29,7 +34,7 @@ const { onDark = false, href = country ? COUNTRIES[country].home : '/' } = Astro
       fill="none"
     />
   </svg>
-  <span class="wordmark">Audit<em>Your</em>Home</span>
+  <span class="wordmark">Audit<em>Your</em>{last}</span>
 </a>
 
 <style>
@@ -48,12 +53,12 @@ const { onDark = false, href = country ? COUNTRIES[country].home : '/' } = Astro
   }
   .wordmark em {
     font-style: normal;
-    color: #ef3340; /* PMS 032 */
+    color: var(--logo-red, #ef3340);
   }
   .logo.dark .wordmark {
     color: #fff;
   }
   .logo.dark .wordmark em {
-    color: #ef3340;
+    color: var(--logo-red, #ef3340);
   }
 </style>

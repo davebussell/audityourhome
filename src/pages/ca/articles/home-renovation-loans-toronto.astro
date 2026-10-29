@@ -42,9 +42,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Articles', path: '/ca/articles/' },
-    { name: 'Home renovation loans in Toronto', path: '/ca/articles/home-renovation-loans-toronto/' },
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Home renovation loans in Toronto', path: '/articles/home-renovation-loans-toronto/' },
   ]),
   faqSchema(faqs),
 ];
@@ -52,7 +52,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('attic-insulation-inspection')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Home renovation loans in Toronto</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Home renovation loans in Toronto</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Article · verified {VERIFIED}</p>
@@ -97,7 +97,7 @@ const schema = [
         (<a href="https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/canada-greener-homes-loan" rel="noopener">NRCan ↗</a>).
         We know of no replacement federal retrofit loan as of October 2026. If a contractor or
         website is still promising it, their information is at least a year old, a useful trust
-        test we apply across our <a href="/ca/programs/">program tracker</a>.
+        test we apply across our <a href="/programs/">program tracker</a>.
       </p>
 
       <h2>Mortgage-based options: refinancing, home equity and the CMHC refund</h2>
@@ -139,8 +139,8 @@ const schema = [
         long as you book it through one of that program's seven approved service organizations and
         have the follow-up booked by November 30 and done by December 31, 2026.
         Finance through HELP, collect the rebates against the same work, then claim CMHC Eco if
-        you're an insured recent buyer. The <a href="/ca/plan/">planner</a> builds your version of
-        this sequence, and the <a href="/ca/find/toronto/">Toronto directory</a> lists every
+        you're an insured recent buyer. The <a href="/plan/">planner</a> builds your version of
+        this sequence, and the <a href="/find/toronto/">Toronto directory</a> lists every
         registered advisor who can start it.
       </p>
     </div>

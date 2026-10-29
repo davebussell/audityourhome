@@ -41,9 +41,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Well water', path: '/ca/tests/well-water/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Well water', path: '/tests/well-water/' },
   ]),
   faqSchema(faqs),
 ];
@@ -51,7 +51,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('well-water-testing')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Well water</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Well water</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
@@ -141,7 +141,7 @@ const schema = [
       <h3>The rural audit connection</h3>
       <p class="mb-0">
         Rural retrofits touch the well more than you'd think: the pump is part of your electrical
-        baseload (it shows up in the <a href="/ca/plan/">planner's</a> bill analysis), trenching and
+        baseload (it shows up in the <a href="/plan/">planner's</a> bill analysis), trenching and
         grading work near the wellhead can change surface drainage, and a heat pump conversion
         that frees you from fuel deliveries pairs naturally with getting the water file in order.
         If you told the planner you're on a well, this test is already in your audit request.
@@ -170,9 +170,9 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/radon/">Related guide: radon</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/radon/">Related guide: radon</a>
     </div>
 
     <LeadForm

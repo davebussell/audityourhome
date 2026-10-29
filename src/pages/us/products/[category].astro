@@ -22,18 +22,18 @@ const ELEMENT_LABEL: Record<string, string> = {
   energy: 'Heat & energy',
 };
 
-const title = `${c.name} for US homes: picks and buying notes | AuditYourHome`;
+const title = `${c.name} for US homes: picks and buying notes | AuditYourHouse`;
 const description = `${c.short} ${c.picks.map((p) => p.name).join(', ')}: what each is for and the buying notes that matter in US homes.`;
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'Gear guides', path: '/us/products/' },
-    { name: c.name, path: `/us/products/${c.slug}/` },
+    { name: 'Home', path: '/' },
+    { name: 'Gear guides', path: '/products/' },
+    { name: c.name, path: `/products/${c.slug}/` },
   ]),
 ];
 
-const tests = c.tests.map((t) => ({ ...t, href: `/us/tests/${t.slug}/` }));
+const tests = c.tests.map((t) => ({ ...t, href: `/tests/${t.slug}/` }));
 const others = productsData.categories.filter((x) => x.slug !== c.slug).slice(0, 3);
 
 /** Same photos as the Canadian guides; the corner label is swapped where the default uses Canadian units. */
@@ -63,14 +63,14 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
 
 <Base title={title} description={description} schema={schema} ogImage={ogImage}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/us/products/">Gear guides</a> <span aria-hidden="true">/</span> <span>{c.name}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/products/">Gear guides</a> <span aria-hidden="true">/</span> <span>{c.name}</span></nav>
     <div class:list={['page-hero', { 'has-photo': hero }]}>
       <div class="hero-text">
       <p class="eyebrow">Gear guide · {ELEMENT_LABEL[c.element] ?? c.element} · updated {updated}</p>
       <h1>{c.name}</h1>
       <p class="lede measure">{c.why}</p>
       <p class="small measure">
-        Not sure this category applies to your home? The <a href="/us/tests/">testing guide</a> covers
+        Not sure this category applies to your home? The <a href="/tests/">testing guide</a> covers
         which tests matter. For the testing side, see {tests.map((t, i) => (
           <>{i > 0 && (i === tests.length - 1 ? ' and ' : ', ')}<a href={t.href}>{t.name}</a></>
         ))}.
@@ -81,7 +81,7 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
 
     {AFFILIATE.amazonTagUS && (
       <p class="aff-note">
-        Buttons open amazon.com search results. As an Amazon Associate, AuditYourHome earns from
+        Buttons open amazon.com search results. As an Amazon Associate, AuditYourHouse earns from
         qualifying purchases, at no extra cost to you.
       </p>
     )}
@@ -130,13 +130,13 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
           categories matter in your home.
         </p>
       </div>
-      <a class="btn btn-primary" href="/us/find/">Find a certified auditor →</a>
+      <a class="btn btn-primary" href="/find/">Find a certified auditor →</a>
     </div>
 
     <p class="also">
       Also in gear guides:
       {others.map((o, i) => (
-        <span>{i > 0 && ' · '}<a href={`/us/products/${o.slug}/`}>{o.name}</a></span>
+        <span>{i > 0 && ' · '}<a href={`/products/${o.slug}/`}>{o.name}</a></span>
       ))}
     </p>
   </div>

@@ -50,7 +50,7 @@ const rebated = [
 ];
 const austin = prog('austin', 'ECAD');
 
-const title = 'What a home energy audit costs in the U.S. (2026): real prices by metro | AuditYourHome';
+const title = 'What a home energy audit costs in the U.S. (2026): real prices by metro | AuditYourHouse';
 const description = `There’s no official national price for a home energy audit. Here is what ${all.length} audit programs in the ${n} largest U.S. metros publish, from free utility assessments to $49–$100 fees and contractor prices with rebates. Verified ${US_VERIFIED}.`;
 
 const faqs = [
@@ -78,8 +78,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/us/' },
-    { name: 'What an audit costs', path: '/us/cost/' },
+    { name: 'Home', path: '/' },
+    { name: 'What an audit costs', path: '/cost/' },
   ]),
   faqSchema(faqs),
 ];
@@ -88,7 +88,7 @@ const schema = [
 <Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/">Home</a> <span aria-hidden="true">/</span> <span>What an audit costs</span>
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <span>What an audit costs</span>
     </nav>
 
     <JourneyBar country="us" current={2} ticks={false} compact />
@@ -122,7 +122,7 @@ const schema = [
           <li>
             <strong>{f.p!.name}</strong> <span class="where">{f.where}</span>
             <span class="txt">{f.text}.</span>
-            <span class="meta">{f.p!.url && <a href={f.p!.url} rel="noopener" target="_blank">Official page&nbsp;↗</a>} · <a href={`/us/cities/${f.p!.metro.slug}/`}>{f.p!.metro.data.name} guide</a></span>
+            <span class="meta">{f.p!.url && <a href={f.p!.url} rel="noopener" target="_blank">Official page&nbsp;↗</a>} · <a href={`/cities/${f.p!.metro.slug}/`}>{f.p!.metro.data.name} guide</a></span>
           </li>
         ))}
       </ul>
@@ -133,7 +133,7 @@ const schema = [
           <li>
             <strong>{f.p!.name}</strong> <span class="where">{f.where}</span>
             <span class="txt">{f.text}.</span>
-            <span class="meta">{f.p!.url && <a href={f.p!.url} rel="noopener" target="_blank">Official page&nbsp;↗</a>} · <a href={`/us/cities/${f.p!.metro.slug}/`}>{f.p!.metro.data.name} guide</a></span>
+            <span class="meta">{f.p!.url && <a href={f.p!.url} rel="noopener" target="_blank">Official page&nbsp;↗</a>} · <a href={`/cities/${f.p!.metro.slug}/`}>{f.p!.metro.data.name} guide</a></span>
           </li>
         ))}
       </ul>
@@ -144,7 +144,7 @@ const schema = [
         audit “may cost between $100 and $500 or more,” and Austin Energy estimates about $200–$300 for the audit Austin requires
         at most home sales, for a typical single-family home of 1,800 sq ft or less with one A/C system.
         {austin?.url && <a href={austin.url} rel="noopener" target="_blank">Austin Energy&nbsp;↗</a>}
-        <a href="/us/cities/chicago/">Chicago guide</a> · <a href="/us/cities/austin/">Austin guide</a>
+        <a href="/cities/chicago/">Chicago guide</a> · <a href="/cities/austin/">Austin guide</a>
       </p>
 
       <h2 class="h2b">Elsewhere in the country</h2>
@@ -162,7 +162,7 @@ const schema = [
         <li>
           <strong>Weatherization Assistance Program</strong>
           <span class="txt">For eligible lower-income households, the audit and the work that follows are provided at no cost.</span>
-          <span class="meta"><a href="/us/programs/weatherization-assistance-program/">Our guide</a></span>
+          <span class="meta"><a href="/programs/weatherization-assistance-program/">Our guide</a></span>
         </li>
       </ul>
     </section>
@@ -189,7 +189,7 @@ const schema = [
               {programs.length} program{programs.length === 1 ? '' : 's'} · {programs.filter((p) => p.live && p.cost.kind === 'free').length} free and open
             </span>
           </summary>
-          <p class="small mlink"><a href={`/us/cities/${m.slug}/`}>{m.data.name} guide: rebates, utilities and local rules →</a></p>
+          <p class="small mlink"><a href={`/cities/${m.slug}/`}>{m.data.name} guide: rebates, utilities and local rules →</a></p>
           <div class="tablewrap card">
             <table class="stack" aria-label={`Home energy audit programs in the ${m.data.name} metro`}>
               <thead>

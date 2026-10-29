@@ -47,13 +47,13 @@ const upClose = [
   { slug: 'well-water-testing', name: 'Well water', note: 'Bacteria, then chemistry' },
 ];
 const regionsStrip = [
-  { photo: 'region-bc', label: 'British Columbia', href: '/ca/cities/#bc' },
-  { photo: 'region-alberta', label: 'Alberta', href: '/ca/cities/#ab' },
-  { photo: 'region-prairies', label: 'Saskatchewan & Manitoba', href: '/ca/cities/#sk' },
-  { photo: 'region-ontario', label: 'Ontario', href: '/ca/cities/#on' },
-  { photo: 'region-quebec', label: 'Quebec', href: '/ca/cities/#qc' },
-  { photo: 'region-atlantic', label: 'Atlantic Canada', href: '/ca/cities/#nb' },
-  { photo: 'region-north', label: 'The North', href: '/ca/cities/#yt' },
+  { photo: 'region-bc', label: 'British Columbia', href: '/cities/#bc' },
+  { photo: 'region-alberta', label: 'Alberta', href: '/cities/#ab' },
+  { photo: 'region-prairies', label: 'Saskatchewan & Manitoba', href: '/cities/#sk' },
+  { photo: 'region-ontario', label: 'Ontario', href: '/cities/#on' },
+  { photo: 'region-quebec', label: 'Quebec', href: '/cities/#qc' },
+  { photo: 'region-atlantic', label: 'Atlantic Canada', href: '/cities/#nb' },
+  { photo: 'region-north', label: 'The North', href: '/cities/#yt' },
 ];
 const bigCities = [...localIndex.cities].sort((a, b) => b.population - a.population).slice(0, 12);
 // The quick start hands its answers to the planner after the # (never sent to a server), and the planner loads no analytics.
@@ -72,7 +72,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
         <p class="lede">
           Find an <strong>NRCan-registered</strong> energy auditor, see <strong>real prices</strong>,
           and get the rebates that are <strong>actually live</strong> in
-          <a href="/ca/provinces/">your province</a> — from Ontario's $600 assessment rebate and
+          <a href="/provinces/">your province</a> — from Ontario's $600 assessment rebate and
           heat pump rebates to BC's Improvement Bonus and Efficiency Manitoba.
         </p>
         <ul class="trust-list">
@@ -82,7 +82,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
         </ul>
       </div>
 
-      <form class="card hero-form" id="quickStart" action="/ca/plan/" method="GET" aria-label="Start your home energy plan" data-clarity-mask="true">
+      <form class="card hero-form" id="quickStart" action="/plan/" method="GET" aria-label="Start your home energy plan" data-clarity-mask="true">
         <h2>Get your free home energy plan</h2>
         <p class="small">Six short steps, about two minutes, no email needed. Start with these two.</p>
         <div class="field">
@@ -137,7 +137,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
       </div>
       <p class="steps-after small">
         Then come the upgrades and rebates.
-        <a href="/ca/how-it-works/">How a home energy audit works</a> · <a href="/ca/find/">How booking works in your province</a> · <a href="/ca/programs/">Rebates by province</a>
+        <a href="/how-it-works/">How a home energy audit works</a> · <a href="/find/">How booking works in your province</a> · <a href="/programs/">Rebates by province</a>
       </p>
     </div>
   </section>
@@ -156,11 +156,11 @@ const quickPrivacy = ACCOUNTS_ENABLED
           camera sees.
         </p>
         <div class="test-chips">
-          <a href="/ca/tests/#blower-door">Blower door test</a>
-          <a href="/ca/tests/#thermal-imaging">Infrared scan</a>
-          <a href="/ca/tests/#heat-loss-calc">Heat-loss calc</a>
-          <a href="/ca/tests/#radon">Radon test</a>
-          <a href="/ca/tests/" class="all">All tests →</a>
+          <a href="/tests/#blower-door">Blower door test</a>
+          <a href="/tests/#thermal-imaging">Infrared scan</a>
+          <a href="/tests/#heat-loss-calc">Heat-loss calc</a>
+          <a href="/tests/#radon">Radon test</a>
+          <a href="/tests/" class="all">All tests →</a>
         </div>
       </div>
       <div class="thermal-art">
@@ -177,7 +177,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
       <p class="lede measure">Every test has a plain-language guide and a local page for each of our 70 cities: what it measures, what it costs where you live, and who does it.</p>
       <div class="uc-row">
         {upClose.map((t) => (
-          <a class="pcard-link uc" href={`/ca/services/${t.slug}/`}>
+          <a class="pcard-link uc" href={`/services/${t.slug}/`}>
             <Photo name={t.slug} sizes="(max-width: 700px) 70vw, 300px" />
             <div class="pcard-body">
               <h3>{t.name}</h3>
@@ -186,7 +186,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
           </a>
         ))}
       </div>
-      <p class="uc-more"><a class="btn btn-ghost" href="/ca/services/">All 16 services →</a></p>
+      <p class="uc-more"><a class="btn btn-ghost" href="/services/">All 16 services →</a></p>
     </div>
   </section>
 
@@ -198,13 +198,13 @@ const quickPrivacy = ACCOUNTS_ENABLED
       <p class="lede measure">
         Rebate programs open and close with little warning — the federal Grant and Loan are both
         gone, and half the internet hasn't noticed. The new federal
-        <a href="/ca/programs/national-heat-pump-rebate/">heat pump rebate</a> was announced October 8,
+        <a href="/programs/national-heat-pump-rebate/">heat pump rebate</a> was announced October 8,
         2026 but won't open until early 2027. Today the live money is provincial. We verify every
         program against its official page and stamp the date.
       </p>
       <div class="reb-grid">
         {rebateCards.map((c) => (
-          <a class="card reb" href={`/ca/provinces/${c.slug}/`}>
+          <a class="card reb" href={`/provinces/${c.slug}/`}>
             <h3>{c.name}</h3>
             {c.programs.length ? (
               <ul class="reb-progs">
@@ -226,7 +226,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
           </a>
         ))}
       </div>
-      <p style="margin-top: 20px;"><a class="btn btn-ghost" href="/ca/programs/">See the full tracker — including what's closed</a></p>
+      <p style="margin-top: 20px;"><a class="btn btn-ghost" href="/programs/">See the full tracker — including what's closed</a></p>
     </div>
   </section>
 
@@ -240,21 +240,21 @@ const quickPrivacy = ACCOUNTS_ENABLED
         code. Our city pages show who serves each of {localIndex.cities.length} cities, and how booking works in
         each province. In Ontario we go further, with full provider profiles and published prices where they exist.
       </p>
-      <p class="dir-cta"><a class="btn btn-primary" href="/ca/find/">Find an auditor in your province →</a></p>
+      <p class="dir-cta"><a class="btn btn-primary" href="/find/">Find an auditor in your province →</a></p>
       <p class="small hrs-line">
         Ontario: only assessments from the seven HRSP-approved organizations qualify for the province's $600
         assessment rebate. Every Ontario provider card says whether the provider is one of them.
-        <a href="/ca/programs/home-renovation-savings-assessment/">See the seven</a>
+        <a href="/programs/home-renovation-savings-assessment/">See the seven</a>
       </p>
       <div class="grid-3">
         {featuredProviders.map((p) => <ProviderCard provider={p} />)}
       </div>
       <div class="city-links">
         <span class="small">Ontario areas in depth:</span>
-        {regions.map((r) => <a href={`/ca/find/${r.slug}/`}>{r.name}</a>)}
+        {regions.map((r) => <a href={`/find/${r.slug}/`}>{r.name}</a>)}
       </div>
       <p class="small guides-link">
-        Or go deeper: <a href="/ca/guides/"><strong>city-by-city home energy guides</strong></a> —
+        Or go deeper: <a href="/guides/"><strong>city-by-city home energy guides</strong></a> —
         your region's housing stock, read like an auditor.
       </p>
     </div>
@@ -279,9 +279,9 @@ const quickPrivacy = ACCOUNTS_ENABLED
       </div>
       <div class="bigcities">
         {bigCities.map((c) => (
-          <a href={`/ca/cities/${c.slug}/`}><span class="bn">{c.name}</span><EraBar era={c.facts.era} name={c.name} /></a>
+          <a href={`/cities/${c.slug}/`}><span class="bn">{c.name}</span><EraBar era={c.facts.era} name={c.name} /></a>
         ))}
-        <a class="allc" href="/ca/cities/">All {localIndex.cities.length} cities →</a>
+        <a class="allc" href="/cities/">All {localIndex.cities.length} cities →</a>
       </div>
     </div>
   </section>
@@ -311,7 +311,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
           likely upgrades, and their rebate path — the most qualified audit lead there is.
         </p>
       </div>
-      <a class="btn btn-light" href="/ca/for-professionals/">Get listed →</a>
+      <a class="btn btn-light" href="/for-professionals/">Get listed →</a>
     </div>
   </section>
 </Base>
@@ -328,7 +328,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
     if (postal) p.set('postal', postal);
     if (age) p.set('age', age);
     const hash = p.toString();
-    location.href = '/ca/plan/' + (hash ? '#' + hash : '');
+    location.href = '/plan/' + (hash ? '#' + hash : '');
   });
 </script>
 

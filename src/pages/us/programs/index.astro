@@ -16,7 +16,7 @@ import {
 } from '../../../lib/us/programs';
 
 const taking = takingPhrase();
-const title = 'US home energy rebates and programs in 2026: what’s open | AuditYourHome';
+const title = 'US home energy rebates and programs in 2026: what’s open | AuditYourHouse';
 const description = `Federal energy tax credits ended after 2025; Home Energy Rebates are open in ${taking}. Every federal program and all 50 states, checked ${VERIFIED}.`;
 
 const S = {
@@ -64,8 +64,8 @@ const changes = [
 const open = statusChip('open');
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Rebates & programs', path: '/us/programs/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
   ]),
 ];
 ---
@@ -86,7 +86,7 @@ const schema = [
         </p>
         <div class="up-cta">
           <a class="btn btn-primary" href="#states">Check your state</a>
-          <a class="btn btn-ghost" href="/us/find/">Find a certified auditor</a>
+          <a class="btn btn-ghost" href="/find/">Find a certified auditor</a>
         </div>
       </div>
       <Photo name="energy-bill-analysis" eager />
@@ -123,7 +123,7 @@ const schema = [
             programs. California’s and Colorado’s launched programs are closed to new applicants, and
             {COUNTS.group['not-open']} states haven’t launched or haven’t posted a status.
           </p>
-          <p class="up-meta"><a href="/us/programs/states/">All 50 states plus DC</a> · verified {VERIFIED}</p>
+          <p class="up-meta"><a href="/programs/states/">All 50 states plus DC</a> · verified {VERIFIED}</p>
         </article>
       </div>
 
@@ -146,7 +146,7 @@ const schema = [
       <div class="up-three">
         <ProgramCard
           title="Federal tax credits (25C, 25D, 45L)"
-          href="/us/programs/federal-tax-credits/"
+          href="/programs/federal-tax-credits/"
           cta="What ended and what’s left"
           chip={statusChip(TAX['25C'].status)}
           status={`25C: ${TAX['25C'].status}. 25D: ${TAX['25D'].status}.`}
@@ -162,7 +162,7 @@ const schema = [
 
         <ProgramCard
           title="Home Energy Rebates (HOMES and HEEHR)"
-          href="/us/programs/home-energy-rebates/"
+          href="/programs/home-energy-rebates/"
           cta="How HOMES and HEEHR work now"
           chip={statusChip('partly open')}
           status={`DOE: “Home Energy Rebates are now available in select states” (program page modified July 8, 2026). Taking applications in ${taking} as of ${VERIFIED}.`}
@@ -179,7 +179,7 @@ const schema = [
 
         <ProgramCard
           title="Weatherization Assistance Program"
-          href="/us/programs/weatherization-assistance-program/"
+          href="/programs/weatherization-assistance-program/"
           cta="Who qualifies and how to apply"
           chip={open}
           status="Funded for FY2026 by Public Law 119-74; DOE’s Program Year 2026 allocations total $369 million. Apply through your state’s weatherization agency."
@@ -195,7 +195,7 @@ const schema = [
 
         <ProgramCard
           title="LIHEAP (energy bill help)"
-          href="/us/programs/weatherization-assistance-program/#liheap"
+          href="/programs/weatherization-assistance-program/#liheap"
           cta="LIHEAP and weatherization"
           chip={open}
           status="Funded for FY2026: HHS released $3,713,859,933 on Nov. 28, 2025 and a final $421,540,067 on Apr. 17, 2026. FY2027 runs on a continuing resolution through Dec. 11, 2026."
@@ -226,7 +226,7 @@ const schema = [
 
         <ProgramCard
           title="DOE Home Energy Score"
-          href="/us/programs/home-energy-score/"
+          href="/programs/home-energy-score/"
           cta="Where it’s required"
           chip={open}
           status="Continues on DOE’s Better Buildings Solution Center (homeenergyscore.gov redirects there), with a ZIP-code Find an Assessor tool."
@@ -291,13 +291,13 @@ const schema = [
       </p>
       <p class="up-counts">
         {GROUP_ORDER.map((g) => (
-          <a href={`/us/programs/states/#${GROUPS[g].anchor}`}><span class={`chip ${GROUPS[g].cls}`}>{COUNTS.group[g]}</span>{GROUPS[g].label}</a>
+          <a href={`/programs/states/#${GROUPS[g].anchor}`}><span class={`chip ${GROUPS[g].cls}`}>{COUNTS.group[g]}</span>{GROUPS[g].label}</a>
         ))}
       </p>
       <ProgramStateTable states={STATES} split caption="Home Energy Rebate status by state" />
       <p class="up-related">
-        <a class="btn btn-ghost" href="/us/programs/states/">All states grouped by status →</a>
-        <a class="btn btn-ghost" href="/us/programs/home-energy-rebates/">How HOMES and HEEHR work →</a>
+        <a class="btn btn-ghost" href="/programs/states/">All states grouped by status →</a>
+        <a class="btn btn-ghost" href="/programs/home-energy-rebates/">How HOMES and HEEHR work →</a>
       </p>
     </section>
 
@@ -309,7 +309,7 @@ const schema = [
       </p>
       <div class="up-metros">
         {METROS.map((m) => (
-          <a class="up-metro" href={`/us/cities/${m.slug}/`}>
+          <a class="up-metro" href={`/cities/${m.slug}/`}>
             <span class="n">{metroName(m)}</span>
             <span class="s">{metroStates(m)}</span>
           </a>

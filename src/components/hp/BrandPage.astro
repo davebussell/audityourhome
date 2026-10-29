@@ -52,13 +52,13 @@ const lede = [
   `ENERGY STAR lists ${fmtInt(st.outdoorModels, market)} ${name} outdoor model${st.outdoorModels === 1 ? '' : 's'} certified for ${country}, ${fmtInt(st.coldOutdoorModels, market)} of them cold-climate${st.bestCop5 ? `, and its best certified pairing heats at a COP of ${fmtCop(st.bestCop5)} at ${t5}` : ''}.`,
 ].join(' ');
 
-const title = `${name} heat pumps: models, cold-climate ratings and warranty (${isCA ? 'Canada' : 'US'}) | AuditYourHome`;
+const title = `${name} heat pumps: models, cold-climate ratings and warranty (${isCA ? 'Canada' : 'US'}) | ${isCA ? 'AuditYourHome' : 'AuditYourHouse'}`;
 const description = `${name} heat pumps in ${country}: ${fmtInt(st.outdoorModels, market)} certified models, ${fmtInt(st.coldOutdoorModels, market)} cold-climate, best COP ${fmtCop(st.bestCop5)} at ${t5}. Owner, product lines, ${warrantyHeadline(w).toLowerCase()} warranty and the rebates they fit.`;
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: `/${market}/` },
-    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
-    { name: 'Brands', path: `/${market}/heat-pumps/brands/` },
+    { name: 'Home', path: `/` },
+    { name: 'Heat pumps', path: `/heat-pumps/` },
+    { name: 'Brands', path: `/heat-pumps/brands/` },
     { name, path: brandHref(market, slug) },
   ]),
 ];
@@ -87,8 +87,8 @@ const news = (isCA ? b.recentNews : b.recentNews.map((n) => ({ ...n, text: usTex
 <Base title={title} description={description} schema={schema}>
   <div class="container hp">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href={`/${market}/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span>
-      <a href={`/${market}/heat-pumps/brands/`}>Brands</a> <span aria-hidden="true">/</span> <span>{name}</span>
+      <a href={`/heat-pumps/`}>Heat pumps</a> <span aria-hidden="true">/</span>
+      <a href={`/heat-pumps/brands/`}>Brands</a> <span aria-hidden="true">/</span> <span>{name}</span>
     </nav>
     <div class="page-hero">
       <div class="hero-text">
@@ -237,7 +237,7 @@ const news = (isCA ? b.recentNews : b.recentNews.map((n) => ({ ...n, text: usTex
             <strong>{fmtInt(st.coldOutdoorModels)} models</strong> meet ENERGY STAR Cold Climate, which earns Quebec's higher LogisVert rate. BC uses its own
             qualified list. Rebate rules by province:
           </p>
-          <div class="pills">{CA_REGIONS.map((x) => <a href={`/ca/heat-pumps/${x.slug}/`}>{x.name}</a>)}</div>
+          <div class="pills">{CA_REGIONS.map((x) => <a href={`/heat-pumps/${x.slug}/`}>{x.name}</a>)}</div>
         </div>
       ) : (
         <div class="callout card">
@@ -247,7 +247,7 @@ const news = (isCA ? b.recentNews : b.recentNews.map((n) => ({ ...n, text: usTex
             several utility programs require. The 25C tax credit ended for heat pumps placed in service after December 31, 2025.
           </p>
           <p>Rebate rules by metro:</p>
-          <div class="pills">{US_METROS.map((m) => <a href={`/us/heat-pumps/${m.slug}/`}>{metroName(m)}</a>)}</div>
+          <div class="pills">{US_METROS.map((m) => <a href={`/heat-pumps/${m.slug}/`}>{metroName(m)}</a>)}</div>
         </div>
       )}
     </section>
@@ -272,7 +272,7 @@ const news = (isCA ? b.recentNews : b.recentNews.map((n) => ({ ...n, text: usTex
         <h2>Compare with</h2>
         <div class="nb">
           {compare.map((s) => <a href={brandHref(market, s)}>{brandInfo(s).name} <span class="st">{fam.includes(s) ? 'same owner' : tierLabel(brandInfo(s).priceTier).toLowerCase()}</span></a>)}
-          <a class="all" href={`/${market}/heat-pumps/`}>All brands compared →</a>
+          <a class="all" href={`/heat-pumps/`}>All brands compared →</a>
         </div>
       </section>
     )}

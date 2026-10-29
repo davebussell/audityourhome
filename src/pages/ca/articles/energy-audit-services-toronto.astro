@@ -37,9 +37,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Articles', path: '/ca/articles/' },
-    { name: 'Energy audit and energy management services in Toronto', path: '/ca/articles/energy-audit-services-toronto/' },
+    { name: 'Home', path: '/' },
+    { name: 'Articles', path: '/articles/' },
+    { name: 'Energy audit and energy management services in Toronto', path: '/articles/energy-audit-services-toronto/' },
   ]),
   faqSchema(faqs),
   {
@@ -48,7 +48,7 @@ const schema = [
     headline: 'Energy audit and energy management services in Toronto',
     description,
     dateModified: '2026-10-08',
-    mainEntityOfPage: `${SITE.url}/ca/articles/energy-audit-services-toronto/`,
+    mainEntityOfPage: `/articles/energy-audit-services-toronto/`,
     author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
     publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
   },
@@ -76,7 +76,7 @@ const SRC = {
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audit and energy management in Toronto</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/articles/">Articles</a> <span aria-hidden="true">/</span> <span>Energy audit and energy management in Toronto</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Toronto buildings · verified {VERIFIED}</p>
@@ -128,8 +128,8 @@ const SRC = {
       </p>
       <p>
         Houses and small multi-unit buildings are rated under NRCan's EnerGuide system instead; see
-        <a href="/ca/articles/energy-audits-multi-unit-buildings/">energy audits for duplexes, triplexes
-        and apartment buildings</a>. Our <a href="/ca/services/commercial-energy-audit/">commercial energy
+        <a href="/articles/energy-audits-multi-unit-buildings/">energy audits for duplexes, triplexes
+        and apartment buildings</a>. Our <a href="/services/commercial-energy-audit/">commercial energy
         audit</a> page covers the service across Ontario.
       </p>
 
@@ -215,9 +215,9 @@ const SRC = {
       </ul>
       <p>
         Condo and apartment owners should also read our guide to
-        <a href="/ca/articles/energy-audits-multi-unit-buildings/">multi-unit building audits</a>, which
+        <a href="/articles/energy-audits-multi-unit-buildings/">multi-unit building audits</a>, which
         covers Enbridge's multi-residential incentives and CMHC MLI Select, and the Ontario-wide
-        <a href="/ca/articles/commercial-energy-audits-ontario/">commercial and industrial audit guide</a>.
+        <a href="/articles/commercial-energy-audits-ontario/">commercial and industrial audit guide</a>.
       </p>
 
       <h2>Which service do you need?</h2>
@@ -227,8 +227,8 @@ const SRC = {
       <table class="stack">
         <thead><tr><th>You have…</th><th>You need…</th><th>Performed by</th></tr></thead>
         <tbody>
-          <tr><td data-label="You have">A house or townhome</td><td data-label="You need">EnerGuide home evaluation, plus add-on tests as symptoms warrant</td><td data-label="Performed by">NRCan-registered energy advisor — <a href="/ca/find/toronto/">Toronto directory</a></td></tr>
-          <tr><td data-label="You have">A duplex, triplex or small low-rise</td><td data-label="You need">EnerGuide evaluation for multi-unit buildings, or an engineering audit for larger buildings</td><td data-label="Performed by">An advisor registered for MURBs, or an engineering firm — <a href="/ca/articles/energy-audits-multi-unit-buildings/">how to tell</a></td></tr>
+          <tr><td data-label="You have">A house or townhome</td><td data-label="You need">EnerGuide home evaluation, plus add-on tests as symptoms warrant</td><td data-label="Performed by">NRCan-registered energy advisor — <a href="/find/toronto/">Toronto directory</a></td></tr>
+          <tr><td data-label="You have">A duplex, triplex or small low-rise</td><td data-label="You need">EnerGuide evaluation for multi-unit buildings, or an engineering audit for larger buildings</td><td data-label="Performed by">An advisor registered for MURBs, or an engineering firm — <a href="/articles/energy-audits-multi-unit-buildings/">how to tell</a></td></tr>
           <tr><td data-label="You have">An office, store, plant or apartment tower</td><td data-label="You need">ASHRAE Level 1, 2 or 3 audit, as depth demands</td><td data-label="Performed by">Engineering firm with a P.Eng or Certified Energy Manager</td></tr>
           <tr><td data-label="You have">A building of 50,000 sq ft or more</td><td data-label="You need">Annual reporting to Ontario and the City, then benchmarking</td><td data-label="Performed by">Owner or manager; a certified professional verifies data at 100,000 sq ft and up</td></tr>
           <tr><td data-label="You have">Systems that have drifted from their design</td><td data-label="You need">Retro-commissioning or interval-data monitoring</td><td data-label="Performed by">Commissioning provider or energy manager; Save on Energy funds both</td></tr>
@@ -240,11 +240,11 @@ const SRC = {
       <h2>If you own a house</h2>
       <p>
         For a house, the service that counts is the EnerGuide home evaluation, the document behind
-        <a href="/ca/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebates and
-        most <a href="/ca/programs/toronto-home-energy-loan-program/">HELP loans</a>. Our
-        <a href="/ca/articles/home-energy-audit-ontario/">Ontario home energy assessment guide</a> covers
+        <a href="/programs/home-renovation-savings-assessment/">Home Renovation Savings</a> rebates and
+        most <a href="/programs/toronto-home-energy-loan-program/">HELP loans</a>. Our
+        <a href="/articles/home-energy-audit-ontario/">Ontario home energy assessment guide</a> covers
         costs, deadlines and the seven approved organizations, and the
-        <a href="/ca/find/toronto/">Toronto directory</a> lists every licensed advisor.
+        <a href="/find/toronto/">Toronto directory</a> lists every licensed advisor.
       </p>
     </div>
 

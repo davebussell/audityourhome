@@ -33,9 +33,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Radon', path: '/ca/tests/radon/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Radon', path: '/tests/radon/' },
   ]),
   faqSchema(faqs),
 ];
@@ -43,7 +43,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('radon-testing')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Radon</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Radon</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
@@ -109,7 +109,7 @@ const schema = [
         Air sealing is the highest-return energy upgrade there is — and it changes your home's
         pressure balance and air exchange, which can move radon in either direction.
         <strong>Air-sealing a basement without knowing your radon number is doing it blind.</strong>
-        Start the kit before or alongside your <a href="/ca/plan/">retrofit plan</a>, and retest after
+        Start the kit before or alongside your <a href="/plan/">retrofit plan</a>, and retest after
         major envelope work. If mitigation is needed, the fan system works regardless of how tight
         the house gets — tight house + mitigation is the healthy end state.
       </p>
@@ -147,9 +147,9 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/carbon-monoxide/">Next guide: carbon monoxide</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/carbon-monoxide/">Next guide: carbon monoxide</a>
     </div>
 
     <LeadForm

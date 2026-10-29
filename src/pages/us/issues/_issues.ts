@@ -1,5 +1,5 @@
 /**
- * Data helpers for the US common-problem guides (/us/issues/). Not a route: Astro skips files that
+ * Data helpers for the US common-problem guides (/issues/). Not a route: Astro skips files that
  * start with an underscore. Content lives in src/data/us/issues.json; where each problem is common comes
  * from the symptom lists of the climate profiles in src/data/climate/us.json, so the metro links stay
  * in step with the climate research. Every test, glossary term and symptom is checked at build time.
@@ -80,7 +80,7 @@ export function metrosFor(issue: Issue): { group: GroupKey; label: string; metro
     const metros = METROS.filter((m) => inGroup.has(m.slug)).map((m) => ({
       slug: m.slug,
       name: m.data.name as string,
-      href: `/us/cities/${m.slug}/`,
+      href: `/cities/${m.slug}/`,
     }));
     if (metros.length) out.push({ group: g, label: GROUPS[g].label, metros });
   }

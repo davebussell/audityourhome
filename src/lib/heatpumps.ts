@@ -1,5 +1,5 @@
 /**
- * Heat pump comparison data layer (/ca/heat-pumps/ and /us/heat-pumps/).
+ * Heat pump comparison data layer (/heat-pumps/ on both sites).
  *
  * Model numbers come from the ENERGY STAR Certified Heat Pumps list (data.energystar.gov 83eb-xbyy),
  * built by tools/heatpumps/build_estar.py into src/data/heatpumps/estar.json. Brand facts (owner,
@@ -212,7 +212,7 @@ export function brandsBySize(m: Market): string[] {
   return brandSlugs(m).sort((a, b) => (statsFor(m, b)!.outdoorModels - statsFor(m, a)!.outdoorModels));
 }
 
-export const brandHref = (m: Market, slug: string) => `/${m}/heat-pumps/brands/${slug}/`;
+export const brandHref = (m: Market, slug: string) => `/heat-pumps/brands/${slug}/`;
 
 /** Families: owner → brand slugs in this country, for the "who owns whom" map. */
 export const FAMILIES: { owner: string; note: string; slugs: string[]; others?: string[] }[] = [

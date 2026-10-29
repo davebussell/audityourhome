@@ -302,7 +302,7 @@ function heatTodo(r: EnergyResult): string {
   const lead = c.now.cost === null
     ? 'add your fuel price under “Prices”, then compare the figure with your last 12 months of bills.'
     : `compare it with your last 12 months of bills (enter them above to calibrate). ${cheaper ? `The table shows a system that costs less to run here (${esc(cheaper)}): pick it under “Thinking of switching?” to see the installed cost, rebates and payback.` :'Your system is already the cheapest to run here, so cutting heat loss is the way to lower the bill.'}`;
-  return `<p class="todo"><strong>What to do with this number:</strong> ${lead} <a href="/ca/calculators/upgrade-payback/${slugOf(r)}/">See what insulation and air sealing would save in ${esc(r.p.city.name)}</a>.</p>`;
+  return `<p class="todo"><strong>What to do with this number:</strong> ${lead} <a href="/calculators/upgrade-payback/${slugOf(r)}/">See what insulation and air sealing would save in ${esc(r.p.city.name)}</a>.</p>`;
 }
 
 export function renderSwitch(r: EnergyResult): string {
@@ -338,8 +338,8 @@ export function renderSwitch(r: EnergyResult): string {
     <p class="todo"><strong>What to do with this number:</strong> ${save !== null && save > 0
       ? 'get two or three installed quotes, and check each rebate’s rules before you sign: most need an EnerGuide evaluation before the work.'
       : 'on running costs alone this switch does not pay, so weigh comfort, cooling and emissions, or compare another system.'} ${MODEL.systems[sw.to].fuel === 'electricity' && sw.to !== 'electricResistance'
-      ? `A heat loss calculation sizes a heat pump correctly: <a href="/ca/services/heat-loss-calculation/${slugOf(r)}/">heat loss calculations in ${esc(r.p.city.name)}</a>.`
-      : `<a href="/ca/services/home-energy-audit/${slugOf(r)}/">Energy audits in ${esc(r.p.city.name)}</a>.`}</p>`;
+      ? `A heat loss calculation sizes a heat pump correctly: <a href="/services/heat-loss-calculation/${slugOf(r)}/">heat loss calculations in ${esc(r.p.city.name)}</a>.`
+      : `<a href="/services/home-energy-audit/${slugOf(r)}/">Energy audits in ${esc(r.p.city.name)}</a>.`}</p>`;
 }
 
 export function renderWater(r: EnergyResult): string {
@@ -371,12 +371,12 @@ export function renderWater(r: EnergyResult): string {
       </table>
     </div>
     <p class="small foot">${esc(claim)} A heat pump water heater cools the room it sits in; in winter your heating system replaces that heat, and we count it.</p>
-    <p class="todo"><strong>What to do with this number:</strong> compare the yearly difference with the price gap between models, and plan the change before your old tank fails, so an emergency doesn't force a like-for-like replacement. <a href="/ca/services/energy-bill-analysis/${slugOf(r)}/">Energy bill analysis in ${esc(r.p.city.name)}</a>.</p>`;
+    <p class="todo"><strong>What to do with this number:</strong> compare the yearly difference with the price gap between models, and plan the change before your old tank fails, so an emergency doesn't force a like-for-like replacement. <a href="/services/energy-bill-analysis/${slugOf(r)}/">Energy bill analysis in ${esc(r.p.city.name)}</a>.</p>`;
 }
 
 export function renderCooling(r: EnergyResult): string {
   const c = r.cool;
-  const coolTodo = `<p class="todo"><strong>What to do with this number:</strong> shade sunny windows by day and seal air leaks to cut the hours any cooling runs; when an air conditioner or furnace is due for replacement, a heat pump does both jobs. <a href="/ca/issues/summer-overheating/">Keeping a house cool in summer</a>.</p>`;
+  const coolTodo = `<p class="todo"><strong>What to do with this number:</strong> shade sunny windows by day and seal air leaks to cut the hours any cooling runs; when an air conditioner or furnace is due for replacement, a heat pump does both jobs. <a href="/issues/summer-overheating/">Keeping a house cool in summer</a>.</p>`;
   if (!c) return `<p class="small">No air conditioning, no cooling cost.</p>${coolTodo}`;
   const what = c.kind === 'room' ? `${c.units} room air conditioner${c.units > 1 ? 's' : ''} (about 9,500 Btu/h each)` : c.kind === 'heatPump' ? `a ${c.tons.toFixed(1)}-ton heat pump cooling at SEER2 ${c.seer}` : `a ${c.tons.toFixed(1)}-ton central air conditioner at SEER ${c.seer}`;
   const better = c.kind === 'room' ? 'new room units (CEER 16)' : 'a new SEER 14 unit';

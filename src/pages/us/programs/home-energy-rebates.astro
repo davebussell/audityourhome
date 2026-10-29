@@ -37,7 +37,7 @@ const S = {
   wiHear: src(/focusonenergy\.com\/ira-hear/),
 };
 
-const title = 'Home Energy Rebates 2026: HOMES and HEEHR, the new rules and where they’re open | AuditYourHome';
+const title = 'Home Energy Rebates 2026: HOMES and HEEHR, the new rules and where they’re open | AuditYourHouse';
 const description = `HOMES and HEEHR (formerly HEAR) are run by states. DOE’s May 29, 2026 rules ended HEEHR rebates for replacing gas equipment. Open in ${taking}.`;
 
 const changes = [
@@ -110,9 +110,9 @@ const sources = dedupe([
 
 const schema = [
   breadcrumbSchema([
-    { name: 'United States', path: '/us/' },
-    { name: 'Rebates & programs', path: '/us/programs/' },
-    { name: 'Home Energy Rebates', path: '/us/programs/home-energy-rebates/' },
+    { name: 'Home', path: '/' },
+    { name: 'Rebates & programs', path: '/programs/' },
+    { name: 'Home Energy Rebates', path: '/programs/home-energy-rebates/' },
   ]),
   faqSchema(faqs),
 ];
@@ -122,7 +122,7 @@ const schema = [
   <ProgramStyles />
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/us/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Home Energy Rebates</span>
+      <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span> <span>Home Energy Rebates</span>
     </nav>
 
     <div class="page-hero has-photo">
@@ -271,19 +271,19 @@ const schema = [
       <p class="small grp-d">{GROUPS['not-open'].desc}</p>
       <p class="nl">
         {notLaunched.map((s, i) => (
-          <>{i > 0 && ' · '}<a href={`/us/programs/states/${s.slug}/`}>{s.name}</a>{s.mapOnly && <span class="q" title="No state page could be checked">*</span>}</>
+          <>{i > 0 && ' · '}<a href={`/programs/states/${s.slug}/`}>{s.name}</a>{s.mapOnly && <span class="q" title="No state page could be checked">*</span>}</>
         ))}
       </p>
       <p class="small">* No state program page could be checked; the status comes from the Building Performance Association’s June 2026 map.</p>
       <p class="up-related">
-        <a class="btn btn-ghost" href="/us/programs/states/">Every state with its exact wording →</a>
+        <a class="btn btn-ghost" href="/programs/states/">Every state with its exact wording →</a>
       </p>
     </section>
 
     <section class="up-s" id="apply" aria-labelledby="apply-h">
       <h2 class="up-sec" id="apply-h">How to apply</h2>
       <ol class="up-steps measure">
-        <li><p><strong>Find your state’s program.</strong> Open your state’s page in our <a href="/us/programs/states/">state list</a>; it links the official program site. You apply through the state or its contractors, not through DOE.</p></li>
+        <li><p><strong>Find your state’s program.</strong> Open your state’s page in our <a href="/programs/states/">state list</a>; it links the official program site. You apply through the state or its contractors, not through DOE.</p></li>
         <li><p><strong>Check income eligibility.</strong> States use area median income (AMI). For HEEHR, households above 150% of AMI aren’t eligible; below 80% of AMI, rebates can cover up to 100% of the cost. Some states accept enrollment in other programs as proof: Arizona lists SNAP, AHCCCS/Medicaid, LIHEAP, Lifeline, Head Start and public housing.</p></li>
         <li><p><strong>Use a participating contractor or retailer.</strong> Most programs pay through enrolled contractors, such as TECH-certified, HEEHRA-trained contractors in California, MiHER Registered Contractors in Michigan and registered contractors in North Carolina. Wisconsin, Arizona and New Mexico also use retail coupons.</p></li>
         <li><p><strong>For HOMES, start with an energy assessment.</strong> The rebate depends on modeled savings. The assessment can carry a fee: Georgia warns of possible costs, Wisconsin gives low-income households up to $500 toward it, and North Carolina’s is free. Assessors usually have to be enrolled in the state program (Oregon requires every contractor, home energy assessor and energy modeler offering rebates to enroll), so check before you book one.</p></li>
@@ -295,7 +295,7 @@ const schema = [
       <div class="ap-grid">
         {applyNow.map((a) => (
           <div class="ap">
-            <a class="ap-n" href={`/us/programs/states/${a.s.slug}/`}>{a.s.name}</a>
+            <a class="ap-n" href={`/programs/states/${a.s.slug}/`}>{a.s.name}</a>
             <span class="ap-l">
               {a.links.map((l, i) => (<>{i > 0 && ' · '}<a href={l.href} rel="noopener" target="_blank">{l.label}&nbsp;↗</a></>))}
             </span>
@@ -311,7 +311,7 @@ const schema = [
         <li><strong>Money runs out.</strong> Colorado’s single-family rebates closed when its funds reached $0. California’s are fully reserved, with a waitlist. Michigan paused new income-qualified applications in several districts, which covers every county in metro Detroit.</li>
         <li><strong>Stale state pages.</strong> Some state pages haven’t been updated since 2024 or 2025 and still show launch dates that have passed, including Delaware, Iowa, Nevada and Wyoming.</li>
         <li><strong>Look-alike state programs.</strong> Washington’s state-funded HEAR, Oregon’s heat pump programs, DC’s DCSEU residential rebates and Alaska’s $10,000 new-home rebate are state programs, not the federal rebates.</li>
-        <li><strong>No federal tax credit to combine.</strong> The 25C and 25D credits ended for work after December 31, 2025. <a href="/us/programs/federal-tax-credits/">What ended</a></li>
+        <li><strong>No federal tax credit to combine.</strong> The 25C and 25D credits ended for work after December 31, 2025. <a href="/programs/federal-tax-credits/">What ended</a></li>
       </ul>
     </div>
 
@@ -338,11 +338,11 @@ const schema = [
     <ProgramSources sources={sources} verified={VERIFIED} note="The state-by-state status comes from each state’s page; see the state pages for those sources." />
 
     <p class="up-related">
-      <a class="btn btn-ghost" href="/us/programs/">Full program tracker</a>
-      <a class="btn btn-ghost" href="/us/programs/states/">Rebates by state</a>
-      <a class="btn btn-ghost" href="/us/programs/federal-tax-credits/">Tax credits that ended</a>
-      <a class="btn btn-ghost" href="/us/programs/weatherization-assistance-program/">Weatherization</a>
-      <a class="btn btn-ghost" href="/us/find/">Find a certified auditor</a>
+      <a class="btn btn-ghost" href="/programs/">Full program tracker</a>
+      <a class="btn btn-ghost" href="/programs/states/">Rebates by state</a>
+      <a class="btn btn-ghost" href="/programs/federal-tax-credits/">Tax credits that ended</a>
+      <a class="btn btn-ghost" href="/programs/weatherization-assistance-program/">Weatherization</a>
+      <a class="btn btn-ghost" href="/find/">Find a certified auditor</a>
     </p>
   </div>
 </Base>

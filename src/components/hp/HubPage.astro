@@ -104,7 +104,7 @@ const usRows = US_METROS.map((m) => {
 
 const title = isCA
   ? `Heat pump comparison: every brand sold in Canada (${new Date().getFullYear()}) | AuditYourHome`
-  : `Heat pump comparison: every brand sold in the US (${new Date().getFullYear()}) | AuditYourHome`;
+  : `Heat pump comparison: every brand sold in the US (${new Date().getFullYear()}) | AuditYourHouse`;
 const description = isCA
   ? `${fmtInt(T.outdoorModels)} certified heat pump models from ${T.brands} brands, compared on cold-climate performance at −15°C, warranty, price tier and the rebates in every province.`
   : `${fmtInt(T.outdoorModels, 'us')} certified heat pump models from ${T.brands} brands, compared on cold-weather performance at 5°F, cooling efficiency, warranty, price tier and the rebates in the 26 largest metros.`;
@@ -140,8 +140,8 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: `/${market}/` },
-    { name: 'Heat pumps', path: `/${market}/heat-pumps/` },
+    { name: 'Home', path: `/` },
+    { name: 'Heat pumps', path: `/heat-pumps/` },
   ]),
   faqSchema(faqs),
 ];
@@ -162,7 +162,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
 
 <Base title={title} description={description} schema={schema}>
   <div class="container hp">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/${market}/`}>Home</a> <span aria-hidden="true">/</span> <span>Heat pumps</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href={`/`}>Home</a> <span aria-hidden="true">/</span> <span>Heat pumps</span></nav>
     <div class="page-hero">
       <div class="hero-text">
         <p class="eyebrow">Heat pump comparison guide · checked {HP_CHECKED}</p>
@@ -183,7 +183,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
       <div class="key card">
         <span class="k">Brands</span>
         <span class="kv-big">{T.brands} <small>names</small></span>
-        <span class="kv-sub">{slugs.length} with full pages here; the rest are in the <a href={`/${market}/heat-pumps/brands/`}>brand directory</a></span>
+        <span class="kv-sub">{slugs.length} with full pages here; the rest are in the <a href={`/heat-pumps/brands/`}>brand directory</a></span>
       </div>
       <div class="key card">
         <span class="k">{isCA ? 'Cold-climate' : 'Cold-climate certified'}</span>
@@ -267,7 +267,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
       <p class="tnote">
         Models = outdoor units certified for {country}. Cold-climate = models with at least one pairing that meets ENERGY STAR's Cold Climate test.
         Source: <a href={ESTAR.dataset} rel="noopener" target="_blank">ENERGY STAR Certified Heat Pumps</a>, updated {updated}. Every other brand is in the
-        <a href={`/${market}/heat-pumps/brands/`}>directory of all {T.brands} names</a>.
+        <a href={`/heat-pumps/brands/`}>directory of all {T.brands} names</a>.
       </p>
     </section>
 
@@ -347,7 +347,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
               <tbody>
                 {caRows.map(({ r, progs, open }) => (
                   <tr>
-                    <td class="brand-cell"><a href={`/ca/heat-pumps/${r.slug}/`}>{r.name}</a></td>
+                    <td class="brand-cell"><a href={`/heat-pumps/${r.slug}/`}>{r.name}</a></td>
                     <td class="num" data-label="Programs open">{open.length} of {progs.length}</td>
                     <td data-label="Main heat pump offer">{(open[0] ?? progs[0])?.name ?? 'No heat pump program found'}</td>
                   </tr>
@@ -355,7 +355,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
               </tbody>
             </table>
           </div>
-          <p class="tnote">Check a model on <a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan's Eligible Products List&nbsp;↗</a> before you sign. Full program guides: <a href="/ca/programs/">rebates and programs</a>.</p>
+          <p class="tnote">Check a model on <a href={NRCAN_LIST_URL} rel="noopener" target="_blank">NRCan's Eligible Products List&nbsp;↗</a> before you sign. Full program guides: <a href="/programs/">rebates and programs</a>.</p>
         </>
       ) : (
         <>
@@ -371,7 +371,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
               <tbody>
                 {usRows.map(({ m, progs, open }) => (
                   <tr>
-                    <td class="brand-cell"><a href={`/us/heat-pumps/${m.slug}/`}>{metroName(m)}</a><span class="sub">{metroState(m)}</span></td>
+                    <td class="brand-cell"><a href={`/heat-pumps/${m.slug}/`}>{metroName(m)}</a><span class="sub">{metroState(m)}</span></td>
                     <td class="num" data-label="Programs open">{open.length} of {progs.length}</td>
                     <td data-label="First open offer">{open[0]?.name ?? 'None open now'}</td>
                   </tr>
@@ -379,7 +379,7 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
               </tbody>
             </table>
           </div>
-          <p class="tnote">{usFed['25CUrl'] && <a href={usFed['25CUrl']} rel="noopener" target="_blank">IRS on the 25C credit&nbsp;↗</a>} · Full state-by-state guide: <a href="/us/programs/states/">home energy rebates in all 50 states</a>.</p>
+          <p class="tnote">{usFed['25CUrl'] && <a href={usFed['25CUrl']} rel="noopener" target="_blank">IRS on the 25C credit&nbsp;↗</a>} · Full state-by-state guide: <a href="/programs/states/">home energy rebates in all 50 states</a>.</p>
         </>
       )}
     </section>
@@ -389,13 +389,13 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
       <p class="sec-intro">Local climate, what heat costs with each fuel at today's prices, the rebates and their equipment rules, and the systems that suit the weather.</p>
       <div class="nb">
         {isCA
-          ? CA_REGIONS.map((r) => <a href={`/ca/heat-pumps/${r.slug}/`}>{r.name}</a>)
-          : US_METROS.map((m) => <a href={`/us/heat-pumps/${m.slug}/`}>{metroName(m)} <span class="st">{usClimateKind(m)}</span></a>)}
+          ? CA_REGIONS.map((r) => <a href={`/heat-pumps/${r.slug}/`}>{r.name}</a>)
+          : US_METROS.map((m) => <a href={`/heat-pumps/${m.slug}/`}>{metroName(m)} <span class="st">{usClimateKind(m)}</span></a>)}
       </div>
       <h3 class="sub-h">Other kinds of heat pump</h3>
       <div class="cards">
-        <article class="card c"><h3><a href={`/${market}/heat-pumps/geothermal/`}>Geothermal (ground-source)</a></h3><p class="muted">The makers, what they warrant, and the rebates that cover drilling and loops.</p></article>
-        <article class="card c"><h3><a href={`/${market}/heat-pumps/geothermal/#window`}>Window and no-outdoor-unit heat pumps</a></h3><p class="muted">Saddle-style window units and wall units with no outdoor box, for apartments and rooms.</p></article>
+        <article class="card c"><h3><a href={`/heat-pumps/geothermal/`}>Geothermal (ground-source)</a></h3><p class="muted">The makers, what they warrant, and the rebates that cover drilling and loops.</p></article>
+        <article class="card c"><h3><a href={`/heat-pumps/geothermal/#window`}>Window and no-outdoor-unit heat pumps</a></h3><p class="muted">Saddle-style window units and wall units with no outdoor box, for apartments and rooms.</p></article>
       </div>
     </section>
 

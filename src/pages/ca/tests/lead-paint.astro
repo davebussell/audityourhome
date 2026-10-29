@@ -33,9 +33,9 @@ const faqs = [
 
 const schema = [
   breadcrumbSchema([
-    { name: 'Home', path: '/ca/' },
-    { name: 'Testing guide', path: '/ca/tests/' },
-    { name: 'Lead paint', path: '/ca/tests/lead-paint/' },
+    { name: 'Home', path: '/' },
+    { name: 'Testing guide', path: '/tests/' },
+    { name: 'Lead paint', path: '/tests/lead-paint/' },
   ]),
   faqSchema(faqs),
 ];
@@ -43,7 +43,7 @@ const schema = [
 
 <Base title={title} description={description} schema={schema} ogImage={ogFor('lead-paint-testing')}>
   <div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/ca/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Lead paint</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/tests/">Testing guide</a> <span aria-hidden="true">/</span> <span>Lead paint</span></nav>
     <div class="page-hero has-photo">
       <div class="hero-text">
       <p class="eyebrow">Specialty test guide · verified {SITE.dataReviewDate}</p>
@@ -107,7 +107,7 @@ const schema = [
     <div class="card card-pad callout measure">
       <h3>Lead and your retrofit</h3>
       <p class="mb-0">
-        The upgrades that trigger lead precautions are the ones our <a href="/ca/plan/">planner</a>
+        The upgrades that trigger lead precautions are the ones our <a href="/plan/">planner</a>
         recommends for older homes anyway: window and door replacement, air-sealing around trim,
         opening walls for insulation. None of them become forbidden — they become
         <em>wet-method, contained</em> jobs. Budget a few hundred dollars of extra labour and
@@ -136,9 +136,9 @@ const schema = [
     </div>
 
     <div class="related">
-      <a class="btn btn-ghost" href="/ca/tests/screener/">Which specialty tests does my home need? →</a>
-      <a class="btn btn-ghost" href="/ca/tests/">All tests</a>
-      <a class="btn btn-ghost" href="/ca/tests/asbestos-vermiculite/">Related guide: asbestos &amp; vermiculite</a>
+      <a class="btn btn-ghost" href="/tests/screener/">Which specialty tests does my home need? →</a>
+      <a class="btn btn-ghost" href="/tests/">All tests</a>
+      <a class="btn btn-ghost" href="/tests/asbestos-vermiculite/">Related guide: asbestos &amp; vermiculite</a>
     </div>
 
     <LeadForm
