@@ -1,8 +1,8 @@
 /**
  * Two sites from one codebase. In the source tree Canadian pages live under src/pages/ca/ and
  * US pages under src/pages/us/, so a page's country is read from its build path; the published
- * sites put each country at the root of its own domain (audityourhome.com for Canada,
- * audityourhouse.com for the US; see tools/country/postbuild.mjs), so every link in the source is
+ * sites put each country at the root of its own domain (audityourhome.ca for Canada,
+ * audityourhome.com for the US; see tools/country/postbuild.mjs), so every link in the source is
  * written in root form (`/tests/radon/`), never with a country prefix.
  */
 export type Country = 'ca' | 'us';
@@ -23,8 +23,8 @@ export interface CountryInfo {
 }
 
 export const COUNTRIES: Record<Country, CountryInfo> = {
-  ca: { code: 'ca', name: 'Canada', short: 'CA', home: '/', origin: 'https://audityourhome.com', locale: 'en-CA', ogLocale: 'en_CA' },
-  us: { code: 'us', name: 'United States', short: 'US', home: '/', origin: 'https://audityourhouse.com', locale: 'en-US', ogLocale: 'en_US' },
+  ca: { code: 'ca', name: 'Canada', short: 'CA', home: '/', origin: 'https://audityourhome.ca', locale: 'en-CA', ogLocale: 'en_CA' },
+  us: { code: 'us', name: 'United States', short: 'US', home: '/', origin: 'https://audityourhome.com', locale: 'en-US', ogLocale: 'en_US' },
 };
 
 /** Country of a page from its build-time path (`Astro.url.pathname`, e.g. `/ca/tests/radon/`). */
@@ -47,7 +47,14 @@ export function publicUrl(pathname: string): string {
 }
 
 /**
- * Cookie that records a visitor's choice of site (set by the country switcher and the "other site"
- * banner). While it is set, the banner stays hidden. Each site sets it for its own domain only.
+ * Cookie that records a visitor's choice of site. While it is set, the US site's Netlify rules stop
+ * sending Canadian visitors to audityourhome.ca and the "other site" bar stays hidden. Each site sets
+ * it for its own domain only: a cross-site link goes through that site's /switch/ page (public/switch/),
+ * which sets the cookie and then continues to the page.
  */
 export const CHOICE_COOKIE = 'ayh_site';
+
+/** Address on the other country's site that records the visitor's choice before showing `path`. */
+export function switchUrl(to: Country, path = '/'): string {
+  return `${COUNTRIES[to].origin}/switch/?to=${encodeURIComponent(path)}`;
+}

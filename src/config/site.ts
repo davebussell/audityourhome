@@ -4,15 +4,15 @@ import type { Country } from '../lib/country';
 /**
  * Central site configuration.
  *
- * Two sites are built from this one codebase (since 2026-10-29): audityourhome.com is the Canadian
- * site (AuditYourHome) and audityourhouse.com is the US site (AuditYourHouse). `SITE` is the
- * Canadian configuration (and the operator's details, shared by both); `SITES` has both, and
- * `siteFor(country)` picks the right one for a page. Swap brand, contact, or form endpoint here.
+ * Two sites are built from this one codebase (since 2026-10-30): audityourhome.ca is the Canadian
+ * site and audityourhome.com the US site, both AuditYourHome. `SITE` is the Canadian configuration
+ * (and the operator's details, shared by both); `SITES` has both, and `siteFor(country)` picks the
+ * right one for a page. Swap brand, contact, or form endpoint here.
  */
 export const SITE = {
   name: 'AuditYourHome',
-  domain: 'audityourhome.com',
-  url: 'https://audityourhome.com',
+  domain: 'audityourhome.ca',
+  url: 'https://audityourhome.ca',
   tagline: 'Find a certified home energy auditor. Verified credentials, real prices, live rebates.',
   description:
     'AuditYourHome helps Canadian homeowners find NRCan-registered energy advisors, compare real prices, and see which rebates are actually live right now — province by province, from Ontario\'s Home Renovation Savings to BC\'s Improvement Bonus and Efficiency Manitoba.',
@@ -60,12 +60,12 @@ export const SITES: Record<Country, SiteInfo> = {
     blurb: 'NRCan-registered energy advisors, EnerGuide evaluations and live provincial and federal rebates.',
   },
   us: {
-    name: 'AuditYourHouse',
-    domain: 'audityourhouse.com',
-    url: 'https://audityourhouse.com',
+    name: 'AuditYourHome',
+    domain: 'audityourhome.com',
+    url: 'https://audityourhome.com',
     tagline: 'Find a certified home energy auditor. Verified credentials, real prices, live rebates and tax credits.',
     description:
-      'AuditYourHouse helps US homeowners find HERS raters and BPI professionals, see what a home energy audit costs, and check which rebates, tax credits and utility programs are open right now, metro by metro.',
+      'AuditYourHome helps US homeowners find HERS raters and BPI professionals, see what a home energy audit costs, and check which rebates, tax credits and utility programs are open right now, metro by metro.',
     blurb: 'HERS raters and BPI professionals, audit costs and the rebates, tax credits and utility programs open in your state.',
   },
 };

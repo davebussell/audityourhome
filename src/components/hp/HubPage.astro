@@ -104,7 +104,7 @@ const usRows = US_METROS.map((m) => {
 
 const title = isCA
   ? `Heat pump comparison: every brand sold in Canada (${new Date().getFullYear()}) | AuditYourHome`
-  : `Heat pump comparison: every brand sold in the US (${new Date().getFullYear()}) | AuditYourHouse`;
+  : `Heat pump comparison: every brand sold in the US (${new Date().getFullYear()}) | AuditYourHome`;
 const description = isCA
   ? `${fmtInt(T.outdoorModels)} certified heat pump models from ${T.brands} brands, compared on cold-climate performance at −15°C, warranty, price tier and the rebates in every province.`
   : `${fmtInt(T.outdoorModels, 'us')} certified heat pump models from ${T.brands} brands, compared on cold-weather performance at 5°F, cooling efficiency, warranty, price tier and the rebates in the 26 largest metros.`;

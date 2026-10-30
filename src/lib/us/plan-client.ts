@@ -1655,7 +1655,7 @@ export function startPlanner() {
   function planSummary(c: Ctx, seq: SeqItem[]): string {
     const a = c.a;
     const lines = [
-      'From the AuditYourHouse planner (a pre-audit estimate):',
+      'From the AuditYourHome planner (a pre-audit estimate):',
       `Home: built ${lcfirst(pickedLabel('age', a.age))}, ${pickedLabel('htype', a.htype).toLowerCase()}, ${lcfirst(pickedLabel('size', a.size).replace(/\s*sq ft$/, ''))} sq ft, ${a.found === 'unsure' ? 'foundation not sure' : pickedLabel('found', a.found).toLowerCase()}; ZIP ${c.loc.zip5}${c.loc.metro ? ` (${metroName(c.loc.metro)} metro area)` : ''}`,
       `Heating: ${pickedLabel('heat', a.heat)} · Cooling: ${pickedLabel('ac', a.ac)} · Water heater: ${pickedLabel('wh', a.wh)}`,
     ];

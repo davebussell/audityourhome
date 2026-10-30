@@ -1,12 +1,20 @@
 ---
 import { SITE, ACCOUNTS_ENABLED, siteFor } from '../config/site';
 import Logo from './Logo.astro';
-import { countryOf, COUNTRIES } from '../lib/country';
+import { countryOf, COUNTRIES, switchUrl } from '../lib/country';
 
 const country = countryOf(Astro.url.pathname);
 const site = siteFor(country);
 const other = country === 'us' ? COUNTRIES.ca : COUNTRIES.us;
 const otherSite = siteFor(other.code);
+/* Same footer features as clickshift.ca and proudtowork.ca: where we work, connect, photo credits, live year, tagline. */
+const whereWeWork =
+  country === 'us'
+    ? 'Built in Canada, in Wakefield, Quebec, for homeowners across the United States: the 26 largest metro areas, with rebate programs tracked for all 50 states.'
+    : 'Wakefield, Quebec, in the Gatineau Hills north of Ottawa. Proudly built in Canada, covering 70 cities and every province and territory.';
+const resources = country === 'us' ? { href: '/tests/', label: 'Guides & resources' } : { href: '/learn/', label: 'Guides & resources' };
+const LINKEDIN = 'https://www.linkedin.com/in/davebussell/';
+const year = new Date().getFullYear();
 const blurb =
   country === 'us'
     ? 'Plan home energy upgrades in the United States with certified auditors, real prices and rebate data we keep current.'
@@ -34,6 +42,8 @@ const metaLine =
         <Logo onDark />
         <p class="small">{blurb}</p>
         {country === 'ca' && <p class="meta">Program data last reviewed {SITE.dataReviewDate}</p>}
+        <h4 class="where-h">Where we work</h4>
+        <p class="small where">{whereWeWork}</p>
       </div>
       {country === 'ca' && (
         <nav aria-label="Homeowners">
@@ -94,8 +104,17 @@ const metaLine =
         <ul>
           <li><a href="/about/">About &amp; data policy</a></li>
           <li><a href="/privacy/">Privacy</a></li>
-          <li><a href={`mailto:${SITE.contactEmail}`}>Contact</a></li>
-          <li><a href={`${other.origin}/?site=${other.code}`}>{country === 'us' ? 'Canadian site' : 'United States site'} ({otherSite.domain})</a></li>
+          <li><a href="/credits/">Photo &amp; data credits</a></li>
+          <li><a href={switchUrl(other.code, '/')}>{country === 'us' ? 'Canadian site' : 'United States site'} ({otherSite.domain})</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Connect">
+        <h4>Connect</h4>
+        <ul class="connect">
+          <li><a href="/plan/">Get started: your free plan →</a></li>
+          <li><a href={`mailto:${SITE.contactEmail}`}>Email {SITE.contactEmail}</a></li>
+          <li><a href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href={resources.href}>{resources.label}</a></li>
         </ul>
       </nav>
     </div>
@@ -108,7 +127,7 @@ const metaLine =
         customers, specific homes or any listed provider, and the infrared views are illustrative,
         not measurements.
       </p>
-      <p class="meta">© 2026 {site.name} · {metaLine}</p>
+      <p class="meta">© <span id="year">{year}</span> {site.name} · {metaLine} · Know your home before you spend on it.</p>
     </div>
   </div>
 </footer>
@@ -117,13 +136,17 @@ const metaLine =
   .site-footer { padding: 56px 0 36px; margin-top: 40px; }
   .cols {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 36px;
     padding-bottom: 32px;
     border-bottom: 1px solid var(--navy-line);
   }
-  @media (max-width: 760px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
+  @media (max-width: 1000px) { .cols { grid-template-columns: 1.4fr 1fr 1fr; } .cols nav:last-child { grid-column: 1 / -1; } }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr; gap: 28px; } .cols nav:last-child { grid-column: auto; } }
   .brand-col p { margin-top: 14px; max-width: 40ch; }
+  .where-h { margin-top: 22px; }
+  .brand-col .where { margin-top: 0; }
+  .connect a { overflow-wrap: anywhere; }
   h4 {
     color: #fff;
     font-size: 13px;
@@ -139,3 +162,9 @@ const metaLine =
   .legal p:first-child { font-size: 13px; max-width: 90ch; }
   .meta { color: var(--navy-muted); }
 </style>
+
+<script>
+  // Keep the copyright year current without a rebuild (the build year is rendered as the fallback).
+  const y = document.getElementById('year');
+  if (y) y.textContent = String(new Date().getFullYear());
+</script>

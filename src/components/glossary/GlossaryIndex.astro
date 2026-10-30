@@ -33,10 +33,10 @@ for (const v of views) {
 const cats = CATEGORY_ORDER.filter((k) => views.some((v) => v.category === k));
 const path = `/glossary/`;
 const home = `/`;
-const setName = c === 'us' ? 'AuditYourHouse home energy audit glossary (United States)' : 'AuditYourHome energy audit glossary (Canada)';
+const setName = c === 'us' ? 'AuditYourHome home energy audit glossary (United States)' : 'AuditYourHome energy audit glossary (Canada)';
 const title =
   c === 'us'
-    ? 'Home energy audit glossary: every term explained | AuditYourHouse'
+    ? 'Home energy audit glossary: every term explained | AuditYourHome'
     : 'Energy audit glossary: every term explained | AuditYourHome';
 const examples = c === 'us' ? 'ACH50, SEER2, Manual J and HERS scores' : 'ACH50, design temperatures, HOT2000 and EnerGuide ratings';
 const description = `Plain-language definitions of the ${views.length} terms you meet in a home energy audit, from ${examples}: what each means, why it matters and what good looks like.`;

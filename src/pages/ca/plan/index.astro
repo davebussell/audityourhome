@@ -920,7 +920,7 @@ const privacyLine = ACCOUNTS_ENABLED
       if (chk.ok) { setPostalError(''); return true; }
       if (chk.reason === 'us-zip') {
         const ageNow = fieldVal('age');
-        setPostalError(`That looks like a US ZIP code. <a href="https://audityourhouse.com/plan/?site=us#zip=${encodeURIComponent(chk.zip)}${ageNow ? `&age=${encodeURIComponent(ageNow)}` : ''}">Open the US planner with ${esc(chk.zip)} →</a>`);
+        setPostalError(`That looks like a US ZIP code. <a href="https://audityourhome.com/switch/?to=${encodeURIComponent(`/plan/#zip=${chk.zip}${ageNow ? `&age=${ageNow}` : ''}`)}">Open the US planner with ${esc(chk.zip)} →</a>`);
         return false;
       }
       if (prov) { setPostalError(''); return true; }

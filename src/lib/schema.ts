@@ -5,7 +5,7 @@ import type { Country } from './country';
 /**
  * JSON-LD helpers. Page addresses are given in root form (`/tests/radon/`); Base.astro turns them
  * into absolute URLs on the page's own site with absolutize(), so the same helper serves both
- * audityourhome.com and audityourhouse.com.
+ * audityourhome.ca and audityourhome.com.
  */
 
 /** JSON-LD keys whose values are addresses; only these get the site's origin prefixed. */

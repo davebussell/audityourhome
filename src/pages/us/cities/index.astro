@@ -17,7 +17,7 @@ const groups = metrosByRegion();
 const freeVisit = METROS.filter(hasFreeVisitForAll).length;
 const herLive = METROS.filter((m) => isOpenChip(herStatus(m).chip)).length;
 
-const title = `Home energy audits in the ${n} largest U.S. metro areas (2026) | AuditYourHouse`;
+const title = `Home energy audits in the ${n} largest U.S. metro areas (2026) | AuditYourHome`;
 const description = `Audit programs, prices, utilities and federal Home Energy Rebates status for the ${n} largest U.S. metro areas, from New York to Portland. Checked against official sources on ${US_VERIFIED}.`;
 const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cities', path: '/cities/' }])];
 ---

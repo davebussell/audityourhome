@@ -1,15 +1,18 @@
 ---
 /**
  * "You're on the Canadian site" / "You're on the US site" bar for visitors who look like they belong
- * on the other site. Nothing redirects: both home pages stay crawlable, and the bar is advice.
+ * on the other site. On audityourhome.com the Netlify rules already send Canadian visitors to the
+ * Canadian twin of a page (tools/country/postbuild.mjs); this bar covers what the rules can't: US-only
+ * pages on the US site, and US visitors on the Canadian site, which never redirects (Googlebot crawls
+ * from the US, and a redirect would hide the Canadian site from it).
  *
- * How the visitor's country is known: /geo.json is a Netlify rewrite (tools/country/postbuild.mjs writes
- * the rules) that serves /geo/us.json, /geo/ca.json or /geo/other.json by the request's country.
- * The bar shows only when that country is the other site's, no choice cookie is set, and the page
- * wasn't reached through the switcher (?site=<code>, which records the choice). Without Netlify
- * (local builds) the fetch fails and nothing shows.
+ * How the visitor's country is known: /geo.json is a Netlify rewrite (rules in postbuild) that serves
+ * /geo/us.json, /geo/ca.json or /geo/other.json by the request's country. The bar shows only when that
+ * country is the other site's and no choice cookie is set (the cookie is set by /switch/, by the "Stay
+ * here" button, or on arrival with ?site=<code>). Without Netlify (local builds) the fetch fails and
+ * nothing shows.
  */
-import { COUNTRIES, CHOICE_COOKIE, type Country } from '../lib/country';
+import { COUNTRIES, CHOICE_COOKIE, switchUrl, type Country } from '../lib/country';
 import { SITES } from '../config/site';
 
 interface Props { country: Country }
@@ -23,7 +26,7 @@ const there = COUNTRIES[other].name === 'United States' ? 'the United States' : 
   <div class="container osb-in">
     <p>
       <strong>You're on {here}.</strong> In {there}? <span class="osb-blurb">{SITES[other].blurb}</span>
-      <a class="osb-go" href={`${COUNTRIES[other].origin}/?site=${other}`} rel="noopener">Go to {SITES[other].domain} →</a>
+      <a class="osb-go" href={switchUrl(other, '/')} rel="noopener">Go to {SITES[other].domain} →</a>
     </p>
     <button type="button" class="osb-stay" id="other-site-stay">Stay here</button>
   </div>
@@ -71,7 +74,7 @@ const there = COUNTRIES[other].name === 'United States' ? 'the United States' : 
           const locale = other === 'ca' ? 'en-ca' : 'en-us';
           const alt = [...document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]')].find((l) => l.hreflang.toLowerCase() === locale);
           const go = bar.querySelector<HTMLAnchorElement>('.osb-go');
-          if (alt && go) { const u = new URL(alt.href); u.searchParams.set('site', other); go.href = u.href; }
+          if (alt && go) { const u = new URL(alt.href); go.href = `${u.origin}/switch/?to=${encodeURIComponent(u.pathname)}`; }
           bar.hidden = false;
         })
         .catch(() => {});

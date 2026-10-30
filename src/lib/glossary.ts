@@ -296,7 +296,7 @@ export function viewFor(e: GlossaryEntry, c: Country): GlossaryView {
   };
 }
 
-/** SEO title "What is <term>? <paraphrase> | AuditYourHome" (or AuditYourHouse on the US site), kept near 65 characters. */
+/** SEO title "What is <term>? <paraphrase> | AuditYourHome", kept near 65 characters. */
 export function seoTitle(v: GlossaryView, country: Country = 'ca') {
   const { lead, paren, parenIsAcronym, acronym } = questionParts(v.term);
   const para = acronym && paren && !parenIsAcronym && !/\s(?:and|vs)\s/.test(paren) ? paren.charAt(0).toUpperCase() + paren.slice(1) : null;

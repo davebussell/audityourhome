@@ -1,0 +1,103 @@
+---
+/**
+ * Photo & data credits, the same feature as proudtowork.ca/credits: every illustration on the site
+ * with what it shows, plus the data sets drawn into pages and the typefaces. Used by
+ * src/pages/ca/credits.astro and src/pages/us/credits.astro.
+ */
+import Base from '../layouts/Base.astro';
+import { PHOTOS } from '../lib/photos';
+import { breadcrumbSchema } from '../lib/schema';
+import { SITE, siteFor } from '../config/site';
+import type { Country } from '../lib/country';
+
+interface Props { country: Country }
+const { country } = Astro.props;
+const site = siteFor(country);
+const title = `Photo & data credits | ${site.name}`;
+const description = `Where the illustrations, housing data and typefaces on ${site.domain} come from, and how to reach us if a credit is wrong.`;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Credits', path: '/credits/' }])];
+const photos = Object.entries(PHOTOS).map(([key, p]) => ({ key, alt: p.alt, hud: (p as { hud?: string }).hud }));
+const regional = photos.filter((p) => p.key.startsWith('region-'));
+const general = photos.filter((p) => !p.key.startsWith('region-'));
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Credits</p>
+      <h1>Photo &amp; data credits</h1>
+      <p class="lede measure">
+        Every picture on this site is an editorial-style illustration generated for it; none shows a real
+        customer, a specific home or any listed provider, and the infrared views are illustrative, not
+        measurements. The data drawings and the facts on each page come from the public sources listed here.
+        If a credit is wrong or missing, write to <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+        and it will be fixed.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>Illustrations <span class="count">{country === 'ca' ? photos.length : general.length}</span></h2>
+      <p>
+        Made for {site.name} on September 29, 2026 with Higgsfield (GPT Image 2.5), art-directed and captioned by
+        the editors. Each carries a small instrument-style label naming the measurement convention it illustrates.
+      </p>
+      <ol class="credit-list">
+        {general.map((p) => (
+          <li>
+            <strong>{p.hud ?? p.key}</strong>
+            <span>{p.alt}.</span>
+          </li>
+        ))}
+      </ol>
+      {country === 'ca' && (
+        <Fragment>
+          <h3>Regional illustrations <span class="count">{regional.length}</span></h3>
+          <ol class="credit-list">
+            {regional.map((p) => (
+              <li>
+                <strong>{p.hud ?? p.key}</strong>
+                <span>{p.alt}.</span>
+              </li>
+            ))}
+          </ol>
+        </Fragment>
+      )}
+
+      <h2>Data drawn into the pages</h2>
+      {country === 'ca' ? (
+        <ul class="credit-list plain">
+          <li><strong>Housing portraits</strong> <span>on city pages are drawn from the Statistics Canada 2021 Census of Population (dwelling type, period of construction, tenure and heating fuel), under the Statistics Canada Open Licence.</span></li>
+          <li><strong>Climate figures</strong> <span>(heating degree-days, design temperatures) come from Environment and Climate Change Canada normals and the NRCan HOT2000 weather library; climate profiles cite their sources on each page.</span></li>
+          <li><strong>Program and rebate facts</strong> <span>are checked against the official program pages (Natural Resources Canada, provincial governments and utilities), with the verification date shown beside each one.</span></li>
+          <li><strong>Test guides and the glossary</strong> <span>draw on Health Canada, NRCan, the National Building Code, CSA, the EPA, ENERGY STAR and the other sources listed under each entry.</span></li>
+        </ul>
+      ) : (
+        <ul class="credit-list plain">
+          <li><strong>Metro facts</strong> <span>(housing stock, utilities, climate) come from the U.S. Census Bureau's American Community Survey, NOAA climate normals and the utilities' own program pages, cited on each metro guide.</span></li>
+          <li><strong>Program and rebate facts</strong> <span>are checked against the official pages (U.S. Department of Energy, state energy offices, the IRS and utilities), with the verification date shown beside each one.</span></li>
+          <li><strong>Test guides and the glossary</strong> <span>draw on the EPA, ENERGY STAR, DOE and PNNL, ACCA, BPI, RESNET, the CPSC and the other sources listed under each entry.</span></li>
+          <li><strong>Cooling benchmarks</strong> <span>in the planner come from the EIA Residential Energy Consumption Survey (RECS 2020).</span></li>
+        </ul>
+      )}
+
+      <h2>Typefaces and icons</h2>
+      <p>
+        Archivo, Public Sans and IBM Plex Mono, served by Google Fonts under the SIL Open Font License. Icons and
+        the house-and-checkmark mark are drawn for the site.
+      </p>
+      <p class="small">See also <a href="/about/">about &amp; data policy</a> and <a href="/privacy/">privacy</a>.</p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .prose h2 { margin-top: 32px; }
+  .prose h3 { margin-top: 24px; font-size: 19px; }
+  .count { font-family: var(--mono); font-size: 14px; color: var(--muted); margin-left: 6px; }
+  .credit-list { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 8px; }
+  .credit-list.plain { list-style: none; padding-left: 0; }
+  .credit-list li { font-size: 15px; }
+  .credit-list strong { display: block; font-size: 14px; }
+  .credit-list span { color: var(--muted); }
+  .prose { padding-bottom: 48px; }
+</style>

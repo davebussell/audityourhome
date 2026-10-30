@@ -1,4 +1,4 @@
-# audityourhome.com + audityourhouse.com — rules for Claude
+# audityourhome.ca + audityourhome.com — rules for Claude
 
 Portfolio-wide rules and the registry of every site live in `davebussell/portfolio-hq` — read its CLAUDE.md too, then `README.md` here.
 
@@ -10,37 +10,46 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
    Never deploy anything that is not pushed first: on 2026-10-26 GitHub was two weeks and 300 files behind the live site because
    deploys had been uploaded from chat workspaces without a push.
 
-## Two sites, one codebase (since 2026-10-29)
-- **audityourhome.com** = Canada only (AuditYourHome), built from `src/pages/ca/`. **audityourhouse.com** = United States (AuditYourHouse),
-  built from `src/pages/us/`. Both are served from the root of their own domain: `audityourhome.com/cities/toronto/`,
-  `audityourhouse.com/cities/phoenix/`. Dave chose this on 2026-10-29 (both at root, a second Netlify site, the AuditYourHouse brand).
+## Two sites, one codebase (since 2026-10-30)
+- **audityourhome.ca** = Canada, built from `src/pages/ca/`. **audityourhome.com** = United States, built from `src/pages/us/`. Both are
+  AuditYourHome and both are served from the root of their own domain: `audityourhome.ca/cities/toronto/`,
+  `audityourhome.com/cities/phoenix/`. Dave decided this on 2026-10-30 (he had chosen audityourhouse.com for the US the day before;
+  that domain now redirects to audityourhome.com).
 - A page's country comes from its build path (`countryOf(Astro.url.pathname)`, `src/lib/country.ts`); its published address is
-  `publicPath()` of that (the prefix dropped). **Every link in the source is root form** (`/tests/radon/`), never `/ca/...` or `/us/...`;
-  cross-site links are absolute (`COUNTRIES[c].origin`, e.g. the switcher, footer, planner hand-offs) and carry `?site=<code>`.
-- Brand per site: `SITES` / `siteFor(country)` in `src/config/site.ts` (name, domain, url, tagline, description). `SITE` is still the
-  Canadian config and the operator's details. Logo wordmark, og:site_name, canonical, JSON-LD (`absolutize()` in `src/lib/schema.ts`
-  turns root-form paths into the page's own origin), titles and the footer all follow it.
+  `publicPath()` of that (the prefix dropped). **Every link in the source is root form** (`/tests/radon/`), never `/ca/...` or `/us/...`.
+  Cross-site links go through the other site's `/switch/` page (`switchUrl()` in `src/lib/country.ts`; `public/switch/index.html`),
+  which sets the `ayh_site` cookie there and continues to the page.
+- Per-site config: `SITES` / `siteFor(country)` in `src/config/site.ts` (domain, url, tagline, description). `SITE` is the Canadian config
+  and the operator's details. Canonical, og:url, hreflang, JSON-LD (`absolutize()` in `src/lib/schema.ts`) and the footer follow it.
 - `npm run build` = `astro build` → `tools/glossary/link.mjs` → `tools/country/postbuild.mjs`, which splits `dist/` into **`dist-ca/`**
   and **`dist-us/`** (shared assets + that country's pages at the root), writes cross-domain hreflang between twin pages, each site's
-  `sitemap.xml` (+ `sitemap-index.xml`), `robots.txt`, `404.html` and `_redirects`. It fails if a page is built outside `src/pages/ca`
-  or `src/pages/us`, so no global pages: about, privacy, 404 and account live under each country tree.
-- Redirects (`dist-*/_redirects`): on audityourhome.com `/us/*` → `https://audityourhouse.com/*` and `/ca/*` → `/*` (the pages lived under
-  `/ca/` from Oct 12 to Oct 29); on audityourhouse.com `/ca/*` → `https://audityourhome.com/*` and `/us/*` → `/*`. Nothing redirects by
-  visitor country any more (it would hide the home pages from Googlebot): `OtherSite.astro` shows a "You're on the Canadian/US site" bar
-  instead, fed by the `/geo.json` rewrite (`public/geo/*.json`, rules in postbuild) and silenced by the `ayh_site` cookie.
+  `sitemap.xml` (+ `sitemap-index.xml`), `robots.txt`, `404.html` and `_redirects`. It fails if an Astro page is built outside
+  `src/pages/ca` or `src/pages/us`, so no global pages: about, privacy, credits, 404 and account live under each country tree.
+- **Country routing** (`dist-us/_redirects`, all generated): visitors from Canada who request a page the Canadian site also has get a 302
+  to `https://audityourhome.ca<same path>` — unless the `ayh_site` cookie is set (a `200!` rule per page comes first; Netlify takes the
+  first match). Pages only the US site has don't redirect. The old Canadian addresses on audityourhome.com (the site was Canadian at the
+  root until 2026-10-12, then under `/ca/`) 301 to audityourhome.ca: `/ca/*`, whole Canadian-only sections (`/provinces/*`, `/services/*`,
+  `/calculators/*`…) and one rule per Canadian-only page in shared sections (cities, glossary, programs, find, heat-pumps, issues, tests).
+  `audityourhouse.com` (a domain alias of the US Netlify site) 301s to audityourhome.com. **The Canadian site never redirects by
+  country**: Googlebot crawls from the US and would never see it; `OtherSite.astro` shows a "You're on the Canadian site" bar to US
+  visitors instead (and to Canadians on US-only pages), fed by the `/geo.json` rewrite (`public/geo/*.json`).
 - The dev server keeps the prefixes (`/ca/...`, `/us/...`), so root-form links don't resolve in `npm run dev`; check built output
   (`npx http-server dist-ca`).
 
-## State (2026-10-29)
-- `main` = the split into two sites (this section). Live: audityourhome.com deploy `<record after deploy>`; audityourhouse.com
-  deploy `<record after deploy>` (Netlify site `audityourhouse`, created 2026-10-29).
-- Earlier: live deploy `6ae0a1236ceaccd2859a083d` (2026-10-27) = `main` at `045017b` (regional rewrite); before that
-  `6ad7e24cad90198c04485fa1` (2026-10-20), whose source was recovered from Netlify's "Download source code" on 2026-10-26.
+## State (2026-10-30)
+- `main` = the two-site split (this section) + the footer features from clickshift.ca/proudtowork.ca (where we work, connect, photo &
+  data credits at `/credits/`, live year, tagline). Live: audityourhome.com deploy `<record after deploy>`; audityourhome.ca deploy
+  `<record after deploy>`.
+- Earlier: live deploy `6ae0a1236ceaccd2859a083d` (2026-10-27) = `main` at `045017b` (regional rewrite, both countries under `/ca/` and
+  `/us/` on audityourhome.com); before that `6ad7e24cad90198c04485fa1` (2026-10-20), whose source was recovered from Netlify's
+  "Download source code" on 2026-10-26.
 - Stack: Astro 5, data in `src/data/*.json`, generators in `tools/`, Supabase (accounts and alerts, Canada only, not enabled) in `supabase/`.
 
 ## Netlify
-- Project `audityourhome` (`ac0a6bef-3d1a-4b0c-9234-5da336851fcd`) serves audityourhome.com from `dist-ca/` (`netlify.toml`).
-- Project `audityourhouse` (`dc8d8fbd-a528-48ac-b03a-584577f7c33b`, created 2026-10-29, forms enabled) serves audityourhouse.com from `dist-us/` (`netlify.us.toml`).
+- Project `audityourhome` (`ac0a6bef-3d1a-4b0c-9234-5da336851fcd`) serves **audityourhome.com (US)** from `dist-us/` (`netlify.toml`),
+  with `audityourhouse.com` + `www` as domain aliases (redirected by `_redirects`).
+- Project `audityourhome-ca` (`dc8d8fbd-a528-48ac-b03a-584577f7c33b`, created 2026-10-29 as "audityourhouse", renamed 2026-10-30, forms
+  enabled) serves **audityourhome.ca (Canada)** from `dist-ca/` (`netlify.ca.toml`).
 - **Neither is linked to this repo**: deploys are uploads, so a push changes nothing live. Never create another Netlify site.
 - Both tomls: `npm run build`, Node 22, `FORMS=netlify` (renders the forms as Netlify Forms) and `AYH_SITE=ca|us`, which postbuild checks
   against Netlify's `SITE_NAME` so the wrong toml can't publish one site's pages to the other.
@@ -53,15 +62,16 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
 Build locally first (`npm ci && FORMS=netlify npm run build`, then `npm run -s test:calc`, `node tools/us/test-plan.mjs`) so a broken
 build never reaches Netlify. Then, for each site, from source only:
 ```
-rm -rf /tmp/ayh-deploy && mkdir /tmp/ayh-deploy && git archive HEAD | tar -x -C /tmp/ayh-deploy          # Canada: netlify.toml as is
-rm -rf /tmp/ayh-deploy-us && mkdir /tmp/ayh-deploy-us && git archive HEAD | tar -x -C /tmp/ayh-deploy-us \
-  && cp /tmp/ayh-deploy-us/netlify.us.toml /tmp/ayh-deploy-us/netlify.toml                                  # US: swap in the US toml
+rm -rf /tmp/ayh-deploy && mkdir /tmp/ayh-deploy && git archive HEAD | tar -x -C /tmp/ayh-deploy          # US: netlify.toml as is
+rm -rf /tmp/ayh-deploy-ca && mkdir /tmp/ayh-deploy-ca && git archive HEAD | tar -x -C /tmp/ayh-deploy-ca \
+  && cp /tmp/ayh-deploy-ca/netlify.ca.toml /tmp/ayh-deploy-ca/netlify.toml                                  # Canada: swap in the CA toml
 ```
 Call the Netlify MCP `netlify-deploy-services-updater` (`deploy-site`, the site id) and run the command it returns from inside that
-directory. Netlify builds it with its `netlify.toml`. Never paste its proxy token anywhere. Afterwards, on each site: the pages you changed
-at 375px and 1280px, the home page, an old address redirecting (`/ca/plan/` → `/plan/` on audityourhome.com, `/us/plan/` on
-audityourhome.com → `https://audityourhouse.com/plan/`), `/geo.json` answering, `get-forms-for-project` still listing the forms, then
-record both deploy IDs here.
+directory. Netlify builds it with its `netlify.toml`. Never paste its proxy token anywhere. Deploy the Canadian site first (its domain must
+answer before the US site starts redirecting Canadians there). Afterwards, on each site: the pages you changed at 375px and 1280px, the
+home page, an old address redirecting (`/ca/plan/` → `/plan/` on audityourhome.ca; `/ca/plan/` and `/provinces/ontario/` on
+audityourhome.com → audityourhome.ca), `/geo.json` answering, `/switch/?to=%2Fplan%2F` landing on the planner, `get-forms-for-project`
+still listing the forms, then record both deploy IDs here.
 
 ## Systems added 2026-10-26 (regional rewrite)
 - **Glossary:** `src/data/glossary.json` (199 sourced terms, ca 169 / us 168) is the source of truth; `tools/glossary/import.mjs --check`

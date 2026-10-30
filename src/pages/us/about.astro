@@ -4,10 +4,11 @@ import Photo from '../../components/Photo.astro';
 import { ogFor } from '../../lib/photos';
 import { SITE, SITES } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
+import { switchUrl } from '../../lib/country';
 
-const title = 'About AuditYourHouse — and how we handle data | AuditYourHouse';
+const title = 'About AuditYourHome — and how we handle data | AuditYourHome';
 const description =
-  'Why AuditYourHouse exists, how auditor and program listings are compiled and checked, how program data stays current, and the editorial rules we hold ourselves to.';
+  'Why AuditYourHome exists, how auditor and program listings are compiled and checked, how program data stays current, and the editorial rules we hold ourselves to.';
 
 const schema = [
   breadcrumbSchema([
@@ -28,7 +29,7 @@ const schema = [
         pause and close while half the internet keeps advertising them. And the big lead-gen platforms
         sell "energy audit" leads to solar and HVAC reps. Homeowners deserved a better front door, so
         we built one: this site for the United States, and
-        <a href={`${SITES.ca.url}/?site=ca`}>{SITES.ca.domain}</a> for Canada.
+        <a href={switchUrl('ca', '/')}>{SITES.ca.domain}</a> for Canada.
       </p>
       </div>
       <Photo name={'home-hero'} eager />

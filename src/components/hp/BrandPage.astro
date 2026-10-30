@@ -52,7 +52,7 @@ const lede = [
   `ENERGY STAR lists ${fmtInt(st.outdoorModels, market)} ${name} outdoor model${st.outdoorModels === 1 ? '' : 's'} certified for ${country}, ${fmtInt(st.coldOutdoorModels, market)} of them cold-climate${st.bestCop5 ? `, and its best certified pairing heats at a COP of ${fmtCop(st.bestCop5)} at ${t5}` : ''}.`,
 ].join(' ');
 
-const title = `${name} heat pumps: models, cold-climate ratings and warranty (${isCA ? 'Canada' : 'US'}) | ${isCA ? 'AuditYourHome' : 'AuditYourHouse'}`;
+const title = `${name} heat pumps: models, cold-climate ratings and warranty (${isCA ? 'Canada' : 'US'}) | AuditYourHome`;
 const description = `${name} heat pumps in ${country}: ${fmtInt(st.outdoorModels, market)} certified models, ${fmtInt(st.coldOutdoorModels, market)} cold-climate, best COP ${fmtCop(st.bestCop5)} at ${t5}. Owner, product lines, ${warrantyHeadline(w).toLowerCase()} warranty and the rebates they fit.`;
 const schema = [
   breadcrumbSchema([

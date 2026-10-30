@@ -1,10 +1,12 @@
-# AuditYourHome (audityourhome.com) and AuditYourHouse (audityourhouse.com)
+# AuditYourHome: audityourhome.ca (Canada) and audityourhome.com (United States)
 
 Directory + planning engine for home energy audits: one Astro 5 codebase, fully static,
 data-driven from JSON files, published as two sites. `src/pages/ca/` is the Canadian site
-(AuditYourHome, audityourhome.com) and `src/pages/us/` the US site (AuditYourHouse,
-audityourhouse.com); each is served from the root of its own domain, so every link in the
-source is written in root form (`/tests/radon/`), never with a country prefix.
+(audityourhome.ca) and `src/pages/us/` the US site (audityourhome.com); each is served from the
+root of its own domain, so every link in the source is written in root form (`/tests/radon/`),
+never with a country prefix. Visitors from Canada who land on the US site are sent to the Canadian
+twin of the page by Netlify rules (unless they chose the US site); the Canadian site never
+redirects by country. audityourhouse.com redirects to the US site.
 
 ## Quick start
 
@@ -18,8 +20,9 @@ npx http-server dist-ca   # or dist-us: preview a built site
 `npm run build` runs `astro build`, then `tools/glossary/link.mjs` (glossary links) and
 `tools/country/postbuild.mjs`, which splits `dist/` into `dist-ca/` and `dist-us/` with each
 site's hreflang links, sitemap, robots.txt, 404.html and Netlify `_redirects`. Deploy
-`dist-ca/` to the audityourhome Netlify site and `dist-us/` to audityourhouse (CLAUDE.md has
-the procedure; `netlify.toml` is the Canadian site's config, `netlify.us.toml` the US one).
+`dist-us/` to the audityourhome Netlify site (audityourhome.com) and `dist-ca/` to
+audityourhome-ca (audityourhome.ca); CLAUDE.md has the procedure (`netlify.toml` is the US
+site's config, `netlify.ca.toml` the Canadian one).
 
 ## Where everything lives
 

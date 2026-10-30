@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { COUNTRIES } from '../../lib/country';
+import { switchUrl } from '../../lib/country';
 
 const title = 'Page not found | AuditYourHome';
 const description = 'That page has gone missing — like heat through an uninsulated attic.';
@@ -19,7 +19,7 @@ const description = 'That page has gone missing — like heat through an uninsul
       <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
         <a class="btn btn-ghost" href="/find/">Find an auditor in Canada</a>
         <a class="btn btn-ghost" href="/programs/">Rebates &amp; programs</a>
-        <a class="btn btn-ghost" href={`${COUNTRIES.us.origin}/?site=us`}>Looking for the US site?</a>
+        <a class="btn btn-ghost" href={switchUrl('us', '/')}>Looking for the US site?</a>
       </p>
     </div>
   </div>

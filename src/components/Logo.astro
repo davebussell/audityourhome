@@ -11,9 +11,9 @@ interface Props {
 const country = countryOf(Astro.url.pathname) ?? 'ca';
 const site = siteFor(country);
 const { onDark = false, href = '/' } = Astro.props;
-/* House and accent: Canadian flag red, Pantone 032 (sRGB #EF3340) on AuditYourHome; Old Glory red (#B22234) on AuditYourHouse. */
-const red = country === 'us' ? '#B22234' : '#EF3340';
-/* Wordmark: Audit·Your·Home or Audit·Your·House */
+/* House and accent: flag red, Pantone 032 (sRGB #EF3340), the same on both sites */
+const red = '#EF3340';
+/* Wordmark: Audit·Your·Home */
 const last = site.name.replace(/^AuditYour/, '');
 ---
 

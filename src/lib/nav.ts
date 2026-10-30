@@ -32,7 +32,7 @@ export interface NavItem {
   panelFoot?: NavLink;
 }
 
-/** Canadian site navigation (audityourhome.com). */
+/** Canadian site navigation (audityourhome.ca). */
 export const NAV_CA: NavItem[] = [
   {
     id: 'test',
@@ -268,7 +268,7 @@ export const NAV_CA: NavItem[] = [
   { id: 'programs', label: 'Rebates & programs', href: '/programs/' },
 ];
 
-/** US site navigation (audityourhouse.com). */
+/** US site navigation (audityourhome.com). */
 export const NAV_US: NavItem[] = [
   {
     id: 'test',
@@ -443,8 +443,8 @@ export const NAV_US: NavItem[] = [
 
 /** Pages outside both country trees (none since the sites split): just the two sites. */
 export const NAV_ROOT: NavItem[] = [
-  { id: 'ca', label: 'Canada', href: 'https://audityourhome.com/' },
-  { id: 'us', label: 'United States', href: 'https://audityourhouse.com/' },
+  { id: 'ca', label: 'Canada', href: 'https://audityourhome.ca/' },
+  { id: 'us', label: 'United States', href: 'https://audityourhome.com/' },
 ];
 
 export function navFor(country: 'ca' | 'us' | null): NavItem[] {

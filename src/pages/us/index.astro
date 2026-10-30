@@ -13,7 +13,7 @@ import { METROS, FEDERAL, US_VERIFIED, STATE_NAMES } from '../../lib/us/data';
 import { hasFreeVisitForAll, andList } from '../../lib/us/metro-view';
 import { STATES } from '../../lib/us/programs';
 
-const title = 'AuditYourHouse: find a certified home energy auditor in the United States';
+const title = 'AuditYourHome: find a certified home energy auditor in the United States';
 const description = `Find a certified home energy auditor, see what audits cost in the ${METROS.length} largest U.S. metro areas and check which rebates are open after the 2026 changes. Every fact links to its official source, verified ${US_VERIFIED}.`;
 
 // ---------------------------------------------------------------- 2026 changes, from federal.json
@@ -337,7 +337,7 @@ const tests = [
     const q = new URLSearchParams({ postal });
     const age = quick?.querySelector<HTMLInputElement>('input[name="age"]:checked')?.value;
     if (age) q.set('age', age);
-    return `That looks like a Canadian postal code. This planner covers US homes; <a href="https://audityourhome.com/plan/?site=ca#${q.toString()}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).`;
+    return `That looks like a Canadian postal code. This planner covers US homes; <a href="https://audityourhome.ca/switch/?to=${encodeURIComponent(`/plan/#${q.toString()}`)}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).`;
   }
   quick?.addEventListener('submit', (e) => {
     const raw = zipIn?.value.trim() ?? '';

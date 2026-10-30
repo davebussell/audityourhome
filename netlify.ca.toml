@@ -1,0 +1,7 @@
+# audityourhome.ca (the Canadian site) on Netlify, project "audityourhome-ca".
+# Deploy: copy this file over netlify.toml in the deploy directory (see CLAUDE.md). The same build
+# produces dist-ca/ (this site) and dist-us/ (audityourhome.com).
+[build]
+  command = "npm run build"
+  publish = "dist-ca"
+  environment = { NODE_VERSION = "22", FORMS = "netlify", AYH_SITE = "ca" }

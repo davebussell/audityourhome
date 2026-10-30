@@ -1,12 +1,12 @@
 ---
 /**
- * Canada / United States switcher. Each country is its own site (audityourhome.com and
- * audityourhouse.com), so the links cross domains: to the same page on the other site when one
+ * Canada / United States switcher. Each country is its own site (audityourhome.ca and
+ * audityourhome.com), so the links cross domains: to the same page on the other site when one
  * exists (read at runtime from the page's hreflang alternates), otherwise to that site's home.
- * The link carries ?site=<code> so the other site records the choice and skips its "other site"
- * banner; see OtherSite.astro.
+ * Links go through the other site's /switch/ page, which records the choice (ayh_site cookie) so
+ * that site neither redirects the visitor back by country nor shows its "other site" bar.
  */
-import { COUNTRIES, type Country } from '../lib/country';
+import { COUNTRIES, switchUrl, type Country } from '../lib/country';
 
 interface Props {
   current: Country | null;
@@ -14,7 +14,7 @@ interface Props {
 }
 const { current, variant = 'desk' } = Astro.props;
 const list = [COUNTRIES.ca, COUNTRIES.us];
-const hrefFor = (c: (typeof list)[number]) => (c.code === current ? '/' : `${c.origin}/?site=${c.code}`);
+const hrefFor = (c: (typeof list)[number]) => (c.code === current ? '/' : switchUrl(c.code, '/'));
 ---
 
 <div class:list={['ctry', variant]} role="group" aria-label="Country">
@@ -64,8 +64,7 @@ const hrefFor = (c: (typeof list)[number]) => (c.code === current ? '/' : `${c.o
     const locale = (a.dataset.locale || '').toLowerCase();
     if (alt[locale]) {
       const u = new URL(alt[locale]);
-      u.searchParams.set('site', code);
-      a.href = u.href;
+      a.href = `${u.origin}/switch/?to=${encodeURIComponent(u.pathname)}`;
     }
     a.addEventListener('click', () => {
       // Staying is also a choice: the banner on this site should not nag after a deliberate switch back.

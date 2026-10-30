@@ -22,7 +22,7 @@ const ELEMENT_LABEL: Record<string, string> = {
   energy: 'Heat & energy',
 };
 
-const title = `${c.name} for US homes: picks and buying notes | AuditYourHouse`;
+const title = `${c.name} for US homes: picks and buying notes | AuditYourHome`;
 const description = `${c.short} ${c.picks.map((p) => p.name).join(', ')}: what each is for and the buying notes that matter in US homes.`;
 
 const schema = [
@@ -81,7 +81,7 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
 
     {AFFILIATE.amazonTagUS && (
       <p class="aff-note">
-        Buttons open amazon.com search results. As an Amazon Associate, AuditYourHouse earns from
+        Buttons open amazon.com search results. As an Amazon Associate, AuditYourHome earns from
         qualifying purchases, at no extra cost to you.
       </p>
     )}

@@ -16,7 +16,7 @@ const { market } = Astro.props;
 const isCA = market === 'ca';
 ---
 
-<Base title={`Your heat pump quote request | ${isCA ? 'AuditYourHome' : 'AuditYourHouse'}`} description="What happens after you ask for heat pump quotes." indexable={false}>
+<Base title="Your heat pump quote request | AuditYourHome" description="What happens after you ask for heat pump quotes." indexable={false}>
   <div class="container hp" style="padding-bottom:48px">
     <JourneyBar country={market} current={2} ticks={false} />
     <div class="page-hero">
