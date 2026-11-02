@@ -14,6 +14,7 @@ const whereWeWork =
     : 'Wakefield, Quebec, in the Gatineau Hills north of Ottawa. Proudly built in Canada, covering 70 cities and every province and territory.';
 const resources = country === 'us' ? { href: '/tests/', label: 'Guides & resources' } : { href: '/learn/', label: 'Guides & resources' };
 const LINKEDIN = 'https://www.linkedin.com/in/davebussell/';
+const INSTAGRAM = 'https://www.instagram.com/davebussell/';
 const year = new Date().getFullYear();
 const blurb =
   country === 'us'
@@ -114,6 +115,7 @@ const metaLine =
           <li><a href="/plan/">Get started: your free plan →</a></li>
           <li><a href={`mailto:${SITE.contactEmail}`}>Email {SITE.contactEmail}</a></li>
           <li><a href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href={INSTAGRAM} target="_blank" rel="noopener">Instagram</a></li>
           <li><a href={resources.href}>{resources.label}</a></li>
         </ul>
       </nav>
