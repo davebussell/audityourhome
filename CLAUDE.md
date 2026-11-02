@@ -36,10 +36,19 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
 - The dev server keeps the prefixes (`/ca/...`, `/us/...`), so root-form links don't resolve in `npm run dev`; check built output
   (`npx http-server dist-ca`).
 
-## State (2026-10-30)
-- `main` = the two-site split (this section) + the footer features from clickshift.ca/proudtowork.ca (where we work, connect, photo &
-  data credits at `/credits/`, live year, tagline). Live: audityourhome.com deploy `<record after deploy>`; audityourhome.ca deploy
-  `<record after deploy>`.
+## State (2026-11-02)
+- `main` = the two-site split (this section) + the footer features from clickshift.ca/proudtowork.ca (where we work, connect with
+  LinkedIn and Instagram, photo & data credits at `/credits/`, live year, tagline).
+- Live: **audityourhome.ca** deploy `6ae80d6a9f265c6f51f5b979` (2026-11-02, `f9798f6`; Dave added the domain in Netlify and pointed
+  GoDaddy DNS, Let's Encrypt cert issued); **audityourhome.com** deploy `6ae8a04e6b391c0b0d1a766b` (2026-11-02, `f9798f6`, 631 redirect
+  rules). Checked live from Dave's browser in Canada: CA on .com lands on the same page on .ca and US on .ca on the same page on .com
+  (via `/switch/`); without the choice cookie, `/` and `/tests/radon/` on .com redirect to .ca, `/cities/phoenix/` (US-only) doesn't,
+  `/provinces/ontario/` and `/ca/plan/` 301 to .ca. Both projects email dave@clickshift.ca on any form submission.
+- Not done yet: `audityourhouse.com` (+ `www`) still points at GoDaddy parking; add it as a domain alias of the audityourhome project and
+  point its DNS at Netlify (A `@` 75.2.60.5, CNAME `www` audityourhome.netlify.app) for the redirect rules to apply. Search Console
+  property for audityourhome.ca (submit `/sitemap.xml`) is Dave's to add.
+- Pushing: this cloud task can't push (proxy 403) and the laptop's Linux VM has no GitHub login; on 2026-11-01 the push went from Dave's
+  laptop through Git GUI (Tools → a one-off command `git push origin two-sites:main` with his Windows GitHub login, removed afterwards).
 - Earlier: live deploy `6ae0a1236ceaccd2859a083d` (2026-10-27) = `main` at `045017b` (regional rewrite, both countries under `/ca/` and
   `/us/` on audityourhome.com); before that `6ad7e24cad90198c04485fa1` (2026-10-20), whose source was recovered from Netlify's
   "Download source code" on 2026-10-26.
