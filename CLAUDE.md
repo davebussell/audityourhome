@@ -41,9 +41,10 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
 ## State (2026-11-02)
 - `main` = the two-site split (this section) + the footer features from clickshift.ca/proudtowork.ca (where we work, connect with
   LinkedIn and Instagram, photo & data credits at `/credits/`, live year, tagline).
-- Live: **audityourhome.ca** deploy `6ae80d6a9f265c6f51f5b979` (2026-11-02, `f9798f6`; Dave added the domain in Netlify and pointed
-  GoDaddy DNS, Let's Encrypt cert issued); **audityourhome.com** deploy `6ae8a04e6b391c0b0d1a766b` (2026-11-02, `f9798f6`, 631 redirect
-  rules). Checked live from Dave's browser in Canada: CA on .com lands on the same page on .ca and US on .ca on the same page on .com
+- Live (2026-11-02, both from `c5196cb`, the flag country picker): **audityourhome.ca** deploy `6ae8b7c977ecd4eba7a2689f`,
+  **audityourhome.com** deploy `6ae8b8dae2c9c07a05aac009` (631 redirect rules). Before that the same day, from `f9798f6`: .ca
+  `6ae80d6a9f265c6f51f5b979` (Dave added the domain in Netlify and pointed GoDaddy DNS, Let's Encrypt cert issued), .com
+  `6ae8a04e6b391c0b0d1a766b`. Checked live from Dave's browser in Canada: CA on .com lands on the same page on .ca and US on .ca on the same page on .com
   (via `/switch/`); without the choice cookie, `/` and `/tests/radon/` on .com redirect to .ca, `/cities/phoenix/` (US-only) doesn't,
   `/provinces/ontario/` and `/ca/plan/` 301 to .ca. Both projects email dave@clickshift.ca on any form submission.
 - Not done yet: `audityourhouse.com` (+ `www`) still points at GoDaddy parking; add it as a domain alias of the audityourhome project and
