@@ -18,7 +18,9 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
 - A page's country comes from its build path (`countryOf(Astro.url.pathname)`, `src/lib/country.ts`); its published address is
   `publicPath()` of that (the prefix dropped). **Every link in the source is root form** (`/tests/radon/`), never `/ca/...` or `/us/...`.
   Cross-site links go through the other site's `/switch/` page (`switchUrl()` in `src/lib/country.ts`; `public/switch/index.html`),
-  which sets the `ayh_site` cookie there and continues to the page.
+  which sets the `ayh_site` cookie there and continues to the page. The header's country control (since 2026-11-02, Dave's ask) is a small
+  flag for the current site that opens a menu with the other country (`CountrySwitch.astro`, SVG flags in `Flag.astro`; not emoji, which
+  Windows shows as letters); it's in the desktop row and next to Menu on phones.
 - Per-site config: `SITES` / `siteFor(country)` in `src/config/site.ts` (domain, url, tagline, description). `SITE` is the Canadian config
   and the operator's details. Canonical, og:url, hreflang, JSON-LD (`absolutize()` in `src/lib/schema.ts`) and the footer follow it.
 - `npm run build` = `astro build` → `tools/glossary/link.mjs` → `tools/country/postbuild.mjs`, which splits `dist/` into **`dist-ca/`**

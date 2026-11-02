@@ -1,74 +1,149 @@
 ---
 /**
- * Canada / United States switcher. Each country is its own site (audityourhome.ca and
- * audityourhome.com), so the links cross domains: to the same page on the other site when one
- * exists (read at runtime from the page's hreflang alternates), otherwise to that site's home.
- * Links go through the other site's /switch/ page, which records the choice (ayh_site cookie) so
- * that site neither redirects the visitor back by country nor shows its "other site" bar.
+ * Country picker: a small flag for the site you're on. Clicking it opens a little menu with the other
+ * country. Each country is its own site (audityourhome.ca and audityourhome.com), so that link crosses
+ * domains: to the same page on the other site when one exists (read at runtime from the page's hreflang
+ * alternates), otherwise to that site's home. It goes through the other site's /switch/ page, which records
+ * the choice there (ayh_site cookie), so that site neither sends the visitor back by country nor shows its
+ * "other site" bar. Rendered twice in the header (desktop row and the phone bar), hence the `id` prop.
  */
+import Flag from './Flag.astro';
 import { COUNTRIES, switchUrl, type Country } from '../lib/country';
+import { SITES } from '../config/site';
 
 interface Props {
-  current: Country | null;
-  variant?: 'desk' | 'mobile';
+  current: Country;
+  /** Unique per instance on the page */
+  id: string;
 }
-const { current, variant = 'desk' } = Astro.props;
-const list = [COUNTRIES.ca, COUNTRIES.us];
-const hrefFor = (c: (typeof list)[number]) => (c.code === current ? '/' : switchUrl(c.code, '/'));
+const { current, id } = Astro.props;
+const other: Country = current === 'ca' ? 'us' : 'ca';
+const here = COUNTRIES[current];
+const there = COUNTRIES[other];
 ---
 
-<div class:list={['ctry', variant]} role="group" aria-label="Country">
-  {variant === 'mobile' && <span class="ctry-t">Country</span>}
-  {list.map((c) => (
-    <a
-      href={hrefFor(c)}
-      data-ctry={c.code}
-      data-locale={c.locale}
-      data-origin={c.origin}
-      aria-current={current === c.code ? 'true' : undefined}
-      title={c.name}
-    >
-      <span class="ctry-short" aria-hidden="true">{c.short}</span>
-      <span class="ctry-name">{c.name}</span>
-    </a>
-  ))}
+<div class="ctry" data-ctry-picker>
+  <button
+    type="button"
+    class="ctry-btn"
+    aria-expanded="false"
+    aria-controls={`${id}-pop`}
+    aria-label={`Country: ${here.name}. Change country`}
+    title={`${here.name} · change country`}
+  >
+    <Flag code={current} />
+    <svg class="ctry-chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  </button>
+  <div class="ctry-pop" id={`${id}-pop`} hidden>
+    <p class="ctry-t">Country</p>
+    <ul>
+      <li>
+        <span class="ctry-row is-current" aria-current="true">
+          <Flag code={current} height={16} />
+          <span class="ctry-name">{here.name}<span class="ctry-dom">{SITES[current].domain}<span class="ctry-sr"> (the site you're on)</span></span></span>
+          <svg class="ctry-check" viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </span>
+      </li>
+      <li>
+        <a class="ctry-row" href={switchUrl(other, '/')} data-ctry={other} data-locale={there.locale} hreflang={there.locale}>
+          <Flag code={other} height={16} />
+          <span class="ctry-name">{there.name}<span class="ctry-dom">{SITES[other].domain}</span></span>
+          <span class="ctry-go" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ul>
+    <p class="ctry-note">Programs, prices and rules differ, so each country has its own site.</p>
+  </div>
 </div>
 
 <style>
-  .ctry { display: inline-flex; align-items: center; gap: 2px; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 2px; background: var(--card); }
-  .ctry a {
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: 0.06em;
-    color: var(--steel); text-decoration: none; border-radius: 999px; padding: 5px 8px; line-height: 1;
+  .ctry { position: relative; display: flex; align-items: center; }
+  .ctry-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 9px 6px 8px;
+    border: 1.5px solid var(--line-strong); border-radius: 999px;
+    background: var(--card); color: var(--steel);
+    cursor: pointer; line-height: 1;
   }
-  .ctry a:hover { color: var(--heat-deep); }
-  .ctry a[aria-current='true'] { background: var(--navy); color: #fff; }
-  .ctry .ctry-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .ctry.mobile { display: flex; width: 100%; border: none; padding: 0; gap: 8px; background: none; margin: 4px 0 10px; }
-  .ctry.mobile .ctry-t { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); font-weight: 600; margin-right: 4px; }
-  .ctry.mobile a { flex: 1; border: 1.5px solid var(--line-strong); padding: 10px 12px; font-family: var(--body); font-size: 14px; letter-spacing: 0; }
-  .ctry.mobile .ctry-short { display: none; }
-  .ctry.mobile .ctry-name { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+  .ctry-btn:hover { border-color: var(--steel); }
+  .ctry-btn:focus-visible { outline: 2px solid var(--heat); outline-offset: 2px; }
+  .ctry-chev { width: 10px; height: 6px; transition: transform 0.15s; }
+  .ctry-btn[aria-expanded='true'] { border-color: var(--steel); }
+  .ctry-btn[aria-expanded='true'] .ctry-chev { transform: rotate(180deg); }
+
+  .ctry-pop {
+    position: absolute; right: 0; top: calc(100% + 10px); z-index: 60;
+    width: 272px; max-width: calc(100vw - 32px);
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 10px 8px 8px;
+  }
+  .ctry-t {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--steel); font-weight: 600; margin: 2px 8px 8px;
+  }
+  .ctry-pop ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .ctry-row {
+    display: flex; align-items: center; gap: 11px;
+    padding: 9px 10px; border-radius: 8px;
+    color: var(--ink); text-decoration: none;
+  }
+  .is-current { background: var(--paper); }
+  a.ctry-row { border: 1px solid transparent; }
+  a.ctry-row:hover, a.ctry-row:focus-visible { background: var(--heat-tint); border-color: rgba(224, 92, 31, 0.25); outline: none; }
+  .ctry-name { display: grid; gap: 1px; flex: 1; min-width: 0; font-family: var(--body); font-weight: 700; font-size: 14.5px; line-height: 1.25; }
+  .ctry-dom { font-family: var(--mono); font-weight: 500; font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
+  .ctry-check { width: 16px; height: 16px; flex: none; color: var(--pine); }
+  .ctry-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ctry-go { flex: none; font-weight: 700; color: var(--heat-deep); }
+  .ctry-note { margin: 8px 8px 2px; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
 </style>
 
 <script>
-  import { CHOICE_COOKIE } from '../lib/country';
-  const current = document.documentElement.dataset.country;
-  const alt: Record<string, string> = {};
+  const alts: Record<string, string> = {};
   document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]').forEach((l) => {
-    alt[l.hreflang.toLowerCase()] = l.href;
+    alts[l.hreflang.toLowerCase()] = l.href;
   });
-  document.querySelectorAll<HTMLAnchorElement>('.ctry a[data-ctry]').forEach((a) => {
-    const code = a.dataset.ctry || '';
-    if (code === current) return;
-    const locale = (a.dataset.locale || '').toLowerCase();
-    if (alt[locale]) {
-      const u = new URL(alt[locale]);
-      a.href = `${u.origin}/switch/?to=${encodeURIComponent(u.pathname)}`;
+  const pickers = Array.from(document.querySelectorAll<HTMLElement>('[data-ctry-picker]'));
+  const close = (p: HTMLElement) => {
+    p.querySelector<HTMLElement>('.ctry-pop')!.hidden = true;
+    p.querySelector('.ctry-btn')!.setAttribute('aria-expanded', 'false');
+  };
+  pickers.forEach((picker) => {
+    const btn = picker.querySelector<HTMLButtonElement>('.ctry-btn')!;
+    const pop = picker.querySelector<HTMLElement>('.ctry-pop')!;
+    const link = pop.querySelector<HTMLAnchorElement>('a[data-locale]');
+    // The same page on the other country's site, when it has one.
+    const alt = link ? alts[(link.dataset.locale || '').toLowerCase()] : undefined;
+    if (link && alt) {
+      const u = new URL(alt);
+      link.href = `${u.origin}/switch/?to=${encodeURIComponent(u.pathname)}`;
     }
-    a.addEventListener('click', () => {
-      // Staying is also a choice: the banner on this site should not nag after a deliberate switch back.
-      document.cookie = `${CHOICE_COOKIE}=${code}; path=/; max-age=31536000; samesite=lax`;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = pop.hidden;
+      pickers.forEach(close);
+      if (open) {
+        pop.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+        link?.focus({ preventScroll: true });
+      }
+    });
+    picker.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !pop.hidden) {
+        close(picker);
+        btn.focus();
+      }
+    });
+    // Tabbing out closes it (relatedTarget is null when Safari moves focus nowhere on a click: ignore that).
+    picker.addEventListener('focusout', (e) => {
+      const to = e.relatedTarget as Node | null;
+      if (to && !picker.contains(to)) close(picker);
+    });
+  });
+  document.addEventListener('click', (e) => {
+    pickers.forEach((p) => {
+      if (!p.contains(e.target as Node)) close(p);
     });
   });
 </script>
