@@ -2,6 +2,8 @@
 import { SITE, ACCOUNTS_ENABLED, siteFor } from '../config/site';
 import Logo from './Logo.astro';
 import { countryOf, COUNTRIES, switchUrl } from '../lib/country';
+import { BUILDING } from '../config/building';
+import { SERVICE_COUNT } from '../lib/local-counts';
 
 const country = countryOf(Astro.url.pathname);
 const site = siteFor(country);
@@ -62,7 +64,7 @@ const metaLine =
             <li><a href="/tests/screener/">Specialty test screener</a></li>
             <li><a href="/products/">Monitoring &amp; testing gear</a></li>
             <li><a href="/provinces/">Province-by-province</a></li>
-            <li><a href="/cities/">70 cities, 16 local services</a></li>
+            <li><a href="/cities/">70 cities, {SERVICE_COUNT} local services</a></li>
             <li><a href="/areas/">Smaller towns &amp; counties</a></li>
             <li><a href="/services/">Audit &amp; testing services</a></li>
             <li><a href="/guides/">Ontario city guides</a></li>
@@ -107,6 +109,7 @@ const metaLine =
           <li><a href="/privacy/">Privacy</a></li>
           <li><a href="/credits/">Photo &amp; data credits</a></li>
           <li><a href={switchUrl(other.code, '/')}>{country === 'us' ? 'Canadian site' : 'United States site'} ({otherSite.domain})</a></li>
+          {country === 'ca' && <li><a href={BUILDING.url + '/'}>Commercial &amp; apartment buildings ({BUILDING.domain})</a></li>}
         </ul>
       </nav>
       <nav aria-label="Connect">

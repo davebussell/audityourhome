@@ -4,7 +4,7 @@ import ProviderCard from '../../components/ProviderCard.astro';
 import Photo from '../../components/Photo.astro';
 import ThermalCompare from '../../components/ThermalCompare.astro';
 import EraBar from '../../components/EraBar.astro';
-import { localIndex, citiesByProvince } from '../../lib/local';
+import { localIndex, citiesByProvince, SERVICE_COUNT } from '../../lib/local';
 import { SITE, ACCOUNTS_ENABLED } from '../../config/site';
 import { organizationSchema, faqSchema } from '../../lib/schema';
 import { providers, regions } from '../../lib/data';
@@ -186,7 +186,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
           </a>
         ))}
       </div>
-      <p class="uc-more"><a class="btn btn-ghost" href="/services/">All 16 services →</a></p>
+      <p class="uc-more"><a class="btn btn-ghost" href="/services/">All {SERVICE_COUNT} services →</a></p>
     </div>
   </section>
 

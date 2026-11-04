@@ -21,6 +21,13 @@ export const BUILDING = {
   homeUs: { name: 'AuditYourHome.com', url: 'https://audityourhome.com' },
 } as const;
 
+/**
+ * Address of a page on audityourbuilding.com, for links from the residential sites (audityourhome.ca / .com),
+ * which keep only a pointer to the commercial and multi-unit content that moved here on 2026-11-04.
+ * Pass the root-form path the page is published at: `buildingUrl('/commercial-energy-audit/toronto/')`.
+ */
+export const buildingUrl = (path = '/'): string => `${BUILDING.url}${path}`;
+
 /** The path a building-site page is published at: its build path without the /bu prefix (`/bu/audit-levels/` → `/audit-levels/`). */
 export function buildingPath(pathname: string): string {
   const m = pathname.match(/^\/bu(\/.*)?$/);

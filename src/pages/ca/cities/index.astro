@@ -3,13 +3,13 @@ import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
 import EraBar from '../../../components/EraBar.astro';
 import { breadcrumbSchema } from '../../../lib/schema';
-import { localIndex, citiesByProvince } from '../../../lib/local';
+import { localIndex, citiesByProvince, SERVICE_COUNT } from '../../../lib/local';
 import { PROV_PHOTO, ogFor } from '../../../lib/photos';
 
 const n = localIndex.cities.length;
 const groups = citiesByProvince();
 const title = `Home energy audits and home testing in ${n} Canadian cities | AuditYourHome`;
-const description = `Local guides to 16 home energy and home health services in ${n} Canadian cities, each with its climate, housing age, provincial rules and who does the work.`;
+const description = `Local guides to ${SERVICE_COUNT} home energy and home health services in ${n} Canadian cities, each with its climate, housing age, provincial rules and who does the work.`;
 const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cities', path: '/cities/' }])];
 const fmt = (v: number) => v.toLocaleString('en-CA');
 ---
@@ -17,10 +17,10 @@ const fmt = (v: number) => v.toLocaleString('en-CA');
 <Base title={title} description={description} schema={schema} ogImage={ogFor('region-atlantic')}>
   <div class="container">
     <div class="page-hero intro">
-      <p class="eyebrow">{n} cities · 16 services each · checked {localIndex.checked}</p>
+      <p class="eyebrow">{n} cities · {SERVICE_COUNT} services each · checked {localIndex.checked}</p>
       <h1>From Victoria to St. John's, your city's houses have a story</h1>
       <p class="lede measure">
-        Every city below has its own guide to 16 home energy and home health services, built from
+        Every city below has its own guide to {SERVICE_COUNT} home energy and home health services, built from
         its climate, the age of its houses, its province's rules and the organizations that serve it.
         The bar on each card shows the city's houses by the era they were built, oldest first.
       </p>

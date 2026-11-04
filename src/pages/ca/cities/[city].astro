@@ -5,9 +5,10 @@ import HousingPortrait from '../../../components/HousingPortrait.astro';
 import LeadForm from '../../../components/LeadForm.astro';
 import RegionalNeeds from '../../../components/RegionalNeeds.astro';
 import JourneyBar from '../../../components/JourneyBar.astro';
+import BuildingPointer from '../../../components/BuildingPointer.astro';
 import { placeClimate } from '../../../lib/climate';
 import { breadcrumbSchema } from '../../../lib/schema';
-import { localIndex, loadCity, services } from '../../../lib/local';
+import { localIndex, loadCity, SERVICE_COUNT } from '../../../lib/local';
 import type { LocalCity } from '../../../lib/local';
 import { PROV_PHOTO, ogFor } from '../../../lib/photos';
 import { regionBySlug } from '../../../lib/data';
@@ -47,7 +48,6 @@ const byCat = (cat: string) => hub.services.filter((s) => s.cat === cat);
 const cats = [
   { cat: 'energy', title: 'Energy audits and tests' },
   { cat: 'health', title: 'Home health tests' },
-  { cat: 'commercial', title: 'For businesses and buildings' },
 ];
 const statusChip: Record<string, [string, string]> = {
   active: ['chip-active', 'Open'],
@@ -68,12 +68,12 @@ const clim = placeClimate('ca', city.slug);
 
     <div class="page-hero has-photo">
       <div class="hero-text">
-        <p class="eyebrow">{city.provName} · 16 local services · checked {localIndex.checked}</p>
+        <p class="eyebrow">{city.provName} · {SERVICE_COUNT} local services · checked {localIndex.checked}</p>
         <h1>Home energy audits and home testing in {city.name}</h1>
         <p class="lede">{hub.lede}</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href={`/services/home-energy-audit/${city.slug}/`}>Energy audits in {city.name} →</a>
-          <a class="btn btn-ghost" href="#services">All 16 services</a>
+          <a class="btn btn-ghost" href="#services">All {SERVICE_COUNT} services</a>
         </div>
         <p class="small plan-link">Not sure what your house needs? <a href="/plan/">Get your free plan →</a> (six short steps, no email)</p>
       </div>
@@ -140,6 +140,14 @@ const clim = placeClimate('ca', city.slug);
           </div>
         </div>
       ))}
+      <div class="bldg">
+        <BuildingPointer
+          path={`/commercial-energy-audit/${city.slug}/`}
+          heading={`Own or manage a commercial or apartment building in ${city.name}?`}
+          text="These pages are about houses. Building audits follow a different standard (the three ASHRAE levels) and have their own reporting rules and incentives, which our sister site covers for this city."
+          cta={`${city.name} on AuditYourBuilding.com`}
+        />
+      </div>
     </section>
 
     <section class="who">
@@ -221,6 +229,7 @@ const clim = placeClimate('ca', city.slug);
   .fgrid p:last-child { margin: 0; font-size: 15px; }
   .fgrid .eyebrow { margin-bottom: 6px; }
   .cat { margin: 18px 0 8px; }
+  .bldg { margin: 26px 0 0; }
   .cat > h3 { font-size: 14px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
   .pcard-body .metric { font-family: var(--mono); font-size: 12.5px; color: var(--heat-deep); }
   .pcard-body .mnote { font-size: 13px; color: var(--muted); line-height: 1.4; }

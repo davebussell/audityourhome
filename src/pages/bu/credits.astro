@@ -1,6 +1,6 @@
 ---
 import BuildingBase from '../../layouts/BuildingBase.astro';
-import { PHOTOS } from '../../lib/photos';
+import { PHOTOS, BUILDING_PHOTO_KEYS } from '../../lib/photos';
 import { breadcrumbSchema } from '../../lib/schema';
 import { BUILDING } from '../../config/building';
 import { dataChecked } from '../../lib/building';
@@ -8,7 +8,7 @@ import { dataChecked } from '../../lib/building';
 const title = 'Illustration and data credits | AuditYourBuilding';
 const description = `Where the illustrations, research data and typefaces on ${BUILDING.domain} come from, and how to reach us if a credit is wrong.`;
 const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Credits', path: '/credits/' }])];
-const used = ['commercial-energy-audit', 'multi-unit'].map((k) => ({ key: k, alt: PHOTOS[k].alt, hud: (PHOTOS[k] as { hud?: string }).hud }));
+const used = BUILDING_PHOTO_KEYS.map((k) => ({ key: k, alt: PHOTOS[k].alt, hud: (PHOTOS[k] as { hud?: string }).hud }));
 ---
 
 <BuildingBase title={title} description={description} schema={schema}>

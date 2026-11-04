@@ -20,7 +20,7 @@ const {
   context = 'us-general',
 } = Astro.props;
 const subject = `US audit question (${context})`;
-const body = 'ZIP code:\nType of home (house, townhouse, condo, multi-unit):\nWhat I’m planning:\n';
+const body = 'ZIP code:\nType of home (house, townhouse, condo):\nWhat I’m planning:\n';
 const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 // The default copy asks people to email; the form version asks them to fill it in.
 const subText = NETLIFY_FORMS ? sub.replace(/^Email us /, 'Tell us ') : sub;
@@ -65,7 +65,6 @@ const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
             <option value="house">House</option>
             <option value="townhouse">Townhouse or row house</option>
             <option value="condo">Condo or apartment</option>
-            <option value="multi-unit">Multi-unit building</option>
           </select>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import { SITE, ACCOUNTS_ENABLED } from '../config/site';
 import { NETLIFY_FORMS, FORM_NAMES } from '../config/forms';
 import { regions } from '../lib/data';
+import { buildingUrl } from '../config/building';
 import { SERVICES, TIMELINES, BUILDINGS, MATCH_CONSENT } from '../lib/account/catalog';
 
 interface Props {
@@ -119,6 +120,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
             <input id={`${uid}-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
           </div>
         </div>
+        <p class="small lf-bldg">Own an apartment building (4 or more units) or a commercial property? <a href={buildingUrl('/request/')}>Ask AuditYourBuilding.com instead →</a></p>
         <div class="field">
           <label for={`${uid}-message`}>What are you planning? <span class="optional">(optional)</span></label>
           <textarea id={`${uid}-message`} name="message" rows="3" maxlength="2000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want to know which rebates apply"></textarea>
@@ -190,10 +192,9 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         <select id={`${uid}-f-building`} name="building">
           <option value="house">House (detached, semi, row or town)</option>
           <option value="duplex-triplex">Duplex or triplex</option>
-          <option value="multi-unit">Multi-unit building (4 or more units)</option>
           <option value="condo-unit">Condo unit</option>
-          <option value="commercial">Commercial building</option>
         </select>
+        <p class="small lf-bldg">Own an apartment building (4 or more units) or a commercial property? <a href={buildingUrl('/request/')}>Ask AuditYourBuilding.com instead →</a></p>
       </div>
       <div class="field">
         <label for={`${uid}-f-phone`}>Phone <span class="optional">(optional)</span></label>
@@ -209,9 +210,10 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   ) : (
     <div class="fallback">
       <p>
-        Email us what you’re planning, your postal code and the type of building (a house, a duplex
-        or triplex, or a larger multi-unit building) — we’ll reply with registered service
-        organizations for your area and which rebates apply.
+        Email us what you’re planning, your postal code and the type of home (a house, a duplex,
+        a triplex or a condo unit) — we’ll reply with registered service organizations for your
+        area and which rebates apply. For an apartment building or a commercial property, use
+        <a href={buildingUrl('/request/')}>AuditYourBuilding.com</a> instead.
       </p>
       <a class="btn btn-primary" href={mailtoFallback}>Email {SITE.contactEmail}</a>
       <p class="meta">This inbox is answered by a person. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory.</p>
@@ -349,6 +351,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
   .lf-err { color: var(--dead); font-weight: 600; font-size: 14px; margin: 10px 0 0; }
   .lf-err:empty { display: none; }
   .lf-meta { margin-top: 12px; }
+  .lf-bldg { margin: 2px 0 14px; color: var(--muted); }
   .lf-code-head { font-size: 15px; }
   .lf-code-in { font-family: var(--mono) !important; font-size: 22px !important; letter-spacing: 0.25em; max-width: 220px; }
   .lf-done { background: var(--pine-tint); border-radius: var(--radius); padding: 16px 18px; }

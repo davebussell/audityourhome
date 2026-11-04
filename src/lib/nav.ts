@@ -3,6 +3,8 @@
  * Consumed by Header.astro (desktop mega panels + mobile accordion).
  */
 
+import { SERVICE_COUNT } from './local-counts';
+
 export interface NavLink {
   href: string;
   label: string;
@@ -88,7 +90,7 @@ export const NAV_CA: NavItem[] = [
     label: 'Guides',
     lead: {
       title: 'Your city, read like an auditor',
-      desc: '70 Canadian cities, each with its climate, housing age and 16 local audit and testing services.',
+      desc: `70 Canadian cities, each with its climate, housing age and ${SERVICE_COUNT} local audit and testing services.`,
       href: '/cities/',
       cta: 'All 70 cities →',
     },
@@ -118,7 +120,7 @@ export const NAV_CA: NavItem[] = [
           { href: '/cities/edmonton/', label: 'Edmonton' },
           { href: '/cities/winnipeg/', label: 'Winnipeg' },
           { href: '/cities/vancouver/', label: 'Vancouver' },
-          { href: '/services/', label: '16 services by city →' },
+          { href: '/services/', label: `${SERVICE_COUNT} services by city →` },
           { href: '/areas/', label: 'Smaller towns & counties →' },
         ],
       },
@@ -147,8 +149,7 @@ export const NAV_CA: NavItem[] = [
           { href: '/articles/home-energy-audit-cost/', label: 'What audits cost' },
           { href: '/programs/national-heat-pump-rebate/', label: 'New federal heat pump rebate' },
           { href: '/articles/heat-pump-rebates-canada/', label: 'Heat pump rebates by province' },
-          { href: '/articles/energy-audit-services-toronto/', label: 'Toronto audit services' },
-          { href: '/articles/energy-audits-multi-unit-buildings/', label: 'Multi-unit buildings' },
+          { href: 'https://audityourbuilding.com/', label: 'Commercial & apartment buildings ↗' },
           { href: '/articles/', label: 'All articles →' },
         ],
       },

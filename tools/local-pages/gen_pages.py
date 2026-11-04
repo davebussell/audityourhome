@@ -3,7 +3,7 @@
 
 Writes into the site repo:
   src/data/local/index.json            services, cities (hub metrics), provinces
-  src/data/local/cities/<slug>.json    one file per city: city facts + 16 service page payloads + hub payload
+  src/data/local/cities/<slug>.json    one file per city: city facts + one payload per service (15 since the commercial one moved) + hub payload
 
 Also reads tools/areas/areas.json, tools/areas/research/towns.json and src/data/areas/index.json for the
 "Communities served" blocks, so run tools/areas/gen_areas.py first when the area pages change.
@@ -893,7 +893,12 @@ SERVICES = [
          blurb='An engineering audit of an office, apartment, retail or industrial building, scoped to ASHRAE Standard 211 levels 1 to 3.',
          cost='Priced by building size and audit level'),
 ]
+# The commercial service moved to audityourbuilding.com on 2026-11-04: its data is in src/data/building/ (extracted by
+# tools/building/extract.mjs) and it is not generated into src/data/local/ any more. gen_commercial() stays below for
+# reference, and SV still holds the service because gen_commercial() reads its guide link.
+SKIP_SERVICES = {'commercial-energy-audit'}
 SV = {s['slug']: s for s in SERVICES}
+SERVICES = [s for s in SERVICES if s['slug'] not in SKIP_SERVICES]
 
 
 # ------------------------------------------------------------------ helpers for page assembly
@@ -2162,8 +2167,8 @@ def build():
         hub_src = Sources()
         facts = city_facts(c)
         hub = {
-            'title': f"Home energy audits and home testing in {c['name']}: 16 local service guides",
-            'description': (f"Local guides to 16 home energy and health services in {c['name']}, {c['provName']}: EnerGuide evaluations, radon, asbestos, "
+            'title': f"Home energy audits and home testing in {c['name']}: {len(SERVICES)} local service guides",
+            'description': (f"Local guides to {len(SERVICES)} home energy and health services in {c['name']}, {c['provName']}: EnerGuide evaluations, radon, asbestos, "
                             f"heat pump sizing and more, with {n(c['climate']['hdd'])} degree-days and {pct(c['housing']['housesPre1991Pct'])} pre-1991 houses."),
             'lede': (f"{c['name']} gets about {n(c['climate']['hdd'])} heating degree-days a year ({hdd_short(c)[0].lower() + hdd_short(c)[1:]}), "
                      f"{pct(c['housing']['housesPre1961Pct'])} of its houses were built before 1961, "

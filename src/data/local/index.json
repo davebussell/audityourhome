@@ -166,17 +166,6 @@
    "blurb": "Bacteria testing (E. coli and total coliforms) at least once a year and periodic chemistry for homes on private wells.",
    "cost": "Varies by province",
    "metricNote": "The label says how common private wells are in the city."
-  },
-  {
-   "slug": "commercial-energy-audit",
-   "name": "Commercial energy audit",
-   "h1": "Commercial energy audits",
-   "cat": "commercial",
-   "guide": "/articles/commercial-energy-audits-ontario/",
-   "guideLabel": "How commercial energy audits work",
-   "blurb": "An engineering audit of an office, apartment, retail or industrial building, scoped to ASHRAE Standard 211 levels 1 to 3.",
-   "cost": "Priced by building size and audit level",
-   "metricNote": "The number is how many audit or study incentive programs we found for buildings in the city."
   }
  ],
  "cities": [
@@ -193,7 +182,7 @@
     "designHeat": -16.3,
     "station": "Toronto City Centre",
     "stationKm": 9,
-    "housesPre1961": 46.0,
+    "housesPre1961": 46,
     "housesPre1991": 81.4,
     "houses": 455985,
     "radonPct": 2.7,
@@ -203,7 +192,7 @@
     "electricity": "Toronto Hydro",
     "wells": "rare",
     "era": {
-     "pre1961": 46.0,
+     "pre1961": 46,
      "y1961to1990": 35.4,
      "y1991to2000": 6.1,
      "since2001": 12.5
@@ -226,8 +215,7 @@
     "mold-testing": "81% built before 1991",
     "asbestos-testing": "81% built before 1991",
     "lead-paint-testing": "46% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -243,7 +231,7 @@
     "designHeat": -22.3,
     "station": "Mctavish",
     "stationKm": 5,
-    "housesPre1961": 48.0,
+    "housesPre1961": 48,
     "housesPre1991": 85.9,
     "houses": 221340,
     "radonPct": 6.9,
@@ -253,10 +241,10 @@
     "electricity": "Hydro-Québec",
     "wells": "rare",
     "era": {
-     "pre1961": 48.0,
+     "pre1961": 48,
      "y1961to1990": 37.8,
      "y1991to2000": 6.1,
-     "since2001": 8.0
+     "since2001": 8
     },
     "singleDetachedPct": 7.1,
     "medianPeriod": "1961–1970"
@@ -276,8 +264,7 @@
     "mold-testing": "86% built before 1991",
     "asbestos-testing": "86% built before 1991",
     "lead-paint-testing": "48% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -304,11 +291,11 @@
     "wells": "rare",
     "era": {
      "pre1961": 9.5,
-     "y1961to1990": 38.0,
+     "y1961to1990": 38,
      "y1991to2000": 16.6,
      "since2001": 35.9
     },
-    "singleDetachedPct": 55.0,
+    "singleDetachedPct": 55,
     "medianPeriod": "1991–1995"
    },
    "metrics": {
@@ -326,8 +313,7 @@
     "mold-testing": "47% built before 1991",
     "asbestos-testing": "47% built before 1991",
     "lead-paint-testing": "10% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -376,8 +362,7 @@
     "mold-testing": "56% built before 1991",
     "asbestos-testing": "56% built before 1991",
     "lead-paint-testing": "16% built before 1961",
-    "well-water-testing": "Wells common",
-    "commercial-energy-audit": "6 incentive programs"
+    "well-water-testing": "Wells common"
    }
   },
   {
@@ -393,7 +378,7 @@
     "designHeat": -30.8,
     "station": "Edmonton International",
     "stationKm": 26,
-    "housesPre1961": 15.0,
+    "housesPre1961": 15,
     "housesPre1991": 51.5,
     "houses": 275750,
     "radonPct": 1.4,
@@ -403,10 +388,10 @@
     "electricity": "EPCOR",
     "wells": "rare",
     "era": {
-     "pre1961": 15.0,
+     "pre1961": 15,
      "y1961to1990": 36.6,
      "y1991to2000": 9.5,
-     "since2001": 39.0
+     "since2001": 39
     },
     "singleDetachedPct": 49.6,
     "medianPeriod": "1981–1990"
@@ -426,8 +411,7 @@
     "mold-testing": "52% built before 1991",
     "asbestos-testing": "52% built before 1991",
     "lead-paint-testing": "15% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -444,7 +428,7 @@
     "station": "Winnipeg International",
     "stationKm": 7,
     "housesPre1961": 37.3,
-    "housesPre1991": 77.0,
+    "housesPre1991": 77,
     "houses": 202915,
     "radonPct": 12.1,
     "radonRegion": "Winnipeg Regional Health Authority",
@@ -476,8 +460,7 @@
     "mold-testing": "77% built before 1991",
     "asbestos-testing": "77% built before 1991",
     "lead-paint-testing": "37% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "2 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -496,7 +479,7 @@
     "housesPre1961": 7.3,
     "housesPre1991": 56.6,
     "houses": 160175,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Peel Regional Health Unit",
     "providers": 28,
     "gas": "Enbridge Gas",
@@ -526,8 +509,7 @@
     "mold-testing": "57% built before 1991",
     "asbestos-testing": "57% built before 1991",
     "lead-paint-testing": "7% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -576,8 +558,7 @@
     "mold-testing": "62% built before 1991",
     "asbestos-testing": "62% built before 1991",
     "lead-paint-testing": "31% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -596,7 +577,7 @@
     "housesPre1961": 3.4,
     "housesPre1991": 32.8,
     "houses": 155800,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Peel Regional Health Unit",
     "providers": 26,
     "gas": "Enbridge Gas",
@@ -626,8 +607,7 @@
     "mold-testing": "33% built before 1991",
     "asbestos-testing": "33% built before 1991",
     "lead-paint-testing": "3% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -646,7 +626,7 @@
     "housesPre1961": 34.1,
     "housesPre1991": 68.7,
     "houses": 167240,
-    "radonPct": 5.0,
+    "radonPct": 5,
     "radonRegion": "City of Hamilton Health Unit",
     "providers": 25,
     "gas": "Enbridge Gas",
@@ -676,8 +656,7 @@
     "mold-testing": "69% built before 1991",
     "asbestos-testing": "69% built before 1991",
     "lead-paint-testing": "34% built before 1961",
-    "well-water-testing": "Wells common",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells common"
    }
   },
   {
@@ -696,7 +675,7 @@
     "housesPre1961": 4.8,
     "housesPre1991": 38.9,
     "houses": 139390,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Fraser South Health Service Delivery Area",
     "providers": 29,
     "gas": "FortisBC",
@@ -726,8 +705,7 @@
     "mold-testing": "39% built before 1991",
     "asbestos-testing": "39% built before 1991",
     "lead-paint-testing": "5% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -776,8 +754,7 @@
     "mold-testing": "70% built before 1991",
     "asbestos-testing": "70% built before 1991",
     "lead-paint-testing": "20% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -826,8 +803,7 @@
     "mold-testing": "63% built before 1991",
     "asbestos-testing": "63% built before 1991",
     "lead-paint-testing": "22% built before 1961",
-    "well-water-testing": "Wells common",
-    "commercial-energy-audit": "3 incentive programs"
+    "well-water-testing": "Wells common"
    }
   },
   {
@@ -876,8 +852,7 @@
     "mold-testing": "67% built before 1991",
     "asbestos-testing": "67% built before 1991",
     "lead-paint-testing": "17% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -904,7 +879,7 @@
     "wells": "some",
     "era": {
      "pre1961": 24.7,
-     "y1961to1990": 41.0,
+     "y1961to1990": 41,
      "y1991to2000": 10.6,
      "since2001": 23.7
     },
@@ -926,8 +901,7 @@
     "mold-testing": "66% built before 1991",
     "asbestos-testing": "66% built before 1991",
     "lead-paint-testing": "25% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -946,7 +920,7 @@
     "housesPre1961": 2.6,
     "housesPre1991": 40.1,
     "houses": 91305,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "York Regional Health Unit",
     "providers": 28,
     "gas": "Enbridge Gas",
@@ -976,8 +950,7 @@
     "mold-testing": "40% built before 1991",
     "asbestos-testing": "40% built before 1991",
     "lead-paint-testing": "3% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -994,9 +967,9 @@
     "station": "Toronto Buttonville",
     "stationKm": 13,
     "housesPre1961": 1.5,
-    "housesPre1991": 30.0,
+    "housesPre1991": 30,
     "houses": 87885,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "York Regional Health Unit",
     "providers": 28,
     "gas": "Enbridge Gas",
@@ -1026,8 +999,7 @@
     "mold-testing": "30% built before 1991",
     "asbestos-testing": "30% built before 1991",
     "lead-paint-testing": "2% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1076,8 +1048,7 @@
     "mold-testing": "58% built before 1991",
     "asbestos-testing": "58% built before 1991",
     "lead-paint-testing": "14% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "3 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1126,8 +1097,7 @@
     "mold-testing": "63% built before 1991",
     "asbestos-testing": "63% built before 1991",
     "lead-paint-testing": "19% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1146,7 +1116,7 @@
     "housesPre1961": 19.7,
     "housesPre1991": 59.7,
     "houses": 69005,
-    "radonPct": 4.0,
+    "radonPct": 4,
     "radonRegion": "Waterloo Health Unit",
     "providers": 27,
     "gas": "Kitchener Utilities",
@@ -1154,9 +1124,9 @@
     "wells": "rare",
     "era": {
      "pre1961": 19.7,
-     "y1961to1990": 40.0,
+     "y1961to1990": 40,
      "y1991to2000": 10.4,
-     "since2001": 30.0
+     "since2001": 30
     },
     "singleDetachedPct": 47.5,
     "medianPeriod": "1981–1990"
@@ -1176,8 +1146,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "20% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1226,8 +1195,7 @@
     "mold-testing": "76% built before 1991",
     "asbestos-testing": "76% built before 1991",
     "lead-paint-testing": "21% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1246,7 +1214,7 @@
     "housesPre1961": 18.4,
     "housesPre1991": 58.3,
     "houses": 47540,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Fraser North Health Service Delivery Area",
     "providers": 29,
     "gas": "FortisBC",
@@ -1254,7 +1222,7 @@
     "wells": "rare",
     "era": {
      "pre1961": 18.4,
-     "y1961to1990": 40.0,
+     "y1961to1990": 40,
      "y1991to2000": 15.1,
      "since2001": 26.6
     },
@@ -1276,8 +1244,7 @@
     "mold-testing": "58% built before 1991",
     "asbestos-testing": "58% built before 1991",
     "lead-paint-testing": "18% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1326,8 +1293,7 @@
     "mold-testing": "73% built before 1991",
     "asbestos-testing": "73% built before 1991",
     "lead-paint-testing": "43% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1376,8 +1342,7 @@
     "mold-testing": "70% built before 1991",
     "asbestos-testing": "70% built before 1991",
     "lead-paint-testing": "22% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1406,7 +1371,7 @@
      "pre1961": 8.1,
      "y1961to1990": 36.3,
      "y1991to2000": 17.6,
-     "since2001": 38.0
+     "since2001": 38
     },
     "singleDetachedPct": 58.6,
     "medianPeriod": "1991–1995"
@@ -1426,8 +1391,7 @@
     "mold-testing": "44% built before 1991",
     "asbestos-testing": "44% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1444,9 +1408,9 @@
     "station": "Vancouver International",
     "stationKm": 5,
     "housesPre1961": 4.5,
-    "housesPre1991": 49.0,
+    "housesPre1991": 49,
     "houses": 46950,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Richmond Health Service Delivery Area",
     "providers": 27,
     "gas": "FortisBC",
@@ -1476,8 +1440,7 @@
     "mold-testing": "49% built before 1991",
     "asbestos-testing": "49% built before 1991",
     "lead-paint-testing": "4% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1493,17 +1456,17 @@
     "designHeat": -19.8,
     "station": "Toronto Buttonville",
     "stationKm": 5,
-    "housesPre1961": 5.0,
+    "housesPre1961": 5,
     "housesPre1991": 32.3,
     "houses": 54640,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "York Regional Health Unit",
     "providers": 27,
     "gas": "Enbridge Gas",
     "electricity": "Alectra Utilities",
     "wells": "rare",
     "era": {
-     "pre1961": 5.0,
+     "pre1961": 5,
      "y1961to1990": 27.3,
      "y1991to2000": 25.5,
      "since2001": 42.2
@@ -1526,8 +1489,7 @@
     "mold-testing": "32% built before 1991",
     "asbestos-testing": "32% built before 1991",
     "lead-paint-testing": "5% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1543,7 +1505,7 @@
     "designHeat": -15.6,
     "station": "Burlington Piers",
     "stationKm": 8,
-    "housesPre1961": 15.0,
+    "housesPre1961": 15,
     "housesPre1991": 62.9,
     "houses": 54425,
     "radonPct": 4.9,
@@ -1553,9 +1515,9 @@
     "electricity": "Burlington Hydro",
     "wells": "some",
     "era": {
-     "pre1961": 15.0,
+     "pre1961": 15,
      "y1961to1990": 47.9,
-     "y1991to2000": 15.0,
+     "y1991to2000": 15,
      "since2001": 22.1
     },
     "singleDetachedPct": 50.2,
@@ -1576,8 +1538,7 @@
     "mold-testing": "63% built before 1991",
     "asbestos-testing": "63% built before 1991",
     "lead-paint-testing": "15% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1596,7 +1557,7 @@
     "housesPre1961": 23.8,
     "housesPre1991": 67.1,
     "houses": 52550,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Durham Regional Health Unit",
     "providers": 24,
     "gas": "Enbridge Gas",
@@ -1626,8 +1587,7 @@
     "mold-testing": "67% built before 1991",
     "asbestos-testing": "67% built before 1991",
     "lead-paint-testing": "24% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1643,7 +1603,7 @@
     "designHeat": -25.8,
     "station": "Lennoxville",
     "stationKm": 9,
-    "housesPre1961": 18.0,
+    "housesPre1961": 18,
     "housesPre1991": 59.6,
     "houses": 41360,
     "radonPct": 9.3,
@@ -1653,7 +1613,7 @@
     "electricity": "Hydro-Sherbrooke",
     "wells": "some",
     "era": {
-     "pre1961": 18.0,
+     "pre1961": 18,
      "y1961to1990": 41.6,
      "y1991to2000": 13.2,
      "since2001": 27.3
@@ -1676,8 +1636,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "18% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1693,7 +1652,7 @@
     "designHeat": -27.7,
     "station": "Sudbury",
     "stationKm": 19,
-    "housesPre1961": 31.0,
+    "housesPre1961": 31,
     "housesPre1991": 77.8,
     "houses": 54640,
     "radonPct": 5.1,
@@ -1703,7 +1662,7 @@
     "electricity": "Greater Sudbury Hydro / Hydro One",
     "wells": "some",
     "era": {
-     "pre1961": 31.0,
+     "pre1961": 31,
      "y1961to1990": 46.8,
      "y1991to2000": 9.4,
      "since2001": 12.7
@@ -1726,8 +1685,7 @@
     "mold-testing": "78% built before 1991",
     "asbestos-testing": "78% built before 1991",
     "lead-paint-testing": "31% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1746,7 +1704,7 @@
     "housesPre1961": 5.8,
     "housesPre1991": 52.3,
     "houses": 37705,
-    "radonPct": 3.0,
+    "radonPct": 3,
     "radonRegion": "Fraser East Health Service Delivery Area",
     "providers": 27,
     "gas": "FortisBC",
@@ -1756,7 +1714,7 @@
      "pre1961": 5.8,
      "y1961to1990": 46.4,
      "y1991to2000": 20.8,
-     "since2001": 27.0
+     "since2001": 27
     },
     "singleDetachedPct": 37.1,
     "medianPeriod": "1981–1990"
@@ -1776,8 +1734,7 @@
     "mold-testing": "52% built before 1991",
     "asbestos-testing": "52% built before 1991",
     "lead-paint-testing": "6% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1804,7 +1761,7 @@
     "wells": "some",
     "era": {
      "pre1961": 14.4,
-     "y1961to1990": 46.0,
+     "y1961to1990": 46,
      "y1991to2000": 13.2,
      "since2001": 26.3
     },
@@ -1826,8 +1783,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "14% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -1846,7 +1802,7 @@
     "housesPre1961": 7.9,
     "housesPre1991": 55.3,
     "houses": 35695,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Fraser North Health Service Delivery Area",
     "providers": 30,
     "gas": "FortisBC",
@@ -1876,8 +1832,7 @@
     "mold-testing": "55% built before 1991",
     "asbestos-testing": "55% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1926,8 +1881,7 @@
     "mold-testing": "40% built before 1991",
     "asbestos-testing": "40% built before 1991",
     "lead-paint-testing": "9% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -1944,7 +1898,7 @@
     "station": "Jonquière",
     "stationKm": 6,
     "housesPre1961": 26.2,
-    "housesPre1991": 75.0,
+    "housesPre1991": 75,
     "houses": 48955,
     "radonPct": 2.8,
     "radonRegion": "Région du Saguenay - Lac-Saint-Jean",
@@ -1958,7 +1912,7 @@
      "y1991to2000": 9.4,
      "since2001": 15.5
     },
-    "singleDetachedPct": 48.0,
+    "singleDetachedPct": 48,
     "medianPeriod": "1971–1980"
    },
    "metrics": {
@@ -1976,8 +1930,7 @@
     "mold-testing": "75% built before 1991",
     "asbestos-testing": "75% built before 1991",
     "lead-paint-testing": "26% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2026,8 +1979,7 @@
     "mold-testing": "50% built before 1991",
     "asbestos-testing": "50% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2044,7 +1996,7 @@
     "station": "Mount Forest",
     "stationKm": 64,
     "housesPre1961": 20.2,
-    "housesPre1991": 54.0,
+    "housesPre1991": 54,
     "houses": 42250,
     "radonPct": 10.9,
     "radonRegion": "Wellington-Dufferin-Guelph Health Unit",
@@ -2076,8 +2028,7 @@
     "mold-testing": "54% built before 1991",
     "asbestos-testing": "54% built before 1991",
     "lead-paint-testing": "20% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2096,7 +2047,7 @@
     "housesPre1961": 21.3,
     "housesPre1991": 67.7,
     "houses": 39825,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Région de la Mauricie et du Centre-du-Québec",
     "providers": 3,
     "gas": "Énergir",
@@ -2126,8 +2077,7 @@
     "mold-testing": "68% built before 1991",
     "asbestos-testing": "68% built before 1991",
     "lead-paint-testing": "21% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2146,7 +2096,7 @@
     "housesPre1961": 7.5,
     "housesPre1991": 38.9,
     "houses": 40670,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Durham Regional Health Unit",
     "providers": 25,
     "gas": "Enbridge Gas",
@@ -2176,8 +2126,7 @@
     "mold-testing": "39% built before 1991",
     "asbestos-testing": "39% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2194,9 +2143,9 @@
     "station": "Toronto International",
     "stationKm": 63,
     "housesPre1961": 22.8,
-    "housesPre1991": 60.0,
+    "housesPre1991": 60,
     "houses": 41030,
-    "radonPct": 4.0,
+    "radonPct": 4,
     "radonRegion": "Waterloo Health Unit",
     "providers": 28,
     "gas": "Enbridge Gas",
@@ -2226,8 +2175,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "23% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2246,7 +2194,7 @@
     "housesPre1961": 35.6,
     "housesPre1991": 82.8,
     "houses": 43885,
-    "radonPct": 2.0,
+    "radonPct": 2,
     "radonRegion": "Niagara Regional Area Health Unit",
     "providers": 24,
     "gas": "Enbridge Gas",
@@ -2276,8 +2224,7 @@
     "mold-testing": "83% built before 1991",
     "asbestos-testing": "83% built before 1991",
     "lead-paint-testing": "36% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2294,7 +2241,7 @@
     "station": "Toronto International",
     "stationKm": 27,
     "housesPre1961": 5.2,
-    "housesPre1991": 23.0,
+    "housesPre1991": 23,
     "houses": 35910,
     "radonPct": 4.9,
     "radonRegion": "Halton Regional Health Unit",
@@ -2326,8 +2273,7 @@
     "mold-testing": "23% built before 1991",
     "asbestos-testing": "23% built before 1991",
     "lead-paint-testing": "5% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2346,7 +2292,7 @@
     "housesPre1961": 3.8,
     "housesPre1991": 41.3,
     "houses": 42165,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Fraser South Health Service Delivery Area",
     "providers": 29,
     "gas": "FortisBC",
@@ -2355,7 +2301,7 @@
     "era": {
      "pre1961": 3.8,
      "y1961to1990": 37.4,
-     "y1991to2000": 18.0,
+     "y1991to2000": 18,
      "since2001": 40.7
     },
     "singleDetachedPct": 47.6,
@@ -2376,8 +2322,7 @@
     "mold-testing": "41% built before 1991",
     "asbestos-testing": "41% built before 1991",
     "lead-paint-testing": "4% built before 1961",
-    "well-water-testing": "Wells common",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells common"
    }
   },
   {
@@ -2408,7 +2353,7 @@
      "y1991to2000": 11.3,
      "since2001": 21.4
     },
-    "singleDetachedPct": 48.0,
+    "singleDetachedPct": 48,
     "medianPeriod": "1971–1980"
    },
    "metrics": {
@@ -2426,8 +2371,7 @@
     "mold-testing": "67% built before 1991",
     "asbestos-testing": "67% built before 1991",
     "lead-paint-testing": "24% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2446,7 +2390,7 @@
     "housesPre1961": 5.9,
     "housesPre1991": 41.7,
     "houses": 35260,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Durham Regional Health Unit",
     "providers": 27,
     "gas": "Enbridge Gas",
@@ -2476,8 +2420,7 @@
     "mold-testing": "42% built before 1991",
     "asbestos-testing": "42% built before 1991",
     "lead-paint-testing": "6% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2493,17 +2436,17 @@
     "designHeat": -20.3,
     "station": "Mount Forest",
     "stationKm": 58,
-    "housesPre1961": 11.0,
+    "housesPre1961": 11,
     "housesPre1991": 54.4,
     "houses": 31735,
-    "radonPct": 4.0,
+    "radonPct": 4,
     "radonRegion": "Waterloo Health Unit",
     "providers": 27,
     "gas": "Enbridge Gas",
     "electricity": "Enova Power",
     "wells": "rare",
     "era": {
-     "pre1961": 11.0,
+     "pre1961": 11,
      "y1961to1990": 43.3,
      "y1991to2000": 19.3,
      "since2001": 26.3
@@ -2526,8 +2469,7 @@
     "mold-testing": "54% built before 1991",
     "asbestos-testing": "54% built before 1991",
     "lead-paint-testing": "11% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2555,7 +2497,7 @@
     "era": {
      "pre1961": 4.7,
      "y1961to1990": 45.2,
-     "y1991to2000": 16.0,
+     "y1991to2000": 16,
      "since2001": 34.1
     },
     "singleDetachedPct": 62.1,
@@ -2576,8 +2518,7 @@
     "mold-testing": "50% built before 1991",
     "asbestos-testing": "50% built before 1991",
     "lead-paint-testing": "5% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2626,8 +2567,7 @@
     "mold-testing": "78% built before 1991",
     "asbestos-testing": "78% built before 1991",
     "lead-paint-testing": "28% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "6 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2646,7 +2586,7 @@
     "housesPre1961": 21.8,
     "housesPre1991": 63.5,
     "houses": 42120,
-    "radonPct": 4.0,
+    "radonPct": 4,
     "radonRegion": "Eastern Regional Integrated Health Authority",
     "providers": 7,
     "gas": null,
@@ -2676,8 +2616,7 @@
     "mold-testing": "64% built before 1991",
     "asbestos-testing": "64% built before 1991",
     "lead-paint-testing": "22% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2696,7 +2635,7 @@
     "housesPre1961": 42.8,
     "housesPre1991": 84.1,
     "houses": 37935,
-    "radonPct": 12.0,
+    "radonPct": 12,
     "radonRegion": "Thunder Bay District Health Unit",
     "providers": 8,
     "gas": "Enbridge Gas",
@@ -2726,8 +2665,7 @@
     "mold-testing": "84% built before 1991",
     "asbestos-testing": "84% built before 1991",
     "lead-paint-testing": "43% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2746,7 +2684,7 @@
     "housesPre1961": 7.6,
     "housesPre1991": 73.8,
     "houses": 31845,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Fraser South Health Service Delivery Area",
     "providers": 29,
     "gas": "FortisBC",
@@ -2756,7 +2694,7 @@
      "pre1961": 7.6,
      "y1961to1990": 66.2,
      "y1991to2000": 9.2,
-     "since2001": 17.0
+     "since2001": 17
     },
     "singleDetachedPct": 55.6,
     "medianPeriod": "1971–1980"
@@ -2776,8 +2714,7 @@
     "mold-testing": "74% built before 1991",
     "asbestos-testing": "74% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "6 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2804,9 +2741,9 @@
     "wells": "rare",
     "era": {
      "pre1961": 34.7,
-     "y1961to1990": 37.0,
+     "y1961to1990": 37,
      "y1991to2000": 9.4,
-     "since2001": 19.0
+     "since2001": 19
     },
     "singleDetachedPct": 60.6,
     "medianPeriod": "1971–1980"
@@ -2826,8 +2763,7 @@
     "mold-testing": "72% built before 1991",
     "asbestos-testing": "72% built before 1991",
     "lead-paint-testing": "35% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -2858,7 +2794,7 @@
      "y1991to2000": 8.8,
      "since2001": 9.5
     },
-    "singleDetachedPct": 76.0,
+    "singleDetachedPct": 76,
     "medianPeriod": "1961–1970"
    },
    "metrics": {
@@ -2876,8 +2812,7 @@
     "mold-testing": "82% built before 1991",
     "asbestos-testing": "82% built before 1991",
     "lead-paint-testing": "42% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2896,7 +2831,7 @@
     "housesPre1961": 12.4,
     "housesPre1991": 44.6,
     "houses": 33120,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Durham Regional Health Unit",
     "providers": 24,
     "gas": "Enbridge Gas",
@@ -2926,8 +2861,7 @@
     "mold-testing": "45% built before 1991",
     "asbestos-testing": "45% built before 1991",
     "lead-paint-testing": "12% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -2976,8 +2910,7 @@
     "mold-testing": "46% built before 1991",
     "asbestos-testing": "46% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "0 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3005,7 +2938,7 @@
     "era": {
      "pre1961": 14.6,
      "y1961to1990": 39.5,
-     "y1991to2000": 18.0,
+     "y1991to2000": 18,
      "since2001": 27.9
     },
     "singleDetachedPct": 51.5,
@@ -3026,8 +2959,7 @@
     "mold-testing": "54% built before 1991",
     "asbestos-testing": "54% built before 1991",
     "lead-paint-testing": "15% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "7 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3076,8 +3008,7 @@
     "mold-testing": "46% built before 1991",
     "asbestos-testing": "46% built before 1991",
     "lead-paint-testing": "4% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "0 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -3096,7 +3027,7 @@
     "housesPre1961": 6.5,
     "housesPre1991": 59.7,
     "houses": 29245,
-    "radonPct": 0.0,
+    "radonPct": 0,
     "radonRegion": "Durham Regional Health Unit",
     "providers": 27,
     "gas": "Enbridge Gas",
@@ -3105,7 +3036,7 @@
     "era": {
      "pre1961": 6.5,
      "y1961to1990": 53.3,
-     "y1991to2000": 19.0,
+     "y1991to2000": 19,
      "since2001": 21.3
     },
     "singleDetachedPct": 59.6,
@@ -3126,8 +3057,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "6% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -3146,7 +3076,7 @@
     "housesPre1961": 19.2,
     "housesPre1991": 54.2,
     "houses": 33945,
-    "radonPct": 9.0,
+    "radonPct": 9,
     "radonRegion": "Chinook Regional Health Authority",
     "providers": 21,
     "gas": "ATCO Gas",
@@ -3154,8 +3084,8 @@
     "wells": "rare",
     "era": {
      "pre1961": 19.2,
-     "y1961to1990": 35.0,
-     "y1991to2000": 11.0,
+     "y1961to1990": 35,
+     "y1991to2000": 11,
      "since2001": 34.8
     },
     "singleDetachedPct": 62.6,
@@ -3176,8 +3106,7 @@
     "mold-testing": "54% built before 1991",
     "asbestos-testing": "54% built before 1991",
     "lead-paint-testing": "19% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "0 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3226,8 +3155,7 @@
     "mold-testing": "62% built before 1991",
     "asbestos-testing": "62% built before 1991",
     "lead-paint-testing": "11% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "6 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -3276,8 +3204,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "19% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "4 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -3326,8 +3253,7 @@
     "mold-testing": "84% built before 1991",
     "asbestos-testing": "84% built before 1991",
     "lead-paint-testing": "59% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "6 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3356,7 +3282,7 @@
      "pre1961": 37.6,
      "y1961to1990": 36.1,
      "y1991to2000": 9.2,
-     "since2001": 17.0
+     "since2001": 17
     },
     "singleDetachedPct": 57.1,
     "medianPeriod": "1961–1970"
@@ -3376,8 +3302,7 @@
     "mold-testing": "74% built before 1991",
     "asbestos-testing": "74% built before 1991",
     "lead-paint-testing": "38% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "5 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3406,7 +3331,7 @@
      "pre1961": 23.6,
      "y1961to1990": 36.5,
      "y1991to2000": 11.9,
-     "since2001": 28.0
+     "since2001": 28
     },
     "singleDetachedPct": 42.1,
     "medianPeriod": "1981–1990"
@@ -3426,8 +3351,7 @@
     "mold-testing": "60% built before 1991",
     "asbestos-testing": "60% built before 1991",
     "lead-paint-testing": "24% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "2 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3476,8 +3400,7 @@
     "mold-testing": "78% built before 1991",
     "asbestos-testing": "78% built before 1991",
     "lead-paint-testing": "34% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "2 incentive programs"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -3493,19 +3416,19 @@
     "designHeat": -23.3,
     "station": "Fredericton",
     "stationKm": 11,
-    "housesPre1961": 23.0,
+    "housesPre1961": 23,
     "housesPre1991": 66.2,
     "houses": 18140,
-    "radonPct": 17.0,
+    "radonPct": 17,
     "radonRegion": "Region 3",
     "providers": 4,
     "gas": "Liberty Utilities (Gas New Brunswick)",
     "electricity": "NB Power",
     "wells": "rare",
     "era": {
-     "pre1961": 23.0,
+     "pre1961": 23,
      "y1961to1990": 43.2,
-     "y1991to2000": 11.0,
+     "y1991to2000": 11,
      "since2001": 22.9
     },
     "singleDetachedPct": 43.8,
@@ -3526,8 +3449,7 @@
     "mold-testing": "66% built before 1991",
     "asbestos-testing": "66% built before 1991",
     "lead-paint-testing": "23% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "2 incentive programs"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3555,7 +3477,7 @@
     "era": {
      "pre1961": 20.3,
      "y1961to1990": 45.6,
-     "y1991to2000": 12.0,
+     "y1991to2000": 12,
      "since2001": 22.2
     },
     "singleDetachedPct": 43.6,
@@ -3576,8 +3498,7 @@
     "mold-testing": "66% built before 1991",
     "asbestos-testing": "66% built before 1991",
     "lead-paint-testing": "20% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells rare"
    }
   },
   {
@@ -3626,8 +3547,7 @@
     "mold-testing": "48% built before 1991",
     "asbestos-testing": "48% built before 1991",
     "lead-paint-testing": "8% built before 1961",
-    "well-water-testing": "Wells in some areas",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells in some areas"
    }
   },
   {
@@ -3643,7 +3563,7 @@
     "designHeat": -39.2,
     "station": "Yellowknife",
     "stationKm": 5,
-    "housesPre1961": 3.0,
+    "housesPre1961": 3,
     "housesPre1991": 56.7,
     "houses": 5225,
     "radonPct": 5.4,
@@ -3653,7 +3573,7 @@
     "electricity": "Naka Power Utilities (formerly Northland Utilities)",
     "wells": "rare",
     "era": {
-     "pre1961": 3.0,
+     "pre1961": 3,
      "y1961to1990": 53.7,
      "y1991to2000": 21.1,
      "since2001": 22.3
@@ -3676,8 +3596,7 @@
     "mold-testing": "57% built before 1991",
     "asbestos-testing": "57% built before 1991",
     "lead-paint-testing": "3% built before 1961",
-    "well-water-testing": "Wells rare",
-    "commercial-energy-audit": "1 incentive program"
+    "well-water-testing": "Wells rare"
    }
   }
  ],

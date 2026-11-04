@@ -19,9 +19,19 @@
 //
 // tools/local-pages/gen_pages.py still knows how to generate the commercial pages; its output must not go back into
 // src/data/local/ (see SKIP_SERVICES there).
+//
+// DO NOT RE-RUN. src/data/building/* was edited by hand after this ran (titles, descriptions, link fixes), and the
+// residential data no longer holds the content it extracts, so a second run would overwrite those edits with a
+// stale copy. It is kept as the record of how the data got there; it refuses to run without the flag below.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+if (!process.argv.includes('--overwrite-hand-edits')) {
+  console.error('tools/building/extract.mjs already ran (2026-11-04) and src/data/building/ has been edited by hand since.');
+  console.error('Refusing to overwrite it. (Pass --overwrite-hand-edits only if you mean to throw those edits away.)');
+  process.exit(1);
+}
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const LOCAL = path.join(ROOT, 'src', 'data', 'local');

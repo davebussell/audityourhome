@@ -1,4 +1,4 @@
-# audityourhome.ca + audityourhome.com — rules for Claude
+# audityourhome.ca + audityourhome.com + audityourbuilding.com — rules for Claude
 
 Portfolio-wide rules and the registry of every site live in `davebussell/portfolio-hq` — read its CLAUDE.md too, then `README.md` here.
 
@@ -23,10 +23,11 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
   Windows shows as letters); it's in the desktop row and next to Menu on phones.
 - Per-site config: `SITES` / `siteFor(country)` in `src/config/site.ts` (domain, url, tagline, description). `SITE` is the Canadian config
   and the operator's details. Canonical, og:url, hreflang, JSON-LD (`absolutize()` in `src/lib/schema.ts`) and the footer follow it.
-- `npm run build` = `astro build` → `tools/glossary/link.mjs` → `tools/country/postbuild.mjs`, which splits `dist/` into **`dist-ca/`**
-  and **`dist-us/`** (shared assets + that country's pages at the root), writes cross-domain hreflang between twin pages, each site's
-  `sitemap.xml` (+ `sitemap-index.xml`), `robots.txt`, `404.html` and `_redirects`. It fails if an Astro page is built outside
-  `src/pages/ca` or `src/pages/us`, so no global pages: about, privacy, credits, 404 and account live under each country tree.
+- `npm run build` = `astro build` → `tools/glossary/link.mjs` (ca and us pages only) → `tools/country/postbuild.mjs`, which splits `dist/`
+  into **`dist-ca/`**, **`dist-us/`** and (since 2026-11-04) **`dist-bu/`** (shared assets + that site's pages at the root), writes
+  cross-domain hreflang between twin pages, each site's `sitemap.xml` (+ `sitemap-index.xml`), `robots.txt`, `404.html` and `_redirects`.
+  It fails if an Astro page is built outside `src/pages/ca`, `src/pages/us` or `src/pages/bu`, so no global pages: about, privacy,
+  credits, 404 and account live under each site's tree.
 - **Country routing** (`dist-us/_redirects`, all generated): visitors from Canada who request a page the Canadian site also has get a 302
   to `https://audityourhome.ca<same path>` — unless the `ayh_site` cookie is set (a `200!` rule per page comes first; Netlify takes the
   first match). Pages only the US site has don't redirect. The old Canadian addresses on audityourhome.com (the site was Canadian at the
@@ -35,8 +36,65 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
   `audityourhouse.com` (a domain alias of the US Netlify site) 301s to audityourhome.com. **The Canadian site never redirects by
   country**: Googlebot crawls from the US and would never see it; `OtherSite.astro` shows a "You're on the Canadian site" bar to US
   visitors instead (and to Canadians on US-only pages), fed by the `/geo.json` rewrite (`public/geo/*.json`).
-- The dev server keeps the prefixes (`/ca/...`, `/us/...`), so root-form links don't resolve in `npm run dev`; check built output
-  (`npx http-server dist-ca`).
+- The dev server keeps the prefixes (`/ca/...`, `/us/...`, `/bu/...`), so root-form links don't resolve in `npm run dev`; check built
+  output (`npx http-server dist-ca`, or `python3 -m http.server 4400 --directory dist-ca`).
+
+## Third site: audityourbuilding.com (since 2026-11-04)
+Dave bought audityourbuilding.com on 2026-11-04 and asked to move everything about **commercial buildings and multi-unit (apartment,
+condo, strata) buildings** off the two residential sites onto it. The residential sites are for houses, duplexes, triplexes and single
+condo units; the building site is for owners and managers of commercial, institutional, industrial and 4+ unit residential buildings
+(Canada only, for now). **Do not put commercial or apartment-building content back on the residential sites**; add it to the building site.
+- **Pages:** `src/pages/bu/`, published at the root of audityourbuilding.com (`/audit-levels/`, `/commercial-energy-audit/toronto/`).
+  Home, 70 city pages plus a hub (`/commercial-energy-audit/`), audit levels (the three ASHRAE levels), apartments and condos, reporting
+  rules, incentives, three articles, how it works, the request form, about, privacy, credits, thanks, 404. As on the other sites, every
+  link in the source is root form; links to a residential site are full URLs (`BUILDING.homeCa.url`).
+- **It is not a "country".** `Country = 'ca' | 'us'` in `src/lib/country.ts` is unchanged. The building site has its own config
+  (`src/config/building.ts`: `BUILDING`, `buildingUrl(path)` for links from the residential sites, `buildingPath()`, `isBuildingPage()`),
+  lib (`src/lib/building.ts`), layout (`src/layouts/BuildingBase.astro`), components (`src/components/building/`) and styles
+  (`src/styles/building.css` over `global.css`: blueprint blue `--heat: #1F5FA8`, cool paper, cyanotype `--bp`, crop-mark `.sheet`).
+  It has no `/geo.json` "other site" bar and no country routing.
+- **Data:** `src/data/building/{commercial,cities,articles}.json`. `tools/building/extract.mjs` moved it out of the residential data on
+  2026-11-04 and the files were edited by hand afterwards, so **do not re-run the script** (it refuses without a flag). The Toronto
+  article is an Astro page (`src/pages/bu/articles/energy-audit-services-toronto.astro`).
+- **Form:** Netlify form `building-audit-request` (`RequestForm.astro`, `/request/`), which emails dave@clickshift.ca like the others.
+  Consent text and `about`/`how-it-works` say participating firms "may pay us a referral fee" and replies come "within one business
+  day"; both are mirrored from the residential sites, so change them if commercial works differently.
+- **What the residential sites keep:** a pointer (`src/components/BuildingPointer.astro`: city pages, the services hub, the professionals
+  page), a link in the header menu and the Canadian footer, and a one-line note in the request forms (`LeadForm.astro`). The forms no
+  longer offer "multi-unit" or "commercial" (`LeadForm`, `QuoteForm`, `LeadFormUS`, `BUILDINGS` in `src/lib/account/catalog.ts`; the
+  database check still accepts the old values for legacy rows). Factual program notes that mention multi-unit buildings (Alberta CEIP,
+  Victoria's Strata Energy Advisor Program, heat-pump multi-unit bonuses, CO-alarm rules) were left on purpose.
+- **Old addresses:** `/services/commercial-energy-audit/*` and the three building articles (with and without the old `/ca/` prefix) 301 to
+  the building site from both residential domains (`MOVED_TO_BU` in `tools/country/postbuild.mjs`, placed ahead of the `/ca/*`
+  wildcards so there is never a two-hop chain). `dist-bu/_redirects` only turns `/bu/*` into `/*`.
+- **Counts that can't drift:** the commercial service no longer counts, so "15 services" comes from `SERVICE_COUNT` (and `CITY_COUNT`) in
+  `src/lib/local-counts.ts`, read from the generated index. `tools/local-pages/gen_pages.py` has `SKIP_SERVICES = {'commercial-energy-audit'}`
+  so regenerating the city pages can't bring the commercial service back.
+- **Photos:** two pictures belong to the building site (`BUILDING_PHOTO_KEYS` in `src/lib/photos.ts`); the shared credits page leaves them
+  out and `src/pages/bu/credits.astro` lists them. Postbuild keeps assets that only building pages use (`buildingOnly`) out of `dist-ca`
+  and `dist-us`.
+- **Analytics:** it reuses the portfolio GA tag (`G-QK0ETT28BD`, `content_group` "building") and the Clarity project. The tag is in the
+  page source, so after the first deploy count the `gtag/js?id=G-QK0ETT28BD` includes in the live HTML: if there are two, the project
+  also has the portfolio's Netlify snippet injection ("ga4-portfolio") and every view would count twice; tell Dave to remove the snippet
+  (Project configuration → Build & deploy → Post processing). Dave still needs a Search Console property for audityourbuilding.com
+  (submit `/sitemap.xml`) and a GA split if he wants one.
+- **Netlify:** its own project, **`audityourbuilding`** (`a8074ca1-136b-45bc-934c-b3e2c9470c68`, created 2026-10-29, same team as the
+  others), serving `dist-bu/` from `netlify.bu.toml` (`AYH_SITE=bu`, which postbuild checks against `SITE_NAME`; the project is named
+  exactly that). The domain, DNS, www redirect and certificate were already working on 2026-11-04 because the project was serving a
+  "Launching soon" page (deploy `6aeb3cb6f3fadba36951c0d6`, a Netlify form `notify` with one signup in it). Our first deploy replaces
+  that page, so it needs Dave's OK in the chat; the old deploy stays in Netlify's history and can be re-published there. The `notify` form
+  has one signup (a visitor's email, which we have not read): Dave should look at it, and export it if he wants to write to that person,
+  before the page is replaced. A new form (`building-audit-request`) needs its email notification set in the Netlify UI like the other
+  projects (Forms → Settings → notifications to dave@clickshift.ca).
+- **Never mention** WillScot (WSC), Transcat (TRNS) or McGrath RentCorp (MGRC) on any of his sites.
+
+## State (2026-11-04)
+- Built and tested but **not live yet** (the laptop was unreachable for the push): the three-site build, the building site, the removal
+  from the residential sites, the planner fix for a blocked Next on step 2 (`e601ec6`), the site-switch open-redirect fix and two other
+  bugs found by the end-to-end pass (`61a9abb`), and the US pictures and charts (`802bd77`). Until they are deployed, the live
+  planner still blocks Next on step 2 until the visitor picks a build era, and `/switch/?to=` still accepts off-site paths.
+- Ship order: push, deploy the building site over the placeholder (no DNS step: the domain, www and certificate already work), check
+  it, then deploy .ca, then .com (their redirects would otherwise send visitors to a page that isn't there yet).
 
 ## State (2026-11-02)
 - `main` = the two-site split (this section) + the footer features from clickshift.ca/proudtowork.ca (where we work, connect with
@@ -62,11 +120,14 @@ Portfolio-wide rules and the registry of every site live in `davebussell/portfol
   with `audityourhouse.com` + `www` as domain aliases (redirected by `_redirects`).
 - Project `audityourhome-ca` (`dc8d8fbd-a528-48ac-b03a-584577f7c33b`, created 2026-10-29 as "audityourhouse", renamed 2026-10-30, forms
   enabled) serves **audityourhome.ca (Canada)** from `dist-ca/` (`netlify.ca.toml`).
-- **Neither is linked to this repo**: deploys are uploads, so a push changes nothing live. Never create another Netlify site.
-- Both tomls: `npm run build`, Node 22, `FORMS=netlify` (renders the forms as Netlify Forms) and `AYH_SITE=ca|us`, which postbuild checks
-  against Netlify's `SITE_NAME` so the wrong toml can't publish one site's pages to the other.
-- Netlify Forms: Canada `audit-request`, `heat-pump-quote`; US `us-question`, `heat-pump-quote`. Notifications go to dave@clickshift.ca
-  (set per site in the Netlify UI: Forms → notifications).
+- Project `audityourbuilding` (`a8074ca1-136b-45bc-934c-b3e2c9470c68`, created 2026-10-29) serves **audityourbuilding.com** from `dist-bu/`
+  (`netlify.bu.toml`); see "Third site" above. It was already live with a "Launching soon" page before our site existed.
+- **None is linked to this repo**: deploys are uploads, so a push changes nothing live. Never create another Netlify site for the two
+  residential domains; the building site's project is the only other one.
+- All three tomls: `npm run build`, Node 22, `FORMS=netlify` (renders the forms as Netlify Forms) and `AYH_SITE=ca|us|bu`, which postbuild
+  checks against Netlify's `SITE_NAME` so the wrong toml can't publish one site's pages to another.
+- Netlify Forms: Canada `audit-request`, `heat-pump-quote`; US `us-question`, `heat-pump-quote`; buildings `building-audit-request`.
+  Notifications go to dave@clickshift.ca (set per site in the Netlify UI: Forms → notifications).
 - GitHub Pages is no longer the host (`.github/workflows/deploy.yml` removed 2026-10-29). `.github/workflows/alerts.yml` still runs hourly
   and does nothing until its Supabase and Resend secrets are set. `PUSH-TO-GITHUB.bat` was the old laptop publishing loop (Pages era).
 
@@ -77,13 +138,17 @@ build never reaches Netlify. Then, for each site, from source only:
 rm -rf /tmp/ayh-deploy && mkdir /tmp/ayh-deploy && git archive HEAD | tar -x -C /tmp/ayh-deploy          # US: netlify.toml as is
 rm -rf /tmp/ayh-deploy-ca && mkdir /tmp/ayh-deploy-ca && git archive HEAD | tar -x -C /tmp/ayh-deploy-ca \
   && cp /tmp/ayh-deploy-ca/netlify.ca.toml /tmp/ayh-deploy-ca/netlify.toml                                  # Canada: swap in the CA toml
+rm -rf /tmp/ayh-deploy-bu && mkdir /tmp/ayh-deploy-bu && git archive HEAD | tar -x -C /tmp/ayh-deploy-bu \
+  && cp /tmp/ayh-deploy-bu/netlify.bu.toml /tmp/ayh-deploy-bu/netlify.toml                                  # Buildings: swap in the BU toml
 ```
 Call the Netlify MCP `netlify-deploy-services-updater` (`deploy-site`, the site id) and run the command it returns from inside that
-directory. Netlify builds it with its `netlify.toml`. Never paste its proxy token anywhere. Deploy the Canadian site first (its domain must
-answer before the US site starts redirecting Canadians there). Afterwards, on each site: the pages you changed at 375px and 1280px, the
-home page, an old address redirecting (`/ca/plan/` → `/plan/` on audityourhome.ca; `/ca/plan/` and `/provinces/ontario/` on
-audityourhome.com → audityourhome.ca), `/geo.json` answering, `/switch/?to=%2Fplan%2F` landing on the planner, `get-forms-for-project`
-still listing the forms, then record both deploy IDs here.
+directory. Netlify builds it with its `netlify.toml`. Never paste its proxy token anywhere. **Order: the building site first** (the
+residential redirects send visitors there), then the Canadian site (its domain must answer before the US site starts redirecting
+Canadians there), then the US site. Afterwards, on each site: the pages you changed at 375px and 1280px, the home page, an old address
+redirecting (`/ca/plan/` → `/plan/` on audityourhome.ca; `/ca/plan/` and `/provinces/ontario/` on audityourhome.com → audityourhome.ca;
+`/services/commercial-energy-audit/toronto/` on either → audityourbuilding.com/commercial-energy-audit/toronto/), `/geo.json` answering
+(residential sites), `/switch/?to=%2Fplan%2F` landing on the planner, `get-forms-for-project` still listing the forms (on the building
+site: `building-audit-request`), then record every deploy ID here.
 
 ## Systems added 2026-10-26 (regional rewrite)
 - **Glossary:** `src/data/glossary.json` (199 sourced terms, ca 169 / us 168) is the source of truth; `tools/glossary/import.mjs --check`

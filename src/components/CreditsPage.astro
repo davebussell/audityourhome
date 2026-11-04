@@ -5,7 +5,7 @@
  * src/pages/ca/credits.astro and src/pages/us/credits.astro.
  */
 import Base from '../layouts/Base.astro';
-import { PHOTOS } from '../lib/photos';
+import { PHOTOS, BUILDING_PHOTO_KEYS } from '../lib/photos';
 import { breadcrumbSchema } from '../lib/schema';
 import { profile } from '../lib/climate';
 import { REGION_KEYS, REGION_PHOTOS } from '../lib/us/photos';
@@ -18,7 +18,10 @@ const site = siteFor(country);
 const title = `Photo & data credits | ${site.name}`;
 const description = `Where the illustrations, housing data and typefaces on ${site.domain} come from, and how to reach us if a credit is wrong.`;
 const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Credits', path: '/credits/' }])];
-const photos = Object.entries(PHOTOS).map(([key, p]) => ({ key, alt: p.alt, hud: (p as { hud?: string }).hud }));
+// Pictures that belong to audityourbuilding.com are credited there, not here.
+const photos = Object.entries(PHOTOS)
+  .filter(([key]) => !(BUILDING_PHOTO_KEYS as readonly string[]).includes(key))
+  .map(([key, p]) => ({ key, alt: p.alt, hud: (p as { hud?: string }).hud }));
 const regional = photos.filter((p) => p.key.startsWith('region-'));
 const general = photos.filter((p) => !p.key.startsWith('region-'));
 ---

@@ -1,7 +1,7 @@
 # Local service pages generator
 
 Builds the data behind `/services/<service>/<city>/`, `/services/<service>/` and `/cities/<city>/`
-(70 cities × 16 services) into `src/data/local/`.
+(70 cities × 15 services; the 16th, commercial energy audits, moved to audityourbuilding.com on 2026-11-04 and is skipped by `SKIP_SERVICES` in gen_pages.py) into `src/data/local/`.
 
 ```
 python3 tools/local-pages/gen_pages.py     # out/cities.json + research/*.json  →  src/data/local/

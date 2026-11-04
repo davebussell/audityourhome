@@ -1,9 +1,9 @@
 /**
- * Local service pages: 70 cities × 16 services.
+ * Local service pages: 70 cities × 15 services (the commercial service moved to audityourbuilding.com on 2026-11-04).
  *
- * Data is generated offline (svc/gen_pages.py) into src/data/local/:
+ * Data is generated offline (tools/local-pages/gen_pages.py) into src/data/local/:
  *   index.json           — services + per-city summary metrics (small; imported)
- *   cities/<slug>.json   — full city payload incl. all 16 page payloads (read from disk at build
+ *   cities/<slug>.json   — full city payload incl. all the page payloads (read from disk at build
  *                          time so ~10 MB of JSON never lands in the server bundle)
  */
 import fs from 'node:fs';
@@ -45,7 +45,7 @@ export interface LocalService {
   slug: string;
   name: string;
   h1: string;
-  cat: 'energy' | 'health' | 'commercial' | string;
+  cat: 'energy' | 'health' | string;
   guide: string;
   guideLabel: string;
   blurb: string;
@@ -148,6 +148,7 @@ export interface LocalIndex {
   provinceOrder: string[];
 }
 
+export { SERVICE_COUNT, CITY_COUNT } from './local-counts';
 export const localIndex = indexJson as unknown as LocalIndex;
 export const services = localIndex.services;
 export const localCities = localIndex.cities;
@@ -171,7 +172,6 @@ export function serviceBySlug(slug: string): LocalService | undefined {
 export const CAT_LABEL: Record<string, string> = {
   energy: 'Energy',
   health: 'Home health',
-  commercial: 'Commercial',
 };
 
 /** Cities grouped by province in the site's west-to-east order. */

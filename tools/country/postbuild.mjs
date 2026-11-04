@@ -10,6 +10,8 @@
 // Canadian twin of a page (unless they chose the US site: ayh_site cookie, set by /switch/), send the
 // old Canadian addresses on audityourhome.com to audityourhome.ca, and redirect audityourhouse.com.
 // The Canadian site never redirects by country: Googlebot crawls from the US and would never see it.
+// The commercial and multi-unit pages that used to be on the two home sites moved to audityourbuilding.com on 2026-11-04:
+// their old addresses (MOVED_TO_BU below) 301 straight to the new site from both domains, ahead of the wildcard rules.
 // Links in the source are already written in root form, so no HTML rewriting happens here.
 // Usage: node tools/country/postbuild.mjs [distDir]
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync, rmSync, cpSync } from 'node:fs';
@@ -38,6 +40,24 @@ const ONLY_FOR = {
   'gl.js': ['ca', 'us'],
   '33f67d1ce743b218572dfce6d7fc2b49.txt': ['ca', 'us'],
 };
+/**
+ * Addresses that moved to audityourbuilding.com on 2026-11-04 (the commercial and multi-unit content). Each is
+ * [old path in root form, new path on the building site, whether everything under it moves too]. Both home sites
+ * redirect them, with and without the old /ca prefix, before any wildcard rule, so no visitor takes two hops.
+ */
+const MOVED_TO_BU = [
+  ['/services/commercial-energy-audit', '/commercial-energy-audit/', true],
+  ['/articles/commercial-energy-audits-ontario', '/articles/commercial-energy-audits-ontario/', false],
+  ['/articles/energy-audits-multi-unit-buildings', '/articles/energy-audits-multi-unit-buildings/', false],
+  ['/articles/energy-audit-services-toronto', '/articles/energy-audit-services-toronto/', false],
+];
+const movedToBuildingRules = () =>
+  MOVED_TO_BU.flatMap(([from, to, everything]) =>
+    ['', '/ca'].flatMap((prefix) => [
+      `${prefix}${from}  ${SITES.bu.url}${to}  301!`,
+      ...(everything ? [`${prefix}${from}/*  ${SITES.bu.url}${to}:splat  301!`] : []),
+    ]),
+  );
 /** Spare domain that redirects to the US site (a domain alias of the audityourhome Netlify site). */
 const SPARE_DOMAINS = ['audityourhouse.com', 'www.audityourhouse.com'];
 const CHOICE_COOKIE = 'ayh_site';
@@ -117,6 +137,10 @@ function assetsUsedBy(dir) {
   return used;
 }
 const wantsFile = (name, key) => !ONLY_FOR[name] || ONLY_FOR[name].includes(key);
+/** Assets (photos, social cards, styles) that the building site's pages use and no page of the two home sites does: left out of dist-ca and dist-us. */
+const homeUsed = new Set([...assetsUsedBy(join(DIST, 'ca')), ...assetsUsedBy(join(DIST, 'us'))]);
+const buildingOnly = new Set([...assetsUsedBy(join(DIST, 'bu'))].filter((rel) => !homeUsed.has(rel)));
+const toRel = (abs) => abs.slice(DIST.length).split(sep).join('/');
 
 // ---------------------------------------------------------------- build each site
 const summary = [];
@@ -142,7 +166,7 @@ for (const c of SITE_KEYS) {
   } else {
     for (const name of readdirSync(DIST)) {
       if (SITE_KEYS.includes(name) || !wantsFile(name, c)) continue;
-      cpSync(join(DIST, name), join(out, name), { recursive: true });
+      cpSync(join(DIST, name), join(out, name), { recursive: true, filter: (src) => !buildingOnly.has(toRel(src)) });
     }
   }
   cpSync(join(DIST, c), out, { recursive: true });
@@ -221,6 +245,8 @@ for (const c of SITE_KEYS) {
   } else if (c === 'ca') {
     lines.push(
       '# audityourhome.ca is the Canadian site (since 2026-10-30). Its pages were at audityourhome.com (root, then /ca/) before.',
+      '# The commercial and multi-unit pages moved to audityourbuilding.com on 2026-11-04 (first, so /ca/* below does not make two hops).',
+      ...movedToBuildingRules(),
       '/ca  /  301!',
       '/ca/*  /:splat  301!',
       '/us  https://audityourhome.com/  301!',
@@ -237,6 +263,8 @@ for (const c of SITE_KEYS) {
       '# then both countries under /ca/ and /us/ until 2026-10-30.',
       '# Spare domain',
       ...SPARE_DOMAINS.flatMap((d) => [`https://${d}/*  https://audityourhome.com/:splat  301!`, `http://${d}/*  https://audityourhome.com/:splat  301!`]),
+      '# The commercial and multi-unit pages that were on the Canadian pages moved to audityourbuilding.com on 2026-11-04 (first, so the rules below do not make two hops).',
+      ...movedToBuildingRules(),
       '# Country prefixes',
       '/ca  https://audityourhome.ca/  301!',
       '/ca/*  https://audityourhome.ca/:splat  301!',

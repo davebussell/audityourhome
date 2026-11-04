@@ -179,6 +179,13 @@ export const PHOTOS = {
 
 export type PhotoKey = keyof typeof PHOTOS;
 
+/**
+ * The two pictures that belong to audityourbuilding.com (commercial and multi-unit buildings). They stay in this
+ * registry so that site can use them, but no page of audityourhome.ca or .com shows them any more, so the credits
+ * pages of those two sites leave them out and the build leaves their files out of dist-ca and dist-us.
+ */
+export const BUILDING_PHOTO_KEYS = ['commercial-energy-audit', 'multi-unit'] as const;
+
 export function photo(key: string): SitePhoto | undefined {
   return (PHOTOS as Record<string, SitePhoto>)[key];
 }

@@ -3,7 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
 import { ogFor, PROV_SLUG_PHOTO } from '../../../lib/photos';
 import EraBar from '../../../components/EraBar.astro';
-import { localCities } from '../../../lib/local';
+import { localCities, SERVICE_COUNT } from '../../../lib/local';
 import LeadForm from '../../../components/LeadForm.astro';
 import { SITE } from '../../../config/site';
 import { breadcrumbSchema } from '../../../lib/schema';
@@ -138,7 +138,7 @@ const cityProfileLabel = (slug: string) => placeClimate('ca', slug)?.profile.lab
       <>
         <h2 class="sec">Local guides for {provCities.length} {provCities.length === 1 ? 'city' : 'cities'} in {p.name}</h2>
         <p class="small measure">
-          Each city page covers 16 audit and testing services with that city's own climate, housing
+          Each city page covers {SERVICE_COUNT} audit and testing services with that city's own climate, housing
           age and service organizations. The bar shows its houses by construction era, oldest first.
           HDD is heating degree-days: the higher the number, the longer and colder the heating season.
           The share built before 1961 matters because older houses usually leak more and have less insulation.

@@ -61,12 +61,13 @@ export const TIMELINES: Opt[] = [
   { value: 'researching', label: 'Just researching for now' },
 ];
 
+/** Houses and single units only: apartment buildings (4+ units) and commercial buildings moved to audityourbuilding.com
+ *  on 2026-11-04. The database check still accepts 'multi-unit' and 'commercial', so older requests keep their value
+ *  (the admin console shows the raw value when no label matches). */
 export const BUILDINGS: Opt[] = [
   { value: 'house', label: 'House (detached, semi, row or town)' },
   { value: 'duplex-triplex', label: 'Duplex or triplex' },
-  { value: 'multi-unit', label: 'Multi-unit building (4 or more units)' },
   { value: 'condo-unit', label: 'Condo unit' },
-  { value: 'commercial', label: 'Commercial building' },
 ];
 
 export const REQUEST_STATUS: Record<string, { label: string; tone: string; hint: string }> = {

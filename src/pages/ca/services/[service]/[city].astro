@@ -7,7 +7,7 @@ import ThermalCompare from '../../../../components/ThermalCompare.astro';
 import RegionalNeeds from '../../../../components/RegionalNeeds.astro';
 import { placeClimate, TEST_FOR_CA_SERVICE } from '../../../../lib/climate';
 import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
-import { localIndex, loadCity, services, CAT_LABEL } from '../../../../lib/local';
+import { localIndex, loadCity, services, SERVICE_COUNT } from '../../../../lib/local';
 import type { LocalPage, LocalService, LocalCity } from '../../../../lib/local';
 import { ogFor } from '../../../../lib/photos';
 
@@ -50,9 +50,7 @@ const schema = [
 
 const leadHeading = service.cat === 'energy'
   ? `Get matched with a registered advisor in ${city.name}`
-  : service.cat === 'commercial'
-    ? `Tell us about your building in ${city.name}`
-    : `Ask about ${service.name.toLowerCase()} in ${city.name}`;
+  : `Ask about ${service.name.toLowerCase()} in ${city.name}`;
 const leadSub = service.cat === 'energy'
   ? 'Tell us your postal code and what you’re planning. We’ll connect you with one licensed service organization serving your area. No spam, no shared lead lists.'
   : 'Tell us your postal code and what you’re dealing with. We’ll reply with the right kind of certified professional or lab for your area, and which programs apply.';
@@ -65,7 +63,7 @@ const statusChip: Record<string, [string, string]> = {
 };
 
 // What this test means in the city's climate: the profile's own note on the test, or the compact
-// profile for the full audit. Skipped where the climate has nothing specific to add (and for buildings).
+// profile for the full audit. Skipped where the climate has nothing specific to add.
 const clim = placeClimate('ca', city.slug);
 const climTest = TEST_FOR_CA_SERVICE[service.slug];
 const climHasTest = !!clim && !!climTest && (clim.profile.tests.some((t) => t.test === climTest)
@@ -222,7 +220,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
           <dl>
             {pg.snapshot.map((x) => (<><dt>{x.k}{x.note && <span class="sn">{x.note}</span>}</dt><dd>{x.v}</dd></>))}
           </dl>
-          <a class="more" href={`/cities/${city.slug}/`}>All 16 services in {city.name} →</a>
+          <a class="more" href={`/cities/${city.slug}/`}>All {SERVICE_COUNT} services in {city.name} →</a>
         </div>
         <nav class="card card-pad rel" aria-label={`Other services in ${city.name}`}>
           <p class="eyebrow">More in {city.name}</p>

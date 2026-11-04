@@ -1,19 +1,19 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
+import BuildingPointer from '../../../components/BuildingPointer.astro';
 import { breadcrumbSchema } from '../../../lib/schema';
-import { services, localIndex, citiesByProvince } from '../../../lib/local';
+import { services, localIndex, citiesByProvince, SERVICE_COUNT } from '../../../lib/local';
 import { ogFor } from '../../../lib/photos';
 
 const n = localIndex.cities.length;
 const title = `Home energy audit and home testing services in ${n} Canadian cities | AuditYourHome`;
-const description = `Sixteen home energy and home health services, from EnerGuide evaluations and blower door tests to radon, asbestos and well water testing, with local guides for ${n} cities across Canada.`;
+const description = `${SERVICE_COUNT} home energy and home health services, from EnerGuide evaluations and blower door tests to radon, asbestos and well water testing, with local guides for ${n} cities across Canada.`;
 const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }])];
 
 const GROUPS = [
   { cat: 'energy', title: 'Energy: find where the heat and money go', note: 'Usually done during an EnerGuide evaluation by an NRCan-registered energy advisor.' },
   { cat: 'health', title: 'Home health: test the air, water and materials', note: 'Specialty tests by certified professionals and accredited labs, and some you can do yourself.' },
-  { cat: 'commercial', title: 'Commercial buildings', note: 'Engineering-grade audits for businesses, institutions and multi-unit buildings.' },
 ];
 const groups = citiesByProvince();
 ---
@@ -22,7 +22,7 @@ const groups = citiesByProvince();
   <div class="container">
     <div class="page-hero has-photo">
       <div class="hero-text">
-        <p class="eyebrow">16 services · {n} cities · checked {localIndex.checked}</p>
+        <p class="eyebrow">{SERVICE_COUNT} services · {n} cities · checked {localIndex.checked}</p>
         <h1>Every home audit and test, city by city</h1>
         <p class="lede">
           Pick the service, then your city. Each local page pulls together the numbers that change
@@ -55,6 +55,13 @@ const groups = citiesByProvince();
         </div>
       </section>
     ))}
+
+    <section class="grp">
+      <BuildingPointer
+        heading="Own or manage a commercial or apartment building?"
+        text="These services are for houses. Offices, stores, plants and apartment or condo buildings get engineering audits to the ASHRAE levels instead, with their own reporting rules and incentives. We cover them on a sister site, city by city."
+      />
+    </section>
 
     <section class="grp">
       <h2>Or start with your city</h2>

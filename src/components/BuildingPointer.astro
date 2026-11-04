@@ -1,0 +1,59 @@
+---
+/* A card that sends the owner of a commercial or apartment building to AuditYourBuilding.com.
+   The residential sites no longer carry commercial or multi-unit building content (it moved to that site on
+   2026-11-04); this is the one place they say where it went. Used on city pages, the services hub and the
+   professionals page. Blueprint blue is the other site's accent, so the card reads as "a different site". */
+import { buildingUrl } from '../config/building';
+import BuildingIcon from './building/BuildingIcon.astro';
+
+interface Props {
+  /** Page on audityourbuilding.com, root-form path (its home page when omitted) */
+  path?: string;
+  heading?: string;
+  text?: string;
+  /** Link text (the arrow is added) */
+  cta?: string;
+  /** A building type icon (see BuildingIcon) */
+  icon?: string;
+}
+const {
+  path = '/',
+  heading = 'Own or manage a commercial or apartment building?',
+  text = 'Building audits follow a different standard (the three ASHRAE levels) and have their own reporting rules and incentives. Our sister site covers them, city by city.',
+  cta = 'AuditYourBuilding.com',
+  icon = 'office',
+} = Astro.props;
+---
+
+<aside class="bldg-pointer" aria-label="Commercial and apartment buildings">
+  <span class="bp-ic" aria-hidden="true"><BuildingIcon type={icon} size={40} /></span>
+  <div class="bp-body">
+    <p class="bp-eyebrow">Not a house?</p>
+    <p class="bp-h">{heading}</p>
+    <p class="bp-t">{text}</p>
+    <a class="bp-a" href={buildingUrl(path)}>{cta}&nbsp;→</a>
+  </div>
+</aside>
+
+<style>
+  .bldg-pointer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    padding: 20px 22px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid #1f5fa8;
+    border-radius: var(--radius);
+  }
+  .bp-ic { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 12px; background: #eaf1fa; color: #1f5fa8; }
+  .bp-eyebrow { margin: 0 0 4px; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #1f5fa8; }
+  .bp-h { margin: 0 0 4px; font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--ink); }
+  .bp-t { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; color: var(--muted); max-width: 62ch; }
+  .bp-a { font-weight: 700; overflow-wrap: anywhere; }
+  @media (max-width: 520px) {
+    .bldg-pointer { grid-template-columns: 1fr; gap: 12px; padding: 18px 18px; }
+    .bp-ic { width: 52px; height: 52px; }
+  }
+</style>
