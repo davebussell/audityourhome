@@ -1,0 +1,97 @@
+---
+import { BUILDING, buildingPath } from '../config/building';
+import { absolutize } from '../lib/schema';
+import BHeader from '../components/building/BHeader.astro';
+import BFooter from '../components/building/BFooter.astro';
+import '../styles/global.css';
+import '../styles/building.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra JSON-LD blocks for this page */
+  schema?: Record<string, unknown>[];
+  /** Set false on utility pages (404, thanks) */
+  indexable?: boolean;
+  /** Social-card image path (1200×630); defaults to the site card */
+  ogImage?: string;
+  /** The page ends in a full-width dark band: take away the gap above the footer */
+  flushFooter?: boolean;
+}
+
+const { title, description, schema = [], indexable = true, ogImage = '/og-default-building.png', flushFooter = false } = Astro.props;
+/* Pages are built under /bu/ and published at the root of audityourbuilding.com. */
+const canonical = new URL(buildingPath(Astro.url.pathname), BUILDING.url).href;
+const ogUrl = new URL(ogImage, BUILDING.url).href;
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: BUILDING.name,
+  url: BUILDING.url,
+  description: BUILDING.description,
+};
+const blocks = [website, ...schema].map((b) => absolutize(b, BUILDING.url));
+---
+
+<!doctype html>
+<html lang="en-CA" data-site="building">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {!indexable && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon-building.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_CA" />
+    <meta name="ayh-country" content="building" />
+    <meta property="og:site_name" content={BUILDING.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogUrl} />
+
+    {/* Google tag (gtag.js), Click Shift Portfolio (shared with AuditYourHome; this site reports as content group "building"); Microsoft Clarity */}
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-QK0ETT28BD"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QK0ETT28BD', { content_group: 'building' });
+    </script>
+    <script is:inline>
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "yjaem8xfxi");
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap"
+    />
+
+    {blocks.map((b) => <script type="application/ld+json" set:html={JSON.stringify(b)} />)}
+    <style is:global>
+      main.flush + .site-footer { margin-top: 0; }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the content</a>
+    <BHeader />
+    <main id="main" class:list={{ flush: flushFooter }}>
+      <slot />
+    </main>
+    <BFooter />
+  </body>
+</html>

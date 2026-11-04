@@ -1,0 +1,177 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import IncentiveCard from '../../components/building/IncentiveCard.astro';
+import Photo from '../../components/Photo.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { BUILDING } from '../../config/building';
+import { allIncentives, dataChecked } from '../../lib/building';
+
+// Facts here are from the article this page summarizes (energy-audits-multi-unit-buildings, checked October 5, 2026)
+// and from the program records that mention multi-unit or rental housing.
+const CHECKED = 'October 5, 2026';
+const title = 'Apartment and condo building energy audits | AuditYourBuilding';
+const description =
+  'Which audit an apartment, condo or rental building needs: EnerGuide for low-rise, an ASHRAE engineering audit for larger buildings, and the loans and programs that pay.';
+
+const SRC = {
+  murb: 'https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/multi-unit-residential-buildings-murbs',
+  advisor: 'https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/become-nrcan-registered-energy-advisor',
+  hiris: 'https://www.toronto.ca/community-people/community-partners/apartment-building-operators/tower-renewal/hi-ris/',
+  mli: 'https://www.cmhc-schl.gc.ca/professionals/project-funding-and-mortgage-financing/mortgage-loan-insurance/multi-unit-insurance/mliselect',
+  ewrb: 'https://www.ontario.ca/page/report-energy-water-use-large-buildings',
+};
+
+// Utility and government programs that name multi-unit, rental or affordable housing buildings.
+const MULTI = ['enbridge-affordable-housing-assessment', 'fortisbc-rental-apartment-efficiency', 'saveonenergy-bizenergysaver', 'ens-custom-retrofit-study', 'energir-feasibility-study'];
+const programs = allIncentives().filter((i) => MULTI.includes(i.key) && i.status !== 'closed');
+
+const faq = [
+  {
+    q: 'Can a duplex or triplex get an EnerGuide rating?',
+    a: 'Yes, as a multi-unit residential building, if the advisor is registered for EnerGuide for MURBs, which takes a separate NRCan exam. Low-rise buildings within NRCan’s limits qualify: three storeys or fewer above ground and a building area of 600 m² or less. High-rises fall outside the EnerGuide system.',
+  },
+  {
+    q: 'What audit does a mid-rise or high-rise apartment building need?',
+    a: 'An engineering energy audit scoped to ASHRAE Standard 211, from a mechanical engineering firm or a certified energy manager. For a condo building the envelope matters as much as the plant, so building-science firms often lead.',
+  },
+  {
+    q: 'What audit does a Toronto apartment building need for Hi-RIS?',
+    a: 'An energy assessment report at ASHRAE Level 2 or above; the City may accept a decarbonization study for non-profit housing. Hi-RIS is for Toronto apartment buildings at least 20 years old with 7 or more units and 3 or more storeys.',
+  },
+  {
+    q: 'Who can do the energy analysis for CMHC MLI Select?',
+    a: 'A professional engineer, architect, certified engineering technologist or certified energy manager, using energy simulation software. For existing buildings, cuts of 15%, 25% or 40% earn 20, 35 or 50 points.',
+  },
+];
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Apartments and condos', path: '/apartments-condos/' }]),
+  faqSchema(faq),
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('multi-unit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Apartments and condos</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Multi-unit residential buildings · checked {CHECKED}</p>
+        <h1>Apartment, condo and rental buildings</h1>
+        <p class="lede">
+          A duplex, a six-plex and a 1960s apartment tower all count as multi-unit buildings, but they get different audits. Which one fits depends
+          on the building’s height and size, and it decides which programs will pay.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#request">Request an audit</a>
+          <a class="btn btn-ghost" href="/articles/energy-audits-multi-unit-buildings/">Read the full article</a>
+        </div>
+      </div>
+      <Photo name="multi-unit" eager sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+    </div>
+
+    <section class="block">
+      <div class="sec-head"><h2>Which audit fits your building</h2><span class="tag">Count storeys, area and units</span></div>
+      <div class="fits">
+        <div class="card sheet fit">
+          <p class="tag">Low-rise</p>
+          <h3>EnerGuide rating for multi-unit buildings</h3>
+          <p>
+            NRCan’s EnerGuide Rating System covers low-rise multi-unit buildings: <strong>three storeys or fewer</strong> above ground, a building area of
+            <strong>600 m² or less</strong>, and <strong>2 to 100 units</strong>, with at least half the floor area used as living space. One evaluation covers the
+            whole building, every unit and common area included (<a href={SRC.murb} rel="noopener">NRCan</a>).
+          </p>
+          <p>The advisor must also have passed NRCan’s separate MURB exam (<a href={SRC.advisor} rel="noopener">NRCan</a>). Ask before you book.</p>
+        </div>
+        <div class="card sheet fit">
+          <p class="tag">Mid-rise and high-rise</p>
+          <h3>Engineering audit, ASHRAE 211</h3>
+          <p>
+            Larger buildings are a different job: NRCan says high-rises involve very different engineering and fall outside the EnerGuide system. They get an
+            engineering energy audit scoped to ASHRAE Standard 211, from a mechanical engineering firm or a certified energy manager.
+          </p>
+          <p><a href="/audit-levels/">The three audit levels →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Money for multi-unit buildings</h2><span class="tag">Loans, insurance and utility programs</span></div>
+      <div class="tablewrap card">
+        <table class="stack">
+          <thead><tr><th>Program</th><th>Which buildings</th><th>What it offers</th></tr></thead>
+          <tbody>
+            <tr>
+              <td data-label="Program"><a href={SRC.hiris} rel="noopener">Toronto Hi-RIS</a></td>
+              <td data-label="Which buildings">Toronto apartment buildings at least 20 years old, with 7 or more units and 3 or more storeys</td>
+              <td data-label="What it offers">Loans up to 10% of current value assessment or $2.5 million per building, interest-free during construction; needs an energy assessment report at ASHRAE Level 2 or above</td>
+            </tr>
+            <tr>
+              <td data-label="Program"><a href={SRC.mli} rel="noopener">CMHC MLI Select</a></td>
+              <td data-label="Which buildings">Rental buildings with 5 or more units</td>
+              <td data-label="What it offers">Points toward better mortgage-insurance terms for committing to cut an existing building’s energy use and emissions: 15% earns 20 points, 25% earns 35, 40% earns 50; the analysis comes from an engineer, architect, technologist or certified energy manager</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small after">Programs change often and have deadlines. The <a href="/articles/energy-audits-multi-unit-buildings/">full article</a> covers Toronto, Ottawa and Peterborough loans, Enbridge’s multi-residential incentives and the federal options, each with its source.</p>
+
+      {programs.length > 0 && (
+        <>
+          <h3 class="sub">Utility programs that pay for audits and assessments in multi-unit buildings</h3>
+          <div class="cards">
+            {programs.map((i) => <IncentiveCard incentive={i} showProvinces />)}
+          </div>
+          <p class="meta after">Read {dataChecked}. <a href="/incentives/">All incentive programs →</a></p>
+        </>
+      )}
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Reporting rules that cover apartment buildings</h2><span class="tag">Annual benchmarking</span></div>
+      <p class="measure">
+        Ontario’s Energy and Water Reporting and Benchmarking regulation covers multi-unit residential buildings of 7 or more self-contained units at 50,000 sq ft and
+        larger (<a href={SRC.ewrb} rel="noopener">ontario.ca</a>), and Toronto’s by-law adds a city report. Other cities and provinces have their own thresholds:
+        <a href="/reporting-rules/">see every rule, province by province</a>, or pick your city.
+      </p>
+      <p><a class="btn btn-ghost" href="/commercial-energy-audit/">Choose your city</a></p>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Before you book</h2></div>
+      <ol class="steps3">
+        <li><strong>Count storeys and units.</strong> Three storeys or fewer with a building area of 600 m² or less points to an EnerGuide MURB evaluation. Anything larger points to an engineering audit.</li>
+        <li><strong>Ask about MURB registration</strong> before you book an EnerGuide evaluation.</li>
+        <li><strong>Match the audit to the money.</strong> Hi-RIS asks for an ASHRAE Level 2 report or better, MLI Select for an energy analysis by an engineer, architect, technologist or energy manager, and city loan programs for EnerGuide evaluations before and after.</li>
+      </ol>
+      <p class="small">Own a single condo unit or a house? That is a home evaluation: see <a href={BUILDING.homeCa.url}>AuditYourHome.ca</a>.</p>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Common questions</h2></div>
+      <div class="measure">
+        {faq.map((f) => <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>)}
+      </div>
+    </section>
+
+    <RequestForm id="request" context="apartments-condos" type="multi-unit" heading="Tell us about your apartment or condo building" sub="Number of storeys and units, city, and what you need. We introduce you to one engineering firm or energy consultant that serves your area." />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .block { padding: 10px 0 30px; }
+  .fits { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 860px) { .fits { grid-template-columns: 1fr; } }
+  .fit { padding: 24px 26px; display: grid; gap: 4px; align-content: start; }
+  .fit h3 { margin: 2px 0 6px; font-size: 21px; }
+  .fit p { margin: 0 0 0.8em; }
+  .tablewrap { margin: 0; overflow-x: auto; }
+  .tablewrap table { font-size: 14.5px; }
+  .after { margin: 14px 0 0; max-width: 76ch; }
+  .sub { font-size: 19px; margin: 28px 0 12px; }
+  .cards { display: grid; gap: 14px; }
+  .steps3 { margin: 0 0 14px; padding-left: 22px; display: grid; gap: 10px; max-width: 74ch; }
+</style>

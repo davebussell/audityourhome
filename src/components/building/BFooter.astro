@@ -1,0 +1,93 @@
+---
+import BLogo from './BLogo.astro';
+import { BUILDING } from '../../config/building';
+import { cities, dataChecked } from '../../lib/building';
+
+/* Same footer features as the AuditYourHome sites: where we work, connect, credits, live year. */
+const LINKEDIN = 'https://www.linkedin.com/in/davebussell/';
+const INSTAGRAM = 'https://www.instagram.com/davebussell/';
+const year = new Date().getFullYear();
+---
+
+<footer class="band-dark site-footer">
+  <div class="container">
+    <div class="cols">
+      <div class="brand-col">
+        <BLogo onDark />
+        <p class="small">Energy audits for commercial and multi-unit buildings in Canada: what the audit levels mean, which reporting rules apply in your city, and which incentives pay for audits and studies.</p>
+        <p class="meta">Rules and programs last read {dataChecked}</p>
+        <h4 class="where-h">Where we work</h4>
+        <p class="small where">Wakefield, Quebec, in the Gatineau Hills north of Ottawa. Proudly built in Canada, covering {cities.length} cities from Victoria to St. John’s.</p>
+      </div>
+      <nav aria-label="Buildings">
+        <h4>Buildings</h4>
+        <ul>
+          <li><a href="/commercial-energy-audit/">Commercial audits by city</a></li>
+          <li><a href="/audit-levels/">The three audit levels</a></li>
+          <li><a href="/apartments-condos/">Apartments &amp; condos</a></li>
+          <li><a href="/reporting-rules/">Energy reporting rules</a></li>
+          <li><a href="/incentives/">Audit &amp; study incentives</a></li>
+          <li><a href="/how-it-works/">How a building audit works</a></li>
+          <li><a href="/articles/">Articles</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Company and homes">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about/">About &amp; data policy</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/credits/">Illustration &amp; data credits</a></li>
+        </ul>
+        <h4 class="second">Home energy audits</h4>
+        <ul>
+          <li><a href={BUILDING.homeCa.url}>{BUILDING.homeCa.name} (Canada)</a></li>
+          <li><a href={BUILDING.homeUs.url}>{BUILDING.homeUs.name} (United States)</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Connect">
+        <h4>Connect</h4>
+        <ul class="connect">
+          <li><a href="/request/">Request an audit →</a></li>
+          <li><a href={`mailto:${BUILDING.contactEmail}`}>Email {BUILDING.contactEmail}</a></li>
+          <li><a href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href={INSTAGRAM} target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <p>
+        {BUILDING.name} is an independent guide and introduction service. We are not affiliated with ASHRAE, Natural Resources Canada, any utility,
+        or any government program. Reporting rules and incentive programs change: confirm on the official page, linked from every entry, before you
+        commit money or a filing date. Nothing here is engineering, legal or financial advice, and a page that lists a program or rule is not a
+        statement that your building qualifies. Pictures on this site are AI-generated illustrations or drawings made for it; they don’t show real
+        customers, specific buildings or any firm.
+      </p>
+      <p class="meta">© <span id="year">{year}</span> {BUILDING.name} · Canada, city by city · Know your building before you commission the audit.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { padding: 56px 0 36px; margin-top: 40px; }
+  .cols { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 32px; border-bottom: 1px solid var(--navy-line); }
+  @media (max-width: 1000px) { .cols { grid-template-columns: 1.4fr 1fr 1fr; } .cols nav:last-child { grid-column: 1 / -1; } }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr; gap: 28px; } .cols nav:last-child { grid-column: auto; } }
+  .brand-col p { margin-top: 14px; max-width: 40ch; }
+  .where-h { margin-top: 22px; }
+  .brand-col .where { margin-top: 0; }
+  .connect a { overflow-wrap: anywhere; }
+  h4 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  h4.second { margin-top: 22px; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  ul a { text-decoration: none; font-size: 14.5px; }
+  ul a:hover { color: #fff; text-decoration: underline; }
+  .legal { padding-top: 24px; }
+  .legal p:first-child { font-size: 13px; max-width: 90ch; }
+  .meta { color: var(--navy-muted); }
+</style>
+
+<script>
+  // Keep the copyright year current without a rebuild (the build year is rendered as the fallback).
+  const y = document.getElementById('year');
+  if (y) y.textContent = String(new Date().getFullYear());
+</script>

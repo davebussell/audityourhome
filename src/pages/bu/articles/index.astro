@@ -1,0 +1,70 @@
+---
+import BuildingBase from '../../../layouts/BuildingBase.astro';
+import Photo from '../../../components/Photo.astro';
+import ArtTile from '../../../components/building/ArtTile.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { articles, STATIC_ARTICLES, ARTICLE_PHOTO, ARTICLE_TILE } from '../../../lib/building';
+
+const title = 'Building energy audit articles for owners | AuditYourBuilding';
+const description =
+  'Cited, dated articles on commercial and multi-unit building energy audits: ASHRAE levels, Ontario and Toronto reporting rules, apartment buildings and the programs that pay.';
+
+const cards = [
+  ...STATIC_ARTICLES.map((a) => ({ href: `/articles/${a.slug}/`, kicker: a.kicker, title: a.title, blurb: a.blurb, photo: ARTICLE_PHOTO[a.slug], tile: ARTICLE_TILE[a.slug], verified: a.verified })),
+  ...articles.map((a) => ({ href: `/articles/${a.slug}/`, kicker: a.kicker, title: a.h1, blurb: a.blurb, photo: ARTICLE_PHOTO[a.slug], tile: ARTICLE_TILE[a.slug], verified: a.verified })),
+];
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Articles', path: '/articles/' }])];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Articles</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Articles</p>
+      <h1>Cited, dated, for building owners</h1>
+      <p class="lede measure">
+        Long-form answers with receipts: every program claim links to its official page and carries the date we checked it.
+      </p>
+    </div>
+
+    <div class="arts">
+      {cards.map((c) => (
+        <a class="card art" href={c.href}>
+          {c.tile
+            ? <ArtTile types={c.tile.types} caption={c.tile.caption} flat />
+            : <Photo name={c.photo} plain hud={false} ratio="16 / 9" sizes="(max-width: 860px) calc(100vw - 44px), 360px" />}
+          <span class="ab">
+            <span class="tag">{c.kicker}</span>
+            <strong>{c.title}</strong>
+            <span class="bl">{c.blurb}</span>
+            <span class="meta">Verified {c.verified}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <div class="card sheet more">
+      <h2>Looking for your city?</h2>
+      <p class="mb-0">The <a href="/commercial-energy-audit/">city pages</a> list the reporting rules and the audit incentives for each of 70 Canadian cities, and <a href="/reporting-rules/">reporting rules</a> and <a href="/incentives/">incentives</a> show them province by province.</p>
+    </div>
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .arts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .arts { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .arts { grid-template-columns: 1fr; } }
+  .art { display: grid; grid-template-rows: auto 1fr; overflow: hidden; text-decoration: none; color: var(--ink); transition: box-shadow 0.15s ease, border-color 0.15s ease; }
+  .art:hover { box-shadow: var(--shadow-md); border-color: var(--line-strong); color: var(--ink); }
+  .art :global(.frame) { border-radius: 0; box-shadow: none; }
+  .ab { display: grid; gap: 6px; padding: 16px 18px 20px; align-content: start; }
+  .ab .tag { margin: 0; }
+  .ab strong { font-family: var(--display); font-size: 18px; line-height: 1.2; }
+  .bl { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .ab .meta { margin: 4px 0 0; }
+  .more { padding: 24px 28px; margin: 32px 0 40px; max-width: 800px; }
+  .more h2 { font-size: 22px; margin: 0 0 8px; }
+</style>

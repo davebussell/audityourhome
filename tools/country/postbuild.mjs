@@ -1,11 +1,12 @@
-// After `astro build` and tools/glossary/link.mjs: split dist/ into the two published sites.
+// After `astro build` and tools/glossary/link.mjs: split dist/ into the three published sites.
 //
-//   dist/ca/**  →  dist-ca/   audityourhome.ca    (Canada)
-//   dist/us/**  →  dist-us/   audityourhome.com   (United States)
+//   dist/ca/**  →  dist-ca/   audityourhome.ca      (Canada)
+//   dist/us/**  →  dist-us/   audityourhome.com     (United States)
+//   dist/bu/**  →  dist-bu/   audityourbuilding.com (commercial and multi-unit buildings, Canada; since 2026-11-04)
 //
-// Each site gets the shared assets (everything in dist/ outside ca/ and us/), its pages at the root,
-// cross-domain hreflang links between twin pages, its own sitemap.xml (+ sitemap-index.xml), robots.txt,
-// 404.html and the Netlify _redirects file. The US site's rules also send visitors from Canada to the
+// Each site gets the shared assets (everything in dist/ outside ca/, us/ and bu/; the building site gets only the
+// ones its own pages use), its pages at the root, its own sitemap.xml (+ sitemap-index.xml), robots.txt, 404.html and
+// the Netlify _redirects file. The two home sites also get cross-domain hreflang links between twin pages. The US site's rules also send visitors from Canada to the
 // Canadian twin of a page (unless they chose the US site: ayh_site cookie, set by /switch/), send the
 // old Canadian addresses on audityourhome.com to audityourhome.ca, and redirect audityourhouse.com.
 // The Canadian site never redirects by country: Googlebot crawls from the US and would never see it.
@@ -18,9 +19,24 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DIST = process.argv[2] ? join(process.cwd(), process.argv[2]) : join(ROOT, 'dist');
 const COUNTRIES = ['ca', 'us'];
+/** Every site the build publishes: the two home sites (by country) and the building site. */
+const SITE_KEYS = ['ca', 'us', 'bu'];
 const SITES = {
   ca: { url: 'https://audityourhome.ca', name: 'AuditYourHome', locale: 'en-CA', netlify: 'audityourhome-ca', out: join(ROOT, 'dist-ca') },
   us: { url: 'https://audityourhome.com', name: 'AuditYourHome', locale: 'en-US', netlify: 'audityourhome', out: join(ROOT, 'dist-us') },
+  bu: { url: 'https://audityourbuilding.com', name: 'AuditYourBuilding', locale: 'en-CA', netlify: 'audityourbuilding', out: join(ROOT, 'dist-bu') },
+};
+/** Files in public/ that belong to some sites only (the others don't get them). Anything not listed goes to every site that uses it. */
+const ONLY_FOR = {
+  'favicon-building.svg': ['bu'],
+  'og-default-building.png': ['bu'],
+  'favicon.svg': ['ca', 'us'],
+  'og-default.png': ['ca', 'us'],
+  'og-default-us.png': ['ca', 'us'],
+  'switch': ['ca', 'us'],
+  'geo': ['ca', 'us'],
+  'gl.js': ['ca', 'us'],
+  '33f67d1ce743b218572dfce6d7fc2b49.txt': ['ca', 'us'],
 };
 /** Spare domain that redirects to the US site (a domain alias of the audityourhome Netlify site). */
 const SPARE_DOMAINS = ['audityourhouse.com', 'www.audityourhouse.com'];
@@ -51,9 +67,9 @@ const noindex = (html) => /<meta name="robots" content="noindex/.test(html);
 
 // ---------------------------------------------------------------- what the unified build holds
 /** indexable page paths per country, in root form: { ca: Set('/', '/tests/', ...), us: Set(...) }; `all` includes noindex pages */
-const indexable = { ca: new Set(), us: new Set() };
-const all = { ca: new Set(), us: new Set() };
-for (const c of COUNTRIES) {
+const indexable = { ca: new Set(), us: new Set(), bu: new Set() };
+const all = { ca: new Set(), us: new Set(), bu: new Set() };
+for (const c of SITE_KEYS) {
   for (const file of walk(join(DIST, c))) {
     const rel = file.slice(join(DIST, c).length).replace(/\\/g, '/').replace(/index\.html$/, '') || '/';
     all[c].add(rel);
@@ -72,43 +88,83 @@ const usSections = new Set([...all.us].map(section));
 const caOnlySections = [...new Set([...all.ca].map(section))].filter((s) => s && !usSections.has(s)).sort();
 const caOnlyPages = [...all.ca].filter((p) => !all.us.has(p) && !caOnlySections.includes(section(p)) && p !== '/404/').sort();
 // public/switch/index.html is a shared static page, not an Astro page; it belongs to both sites.
-const stray = walk(DIST).filter((f) => !COUNTRIES.some((c) => f.startsWith(join(DIST, c) + sep)) && f !== join(DIST, 'switch', 'index.html'));
+const stray = walk(DIST).filter((f) => !SITE_KEYS.some((c) => f.startsWith(join(DIST, c) + sep)) && f !== join(DIST, 'switch', 'index.html'));
 if (stray.length) {
-  console.error(`postbuild: ${stray.length} page(s) outside src/pages/ca and src/pages/us have no site to go to:\n  ${stray.map((f) => f.slice(DIST.length)).join('\n  ')}`);
+  console.error(`postbuild: ${stray.length} page(s) outside src/pages/ca, src/pages/us and src/pages/bu have no site to go to:\n  ${stray.map((f) => f.slice(DIST.length)).join('\n  ')}`);
   process.exitCode = 1;
 }
 
+// ---------------------------------------------------------------- shared assets
+/** Files the building site's pages use: /_astro/* and /og/* (followed through the CSS and JS that reference each other), plus its own root files. */
+function assetsUsedBy(dir) {
+  const used = new Set();
+  const queue = [];
+  const note = (rel) => {
+    rel = rel.replace(/[?#].*$/, '');
+    if (!used.has(rel)) { used.add(rel); queue.push(rel); }
+  };
+  const RE_ABS = /\/(?:_astro|og)\/[A-Za-z0-9_.\-]+/g;
+  for (const file of walk(dir)) for (const m of readFileSync(file, 'utf8').matchAll(RE_ABS)) note(m[0]);
+  // CSS and JS files name other files in /_astro/ either by absolute path or relative to themselves
+  const RE_REL = /["'(](?:\.\/|\/_astro\/)([A-Za-z0-9_.\-]+\.(?:js|css|woff2?|png|jpe?g|avif|webp|svg|gif))["')]/g;
+  while (queue.length) {
+    const rel = queue.pop();
+    if (!/\.(?:js|css)$/.test(rel)) continue;
+    const abs = join(DIST, rel);
+    if (!existsSync(abs)) continue;
+    for (const m of readFileSync(abs, 'utf8').matchAll(RE_REL)) note(`/_astro/${m[1]}`);
+  }
+  return used;
+}
+const wantsFile = (name, key) => !ONLY_FOR[name] || ONLY_FOR[name].includes(key);
+
 // ---------------------------------------------------------------- build each site
 const summary = [];
-for (const c of COUNTRIES) {
+for (const c of SITE_KEYS) {
   const site = SITES[c];
   const out = site.out;
   rmSync(out, { recursive: true, force: true });
   mkdirSync(out, { recursive: true });
 
-  // shared assets, then this country's pages at the root
-  for (const name of readdirSync(DIST)) {
-    if (COUNTRIES.includes(name)) continue;
-    cpSync(join(DIST, name), join(out, name), { recursive: true });
+  // shared assets, then this site's pages at the root
+  if (c === 'bu') {
+    // the building site is small: carry over only the assets its own pages use, plus its root files
+    for (const rel of assetsUsedBy(join(DIST, c))) {
+      const from = join(DIST, rel);
+      if (!existsSync(from)) { console.error(`postbuild: bu pages use ${rel}, which the build did not produce`); process.exitCode = 1; continue; }
+      mkdirSync(dirname(join(out, rel)), { recursive: true });
+      cpSync(from, join(out, rel));
+    }
+    for (const name of readdirSync(DIST)) {
+      if (SITE_KEYS.includes(name) || name === '_astro' || name === 'og' || !ONLY_FOR[name] || !wantsFile(name, c)) continue;
+      cpSync(join(DIST, name), join(out, name), { recursive: true });
+    }
+  } else {
+    for (const name of readdirSync(DIST)) {
+      if (SITE_KEYS.includes(name) || !wantsFile(name, c)) continue;
+      cpSync(join(DIST, name), join(out, name), { recursive: true });
+    }
   }
   cpSync(join(DIST, c), out, { recursive: true });
 
-  // hreflang between twins (both sites carry both links), stripping anything the build left
+  // hreflang between the home sites' twins (both carry both links), stripping anything the build left
   let linked = 0;
-  for (const file of walk(out)) {
-    const rel = file.slice(out.length).replace(/\\/g, '/').replace(/index\.html$/, '') || '/';
-    let html = readFileSync(file, 'utf8');
-    const before = html;
-    html = html.replace(/<link rel="alternate" hreflang="[^"]+" href="[^"]+">/g, '');
-    if (!noindex(html) && indexable[c].has(rel) && indexable[other(c)].has(rel)) {
-      const tags = COUNTRIES.map((k) => `<link rel="alternate" hreflang="${SITES[k].locale}" href="${SITES[k].url}${rel}">`).join('');
-      html = html.replace('</head>', `${tags}</head>`);
-      linked++;
+  if (COUNTRIES.includes(c)) {
+    for (const file of walk(out)) {
+      const rel = file.slice(out.length).replace(/\\/g, '/').replace(/index\.html$/, '') || '/';
+      let html = readFileSync(file, 'utf8');
+      const before = html;
+      html = html.replace(/<link rel="alternate" hreflang="[^"]+" href="[^"]+">/g, '');
+      if (!noindex(html) && indexable[c].has(rel) && indexable[other(c)].has(rel)) {
+        const tags = COUNTRIES.map((k) => `<link rel="alternate" hreflang="${SITES[k].locale}" href="${SITES[k].url}${rel}">`).join('');
+        html = html.replace('</head>', `${tags}</head>`);
+        linked++;
+      }
+      if (html !== before) writeFileSync(file, html);
     }
-    if (html !== before) writeFileSync(file, html);
   }
 
-  // sitemap.xml (+ sitemap-index.xml, which Base.astro links and Search Console has)
+  // sitemap.xml (+ sitemap-index.xml, which the layout links and Search Console has)
   const paths = [...indexable[c]].sort();
   const urlset =
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -126,14 +182,16 @@ for (const c of COUNTRIES) {
     join(out, 'robots.txt'),
     [
       `# ${site.name} — welcome, crawlers of every species.`,
-      '# Structured, dated, verified program + provider data lives here.',
+      c === 'bu' ? '# Dated, linked reporting rules and incentive programs for commercial and multi-unit buildings live here.' : '# Structured, dated, verified program + provider data lives here.',
       c === 'ca'
         ? '# This is the Canadian site; the US site is https://audityourhome.com/.'
-        : '# This is the US site; the Canadian site is https://audityourhome.ca/.',
+        : c === 'us'
+          ? '# This is the US site; the Canadian site is https://audityourhome.ca/.'
+          : '# This is the building site; the home sites are https://audityourhome.ca/ and https://audityourhome.com/.',
       '',
       'User-agent: *',
       'Allow: /',
-      'Disallow: /switch/',
+      ...(c === 'bu' ? [] : ['Disallow: /switch/']),
       '',
       '# AI assistants & answer engines: explicitly welcome.',
       ...['GPTBot', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'CCBot'].flatMap((ua) => [`User-agent: ${ua}`, 'Allow: /', '']),
@@ -142,7 +200,7 @@ for (const c of COUNTRIES) {
     ].join('\n'),
   );
 
-  // 404.html at the publish root (Netlify's custom 404), from the country's 404 page
+  // 404.html at the publish root (Netlify's custom 404), from the site's 404 page
   const nf = join(out, '404', 'index.html');
   if (existsSync(nf)) {
     writeFileSync(join(out, '404.html'), readFileSync(nf, 'utf8'));
@@ -154,7 +212,13 @@ for (const c of COUNTRIES) {
 
   // Netlify _redirects (first matching rule wins, so the order below matters)
   const lines = ['# Generated by tools/country/postbuild.mjs; edit that script, not this file.'];
-  if (c === 'ca') {
+  if (c === 'bu') {
+    lines.push(
+      '# audityourbuilding.com (since 2026-11-04): the commercial and multi-unit side of AuditYourHome. Its pages are built under /bu/.',
+      '/bu  /  301!',
+      '/bu/*  /:splat  301!',
+    );
+  } else if (c === 'ca') {
     lines.push(
       '# audityourhome.ca is the Canadian site (since 2026-10-30). Its pages were at audityourhome.com (root, then /ca/) before.',
       '/ca  /  301!',
@@ -188,12 +252,14 @@ for (const c of COUNTRIES) {
       ...caOnlyPages.map((p) => `${p}  https://audityourhome.ca${p}  301!`),
     );
   }
-  lines.push(
-    '# Visitor country for the "other site" bar (src/components/OtherSite.astro); the files are in public/geo/.',
-    '/geo.json  /geo/us.json  200!  Country=us',
-    '/geo.json  /geo/ca.json  200!  Country=ca',
-    '/geo.json  /geo/other.json  200!',
-  );
+  if (c !== 'bu') {
+    lines.push(
+      '# Visitor country for the "other site" bar (src/components/OtherSite.astro); the files are in public/geo/.',
+      '/geo.json  /geo/us.json  200!  Country=us',
+      '/geo.json  /geo/ca.json  200!  Country=ca',
+      '/geo.json  /geo/other.json  200!',
+    );
+  }
   if (c === 'us') {
     lines.push(
       `# Visitors from Canada get the Canadian twin of a page, unless they chose this site (${CHOICE_COOKIE} cookie, set by /switch/).`,
@@ -203,7 +269,7 @@ for (const c of COUNTRIES) {
   }
   writeFileSync(join(out, '_redirects'), lines.join('\n') + '\n');
 
-  summary.push(`${c}: ${paths.length} indexable pages, ${linked} with hreflang, ${lines.length} redirect lines → ${out.slice(ROOT.length + 1)}/`);
+  summary.push(`${c}: ${paths.length} indexable pages${COUNTRIES.includes(c) ? `, ${linked} with hreflang` : ''}, ${lines.length} redirect lines → ${out.slice(ROOT.length + 1)}/`);
 }
 
 console.log(`postbuild: ${summary.join('; ')}`);

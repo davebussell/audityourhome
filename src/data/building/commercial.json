@@ -1,0 +1,2023 @@
+{
+  "checked": "2026-09-28",
+  "notes": [
+    "Every item was read from the cited page on or just before 2026-09-28; 'sourceUpdated' is the date shown on the page, where it had one.",
+    "cityIncentives lists only open or 'unclear' programs; closed ones stay in 'incentives' with status 'closed'.",
+    "Ontario gas mapping: the OEB names Enbridge Gas and EPCOR Natural Gas as the rate-regulated distributors and Kitchener Utilities and Utilities Kingston as municipal utilities. Enbridge is mapped to every Ontario city except Kitchener; EPCOR's small Ontario franchise areas were not checked against the city list.",
+    "Quebec gas mapping: Enbridge Gaz Québec says it is one of two Quebec gas distributors and serves Gatineau and Chelsea; the other is Énergir.",
+    "B.C.: FortisBC gas programs are mapped to all B.C. cities; BC Hydro programs to all but Kelowna. The utility programs are for utility customers and usually need a minimum consumption; see each record's eligibility.",
+    "City rules marked 'none found' without a 'Checked:' note were not individually verified on the municipality's own site.",
+    "Web search quota ran out mid-task, so later programs were found by browsing the official sites directly. That route found no municipal audit incentives outside Toronto and no Quebec municipal programs."
+  ],
+  "rules": {
+    "federal": [
+      {
+        "name": "ENERGY STAR Portfolio Manager (administered in Canada by NRCan)",
+        "type": "tool (not a regulation)",
+        "status": "available",
+        "summary": "Free online benchmarking platform 'administered and promoted by Natural Resources Canada'; tracks energy (plus water and waste) and gives a 1-100 ENERGY STAR score (75+ can apply for certification). NRCan says it can be used for provincial, territorial and municipal reporting programs; it is the submission tool named by Ontario EWRB, Toronto, Vancouver, Victoria, Saanich and Montréal. NRCan also supports utilities' automated data exchange (Portfolio Manager Web Services).",
+        "thresholds": null,
+        "source": "https://natural-resources.canada.ca/energy-efficiency/energy-star/energy-benchmarking-energy-starr-portfolio-managerr",
+        "sourceUpdated": "2026-03-26",
+        "note": "No federal mandatory benchmarking/reporting rule for private buildings was found; NRCan's own jurisdiction list (modified 2026-03-26) names only provincial and municipal programs."
+      },
+      {
+        "name": "NRCan list of Canadian benchmarking / building performance standard programs",
+        "type": "reference",
+        "status": "reference",
+        "summary": "Under 'Benchmarking and disclosure (regulation or voluntary program)' NRCan lists Ontario EWRB, Montréal's GHG disclosure and rating by-law, Calgary BenchmarkYYC, Edmonton's Building Energy Benchmarking Program, Ottawa's benchmarking and auditing program, Winnipeg's Building Energy Disclosure Project, Efficiency Nova Scotia's Benchmarking Pilot, a Service New Brunswick energy management annual report, two Quebec items, Building Benchmark BC and the CaGBC Disclosure Challenge. Under 'Building performance standards' it lists Vancouver (carbon pollution limits and reporting) and Toronto (Energy & Water Reporting).",
+        "thresholds": null,
+        "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+        "sourceUpdated": "2026-03-26",
+        "note": "Not exhaustive or fully current: it omits Victoria's and Saanich's 2025 reporting bylaws and Quebec's June 2026 provincial regulation, and it doesn't separate mandatory from voluntary programs."
+      }
+    ],
+    "provinces": {
+      "ON": [
+        {
+          "name": "Energy and Water Reporting and Benchmarking (EWRB) - O. Reg. 506/18",
+          "type": "mandatory reporting",
+          "status": "in force",
+          "summary": "Owners of large buildings must report the previous calendar year's energy (all fuels) and water use to Ontario's Ministry of Energy and Mines through ENERGY STAR Portfolio Manager every year. Covered types include multi-unit residential (7+ self-contained units), office, retail/services, hospitality, entertainment/recreation, industrial/warehousing, institutional and 'other' (MPAC property codes); exemptions exist. The province publishes building-level intensities, ENERGY STAR scores and GHG intensity (not totals or floor area) on the Ontario Data Catalogue. Toronto buildings must report to both the province and the city.",
+          "thresholds": "Buildings 50,000 sq ft (4,645 m2) and larger. Buildings 100,000 sq ft and larger need a certified professional to verify data in the first reporting year and every five years after.",
+          "deadline": "July 1 each year (e.g., July 1, 2026 for 2025 data).",
+          "source": "https://www.ontario.ca/page/report-energy-water-use-large-buildings",
+          "sourceUpdated": "2026-08-18",
+          "additionalSources": [
+            "https://www.ontario.ca/document/guide-energy-and-water-reporting/who-needs-report",
+            "https://www.ontario.ca/document/guide-energy-and-water-reporting/list-building-types",
+            "https://www.ontario.ca/document/guide-energy-and-water-reporting/how-ewrb-uses-building-data",
+            "https://ottawa.ca/en/living-ottawa/environment-conservation-and-climate/climate-change-and-energy/better-buildings-ottawa/energy-benchmarking-and-auditing-program"
+          ],
+          "note": "Regulation number (O. Reg. 506/18) taken from the City of Ottawa's page; the e-Laws text itself could not be loaded (JavaScript-only). No provincial plan to extend EWRB below 50,000 sq ft was found on the Ontario pages (the 10,000 sq ft expansion is Toronto's by-law, not the province's)."
+        },
+        {
+          "name": "Broader Public Sector energy reporting - O. Reg. 25/23",
+          "type": "mandatory reporting (public sector only)",
+          "status": "in force",
+          "summary": "Broader public sector organizations (e.g., municipalities, hospitals, school boards, universities, colleges) must report annual energy consumption and post Conservation and Demand Management (CDM) plans on their websites, renewed every five years (the last round was due July 2024).",
+          "thresholds": "Applies by organization type (public agencies), not floor area.",
+          "deadline": "July 1 each year.",
+          "source": "https://www.ontario.ca/page/broader-public-sector-energy-reporting",
+          "sourceUpdated": "2026-09-23",
+          "note": "Does not apply to private commercial buildings; relevant to institutional/municipal audit clients."
+        }
+      ],
+      "QC": [
+        {
+          "name": "Règlement sur la déclaration obligatoire de la performance environnementale de certains bâtiments (Loi sur la performance environnementale des bâtiments, chapitre P-9.02)",
+          "type": "mandatory reporting",
+          "status": "in force - first declarations due June 30, 2027",
+          "summary": "Enacted by Ministerial Order 2026-0013 (June 9, 2026), published in the Gazette officielle du Québec on June 23, 2026 and in force on the 15th day after publication. Owners must declare each building's energy consumption and costs by source and billing period (first declaration: the two previous calendar years; then the previous year) on the ministry's platform by June 30 each year. Declarations must be verified at least once every four years by a member of a listed professional order (e.g., engineers, architects, CPAs, technologists). Energy distributors must provide digital platforms to transfer consumption data; Quebec's page points owners to ENERGY STAR Portfolio Manager with automatic transfer from Hydro-Québec and Énergir. Excludes buildings under construction or with a demolition permit, agricultural buildings, metro facilities, and buildings on sites whose main activity is manufacturing (NAICS 31-33), mining (21) or water/sewer (2213). Administrative penalties $250-$5,000 and fines up to $3,000,000.",
+          "thresholds": "From Jan 1, 2027: buildings of 5,000 m2+ (not exclusively residential), residential or partly residential buildings with 50+ units, and buildings owned by public bodies other than municipal bodies (buildings under 100 m2 excepted, subject to a metering condition in the text). From Jan 1, 2028: buildings of 2,000 m2+ (not exclusively residential) and residential buildings with 25+ units.",
+          "deadline": "June 30 each year; first declaration June 30, 2027 (2025 + 2026 data) for the 2027 group; June 30, 2028 for the 2028 group. Buildings acquired less than 90 days before June 30: by September 30.",
+          "source": "https://www.quebec.ca/agriculture-environnement-et-ressources-naturelles/energie/reussir-ses-projets-transition-energetique/performance-energetique-batiments/declaration-obligatoire-consommation-energetique-grands-batiments",
+          "sourceUpdated": "2026-06-25",
+          "additionalSources": [
+            "https://www.publicationsduquebec.gouv.qc.ca/fileadmin/gazette/pdf_encrypte/lois_reglements/2026F/88297.pdf"
+          ],
+          "note": "The published regulation covers declaration and verification only; no GHG/energy rating ('cote') requirement appears in its text. The text does not mention Montréal's by-law 21-042, so Montréal buildings may face both obligations (not confirmed)."
+        }
+      ],
+      "BC": [
+        {
+          "name": "None found (province-wide)",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No provincial benchmarking/reporting or performance requirement for existing commercial buildings is mentioned on B.C.'s buildings climate page. Mandatory rules exist only at the municipal level (Vancouver, Victoria, Saanich). NRCan lists 'Building Benchmark BC' as a voluntary initiative.",
+          "thresholds": null,
+          "source": "https://www2.gov.bc.ca/gov/content/environment/climate-change/clean-buildings",
+          "sourceUpdated": "2025-12-03",
+          "additionalSources": [
+            "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards"
+          ]
+        }
+      ],
+      "AB": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Alberta.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "NRCan's list includes only Calgary's BenchmarkYYC and Edmonton's benchmarking program for Alberta, both voluntary per the cities' own pages."
+        }
+      ],
+      "SK": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Saskatchewan.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "No Saskatchewan program appears on NRCan's list; no provincial source was found."
+        }
+      ],
+      "MB": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Manitoba.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "NRCan's list includes only Winnipeg's Building Energy Disclosure Project, which is voluntary per the City's page."
+        }
+      ],
+      "NS": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Nova Scotia.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "NRCan lists a Nova Scotia benchmarking pilot; Efficiency Nova Scotia runs a voluntary Energy Benchmarking Program (register and share Portfolio Manager data).",
+          "additionalSources": [
+            "https://www.efficiencyns.ca/programs-rebates/energy-benchmarking-program"
+          ]
+        }
+      ],
+      "NB": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for New Brunswick.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "NRCan's only New Brunswick item is a Service New Brunswick energy management annual report (provincial government buildings, not a private-building rule). NB Power/SaveEnergyNB offer voluntary Portfolio Manager data transfer.",
+          "additionalSources": [
+            "https://www.saveenergynb.ca/en/for-business/energy-star-portfolio-manager/"
+          ]
+        }
+      ],
+      "PE": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Prince Edward Island.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "Not on NRCan's list; no provincial source found. Not searched in depth."
+        }
+      ],
+      "NL": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Newfoundland and Labrador.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "Not on NRCan's list; no provincial source found. Not searched in depth."
+        }
+      ],
+      "YT": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Yukon.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "Not on NRCan's list; no territorial source found. Not searched in depth."
+        }
+      ],
+      "NT": [
+        {
+          "name": "None found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No province/territory-wide mandatory energy or water benchmarking, reporting or performance rule for private commercial buildings found for Northwest Territories.",
+          "thresholds": null,
+          "source": "https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/energy-efficiency-existing-buildings/benchmarking-building-performance-standards",
+          "note": "Not on NRCan's list; no territorial source found. Not searched in depth."
+        }
+      ]
+    },
+    "cities": {
+      "toronto": [
+        {
+          "name": "Energy & Water Reporting By-law - Toronto Municipal Code Chapter 367, Building Emissions Performance",
+          "type": "mandatory reporting",
+          "status": "in force",
+          "summary": "Adopted Dec 15, 2023 (By-law 1283-2023) and in force since Jan 1, 2024. Owners report annual energy and water data to the City through ENERGY STAR Portfolio Manager, in addition to Ontario's EWRB. The City says buildings over the size threshold must report 'regardless of property use' (unlike EWRB, which exempts some types); exemptions or extensions can be requested in writing. The City publishes building-level data under its disclosure policy. By-law 1487-2025 (enacted Dec 17, 2025, in force Jan 1, 2026) moved the start date for 10,000-49,999 sq ft buildings from 2026 to 2027.",
+          "thresholds": "Buildings 4,645 m2 (50,000 sq ft) and larger: reporting since 2024. Buildings 929-4,644 m2 (10,000-49,999 sq ft): must begin reporting in 2027. Buildings 9,290 m2 (100,000 sq ft) and larger: certified-professional verification in the first reporting year and every fifth year.",
+          "deadline": "First business day of July (July 2, 2026 for 2025 data); the provincial EWRB deadline is July 1.",
+          "source": "https://www.toronto.ca/business-economy/business-operation-growth/green-your-business/energy-and-water-reporting-for-buildings/",
+          "sourceUpdated": "2026-07-07",
+          "additionalSources": [
+            "https://www.toronto.ca/legdocs/municode/toronto-code-367.pdf",
+            "https://www.toronto.ca/legdocs/bylaws/2025/law1487.pdf",
+            "https://secure.toronto.ca/council/agenda-item.do?item=2025.IE26.3"
+          ]
+        },
+        {
+          "name": "Building Emissions Performance Standards (BEPS)",
+          "type": "performance standard (proposed)",
+          "status": "not adopted - deferred",
+          "summary": "No BEPS by-law or emissions limits have been adopted. At its Dec 16-17, 2025 meeting (item 2025.IE26.3, TransformTO Action Plan 2026-2030) Council directed staff to report to the Infrastructure and Environment Committee in Q1 2027 with an economic impact review, updated legal analysis, tenant protection measures and an assessment of changed federal retrofit programs. If adopted, BEPS would sit in Chapter 367. Low-rise residential (3 storeys or less) would be exempt from any BEPS proposal.",
+          "thresholds": null,
+          "source": "https://www.toronto.ca/services-payments/water-environment/net-zero-homes-buildings/emissions-performance-standards/",
+          "sourceUpdated": "2025-12-12",
+          "additionalSources": [
+            "https://secure.toronto.ca/council/agenda-item.do?item=2025.IE26.3"
+          ]
+        }
+      ],
+      "montreal": [
+        {
+          "name": "Règlement 21-042 sur la divulgation et la cotation des émissions de GES des grands bâtiments",
+          "type": "mandatory disclosure (with GHG rating)",
+          "status": "in force",
+          "summary": "Adopted Sept 27, 2021. Owners of existing commercial, institutional and residential buildings must disclose the previous year's energy consumption (for GHG calculation) through ENERGY STAR Portfolio Manager, with Hydro-Québec and Énergir data exchange. Buildings whose assessment unit is predominantly industrial (CUBF codes 2/3) are excluded. The by-law provides for an A-F GHG-intensity rating (kg CO2e/m2, absolute scale): BOMA Québec (industry association) reported that Ordonnance no 1 adding the rating methodology came into force Sept 23, 2025, that only the building's address and rating would be published on the City's website, and that posting the rating at building entrances is not in force. The City's zero-emission roadmap (updated Mar 4, 2026) lists, as upcoming measures for buildings of 2,000 m2+, posting an A-F rating at entrances and gradually tighter GHG emission limits reaching zero emissions by 2040 - no dates given. The City's Nov 2023 guide says data may be self-declared and there is 'for now' no obligation to have it verified by a professional (compliance inspections can occur).",
+          "thresholds": "2,000 m2 (21,528 sq ft) or larger, or 25+ dwelling units (phased: 15,000 m2+ non-residential and City-owned 2,000 m2+ from 2022; 5,000 m2+ and 50+ units from 2023; 2,000 m2+ and 25+ units from 2024).",
+          "deadline": "June 30 each year (for the previous calendar year).",
+          "source": "https://montreal.ca/articles/reglement-sur-la-divulgation-et-la-cotation-ges-des-grands-batiments-20548",
+          "sourceUpdated": "2026-09-08",
+          "additionalSources": [
+            "https://portail-m4s.s3.montreal.ca/pdf/guide-dapplication_reglement_de_la_ville_de_montreal_version_nov2023_vf.pdf",
+            "https://montreal.ca/articles/batiments-zero-emission-dici-2040-feuille-de-route-39260",
+            "https://boma-quebec.org/publication/communiques/2025-10-30/cotation-des-emissions-ges-des-grands-batiments-sur-le-territoire-de-la-ville-de-montreal"
+          ],
+          "note": "Rating status comes from an industry source (BOMA Québec, Oct 30, 2025); the City's by-law page does not describe it. The City's current guide (Aug 2026) and the consolidated by-law text could not be opened (Constellio viewer / robots-blocked). Quebec's provincial regulation (rules.provinces.QC) also applies from 2027."
+        }
+      ],
+      "calgary": [
+        {
+          "name": "BenchmarkYYC",
+          "type": "voluntary program",
+          "status": "voluntary",
+          "summary": "Voluntary benchmarking program; owners sign up and accept terms. Any building type on Portfolio Manager's list, any size, in Calgary. Participants get an annual scorecard, discounted training and notices of retrofit funding, plus three complimentary virtual decarbonization plans. No mandatory by-law found; an earlier Council committee report (UCS2018-0314) preferred voluntary benchmarking.",
+          "thresholds": null,
+          "deadline": "2026 data submission period: May 15 - Oct 15, 2026.",
+          "source": "https://www.calgary.ca/environment/programs/building-energy-benchmarking-program.html",
+          "additionalSources": [
+            "https://pub-calgary.escribemeetings.com/filestream.ashx?DocumentId=55773"
+          ]
+        }
+      ],
+      "ottawa": [
+        {
+          "name": "Energy Benchmarking and Auditing Program (Better Buildings Ottawa)",
+          "type": "voluntary program",
+          "status": "voluntary",
+          "summary": "Voluntary: the City says participation in its program is voluntary and builds on existing (EWRB) reporting. Open to all Ottawa buildings except small residential (under four storeys). Participants share ENERGY STAR Portfolio Manager data and get a free Energy Performance Scorecard and Insights Report; the City says it is 'exploring options' to arrange lower-priced thermal scans. No city by-law found. Ontario's EWRB (O. Reg. 506/18) applies to buildings 50,000 sq ft+.",
+          "thresholds": null,
+          "source": "https://ottawa.ca/en/living-ottawa/environment-conservation-and-climate/climate-change-and-energy/better-buildings-ottawa/energy-benchmarking-and-auditing-program",
+          "note": "The page shows no date. ottawa.ca blocks automated fetching of some sub-pages, so the details come from the main program page only."
+        }
+      ],
+      "edmonton": [
+        {
+          "name": "Building Energy Benchmarking Program",
+          "type": "voluntary program",
+          "status": "voluntary",
+          "summary": "Voluntary; any Edmonton building over 1,000 sq ft can register with owner consent. No mandatory benchmarking or labelling by-law found (the City's 'Mandatory Energy Labelling and Disclosure' PDF is an older discussion paper, not a by-law).",
+          "thresholds": null,
+          "source": "https://www.edmonton.ca/programs_services/environmental/building-energy-benchmarking-program",
+          "note": "The page still shows 2024 dates (registration Oct 15, 2024; data Nov 15, 2024), so the 2026 cycle is not confirmed."
+        }
+      ],
+      "winnipeg": [
+        {
+          "name": "Building Energy Disclosure Project (BEDP)",
+          "type": "voluntary program",
+          "status": "voluntary",
+          "summary": "Voluntary and free, started 2020. Eligible: commercial or institutional buildings in Winnipeg of at least 20,000 sq ft that are at least 70% occupied. No mandatory by-law found.",
+          "thresholds": null,
+          "source": "https://www.winnipeg.ca/services-programs/trees-environment/climate-action/building-energy-disclosure-project"
+        }
+      ],
+      "mississauga": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "vancouver": [
+        {
+          "name": "Annual Greenhouse Gas and Energy Limits By-law No. 13472",
+          "type": "mandatory reporting + building performance standard",
+          "status": "in force - enforcement paused since May 21, 2026",
+          "summary": "Enacted July 20, 2022. Requires annual energy and carbon reports through ENERGY STAR Portfolio Manager, and sets greenhouse gas intensity (GHGI) limits based on natural gas and district energy use for space and water heating (electricity excluded). On May 21, 2026 Council directed staff to pause enforcement; the City says there are no penalties for not reporting, staff will review the by-law and report back in the first half of 2027, and complete reports received by Sept 1 get a comparison scorecard.",
+          "thresholds": "Reporting: commercial or multi-family residential buildings 4,645 m2 (50,000 sq ft) or larger, phased in by occupancy and size (assembly/business/mercantile/industrial occupancies 9,290 m2+ reported 2023 data by June 1, 2024 and 4,645-9,290 m2 reported 2024 data by June 1, 2025; care and residential occupancies 9,290 m2+ reported 2024 data by June 1, 2025 and 4,645-9,290 m2 reported 2025 data by June 1, 2026). GHGI limits: office (Group D) buildings 9,290 m2+ 25 kg CO2e/m2 and retail (Group E) buildings 9,290 m2+ 14 kg CO2e/m2 from 2026, falling to 0 by 2040; heat energy intensity limit 0.09 GJ/m2 from Jan 1, 2040.",
+          "deadline": "June 1 each year (by-law); scorecards for reports received by Sept 1.",
+          "source": "https://vancouver.ca/green-vancouver/report-energy-and-greenhouse-gas-emissions-data.aspx",
+          "sourceUpdated": "2026-06-01",
+          "additionalSources": [
+            "https://vancouver.ca/green-vancouver/greenhouse-gas-intensity-limits.aspx",
+            "https://bylaws.vancouver.ca/consolidated/13472.PDF"
+          ],
+          "note": "Phasing and limit values are from the by-law PDF as posted (enactment version, no amendments shown). The pause means the requirement still exists but is not enforced pending the 2027 review."
+        }
+      ],
+      "brampton": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "hamilton": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "surrey": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "quebec-city": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "halifax": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.NS).",
+          "thresholds": null,
+          "source": null,
+          "note": "Checked: no Halifax Regional Municipality benchmarking by-law found (halifax.ca search results were unrelated council reports); NRCan's list shows only a Nova Scotia voluntary pilot."
+        }
+      ],
+      "laval": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "london": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "markham": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "vaughan": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "gatineau": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "saskatoon": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.SK).",
+          "thresholds": null,
+          "source": null,
+          "note": "Checked: no Saskatoon benchmarking rule found in searches or on NRCan's list."
+        }
+      ],
+      "kitchener": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "longueuil": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "burnaby": [
+        {
+          "name": "Building benchmarking in Burnaby (Building Benchmark BC participation)",
+          "type": "voluntary program",
+          "status": "voluntary",
+          "summary": "The City joined Building Benchmark BC voluntarily; private owners can register. No mandatory by-law found.",
+          "thresholds": null,
+          "source": "https://www.burnaby.ca/our-city/projects/building-benchmarking-burnaby",
+          "note": "Page content dates from the 2022 report; no current mandatory requirement found."
+        }
+      ],
+      "windsor": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "regina": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.SK).",
+          "thresholds": null,
+          "source": null,
+          "note": "Checked: no Regina benchmarking rule found in searches or on NRCan's list."
+        }
+      ],
+      "oakville": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "richmond-bc": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "richmond-hill": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "burlington": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "oshawa": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "sherbrooke": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "sudbury": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "abbotsford": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "levis": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "coquitlam": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "barrie": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "saguenay": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "kelowna": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "guelph": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "trois-rivieres": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "whitby": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "cambridge": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "st-catharines": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "milton": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "langley": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "kingston": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "ajax": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "waterloo": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "terrebonne": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "saanich": [
+        {
+          "name": "Energy and Carbon Emissions Reporting Bylaw No. 10147",
+          "type": "mandatory reporting",
+          "status": "in force",
+          "summary": "Adopted May 12, 2025; delivered through the CRD Building Benchmarking Program with Victoria. Reporting through ENERGY STAR Portfolio Manager; the District can issue fines for non-compliance. Exempt: detached/attached single-family forms (row/townhouses, duplexes, triplexes, houseplexes), residential buildings with 4 or fewer units, mainly residential mixed-use buildings with 4 or fewer units, and buildings with a demolition permit.",
+          "thresholds": "Buildings over 30,000 sq ft (2,787 m2): 2025 data due June 1, 2026. Buildings over 10,000 sq ft (929 m2): 2026 data due June 1, 2027, then prior-year data every June 1.",
+          "deadline": "June 1 each year.",
+          "source": "https://www.saanich.ca/EN/main/community/sustainable-saanich/climate-change/sustainable-buildings/Building-Benchmarking-Program.html",
+          "additionalSources": [
+            "https://www.crd.ca/environment/climate-action/climate-programs-resources/benchmarking"
+          ]
+        }
+      ],
+      "st-johns": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.NL).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "thunder-bay": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "delta": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "brantford": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "chatham-kent": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "clarington": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "red-deer": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.AB).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "nanaimo": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "sherwood-park": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.AB).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "pickering": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "lethbridge": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.AB).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "kamloops": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.BC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Only Vancouver, Victoria and Saanich have mandatory bylaws among the B.C. cities checked. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "saint-jean-sur-richelieu": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.QC).",
+          "thresholds": null,
+          "source": null,
+          "note": "Quebec's provincial declaration regulation applies from 2027/2028. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "victoria": [
+        {
+          "name": "Energy and Carbon Emissions Reporting Bylaw No. 25-022",
+          "type": "mandatory reporting",
+          "status": "in force",
+          "summary": "Adopted June 26, 2025; delivered through the CRD Building Benchmarking Program with Saanich. Owners give the City read-only 'share forward' access in ENERGY STAR Portfolio Manager and report site energy, GHG emissions, weather-normalized and monthly utility data. The Director may require verification by an independent certified energy manager or professional engineer when data look wrong. Fines of $100-$50,000 per offence (or per day it continues); specific offences carry a $250 ticket fine, reduced if paid within 30 days.",
+          "thresholds": "Buildings 929 m2 (10,000 sq ft) and larger in assembly, treatment, care, multi-dwelling residential, business/personal services, mercantile and industrial occupancies. 2,787 m2 (30,000 sq ft)+ report from 2026 (2025 data due June 1, 2026); 929-2,787 m2 from 2027 (2026 data due June 1, 2027).",
+          "deadline": "June 1 each year.",
+          "source": "https://www.victoria.ca/media/file/energy-and-carbon-emissions-reporting-bylaw-25-022",
+          "additionalSources": [
+            "https://www.crd.ca/environment/climate-action/climate-programs-resources/benchmarking"
+          ]
+        }
+      ],
+      "peterborough": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.ON).",
+          "thresholds": null,
+          "source": null,
+          "note": "Ontario EWRB applies to buildings 50,000 sq ft+. Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "moncton": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.NB).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "saint-john": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.NB).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "fredericton": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.NB).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "charlottetown": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.PE).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "whitehorse": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.YT).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ],
+      "yellowknife": [
+        {
+          "name": "No city-specific rule found",
+          "type": "none found",
+          "status": "none found",
+          "summary": "No municipal energy/water benchmarking, reporting or building-performance by-law found; provincial rules apply (see rules.provinces.NT).",
+          "thresholds": null,
+          "source": null,
+          "note": "Not individually verified on the municipality's own website in this pass; the city does not appear on NRCan's 2026 benchmarking list or in the other sources checked."
+        }
+      ]
+    }
+  },
+  "incentives": {
+    "enbridge-commercial-audits": {
+      "name": "Commercial Custom Audits & Studies - Energy Assessments and Meters",
+      "provider": "Enbridge Gas (Ontario)",
+      "provinces": [
+        "ON"
+      ],
+      "summary": "Pays up to 50% of eligible costs for energy audits, engineering feasibility studies, steam trap surveys/audits, air and water balancing and metering. The cap depends on the address's previous-year gas use: up to $6,000 (100,000 to under 3,000,000 m3), up to $10,000 (3,000,000 to under 10,000,000 m3), up to $20,000 (10,000,000 m3+, institutions only). Institutions max $20,000 per project; other commercial sectors max $10,000 per project.",
+      "eligibility": "Enbridge Gas Inc. customers using at least 100,000 m3 of natural gas in the previous year at that address; pre-approval required; one opportunity-identification incentive per address; applicants and Business Partners limited to 5 such projects per year not linked to a completed Custom Retrofit project.",
+      "status": "open",
+      "source": "https://www.enbridgegas.com/ontario/business-industrial/incentives-conservation/programs-and-incentives/audits-studies-assessments/commercial-custom-audit"
+    },
+    "enbridge-affordable-housing-assessment": {
+      "name": "Affordable Housing Multi-Residential Program - energy assessment",
+      "provider": "Enbridge Gas (Ontario)",
+      "provinces": [
+        "ON"
+      ],
+      "summary": "Up to $8,000 for an energy assessment (up to $40,000 per housing provider) to find natural gas savings in affordable housing buildings.",
+      "eligibility": "Affordable housing providers (Enbridge Gas customers); detailed criteria are on the program page (not read in this pass).",
+      "status": "open",
+      "source": "https://www.enbridgegas.com/ontario/business-industrial/incentives-conservation/programs-and-incentives/audits-studies-assessments",
+      "note": "Multi-residential affordable housing only - not general commercial."
+    },
+    "saveonenergy-small-business": {
+      "name": "Save on Energy Small Business Program",
+      "provider": "Save on Energy (IESO)",
+      "provinces": [
+        "ON"
+      ],
+      "summary": "Free on-site assessment by qualified Save on Energy representatives, then free installed upgrades: up to $3,000 for lighting and up to $2,500 for refrigeration and smart thermostats (up to $5,500 total).",
+      "eligibility": "Ontario businesses with 50 or fewer employees that own or lease their space (tenants need landlord consent).",
+      "status": "open",
+      "source": "https://saveonenergy.ca/en/For-Your-Small-Business/Programs-and-Incentives/Small-Business-Program",
+      "note": "No end date shown; no closure notice in Save on Energy news (checked 2026-09-28)."
+    },
+    "saveonenergy-ebcx": {
+      "name": "Existing Building Commissioning (EBCx) Program",
+      "provider": "Save on Energy (IESO)",
+      "provinces": [
+        "ON"
+      ],
+      "summary": "Funds retro-commissioning. Investigation phase: up to $0.06 per sq ft, max $50,000 per application or 75% of the participant's cost for the commissioning provider. Implementation and persistence phases: $0.03 per kWh of confirmed/persisting savings (each capped at 30% of annual consumption or $50,000, whichever is lower).",
+      "eligibility": "Buildings with 12+ months of consecutive energy data, using at least 750,000 kWh/yr (excluding industrial process loads), no commissioning in the last two years, connected to the IESO-controlled grid (directly or behind the meter).",
+      "status": "open",
+      "source": "https://saveonenergy.ca/en/For-Business-and-Industry/Programs-and-incentives/Existing-Building-Commissioning-Program",
+      "note": "No end date shown."
+    },
+    "saveonenergy-xlerate": {
+      "name": "XLerate Program - Project Feasibility Study funding",
+      "provider": "Save on Energy (IESO)",
+      "provinces": [
+        "ON"
+      ],
+      "summary": "Project feasibility study (PFS) funding at a 50% cost share; project incentives of $300/MWh up to 75% of eligible costs (max $15 million per project).",
+      "eligibility": "Industrial, municipal, institutional and healthcare sectors; projects must save at least 600 MWh of electricity per year. Not aimed at commercial office/retail.",
+      "status": "open",
+      "source": "https://saveonenergy.ca/For-Business-and-Industry/Programs-and-incentives/XLerate",
+      "note": "Program webinar held Jan 28, 2026."
+    },
+    "saveonenergy-bizenergysaver": {
+      "name": "BizEnergySaver Program (local initiative)",
+      "provider": "Save on Energy (IESO)",
+      "provinces": [
+        "ON"
+      ],
+      "cities": [
+        "toronto",
+        "ottawa"
+      ],
+      "summary": "Free on-site assessment plus direct installation, with instant discounts applied on the invoice (most VFD upgrades now free).",
+      "eligibility": "Non-residential customers of Toronto Hydro, Hydro Ottawa or Hydro One with industrial, commercial, institutional or multi-unit residential facilities in eligible areas: all Toronto 'M' postal codes (expanded to all of Toronto on July 23, 2026) and Ottawa FSAs K1A, K1B, K1C, K1E, K1G, K1H, K1J, K1K, K1L, K1M, K1N, K1P, K1R, K1S, K1T, K1V, K1W, K1X, K1Y, K1Z, K2A, K2B, K2C, K2E, K2G, K2H, K2J, K2K, K2L, K2M, K2P, K2R, K2S, K2T, K2V, K2W, K4A, K4B, K4M, K4P.",
+      "status": "open",
+      "source": "https://www.saveonenergy.ca/en/For-Business-and-Industry/Programs-and-incentives/Local-Initiatives/BizEnergySaver",
+      "note": "Installations must be completed by Aug 31, 2027."
+    },
+    "toronto-building-tune-up": {
+      "name": "Building Tune-Up Program",
+      "provider": "City of Toronto (delivered by Enerva Energy Solutions)",
+      "provinces": [
+        "ON"
+      ],
+      "cities": [
+        "toronto"
+      ],
+      "summary": "Free expert on-site building assessment (the City says these typically cost $5,000 or more), a customized report of energy-performance opportunities, implementation support, staff training and a follow-up meeting.",
+      "eligibility": "Non-profits, community organizations, faith groups and small businesses (up to 50 employees); buildings generally 10,000-30,000 sq ft; condominiums and buildings 50,000 sq ft+ excluded. Participation is limited.",
+      "status": "open",
+      "source": "https://www.toronto.ca/services-payments/water-environment/net-zero-homes-buildings/better-buildings-partnership/building-tune-up-program/",
+      "sourceUpdated": "2026-07-30"
+    },
+    "kitchener-utilities-cii": {
+      "name": "Commercial, industrial and institutional customer rebate programs",
+      "provider": "Kitchener Utilities (City of Kitchener gas utility)",
+      "provinces": [
+        "ON"
+      ],
+      "cities": [
+        "kitchener"
+      ],
+      "summary": "Kitchener Utilities says CII customers planning equipment upgrades that save natural gas or cut carbon should email it for current rebate programs. It publishes no amounts and no audit/study incentive.",
+      "eligibility": "Kitchener Utilities commercial, industrial and institutional gas customers.",
+      "status": "unclear",
+      "source": "https://www.kitchenerutilities.ca/offers-rebates/save-and-conserve/",
+      "note": "Whether audits or studies are funded is not stated; contact utilities@kitchener.ca."
+    },
+    "hydroquebec-energy-analysis": {
+      "name": "Efficient Solutions Program - Energy Analysis component",
+      "provider": "Hydro-Québec",
+      "provinces": [
+        "QC"
+      ],
+      "summary": "Pays for eligible costs of an energy analysis (including in-house labour): 40% of eligible costs when the report is accepted and 60% after at least one measure is implemented (up to 100% in total). Caps for energy-efficiency analyses: existing buildings with 1-2 GWh reference use, $8,000 + $12,000 ($20,000 total), analysis must identify at least 100,000 kWh/yr of savings; over 2 GWh, $20,000 + $30,000 ($50,000 total), at least 200,000 kWh/yr. Analyses that also cover demand-response measures: up to $60,000 ($24,000 + $36,000 for buildings over 2 GWh).",
+      "eligibility": "Commercial, institutional or industrial buildings in Quebec using at least 1 GWh/yr, supplied by the Hydro-Québec grid or an eligible off-grid, municipal or co-op system (including Hydro-Sherbrooke and Hydro-Jonquière/Ville de Saguenay). Submit a proposal and get approval before starting.",
+      "status": "open",
+      "source": "https://www.hydroquebec.com/business/energy-savings-business/efficient-solutions/energy-analysis.html",
+      "additionalSources": [
+        "https://www.hydroquebec.com/data/affaires/pdf/guide-participation-volet-analyse-energetique-mars-2026.pdf",
+        "https://www.hydroquebec.com/data/affaires/pdf/aff-programme-solutions-efficaces-annexe-reseaux-municipaux-ou-reseau-cooperatif-octobre-2024.pdf"
+      ],
+      "note": "Participant guide updated March 31, 2026."
+    },
+    "energir-feasibility-study": {
+      "name": "Energy audit and implementation - Feasibility Study grant",
+      "provider": "Énergir",
+      "provinces": [
+        "QC"
+      ],
+      "summary": "50% of the pre-tax cost of a feasibility study, max $50,000. Follow-on implementation grant: $1 per m3 of natural gas saved in the first year (max $1,000,000 per account), plus up to $15,000 for energy tracking.",
+      "eligibility": "Current or future Énergir customers in commercial, multi-residential (4+ units), institutional or industrial sectors whose building is mainly heated with natural gas; the study must be done by a registered consulting engineering firm (OIQ engineer) and submitted to Énergir before the study starts.",
+      "status": "open",
+      "source": "https://energir.com/en/business/energy-efficiency/energy-efficiency-programs/studies-and-implementation",
+      "note": "Current participant guide applies to applications from Nov 1, 2023."
+    },
+    "energir-recommissioning": {
+      "name": "Recommissioning of mechanical systems grant",
+      "provider": "Énergir",
+      "provinces": [
+        "QC"
+      ],
+      "summary": "Investigation phase: 75% of eligible costs; implementation: $1 per m3 of gas saved up to 75% of eligible costs (measures with payback over 1 year); transfer and continuous-monitoring phases: 75% of eligible costs. Up to $100,000 per project in total.",
+      "eligibility": "Énergir customers; buildings or building groups using at least 75,000 m3 of gas per year (smaller with Énergir approval); must use an accredited RCx agent (MELCCFP list); no Recommissioning or New Construction payment in the last five years.",
+      "status": "open",
+      "source": "https://energir.com/en/business/energy-efficiency/energy-efficiency-programs/recommissioning"
+    },
+    "enbridge-gaz-quebec-feasibility": {
+      "name": "Feasibility study financial assistance",
+      "provider": "Enbridge Gaz Québec (formerly Gazifère)",
+      "provinces": [
+        "QC"
+      ],
+      "cities": [
+        "gatineau"
+      ],
+      "summary": "Up to $2,500 toward a feasibility study or an energy simulation (e.g., EE4, CAN-QUEST, DOE2); follow-on custom project incentive of $1 per m3 of gas saved.",
+      "eligibility": "Enbridge Gaz Québec business customers (it serves the City of Gatineau and the Municipality of Chelsea).",
+      "status": "open",
+      "source": "https://enbridgegaz.com/en/energy-efficiency/feasibility-study/",
+      "additionalSources": [
+        "https://enbridgegaz.com/en/business/cash-incentives/",
+        "https://enbridgegaz.com/en/about-us/"
+      ]
+    },
+    "qc-ecoperformance-analysis": {
+      "name": "ÉcoPerformance - Analyse de mesures de réduction des GES",
+      "provider": "Gouvernement du Québec (MELCCFP)",
+      "provinces": [
+        "QC"
+      ],
+      "summary": "Standard analysis (energy study, fuel-switching study, fugitive-emissions study): 50% of eligible expenses, max $25,000 per site for small/medium energy users (under 36,000 GJ/yr non-electric) or $75,000 for large users. Complex analysis: 75%, max $100,000 / $300,000. Paid 50% on the signed purchase order and the rest after the engineer-signed report is accepted; project must finish within 24 months.",
+      "eligibility": "Businesses, institutions, municipalities and organizations in industrial, commercial, agricultural, agri-food, manufacturing, institutional or municipal sectors with a Quebec site that burns fossil fuels (or has fugitive/process emissions). The report must be signed by an OIQ engineer.",
+      "status": "open",
+      "source": "https://www.quebec.ca/agriculture-environnement-et-ressources-naturelles/energie/reussir-ses-projets-transition-energetique/aide-financiere/programme-ecoperformance/analyse-mesures-reduction-ges",
+      "sourceUpdated": "2026-07-23",
+      "additionalSources": [
+        "https://www.quebec.ca/agriculture-environnement-et-ressources-naturelles/energie/reussir-ses-projets-transition-energetique/aide-financiere/programme-ecoperformance/description-programme"
+      ],
+      "note": "New program framework in force July 7, 2026. Electric-only buildings (no fossil fuel use) are not eligible."
+    },
+    "qc-ecoperformance-rcx": {
+      "name": "ÉcoPerformance - Remise au point des systèmes mécaniques (RCx)",
+      "provider": "Gouvernement du Québec (MELCCFP)",
+      "provinces": [
+        "QC"
+      ],
+      "summary": "Former recommissioning funding component of ÉcoPerformance.",
+      "eligibility": null,
+      "status": "closed",
+      "source": "https://www.quebec.ca/agriculture-environnement-et-ressources-naturelles/energie/reussir-ses-projets-transition-energetique/aide-financiere/programme-ecoperformance/remise-point-systemes-mecaniques",
+      "note": "No new applications since Sept 1, 2026; component removed from the program framework. Énergir's recommissioning grant is still open."
+    },
+    "bchydro-integrated-energy-audit": {
+      "name": "Integrated energy audit",
+      "provider": "BC Hydro",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Up to 100% funding for an energy expert (Alliance of Energy Professionals member) to audit a whole facility or selected systems; payment usually goes directly to the energy expert.",
+      "eligibility": "Industrial and large commercial customers; large commercial customers need company-wide electricity use of at least 2 GWh/yr. Applications go through a BC Hydro Key Account Manager or Regional Energy Manager.",
+      "status": "open",
+      "source": "https://www.bchydro.com/powersmart/business/programs/strategic-energy-management/studies-audits/integrated-energy-audit.html"
+    },
+    "bchydro-feasibility-study": {
+      "name": "Feasibility study",
+      "provider": "BC Hydro",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Study 100% funded when the opportunity exceeds 200,000 kWh/yr or 100 kW; 50% funded for 25,000-200,000 kWh/yr or 25-100 kW (efficiency, efficient electrification or demand response).",
+      "eligibility": "Industrial and large commercial customers (large commercial: company-wide use of at least 2 GWh/yr); energy expert must be an Alliance of Energy Professionals member; arranged through a Key Account Manager or Regional Energy Manager.",
+      "status": "open",
+      "source": "https://www.bchydro.com/powersmart/business/programs/strategic-energy-management/studies-audits/feasibility-study.html"
+    },
+    "bc-continuous-optimization": {
+      "name": "Continuous Optimization (C-Op) program",
+      "provider": "BC Hydro in partnership with FortisBC",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Funding of up to $0.15 per sq ft for an approved service provider to retro-commission or recommission HVAC and other systems; 75% is paid after the investigation stage and 25% on completion.",
+      "eligibility": "Owners or long-term leaseholders of existing large commercial or institutional buildings of 40,000 sq ft+ with a DDC building automation system with remote access; must work with a BC Hydro Key Account Manager/Regional Energy Manager (or, in FortisBC's electric territory, a FortisBC technical advisor). FortisBC adds: commercial-rate gas and/or FortisBC electric customer, no recommissioning in the last 5 years, 1+ year of FortisBC billing history.",
+      "status": "open",
+      "source": "https://www.bchydro.com/powersmart/business/programs/strategic-energy-management/commercial/continuous-optimization.html",
+      "additionalSources": [
+        "https://www.fortisbc.com/rebates/detail/continuous-optimization-program"
+      ]
+    },
+    "fortisbc-commercial-energy-assessment": {
+      "name": "Commercial Energy Assessment Program",
+      "provider": "FortisBC",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Free walkthrough energy assessment by a FortisBC-authorized consultant, with a report within 60 days listing low/no-cost measures, possible upgrades and applicable FortisBC rebates.",
+      "eligibility": "FortisBC commercial gas and/or electricity customers (or municipal electric customers of Grand Forks, Penticton, Summerland or Nelson Hydro); owner, long-term leaseholder or property manager; building occupied by the participant for at least 1 year; non-residential rate class. 'Medium business': average gas use under 10,000 GJ/yr and conditioned floor area up to 100,000 sq ft; 'small industrial': under 10,000 GJ/yr and up to 200,000 sq ft.",
+      "status": "open",
+      "source": "https://www.fortisbc.com/rebates/detail/commercial-energy-assessment-program",
+      "additionalSources": [
+        "https://www.cdn.fortisbc.com/libraries/docs/default-source/rebates-and-energy-savings-documents/rebates-for-business/3053.pdf"
+      ]
+    },
+    "fortisbc-custom-efficiency-study": {
+      "name": "Custom Efficiency Program - energy study funding",
+      "provider": "FortisBC",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Up to 50% of an energy study by a FortisBC-approved consultant (max $20,000 for commercial buildings), plus an implementation bonus of up to another 50% of the study cost (max $20,000) once approved measures are installed. Implementation incentives: the lesser of $6/GJ (gas) or $0.03/kWh (electric) over measure life, 75% of invoiced costs, or $500,000 for commercial buildings.",
+      "eligibility": "FortisBC natural gas customers on any rate class except Rate 1 and/or FortisBC or listed municipal electricity customers; existing commercial, institutional or multi-unit residential buildings (also industrial/agricultural); project must be able to save 1,000 GJ gas or 50,000 kWh per year; written approval before the study starts.",
+      "status": "open",
+      "source": "https://www.fortisbc.com/rebates/detail/custom-efficiency-program"
+    },
+    "fortisbc-rental-apartment-efficiency": {
+      "name": "Energy efficiency for rental apartments and accommodations program",
+      "provider": "FortisBC",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Free building energy assessment by FortisBC engineering consultants plus free in-suite showerheads, aerators, pipe insulation and hot-water recirculation controls, with ongoing support for larger upgrades.",
+      "eligibility": "Purpose-built rentals: apartment buildings, hotels/motels and private retirement or care homes with 9+ units, on a commercial rate for FortisBC gas and/or electricity (or listed municipal utilities), with central gas water heating (central electric water heating only for FortisBC/municipal electric customers; BC Hydro customers with central electric water heating are not eligible).",
+      "status": "open",
+      "source": "https://www.fortisbc.com/rebates/detail/energy-efficiency-for-rental-apartments-and-accommodations-program"
+    },
+    "fortisbc-small-business-support": {
+      "name": "Energy-saving support for small businesses program",
+      "provider": "FortisBC with GreenStep Solutions",
+      "provinces": [
+        "BC"
+      ],
+      "cities": [
+        "burnaby",
+        "coquitlam",
+        "surrey",
+        "richmond-bc",
+        "vancouver",
+        "langley",
+        "abbotsford",
+        "kelowna",
+        "nanaimo"
+      ],
+      "summary": "Free customized energy advice (15-30 minute consultation by phone, video or in person), which may include a basic energy assessment and rebate information, with a follow-up email.",
+      "eligibility": "Small and medium-sized businesses; GreenStep makes outbound visits in listed communities: Burnaby, Tri-Cities, North Vancouver, Surrey, Richmond, Maple Ridge, West Vancouver, Vancouver (downtown), Langley, Abbotsford, Kelowna, West Kelowna, Winfield, Penticton, Summerland, Oliver, Nanaimo, Courtenay ('Courtney' on the page), Campbell River, Coombs, Parksville, Port Alberni.",
+      "status": "open",
+      "source": "https://www.fortisbc.com/rebates/detail/energy-saving-support-for-small-businesses-program",
+      "note": "A short consultation, not a full audit."
+    },
+    "cleanbc-custom-programs": {
+      "name": "CleanBC Custom and Custom-Lite programs",
+      "provider": "Province of B.C. (CleanBC Better Buildings)",
+      "provinces": [
+        "BC"
+      ],
+      "summary": "Past funding for energy studies (Custom: up to $20,000; Custom-Lite: up to $2,000) and upgrades in commercial, industrial and multi-unit residential buildings.",
+      "eligibility": null,
+      "status": "closed",
+      "source": "https://betterbuildingsbc.ca/cleanbc-custom-programs/",
+      "note": "'Not currently accepting new applications' (page modified 2026-09-22)."
+    },
+    "ab-ceip-commercial": {
+      "name": "Clean Energy Improvement Program (CEIP) - commercial",
+      "provider": "Alberta Municipalities with participating municipalities",
+      "provinces": [
+        "AB"
+      ],
+      "cities": [
+        "calgary",
+        "edmonton"
+      ],
+      "summary": "Property-assessed financing (not a grant) of up to 100% of eligible energy-efficiency and renewable upgrade costs, repaid through the property tax bill (terms up to 20 years for some upgrades). Pre-qualification requires an ASHRAE Level 2 audit report, or a quote showing one is booked (plus a feasibility study for non-solar renewables); a post-project memo from an energy-audit engineering consultant is also required.",
+      "eligibility": "Commercial properties in municipalities with a commercial program: City of Calgary, Sturgeon County and City of Edmonton (Grande Prairie listed as launching soon).",
+      "status": "open",
+      "source": "https://ceip.abmunis.ca/commercial/commercial-pre-qualification/",
+      "additionalSources": [
+        "https://ceip.abmunis.ca/commercial/locations/",
+        "https://ceip.abmunis.ca/commercial/"
+      ],
+      "note": "The pages don't say the audit cost itself can be financed. Included because the program requires an audit."
+    },
+    "mccac-cec": {
+      "name": "Community Energy Conservation (CEC) program",
+      "provider": "Municipal Climate Change Action Centre (MCCAC)",
+      "provinces": [
+        "AB"
+      ],
+      "summary": "Paid municipalities up to 50% of pre-GST energy audit costs per facility (max $7,500) plus retrofit rebates, for municipally owned facilities.",
+      "eligibility": "Alberta municipalities only.",
+      "status": "closed",
+      "source": "https://mccac.ca/programs/community-energy-conservation-program/",
+      "note": "Applications closed April 30, 2026."
+    },
+    "era-energy-savings-for-business": {
+      "name": "Energy Savings for Business (ESB)",
+      "provider": "Emissions Reduction Alberta",
+      "provinces": [
+        "AB"
+      ],
+      "summary": "Past commercial energy-efficiency incentive program (CES, ESB, ETP and SPEED streams).",
+      "eligibility": null,
+      "status": "closed",
+      "source": "https://www.eralberta.ca/energy-savings-for-business/",
+      "note": "ERA: 'all current funding ... has been awarded.'"
+    },
+    "energy-efficiency-alberta": {
+      "name": "Energy Efficiency Alberta (agency)",
+      "provider": "Government of Alberta",
+      "provinces": [
+        "AB"
+      ],
+      "summary": "Former provincial energy-efficiency agency and program provider.",
+      "eligibility": null,
+      "status": "closed",
+      "source": null,
+      "note": "Closure (2020) is from the task brief; no official closure notice was found in this pass. The efficiencyalberta.ca domain did not respond on 2026-09-28, and alberta.ca has only an archived 2016 engagement page."
+    },
+    "saskpower-ceop": {
+      "name": "Commercial Energy Optimization Program (CEOP)",
+      "provider": "SaskPower and SaskEnergy (administered by CLEAResult, with the Government of Canada)",
+      "provinces": [
+        "SK"
+      ],
+      "summary": "Free consulting. Energy Support Services (small/medium businesses using under 2 GWh/yr): identify opportunities, build business cases, track projects and savings. Energy Coach Services (large, about 2 GWh+): the same plus up to $30,000 toward an energy champion. CEOP Incentive Services for upgrades: $0.13/kWh non-lighting, $0.06/kWh lighting, $15/GJ gas, up to 50% of costs and $100,000 per project per fuel.",
+      "eligibility": "Commercial customers connected to the SaskPower-controlled grid; facilities mainly used for manufacturing, processing or raw-material extraction are not eligible.",
+      "status": "open",
+      "source": "https://www.saskpower.com/power-savings-and-programs/business/programs/commercial-energy-optimization-program",
+      "note": "Only Energy Support Services is still taking participants, and it 'has limited availability and may close at any time without notice.' Energy Coach Services closed to new enrolment April 30, 2026. The Incentive Services pre-application deadline was July 31, 2026 (case-by-case exceptions for projects finished by Dec 31, 2026)."
+    },
+    "efficiencymb-commercial-energy-audit": {
+      "name": "Commercial Energy Audit Program",
+      "provider": "Efficiency Manitoba",
+      "provinces": [
+        "MB"
+      ],
+      "summary": "Up to 50% of the cost of an ASHRAE Level 2 or Level 3 audit by a pre-qualified consultant. Caps (L2 / L3): office, education, hotel, recreation/arena, healthcare, multi-unit residential or industrial-with-offices buildings of 4+ storeys (any size) or 1-3 storeys over 60,000 sq ft: $3,200 / $12,500; 1-3 storeys 30,000-60,000 sq ft: $2,200 / $8,000; 1-3 storeys under 30,000 sq ft, and all other building types: $1,200 / $4,200.",
+      "eligibility": "Commercial buildings whose owner is a Manitoba Hydro customer on a commercial rate, heated mainly by electricity or natural gas supplied by Manitoba Hydro; pre-qualified auditor; approval before any site work; audit done within 6 months.",
+      "status": "open",
+      "source": "https://efficiencymb.ca/business/commercial-energy-audit-program/",
+      "sourceUpdated": "2025-01-31"
+    },
+    "efficiencymb-small-business": {
+      "name": "Small Business Program",
+      "provider": "Efficiency Manitoba",
+      "provinces": [
+        "MB"
+      ],
+      "summary": "Free installation of basic energy-saving products plus a free lighting and pitched-roof attic insulation assessment to see if a Premium Upgrade fits.",
+      "eligibility": "Small business owners (details on program sub-pages, not read).",
+      "status": "open",
+      "source": "https://efficiencymb.ca/business/small-business/",
+      "sourceUpdated": "2026-06-02"
+    },
+    "ens-small-business-assessment": {
+      "name": "Free energy assessments for small businesses (Small Business Energy Solutions)",
+      "provider": "Efficiency Nova Scotia",
+      "provinces": [
+        "NS"
+      ],
+      "summary": "Free energy assessment (in person or by phone) with a custom report on the best upgrades and available rebates.",
+      "eligibility": "Businesses with electricity costs under $6,000/month, whatever the heating fuel; capacity is limited and applying doesn't guarantee an assessment.",
+      "status": "open",
+      "source": "https://www.efficiencyns.ca/tools-and-resources/tips-and-guides/energy-assessments-for-small-businesses",
+      "additionalSources": [
+        "https://www.efficiencyns.ca/programs-rebates/small-business-energy-solutions"
+      ],
+      "note": "The SBES rebate budget for 2026 is fully committed: new pre-approvals are still issued, but their rebates will be paid in 2027."
+    },
+    "ens-custom-retrofit-study": {
+      "name": "Building Energy Retrofits (Custom Retrofit) - scoping and feasibility study incentives",
+      "provider": "Efficiency Nova Scotia",
+      "provinces": [
+        "NS"
+      ],
+      "summary": "Scoping study rebate: 50% of cost up to $1,000 (P.Eng-signed). Feasibility study incentive: up to $15,000 (up to 100% of study cost) with pre-approval, paid at 100% if the project goes ahead to a Custom Project Agreement and 50% if it doesn't. Implementation incentive: the larger of $0.15/kWh or $250/kW of peak demand savings, limited to 50% of incremental costs and $750,000 per project, minus any study incentives.",
+      "eligibility": "Non-residential customers or farm operations; institutional, non-profit, commercial (including multi-unit residential) or industrial facilities served directly or indirectly by Nova Scotia Power and using at least 350,000 kWh/yr; projects must save at least 15,000 kWh/yr. Electricity-reduction projects only.",
+      "status": "open",
+      "source": "https://www.efficiencyns.ca/programs-rebates/building-energy-retrofits",
+      "additionalSources": [
+        "https://assets.ctfassets.net/hro74sf4x6k2/5ZsoOFZH1i1r06EXjY7v1E/da9b634a5f49d4d9c57d5a62bcc65d03/Retrofit-Program-Guidelines-2025.pdf"
+      ],
+      "note": "Amounts come from the guidelines PDF linked on the live page (file named 2025; document dated November 2023)."
+    },
+    "ens-building-optimization": {
+      "name": "Building Optimization Program (recommissioning)",
+      "provider": "Efficiency Nova Scotia",
+      "provinces": [
+        "NS"
+      ],
+      "summary": "Funding covers 100% of an Investigation Study, up to $5,000, to assess building systems and recommend operational (recommissioning) improvements.",
+      "eligibility": "Commercial, industrial and institutional buildings in Nova Scotia; work with a contractor from ENS's qualified network.",
+      "status": "open",
+      "source": "https://www.efficiencyns.ca/programs-rebates/building-optimization-program"
+    },
+    "nbpower-cbrp-audit": {
+      "name": "Commercial Buildings Retrofit Program - energy audit and feasibility study incentives",
+      "provider": "NB Power (SaveEnergyNB)",
+      "provinces": [
+        "NB"
+      ],
+      "summary": "ASHRAE Level II audit: 50% of cost up front, max $1,100 (under 15,000 sq ft), $2,200 (15,000-75,000 sq ft) or $3,300 (over 75,000 sq ft); rises to 100% of audit cost, max $3,000 / $5,000 / $8,000 (including the first payment), once one or more recommended measures are done. Feasibility study (instead of a full audit): 100% of cost up to $1,100 / $2,200 / $3,300 when the measure is implemented. Upgrade incentives: $120/GJ for electricity-saving projects (up to $250,000 per fiscal year) and 25% for non-electric upgrades (capped at $1 million per entity).",
+      "eligibility": "Commercial or institutional buildings on NB Power General Service 1 or 2 rates; non-NB Power customers in a similar rate class are also eligible; also registered farms, places of worship and multi-unit residential buildings with 3+ units. Work goes through an approved Energy Management Service Provider (EMSP).",
+      "status": "open",
+      "source": "https://www.saveenergynb.ca/en/for-business/commercial-buildings-retrofit-program/",
+      "additionalSources": [
+        "https://www.saveenergynb.ca/media/3zqjosmg/en-cbrp-program-guide-v71-june-2026.pdf",
+        "https://www.saveenergynb.ca/en/for-business/commercial-buildings-retrofit-program/faqs/"
+      ],
+      "note": "Program guide v71, June 2026. Non-electric upgrade funds are first come, first served until depleted."
+    },
+    "nbpower-energy-walkthrough": {
+      "name": "Free Energy Walk-Through Service",
+      "provider": "NB Power (SaveEnergyNB)",
+      "provinces": [
+        "NB"
+      ],
+      "summary": "Free site visit by a Technical Energy Advisor to find energy-saving projects and matching rebates.",
+      "eligibility": "All businesses in New Brunswick, whatever their energy provider or fuel.",
+      "status": "open",
+      "source": "https://www.saveenergynb.ca/en/for-business/business-energy-walk-through/"
+    },
+    "efficiencypei-strategic-energy-solutions": {
+      "name": "Strategic Energy Solutions for Business, Commercial and Community Buildings",
+      "provider": "efficiencyPEI (Government of PEI)",
+      "provinces": [
+        "PE"
+      ],
+      "summary": "efficiencyPEI connects applicants with an auditor for a free ASHRAE Level 1 commercial energy audit. Feasibility study funding by annual energy use: $0 (0-100,000 ekWh), $5,000 (100,000-250,000), $10,000 (250,000-500,000), $15,000 (500,000+ ekWh). Upgrade incentive: the lowest of 1x annual savings, 50% of project cost or $75,000 (annual rebate caps $25,000 / $35,000 / $50,000 / $75,000 by tier).",
+      "eligibility": "Buildings owned and operated by businesses, institutions, municipalities or non-profits; apply with 12 months of utility bills.",
+      "status": "open",
+      "source": "https://www.princeedwardisland.ca/en/information/energy/strategic-energy-solutions-for-business-commercial-and-community-buildings",
+      "sourceUpdated": "2026-09-22",
+      "note": "Current incentive levels in effect since June 2, 2025."
+    },
+    "takecharge-business-efficiency": {
+      "name": "Business Efficiency Program - Custom Solutions",
+      "provider": "takeCHARGE (Newfoundland Power and Newfoundland and Labrador Hydro)",
+      "provinces": [
+        "NL"
+      ],
+      "summary": "Step 1 is a high-level energy assessment by a TakeCharge energy expert, 'fully funded by TakeCharge'; where a detailed energy audit or feasibility study is needed, 'TakeCharge funding may also be available' (no amount stated). Upgrade incentive: $0.10/kWh of first-year savings, max $100,000, plus a limited-time bonus of $500 per kW of peak demand reduced (offer until Dec 31, 2026; measures in service by Dec 31, 2027).",
+      "eligibility": "Commercial customers (details via TakeCharge; M&V required at close-out).",
+      "status": "open",
+      "source": "https://takechargenl.ca/business/custom-solutions/",
+      "sourceUpdated": "2026-06-16",
+      "additionalSources": [
+        "https://takechargenl.ca/about/"
+      ]
+    },
+    "yukon-commercial-rebates": {
+      "name": "Rebates for energy upgrades to commercial and institutional buildings",
+      "provider": "Government of Yukon",
+      "provinces": [
+        "YT"
+      ],
+      "summary": "Rebates for energy upgrades (small projects: heat pumps, ENERGY STAR appliances/windows, biomass, HRVs, insulation/air sealing, solar hot water). Large projects need an energy model by an engineer or certified technician showing at least 20% carbon reduction; funding up to 25% for for-profits (40% for biomass/heat pumps in existing buildings), 50% for non-profits, 60% for First Nations, municipalities and Crown corporations. No standalone rebate for audits or energy models was found.",
+      "eligibility": "First Nations governments and development corporations, municipalities, non-profits/NGOs, for-profit businesses, Crown corporations, and owners of multi-unit residential buildings over 600 m2.",
+      "status": "open",
+      "source": "https://yukon.ca/en/doing-business/funding-and-supports-business/rebates-energy-upgrades-commercial-and-institutional-buildings",
+      "sourceUpdated": "2025-06-05",
+      "note": "Not an audit incentive. Listed so Whitehorse pages can say what exists. The page was last updated June 2025, with no 2026 closure notice."
+    },
+    "aea-building-energy-audits": {
+      "name": "Building Improvements - building energy audits",
+      "provider": "Arctic Energy Alliance (NWT)",
+      "provinces": [
+        "NT"
+      ],
+      "summary": "Free desktop 'yardstick' audits (utility bill analysis) and free on-site targeted audits (heating, ventilation, air leakage, water equipment, lighting) for businesses and non-profits; community governments pay a fee but may get a $15,000 subsidy. Upgrade rebates up to $50,000 (up to $75,000 for community and Indigenous governments and Indigenous development corporations), the lower of 50% of eligible costs or a savings-based calculation.",
+      "eligibility": "Businesses, non-profits and community governments in the NWT. No rebates for systems that burn fossil fuels.",
+      "status": "open",
+      "source": "https://aea.nt.ca/program/building-improvements/",
+      "sourceUpdated": "2026-05-19"
+    },
+    "fcm-gmf-green-buildings-pathway-study": {
+      "name": "Green Municipal Fund - Feasibility study: Green Buildings Pathway",
+      "provider": "Federation of Canadian Municipalities (Green Municipal Fund)",
+      "provinces": [
+        "ON",
+        "QC",
+        "BC",
+        "AB",
+        "SK",
+        "MB",
+        "NS",
+        "NB",
+        "PE",
+        "NL",
+        "YT",
+        "NT"
+      ],
+      "summary": "Grant for up to 80% of eligible costs, max $65,000 for one building or $200,000 for a portfolio, to plan GHG-reduction upgrades.",
+      "eligibility": "Municipal governments, their project partners and not-for-profits that own community buildings (ice rinks, arenas, pools, community/recreation centres, arts and culture facilities, libraries, multi-purpose buildings). Not for private commercial buildings.",
+      "status": "open",
+      "source": "https://greenmunicipalfund.ca/funding/study-ghg-reduction-pathway-feasibility",
+      "note": "Accepts applications year-round until funding runs out. National, so it is kept out of cityIncentives (see nationalIncentives)."
+    }
+  },
+  "nationalIncentives": [
+    "fcm-gmf-green-buildings-pathway-study"
+  ],
+  "cityIncentives": {
+    "toronto": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate",
+      "saveonenergy-bizenergysaver",
+      "toronto-building-tune-up"
+    ],
+    "montreal": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "calgary": [
+      "ab-ceip-commercial"
+    ],
+    "ottawa": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate",
+      "saveonenergy-bizenergysaver"
+    ],
+    "edmonton": [
+      "ab-ceip-commercial"
+    ],
+    "winnipeg": [
+      "efficiencymb-commercial-energy-audit",
+      "efficiencymb-small-business"
+    ],
+    "mississauga": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "vancouver": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "brampton": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "hamilton": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "surrey": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "quebec-city": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "halifax": [
+      "ens-small-business-assessment",
+      "ens-custom-retrofit-study",
+      "ens-building-optimization"
+    ],
+    "laval": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "london": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "markham": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "vaughan": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "gatineau": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "enbridge-gaz-quebec-feasibility"
+    ],
+    "saskatoon": [
+      "saskpower-ceop"
+    ],
+    "kitchener": [
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate",
+      "kitchener-utilities-cii"
+    ],
+    "longueuil": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "burnaby": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "windsor": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "regina": [
+      "saskpower-ceop"
+    ],
+    "oakville": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "richmond-bc": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "richmond-hill": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "burlington": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "oshawa": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "sherbrooke": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "sudbury": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "abbotsford": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "levis": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "coquitlam": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "barrie": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "saguenay": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "kelowna": [
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "guelph": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "trois-rivieres": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "whitby": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "cambridge": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "st-catharines": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "milton": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "langley": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "kingston": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "ajax": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "waterloo": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "terrebonne": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "saanich": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency"
+    ],
+    "st-johns": [
+      "takecharge-business-efficiency"
+    ],
+    "thunder-bay": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "delta": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency"
+    ],
+    "brantford": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "chatham-kent": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "clarington": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "red-deer": [],
+    "nanaimo": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency",
+      "fortisbc-small-business-support"
+    ],
+    "sherwood-park": [],
+    "pickering": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "lethbridge": [],
+    "kamloops": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency"
+    ],
+    "saint-jean-sur-richelieu": [
+      "hydroquebec-energy-analysis",
+      "qc-ecoperformance-analysis",
+      "energir-feasibility-study",
+      "energir-recommissioning"
+    ],
+    "victoria": [
+      "bchydro-integrated-energy-audit",
+      "bchydro-feasibility-study",
+      "bc-continuous-optimization",
+      "fortisbc-commercial-energy-assessment",
+      "fortisbc-custom-efficiency-study",
+      "fortisbc-rental-apartment-efficiency"
+    ],
+    "peterborough": [
+      "enbridge-commercial-audits",
+      "enbridge-affordable-housing-assessment",
+      "saveonenergy-small-business",
+      "saveonenergy-ebcx",
+      "saveonenergy-xlerate"
+    ],
+    "moncton": [
+      "nbpower-cbrp-audit",
+      "nbpower-energy-walkthrough"
+    ],
+    "saint-john": [
+      "nbpower-cbrp-audit",
+      "nbpower-energy-walkthrough"
+    ],
+    "fredericton": [
+      "nbpower-cbrp-audit",
+      "nbpower-energy-walkthrough"
+    ],
+    "charlottetown": [
+      "efficiencypei-strategic-energy-solutions"
+    ],
+    "whitehorse": [
+      "yukon-commercial-rebates"
+    ],
+    "yellowknife": [
+      "aea-building-energy-audits"
+    ]
+  },
+  "cityIncentiveNotes": {
+    "toronto": "BizEnergySaver has covered all 'M' postal codes since July 23, 2026. The City's Building Tune-Up targets small businesses and non-profits in buildings of roughly 10,000-30,000 sq ft.",
+    "ottawa": "BizEnergySaver covers the Ottawa FSAs listed in its incentive record (K4C is not listed).",
+    "kitchener": "Enbridge is not mapped: Kitchener's gas utility is Kitchener Utilities, which the OEB names as a separate utility whose rates it doesn't set. An address with an Enbridge Gas account would still qualify for Enbridge's audit incentive. Save on Energy programs apply province-wide.",
+    "kingston": "Utilities Kingston distributes gas in central Kingston; Enbridge Gas serves the west and east ends. Enbridge's audit incentive applies only to Enbridge accounts.",
+    "gatineau": "Gas is Enbridge Gaz Québec (formerly Gazifère), which serves Gatineau and Chelsea, so Énergir grants are not mapped. Hydro-Québec and ÉcoPerformance apply.",
+    "sherbrooke": "Hydro-Sherbrooke customers are listed as eligible for Hydro-Québec's Efficient Solutions program.",
+    "saguenay": "Hydro-Jonquière (Ville de Saguenay) customers are listed as eligible for Hydro-Québec's Efficient Solutions program.",
+    "montreal": "Note both Montréal's by-law 21-042 and Quebec's 2027 declaration rule (rules section).",
+    "kelowna": "BC Hydro audit and feasibility offers are not mapped because Kelowna is in FortisBC's Okanagan electric service area; confirm the building's electric utility. C-Op is reachable through a FortisBC technical advisor. FortisBC's electric-side eligibility names only the municipal utilities of Grand Forks, Penticton, Summerland and Nelson.",
+    "vancouver": "FortisBC's small-business outreach lists 'Vancouver (downtown)' only.",
+    "coquitlam": "FortisBC's small-business outreach lists 'Tri-Cities' (assumed to include Coquitlam).",
+    "langley": "FortisBC's small-business outreach lists 'Langley' without saying whether that means the City or the Township.",
+    "calgary": "CEIP is property-tax financing, not a grant, and requires an ASHRAE Level 2 audit. No open Alberta grant for commercial audits was found (ERA ESB and MCCAC CEC are closed; Energy Efficiency Alberta no longer operates).",
+    "edmonton": "CEIP is property-tax financing, not a grant, and requires an ASHRAE Level 2 audit. No open Alberta grant for commercial audits was found (ERA ESB and MCCAC CEC are closed).",
+    "red-deer": "No open commercial audit incentive found. CEIP's commercial locations page (Sept 2026) doesn't list Red Deer; ERA ESB and MCCAC CEC are closed. No ATCO/ENMAX/EPCOR commercial audit offer found (ATCO pages tried returned 404).",
+    "lethbridge": "No open commercial audit incentive found. CEIP's commercial locations page (Sept 2026) doesn't list Lethbridge; ERA ESB and MCCAC CEC are closed.",
+    "sherwood-park": "No open commercial audit incentive found. CEIP's commercial locations page (Sept 2026) doesn't list Strathcona County; ERA ESB and MCCAC CEC are closed.",
+    "saskatoon": "CEOP's Energy Support Services requires a connection to the SaskPower-controlled grid; whether customers of the City's own electric utility (Saskatoon Light & Power) qualify was not confirmed.",
+    "regina": "Only CEOP's Energy Support Services stream is still open, and it may close without notice.",
+    "saint-john": "SaveEnergyNB's FAQ says non-NB Power customers in a similar rate class are eligible for the Commercial Buildings Retrofit Program, and the walk-through is open to all NB businesses whatever the energy provider.",
+    "whitehorse": "No Yukon audit rebate found. Large-project rebates require an energy model by an engineer or certified technician."
+  },
+  "sources_utility_territory": {
+    "oeb_gas_distributors": "https://www.oeb.ca/consumer-information-and-protection/natural-gas-rates",
+    "utilities_kingston_service_areas": "https://utilitieskingston.com/Corporate/AboutUs/ServiceAreas",
+    "kitchener_utilities": "https://www.kitchenerutilities.ca/offers-rebates/save-and-conserve/",
+    "enbridge_gaz_quebec_about": "https://enbridgegaz.com/en/about-us/",
+    "hydro_quebec_municipal_networks": "https://www.hydroquebec.com/data/affaires/pdf/aff-programme-solutions-efficaces-annexe-reseaux-municipaux-ou-reseau-cooperatif-octobre-2024.pdf",
+    "fortisbc_electric_service_area": "https://www.fortisbc.com/about-us/corporate-information/regulatory-affairs/our-electricity-utility",
+    "ceip_commercial_locations": "https://ceip.abmunis.ca/commercial/locations/",
+    "takecharge_partners": "https://takechargenl.ca/about/"
+  }
+}

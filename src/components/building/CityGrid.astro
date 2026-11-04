@@ -1,0 +1,91 @@
+---
+/* Every city page, grouped by province (west to east), with what each city has: reporting rules and audit incentives. */
+import { citiesByProvince, cityLabel, cityMetrics, plural } from '../../lib/building';
+
+interface Props {
+  /** Show the filter box above the grid */
+  filter?: boolean;
+}
+const { filter = true } = Astro.props;
+const groups = citiesByProvince();
+const total = groups.reduce((n, g) => n + g.cities.length, 0);
+---
+
+<div class="cgrid" data-cgrid>
+  {filter && (
+    <div class="cg-filter">
+      <label for="cgFilter" class="tag">Filter {total} cities</label>
+      <input id="cgFilter" type="search" placeholder="Type a city or province" autocomplete="off" />
+      <p class="small" id="cgCount" aria-live="polite"></p>
+    </div>
+  )}
+  {groups.map((g) => (
+    <section class="cg-prov" data-prov={g.provName.toLowerCase()}>
+      <h3>{g.provName} <span class="n">{g.cities.length}</span></h3>
+      <ul>
+        {g.cities.map((c) => {
+          const m = cityMetrics(c);
+          return (
+            <li data-name={`${c.name} ${cityLabel(c)} ${g.provName}`.toLowerCase()}>
+              <a class="card cg-city" href={`/commercial-energy-audit/${c.slug}/`}>
+                <span class="nm">{cityLabel(c)}</span>
+                <span class="mt">
+                  {m.mandatory ? <span class="dot dot-rule" aria-hidden="true"></span> : null}
+                  {m.mandatory ? 'Mandatory reporting' : m.voluntary ? 'Voluntary reporting' : 'No reporting rule found'}
+                  <span class="sep"> · </span>{plural(m.incentives, 'program')}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+  <p class="cg-empty small" hidden>No city matches that. Try the province name, or <a href="/request/">describe your building in a request</a>: we cover owners outside the 70 cities too.</p>
+</div>
+
+<style>
+  .cg-filter { display: grid; gap: 6px; max-width: 460px; margin: 0 0 26px; }
+  .cg-filter input { font: inherit; padding: 12px 14px; border: 1.5px solid var(--line-strong); border-radius: 10px; background: var(--card); color: var(--ink); width: 100%; }
+  .cg-filter input:focus { outline: 2px solid var(--heat); outline-offset: 1px; }
+  .cg-filter p { margin: 0; min-height: 1.4em; }
+  .cg-prov { margin: 0 0 30px; padding: 0; }
+  .cg-prov h3 { font-size: 20px; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1.5px solid var(--ink); display: flex; align-items: baseline; gap: 10px; }
+  .cg-prov h3 .n { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--muted); }
+  .cg-prov ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); gap: 10px; }
+  .cg-city { display: grid; gap: 2px; padding: 12px 14px; text-decoration: none; color: var(--ink); border-left: 3px solid var(--line-strong); height: 100%; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+  .cg-city:hover { border-color: var(--heat); border-left-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .nm { font-family: var(--display); font-weight: 800; font-size: 16.5px; letter-spacing: -0.01em; }
+  .mt { font-size: 13px; color: var(--muted); line-height: 1.4; display: block; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 0.05em; }
+  .dot-rule { background: var(--heat); }
+  .sep { color: var(--faint); }
+  [hidden] { display: none !important; }
+</style>
+
+<script>
+  // Narrow the grid as you type: matches the city name or the province, hides provinces left empty.
+  const root = document.querySelector<HTMLElement>('[data-cgrid]');
+  const input = document.getElementById('cgFilter') as HTMLInputElement | null;
+  if (root && input) {
+    const count = document.getElementById('cgCount');
+    const empty = root.querySelector<HTMLElement>('.cg-empty');
+    const apply = () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      root.querySelectorAll<HTMLElement>('.cg-prov').forEach((sec) => {
+        let any = 0;
+        sec.querySelectorAll<HTMLElement>('li').forEach((li) => {
+          const hit = !q || (li.dataset.name ?? '').includes(q);
+          li.hidden = !hit;
+          if (hit) any++;
+        });
+        sec.hidden = any === 0;
+        shown += any;
+      });
+      if (count) count.textContent = q ? `${shown} ${shown === 1 ? 'city matches' : 'cities match'}` : '';
+      if (empty) empty.hidden = shown !== 0;
+    };
+    input.addEventListener('input', apply);
+  }
+</script>

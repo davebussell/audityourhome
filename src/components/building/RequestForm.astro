@@ -1,0 +1,187 @@
+---
+import { BUILDING } from '../../config/building';
+import { NETLIFY_FORMS, FORM_NAMES } from '../../config/forms';
+import { BUILDING_TYPES } from '../../lib/building';
+
+interface Props {
+  heading?: string;
+  sub?: string;
+  /** Context tag submitted with the request, e.g. "city-toronto" */
+  context?: string;
+  /** Pre-fill the city and province (city pages) */
+  city?: string;
+  province?: string;
+  /** Pre-select a building type (a value from BUILDING_TYPES) */
+  type?: string;
+  id?: string;
+}
+const {
+  heading = 'Tell us about your building',
+  sub = 'A few details are enough. We read every request and introduce you to one engineering firm or energy consultant that serves your area, usually within a business day.',
+  context = 'general',
+  city = '',
+  province = '',
+  type = '',
+  id = 'request',
+} = Astro.props;
+
+const netlifyForm = NETLIFY_FORMS;
+const mailtoFallback = `mailto:${BUILDING.contactEmail}?subject=Building%20audit%20request%20(${encodeURIComponent(context)})`;
+const uid = `rf-${Math.random().toString(36).slice(2, 8)}`;
+const PROVINCES: [string, string][] = [
+  ['BC', 'British Columbia'], ['AB', 'Alberta'], ['SK', 'Saskatchewan'], ['MB', 'Manitoba'], ['ON', 'Ontario'], ['QC', 'Quebec'],
+  ['NB', 'New Brunswick'], ['NS', 'Nova Scotia'], ['PE', 'Prince Edward Island'], ['NL', 'Newfoundland and Labrador'],
+  ['YT', 'Yukon'], ['NT', 'Northwest Territories'], ['NU', 'Nunavut'], ['outside', 'Outside Canada'],
+];
+const ROLES = ['Owner', 'Property manager', 'Condo board or strata council member', 'Tenant or occupant', 'Consultant or contractor', 'Other'];
+const AREAS = ['Under 10,000 sq ft (930 m²)', '10,000 to 49,999 sq ft', '50,000 to 99,999 sq ft', '100,000 sq ft (9,300 m²) or more', 'Not sure'];
+const NEEDS = [
+  ['not-sure', 'Not sure: help me scope it'],
+  ['level-1', 'Level 1 walk-through'],
+  ['level-2', 'Level 2 energy survey and analysis'],
+  ['level-3', 'Level 3 detailed analysis'],
+  ['reporting', 'Help with energy reporting or benchmarking'],
+  ['incentive', 'Help with an incentive or loan application'],
+];
+const TIMELINES = [['asap', 'As soon as possible'], ['3-months', 'Within 3 months'], ['planning', 'Planning for later this year or next'], ['just-looking', 'Just looking for now']];
+---
+
+<div class="card sheet requestform" id={id} data-clarity-mask="true">
+  <h3>{heading}</h3>
+  <p class="small">{sub}</p>
+
+  {netlifyForm ? (
+    <form
+      method="POST"
+      action="/thanks/?sent=1"
+      name={FORM_NAMES.buildingAudit}
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="rf-netlify"
+      data-context={context}
+    >
+      <input type="hidden" name="form-name" value={FORM_NAMES.buildingAudit} />
+      <input type="hidden" name="context" value={context} />
+      <input type="hidden" name="subject" value={`Building audit request (${context})`} />
+      <p class="rf-hide" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-name`}>Name</label>
+          <input id={`${uid}-name`} name="name" type="text" autocomplete="name" maxlength="120" required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-email`}>Email</label>
+          <input id={`${uid}-email`} name="email" type="email" autocomplete="email" maxlength="200" required />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-phone`}>Phone <span class="optional">(optional)</span></label>
+          <input id={`${uid}-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
+        </div>
+        <div class="field">
+          <label for={`${uid}-org`}>Organization <span class="optional">(optional)</span></label>
+          <input id={`${uid}-org`} name="organization" type="text" autocomplete="organization" maxlength="160" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-role`}>Your role</label>
+          <select id={`${uid}-role`} name="role">
+            {ROLES.map((r, i) => <option value={r} selected={i === 0}>{r}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${uid}-type`}>Type of building</label>
+          <select id={`${uid}-type`} name="building_type" data-type-select>
+            <option value="">Choose…</option>
+            {BUILDING_TYPES.map((t) => <option value={t.value} selected={t.value === type}>{t.label}</option>)}
+            <option value="mixed-use" selected={type === 'mixed-use'}>Mixed use</option>
+            <option value="other" selected={type === 'other'}>Something else</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-city`}>City or town</label>
+          <input id={`${uid}-city`} name="city" type="text" autocomplete="address-level2" maxlength="120" value={city} required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-prov`}>Province or territory</label>
+          <select id={`${uid}-prov`} name="province" required>
+            <option value="">Choose…</option>
+            {PROVINCES.map(([v, l]) => <option value={v} selected={v === province}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-area`}>Floor area</label>
+          <select id={`${uid}-area`} name="floor_area">
+            {AREAS.map((a, i) => <option value={a} selected={i === AREAS.length - 1}>{a}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${uid}-time`}>Timing</label>
+          <select id={`${uid}-time`} name="timeline">
+            {TIMELINES.map(([v, l], i) => <option value={v} selected={i === 1}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for={`${uid}-need`}>What do you need?</label>
+        <select id={`${uid}-need`} name="need">
+          {NEEDS.map(([v, l]) => <option value={v}>{l}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for={`${uid}-msg`}>Anything we should know? <span class="optional">(optional)</span></label>
+        <textarea id={`${uid}-msg`} name="message" rows="4" maxlength="4000" placeholder="e.g. 1970s six-storey apartment building, shared gas boilers, we've had a reporting notice and want to know what level of audit to ask for"></textarea>
+      </div>
+      <label class="rf-check"><input type="checkbox" name="consent" value="yes" required /> <span>I agree {BUILDING.name} may share this request with one engineering firm or energy consultant that serves my area, so it can contact me about it.</span></label>
+      <button class="btn btn-primary" type="submit">Send my request</button>
+      <p class="meta consent">We never send a request to more than one firm and never sell contact lists. You pay us nothing. Firms that take part may pay us a referral fee; it never changes what this site says about rules or incentives. <a href="/privacy/">Privacy</a></p>
+    </form>
+  ) : (
+    <div class="fallback">
+      <p>Email us the building type, its floor area, the city and what you need, and we’ll reply with what applies and who to talk to.</p>
+      <a class="btn btn-primary" href={mailtoFallback}>Email {BUILDING.contactEmail}</a>
+      <p class="meta">This inbox is answered by a person.</p>
+    </div>
+  )}
+</div>
+
+<style>
+  .requestform { padding: 26px 28px 28px; color: var(--ink); }
+  .requestform h3, .requestform label { color: var(--ink); }
+  .requestform h3 { margin-bottom: 6px; }
+  /* the fields already carry a bottom margin, so the grid only adds the column gap (otherwise stacked fields on a phone sit twice as far apart) */
+  .requestform .grid-2 { gap: 0 20px; }
+  .requestform > .small { margin-bottom: 20px; max-width: 62ch; }
+  .rf-hide { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .optional { font-weight: 400; color: var(--faint); font-size: 13px; }
+  .rf-check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 14.5px; line-height: 1.5; margin: 4px 0 18px; cursor: pointer; }
+  .rf-check input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--heat); }
+  .consent { margin: 14px 0 0; line-height: 1.55; font-family: var(--body); font-size: 13px; }
+  .fallback .btn { margin: 4px 0 10px; }
+  @media (max-width: 560px) { .requestform { padding: 20px 18px 22px; } }
+</style>
+
+<script>
+  // Netlify form: record the lead in analytics without any personal details.
+  document.querySelectorAll<HTMLFormElement>('form.rf-netlify').forEach((f) => {
+    f.addEventListener('submit', () => {
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+      try {
+        w.gtag?.('event', 'generate_lead', { form_name: 'building_audit_request', page_context: f.dataset.context });
+      } catch {
+        /* analytics is optional */
+      }
+    });
+  });
+  // ?type=office (from the building-type tiles) pre-selects the type on a form that has none chosen.
+  const want = new URLSearchParams(location.search).get('type');
+  if (want) document.querySelectorAll<HTMLSelectElement>('select[data-type-select]').forEach((s) => {
+    if (!s.value && [...s.options].some((o) => o.value === want)) s.value = want;
+  });
+</script>

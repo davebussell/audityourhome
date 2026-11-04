@@ -1,0 +1,66 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import { PHOTOS } from '../../lib/photos';
+import { breadcrumbSchema } from '../../lib/schema';
+import { BUILDING } from '../../config/building';
+import { dataChecked } from '../../lib/building';
+
+const title = 'Illustration and data credits | AuditYourBuilding';
+const description = `Where the illustrations, research data and typefaces on ${BUILDING.domain} come from, and how to reach us if a credit is wrong.`;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Credits', path: '/credits/' }])];
+const used = ['commercial-energy-audit', 'multi-unit'].map((k) => ({ key: k, alt: PHOTOS[k].alt, hud: (PHOTOS[k] as { hud?: string }).hud }));
+---
+
+<BuildingBase title={title} description={description} schema={schema}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Credits</p>
+      <h1>Illustration &amp; data credits</h1>
+      <p class="lede measure">
+        The pictures on this site are illustrations made for it; none shows a real customer, a specific building or any firm. The facts on each page come from the
+        public sources listed here. If a credit is wrong or missing, write to <a href={`mailto:${BUILDING.contactEmail}`}>{BUILDING.contactEmail}</a> and it will be fixed.
+      </p>
+    </div>
+
+    <div class="measure prose">
+      <h2>Illustrations <span class="count">{used.length}</span></h2>
+      <p>
+        The two pictures below were made for AuditYourHome on September 29, 2026 with Higgsfield (GPT Image 2.5), art-directed and captioned by the editors, and are used
+        here under the same terms. Each carries a small instrument-style label naming the convention it illustrates.
+      </p>
+      <ol class="credit-list">
+        {used.map((p) => (
+          <li><strong>{p.hud ?? p.key}</strong><span>{p.alt}.</span></li>
+        ))}
+      </ol>
+      <p>
+        The blueprint drawing on the home page, the building-type icons and the building-and-checkmark mark are drawn for the site.
+      </p>
+
+      <h2>Data drawn into the pages</h2>
+      <ul class="credit-list plain">
+        <li><strong>Reporting rules</strong> <span>come from the federal, provincial and municipal pages linked on each card, read on or just before {dataChecked}; the date shown on a source page, where it has one, is shown beside the link.</span></li>
+        <li><strong>Incentive programs</strong> <span>come from the program pages of the utilities and governments that run them (linked on each card), read on or just before {dataChecked}.</span></li>
+        <li><strong>Audit levels</strong> <span>follow ASHRAE Standard 211 as described by ASHRAE, efficiencyPEI, Efficiency Manitoba and the City of Toronto, linked on the audit levels page.</span></li>
+        <li><strong>City facts</strong> <span>Population is from the 2021 Census of Population (Statistics Canada table 98-10-0002-01, under the Statistics Canada Open Licence). Electricity and natural gas utilities are mapped by city from the regulators’ and utilities’ own service-area pages, so confirm which utility serves your address. Climate figures (heating degree-days, design temperatures) are from the NRCan HOT2000 weather library.</span></li>
+      </ul>
+
+      <h2>Typefaces and icons</h2>
+      <p>
+        Archivo, Public Sans and IBM Plex Mono, served by Google Fonts under the SIL Open Font License. Icons and the mark are drawn for the site.
+      </p>
+      <p class="small">See also <a href="/about/">about &amp; data policy</a> and <a href="/privacy/">privacy</a>.</p>
+    </div>
+  </div>
+</BuildingBase>
+
+<style>
+  .prose h2 { margin-top: 32px; }
+  .count { font-family: var(--mono); font-size: 14px; color: var(--muted); margin-left: 6px; }
+  .credit-list { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 8px; }
+  .credit-list.plain { list-style: none; padding-left: 0; }
+  .credit-list li { font-size: 15px; }
+  .credit-list strong { display: block; font-size: 14px; }
+  .credit-list span { color: var(--muted); }
+  .prose { padding-bottom: 48px; }
+</style>

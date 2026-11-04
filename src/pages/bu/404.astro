@@ -1,0 +1,28 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import { BUILDING } from '../../config/building';
+
+const title = 'Page not found | AuditYourBuilding';
+const description = 'That page has moved or never existed. Here are the places most building owners are looking for.';
+---
+
+<BuildingBase title={title} description={description} indexable={false}>
+  <div class="container">
+    <div class="page-hero tac">
+      <p class="eyebrow">404</p>
+      <h1>This sheet is missing from the set</h1>
+      <p class="lede">The page may have moved. These are the usual places to start:</p>
+      <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+        <a class="btn btn-primary" href="/">Home</a>
+        <a class="btn btn-primary" href="/commercial-energy-audit/">Find your city</a>
+        <a class="btn btn-primary" href="/request/">Request an audit</a>
+      </p>
+      <p style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
+        <a class="btn btn-ghost" href="/audit-levels/">Audit levels</a>
+        <a class="btn btn-ghost" href="/reporting-rules/">Reporting rules</a>
+        <a class="btn btn-ghost" href="/incentives/">Incentives</a>
+        <a class="btn btn-ghost" href={BUILDING.homeCa.url}>Looking for a home audit?</a>
+      </p>
+    </div>
+  </div>
+</BuildingBase>

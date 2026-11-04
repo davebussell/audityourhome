@@ -13,4 +13,6 @@ export const FORM_NAMES = {
   auditRequest: 'audit-request',
   usQuestion: 'us-question',
   heatPumpQuote: 'heat-pump-quote',
+  /** audityourbuilding.com (the commercial and multi-unit site) */
+  buildingAudit: 'building-audit-request',
 } as const;

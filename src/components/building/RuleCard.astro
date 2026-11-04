@@ -1,0 +1,42 @@
+---
+import { statusParts, ruleTypeLabel, longDate } from '../../lib/building';
+import type { BRule } from '../../lib/building';
+
+interface Props {
+  rule: Pick<BRule, 'name' | 'type' | 'status' | 'summary' | 'thresholds' | 'deadline' | 'source' | 'sourceUpdated'>;
+  /** Where the rule applies, e.g. "Ontario" or "Toronto" */
+  where?: string;
+}
+const { rule, where } = Astro.props;
+const s = statusParts(rule.status);
+const chipClass = { active: 'chip-active', limited: 'chip-limited', info: 'chip-info', closed: 'chip-closed', neutral: 'chip-neutral' }[s.tone];
+---
+
+<article class="card rule">
+  <div class="top">
+    <p class="tag">{where ? `${where} · ` : ''}{ruleTypeLabel(rule.type)}</p>
+    <span class:list={['chip', chipClass]}>{s.label}</span>
+  </div>
+  <h3>{rule.name}</h3>
+  {s.detail && <p class="detail">{s.detail}</p>}
+  <p class="sum">{rule.summary}</p>
+  <dl>
+    {rule.thresholds && (<><dt>Who it covers</dt><dd>{rule.thresholds}</dd></>)}
+    {rule.deadline && (<><dt>Deadline</dt><dd>{rule.deadline}</dd></>)}
+  </dl>
+  <p class="src"><a href={rule.source} rel="noopener">Official page</a>{rule.sourceUpdated && <span class="meta"> · page dated {longDate(rule.sourceUpdated)}</span>}</p>
+</article>
+
+<style>
+  .rule { padding: 20px 22px; border-left: 4px solid var(--heat); display: grid; gap: 8px; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .top .tag { margin: 0; }
+  h3 { margin: 0; font-size: 19px; line-height: 1.2; }
+  .detail { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--warn); }
+  .sum { margin: 0; font-size: 15px; color: var(--ink); line-height: 1.6; }
+  dl { margin: 2px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; font-size: 14px; }
+  dt { color: var(--muted); font-weight: 600; }
+  dd { margin: 0; }
+  @media (max-width: 560px) { dl { grid-template-columns: 1fr; gap: 2px; } dd { margin-bottom: 8px; } }
+  .src { margin: 2px 0 0; font-size: 14px; }
+</style>

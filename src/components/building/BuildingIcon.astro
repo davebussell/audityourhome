@@ -1,0 +1,55 @@
+---
+/* Line icons for the six building types (48×48, drawn here). */
+interface Props { type: string; size?: number }
+const { type, size = 44 } = Astro.props;
+---
+
+<svg width={size} height={size} viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {type === 'office' && (
+    <>
+      <rect x="13" y="5" width="22" height="37" rx="1.5" />
+      <path d="M18 12h4M26 12h4M18 18h4M26 18h4M18 24h4M26 24h4M18 30h4M26 30h4M21 42v-6h6v6" />
+      <path d="M6 42h36" />
+    </>
+  )}
+  {type === 'retail' && (
+    <>
+      <path d="M6 17l3-9h30l3 9" />
+      <path d="M6 17c0 3 3 4.5 6 4.5s6-1.5 6-4.5c0 3 3 4.5 6 4.5s6-1.5 6-4.5c0 3 3 4.5 6 4.5s6-1.5 6-4.5" />
+      <path d="M9 22v20h30V22" />
+      <rect x="13" y="28" width="12" height="9" rx="1" />
+      <path d="M31 42V28h4v14M6 42h36" />
+    </>
+  )}
+  {type === 'hotel' && (
+    <>
+      <rect x="10" y="7" width="28" height="35" rx="1.5" />
+      <path d="M15 13h5M28 13h5M15 20h5M28 20h5M15 27h5M28 27h5" />
+      <path d="M19 42v-8h10v8M16 34h16M6 42h36" />
+    </>
+  )}
+  {type === 'industrial' && (
+    <>
+      <path d="M5 42V22l9 6v-6l9 6v-6l9 6V10h6v32" />
+      <path d="M5 42h38" />
+      <path d="M10 36h4M19 36h4M28 36h4" />
+      <path d="M36 6c1.5-1.5 3-1.5 4.5 0" />
+    </>
+  )}
+  {type === 'institutional' && (
+    <>
+      <path d="M6 20L24 7l18 13H6Z" />
+      <path d="M10 20v18M18 20v18M30 20v18M38 20v18" />
+      <path d="M6 38h36M4 42h40" />
+      <circle cx="24" cy="15" r="2" />
+    </>
+  )}
+  {type === 'apartment' && (
+    <>
+      <rect x="8" y="12" width="17" height="30" rx="1.5" />
+      <rect x="25" y="22" width="15" height="20" rx="1.5" />
+      <path d="M12 18h9M12 24h9M12 30h9M29 28h7M29 34h7M16 42v-6h5v6" />
+      <path d="M6 42h36" />
+    </>
+  )}
+</svg>

@@ -1,0 +1,80 @@
+---
+import BLogo from './BLogo.astro';
+import { BUILDING, buildingPath } from '../../config/building';
+
+const path = buildingPath(Astro.url.pathname);
+const NAV = [
+  { href: '/commercial-energy-audit/', label: 'Commercial audits' },
+  { href: '/audit-levels/', label: 'Audit levels' },
+  { href: '/apartments-condos/', label: 'Apartments & condos' },
+  { href: '/reporting-rules/', label: 'Reporting rules' },
+  { href: '/incentives/', label: 'Incentives' },
+  { href: '/articles/', label: 'Articles' },
+];
+const isActive = (href: string) => path === href || path.startsWith(href);
+---
+
+<div class="topbar">
+  <div class="container tb-in">
+    <p>Own a house or a single condo unit? Home energy audits: <a href={BUILDING.homeCa.url}>{BUILDING.homeCa.name}</a> (Canada) · <a href={BUILDING.homeUs.url}>{BUILDING.homeUs.name}</a> (United States)</p>
+  </div>
+</div>
+<header class="site-header" id="siteHeader">
+  <div class="container inner">
+    <BLogo />
+    <nav aria-label="Main" class="mainnav">
+      <button class="menu-btn" aria-expanded="false" aria-controls="bnav" id="menuBtn">Menu</button>
+      <ul class="deskrow" id="bnav">
+        {NAV.map((i) => (
+          <li><a href={i.href} aria-current={isActive(i.href) ? 'page' : undefined}>{i.label}</a></li>
+        ))}
+        <li class="cta"><a href="/request/" class="btn btn-primary btn-sm">Request an audit</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .topbar { background: var(--navy); color: var(--navy-ink); font-size: 13px; }
+  .tb-in { padding-top: 7px; padding-bottom: 7px; }
+  .topbar p { margin: 0; line-height: 1.45; color: var(--navy-ink); }
+  .topbar a { color: #fff; text-underline-offset: 2px; }
+  .topbar a:hover { color: var(--navy-ink); }
+  @media (max-width: 760px) { .topbar { font-size: 12px; } }
+
+  .site-header { background: rgba(243, 246, 249, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line-strong); position: sticky; top: 0; z-index: 50; }
+  .inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 66px; }
+  .mainnav { display: flex; align-items: center; height: 100%; }
+  .deskrow { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
+  .deskrow a:not(.btn) { display: block; padding: 9px 9px; font-weight: 600; font-size: 14px; color: var(--ink); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .deskrow a:not(.btn):hover { color: var(--heat-deep); }
+  .deskrow a[aria-current='page']:not(.btn) { border-bottom-color: var(--heat); color: var(--heat-deep); }
+  .cta { margin-left: 8px; }
+  .cta .btn { white-space: nowrap; }
+  .menu-btn { display: none; font: inherit; font-weight: 700; font-size: 14px; background: transparent; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; color: var(--ink); cursor: pointer; }
+  .menu-btn[aria-expanded='true'] { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  @media (max-width: 1060px) {
+    .menu-btn { display: inline-block; }
+    .deskrow { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; background: var(--card); border-bottom: 1px solid var(--line-strong); box-shadow: var(--shadow-md); padding: 8px 22px 18px; }
+    .deskrow.open { display: flex; }
+    .deskrow a:not(.btn) { padding: 13px 2px; border-bottom: 1px solid var(--line); font-size: 16px; }
+    .deskrow a[aria-current='page']:not(.btn) { border-bottom-color: var(--line); }
+    .cta { margin: 14px 0 0; }
+    .cta .btn { width: 100%; justify-content: center; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const list = document.getElementById('bnav');
+  if (btn && list) {
+    const set = (open: boolean) => {
+      list.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+    list.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+  }
+</script>

@@ -1,0 +1,272 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import Blueprint from '../../components/building/Blueprint.astro';
+import AuditLevels from '../../components/building/AuditLevels.astro';
+import BuildingIcon from '../../components/building/BuildingIcon.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import ArtTile from '../../components/building/ArtTile.astro';
+import Photo from '../../components/Photo.astro';
+import { BUILDING } from '../../config/building';
+import { cities, citiesByProvince, allIncentives, articles, STATIC_ARTICLES, ARTICLE_PHOTO, ARTICLE_TILE, BUILDING_TYPES, cityMetrics, dataChecked } from '../../lib/building';
+import { ogFor } from '../../lib/photos';
+
+const title = 'Commercial and multi-unit energy audits in Canada | AuditYourBuilding';
+const description =
+  'The three audit levels, the energy reporting rules in your city and the incentives that pay for audits: commercial and multi-unit buildings in 70 Canadian cities.';
+const groups = citiesByProvince();
+const topCities = ['toronto', 'montreal', 'vancouver', 'calgary', 'edmonton', 'ottawa', 'winnipeg', 'halifax'].map((s) => cities.find((c) => c.slug === s)!);
+const mandatoryCities = cities.filter((c) => cityMetrics(c).mandatory).length;
+const stats = [
+  { v: String(cities.length), l: 'Canadian cities, each with its own page' },
+  { v: String(allIncentives().length), l: 'audit and study incentive programs tracked' },
+  { v: String(mandatoryCities), l: `of the ${cities.length} cities are covered by a mandatory energy reporting rule` },
+  { v: '3', l: 'audit levels, one standard (ASHRAE 211)' },
+];
+const cards = [
+  ...articles.map((a) => ({ href: `/articles/${a.slug}/`, kicker: a.kicker, title: a.h1, blurb: a.blurb, photo: ARTICLE_PHOTO[a.slug], tile: ARTICLE_TILE[a.slug] })),
+  ...STATIC_ARTICLES.map((a) => ({ href: `/articles/${a.slug}/`, kicker: a.kicker, title: a.title, blurb: a.blurb, photo: ARTICLE_PHOTO[a.slug], tile: ARTICLE_TILE[a.slug] })),
+];
+const steps = [
+  ['Pick your city', 'See which reporting rules apply and which incentives pay for an audit where your building is.'],
+  ['Choose a level', 'Level 1 for a first look, Level 2 for most incentive and loan applications, Level 3 for major projects.'],
+  ['Tell us about the building', 'Type, size, city and what you need. Two minutes, no account.'],
+  ['Get introduced', 'We introduce you to one engineering firm or energy consultant that serves your area.'],
+];
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: BUILDING.name,
+    url: '/',
+    email: BUILDING.contactEmail,
+    description: BUILDING.tagline,
+  },
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} flushFooter>
+  <section class="hero bp-grid">
+    <div class="container hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">Commercial and multi-unit buildings · Canada</p>
+        <h1>Know your building before you commission the audit.</h1>
+        <p class="lede">
+          The three ASHRAE audit levels in plain language, the energy reporting rules that apply in your city, and the incentives that pay for
+          audits and studies: for offices, retail, industrial and institutional sites and apartment buildings in {cities.length} Canadian cities.
+        </p>
+        <form class="pick" id="cityPick" action="/commercial-energy-audit/" method="get">
+          <label for="cityPickSel" class="pick-l">Find your city</label>
+          <div class="pick-row">
+            <select id="cityPickSel" aria-label="City">
+              <option value="">Choose a city…</option>
+              {groups.map((g) => (
+                <optgroup label={g.provName}>
+                  {g.cities.map((c) => <option value={c.slug}>{c.name}</option>)}
+                </optgroup>
+              ))}
+            </select>
+            <button class="btn btn-primary" type="submit">Show what applies →</button>
+          </div>
+        </form>
+        <p class="top-cities small">
+          Popular: {topCities.map((c, i) => <><a href={`/commercial-energy-audit/${c.slug}/`}>{c.name}</a>{i < topCities.length - 1 ? ' · ' : ''}</>)}
+        </p>
+      </div>
+      <Blueprint />
+    </div>
+  </section>
+
+  <section class="tight stats-band">
+    <div class="container">
+      <ul class="stats">
+        {stats.map((s) => <li><span class="v">{s.v}</span><span class="l">{s.l}</span></li>)}
+      </ul>
+      <p class="meta stats-note">Rules and programs last read {dataChecked}. Each entry links to the official page.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="sec-head"><h2>What kind of building is it?</h2><span class="tag">Step 1 · Building type</span></div>
+      <div class="types">
+        {BUILDING_TYPES.map((t) => (
+          <a class="card type" href={`/request/?type=${t.value}`}>
+            <span class="ico"><BuildingIcon type={t.icon} /></span>
+            <span class="tt">{t.label}</span>
+            <span class="tl">{t.looks}</span>
+            <span class="go">Request an audit for this →</span>
+          </a>
+        ))}
+      </div>
+      <p class="small types-note">Not sure which one fits? <a href="/request/">Describe it in the request</a> and we’ll sort it out. A single house or condo unit belongs on <a href={BUILDING.homeCa.url}>AuditYourHome.ca</a> (Canada) or <a href={BUILDING.homeUs.url}>AuditYourHome.com</a> (United States).</p>
+    </div>
+  </section>
+
+  <section class="levels-band">
+    <div class="container">
+      <div class="sec-head"><h2>Three audit levels, one standard</h2><span class="tag">Step 2 · Scope</span></div>
+      <p class="lede measure">Building audits in Canada are described by the levels in ASHRAE Standard 211. Each level builds on the one before, and the level you ask for decides the price, the report and which incentive or loan will accept it.</p>
+      <AuditLevels compact />
+      <p class="more"><a class="btn btn-ghost" href="/audit-levels/">What each level includes →</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="sec-head"><h2>What applies in your city</h2><span class="tag">Step 3 · Rules and money</span></div>
+      <div class="two">
+        <div>
+          <p class="lede">Some places require large buildings to report their energy use every year. Many utilities and governments pay part of the cost of an audit or a feasibility study. Both depend on the city, the utility territory and the size of the building.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="/commercial-energy-audit/">Choose your city</a>
+            <a class="btn btn-ghost" href="/reporting-rules/">Reporting rules</a>
+            <a class="btn btn-ghost" href="/incentives/">Incentives</a>
+          </div>
+        </div>
+        <Photo name="commercial-energy-audit" sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+      </div>
+    </div>
+  </section>
+
+  <section class="murb">
+    <div class="container">
+      <div class="card sheet murb-card">
+        <div>
+          <p class="eyebrow">Apartments and condos</p>
+          <h2>Own, manage or sit on the board of an apartment or condo building?</h2>
+          <p>A duplex, a six-plex and a 1960s apartment tower all count as multi-unit buildings, but they get different audits. Low-rise buildings can be rated under NRCan’s EnerGuide system; larger ones get an engineering audit. Here is how to tell which, who can do it, and which programs cover multi-unit buildings.</p>
+          <p class="hero-cta"><a class="btn btn-primary" href="/apartments-condos/">Apartments and condos →</a> <a class="btn btn-ghost" href="/articles/energy-audits-multi-unit-buildings/">The full article</a></p>
+        </div>
+        <Photo name="multi-unit" sizes="(max-width: 860px) calc(100vw - 80px), 420px" />
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="container">
+      <div class="sec-head"><h2>How it works</h2><span class="tag">Four steps</span></div>
+      <ol class="steps">
+        {steps.map(([t, d], i) => <li><span class="sn">{i + 1}</span><h3>{t}</h3><p>{d}</p></li>)}
+      </ol>
+      <p class="more"><a href="/how-it-works/">How a building audit works, from scoping to the report →</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="sec-head"><h2>Read before you request quotes</h2><span class="tag">Articles</span></div>
+      <div class="arts">
+        {cards.map((c) => (
+          <a class="card art" href={c.href}>
+            {c.tile
+              ? <ArtTile types={c.tile.types} caption={c.tile.caption} flat />
+              : <Photo name={c.photo} plain hud={false} ratio="16 / 9" sizes="(max-width: 860px) calc(100vw - 44px), 360px" />}
+            <span class="ab"><span class="tag">{c.kicker}</span><strong>{c.title}</strong><span class="bl">{c.blurb}</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="req-band">
+    <div class="container">
+      <div class="two req">
+        <div>
+          <p class="eyebrow">Request an audit</p>
+          <h2>Tell us about your building.</h2>
+          <p class="lede">We read every request and introduce you to one engineering firm or energy consultant that serves your area. You pay us nothing.</p>
+          <ol class="next">
+            <li><span class="n">1</span><span><strong>We read it.</strong> A person, not a bot, usually within one business day.</span></li>
+            <li><span class="n">2</span><span><strong>One introduction.</strong> It goes to one engineering firm or energy consultant that serves your area.</span></li>
+            <li><span class="n">3</span><span><strong>You decide.</strong> They contact you about the work; you pay us nothing.</span></li>
+          </ol>
+          <p class="small">Coverage today is Canada, with {cities.length} city pages. Owners elsewhere can still send a request: we’ll tell you plainly what we can and can’t do.</p>
+        </div>
+        <RequestForm context="home" heading="Your building" sub="A few details are enough. No account needed." />
+      </div>
+    </div>
+  </section>
+</BuildingBase>
+
+<style>
+  .hero { padding: 40px 0 56px; border-bottom: 1px solid var(--line-strong); }
+  .hero-in { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px 52px; align-items: center; }
+  @media (max-width: 900px) { .hero-in { grid-template-columns: 1fr; } .hero { padding: 28px 0 40px; } }
+  .hero h1 { font-size: clamp(34px, 4.8vw, 52px); margin-bottom: 0.4em; }
+  .pick { margin: 22px 0 8px; max-width: 560px; }
+  .pick-l { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .pick-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pick-row select { flex: 1 1 220px; min-width: 0; }
+  .pick-row .btn { flex: 0 0 auto; }
+  .top-cities { margin-top: 10px; }
+
+  .stats-band { background: var(--card); border-bottom: 1px solid var(--line); }
+  .stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stats li { display: grid; gap: 2px; border-left: 3px solid var(--heat); padding-left: 14px; }
+  .stats .v { font-family: var(--display); font-weight: 900; font-size: 38px; line-height: 1; color: var(--ink); }
+  .stats .l { font-size: 14px; color: var(--muted); line-height: 1.35; }
+  .stats-note { margin: 16px 0 0; }
+  @media (max-width: 820px) { .stats { grid-template-columns: 1fr 1fr; } }
+
+  .types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 960px) { .types { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .types { grid-template-columns: 1fr; } }
+  .type { display: grid; gap: 6px; align-content: start; padding: 20px 22px 18px; text-decoration: none; color: var(--ink); transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease; }
+  .type:hover { border-color: var(--heat); box-shadow: var(--shadow-md); transform: translateY(-2px); color: var(--ink); }
+  .ico { color: var(--heat); display: block; margin-bottom: 4px; }
+  .tt { font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
+  .tl { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
+  .go { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--heat-deep); margin-top: 6px; }
+  .types-note { margin-top: 16px; }
+
+  .levels-band { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .more { margin: 22px 0 0; }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px 48px; align-items: center; }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+
+  .murb-card { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px 40px; align-items: center; padding: 30px 32px; }
+  .murb-card h2 { font-size: clamp(24px, 3vw, 32px); }
+  @media (max-width: 860px) { .murb-card { grid-template-columns: 1fr; padding: 22px 20px; } }
+
+  .how { background: var(--card); border-top: 1px solid var(--line); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: s; }
+  @media (max-width: 960px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+  .steps li { border-top: 3px solid var(--ink); padding-top: 14px; }
+  .sn { font-family: var(--mono); font-weight: 600; font-size: 13px; color: var(--heat); }
+  .steps h3 { margin: 4px 0 6px; font-size: 19px; }
+  .steps p { margin: 0; font-size: 15px; color: var(--muted); }
+
+  .arts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .arts { grid-template-columns: 1fr; } }
+  .art { display: grid; grid-template-rows: auto 1fr; overflow: hidden; text-decoration: none; color: var(--ink); transition: box-shadow 0.15s ease, border-color 0.15s ease; }
+  .art:hover { box-shadow: var(--shadow-md); border-color: var(--line-strong); color: var(--ink); }
+  .art :global(.frame) { border-radius: 0; box-shadow: none; }
+  .ab { display: grid; gap: 6px; padding: 16px 18px 20px; align-content: start; }
+  .ab .tag { margin: 0; }
+  .ab strong { font-family: var(--display); font-size: 18px; line-height: 1.2; }
+  .bl { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  .req-band { background: var(--navy); color: var(--navy-ink); }
+  .req-band h2 { color: #fff; }
+  .req-band .eyebrow { color: #8FB8E8; }
+  .req-band .lede, .req-band .small { color: var(--navy-muted); }
+  .req { align-items: start; }
+  .next { list-style: none; margin: 26px 0 22px; padding: 0; display: grid; gap: 14px; max-width: 520px; }
+  .next li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; color: var(--navy-muted); font-size: 15.5px; line-height: 1.5; }
+  .next strong { color: #fff; }
+  .next .n { display: grid; place-items: center; width: 30px; height: 30px; border: 1.5px solid #3F6BA3; border-radius: 50%; font-family: var(--mono); font-weight: 600; font-size: 13px; color: #8FB8E8; }
+</style>
+
+<script>
+  // City picker: go straight to the city's page (without JavaScript the form opens the list of cities).
+  const f = document.getElementById('cityPick') as HTMLFormElement | null;
+  const sel = document.getElementById('cityPickSel') as HTMLSelectElement | null;
+  if (f && sel) {
+    f.addEventListener('submit', (e) => {
+      if (sel.value) { e.preventDefault(); location.href = `/commercial-energy-audit/${sel.value}/`; }
+    });
+    sel.addEventListener('change', () => { if (sel.value) location.href = `/commercial-energy-audit/${sel.value}/`; });
+  }
+</script>

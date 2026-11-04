@@ -1,0 +1,71 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import Photo from '../../components/Photo.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { BUILDING } from '../../config/building';
+import { cities, dataChecked } from '../../lib/building';
+
+const title = 'About and data policy | AuditYourBuilding';
+const description =
+  'Why AuditYourBuilding exists, how the reporting rules and incentives are researched and dated, how we make money, and the editorial rules we follow.';
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }])];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">About</p>
+        <h1>Why this site exists</h1>
+        <p class="lede measure">
+          Building owners get asked to report their energy use, offered incentives that close without notice, and told they need an “energy audit” without
+          anyone saying which kind. We built a plain-language front door for commercial and multi-unit buildings: the audit levels, the rules that apply in your
+          city, and the programs that pay. It is the building side of <a href={BUILDING.homeCa.url}>AuditYourHome</a>, which covers houses.
+        </p>
+      </div>
+      <Photo name="commercial-energy-audit" eager />
+    </div>
+
+    <div class="measure prose">
+      <h2>The rules we operate by</h2>
+      <p>
+        <strong>An independent guide.</strong> We are not affiliated with ASHRAE, Natural Resources Canada, any utility or any government program. We are an
+        introduction service: we explain the landscape and introduce you to one engineering firm or energy consultant that serves your area.
+      </p>
+      <p>
+        <strong>Dated, linked claims.</strong> Every reporting rule and incentive program on this site carries a link to its official page, and the research behind
+        the {cities.length} city pages was read on or just before {dataChecked}. We list closed programs on purpose, because “still advertising a program
+        that closed” is the fastest way to spot a stale source.
+      </p>
+      <p>
+        <strong>Summaries are not advice.</strong> A card is a short reading of an official page. It is not engineering, legal or financial advice, and a page that
+        lists a rule or program is not a statement that your building is covered or qualifies. Confirm the details with the authority named on the card.
+      </p>
+      <p>
+        <strong>How we make money.</strong> You pay us nothing. Firms that take part may pay us a referral fee for an introduction. It never changes what this site
+        says about the rules or the incentives, and we never send a request to more than one firm.
+      </p>
+      <p>
+        <strong>Where the research stops.</strong> Where we could not verify something (a city’s own site, a program’s detailed criteria), we leave it out rather than guess.
+        Utility territories are mapped by province and city, so check which utility serves your address.
+      </p>
+      <p>
+        <strong>Corrections are fast.</strong> If something is wrong or out of date, email <a href={`mailto:${BUILDING.contactEmail}`}>{BUILDING.contactEmail}</a>
+        and it will be fixed.
+      </p>
+
+      <h2>Who runs it</h2>
+      <p>
+        AuditYourBuilding is operated by Click Shift Marketing in Wakefield, Quebec, by Dave Bussell. Its sister sites are
+        <a href={BUILDING.homeCa.url}>{BUILDING.homeCa.name}</a> for Canadian homes and <a href={BUILDING.homeUs.url}>{BUILDING.homeUs.name}</a> for American ones.
+        See also <a href="/privacy/">privacy</a> and <a href="/credits/">illustration and data credits</a>.
+      </p>
+    </div>
+  </div>
+</BuildingBase>
+
+<style>
+  .prose h2 { margin-top: 28px; }
+  .prose { padding-bottom: 40px; }
+</style>

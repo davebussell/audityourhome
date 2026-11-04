@@ -1,0 +1,72 @@
+---
+/* The three ASHRAE Standard 211 audit levels as three steps. Wording follows the sources cited on /audit-levels/
+   (ASHRAE, efficiencyPEI, Efficiency Manitoba, City of Toronto programs). */
+interface Props {
+  /** Home page version: no bullet lists */
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const levels = [
+  {
+    n: 1,
+    name: 'Walk-through',
+    what: 'A site visit and a review of the utility bills. It benchmarks the building and lists low-cost and no-cost measures.',
+    gets: ['Where the building stands against similar ones', 'A list of recommendations with estimated savings and cost'],
+    when: 'You want a first look before spending on engineering.',
+  },
+  {
+    n: 2,
+    name: 'Energy survey and analysis',
+    what: 'Where the energy goes, then the savings and cost of each practical measure, including operating and maintenance changes.',
+    gets: ['Measures costed and ranked', 'The major capital upgrades that need more engineering'],
+    when: 'You are applying for an incentive or a retrofit loan. Most programs ask for this level.',
+  },
+  {
+    n: 3,
+    name: 'Detailed analysis',
+    what: 'Everything in Level 2, plus an in-depth analysis of the cost and savings of the capital-intensive upgrades, often with monitoring and modelling.',
+    gets: ['Investment-grade numbers for each big project', 'Data to support a financing decision'],
+    when: 'You are planning a major retrofit, such as a new plant or a deep envelope upgrade.',
+  },
+];
+---
+
+<ol class:list={['levels', { compact }]}>
+  {levels.map((l) => (
+    <li class={`lv lv${l.n}`}>
+      <div class="bar" aria-hidden="true"><span class="num">{l.n}</span></div>
+      <div class="body">
+        <p class="tag">Level {l.n}</p>
+        <h3>{l.name}</h3>
+        <p class="what">{l.what}</p>
+        {!compact && (
+          <>
+            <ul class="gets">{l.gets.map((g) => <li>{g}</li>)}</ul>
+            <p class="when"><strong>Use it when:</strong> {l.when}</p>
+          </>
+        )}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .levels { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: end; }
+  .lv { background: var(--card); border: 1px solid var(--line-strong); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+  .bar { background: var(--heat); display: flex; align-items: flex-end; justify-content: flex-end; padding: 0 14px; color: #fff; }
+  .lv1 .bar { height: 26px; background: #6B9AD1; }
+  .lv2 .bar { height: 52px; background: #3A79BE; }
+  .lv3 .bar { height: 78px; background: var(--heat-deep); }
+  .num { font-family: var(--display); font-weight: 900; font-size: 44px; line-height: 0.8; transform: translateY(14px); opacity: 0.22; }
+  .body { padding: 18px 20px 22px; display: grid; gap: 8px; align-content: start; flex: 1; }
+  .body h3 { margin: 0; font-size: 20px; }
+  .what { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+  .gets { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14.5px; }
+  .when { margin: 6px 0 0; font-size: 14px; padding-top: 10px; border-top: 1px dashed var(--line-strong); }
+  .compact .body { padding-bottom: 20px; }
+  @media (max-width: 900px) {
+    .levels { grid-template-columns: 1fr; align-items: stretch; }
+    .bar { height: 14px !important; }
+    .num { display: none; }
+  }
+</style>

@@ -1,0 +1,139 @@
+---
+/* The home page's hero drawing: a mid-rise building in elevation, cyanotype style, with five numbered audit points.
+   Drawn here (no photo): windows are generated from the floor count. The legend is real text so it reads on a phone. */
+interface Props {
+  /** Show the numbered legend under the drawing */
+  legend?: boolean;
+}
+const { legend = true } = Astro.props;
+
+const FLOOR = 42;
+const GROUND = 330;
+const towerX = 130, towerW = 200, towerFloors = 6;
+const wingX = 330, wingW = 120, wingFloors = 4;
+type Win = { x: number; y: number; lit: boolean };
+const windows: Win[] = [];
+function floors(x0: number, w: number, n: number, skipDoor = false) {
+  const cols = Math.round(w / 40);
+  for (let f = 0; f < n; f++) {
+    const top = GROUND - FLOOR * (f + 1);
+    for (let c = 0; c < cols; c++) {
+      if (skipDoor && f === 0 && c === 2) continue;
+      windows.push({ x: x0 + c * 40 + 8, y: top + 11, lit: (f * 7 + c * 3 + x0) % 5 === 0 });
+    }
+  }
+}
+floors(towerX, towerW, towerFloors, true);
+floors(wingX, wingW, wingFloors);
+const towerTop = GROUND - FLOOR * towerFloors;
+const wingTop = GROUND - FLOOR * wingFloors;
+const hatch = Array.from({ length: 41 }, (_, i) => 24 + i * 12.5);
+const points = [
+  { n: 1, t: 'Envelope', d: 'air leakage, insulation and glazing' },
+  { n: 2, t: 'Rooftop units', d: 'heating, cooling and their controls' },
+  { n: 3, t: 'Lighting and controls', d: 'schedules, sensors and setpoints' },
+  { n: 4, t: 'Plant room', d: 'boilers, chillers and pumps' },
+  { n: 5, t: 'Utility data', d: 'bills, interval meters and the ENERGY STAR score' },
+];
+---
+
+<figure class="bp">
+  <svg viewBox="0 0 560 440" role="img" aria-label="Line drawing of a mid-rise building with five numbered audit points: envelope, rooftop units, lighting and controls, plant room and utility data" focusable="false">
+    <defs>
+      <pattern id="bpa-g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#1B4570" stroke-width=".8" /></pattern>
+      <pattern id="bpa-G" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" fill="none" stroke="#2C5B8C" stroke-width="1" /></pattern>
+    </defs>
+    <rect width="560" height="440" fill="#0E2A47" />
+    <rect width="560" height="440" fill="url(#bpa-g)" />
+    <rect width="560" height="440" fill="url(#bpa-G)" opacity=".7" />
+
+    <g fill="none" stroke="#CFE3FA" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+      <!-- ground and its hatch -->
+      <path d={`M24 ${GROUND}H536`} stroke="#9CC2EE" stroke-width="1.8" />
+      <g stroke="#5E8FC4" stroke-width="1">{hatch.map((x) => <path d={`M${x} ${GROUND}l-8 8`} />)}</g>
+
+      <!-- tower, wing, parapets -->
+      <rect x={towerX} y={towerTop} width={towerW} height={GROUND - towerTop} />
+      <rect x={towerX - 3} y={towerTop - 6} width={towerW + 6} height="6" />
+      <rect x={wingX} y={wingTop} width={wingW} height={GROUND - wingTop} />
+      <rect x={wingX} y={wingTop - 5} width={wingW + 3} height="5" />
+      {/* floor lines */}
+      <g stroke="#5E8FC4" stroke-width=".9">
+        {Array.from({ length: towerFloors - 1 }, (_, i) => <path d={`M${towerX} ${GROUND - FLOOR * (i + 1)}H${towerX + towerW}`} />)}
+        {Array.from({ length: wingFloors - 1 }, (_, i) => <path d={`M${wingX} ${GROUND - FLOOR * (i + 1)}H${wingX + wingW}`} />)}
+      </g>
+      <!-- windows -->
+      {windows.map((w) => <rect x={w.x} y={w.y} width="24" height="20" rx="1" fill={w.lit ? 'rgba(207,227,250,.24)' : 'none'} />)}
+      <!-- entrance -->
+      <rect x="210" y="298" width="40" height="32" />
+      <path d="M230 298V330M210 306H250" stroke-width="1" />
+      <path d="M204 298H256" stroke-width="2" />
+
+      <!-- rooftop units, fan circles, stack -->
+      <rect x="160" y="52" width="46" height="20" />
+      <circle cx="183" cy="62" r="6" /><path d="M177 62h12M183 56v12" stroke-width=".9" />
+      <rect x="240" y="58" width="36" height="14" />
+      <circle cx="258" cy="65" r="4" />
+      <rect x="298" y="34" width="11" height="38" />
+      <path d="M296 34h15" stroke-width="2" />
+      <rect x="372" y="146" width="40" height="12" />
+      <circle cx="392" cy="152" r="3.6" />
+
+      <!-- left dimension line: storeys -->
+      <path d={`M108 ${towerTop}V${GROUND}`} stroke="#9CC2EE" stroke-width="1" />
+      {Array.from({ length: towerFloors + 1 }, (_, i) => <path d={`M102 ${GROUND - FLOOR * i}h12`} stroke="#9CC2EE" stroke-width="1" />)}
+
+      <!-- plant room below grade (dashed): two boilers, a pump line -->
+      <rect x="170" y={GROUND + 6} width="170" height="62" stroke-dasharray="5 4" stroke="#9CC2EE" stroke-width="1.2" />
+      <rect x="186" y={GROUND + 18} width="26" height="40" rx="3" />
+      <rect x="222" y={GROUND + 18} width="26" height="40" rx="3" />
+      <path d={`M199 ${GROUND + 18}V${GROUND + 8}M235 ${GROUND + 18}V${GROUND + 8}M212 ${GROUND + 38}h10M262 ${GROUND + 58}h64M262 ${GROUND + 58}v-22h20v22`} stroke-width="1.1" />
+      <circle cx="300" cy={GROUND + 40} r="9" /><path d={`M294 ${GROUND + 40}h12`} stroke-width=".9" />
+
+      <!-- meter on the wing wall -->
+      <rect x="452" y="292" width="12" height="20" rx="2" />
+      <circle cx="458" cy="300" r="3.2" />
+
+      <!-- title block -->
+      <rect x="352" y="388" width="184" height="34" />
+      <path d="M352 400H536" stroke-width="1" />
+    </g>
+    <text x="360" y="397" fill="#9CC2EE" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing=".8">ELEVATION · EXISTING BUILDING</text>
+    <text x="360" y="414" fill="#CFE3FA" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" letter-spacing=".8">ASHRAE LEVELS 1 – 3</text>
+
+    <!-- numbered audit points -->
+    <g font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="12" text-anchor="middle">
+      <g stroke="#EF3340" stroke-width="1.4">
+        <path d="M86 150H130" /><path d="M183 36V52" /><path d="M86 252H138" /><path d="M86 372H170" /><path d="M489 300H466" />
+      </g>
+      <g fill="#EF3340"><circle cx="130" cy="150" r="2.8" /><circle cx="183" cy="52" r="2.8" /><circle cx="138" cy="252" r="2.8" /><circle cx="170" cy="372" r="2.8" /><circle cx="466" cy="300" r="2.8" /></g>
+      <g fill="#0E2A47" stroke="#EF3340" stroke-width="2">
+        <circle cx="74" cy="150" r="12" /><circle cx="183" cy="24" r="12" /><circle cx="74" cy="252" r="12" /><circle cx="74" cy="372" r="12" /><circle cx="501" cy="300" r="12" />
+      </g>
+      <g fill="#fff" stroke="none">
+        <text x="74" y="154.2">1</text><text x="183" y="28.2">2</text><text x="74" y="256.2">3</text><text x="74" y="376.2">4</text><text x="501" y="304.2">5</text>
+      </g>
+    </g>
+  </svg>
+  {legend && (
+    <ol class="legend">
+      {points.map((p) => (
+        <li><span class="n" aria-hidden="true">{p.n}</span><span><strong>{p.t}</strong> <span class="d">{p.d}</span></span></li>
+      ))}
+    </ol>
+  )}
+</figure>
+
+<style>
+  .bp { margin: 0; background: var(--bp); border: 1px solid #1B4570; border-radius: 4px; position: relative; padding: 0; box-shadow: var(--shadow-md); }
+  .bp::before, .bp::after { content: ""; position: absolute; width: 16px; height: 16px; border: 2.5px solid #EF3340; pointer-events: none; z-index: 1; }
+  .bp::before { top: -3px; left: -3px; border-right: 0; border-bottom: 0; }
+  .bp::after { bottom: -3px; right: -3px; border-left: 0; border-top: 0; }
+  svg { display: block; width: 100%; height: auto; border-radius: 3px 3px 0 0; }
+  .legend { list-style: none; margin: 0; padding: 14px 16px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 9px 18px; background: #0B2139; border-top: 1px solid #1B4570; border-radius: 0 0 3px 3px; }
+  .legend li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.35; color: var(--bp-ink); }
+  .legend strong { color: #fff; font-weight: 700; display: block; }
+  .legend .d { color: #9CBBD8; font-size: 12.5px; }
+  .n { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1.8px solid #EF3340; color: #fff; font-family: var(--display); font-weight: 800; font-size: 11.5px; display: inline-grid; place-items: center; margin-top: 1px; }
+  @media (max-width: 520px) { .legend { grid-template-columns: 1fr; } }
+</style>

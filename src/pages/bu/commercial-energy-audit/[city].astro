@@ -1,0 +1,255 @@
+---
+import BuildingBase from '../../../layouts/BuildingBase.astro';
+import RuleCard from '../../../components/building/RuleCard.astro';
+import IncentiveCard from '../../../components/building/IncentiveCard.astro';
+import AuditLevels from '../../../components/building/AuditLevels.astro';
+import RequestForm from '../../../components/building/RequestForm.astro';
+import Photo from '../../../components/Photo.astro';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { BUILDING } from '../../../config/building';
+import { cities, cityCopy, incentiveNote, nationalIncentives, nearbyOf, nearbyIsLocal, sourcesFor, dataChecked, plural } from '../../../lib/building';
+import type { BCity } from '../../../lib/building';
+
+export function getStaticPaths() {
+  return cities.map((c) => ({ params: { city: c.slug }, props: { city: c } }));
+}
+
+interface Props { city: BCity }
+const { city: c } = Astro.props;
+const copy = cityCopy(c);
+const { label, rules, mandatory, voluntary, incentives, faq } = copy;
+const note = incentiveNote(c.slug);
+const national = nationalIncentives();
+const sources = sourcesFor(c);
+const nearby = nearbyOf(c);
+const path = `/commercial-energy-audit/${c.slug}/`;
+const nf = new Intl.NumberFormat('en-CA');
+const minus = (n: number) => String(n).replace('-', '−');
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Commercial energy audits', path: '/commercial-energy-audit/' },
+    { name: label, path },
+  ]),
+  faqSchema(faq),
+];
+
+const reportingTile = mandatory.length
+  ? { v: 'Mandatory', sub: `${plural(mandatory.length, 'rule')} in force` }
+  : voluntary.length
+    ? { v: 'Voluntary', sub: 'No mandatory rule found' }
+    : { v: 'None found', sub: 'No mandatory rule found' };
+const glance = [
+  { k: 'Energy reporting', v: reportingTile.v, sub: reportingTile.sub },
+  { k: 'Audit incentives', v: String(incentives.length), sub: incentives.length === 1 ? 'program found' : 'programs found' },
+  { k: 'Audit standard', v: 'ASHRAE 211', sub: 'Levels 1 to 3' },
+  { k: 'Benchmarking tool', v: 'ENERGY STAR', sub: 'Portfolio Manager' },
+];
+const snapshot = [
+  ['Province', c.provName],
+  ['Population (2021)', nf.format(c.population)],
+  ['Electricity', c.facts.electricity ?? 'Not listed'],
+  ['Natural gas', c.facts.gas ?? 'None listed'],
+  ['Heating degree-days', `${nf.format(c.facts.hdd)} (base 18 °C)`],
+  ['Winter design low', `${minus(c.facts.designHeat)} °C`],
+];
+---
+
+<BuildingBase title={copy.title} description={copy.description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/commercial-energy-audit/">Commercial energy audits</a> <span aria-hidden="true">/</span> <span>{label}</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{c.page.kicker} · checked {dataChecked}</p>
+        <h1>Commercial energy audits in {label}</h1>
+        <p class="lede">{copy.lede}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#request">Request an audit in {label} →</a>
+          <a class="btn btn-ghost" href="/audit-levels/">The three audit levels</a>
+        </div>
+      </div>
+      <Photo name="commercial-energy-audit" eager sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+    </div>
+
+    <div class="glance">
+      {glance.map((g) => (
+        <div class="g"><p class="k">{g.k}</p><p class="v">{g.v}</p><p class="s">{g.sub}</p></div>
+      ))}
+    </div>
+
+    <div class="layout">
+      <article class="main">
+        <section class="sec" id="rules">
+          <h2>Energy reporting rules that apply in {label}</h2>
+          {rules.all.length > 0 ? (
+            <>
+              <p class="small lead-in">
+                {mandatory.length > 0
+                  ? `${plural(mandatory.length, 'mandatory rule')} in force. Each card gives who it covers and the deadline; the official page is linked from every one.`
+                  : 'None of these is mandatory for a private building today. Each card says what it is and links to the official page.'}
+              </p>
+              <div class="cards">
+                {rules.city.map((r) => <RuleCard rule={r} where={label} />)}
+                {rules.province.map((r) => <RuleCard rule={r} where={c.provName} />)}
+              </div>
+            </>
+          ) : (
+            <div class="card card-pad callout">
+              <p class="mb-0">
+                We found no energy reporting rule, mandatory or voluntary, for {label} or {c.provName} as of {dataChecked}. Rules do change:
+                ask the city and the province before you rely on this, or <a href="#request">send us a request</a> and we’ll check.
+              </p>
+            </div>
+          )}
+          <p class="more"><a href="/reporting-rules/">All reporting rules, province by province →</a></p>
+        </section>
+
+        <section class="sec" id="incentives">
+          <h2>Incentives for audits and studies in {label}</h2>
+          {incentives.length > 0 ? (
+            <>
+              <p class="small lead-in">
+                Programs that pay part of an audit, a feasibility study or metering for buildings in {label}, open now or with a status to confirm.
+                Most are tied to your utility account and need approval before the work starts.
+              </p>
+              <div class="cards">
+                {incentives.map((i) => <IncentiveCard incentive={i} />)}
+              </div>
+              {note && <p class="small note">{note}</p>}
+            </>
+          ) : (
+            <div class="card card-pad callout">
+              <p class="mb-0">
+                We found no audit or study incentive program for {label} as of {dataChecked}. Ask your electricity and natural gas utilities what they
+                currently offer, and look at the national program below.
+              </p>
+            </div>
+          )}
+          {national.length > 0 && (
+            <>
+              <h3 class="sub">Open across Canada</h3>
+              <div class="cards">
+                {national.map((i) => <IncentiveCard incentive={i} showProvinces />)}
+              </div>
+            </>
+          )}
+          <p class="more"><a href="/incentives/">All incentive programs, by province →</a></p>
+        </section>
+
+        <section class="sec" id="levels">
+          <h2>Which audit level for your building?</h2>
+          <p class="small lead-in">Ask any firm which level its quote covers. Most incentive and loan applications ask for Level 2.</p>
+          <AuditLevels compact />
+          <p class="more"><a href="/audit-levels/">What each level includes, and who does the work →</a></p>
+        </section>
+
+        <section class="sec" id="faq">
+          <h2>{label}: common questions</h2>
+          {faq.map((f) => (
+            <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}{f.link && <> <a href={f.link.href}>{f.link.label}</a></>}</p></div></details>
+          ))}
+        </section>
+      </article>
+
+      <aside class="side">
+        <div class="card sheet snap">
+          <p class="eyebrow">Local snapshot · {label}</p>
+          <dl>
+            {snapshot.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
+          </dl>
+          <p class="meta">Climate: NRCan HOT2000 station {c.facts.station}, {c.facts.stationKm} km away.</p>
+        </div>
+        <nav class="card card-pad rel" aria-label="More for building owners">
+          <p class="eyebrow">More for building owners</p>
+          <ul>
+            <li><a href="/apartments-condos/">Apartment and condo buildings</a></li>
+            <li><a href="/audit-levels/">The three audit levels</a></li>
+            <li><a href="/how-it-works/">How a building audit works</a></li>
+            <li><a href={`${BUILDING.homeCa.url}/cities/${c.slug}/`}>Own a house? Home audits in {label}</a></li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+
+    {nearby.length > 0 && (
+      <section class="nearby">
+        <h2>{nearbyIsLocal(c) ? `Commercial audits near ${label}` : 'The closest other city pages'}</h2>
+        <div class="nb">
+          {nearby.map((n) => (
+            <a href={`/commercial-energy-audit/${n.slug}/`}><span>{n.name}</span><span class="km">{nf.format(n.km)} km</span></a>
+          ))}
+          <a class="all" href="/commercial-energy-audit/">All {cities.length} cities →</a>
+        </div>
+      </section>
+    )}
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {sources.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <p class="meta">Read {dataChecked}; each entry links to the page it came from. Population is the municipality’s 2021 Census count. Climate data is NRCan’s HOT2000 station {c.facts.station} ({c.facts.stationKm} km away).</p>
+    </div>
+
+    <RequestForm
+      id="request"
+      context={`city-${c.slug}`}
+      city={label}
+      province={c.prov}
+      heading={`Tell us about your building in ${label}`}
+      sub={`Type, size and what you need. We introduce you to one engineering firm or energy consultant that serves ${label}.`}
+    />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 6px 0 30px; }
+  .glance .g { background: var(--card); border: 1px solid var(--line-strong); border-radius: 4px; border-top: 3px solid var(--heat); padding: 14px 16px; min-width: 0; }
+  .glance .k { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin: 0 0 4px; }
+  .glance .v { font-family: var(--display); font-weight: 800; font-size: 21px; letter-spacing: -0.01em; color: var(--ink); margin: 0; overflow-wrap: anywhere; line-height: 1.15; }
+  .glance .s { font-size: 13px; color: var(--muted); margin: 3px 0 0; line-height: 1.35; }
+  @media (max-width: 840px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start; }
+  @media (max-width: 960px) { .layout { grid-template-columns: 1fr; gap: 28px; } }
+  .main { min-width: 0; }
+  .sec { margin-top: 34px; padding: 0; }
+  .sec:first-child { margin-top: 0; }
+  .sec h2 { font-size: 24px; margin-bottom: 8px; }
+  .lead-in { margin: 0 0 16px; max-width: 70ch; }
+  .cards { display: grid; gap: 14px; }
+  .sub { font-size: 19px; margin: 26px 0 12px; }
+  .more { margin: 16px 0 0; font-weight: 600; font-size: 15px; }
+  .note { margin-top: 14px; max-width: 70ch; }
+  .callout { border-left: 4px solid var(--heat); }
+
+  .side { display: grid; gap: 16px; position: sticky; top: 84px; }
+  @media (max-width: 960px) { .side { position: static; } }
+  .snap { padding: 22px 24px; }
+  .snap dl { margin: 0 0 12px; display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; font-size: 14px; }
+  .snap dt { color: var(--muted); }
+  .snap dd { margin: 0; font-family: var(--mono); font-weight: 600; font-size: 13px; text-align: right; overflow-wrap: anywhere; }
+  .snap .meta { margin: 0; }
+  .rel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14.5px; }
+  .side .eyebrow { margin-bottom: 10px; }
+
+  .nearby { padding: 36px 0 8px; }
+  .nearby h2 { font-size: 22px; }
+  .nb { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nb a { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--ink); background: var(--card); }
+  .nb a:hover { border-color: var(--ink); }
+  .nb .km { font-family: var(--mono); font-size: 12px; color: var(--faint); font-weight: 500; }
+  .nb a.all { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 26px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
+</style>

@@ -1,0 +1,102 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import IncentiveCard from '../../components/building/IncentiveCard.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { PROVINCE_ORDER, citiesByProvince, incentivesByProvince, nationalIncentives, closedIncentives, allIncentives, dataChecked, plural } from '../../lib/building';
+
+const title = 'Building energy audit incentives in Canada | AuditYourBuilding';
+const description =
+  `Programs that pay part of a building energy audit or feasibility study, province by province, each with its official page. Checked ${dataChecked}.`;
+
+const provName = Object.fromEntries(citiesByProvince().map((g) => [g.prov, g.provName]));
+const groups = PROVINCE_ORDER.map((p) => ({ prov: p, name: provName[p] as string, items: incentivesByProvince(p) })).filter((g) => g.items.length > 0);
+const national = nationalIncentives();
+const closed = closedIncentives();
+const openCount = allIncentives().filter((i) => i.status === 'open').length;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Incentives', path: '/incentives/' }])];
+
+const how = [
+  ['Tied to your utility account', 'Most programs are run by an electricity or natural gas utility and need you to be its customer, often above a minimum yearly use.'],
+  ['Approval before the work', 'Many pay only for an audit or study approved before it starts. Ask the program, and ask the firm whether it files the application.'],
+  ['A share, with a cap', 'Many cover a share of the cost (up to 50% is a common level) up to a dollar limit per project, address or year. A few fund a study in full.'],
+  ['Open, closed, or changing', 'Programs open, fill and close. Each card shows the status we read on the date below; confirm on the official page before you commit.'],
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Incentives</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Audits, studies and metering · read {dataChecked}</p>
+      <h1>Who pays for a building energy audit</h1>
+      <p class="lede measure">
+        Utilities and governments across Canada pay part of the cost of an audit, a feasibility study or metering for commercial, institutional and
+        multi-unit buildings. These are the programs we found, by province, each with the official page.
+      </p>
+      <ul class="facts">
+        <li><span class="v">{openCount}</span><span class="l">programs open today</span></li>
+        <li><span class="v">{groups.length}</span><span class="l">provinces and territories with a program</span></li>
+        <li><span class="v">{closed.length}</span><span class="l">recently closed, listed so you don’t chase them</span></li>
+      </ul>
+    </div>
+
+    <section class="block">
+      <div class="sec-head"><h2>How these programs usually work</h2></div>
+      <ul class="how">
+        {how.map(([t, d]) => <li><strong>{t}</strong><span>{d}</span></li>)}
+      </ul>
+    </section>
+
+    <nav class="jump" aria-label="Jump to a province">
+      <a class="chip chip-info" href="#canada">Across Canada <span class="cnt">{national.length}</span></a>
+      {groups.map((g) => <a href={`#p-${g.prov.toLowerCase()}`} class="chip chip-neutral">{g.name} <span class="cnt">{g.items.length}</span></a>)}
+      <a class="chip chip-closed" href="#closed">Closed <span class="cnt">{closed.length}</span></a>
+    </nav>
+
+    <section class="block" id="canada">
+      <div class="sec-head"><h2>Across Canada</h2><span class="tag">{plural(national.length, 'program')}</span></div>
+      <div class="cards">{national.map((i) => <IncentiveCard incentive={i} showProvinces />)}</div>
+    </section>
+
+    {groups.map((g) => (
+      <section class="block" id={`p-${g.prov.toLowerCase()}`}>
+        <div class="sec-head"><h2>{g.name}</h2><span class="tag">{plural(g.items.length, 'program')}</span></div>
+        <div class="cards">{g.items.map((i) => <IncentiveCard incentive={i} />)}</div>
+      </section>
+    ))}
+
+    <section class="block" id="closed">
+      <div class="sec-head"><h2>Closed programs</h2><span class="tag">Don’t count on these</span></div>
+      <p class="small measure lead">If a contractor or an old web page still advertises one of these, ask the program whether it has reopened.</p>
+      <div class="cards">{closed.map((i) => <IncentiveCard incentive={i} />)}</div>
+    </section>
+
+    <p class="small foot">Each card is a short reading of the program’s own page on {dataChecked}, not a promise that your building qualifies. Look for your city’s page for the programs that apply where your building stands: <a href="/commercial-energy-audit/">choose your city</a>.</p>
+
+    <RequestForm context="incentives" heading="Want help working out which programs fit?" sub="Tell us the building, the city and the utility it uses." />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .facts { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 18px 40px; }
+  .facts li { display: grid; gap: 2px; border-left: 3px solid var(--heat); padding-left: 14px; }
+  .facts .v { font-family: var(--display); font-weight: 900; font-size: 34px; line-height: 1; }
+  .facts .l { font-size: 14px; color: var(--muted); max-width: 22ch; line-height: 1.35; }
+  .how { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 960px) { .how { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .how { grid-template-columns: 1fr; } }
+  .how li { border-top: 3px solid var(--ink); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+  .how strong { font-family: var(--display); font-size: 17px; }
+  .how span { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 30px; }
+  .jump a { text-decoration: none; padding: 6px 12px; font-size: 13.5px; }
+  .jump .cnt { font-family: var(--mono); font-size: 12px; margin-left: 4px; opacity: 0.75; }
+  .block { padding: 10px 0 26px; scroll-margin-top: 90px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 14px; align-items: start; }
+  .lead { margin: 0 0 14px; }
+  .foot { margin: 8px 0 30px; max-width: 74ch; }
+</style>

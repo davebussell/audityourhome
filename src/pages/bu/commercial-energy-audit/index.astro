@@ -1,0 +1,83 @@
+---
+import BuildingBase from '../../../layouts/BuildingBase.astro';
+import CityGrid from '../../../components/building/CityGrid.astro';
+import RequestForm from '../../../components/building/RequestForm.astro';
+import Photo from '../../../components/Photo.astro';
+import { breadcrumbSchema } from '../../../lib/schema';
+import { ogFor } from '../../../lib/photos';
+import { cities, cityMetrics, allIncentives, dataChecked } from '../../../lib/building';
+
+const title = 'Commercial energy audits by city | AuditYourBuilding';
+const description =
+  `Pick your city to see its energy reporting rules and audit incentives for commercial and multi-unit buildings: ${cities.length} Canadian cities, checked ${dataChecked}.`;
+const mandatoryCities = cities.filter((c) => cityMetrics(c).mandatory).length;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Commercial energy audits', path: '/commercial-energy-audit/' },
+  ]),
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Commercial energy audits</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Commercial and multi-unit buildings · checked {dataChecked}</p>
+        <h1>Commercial energy audits, city by city</h1>
+        <p class="lede">
+          Offices, retail, hotels, industrial sites, schools and apartment buildings get engineering audits scoped to ASHRAE Standard 211.
+          Choose your city to see which energy reporting rules apply there and which programs pay for an audit or a study.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#cities">Find your city</a>
+          <a class="btn btn-ghost" href="/audit-levels/">The three audit levels</a>
+        </div>
+      </div>
+      <Photo name="commercial-energy-audit" eager sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+    </div>
+
+    <ul class="facts">
+      <li><span class="v">{cities.length}</span><span class="l">cities, from Victoria to St. John’s</span></li>
+      <li><span class="v">{mandatoryCities}</span><span class="l">cities covered by a mandatory energy reporting rule</span></li>
+      <li><span class="v">{allIncentives().length}</span><span class="l">audit and study incentive programs tracked</span></li>
+    </ul>
+
+    <section class="cities" id="cities">
+      <div class="sec-head"><h2>Choose your city</h2><span class="tag">{cities.length} cities</span></div>
+      <p class="small legend"><span class="dot dot-rule" aria-hidden="true"></span> marks a city where a mandatory energy reporting rule is in force. “Programs” counts audit and study incentives open or with an unclear status.</p>
+      <CityGrid />
+    </section>
+
+    <section class="elsewhere card sheet">
+      <h2>Not in one of these cities?</h2>
+      <p>
+        Provincial rules and utility programs apply across a province, so the city pages are a good guide for nearby towns. For a building anywhere in
+        Canada, <a href="/request/">send a request</a> and we’ll tell you plainly what applies and who can help. Reporting rules are also listed
+        <a href="/reporting-rules/">province by province</a>, and the incentive programs <a href="/incentives/">by provider</a>.
+      </p>
+    </section>
+
+    <RequestForm context="hub" heading="Request an audit for your building" sub="City, building type and what you need. We introduce you to one engineering firm or energy consultant that serves your area." />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .facts { list-style: none; margin: 4px 0 40px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .facts li { display: grid; gap: 2px; border-left: 3px solid var(--heat); padding-left: 14px; }
+  .facts .v { font-family: var(--display); font-weight: 900; font-size: 34px; line-height: 1; }
+  .facts .l { font-size: 14px; color: var(--muted); line-height: 1.35; }
+  @media (max-width: 640px) { .facts { grid-template-columns: 1fr; gap: 14px; } }
+  .cities { padding: 8px 0 24px; }
+  .legend { margin: 0 0 20px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin: 0 4px; vertical-align: 0.05em; }
+  .dot-rule { background: var(--heat); }
+  .elsewhere { padding: 24px 28px; margin: 12px 0 36px; }
+  .elsewhere h2 { font-size: 22px; margin: 0 0 8px; }
+  .elsewhere p { margin: 0; max-width: 70ch; }
+  @media (max-width: 560px) { .elsewhere { padding: 20px 18px; } }
+</style>

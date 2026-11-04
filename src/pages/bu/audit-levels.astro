@@ -1,0 +1,164 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import AuditLevels from '../../components/building/AuditLevels.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import Photo from '../../components/Photo.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { BUILDING } from '../../config/building';
+
+// Wording follows the sources listed at the bottom of the page (ASHRAE, efficiencyPEI, Efficiency Manitoba, City of Toronto).
+// The page was last checked against them on the date below.
+const CHECKED = 'October 8, 2026';
+const title = 'The three ASHRAE energy audit levels, explained | AuditYourBuilding';
+const description =
+  'Level 1 walk-through, Level 2 energy survey, Level 3 detailed analysis: what each ASHRAE Standard 211 level includes and which one incentives and loans ask for.';
+
+const SRC = {
+  ashrae: 'https://www.ashrae.org/technical-resources/standards-and-guidelines/read-only-versions-of-ashrae-standards',
+  pei: 'https://www.princeedwardisland.ca/en/information/energy/strategic-energy-solutions-for-business-commercial-and-community-buildings',
+  emb: 'https://efficiencymb.ca/business/commercial-energy-audit-program/',
+  erl: 'https://www.toronto.ca/services-payments/water-environment/environmental-grants-incentives/energy-retrofit-loans/',
+  hiris: 'https://www.toronto.ca/community-people/community-partners/apartment-building-operators/tower-renewal/hi-ris/',
+};
+
+const faq = [
+  {
+    q: 'What is ASHRAE Standard 211?',
+    a: 'It is the Standard for Commercial Building Energy Audits from ASHRAE, the engineering society for heating, ventilation and air conditioning. It describes three levels of audit, each building on the one before, so an owner and an engineering firm can agree on what a quote covers.',
+  },
+  {
+    q: 'Which audit level do most incentives and loans ask for?',
+    a: 'Level 2 or above. The City of Toronto’s Energy Retrofit Loans ask for a facility description at ASHRAE Level 2 or equivalent, and its Hi-RIS apartment loans an energy assessment report at Level 2 or above. Check the program’s own page, because requirements differ.',
+  },
+  {
+    q: 'Who performs a commercial energy audit?',
+    a: 'Engineering firms and energy consultancies. Ask who signs the recommendations: a Professional Engineer (P.Eng.) or a Certified Energy Manager (CEM) is the usual answer. The EnerGuide licence that covers houses does not cover commercial buildings.',
+  },
+  {
+    q: 'Can I start with Level 1 and move up later?',
+    a: 'Yes. The levels build on each other, and a Level 1 walk-through is a common first look before spending on engineering. Ask the firm whether the work done at one level is credited if you move up to the next.',
+  },
+];
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Audit levels', path: '/audit-levels/' }]),
+  faqSchema(faq),
+];
+
+const ask = [
+  ['Which ASHRAE level does the price cover?', 'And which sections of the report will you deliver? “Energy audit” alone can mean a two-hour walk-through or months of metering.'],
+  ['Who signs the recommendations?', 'A Professional Engineer or Certified Energy Manager, named on the report.'],
+  ['What is in the report?', 'Costed and ranked measures, estimated savings, and the major capital projects that need more engineering.'],
+  ['Will you prepare any utility pre-approval?', 'Many incentives need approval before the audit starts. Ask whether the firm files it, and when.'],
+  ['What do you need from us?', 'Utility bills, drawings, equipment lists, access to the plant rooms and the roof, and someone who knows the building.'],
+  ['What happens after the report?', 'Whether the firm helps with the incentive application, a capital plan or a follow-up measurement, and what that costs.'],
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Audit levels</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">ASHRAE Standard 211 · checked {CHECKED}</p>
+        <h1>The three audit levels, explained</h1>
+        <p class="lede">
+          Building audits in Canada are described by the levels in ASHRAE Standard 211. Each level builds on the one before, and the level you ask for
+          decides the price, the report and which incentive or loan will accept it.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/request/">Request an audit</a>
+          <a class="btn btn-ghost" href="/commercial-energy-audit/">Rules and incentives by city</a>
+        </div>
+      </div>
+      <Photo name="commercial-energy-audit" eager sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+    </div>
+
+    <section class="block">
+      <AuditLevels />
+      <p class="small after">
+        Level descriptions follow <a href={SRC.ashrae} rel="noopener">ASHRAE Standard 211</a>, as summarised by <a href={SRC.pei} rel="noopener">efficiencyPEI</a> (Level 1) and
+        <a href={SRC.emb} rel="noopener">Efficiency Manitoba</a> (Levels 2 and 3).
+      </p>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Which level do you need?</h2><span class="tag">Pick by purpose</span></div>
+      <div class="tablewrap card">
+        <table class="stack">
+          <thead><tr><th>You want to…</th><th>Start with</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td data-label="You want to">See where the building stands before spending on engineering</td><td data-label="Start with"><strong>Level 1</strong></td><td data-label="Why">A walk-through and bill review benchmarks the building and lists low-cost and no-cost measures.</td></tr>
+            <tr><td data-label="You want to">Apply for an incentive or a retrofit loan</td><td data-label="Start with"><strong>Level 2</strong></td><td data-label="Why">Toronto’s <a href={SRC.erl} rel="noopener">Energy Retrofit Loans</a> ask for Level 2 or equivalent; its <a href={SRC.hiris} rel="noopener">Hi-RIS</a> apartment loans, Level 2 or above. Check each program.</td></tr>
+            <tr><td data-label="You want to">Decide on a major capital project</td><td data-label="Start with"><strong>Level 3</strong></td><td data-label="Why">An in-depth analysis of the cost and savings of capital-intensive upgrades, often with monitoring and modelling.</td></tr>
+            <tr><td data-label="You want to">Tune the systems you already have</td><td data-label="Start with"><strong>Level 1 or 2</strong>, then retro-commissioning</td><td data-label="Why">Operating and maintenance changes are part of a Level 2 survey; some utilities fund retro-commissioning separately.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block two">
+      <div>
+        <div class="sec-head"><h2>Who does the work</h2><span class="tag">Engineering, not EnerGuide</span></div>
+        <div class="prose">
+          <p>
+            Building audits are engineering work, delivered by mechanical engineering firms and energy consultancies. Toronto’s retrofit loans ask for a
+            feasibility study by “a qualified third party, such as a Professional Engineer (P.Eng), Certified Energy Manager (CEM) or equivalent”
+            (<a href={SRC.erl} rel="noopener">toronto.ca</a>).
+          </p>
+          <p>
+            Houses and small low-rise multi-unit buildings are rated under NRCan’s EnerGuide system instead. See
+            <a href="/apartments-condos/">apartments and condos</a> for where the line falls, or
+            <a href={BUILDING.homeCa.url}>AuditYourHome.ca</a> if you own a house.
+          </p>
+        </div>
+      </div>
+      <div class="card sheet ask">
+        <p class="eyebrow">Ask every firm</p>
+        <ol>
+          {ask.map(([q, a]) => <li><strong>{q}</strong><span>{a}</span></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Common questions</h2></div>
+      <div class="measure">
+        {faq.map((f) => <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>)}
+      </div>
+    </section>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href={SRC.ashrae} rel="noopener">ASHRAE: Standard 211, commercial building energy audits</a></li>
+        <li><a href={SRC.pei} rel="noopener">efficiencyPEI: ASHRAE Level 1 commercial energy audits</a></li>
+        <li><a href={SRC.emb} rel="noopener">Efficiency Manitoba: ASHRAE Level 2 and 3 audits</a></li>
+        <li><a href={SRC.erl} rel="noopener">City of Toronto: Energy Retrofit Loans</a></li>
+        <li><a href={SRC.hiris} rel="noopener">City of Toronto: Hi-RIS apartment retrofit loans</a></li>
+      </ul>
+      <p class="small mb-0">Checked against these pages on {CHECKED}. Requirements change: confirm on the official page before you commission work.</p>
+    </div>
+
+    <RequestForm context="audit-levels" heading="Ready to ask for an audit?" sub="Tell us the building and the level you have in mind, or ask us to help scope it." />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .block { padding: 10px 0 30px; }
+  .after { margin: 16px 0 0; max-width: 78ch; }
+  .tablewrap { margin: 0; overflow-x: auto; }
+  .tablewrap table { font-size: 14.5px; }
+  .two { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px 44px; align-items: start; }
+  @media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+  .prose p { margin: 0 0 1em; }
+  .ask { padding: 22px 24px; }
+  .ask ol { margin: 0; padding-left: 20px; display: grid; gap: 12px; }
+  .ask li strong { display: block; font-size: 15px; }
+  .ask li span { color: var(--muted); font-size: 14px; line-height: 1.5; display: block; }
+  .srcs { border-left: 4px solid var(--steel); margin: 10px 0 26px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+</style>

@@ -1,0 +1,40 @@
+---
+import type { BIncentive } from '../../lib/building';
+
+interface Props {
+  incentive: BIncentive;
+  /** Show the provinces the program covers */
+  showProvinces?: boolean;
+}
+const { incentive: i, showProvinces = false } = Astro.props;
+const open = i.status === 'open';
+const closed = i.status === 'closed';
+const NAMES: Record<string, string> = {
+  BC: 'British Columbia', AB: 'Alberta', SK: 'Saskatchewan', MB: 'Manitoba', ON: 'Ontario', QC: 'Quebec', NB: 'New Brunswick', NS: 'Nova Scotia',
+  PE: 'Prince Edward Island', NL: 'Newfoundland and Labrador', YT: 'Yukon', NT: 'Northwest Territories', NU: 'Nunavut',
+};
+const where = i.provinces.length >= 12 ? 'all provinces and territories' : i.provinces.map((p) => NAMES[p] ?? p).join(', ');
+---
+
+<article class="card inc">
+  <div class="top">
+    <p class="tag">{i.provider}</p>
+    <span class:list={['chip', closed ? 'chip-closed' : open ? 'chip-active' : 'chip-limited']}>{closed ? 'Closed' : open ? 'Open' : 'Check status'}</span>
+  </div>
+  <h3>{i.name}</h3>
+  <p class="sum">{i.summary}</p>
+  <p class="elig"><strong>Who can apply:</strong> {i.eligibility}</p>
+  {showProvinces && <p class="elig where"><strong>Applies in:</strong> {where}</p>}
+  <p class="src"><a href={i.source} rel="noopener">Program page →</a></p>
+</article>
+
+<style>
+  .inc { padding: 20px 22px; border-left: 4px solid var(--pine); display: grid; gap: 8px; align-content: start; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .top .tag { margin: 0; }
+  h3 { margin: 0; font-size: 19px; line-height: 1.2; }
+  .sum { margin: 0; font-size: 15px; line-height: 1.6; }
+  .elig { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .elig strong { color: var(--ink); }
+  .src { margin: 2px 0 0; font-size: 14px; font-weight: 600; }
+</style>

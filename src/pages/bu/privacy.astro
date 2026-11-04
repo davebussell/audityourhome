@@ -1,0 +1,81 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import { BUILDING } from '../../config/building';
+import { ACCOUNTS } from '../../config/site';
+
+const title = 'Privacy | AuditYourBuilding';
+const updated = 'November 4, 2026';
+const description = `What AuditYourBuilding collects, why, where it is stored, who sees it, and how to get it corrected or deleted. Plain language, updated ${updated}.`;
+const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec';
+---
+
+<BuildingBase title={title} description={description}>
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Updated {updated}</p>
+      <h1>Privacy, plainly</h1>
+      <p class="lede">What we collect, why, where it’s kept, who sees it, and how to correct it or have it deleted.</p>
+    </div>
+    <div class="measure prose">
+      <h2>Who we are</h2>
+      <p>
+        AuditYourBuilding is operated by Click Shift Marketing, {address}. The person in charge of protecting personal information is Dave Bussell, owner:
+        <a href={`mailto:${BUILDING.contactEmail}`}>{BUILDING.contactEmail}</a>. Write to him for any question, request or complaint about your information.
+      </p>
+
+      <h2>No accounts</h2>
+      <p>This site has no accounts, no sign-in and no passwords. Browsing it, reading the city pages and using the city picker send us no personal information.</p>
+
+      <h2>Requests</h2>
+      <p>
+        If you send a request through a form on this site, or by email, we use your details to introduce you to one engineering firm or energy consultant that
+        serves your area, and for no other purpose. The form asks you to agree before it is sent. We never share a request with more than one firm and never sell
+        contact lists. You pay us nothing; firms that take part may pay us a referral fee for the introduction.
+      </p>
+      <p>
+        What you type in the form is the name, email address and building details you choose to give us (phone number and organization are optional, and the
+        last box is free text, so please leave out anything sensitive). Forms are handled by Netlify, the company that hosts this site. It stores what you submit
+        in the United States and emails it to us, and we keep it only as long as we need to deal with your request. If you email us, we have your email address
+        and use it to reply.
+      </p>
+
+      <h2>Analytics</h2>
+      <p>
+        We use Google Analytics and Microsoft Clarity to see which pages are useful and where people get stuck. They set cookies and record how pages are used;
+        Clarity can replay a visit, with what you type in our forms hidden. You can block them with your browser’s privacy settings or an ad blocker; the site works
+        the same.
+      </p>
+
+      <h2>Cookies we set ourselves</h2>
+      <p>None. This site sets no cookies of its own.</p>
+
+      <h2>Our other sites</h2>
+      <p>
+        <a href={`${BUILDING.homeCa.url}/privacy/`}>{BUILDING.homeCa.name}</a> and <a href={`${BUILDING.homeUs.url}/privacy/`}>{BUILDING.homeUs.name}</a> are separate
+        sites with their own privacy pages.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        You can ask what we hold about you, correct it, get a copy in a common format, or have it deleted, and you can withdraw consent at any time. If you’re not
+        satisfied with our answer, you can complain to Quebec’s <a href="https://www.cai.gouv.qc.ca/" rel="noopener">Commission d’accès à l’information</a> or the
+        <a href="https://www.priv.gc.ca/" rel="noopener">Office of the Privacy Commissioner of Canada</a>.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>Requests and emails you send us are kept as long as needed to deal with them.</p>
+
+      <p class="small">
+        If we change how we handle personal information, we’ll update this page and the date at the top. Questions:
+        <a href={`mailto:${BUILDING.contactEmail}`}>{BUILDING.contactEmail}</a>.
+      </p>
+    </div>
+  </div>
+</BuildingBase>
+
+<style>
+  .prose p { margin-bottom: 16px; }
+  .prose h2 { font-size: 22px; margin: 28px 0 8px; }
+  .prose h2:first-child { margin-top: 0; }
+  .prose { padding-bottom: 56px; }
+</style>

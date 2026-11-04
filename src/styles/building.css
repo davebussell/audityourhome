@@ -1,0 +1,86 @@
+/* ============================================================
+   AuditYourBuilding: same design system as AuditYourHome (Archivo, Public Sans and IBM Plex Mono; the same cards,
+   pill buttons, mono eyebrows and spacing; global.css loads first) in a cooler "drawing sheet" palette.
+   Home sites: warm paper, thermal orange. Here: cool paper, blueprint blue, thin ruled lines and crop marks.
+   The brand red (Pantone 032, #EF3340) stays: the "Your" in the wordmark and the mark's fill.
+   ============================================================ */
+
+:root {
+  --paper: #F3F6F9;
+  --card: #FFFFFF;
+  --ink: #0F1D2B;
+  --muted: #53647A;
+  --faint: #7F92A6;
+  --line: #DAE3EC;
+  --line-strong: #C2CEDA;
+
+  /* the accent that is orange on the home sites */
+  --heat: #1F5FA8;
+  --heat-deep: #164A87;
+  --heat-tint: #E3EDF8;
+
+  --pine: #1F6B4A;
+  --pine-deep: #145237;
+  --pine-tint: #E2F0E8;
+
+  --steel: #1D5A9E;
+  --navy: #0D1B2A;
+  --navy-ink: #D6E2EE;
+  --navy-muted: #8AA1B7;
+  --navy-line: #223648;
+
+  --warn: #946100;
+  --warn-tint: #F6EEDC;
+
+  --bp: #0E2A47;          /* cyanotype panel */
+  --bp-line: #2C5B8C;
+  --bp-ink: #CFE3FA;
+  --grid: rgba(31, 95, 168, 0.075);
+
+  --shadow-sm: 0 1px 2px rgba(15, 29, 43, 0.06);
+  --shadow-md: 0 1px 3px rgba(15, 29, 43, 0.06), 0 8px 24px rgba(15, 29, 43, 0.08);
+}
+
+.chip-neutral { background: #E7EDF3; }
+
+/* skip link */
+.skip { position: absolute; left: 12px; top: -48px; z-index: 100; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+.skip:focus { top: 10px; color: #fff; }
+
+/* ---- drafting-sheet motifs ---- */
+/* a faint square grid behind a hero or band */
+.bp-grid {
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+}
+/* crop marks on two corners, like the viewfinder corners on the home sites' photos */
+.sheet { position: relative; background: var(--card); border: 1px solid var(--line-strong); border-radius: 4px; }
+.sheet::before, .sheet::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--heat); pointer-events: none; }
+.sheet::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+.sheet::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+/* a small mono label in the drawing's title-block style: "LEVEL 2 · SHEET 02" */
+.tag { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+/* section header with a ruled line, like a sheet title */
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; border-bottom: 1.5px solid var(--ink); padding-bottom: 10px; margin-bottom: 24px; }
+.sec-head h2 { margin: 0; }
+.sec-head .tag { white-space: nowrap; }
+
+.btn-primary { background: var(--heat); }
+.btn-light:hover { background: var(--heat-tint); }
+.eyebrow { color: var(--heat); }
+
+/* prose used on article-style pages */
+.prose { max-width: 70ch; }
+.prose h2 { font-size: 26px; margin: 34px 0 10px; }
+.prose h3 { font-size: 20px; margin: 24px 0 8px; }
+.prose ul, .prose ol { padding-left: 22px; margin: 0 0 1.1em; display: grid; gap: 7px; }
+.prose a { overflow-wrap: anywhere; }
+.prose table { margin: 0 0 1.4em; }
+.prose p, .prose li { max-width: 70ch; }
+
+@media (max-width: 640px) {
+  section { padding: 44px 0; }
+}

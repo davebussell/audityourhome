@@ -1,0 +1,8 @@
+# audityourbuilding.com (commercial and multi-unit buildings) on Netlify, project "audityourbuilding".
+# The same `npm run build` builds all three sites; this one publishes dist-bu/. Deploy it with this file copied
+# over netlify.toml in the deploy directory (see CLAUDE.md). AYH_SITE=bu makes postbuild refuse the build unless the
+# Netlify site is named audityourbuilding, so the wrong toml can't publish this site's pages to another project.
+[build]
+  command = "npm run build"
+  publish = "dist-bu"
+  environment = { NODE_VERSION = "22", FORMS = "netlify", AYH_SITE = "bu" }

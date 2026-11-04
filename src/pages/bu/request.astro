@@ -1,0 +1,61 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { BUILDING } from '../../config/building';
+
+const title = 'Request an energy audit for your building | AuditYourBuilding';
+const description =
+  'Tell us the building type, size, city and what you need. We introduce you to one engineering firm or energy consultant that serves your area. You pay us nothing.';
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Request an audit', path: '/request/' }])];
+const ready = [
+  'The building type and roughly how big it is (floor area is enough).',
+  'The city or town. Outside the 70 cities we cover? Send it anyway.',
+  'What you need: an audit level, help with reporting, or an incentive application. “Not sure” is a fine answer.',
+  'When you want to start, and anything the firm should know: an old boiler plant, a reporting notice, a board decision.',
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Request an audit</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Request an audit</p>
+      <h1>Tell us about your building</h1>
+      <p class="lede measure">Two minutes, no account. A person reads every request and introduces you to one engineering firm or energy consultant that serves your area.</p>
+    </div>
+
+    <div class="wrap">
+      <RequestForm id="request" context="request" heading="Your building" sub="A few details are enough. You can add more in the last box." />
+      <aside class="aside">
+        <div class="card sheet pad">
+          <p class="eyebrow">Handy to have</p>
+          <ul>{ready.map((r) => <li>{r}</li>)}</ul>
+        </div>
+        <div class="card pad plain">
+          <p class="eyebrow">What happens next</p>
+          <ol>
+            <li>We read your request, usually within one business day.</li>
+            <li>We reply from {BUILDING.contactEmail} and introduce you to one firm.</li>
+            <li>The firm contacts you. You decide whether to go ahead.</li>
+          </ol>
+          <p class="small mb-0">Own a house or a single condo unit? That is a home evaluation: <a href={BUILDING.homeCa.url}>AuditYourHome.ca</a>.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .wrap { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px 36px; align-items: start; padding-bottom: 40px; }
+  @media (max-width: 960px) { .wrap { grid-template-columns: 1fr; } }
+  .aside { display: grid; gap: 16px; position: sticky; top: 84px; }
+  @media (max-width: 960px) { .aside { position: static; } }
+  .pad { padding: 22px 24px; }
+  .plain { box-shadow: none; }
+  .aside ul, .aside ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .aside .eyebrow { margin-bottom: 10px; }
+</style>

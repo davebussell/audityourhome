@@ -1,0 +1,115 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import RuleCard from '../../components/building/RuleCard.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import {
+  citiesByProvince, cityLabel, provinceRules, cityRules, allRules, isMandatory, portfolioManager, nrcanDirectory, dataChecked,
+} from '../../lib/building';
+
+const title = 'Building energy reporting rules in Canada | AuditYourBuilding';
+const description =
+  `Which provinces and cities require buildings to report energy use, at what size and by when, each with its official page. Checked ${dataChecked}.`;
+
+const groups = citiesByProvince().map((g) => {
+  const provRules = provinceRules(g.prov);
+  const cityList = g.cities
+    .map((c) => ({ c, rules: cityRules(c.slug) }))
+    .filter((x) => x.rules.length > 0);
+  const total = provRules.length + cityList.reduce((n, x) => n + x.rules.length, 0);
+  const mandatory = provRules.some(isMandatory) || cityList.some((x) => x.rules.some(isMandatory));
+  return { ...g, provRules, cityList, total, mandatory };
+});
+const rules = allRules();
+const mandatoryCount = rules.filter(isMandatory).length;
+const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Reporting rules', path: '/reporting-rules/' }])];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Reporting rules</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">Benchmarking and disclosure · checked {dataChecked}</p>
+      <h1>Energy reporting rules for buildings in Canada</h1>
+      <p class="lede measure">
+        Some provinces and cities require owners of larger buildings to report their energy use every year. Reporting is not an audit, but it produces the
+        benchmark that tells you whether an audit will find much. Here is every rule we found, with who it covers, the deadline and the official page.
+      </p>
+      <ul class="facts">
+        <li><span class="v">{mandatoryCount}</span><span class="l">mandatory rules in force</span></li>
+        <li><span class="v">{rules.length}</span><span class="l">rules and programs listed</span></li>
+        <li><span class="v">{groups.filter((g) => g.mandatory).length}</span><span class="l">provinces with at least one mandatory rule</span></li>
+      </ul>
+    </div>
+
+    <nav class="jump" aria-label="Jump to a province">
+      {groups.map((g) => (
+        <a href={`#p-${g.prov.toLowerCase()}`} class:list={['chip', g.mandatory ? 'chip-info' : 'chip-neutral']}>{g.provName} <span class="cnt">{g.total}</span></a>
+      ))}
+    </nav>
+
+    <section class="block" id="federal">
+      <div class="sec-head"><h2>Across Canada</h2><span class="tag">Federal</span></div>
+      <p class="measure small">
+        We found no federal rule that requires private buildings to report energy use. What the federal government provides is the tool: ENERGY STAR
+        Portfolio Manager, which most provincial and municipal programs ask you to report through. NRCan also keeps a
+        <a href={nrcanDirectory.source} rel="noopener">list of Canadian benchmarking and building performance programs</a>, which is not exhaustive or fully current.
+      </p>
+      <div class="cards one"><RuleCard rule={portfolioManager} where="Canada" /></div>
+    </section>
+
+    {groups.map((g) => (
+      <section class="block" id={`p-${g.prov.toLowerCase()}`}>
+        <div class="sec-head">
+          <h2>{g.provName}</h2>
+          <span class="tag">{g.total > 0 ? `${g.total} ${g.total === 1 ? 'rule or program' : 'rules or programs'}` : 'No rule found'}</span>
+        </div>
+        {g.provRules.length > 0 ? (
+          <div class="cards">{g.provRules.map((r) => <RuleCard rule={r} where={g.provName} />)}</div>
+        ) : (
+          <p class="small none">No province-wide energy reporting rule found{g.cityList.length ? ', but these cities have their own' : ''} (as of {dataChecked}).</p>
+        )}
+        {g.cityList.length > 0 && (
+          <>
+            <h3 class="sub">City rules in {g.provName}</h3>
+            <div class="cards">
+              {g.cityList.flatMap(({ c, rules }) => rules.map((r) => <RuleCard rule={r} where={cityLabel(c)} />))}
+            </div>
+          </>
+        )}
+        {g.total === 0 && (
+          <p class="small none-sub">
+            This does not mean none will come: ask the province and your city before you rely on it. The cities we cover in {g.provName}:
+            {g.cities.map((c, i) => <><a href={`/commercial-energy-audit/${c.slug}/`}>{cityLabel(c)}</a>{i < g.cities.length - 1 ? ', ' : '.'}</>)}
+          </p>
+        )}
+      </section>
+    ))}
+
+    <p class="small foot">
+      Rules and thresholds change, and each summary is a short reading of an official page, not legal advice. Confirm the details, the size threshold that applies
+      to your building and the deadline with the authority named on the card.
+    </p>
+
+    <RequestForm context="reporting-rules" heading="Not sure whether your building must report?" sub="Tell us the building and the city and we’ll tell you what we know and who can help." />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .facts { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 18px 40px; }
+  .facts li { display: grid; gap: 2px; border-left: 3px solid var(--heat); padding-left: 14px; }
+  .facts .v { font-family: var(--display); font-weight: 900; font-size: 34px; line-height: 1; }
+  .facts .l { font-size: 14px; color: var(--muted); }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 30px; }
+  .jump a { text-decoration: none; padding: 6px 12px; font-size: 13.5px; }
+  .jump .cnt { font-family: var(--mono); font-size: 12px; margin-left: 4px; opacity: 0.75; }
+  .block { padding: 10px 0 24px; scroll-margin-top: 90px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 14px; align-items: start; }
+  .cards.one { grid-template-columns: minmax(0, 720px); }
+  .sub { font-size: 18px; margin: 24px 0 12px; }
+  .none, .none-sub { margin: 0 0 8px; max-width: 70ch; }
+  .foot { margin: 8px 0 30px; max-width: 74ch; }
+</style>

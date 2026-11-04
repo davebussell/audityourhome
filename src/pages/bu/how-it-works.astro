@@ -1,0 +1,111 @@
+---
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { BUILDING } from '../../config/building';
+
+const title = 'How a building energy audit works | AuditYourBuilding';
+const description =
+  'From “should we audit?” to a finished report: check the rules and incentives, choose an ASHRAE level, ask for an introduction, and what the visit and report involve.';
+
+const steps = [
+  {
+    t: 'Check what applies where the building is',
+    d: 'Start with the city page. It lists the energy reporting rules that apply (some are mandatory above a size) and the programs that pay part of an audit or study. Incentive programs often need approval before the audit starts, so look before you hire.',
+    link: ['/commercial-energy-audit/', 'Find your city'],
+  },
+  {
+    t: 'Choose the level',
+    d: 'Level 1 is a walk-through for a first look. Level 2 is the energy survey most incentive and loan applications ask for. Level 3 adds detailed analysis for a major capital project. Not sure? Say so in the request and we’ll help scope it.',
+    link: ['/audit-levels/', 'The three audit levels'],
+  },
+  {
+    t: 'Tell us about the building',
+    d: 'Building type, floor area, city and what you need. It takes two minutes and needs no account. A person reads every request.',
+    link: ['/request/', 'Request an audit'],
+  },
+  {
+    t: 'Get introduced to one firm',
+    d: 'We introduce you to one engineering firm or energy consultant that serves your area, usually within a business day. They contact you about the request; you decide whether to go ahead. You pay us nothing.',
+  },
+  {
+    t: 'The audit',
+    d: 'The firm reviews the utility bills and drawings, visits the building, talks to the people who run it and looks at the major systems. A Level 2 survey adds the breakdown of where the energy goes and the cost and savings of each practical measure; a Level 3 analysis adds modelling and monitoring for the big projects.',
+  },
+  {
+    t: 'The report, then the money',
+    d: 'You get costed, ranked measures and a view of the capital projects that need more engineering. That is the document an incentive, a retrofit loan or a board decision is built on. Ask the firm up front whether it helps with the application.',
+  },
+];
+
+const faq = [
+  {
+    q: 'How long does a building energy audit take?',
+    a: 'It depends on the level, the size of the building and how much metering is involved. A Level 1 walk-through is the quickest; a Level 3 analysis with monitoring can run for months. Ask the firm for a schedule with the quote.',
+  },
+  {
+    q: 'Do I need to be present during the audit?',
+    a: 'Someone who knows the building should be: a facility manager, building operator or property manager who can open the plant rooms and the roof and explain how the systems are run.',
+  },
+  {
+    q: 'Does it cost anything to use AuditYourBuilding?',
+    a: 'No. You pay the firm for the audit, not us. Firms that take part may pay us a referral fee; it never changes what this site says about rules or incentives.',
+  },
+];
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'How it works', path: '/how-it-works/' }]),
+  faqSchema(faq),
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>How it works</span></nav>
+    <div class="page-hero">
+      <p class="eyebrow">How it works</p>
+      <h1>From “should we audit?” to a finished report</h1>
+      <p class="lede measure">
+        Six steps. The first three are yours, and they take about ten minutes. The rest is the firm’s work, with the report at the end.
+      </p>
+    </div>
+
+    <ol class="path">
+      {steps.map((s, i) => (
+        <li class="card sheet">
+          <span class="n">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h2>{s.t}</h2>
+            <p>{s.d}</p>
+            {s.link && <p class="go"><a href={s.link[0]}>{s.link[1]} →</a></p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="small own">A house or a single condo unit follows a different path: an EnerGuide evaluation by a registered energy advisor. That is what <a href={BUILDING.homeCa.url}>AuditYourHome.ca</a> is for.</p>
+
+    <section class="faqs">
+      <div class="sec-head"><h2>Common questions</h2></div>
+      <div class="measure">
+        {faq.map((f) => <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>)}
+      </div>
+    </section>
+
+    <RequestForm context="how-it-works" />
+  </div>
+</BuildingBase>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+  .crumbs a { color: var(--muted); }
+  .path { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 16px; max-width: 860px; }
+  .path li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 18px; padding: 22px 24px; align-items: start; }
+  .n { font-family: var(--display); font-weight: 900; font-size: 40px; line-height: 0.9; color: var(--heat); opacity: 0.35; }
+  .path h2 { font-size: 21px; margin: 0 0 6px; }
+  .path p { margin: 0; color: var(--ink); max-width: 64ch; }
+  .path .go { margin-top: 10px; font-weight: 600; font-size: 15px; }
+  @media (max-width: 560px) { .path li { grid-template-columns: 1fr; gap: 6px; padding: 18px 18px; } .n { font-size: 28px; } }
+  .own { margin: 18px 0 8px; max-width: 70ch; }
+  .faqs { padding: 26px 0 8px; }
+</style>
