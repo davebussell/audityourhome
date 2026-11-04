@@ -284,7 +284,7 @@ export function startPlanner() {
     if (n === 2) { eraHint(); syncMatch(); }
     if (n === 4) syncSymptoms();
     if (n === 6) initBills();
-    form.querySelectorAll('.step-error').forEach((e) => e.remove());
+    clearStepErrors();
     // the step's own question gets focus, not the optional utility question moved onto step 2
     const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] .field:not(.util-field) input:not([type=hidden])`)
       ?? form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input:not([type=hidden])`);
@@ -292,15 +292,38 @@ export function startPlanner() {
     if (plannerEl.getBoundingClientRect().top < 0) plannerEl.scrollIntoView({ block: 'start' });
   }
 
+  /** Drop any "pick one" message and the red outline it put on a question. */
+  function clearStepErrors() {
+    form.querySelectorAll('.step-error').forEach((e) => e.remove());
+    form.querySelectorAll('.field.has-error').forEach((f) => {
+      f.classList.remove('has-error');
+      const group = f.querySelector<HTMLElement>('[role="radiogroup"]');
+      group?.removeAttribute('aria-invalid');
+      if (group?.getAttribute('aria-describedby')?.startsWith('stepError')) group.removeAttribute('aria-describedby');
+    });
+  }
+
+  /**
+   * A required question is unanswered. Next sits well below the question on a long step, so a message
+   * dropped in beside the question is off-screen and the button looks dead: bring the question into
+   * view, outline it, and put focus on it. Picking an answer clears it again (the change listener below).
+   */
   function stepError(n: number, msg: string) {
-    const fs = form.querySelector(`fieldset[data-step="${n}"] .field:not(.util-field)`)!;
-    if (!fs.querySelector('.step-error')) {
-      const err = document.createElement('p');
-      err.className = 'field-error step-error';
-      err.setAttribute('role', 'alert');
-      err.textContent = msg;
-      fs.appendChild(err);
-    }
+    const field = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] .field:not(.util-field)`)!;
+    // a fresh element each time, so pressing Next again is announced and nudges again
+    field.querySelector('.step-error')?.remove();
+    const err = document.createElement('p');
+    err.className = 'field-error step-error';
+    err.id = `stepError${n}`;
+    err.setAttribute('role', 'alert');
+    err.textContent = msg;
+    field.appendChild(err);
+    field.classList.add('has-error');
+    const group = field.querySelector<HTMLElement>('[role="radiogroup"]');
+    group?.setAttribute('aria-invalid', 'true');
+    group?.setAttribute('aria-describedby', err.id);
+    field.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    field.querySelector<HTMLElement>('input')?.focus({ preventScroll: true });
   }
 
   function validate(n: number): boolean {
@@ -310,7 +333,7 @@ export function startPlanner() {
       if (!r.loc) { zipEl.focus(); return false; }
     }
     if (n === 2 && !fieldVal('age')) {
-      stepError(2, 'Pick the closest era; a rough guess still gives a useful plan.');
+      stepError(2, 'Pick the closest era to continue; a rough guess still gives a useful plan.');
       return false;
     }
     return true;
@@ -332,8 +355,13 @@ export function startPlanner() {
     if (!b || b.disabled) return;
     const n = Number(b.dataset.goto);
     if (n === step) return;
-    for (let s = step; s < n; s++) if (!validate(s)) { if (s !== step) show(s); return; }
+    // show() clears step errors, so an unanswered earlier step is opened first and then flagged
+    for (let s = step; s < n; s++) if (!validate(s)) { if (s !== step) { show(s); validate(s); } return; }
     show(n);
+  });
+  // answering the flagged question clears its message and outline
+  form.addEventListener('change', (e) => {
+    if ((e.target as HTMLElement).closest('.field.has-error')) clearStepErrors();
   });
 
   function eraHint() {

@@ -250,7 +250,7 @@ const privacyLine = ACCOUNTS_ENABLED
         <fieldset class="step" data-step="2">
           <legend><h2>Tell us about the house</h2></legend>
           <div class="field">
-            <span class="lbl">When was it built? <span class="hint-inline">(best guess is fine)</span></span>
+            <span class="lbl">When was it built? <span class="hint-inline">(required, but a best guess is fine)</span></span>
             <div class="radio-row" role="radiogroup" aria-label="Year built">
               <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Before 1946</span></label>
               <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>1946–1965</span></label>
@@ -691,6 +691,11 @@ const privacyLine = ACCOUNTS_ENABLED
   .province-note { border-left: 4px solid var(--warn); padding: 18px 24px; }
   .field-error { color: var(--dead); font-size: 13.5px; margin-top: 8px; font-weight: 600; }
   .field-error a { color: var(--dead); }
+  /* a blocked Next outlines the unanswered question and nudges its message, so the stop is obvious (fieldError in the planner script) */
+  .field.has-error .radio-pill span { border-color: var(--dead); }
+  .field-error.step-error { font-size: 15px; animation: step-nudge 0.35s ease-out; }
+  @keyframes step-nudge { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+  @media (prefers-reduced-motion: reduce) { .field-error.step-error { animation: none; } }
   .test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
   @media (max-width: 800px) { .test-grid { grid-template-columns: 1fr; } }
   .test-card {
@@ -894,7 +899,7 @@ const privacyLine = ACCOUNTS_ENABLED
     if (n === 4) syncSymptoms();
     if (n === 6) initBillSliders();
     if (n > 1) updateMatchLine(); else { matchLine.hidden = true; updatePostalMatch(); }
-    form.querySelectorAll('.field-error:not(#postalError)').forEach((el) => el.remove());
+    clearFieldErrors();
     const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input`);
     first?.focus({ preventScroll: true });
   }
@@ -931,16 +936,44 @@ const privacyLine = ACCOUNTS_ENABLED
       return false;
     }
     if (n === 2 && !fieldVal('age')) {
-      const fs = form.querySelector(`fieldset[data-step="2"] .field`)!;
-      if (!fs.querySelector('.field-error')) {
-        const err = document.createElement('p');
-        err.className = 'field-error';
-        err.textContent = 'Pick the closest era. A rough guess still produces a good plan.';
-        fs.appendChild(err);
-      }
+      fieldError(2, 'Pick the closest era to continue. A rough guess still produces a good plan.');
       return false;
     }
     return true;
+  }
+
+  /** Drop any "pick one" message and the red outline it put on a question (the postal-code message is separate). */
+  function clearFieldErrors() {
+    form.querySelectorAll('.field-error:not(#postalError)').forEach((el) => el.remove());
+    form.querySelectorAll('.field.has-error').forEach((f) => {
+      f.classList.remove('has-error');
+      const group = f.querySelector<HTMLElement>('[role="radiogroup"]');
+      group?.removeAttribute('aria-invalid');
+      if (group?.getAttribute('aria-describedby')?.startsWith('stepError')) group.removeAttribute('aria-describedby');
+    });
+  }
+
+  /**
+   * A required question is unanswered. Next sits well below the question on a long step, so a message
+   * dropped in beside the question is off-screen and the button looks dead: bring the question into
+   * view, outline it, and put focus on it. Picking an answer clears it again (the change listener below).
+   */
+  function fieldError(n: number, msg: string) {
+    const field = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] .field`)!;
+    // a fresh element each time, so pressing Next again is announced and nudges again
+    field.querySelector('.step-error')?.remove();
+    const err = document.createElement('p');
+    err.className = 'field-error step-error';
+    err.id = `stepError${n}`;
+    err.setAttribute('role', 'alert');
+    err.textContent = msg;
+    field.appendChild(err);
+    field.classList.add('has-error');
+    const group = field.querySelector<HTMLElement>('[role="radiogroup"]');
+    group?.setAttribute('aria-invalid', 'true');
+    group?.setAttribute('aria-describedby', err.id);
+    field.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    field.querySelector<HTMLElement>('input')?.focus({ preventScroll: true });
   }
 
   nextBtn.addEventListener('click', () => {
@@ -966,6 +999,10 @@ const privacyLine = ACCOUNTS_ENABLED
   postalEl.addEventListener('input', () => { if (!postalErr.hidden) setPostalError(''); });
   provEl.addEventListener('change', () => { if (provEl.value) setPostalError(''); });
   form.addEventListener('submit', (e) => e.preventDefault());
+  // answering the flagged question clears its message and outline
+  form.addEventListener('change', (e) => {
+    if ((e.target as HTMLElement).closest('.field.has-error')) clearFieldErrors();
+  });
 
   // ---------- location → covered city, climate profile ----------
   type Loc = { kind: 'ca'; fsa: string | null; province: ProvCode; region: any | null } | { kind: 'none' };

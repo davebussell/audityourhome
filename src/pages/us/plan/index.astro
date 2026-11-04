@@ -143,7 +143,7 @@ const leadSub = NETLIFY_FORMS
           <p class="zip-match" id="zipMatch" hidden></p>
           <div id="utilSlot2"></div>
           <div class="field">
-            <span class="lbl" id="ageLbl">When was it built? <span class="hint-inline">(a rough guess is fine)</span></span>
+            <span class="lbl" id="ageLbl">When was it built? <span class="hint-inline">(required, but a rough guess is fine)</span></span>
             <div class="radio-row" role="radiogroup" aria-labelledby="ageLbl">
               {VINTAGES.map((v) => (
                 <label class="radio-pill"><input type="radio" name="age" value={v} /><span>{ERAS[v].label}</span></label>
@@ -669,6 +669,11 @@ const leadSub = NETLIFY_FORMS
   #planner .zip-ca { background: var(--heat-tint); border-radius: 8px; padding: 10px 14px; }
   #planner .zip-ca a { font-weight: 700; }
   .field-error { color: var(--dead); font-size: 13.5px; margin-top: 8px; font-weight: 600; }
+  /* a blocked Next outlines the unanswered question and nudges its message, so the stop is obvious (plan-client.ts stepError) */
+  .field.has-error .radio-pill span { border-color: var(--dead); }
+  .field-error.step-error { font-size: 15px; animation: step-nudge 0.35s ease-out; }
+  @keyframes step-nudge { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+  @media (prefers-reduced-motion: reduce) { .field-error.step-error { animation: none; } }
   .sliders { max-width: 560px; display: grid; gap: 22px; }
   .slider-field label { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; font-size: 15px; }
   .slider-field output { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--heat-deep); font-variant-numeric: tabular-nums; }
