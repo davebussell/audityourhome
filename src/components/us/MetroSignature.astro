@@ -1,0 +1,86 @@
+---
+/**
+ * "How <metro> is built": a dark data panel for the top of a US metro guide, the counterpart of the Canadian housing portrait.
+ * The typical home (Census median year built, drawn in its era's colours), the heating and cooling load (NOAA degree days
+ * on the same bars the metro cards use) and the zones. The numbers are the ones in the "at a glance" tiles below it.
+ */
+import type { Metro } from '../../lib/us/data';
+import { signatureFor } from '../../lib/us/visual';
+import DegreeBars from './DegreeBars.astro';
+import HomeGlyph from './HomeGlyph.astro';
+
+interface Props {
+  m: Metro;
+  name: string;
+}
+const { m, name } = Astro.props;
+const s = signatureFor(m);
+const lean = {
+  heating: 'Mostly a heating climate: the winter bill is the big one.',
+  cooling: 'Mostly a cooling climate: summer air conditioning is the big bill.',
+  both: 'Both seasons count: you pay to heat and to cool.',
+}[s.degrees.lean];
+---
+
+<section class="sig" aria-labelledby="sig-h" data-no-gloss>
+  <h2 id="sig-h" class="sig-h">How {name} is built</h2>
+  <div class="sig-grid">
+    <div class="sig-home">
+      {s.era && (
+        <div class="glyph"><HomeGlyph era={s.era.key} color={s.era.color} /></div>
+      )}
+      <div class="sig-txt">
+        <p class="k">Typical home</p>
+        <p class="big">{s.year ?? s.yearNote ?? 'Not published'}</p>
+        <p class="sub">median year built</p>
+        {s.era && <span class="era"><i style={`background:${s.era.color}`}></i>{s.era.label}</span>}
+      </div>
+    </div>
+    <div class="sig-deg">
+      <p class="k">Heating and cooling a year</p>
+      <DegreeBars d={s.degrees} dark size="md" />
+      <p class="lean">{lean}</p>
+    </div>
+    <div class="sig-facts">
+      <p class="k">Zones</p>
+      <ul>
+        {s.zone && <li><span class="fk">Climate zone</span><span class="fv">{s.zone}</span></li>}
+        {s.radonZone != null && <li><span class="fk">EPA radon zone</span><span class="fv">{s.radonZone}</span></li>}
+        {s.owner != null && <li><span class="fk">Own their home</span><span class="fv">{(s.owner * 100).toFixed(0)}%</span></li>}
+      </ul>
+    </div>
+  </div>
+  <p class="sig-more"><a href="#glance">What these numbers mean, and where they come from</a></p>
+</section>
+
+<style>
+  .sig { margin: 26px 0 8px; padding: 26px 30px 20px; background: var(--navy); color: var(--navy-ink); border-radius: var(--radius-lg); position: relative; overflow: hidden; }
+  .sig::before { content: ''; position: absolute; inset: 0; background: radial-gradient(520px 220px at 12% 0%, rgba(240, 130, 70, 0.16), transparent 70%); pointer-events: none; }
+  .sig-h { margin: 0 0 18px; color: #fff; font-size: 22px; position: relative; }
+  .sig-grid { display: grid; grid-template-columns: 1.15fr 1.2fr 0.9fr; gap: 34px; align-items: center; position: relative; }
+  .k { margin: 0 0 8px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy-muted); }
+  .sig-home { display: flex; align-items: center; gap: 18px; min-width: 0; }
+  .glyph { flex: 0 0 104px; }
+  .sig-txt .k { margin-bottom: 2px; }
+  .big { margin: 0; font-family: var(--display); font-weight: 800; font-size: 38px; line-height: 1.05; color: #fff; }
+  .sub { margin: 2px 0 8px; font-size: 13px; color: var(--navy-muted); }
+  .era { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--navy-ink); border: 1px solid var(--navy-line); border-radius: 999px; padding: 4px 11px 4px 9px; }
+  .era i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .lean { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--navy-muted); }
+  .sig-facts ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .sig-facts li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--navy-line); padding-bottom: 8px; }
+  .sig-facts li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .fk { font-size: 13.5px; color: var(--navy-muted); }
+  .fv { font-family: var(--display); font-weight: 800; font-size: 18px; color: #fff; }
+  .sig-more { margin: 18px 0 0; font-size: 13.5px; position: relative; }
+  .sig-more a { color: #F6A06B; }
+  .sig-more a:hover { color: #fff; }
+  @media (max-width: 900px) {
+    .sig-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+  @media (max-width: 560px) {
+    .sig { padding: 22px 18px 18px; }
+    .glyph { flex-basis: 84px; }
+    .big { font-size: 32px; }
+  }
+</style>

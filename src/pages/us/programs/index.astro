@@ -5,6 +5,7 @@ import LeadFormUS from '../../../components/us/LeadFormUS.astro';
 import ProgramStyles from '../../../components/us/ProgramStyles.astro';
 import ProgramCard from '../../../components/us/ProgramCard.astro';
 import ProgramStateTable from '../../../components/us/ProgramStateTable.astro';
+import StateTileMap from '../../../components/us/StateTileMap.astro';
 import AuditFirst from './_AuditFirst.astro';
 import JourneyBar from '../../../components/JourneyBar.astro';
 import BackToPlan from '../../../components/us/BackToPlan.astro';
@@ -12,7 +13,7 @@ import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { statusChip, METROS } from '../../../lib/us/data';
 import {
-  STATES, COUNTS, GROUPS, GROUP_ORDER, TAX, otherFederal, src, stateByCode, takingPhrase, metroName, metroStates, VERIFIED,
+  STATES, COUNTS, TAX, otherFederal, src, stateByCode, takingPhrase, metroName, metroStates, VERIFIED,
 } from '../../../lib/us/programs';
 
 const taking = takingPhrase();
@@ -289,11 +290,9 @@ const schema = [
         state’s own page as checked on {VERIFIED}; the state page quotes the exact wording and links the
         official source. “Unconfirmed” means the state hasn’t posted a status we can link to, so ask its energy office.
       </p>
-      <p class="up-counts">
-        {GROUP_ORDER.map((g) => (
-          <a href={`/programs/states/#${GROUPS[g].anchor}`}><span class={`chip ${GROUPS[g].cls}`}>{COUNTS.group[g]}</span>{GROUPS[g].label}</a>
-        ))}
-      </p>
+      <div class="card card-pad up-map">
+        <StateTileMap />
+      </div>
       <ProgramStateTable states={STATES} split caption="Home Energy Rebate status by state" />
       <p class="up-related">
         <a class="btn btn-ghost" href="/programs/states/">All states grouped by status →</a>
@@ -345,4 +344,5 @@ const schema = [
   .chg p:not(.up-meta) { font-size: 15px; }
   .chg .up-meta { margin-top: auto; padding-top: 6px; }
   section { padding: 0; }
+  .up-map { max-width: 640px; margin: 4px 0 26px; }
 </style>

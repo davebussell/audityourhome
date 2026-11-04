@@ -4,6 +4,7 @@
  * research record (src/data/us/metros/<slug>.json), climate.json, prices.json, federal.json and
  * tests.json, all verified October 12, 2026.
  */
+import { getImage } from 'astro:assets';
 import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
 import LeadFormUS from '../../../components/us/LeadFormUS.astro';
@@ -15,6 +16,10 @@ import FaqList from '../../../components/us/FaqList.astro';
 import CreditsEnded from '../../../components/us/CreditsEnded.astro';
 import WapNote from '../../../components/us/WapNote.astro';
 import PlanPrompt from '../../../components/us/PlanPrompt.astro';
+import RegionPhoto from '../../../components/us/RegionPhoto.astro';
+import MetroSignature from '../../../components/us/MetroSignature.astro';
+import { regionKeyFor } from '../../../lib/us/visual';
+import { REGION_PHOTOS } from '../../../lib/us/photos';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
 import { METROS, FEDERAL, US_VERIFIED, fmtInt } from '../../../lib/us/data';
@@ -85,9 +90,14 @@ const host = (u: string) => {
   }
 };
 
+const heroRegion = regionKeyFor(m.slug);
 const cold = (g.hdd ?? 0) >= 4000;
 const photoKey = cold ? 'blower-door-test' : 'home-energy-audit';
 const hud = cold ? 'Depressurized to 50 Pa' : 'Home energy audit';
+// social card: the metro's regional picture cropped to 1200 × 630 (the generic audit photo if a metro has no region)
+const ogCard = heroRegion
+  ? (await getImage({ src: REGION_PHOTOS[heroRegion].src, width: 1200, height: 630, format: 'jpg', quality: 80, fit: 'cover' })).src
+  : ogFor(photoKey);
 
 const title = `Home energy audits in ${name}: programs, rebates and costs (2026)`;
 const description = `Home energy audit programs in the ${name} area and what they cost, the rebates open now, federal Home Energy Rebates status in ${andList(states.map((s) => s.code))} and help for lower-income homes. Verified ${US_VERIFIED}.`;
@@ -185,7 +195,7 @@ const herOverview = FEDERAL.homeEnergyRebates.overview;
 const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.test(s.href));
 ---
 
-<Base title={title} description={description} schema={schema} ogImage={ogFor(photoKey)}>
+<Base title={title} description={description} schema={schema} ogImage={ogCard}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">/</span>
@@ -206,7 +216,11 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
         </p>
         <p class="small msa">Metro area: {d.metroName}.</p>
       </div>
-      <Photo name={photoKey} eager hud={hud} />
+      {heroRegion ? (
+        <RegionPhoto region={heroRegion} eager hud={`Illustration · ${pc?.profile.label ?? 'regional home'}`} />
+      ) : (
+        <Photo name={photoKey} eager hud={hud} />
+      )}
     </div>
 
     <div class="keys">
@@ -241,6 +255,8 @@ const pn26 = (herOverview.sources as any[]).find((s) => /program-notice-26-2/.te
     <nav class="jump" aria-label="On this page">
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
     </nav>
+
+    <MetroSignature m={m} name={name} />
 
     <!-- AT A GLANCE -->
     <section id="glance" class="sec">

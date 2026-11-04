@@ -3,6 +3,7 @@ import Base from '../../../../layouts/Base.astro';
 import LeadFormUS from '../../../../components/us/LeadFormUS.astro';
 import ProgramStyles from '../../../../components/us/ProgramStyles.astro';
 import ProgramStatus from '../../../../components/us/ProgramStatus.astro';
+import StateTileMap from '../../../../components/us/StateTileMap.astro';
 import ProgramFaq from '../../../../components/us/ProgramFaq.astro';
 import ProgramSources from '../../../../components/us/ProgramSources.astro';
 import AuditFirst from '../_AuditFirst.astro';
@@ -125,6 +126,7 @@ const auditPoints = [
         <p class="up-meta">Checked against {nameIn(s)}’s own pages on {checked}</p>
       </div>
       <aside class="card card-pad glance" aria-label={`${s.name} at a glance`}>
+        <StateTileMap compact legend={false} current={s.code} />
         <p class="g-h">At a glance</p>
         {progs.map((p) => (
           <a class="g-row" href={`#${anchor(p)}`}>

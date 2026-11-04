@@ -3,6 +3,7 @@ import Base from '../../../../layouts/Base.astro';
 import LeadFormUS from '../../../../components/us/LeadFormUS.astro';
 import ProgramStyles from '../../../../components/us/ProgramStyles.astro';
 import ProgramStateTable from '../../../../components/us/ProgramStateTable.astro';
+import StateTileMap from '../../../../components/us/StateTileMap.astro';
 import ProgramSources from '../../../../components/us/ProgramSources.astro';
 import { ogFor } from '../../../../lib/photos';
 import { breadcrumbSchema } from '../../../../lib/schema';
@@ -55,6 +56,7 @@ const list = (xs: { name: string }[]) => (xs.length < 2 ? xs.map((x) => x.name).
         </p>
       </div>
       <aside class="card card-pad glance" aria-label="Count by status">
+        <StateTileMap compact legend={false} />
         <p class="g-h">States by status</p>
         {GROUP_ORDER.map((g) => (
           <a class="g-row" href={`#${GROUPS[g].anchor}`}>

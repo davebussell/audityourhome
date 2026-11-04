@@ -4,8 +4,8 @@
  * Card details come from each metro's research record (verified October 12, 2026).
  */
 import Base from '../../../layouts/Base.astro';
-import Photo from '../../../components/Photo.astro';
 import MetroCard from '../../../components/us/MetroCard.astro';
+import RegionPhoto from '../../../components/us/RegionPhoto.astro';
 import LeadFormUS from '../../../components/us/LeadFormUS.astro';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
@@ -38,7 +38,7 @@ const schema = [breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cities',
           page it came from.
         </p>
       </div>
-      <Photo name="energy-bill-analysis" eager />
+      <RegionPhoto regions={['hot-dry', 'very-cold', 'marine']} eager hud={`${n} metros · 9 climates`} label="Illustration: a desert ranch house, a snowy two-storey house and a craftsman house in the rain, three of the nine US climates" />
     </div>
 
     <div class="facts">

@@ -1,0 +1,93 @@
+---
+/**
+ * Tile-grid map of the 50 states and DC, one square each, coloured by where the federal Home Energy Rebates stand
+ * (the same four groups and the same reading as the program tracker, so the map and the tables always agree). Every tile
+ * links to that state's page. Works as a legend-free glance on a state page (`current` rings one state) and as the full
+ * map with counts on the home page and the program pages.
+ */
+import { STATES, GROUPS, GROUP_ORDER, COUNTS } from '../../lib/us/programs';
+import { TILE_POS } from '../../lib/us/visual';
+
+interface Props {
+  /** State code to ring (a state page) */
+  current?: string;
+  /** Show the colour key with counts under the map */
+  legend?: boolean;
+  /** On a dark band */
+  dark?: boolean;
+  /** Tighter tiles and no key: for a card */
+  compact?: boolean;
+}
+const { current, legend = true, dark = false, compact = false } = Astro.props;
+
+const missing = STATES.filter((s) => !TILE_POS[s.code]).map((s) => s.code);
+if (missing.length) throw new Error(`StateTileMap.astro: no tile position for ${missing.join(', ')}`);
+
+const KEY: Record<string, string> = { open: 'g-open', limited: 'g-limited', closed: 'g-closed', 'not-open': 'g-none' };
+const SHORT: Record<string, string> = { open: 'open', limited: 'open with limits or paused', closed: 'closed', 'not-open': 'not launched or no status' };
+---
+
+<figure class:list={['tm', { dark, compact }]}>
+  <ul class="grid" aria-label="Home Energy Rebates by state; each tile opens that state's page">
+    {STATES.map((s) => {
+      const [c, r] = TILE_POS[s.code];
+      const label = `${s.name}: ${GROUPS[s.group].label}`;
+      return (
+        <li style={`grid-column:${c + 1};grid-row:${r + 1}`}>
+          <a
+            class:list={['t', KEY[s.group], { cur: s.code === current }]}
+            href={`/programs/states/${s.slug}/`}
+            aria-label={label}
+            aria-current={s.code === current ? 'page' : undefined}
+            title={label}
+          >{s.code}</a>
+        </li>
+      );
+    })}
+  </ul>
+  {legend && !compact && (
+    <figcaption class="key">
+      {GROUP_ORDER.map((g) => (
+        <a class="k" href={`/programs/states/#${GROUPS[g].anchor}`}><i class={KEY[g]}></i><b>{COUNTS.group[g]}</b> {SHORT[g]}</a>
+      ))}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .tm { margin: 0; --gap: 4px; --open: var(--pine); --limited: #C28A14; --closed: var(--dead); --none: #E7E1D5; --none-ink: #5B6672; --ring: var(--ink); }
+  .tm.dark { --none: rgba(255, 255, 255, 0.13); --none-ink: var(--navy-ink); --ring: #fff; --limited: #D9A21E; }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); grid-auto-rows: auto; gap: var(--gap); }
+  .grid li { display: block; aspect-ratio: 1; min-width: 0; }
+  .t {
+    display: grid; place-items: center; width: 100%; height: 100%;
+    border-radius: 6px; font-family: var(--mono); font-weight: 700; font-size: clamp(9.5px, 2.5vw, 13px); letter-spacing: 0.01em;
+    text-decoration: none; color: #fff; line-height: 1;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .t:hover, .t:focus-visible { transform: scale(1.14); box-shadow: 0 4px 14px rgba(14, 22, 32, 0.28); position: relative; z-index: 2; color: #fff; }
+  .g-open { background: var(--open); }
+  .g-limited { background: var(--limited); color: #1B1405; }
+  .g-limited:hover, .g-limited:focus-visible { color: #1B1405; }
+  .g-closed { background: var(--closed); }
+  .g-none { background: var(--none); color: var(--none-ink); }
+  .g-none:hover, .g-none:focus-visible { color: var(--ink); }
+  .dark .g-none:hover, .dark .g-none:focus-visible { color: #fff; }
+  .t.cur { box-shadow: 0 0 0 2.5px var(--paper), 0 0 0 5px var(--ring); position: relative; z-index: 1; }
+  .dark .t.cur { box-shadow: 0 0 0 2.5px var(--navy), 0 0 0 5px var(--ring); }
+  .key { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0 0; font-size: 13.5px; line-height: 1.3; color: var(--muted); }
+  .dark .key { color: var(--navy-muted); }
+  .key .k { display: inline-flex; align-items: center; gap: 7px; color: inherit; text-decoration: none; }
+  .key a.k:hover { color: var(--heat-deep); }
+  .dark .key a.k:hover { color: #fff; }
+  .key b { color: var(--ink); font-family: var(--display); font-weight: 800; font-size: 15px; }
+  .dark .key b { color: #fff; }
+  .key i { width: 12px; height: 12px; border-radius: 3px; display: block; flex-shrink: 0; }
+  .key i.g-open { background: var(--open); }
+  .key i.g-limited { background: var(--limited); }
+  .key i.g-closed { background: var(--closed); }
+  .key i.g-none { background: var(--none); box-shadow: inset 0 0 0 1px rgba(91, 102, 114, 0.35); }
+  .compact { --gap: 3px; margin-bottom: 10px; }
+  .compact .t { border-radius: 4px; font-size: clamp(8px, 2vw, 10.5px); }
+  @media (prefers-reduced-motion: reduce) { .t { transition: none; } .t:hover, .t:focus-visible { transform: none; } }
+</style>

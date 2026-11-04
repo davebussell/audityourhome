@@ -5,13 +5,18 @@
  */
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/Photo.astro';
+import ThermalCompare from '../../components/ThermalCompare.astro';
 import MetroCard from '../../components/us/MetroCard.astro';
+import RegionPhoto from '../../components/us/RegionPhoto.astro';
+import StateTileMap from '../../components/us/StateTileMap.astro';
 import FaqList from '../../components/us/FaqList.astro';
 import LeadFormUS from '../../components/us/LeadFormUS.astro';
 import { organizationSchema, faqSchema } from '../../lib/schema';
 import { METROS, FEDERAL, US_VERIFIED, STATE_NAMES } from '../../lib/us/data';
 import { hasFreeVisitForAll, andList } from '../../lib/us/metro-view';
 import { STATES } from '../../lib/us/programs';
+import { profile } from '../../lib/climate';
+import { REGION_KEYS } from '../../lib/us/photos';
 
 const title = 'AuditYourHome: find a certified home energy auditor in the United States';
 const description = `Find a certified home energy auditor, see what audits cost in the ${METROS.length} largest U.S. metro areas and check which rebates are open after the 2026 changes. Every fact links to its official source, verified ${US_VERIFIED}.`;
@@ -36,6 +41,18 @@ const doeHer = (her.sources as any[]).find((s) => /home-energy-rebates-program$/
 const n = METROS.length;
 const freeVisit = METROS.filter(hasFreeVisitForAll).length;
 const withIncome = METROS.filter((m) => (m.data.incomeQualified ?? []).length > 0).length;
+
+// ---------------------------------------------------------------- the nine climates, each with its picture and its metros
+const regions = REGION_KEYS.map((key) => {
+  const p = profile('us', key)!;
+  return {
+    key,
+    name: p.regionName,
+    label: p.label,
+    oneLiner: p.oneLiner,
+    metros: p.places.map((slug) => METROS.find((m) => m.slug === slug)).filter((m): m is (typeof METROS)[number] => !!m),
+  };
+});
 
 const faqs = [
   {
@@ -118,6 +135,34 @@ const tests = [
     </div>
   </section>
 
+  <!-- NINE CLIMATES -->
+  <section class="regions" id="climates">
+    <div class="container">
+      <p class="eyebrow">Nine climates, nine kinds of home</p>
+      <h2>Your climate decides what your house needs</h2>
+      <p class="lede measure">
+        A Boston triple-decker, a Phoenix ranch house and a Seattle craftsman lose energy in different places, so an audit
+        looks for different things. Find the picture closest to your area, then open your metro’s guide.
+      </p>
+      <div class="rg-grid">
+        {regions.map((r) => (
+          <article class="rgn">
+            <RegionPhoto region={r.key} plain hud={false} ratio="3 / 2" sizes="(max-width: 700px) calc(100vw - 44px), (max-width: 1100px) 45vw, 380px" />
+            <div class="rgn-body">
+              <p class="rgn-k" data-no-gloss>{r.label}</p>
+              <h3>{r.name}</h3>
+              <p class="rgn-one">{r.oneLiner}</p>
+              <ul class="rgn-metros">
+                {r.metros.map((m) => <li><a href={`/cities/${m.slug}/`}>{m.data.name}</a></li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="rg-note small">AI-generated illustrations of typical homes, not photographs of real ones. Climate groups follow the NOAA and IECC climate data behind each metro guide.</p>
+    </div>
+  </section>
+
   <!-- WHAT CHANGED IN 2026 -->
   <section class="band-dark changed">
     <div class="container">
@@ -162,6 +207,18 @@ const tests = [
           </p>
         </article>
       </div>
+      <div class="map-row">
+        <div class="map-copy">
+          <h3>Is your state paying out?</h3>
+          <p>
+            Each square is a state; tap yours. Green means at least one federal rebate pathway was taking applications on
+            {US_VERIFIED}, amber means it’s open with limits or paused, red means it closed after the money was reserved, and grey means
+            it hasn’t launched or the state posts no status.
+          </p>
+          <p class="map-cta"><a class="btn btn-light" href="/programs/states/">All 50 states and DC →</a></p>
+        </div>
+        <div class="map-art"><StateTileMap dark /></div>
+      </div>
     </div>
   </section>
 
@@ -171,8 +228,9 @@ const tests = [
       <p class="eyebrow">{n} metro areas</p>
       <h2>Where to start in your metro</h2>
       <p class="lede measure">
-        The audit program most homeowners in each metro can start with, and what it costs. Each metro guide adds the other
-        programs, the rebates open now, local rules and energy prices.
+        The audit program most homeowners in each metro can start with, and what it costs. The two bars on each card show a
+        year of heating and cooling (NOAA degree days), so you can see at a glance which season drives the bills. Each metro
+        guide adds the other programs, the rebates open now, local rules and energy prices.
       </p>
       <ul class="mgrid">
         {METROS.map((m) => <li><MetroCard m={m} variant="main" /></li>)}
@@ -213,6 +271,31 @@ const tests = [
         </div>
       </div>
       <p class="more"><a class="btn btn-ghost" href="/how-it-works/">What happens in an audit →</a> <a class="btn btn-ghost" href="/cost/">What it costs →</a></p>
+    </div>
+  </section>
+
+  <!-- THERMAL DIAGRAM -->
+  <section class="thermal-band">
+    <div class="container thermal-grid">
+      <div class="thermal-copy">
+        <p class="eyebrow">Where houses actually leak</p>
+        <h2>Your home has a heat signature</h2>
+        <p>
+          Through an infrared camera, every house glows where it’s failing: attic bypasses, empty wall cavities, rim joists,
+          bare foundation walls. An auditor’s <strong>blower door test</strong> and <strong>infrared scan</strong> measure
+          where the energy goes and how much of it. Drag across the photo to see what the camera sees.
+        </p>
+        <div class="test-chips">
+          <a href="/tests/blower-door/">Blower door test</a>
+          <a href="/tests/thermal-imaging/">Infrared scan</a>
+          <a href="/tests/heat-loss-calc/">Heat-loss calc</a>
+          <a href="/tests/radon/">Radon test</a>
+          <a href="/tests/" class="all">All tests →</a>
+        </div>
+      </div>
+      <div class="thermal-art">
+        <ThermalCompare />
+      </div>
     </div>
   </section>
 
@@ -280,6 +363,46 @@ const tests = [
   .chg p { margin: 0; font-size: 15px; }
   .chg .links { font-size: 14px; }
   .chg .links a { color: #fff; }
+
+  .regions { padding: 60px 0 36px; }
+  .rg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 26px; }
+  .rgn { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+  .rgn :global(.frame) { border-radius: 0; box-shadow: none; }
+  .rgn-body { padding: 16px 20px 18px; display: grid; gap: 6px; align-content: start; }
+  .rgn-k { margin: 0; font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--heat-deep); }
+  .rgn h3 { margin: 0; font-size: 19px; line-height: 1.25; }
+  .rgn-one { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
+  .rgn-metros { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .rgn-metros a { display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none; color: var(--ink); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 5px 12px; background: var(--card); }
+  .rgn-metros a:hover { border-color: var(--heat); color: var(--heat-deep); }
+  .rg-note { margin: 16px 0 0; color: var(--faint); }
+  @media (max-width: 900px) { .rg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 700px) {
+    .rg-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .rg-grid .rgn { flex: 0 0 82%; scroll-snap-align: start; }
+  }
+
+  .map-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 44px; align-items: center; margin-top: 40px; padding-top: 36px; border-top: 1px solid var(--navy-line); }
+  @media (max-width: 900px) { .map-row { grid-template-columns: 1fr; gap: 26px; } }
+  .map-copy h3 { margin: 0 0 10px; font-size: 24px; color: #fff; }
+  .map-copy p { margin: 0 0 14px; font-size: 15px; }
+  .map-cta { margin: 0; }
+  .map-art { min-width: 0; max-width: 560px; }
+
+  .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }
+  .thermal-band h2 { color: #fff; }
+  .thermal-band p { color: var(--navy-muted); }
+  .thermal-band .eyebrow { color: #F08246; }
+  .thermal-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 880px) { .thermal-grid { grid-template-columns: 1fr; } }
+  .thermal-art { min-width: 0; }
+  .test-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .test-chips a {
+    display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none;
+    color: var(--navy-ink); border: 1.5px solid var(--navy-line); border-radius: 999px; padding: 7px 15px;
+  }
+  .test-chips a:hover { border-color: #F08246; color: #fff; }
+  .test-chips a.all { background: var(--heat); border-color: var(--heat); color: #fff; }
 
   .metros { padding: 60px 0 40px; }
   .mgrid { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }

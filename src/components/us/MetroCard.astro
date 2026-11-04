@@ -4,8 +4,12 @@
  * the city index ("cheapest": the lowest published audit price, plus utilities and the federal
  * Home Energy Rebates status).
  */
+import { Picture } from 'astro:assets';
 import type { Metro } from '../../lib/us/data';
+import { REGION_PHOTOS } from '../../lib/us/photos';
 import { mainAudit, cheapestAudit, auditTags, mainUtilities, herStatus } from '../../lib/us/metro-view';
+import { signatureFor, cropStyle } from '../../lib/us/visual';
+import DegreeBars from './DegreeBars.astro';
 
 interface Props {
   m: Metro;
@@ -17,14 +21,33 @@ const tags = audit ? auditTags(audit) : [];
 const states = (m.data.states ?? []) as string[];
 const her = variant === 'cheapest' ? herStatus(m) : null;
 const utils = variant === 'cheapest' ? mainUtilities(m, 3) : [];
+const sig = signatureFor(m);
+const crop = cropStyle(m.slug);
 ---
 
 <a class:list={['mc', `mc-${variant}`]} href={`/cities/${m.slug}/`}>
+  {sig.photo && (
+    <span class="mc-img" style={crop}>
+      <Picture
+        src={REGION_PHOTOS[sig.photo].src}
+        alt=""
+        widths={[480, 768, 1200]}
+        sizes="(max-width: 560px) calc(100vw - 32px), 400px"
+        formats={['avif', 'webp']}
+        fallbackFormat="jpg"
+        quality={68}
+        loading="lazy"
+        decoding="async"
+      />
+      {sig.climate && <span class="mc-reg">{sig.climate}</span>}
+    </span>
+  )}
   <span class="mc-top">
     <span class="mc-name">{m.data.name}</span>
     <span class="mc-rank" title="Rank by 2025 Census population estimate">#{m.rank}</span>
   </span>
   <span class="mc-st">{states.join(' · ')}</span>
+  <DegreeBars d={sig.degrees} />
   {utils.length > 0 && <span class="mc-utils"><span class="k">Utilities</span> {utils.join(' · ')}</span>}
   {audit ? (
     <span class="mc-audit">
@@ -47,8 +70,19 @@ const utils = variant === 'cheapest' ? mainUtilities(m, 3) : [];
   .mc {
     display: grid; gap: 8px; align-content: start; height: 100%;
     padding: 14px 16px 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-    text-decoration: none; color: var(--ink); min-width: 0;
+    text-decoration: none; color: var(--ink); min-width: 0; overflow: hidden;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .mc-img { position: relative; display: block; margin: -14px -16px 2px; aspect-ratio: 2 / 1; overflow: hidden; background: #14202c; }
+  .mc-img :global(picture) { display: block; width: 100%; height: 100%; }
+  .mc-img :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% var(--p, 50%); transform: scale(var(--z, 1)); transform-origin: var(--o, 50% 50%); transition: transform 0.4s ease; }
+  .mc:hover .mc-img :global(img) { transform: scale(calc(var(--z, 1) * 1.05)); }
+  @media (max-width: 560px) { .mc-img { aspect-ratio: 16 / 7; } }
+  .mc-reg {
+    position: absolute; left: 8px; top: 8px; max-width: calc(100% - 16px);
+    font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em; line-height: 1.2; color: #fff;
+    background: rgba(20, 32, 44, 0.66); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    padding: 3px 8px; border-radius: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .mc:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
   .mc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }

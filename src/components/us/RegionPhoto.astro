@@ -1,0 +1,170 @@
+---
+/**
+ * One of the nine regional house pictures (src/lib/us/photos.ts) in the same viewfinder frame as Photo.astro, so it can
+ * sit where a site photo does. US site only; the Canadian pages use PHOTOS. It is an AI-generated illustration of a
+ * typical regional home, never a photograph of a real one, and the corner label says so.
+ */
+import { Picture } from 'astro:assets';
+import { REGION_PHOTOS, isRegionKey } from '../../lib/us/photos';
+import type { RegionKey } from '../../lib/us/photos';
+
+interface Props {
+  /** Climate profile key from src/data/climate/us.json */
+  region?: RegionKey | string;
+  /** Two to four profile keys: a mosaic of pictures in one frame (the first is the big tile) */
+  regions?: (RegionKey | string)[];
+  /** What the mosaic shows, for screen readers */
+  label?: string;
+  /** `sizes` attribute for the responsive image (a single picture) */
+  sizes?: string;
+  /** Above the fold: load eagerly with high fetch priority */
+  eager?: boolean;
+  /** CSS aspect-ratio for the crop, e.g. "4 / 3" (default 3 / 2, the picture's own) */
+  ratio?: string;
+  /** Corner label (true = "Illustration"; a string overrides it; false hides it) */
+  hud?: boolean | string;
+  /** Hide the viewfinder corner marks */
+  plain?: boolean;
+  caption?: string;
+  class?: string;
+}
+
+const {
+  region,
+  regions,
+  label,
+  sizes = '(max-width: 860px) calc(100vw - 44px), 500px',
+  eager = false,
+  ratio,
+  hud = true,
+  plain = false,
+  caption,
+  class: cls,
+} = Astro.props;
+const mosaic = regions && regions.length > 1 ? regions : null;
+for (const k of mosaic ?? [region ?? '']) if (!isRegionKey(k)) throw new Error(`RegionPhoto.astro: unknown region "${k}"`);
+const hudText = typeof hud === 'string' ? hud : hud ? 'Illustration' : undefined;
+const single = mosaic ? null : REGION_PHOTOS[region as RegionKey];
+// every use asks for the same few sizes, so each picture is encoded once per size however many cards show it
+const WIDTHS = [480, 768, 1200];
+const tileSizes = (i: number) =>
+  mosaic!.length === 3 && i === 0 ? sizes : '(max-width: 860px) calc(50vw - 24px), 250px';
+---
+
+<figure class:list={['photo', 'region', cls]} style={ratio ? `--ratio: ${ratio}` : undefined}>
+  <div class="frame">
+    {mosaic ? (
+      <div class:list={['mosaic', `n${mosaic.length}`]} role="img" aria-label={label ?? `Illustration: homes from ${mosaic.length} different US climates`}>
+        {mosaic.map((k, i) => (
+          <Picture
+            src={REGION_PHOTOS[k as RegionKey].src}
+            alt=""
+            widths={WIDTHS}
+            sizes={tileSizes(i)}
+            formats={['avif', 'webp']}
+            fallbackFormat="jpg"
+            quality={68}
+            loading={eager && i === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ))}
+      </div>
+    ) : (
+      <Picture
+        src={single!.src}
+        alt={single!.alt}
+        widths={WIDTHS}
+        sizes={sizes}
+        formats={['avif', 'webp']}
+        fallbackFormat="jpg"
+        quality={68}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={eager ? 'high' : 'auto'}
+      />
+    )}
+    {!plain && <span class="vf" aria-hidden="true"></span>}
+    {hudText && <span class="hud" aria-hidden="true"><i></i>{hudText}</span>}
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .photo { margin: 0; min-width: 0; }
+  .frame {
+    container-type: inline-size;
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #1e2f41;
+    aspect-ratio: var(--ratio, 3 / 2);
+    box-shadow: var(--shadow-md);
+    isolation: isolate;
+  }
+  .mosaic { display: grid; gap: 3px; width: 100%; height: 100%; background: #14202c; }
+  .mosaic.n2 { grid-template-columns: 1fr 1fr; }
+  .mosaic.n3 { grid-template-columns: 1fr 1fr; grid-template-rows: 1.15fr 1fr; }
+  .mosaic.n3 :global(picture:first-child) { grid-column: 1 / span 2; }
+  .mosaic.n3 :global(picture:first-child img) { object-position: 50% 62%; }
+  .mosaic.n4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .mosaic :global(picture) { min-height: 0; }
+  .frame :global(picture) { display: block; height: 100%; }
+  .frame :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* viewfinder corner marks */
+  .vf {
+    position: absolute;
+    inset: 12px;
+    pointer-events: none;
+    --c: rgba(255, 255, 255, 0.82);
+    --l: 18px;
+    --t: 2px;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c), var(--c)) top left / var(--t) var(--l) no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / var(--t) var(--l) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / var(--t) var(--l) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--t) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / var(--t) var(--l) no-repeat;
+  }
+  .hud {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    max-width: calc(100% - 40px);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    color: #fff;
+    background: rgba(20, 32, 44, 0.66);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    padding: 5px 10px 5px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hud i {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--heat);
+    box-shadow: 0 0 0 3px rgba(224, 92, 31, 0.28);
+    animation: rec 2.4s ease-in-out infinite;
+  }
+  @keyframes rec { 50% { opacity: 0.35; } }
+  /* smaller marks and label on small frames (cards, thumbnails) */
+  @container (max-width: 340px) {
+    .vf { inset: 8px; --l: 11px; --t: 1.5px; }
+    .hud { left: 12px; bottom: 12px; font-size: 10.5px; padding: 4px 8px 4px 7px; }
+  }
+  figcaption { font-size: 13px; color: var(--faint); margin-top: 8px; line-height: 1.45; }
+</style>

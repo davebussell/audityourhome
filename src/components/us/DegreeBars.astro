@@ -1,0 +1,39 @@
+---
+/**
+ * Two thin bars on one shared scale: heating degree days (orange) and cooling degree days (blue) a year, base 65°F,
+ * NOAA 1991–2020 normals. A cold city is a long orange bar, a hot one a long blue bar. Card and signature panel use it.
+ */
+import { fmtInt } from '../../lib/us/data';
+import type { Degrees } from '../../lib/us/visual';
+
+interface Props {
+  d: Degrees;
+  /** On a dark panel */
+  dark?: boolean;
+  size?: 'sm' | 'md';
+}
+const { d, dark = false, size = 'sm' } = Astro.props;
+const label = `Heating degree days: ${fmtInt(d.hdd)} a year. Cooling degree days: ${fmtInt(d.cdd)} a year.`;
+---
+
+<span class:list={['db', `db-${size}`, { dark }]} role="img" aria-label={label} title={label}>
+  <span class="row heat"><span class="lab">Heat</span><span class="track"><span class="fill" style={`width:${d.hddPct}%`}></span></span><span class="num">{fmtInt(d.hdd)}</span></span>
+  <span class="row cool"><span class="lab">Cool</span><span class="track"><span class="fill" style={`width:${d.cddPct}%`}></span></span><span class="num">{fmtInt(d.cdd)}</span></span>
+</span>
+
+<style>
+  .db { display: grid; gap: 5px; --track: var(--line); --lab: var(--faint); --num: var(--muted); }
+  .db.dark { --track: rgba(255, 255, 255, 0.12); --lab: var(--navy-muted); --num: #fff; }
+  .row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 38px; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; line-height: 1; }
+  .lab { color: var(--lab); text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; font-weight: 600; }
+  .track { display: block; height: 6px; border-radius: 3px; background: var(--track); overflow: hidden; }
+  .fill { display: block; height: 100%; border-radius: 3px; }
+  .heat .fill { background: var(--heat); }
+  .cool .fill { background: #4C9BC9; }
+  .num { text-align: right; color: var(--num); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .db-md { gap: 10px; }
+  .db-md .row { grid-template-columns: 44px minmax(0, 1fr) 52px; gap: 12px; font-size: 13px; }
+  .db-md .lab { font-size: 11.5px; }
+  .db-md .track { height: 10px; border-radius: 5px; }
+  .db-md .fill { border-radius: 5px; }
+</style>

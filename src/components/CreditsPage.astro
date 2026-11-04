@@ -7,6 +7,8 @@
 import Base from '../layouts/Base.astro';
 import { PHOTOS } from '../lib/photos';
 import { breadcrumbSchema } from '../lib/schema';
+import { profile } from '../lib/climate';
+import { REGION_KEYS, REGION_PHOTOS } from '../lib/us/photos';
 import { SITE, siteFor } from '../config/site';
 import type { Country } from '../lib/country';
 
@@ -49,7 +51,7 @@ const general = photos.filter((p) => !p.key.startsWith('region-'));
           </li>
         ))}
       </ol>
-      {country === 'ca' && (
+      {country === 'ca' ? (
         <Fragment>
           <h3>Regional illustrations <span class="count">{regional.length}</span></h3>
           <ol class="credit-list">
@@ -57,6 +59,24 @@ const general = photos.filter((p) => !p.key.startsWith('region-'));
               <li>
                 <strong>{p.hud ?? p.key}</strong>
                 <span>{p.alt}.</span>
+              </li>
+            ))}
+          </ol>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <h3>Regional house pictures <span class="count">{REGION_KEYS.length}</span></h3>
+          <p>
+            Made for {site.name} on November 4, 2026 with Canva’s AI image generator, from the editors’ written descriptions: one
+            picture for each of the nine climate groups the metro guides use. Each shows typical housing for its region, not a
+            real home, street, person or business, and the weather, light and planting are the artwork’s, not measurements.
+            Each carries a small label that says it is an illustration.
+          </p>
+          <ol class="credit-list">
+            {REGION_KEYS.map((k) => (
+              <li>
+                <strong>{profile('us', k)?.label ?? k}</strong>
+                <span>{REGION_PHOTOS[k].alt}.</span>
               </li>
             ))}
           </ol>
@@ -74,6 +94,8 @@ const general = photos.filter((p) => !p.key.startsWith('region-'));
       ) : (
         <ul class="credit-list plain">
           <li><strong>Metro facts</strong> <span>(housing stock, utilities, climate) come from the U.S. Census Bureau's American Community Survey, NOAA climate normals and the utilities' own program pages, cited on each metro guide.</span></li>
+          <li><strong>Heating and cooling bars and the typical-home panel</strong> <span>on the metro cards and guides use NOAA 1991–2020 heating and cooling degree days (base 65°F) and the Census median year a home was built (ACS 5-year, 2020–2024) for each metro's principal city; the era colors match the Canadian housing portraits.</span></li>
+          <li><strong>The state map</strong> <span>shows the same status the rebate tracker gives each state, from each state's own program page and the Building Performance Association's June 2026 map, with the check date on every state page.</span></li>
           <li><strong>Program and rebate facts</strong> <span>are checked against the official pages (U.S. Department of Energy, state energy offices, the IRS and utilities), with the verification date shown beside each one.</span></li>
           <li><strong>Test guides and the glossary</strong> <span>draw on the EPA, ENERGY STAR, DOE and PNNL, ACCA, BPI, RESNET, the CPSC and the other sources listed under each entry.</span></li>
           <li><strong>Cooling benchmarks</strong> <span>in the planner come from the EIA Residential Energy Consumption Survey (RECS 2020).</span></li>
