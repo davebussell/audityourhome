@@ -215,7 +215,9 @@ export function startPlanner() {
     zipFb.className = 'zip-feedback';
     if (r.error === 'empty') { zipFb.innerHTML = showErrors ? '<p class="field-error">Enter the home’s 5-digit ZIP code.</p>' : ''; return r; }
     if (r.error === 'canada') {
-      zipFb.innerHTML = `<p class="zip-ca">That looks like a Canadian postal code. This planner covers US homes; <a href="/plan/#postal=${encodeURIComponent(r.postal!)}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).</p>`;
+      // across to the Canadian site through its /switch/ page (a root-form "/plan/" link would stay on this site)
+      const caPlan = `https://audityourhome.ca/switch/?to=${encodeURIComponent(`/plan/#postal=${encodeURIComponent(r.postal!)}`)}`;
+      zipFb.innerHTML = `<p class="zip-ca">That looks like a Canadian postal code. This planner covers US homes; <a href="${caPlan}">open the Canadian planner&nbsp;→</a> (we’ll carry your postal code over).</p>`;
       return r;
     }
     if (r.error === 'format') { zipFb.innerHTML = showErrors ? '<p class="field-error">Enter a 5-digit ZIP code, like 60614 or 60614-1234.</p>' : ''; return r; }

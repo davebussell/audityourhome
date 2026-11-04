@@ -10,22 +10,34 @@
   chose THIS site (ayh_site cookie, which the Netlify rules and the "other site" bar both honour), then
   continues to ?to=<root-form path>. Linked by the country switcher, the other-site bar, the footer and the
   planner hand-offs; see src/lib/country.ts switchUrl().
+  The destination is resolved against this site's own origin and used only if it stays on it. A prefix test
+  (starts with "/" but not "//") is not enough: "/\evil.example" and "/<tab>/evil.example" both pass it and
+  browsers read them as "//evil.example", which would make this page an open redirect. Resolving is not enough
+  either: "/.//evil.example" and "/..//evil.example" resolve to the path "//evil.example" on our own origin, and
+  location.replace() of that string goes to evil.example. So leading slashes are collapsed and the final
+  address is built from location.origin. Probe: qa "switch-probe" (23 odd shapes; none may reach another host).
 -->
 <style>body{font-family:system-ui,sans-serif;color:#1c2733;background:#f8f6f2;margin:0;display:grid;place-items:center;min-height:100vh}p{font-size:16px}a{color:#2f5f7f}</style>
 <script>
 (function () {
-  var to = new URLSearchParams(location.search).get('to') || '/';
-  if (!/^\/(?!\/)/.test(to)) to = '/';
+  function sameSite(raw) {
+    try {
+      var u = new URL(raw || '/', location.origin);
+      if (u.origin !== location.origin) return '/';
+      return u.pathname.replace(/^\/{2,}/, '/') + u.search + u.hash;
+    } catch (e) { return '/'; }
+  }
+  window.ayhTo = sameSite(new URLSearchParams(location.search).get('to'));
   document.cookie = 'ayh_site=1; path=/; max-age=31536000; samesite=lax';
-  location.replace(to);
+  location.replace(location.origin + window.ayhTo);
 })();
 </script>
 </head>
 <body>
 <p>Taking you to the page… <a id="go" href="/">Continue</a></p>
 <script>
-  var g = document.getElementById('go'), t = new URLSearchParams(location.search).get('to');
-  if (g && t && /^\/(?!\/)/.test(t)) g.href = t;
+  var g = document.getElementById('go');
+  if (g && window.ayhTo) g.href = location.origin + window.ayhTo;
 </script>
 </body>
 </html>

@@ -105,6 +105,12 @@ const leadSub = NETLIFY_FORMS
       <div id="journeyWizard"><JourneyBar country="us" current={1} compact /></div>
     </div>
 
+    <noscript>
+      <div class="card card-pad" style="border-left:4px solid var(--heat);margin:0 0 20px">
+        <p class="mb-0"><strong>The planner needs JavaScript.</strong> It runs entirely in your browser (nothing you enter is sent anywhere), so it can’t start with scripts switched off. Turn JavaScript on for this site and reload, or browse <a href="/cities/">your metro’s guide</a> and <a href="/how-it-works/">how an audit works</a> in the meantime.</p>
+      </div>
+    </noscript>
+
     <div class="planner card" id="planner">
       <ol class="steps-nav" id="stepsNav" aria-label="Planner steps">
         {['Location', 'Your home', 'Heating and cooling', 'Problems', 'Goals', 'Bills'].map((label, i) => (
