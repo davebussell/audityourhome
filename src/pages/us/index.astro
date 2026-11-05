@@ -91,7 +91,7 @@ const tests = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} sky="hero">
   <!-- HERO -->
   <section class="hero">
     <div class="container hero-grid">
@@ -408,7 +408,7 @@ const tests = [
   .mgrid { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
   .more { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
 
-  .how { padding: 40px 0 30px; background: #F3EFE7; }
+  .how { padding: 40px 0 30px; background: var(--wash); }
   .steps { align-items: stretch; margin-top: 24px; }
   .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
   .step-card :global(.frame) { border-radius: 0; box-shadow: none; }

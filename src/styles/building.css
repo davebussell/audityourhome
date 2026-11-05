@@ -5,12 +5,12 @@
    The brand red (Pantone 032, #EF3340) stays: the "Your" in the wordmark and the mark's fill.
    ============================================================ */
 
-:root {
+html[data-site='building'] {
   --paper: #F3F6F9;
   --card: #FFFFFF;
   --ink: #0F1D2B;
-  --muted: #53647A;
-  --faint: #7F92A6;
+  --muted: #46586E;       /* 5.2:1 on the top of the sky, 3.7:1 where a cloud outline crosses it */
+  --faint: #52657A;       /* 5.5:1 on the paper, 4.3:1 on the top of the sky: keep it off the sky */
   --line: #DAE3EC;
   --line-strong: #C2CEDA;
 
@@ -37,11 +37,17 @@
   --bp-ink: #CFE3FA;
   --grid: rgba(31, 95, 168, 0.075);
 
+  /* the sky (sky.css) drawn paler: a blueprint sheet with clouds on it rather than a summer day */
+  --sky-1: #C8DCEE;
+  --sky-2: #DAE8F4;
+  --sky-3: #E8F1F8;
+  --wash: #E8EFF6;
+
   --shadow-sm: 0 1px 2px rgba(15, 29, 43, 0.06);
   --shadow-md: 0 1px 3px rgba(15, 29, 43, 0.06), 0 8px 24px rgba(15, 29, 43, 0.08);
 }
 
-.chip-neutral { background: #E7EDF3; }
+html[data-site='building'] .chip-neutral { background: #E7EDF3; }
 
 /* skip link */
 .skip { position: absolute; left: 12px; top: -48px; z-index: 100; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; }
@@ -82,5 +88,5 @@
 .prose p, .prose li { max-width: 70ch; }
 
 @media (max-width: 640px) {
-  section { padding: 44px 0; }
+  html[data-site='building'] section:not(.tight) { padding: 44px 0; }
 }

@@ -88,6 +88,37 @@ condo units; the building site is for owners and managers of commercial, institu
   projects (Forms → Settings → notifications to dave@clickshift.ca).
 - **Never mention** WillScot (WSC), Transcat (TRNS) or McGrath RentCorp (MGRC) on any of his sites.
 
+## The sky look (2026-11-04; Dave: "more fun and uplifting … the floating in the clouds and flying to a better place kind of feeling")
+All three sites share one look: a band of sky behind the top of every page with slowly drifting clouds, a paper plane, the audit steps
+drawn as a flight path, a lift-off moment when a plan is ready, and a cloud edge on top of every footer. The home sites are a summer sky;
+the building site is the same sky as a pale blueprint (grid and line-art clouds). None of it needs JavaScript.
+- **Files:** `src/styles/sky.css` (hand-written: band, cloud layers, plane, footer edge, lift-off), `src/styles/sky-art.css`
+  (**generated**: the cloud tiles, the plane and the edge mask as data: URIs in CSS variables; change `tools/sky/make-sky-art.mjs` and run
+  `node tools/sky/make-sky-art.mjs`, never edit the CSS), `src/components/Sky.astro` (the markup, first child of `<body>` in `Base.astro` and
+  `BuildingBase.astro`, `aria-hidden`) and `src/components/JourneyBar.astro` (the flight path: an SVG route behind four numbered stops; the
+  plane flies from the previous stop to the current one).
+- **Props:** `sky="hero"` (taller band, with the plane crossing it) on the three home pages, `'page'` elsewhere. `flushFooter` on a page that
+  ends in a full-width dark band (the .ca home's service-organization band, the building home's request band): no gap and no cloud edge
+  before the footer (`main.flush + footer…` in `sky.css`).
+- **Lift-off:** give `class="liftoff-host"` to the element that appears when a result is ready (`.results-head` in both planners, the
+  `[data-sent="yes"]` block on the three thanks pages). Its `::before` (plane and trail) and `::after` (puff) are CSS animations that start
+  the moment the element stops being `hidden`; the "Cleared for take-off" chip is a `<p class="liftoff-chip">` inside it.
+- **Palette:** tokens in `global.css` `:root` (`--sky-1/2/3`, `--wash`, `--sun`; paper `#F5FAFE`, navy `#10304D`; `--heat` orange unchanged);
+  the building site's own in `building.css` under `html[data-site='building']`. Hero labels (`.hero`, `.page-hero`, `.results-head` `.eyebrow`)
+  are white tags in `--heat-deep`, because plain orange on the blue is only 2.3:1; keep `--faint` and small orange text off the sky (breadcrumbs
+  and "stage N of 4" use `--muted`). The building site's cloud outlines are pale (`#9BBBDA`) and its `--muted` darker (`#46586E`) on purpose:
+  muted text keeps 5:1 on the top of the sky and 3.7:1 where a line crosses it. Measured with
+  `scratchpad/qa/sky/contrast-collect.mjs` + `contrast-analyse.py` (text hidden, pixels behind each text run), not from the tokens alone. Not changed, and below AA already before the sky: white text on the orange buttons (3.7:1) and the `--warn` chips.
+- **Reduced motion:** everything that moves is a CSS animation, so the global `prefers-reduced-motion` rule in `global.css`
+  (`animation: none !important`) stops all of it, and every animated element's own style is its resting state (plane parked by the sun,
+  lift-off hidden, journey plane at its stop). Check: `document.getAnimations().length === 0` under Playwright's `reducedMotion: 'reduce'`.
+- **Gotcha, CSS order:** the bundler emits shared CSS chunks alphabetically by chunk name, not in import order, so two equal-specificity
+  rules in `global.css`, `sky.css` and `building.css` can swap. The building site's overrides therefore use `html[data-site='building'] …`
+  (higher specificity) and its tokens are set on `html[data-site='building']`, not `:root`. Scoped component styles (`[data-astro-cid]`,
+  specificity 0,2,0) beat a plain class in `sky.css` too.
+- **Weight:** about 5.7 KB gzipped of CSS (2.4 KB of it the generated art) in the shared stylesheet, which is cached across pages; no images,
+  no extra requests, no JavaScript.
+
 ## State (2026-11-04)
 - Built and tested but **not live yet** (the laptop was unreachable for the push): the three-site build, the building site, the removal
   from the residential sites, the planner fix for a blocked Next on step 2 (`e601ec6`), the site-switch open-redirect fix and two other

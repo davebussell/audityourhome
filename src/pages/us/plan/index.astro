@@ -368,7 +368,8 @@ const leadSub = NETLIFY_FORMS
 
     <!-- RESULTS -->
     <div id="results" hidden>
-      <div class="results-head">
+      <div class="results-head liftoff-host">
+        <p class="liftoff-chip" aria-hidden="true"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="#E05C1F" d="M30 3 2 13l11 5z"/><path fill="#B84713" d="M30 3 13 18l6 11z"/></svg>Cleared for take-off</p>
         <p class="eyebrow">Your free plan · a pre-audit estimate</p>
         <h2 id="rTitle">Your home’s energy plan</h2>
         <p class="small" id="rSub"></p>
@@ -577,7 +578,7 @@ const leadSub = NETLIFY_FORMS
 </Base>
 
 <style>
-  .page-hero h1 em { font-style: normal; color: var(--heat); }
+  .page-hero h1 em { font-style: normal; color: var(--heat-deep); }
   .privacy-line { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font-size: 14.5px; font-weight: 600; color: var(--pine); }
   .privacy-line svg { width: 20px; height: 20px; flex-shrink: 0; }
   .planner { padding: 30px 34px 34px; margin-bottom: 24px; }
@@ -826,7 +827,7 @@ const leadSub = NETLIFY_FORMS
     #results .sticky-book {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       position: sticky; bottom: 0; z-index: 40; margin: 18px -22px 0; padding: 10px 22px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(250, 248, 244, 0.97); border-top: 1px solid var(--line); box-shadow: 0 -4px 14px rgba(26, 36, 48, 0.08);
+      background: rgba(255, 255, 255, 0.97); border-top: 1px solid var(--line); box-shadow: 0 -4px 14px rgba(26, 36, 48, 0.08);
     }
     #results .sticky-book .btn { flex: 1 1 auto; justify-content: center; }
     #results .sticky-book .sb-next { font-size: 14px; font-weight: 600; white-space: nowrap; }

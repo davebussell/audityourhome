@@ -62,7 +62,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
   : 'Runs in your browser. Your answers aren’t sent anywhere unless you ask to be matched with an advisor.';
 ---
 
-<Base title={title} description={description} schema={schema}>
+<Base title={title} description={description} schema={schema} sky="hero" flushFooter>
   <!-- HERO -->
   <section class="hero">
     <div class="container hero-grid">
@@ -370,7 +370,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
     .reb-grid .reb { flex: 0 0 78%; scroll-snap-align: start; }
   }
   .dir-cta { margin: 0 0 6px; }
-  section.alt { background: #F3EFE7; }
+  section.alt { background: var(--wash); }
   .hrs-line { margin: 18px 0 18px; max-width: 70ch; }
   .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }
   .thermal-band h2 { color: #fff; }
@@ -391,7 +391,7 @@ const quickPrivacy = ACCOUNTS_ENABLED
     .uc-row .uc { flex: 0 0 68%; scroll-snap-align: start; }
   }
   .uc-more { margin-top: 20px; }
-  .c2c { padding: 56px 0 30px; background: #F3EFE7; }
+  .c2c { padding: 56px 0 30px; background: var(--wash); }
   .rg-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
   .rg { position: relative; display: block; text-decoration: none; }
   .rg span {

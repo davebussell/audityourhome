@@ -1,0 +1,269 @@
+/* ============================================================
+   Sky: floating up to a better place.
+   One shared look for AuditYourHome (.ca and .com) and AuditYourBuilding, imported after global.css (and building.css):
+   - .sky: a band of sky behind the top of every page, with three layers of cloud drifting slowly (markup: components/Sky.astro)
+   - a paper plane crossing the home pages' sky; the audit steps drawn as a flight path (components/JourneyBar.astro)
+   - lift-off: the plane that crosses the screen when a plan is ready (class liftoff-host, in the planners and thanks pages)
+   - a cloud-edge on top of every footer
+   The artwork itself (cloud tiles, plane, edge mask) is generated into sky-art.css by tools/sky/make-sky-art.mjs.
+   Everything that moves is a CSS animation, so the reduced-motion rule in global.css (animation: none) stops all of it,
+   and every animated element's own style is its resting state. The building site (html[data-site='building']) draws the
+   same sky as a lighter blueprint: line-art clouds over a faint drawing grid.
+   ============================================================ */
+
+/* ---------------------------------------------------------------- the sky behind the page top */
+.sky {
+  --sky-h: 480px;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--sky-h);
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 36%, var(--sky-3) 70%, var(--paper) 100%);
+}
+.sky[data-kind='hero'] { --sky-h: 740px; }
+
+/* the sun, high on the right */
+.sky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 86% 15%, #FFF8DE 0 22px, rgba(255, 243, 196, 0.95) 26px, rgba(255, 233, 160, 0.5) 70px, rgba(255, 226, 150, 0) 250px);
+}
+
+/* the bottom of the sky melts into the paper, so the band has no edge */
+.sky::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: linear-gradient(180deg, transparent, var(--paper));
+}
+
+/* clouds: each layer is a strip one tile wider than the page that slides left by exactly one tile, so the loop never shows a seam */
+.sky i {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: calc(100% + var(--tw));
+  height: var(--th);
+  background-repeat: repeat-x;
+  background-size: var(--tw) var(--th);
+  animation: sky-drift var(--dur) linear infinite;
+  will-change: transform;
+}
+.sky .sky-far { --tw: 1400px; --th: 150px; --dur: 230s; top: 8%; background-image: var(--sky-art-far); }
+.sky .sky-mid { --tw: 1300px; --th: 200px; --dur: 150s; top: 24%; background-image: var(--sky-art-mid); }
+.sky .sky-near { --tw: 1500px; --th: 250px; --dur: 105s; bottom: -2px; background-image: var(--sky-art-near); }
+@keyframes sky-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(calc(var(--tw) * -1), 0, 0); }
+}
+
+/* the plane that crosses the home pages' sky: a zero-size marker that travels, with the plane and its trail hung off it */
+.sky-plane {
+  position: absolute;
+  left: 66%;
+  top: 76px;
+  width: 0;
+  height: 0;
+  /* a negative delay: the plane is already part-way across when the page opens */
+  animation: sky-fly 120s linear -34s infinite;
+}
+.sky-plane::after {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: -18px;
+  width: 36px;
+  height: 36px;
+  background: var(--sky-plane) center / contain no-repeat;
+  transform: rotate(43deg);
+  filter: drop-shadow(0 4px 3px rgba(19, 39, 59, 0.18));
+}
+.sky-plane::before {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: -2px;
+  width: 280px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9));
+}
+@keyframes sky-fly {
+  from { transform: translate3d(-84vw, 30px, 0); }
+  to { transform: translate3d(46vw, -10px, 0); }
+}
+
+/* phones: the same sky, a little smaller and shorter, drifting at the same speed on screen */
+@media (max-width: 700px) {
+  .sky { --sky-h: 380px; }
+  .sky[data-kind='hero'] { --sky-h: 560px; }
+  .sky::before { background: radial-gradient(circle at 88% 20%, #FFF8DE 0 16px, rgba(255, 243, 196, 0.95) 19px, rgba(255, 233, 160, 0.5) 52px, rgba(255, 226, 150, 0) 190px); }
+  .sky .sky-far { --tw: 900px; --th: 96px; --dur: 148s; }
+  .sky .sky-mid { --tw: 780px; --th: 120px; --dur: 90s; }
+  .sky .sky-near { --tw: 900px; --th: 150px; --dur: 63s; }
+  .sky-plane { left: 56%; top: 76px; transform: scale(0.8); }
+}
+
+/* ---------------------------------------------------------------- over the sky */
+/* the small label above a hero heading sits on the blue: a white tag with the deeper orange (deeper blue on the building site)
+   keeps it readable, where plain orange on sky blue is only 2.3:1 */
+.hero .eyebrow,
+.page-hero .eyebrow,
+.acct-hero .eyebrow,
+.acct-loading .eyebrow {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 13px 5px 10px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 14px;
+  color: var(--heat-deep);
+  box-shadow: var(--shadow-sm);
+}
+/* a small paper plane before the eyebrow of every page hero */
+.hero .eyebrow::before,
+.page-hero .eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  margin-right: 8px;
+  vertical-align: -3px;
+  background: var(--sky-plane) center / contain no-repeat;
+}
+
+.btn-primary { box-shadow: 0 6px 16px color-mix(in srgb, var(--heat) 28%, transparent); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 20px color-mix(in srgb, var(--heat) 34%, transparent); }
+.btn-primary:active { transform: translateY(1px); }
+
+/* ---------------------------------------------------------------- footer: the cloud bank you fly up out of */
+footer.band-dark.site-footer { position: relative; margin-top: 76px; }
+/* a page that ends in a full-width dark band (BuildingBase flushFooter) runs straight into the footer: no gap, and no cloud edge,
+   which would only be navy on navy with its bumps drawn over the bottom of that band's card */
+main.flush + footer.band-dark.site-footer { margin-top: 0; }
+main.flush + footer.band-dark.site-footer::before { display: none; }
+footer.band-dark.site-footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 72px;
+  background: var(--navy);
+  -webkit-mask: var(--sky-edge) repeat-x left bottom / 560px 72px;
+  mask: var(--sky-edge) repeat-x left bottom / 560px 72px;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- lift-off: the moment a plan is ready */
+.liftoff-host {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-inline: -6px;
+  padding-inline: 6px;
+}
+.liftoff-host::before,
+.liftoff-host::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+/* the plane and its trail: one bar, tilted to climb, plane at the front; slides from the lower left up and out past the upper right */
+.liftoff-host::before {
+  z-index: 2;
+  left: 0;
+  bottom: 4px;
+  width: 360px;
+  height: 52px;
+  background:
+    var(--sky-plane) right center / 48px 48px no-repeat,
+    linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 85%) 0 center / calc(100% - 34px) 8px no-repeat,
+    linear-gradient(90deg, rgba(140, 201, 242, 0), rgba(140, 201, 242, 0.55) 85%) 0 center / calc(100% - 34px) 20px no-repeat;
+  transform-origin: left bottom;
+  animation: liftoff 2.7s cubic-bezier(0.35, 0.05, 0.25, 1) 0.8s 1 both;
+}
+/* a puff of cloud at the launch point */
+.liftoff-host::after {
+  z-index: -1;
+  left: -40px;
+  bottom: -34px;
+  width: 220px;
+  height: 140px;
+  background: radial-gradient(closest-side, #fff 0 45%, rgba(255, 255, 255, 0) 100%);
+  animation: liftoff-puff 1.8s ease-out 0.7s 1 both;
+}
+@keyframes liftoff {
+  0% { opacity: 0; transform: translate3d(-30px, 26px, 0) rotate(-14deg); }
+  10% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(calc(100vw + 60px), calc((100vw + 60px) * -0.25), 0) rotate(-14deg); }
+}
+@keyframes liftoff-puff {
+  0% { opacity: 0; transform: scale(0.4); }
+  25% { opacity: 0.95; }
+  100% { opacity: 0; transform: scale(1.7) translate3d(-10px, -18px, 0); }
+}
+.liftoff-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+  padding: 3px 13px 3px 9px;
+  background: #fff;
+  border: 1.5px solid var(--heat);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--heat-deep);
+  animation: chip-pop 0.6s cubic-bezier(0.2, 1.5, 0.4, 1) 1.5s both;
+}
+.liftoff-chip svg { width: 16px; height: 16px; flex: none; }
+@keyframes chip-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+
+@media print {
+  .sky, .liftoff-host::before, .liftoff-host::after, footer.band-dark.site-footer::before { display: none !important; }
+}
+
+/* ---------------------------------------------------------------- AuditYourBuilding: the same sky, drawn as a blueprint */
+html[data-site='building'] .sky {
+  background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 40%, var(--sky-3) 74%, var(--paper) 100%);
+}
+html[data-site='building'] .sky::before {
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0, #000 55%, transparent 100%);
+}
+html[data-site='building'] .sky-plane { top: 120px; }
+html[data-site='building'] .sky-plane::before {
+  height: 2px;
+  top: -1px;
+  background: repeating-linear-gradient(90deg, rgba(31, 95, 168, 0.55) 0 9px, transparent 9px 17px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000);
+  mask-image: linear-gradient(90deg, transparent, #000);
+}
+html[data-site='building'] .liftoff-host::before {
+  background:
+    var(--sky-plane) right center / 48px 48px no-repeat,
+    repeating-linear-gradient(90deg, rgba(31, 95, 168, 0.6) 0 10px, transparent 10px 19px) 0 center / calc(100% - 34px) 2px no-repeat;
+}
+html[data-site='building'] .liftoff-host::after { background: radial-gradient(closest-side, rgba(255, 255, 255, 0.95) 0 45%, rgba(255, 255, 255, 0) 100%); }
+html[data-site='building'] .liftoff-chip { border-color: var(--heat); color: var(--heat-deep); }

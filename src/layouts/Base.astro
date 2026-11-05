@@ -5,12 +5,17 @@ import { countryOf, publicPath, COUNTRIES } from '../lib/country';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import OtherSite from '../components/OtherSite.astro';
+import Sky from '../components/Sky.astro';
 import '../styles/global.css';
 import '../styles/glossary.css';
+import '../styles/sky-art.css';
+import '../styles/sky.css';
 
 interface Props {
   title: string;
   description: string;
+  /** The sky behind the top of the page: "hero" (taller, with the plane) on the home pages */
+  sky?: 'page' | 'hero';
   /** Extra JSON-LD blocks for this page */
   schema?: Record<string, unknown>[];
   /** Set false on utility pages (404 etc.) */
@@ -19,9 +24,11 @@ interface Props {
   ogImage?: string;
   /** Load Google Analytics and Clarity. Off on account pages, whose addresses carry sign-in tokens. */
   analytics?: boolean;
+  /** The page ends in a full-width dark band: it runs straight into the footer (no gap, no cloud edge; see sky.css) */
+  flushFooter?: boolean;
 }
 
-const { title, description, schema = [], indexable = true, ogImage, analytics = true } = Astro.props;
+const { title, description, schema = [], indexable = true, ogImage, analytics = true, sky = 'page', flushFooter = false } = Astro.props;
 /* Pages are built under /ca/ and /us/ and published at the root of each country's own domain. */
 const country = countryOf(Astro.url.pathname);
 const site = siteFor(country);
@@ -88,9 +95,10 @@ const contentGroup = country ?? 'global';
     {blocks.map((b) => <script type="application/ld+json" set:html={JSON.stringify(b)} />)}
   </head>
   <body>
+    <Sky kind={sky} />
     <OtherSite country={country ?? 'ca'} />
     <Header />
-    <main id="main">
+    <main id="main" class:list={{ flush: flushFooter }}>
       <slot />
     </main>
     <Footer />

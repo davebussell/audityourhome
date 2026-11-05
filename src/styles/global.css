@@ -1,41 +1,50 @@
 /* ============================================================
    AuditYourHome — design system
-   Light-first, warm paper ground, thermal-orange accent,
-   pine green for money/verification. Fonts: Archivo (display),
-   Public Sans (body), IBM Plex Mono (data).
+   Light and airy: a sky-white ground, thermal-orange accent (the
+   sunrise on the horizon), pine green for money/verification, deep
+   sky blue for the dark bands. The clouds, the flight path and the
+   plane live in sky.css. Fonts: Archivo (display), Public Sans
+   (body), IBM Plex Mono (data).
    ============================================================ */
 
 :root {
   /* color */
-  --paper: #FAF8F4;
+  --paper: #F5FAFE;
   --card: #FFFFFF;
-  --ink: #1A2430;
-  --muted: #5C6B78;
-  --faint: #8494A1;
-  --line: #E7E1D5;
-  --line-strong: #D6CFC0;
+  --ink: #13273B;
+  --muted: #46596C;
+  --faint: #566B80;
+  --line: #DCE8F2;
+  --line-strong: #C3D4E3;
 
   --heat: #E05C1F;
   --heat-deep: #B84713;
-  --heat-tint: #FBEDE2;
+  --heat-tint: #FDEEE2;
 
   --pine: #1F6B4A;
   --pine-deep: #145237;
-  --pine-tint: #E4F1E9;
+  --pine-tint: #E2F2EA;
 
-  --steel: #2E5F7F;
-  --navy: #14202C;
-  --navy-ink: #DCE5EC;
-  --navy-muted: #8DA1B2;
-  --navy-line: #2A3B4A;
+  --steel: #1A5F9E;
+  --navy: #10304D;
+  --navy-ink: #DCE9F5;
+  --navy-muted: #9DB6CC;
+  --navy-line: #25496A;
 
   --dead: #B3372E;
   --dead-tint: #F8E7E5;
   --warn: #A97710;
   --warn-tint: #F7EFDC;
 
-  --shadow-sm: 0 1px 2px rgba(26, 36, 48, 0.06);
-  --shadow-md: 0 1px 3px rgba(26, 36, 48, 0.06), 0 8px 24px rgba(26, 36, 48, 0.07);
+  /* sky: the page's top bands, from high blue to the paper at the horizon */
+  --sky-1: #8CC9F2;
+  --sky-2: #B9E0F8;
+  --sky-3: #DDF0FB;
+  --wash: #EAF4FB;
+  --sun: #FFD27A;
+
+  --shadow-sm: 0 1px 2px rgba(19, 39, 59, 0.06), 0 2px 8px rgba(31, 95, 168, 0.05);
+  --shadow-md: 0 2px 4px rgba(19, 39, 59, 0.05), 0 14px 34px rgba(31, 95, 168, 0.13);
 
   /* type */
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
@@ -44,8 +53,8 @@
 
   /* layout */
   --max: 1140px;
-  --radius: 10px;
-  --radius-lg: 16px;
+  --radius: 12px;
+  --radius-lg: 20px;
 }
 
 * { box-sizing: border-box; }
@@ -93,7 +102,7 @@ a:hover { color: var(--heat-deep); }
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--heat);
+  color: var(--heat-deep);
   margin: 0 0 12px;
 }
 
@@ -145,7 +154,7 @@ section.tight { padding: 40px 0; }
 .chip-closed { background: var(--dead-tint); color: var(--dead); }
 .chip-limited { background: var(--warn-tint); color: var(--warn); }
 .chip-info { background: var(--heat-tint); color: var(--heat-deep); }
-.chip-neutral { background: #EFEBE2; color: var(--muted); }
+.chip-neutral { background: var(--wash); color: var(--muted); }
 
 .badge-verify {
   display: inline-flex;
@@ -303,7 +312,7 @@ details.faq .faq-body { padding: 0 0 16px; color: var(--muted); max-width: 68ch;
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* ---- breadcrumbs (shared) ---- */
-.crumbs { padding-top: 24px; font-size: 13.5px; color: var(--faint); }
+.crumbs { padding-top: 24px; font-size: 13.5px; color: var(--muted); }
 .crumbs a { color: var(--muted); }
 
 /* ---- page hero with a photo ---- */

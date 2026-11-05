@@ -3,7 +3,10 @@ import { BUILDING, buildingPath } from '../config/building';
 import { absolutize } from '../lib/schema';
 import BHeader from '../components/building/BHeader.astro';
 import BFooter from '../components/building/BFooter.astro';
+import Sky from '../components/Sky.astro';
 import '../styles/global.css';
+import '../styles/sky-art.css';
+import '../styles/sky.css';
 import '../styles/building.css';
 
 interface Props {
@@ -17,9 +20,11 @@ interface Props {
   ogImage?: string;
   /** The page ends in a full-width dark band: take away the gap above the footer */
   flushFooter?: boolean;
+  /** The sky behind the top of the page: "hero" (taller, with the plane) on the home page */
+  sky?: 'page' | 'hero';
 }
 
-const { title, description, schema = [], indexable = true, ogImage = '/og-default-building.png', flushFooter = false } = Astro.props;
+const { title, description, schema = [], indexable = true, ogImage = '/og-default-building.png', flushFooter = false, sky = 'page' } = Astro.props;
 /* Pages are built under /bu/ and published at the root of audityourbuilding.com. */
 const canonical = new URL(buildingPath(Astro.url.pathname), BUILDING.url).href;
 const ogUrl = new URL(ogImage, BUILDING.url).href;
@@ -87,6 +92,7 @@ const blocks = [website, ...schema].map((b) => absolutize(b, BUILDING.url));
     </style>
   </head>
   <body>
+    <Sky kind={sky} />
     <a class="skip" href="#main">Skip to the content</a>
     <BHeader />
     <main id="main" class:list={{ flush: flushFooter }}>
