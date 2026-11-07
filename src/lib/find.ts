@@ -189,7 +189,7 @@ export function providerCountLabel(c: IndexCity): string {
 }
 
 /** `city` marks a city-only program (e.g. Toronto HELP), so city-aware pages can leave it out elsewhere. */
-interface ProvinceProgram { name: string; status: string; headline: string; programSlug?: string | null; url: string; verified: string; city?: string }
+interface ProvinceProgram { name: string; status: string; headline: string; programSlug?: string | null; url: string; verified: string; city?: string; /** set when it differs from the linked program record's */ auditRequired?: boolean }
 interface ProvinceRecord { slug: string; name: string; programs: ProvinceProgram[] }
 const PROVINCES = (provincesJson as unknown as { provinces: ProvinceRecord[] }).provinces;
 

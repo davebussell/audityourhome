@@ -357,6 +357,24 @@ const leadSub = NETLIFY_FORMS
               one from the results too.
             </p>
           </div>
+          <details class="usage" id="usage">
+            <summary>Better: enter a year of usage from your bills</summary>
+            <p class="small">Usage beats dollars: it isn’t thrown off by fixed charges, rate tiers or price changes. Your utility’s online account shows the last 12 months. Leave blank what you don’t know; we’ll use the bills above or the typical figures instead.</p>
+            <div class="usage-grid">
+              <div class="field" id="fuelUnitsField">
+                <label for="fuelUnits"><span id="fuelUnitsLabel">Natural gas, last 12 months (therms)</span></label>
+                <input id="fuelUnits" name="fu" type="number" inputmode="numeric" min="0" max="100000" step="1" placeholder="e.g. 640" />
+              </div>
+              <div class="field" id="elecKwhField">
+                <label for="elecKwhY">Electricity, last 12 months (kWh)</label>
+                <input id="elecKwhY" name="ek" type="number" inputmode="numeric" min="0" max="200000" step="10" placeholder="e.g. 14,500" />
+              </div>
+              <div class="field" id="elecKwhSField">
+                <label for="elecKwhS">A summer month’s electricity (kWh) <span class="hint-inline">(separates heating from the rest)</span></label>
+                <input id="elecKwhS" name="eks" type="number" inputmode="numeric" min="0" max="20000" step="10" placeholder="e.g. 700" />
+              </div>
+            </div>
+          </details>
         </fieldset>
 
         <div class="wizard-actions">
@@ -686,6 +704,10 @@ const leadSub = NETLIFY_FORMS
   .slider-field output { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--heat-deep); font-variant-numeric: tabular-nums; }
   .slider-hint { margin: 6px 0 0; }
   .bill-note { margin-top: 14px; max-width: 70ch; }
+  .usage { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .usage summary { cursor: pointer; font-weight: 600; color: var(--steel); }
+  .usage-grid { display: grid; gap: 12px 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 8px; max-width: 760px; }
+  .usage-grid input { width: 100%; }
   #planner .elec-out { min-height: 1.2em; margin: 10px 0 0; font-weight: 600; }
   #planner .elec-out.ok { color: var(--pine); }
   #planner .elec-out.warn { color: var(--warn); }

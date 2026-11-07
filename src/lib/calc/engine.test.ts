@@ -180,6 +180,11 @@ test('rebates: per-unit defaults, caps, fuel rules', () => {
   assert.equal(rebateAmount(hp, { tons: 3, fuel: 'gas' }).eligible, false);
   const closed: RebateEntry = { ...flat, status: 'closed' };
   assert.equal(rebateAmount(closed, {}).eligible, false);
+  // LogisVert: $50 per 1,000 BTU/h for ENERGY STAR, $120 for a cold-climate model, capped at $6,700
+  const qc: RebateEntry = { id: 'f', program: 'LogisVert', status: 'open', kind: 'perKBtu', rate: 50, cap: 6700, coldClimateRate: 120 };
+  assert.equal(rebateAmount(qc, { kBtu: 36 }).amount, 1800);
+  assert.equal(rebateAmount(qc, { kBtu: 36, coldClimate: true }).amount, 4320);
+  assert.equal(rebateAmount(qc, { kBtu: 60, coldClimate: true }).amount, 6700, 'capped');
   const pct: RebateEntry = { id: 'e', program: 'x', status: 'open', kind: 'pctCost', rate: null, cap: 10500, pct: 0.5 };
   assert.equal(rebateAmount(pct, {}).amount, null);
   assert.equal(rebateAmount(pct, { cost: 30000 }).amount, 10500);

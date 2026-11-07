@@ -301,8 +301,12 @@ test('payload: utilities, programs and rebates per metro', () => {
   assert.ok(ins && ins.keys.includes('attic-insulation'), 'insulation rebate on the attic card');
   assert.ok(phx.rb.find((r) => /Duct Test/.test(r.n)).keys.includes('duct-sealing'));
   assert.ok(phx.rb.find((r) => /Shade Screen/.test(r.n)).keys.includes('window-film'));
-  assert.equal(P.metros.miami.u.ask.FL, false, 'FPL serves most of the Miami metro');
-  assert.equal(P.metros.detroit.u.ask.MI, false, 'DTE and Consumers both sell gas: the electric bill rules nothing out');
+  // since the November 6 review: the question is asked wherever a utility runs programs, because a metro is wider than
+  // any utility's territory; "Another utility" then keeps only the gas-side programs of utilities that also sell gas
+  assert.equal(P.metros.miami.u.ask.FL, true, 'FPL runs programs, and the metro has co-op customers too');
+  assert.equal(P.metros.detroit.u.ask.MI, true, 'DTE and Consumers both run programs');
+  assert.equal(P.metros.boston.u.ask.MA, true, 'Eversource, National Grid and the municipal light plants outside Mass Save');
+  assert.ok(P.metros.boston.rb.find((r) => /Mass Save insulation/.test(r.n)).ut.includes('eversource-energy'), 'Mass Save tied to its sponsors');
   const sea = P.metros.seattle;
   assert.equal(sea.u.ask.WA, true);
   assert.equal(sea.u.list.find((u) => u.id === 'pse').gas, true, 'PSE sells gas in Seattle');

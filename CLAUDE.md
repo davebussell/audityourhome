@@ -119,6 +119,37 @@ the building site is the same sky as a pale blueprint (grid and line-art clouds)
 - **Weight:** about 5.7 KB gzipped of CSS (2.4 KB of it the generated art) in the shared stylesheet, which is cached across pages; no images,
   no extra requests, no JavaScript.
 
+## The November 6 review (Dave mailed himself a four-part review of both home sites: "Audit Your Home . ca fixes")
+Dave chose four of its five buckets: **A** quick factual and consent fixes (`9aa20fe`), **B** planner logic (prerequisite-first next
+step, municipality gating, eligibility statuses, utility gate, usage inputs), **C** a shorter "rebates first" planner path, **D** a French
+site for the Québec-facing pages; **E** (provider terms, a transaction router, funnel analytics, a smaller navigation) is parked. Every
+claim in the thread was checked against the official page before anything changed: **LogisVert's cold-climate rate is still $120 per
+1,000 BTU/h** (the thread's $140 was a measure Hydro-Québec removed on August 25, 2025), so that number stayed; Rénoclimat's October 1,
+2026 optional-evaluation rules and Mass Save's January 1, 2027 cut are real.
+- **Québec (A):** the planner's evaluation step is province-aware (`PROVINCE_BOOKING[].optional` in `src/lib/find.ts`); the 11 Québec
+  city pages, the audit-cost article and the Learn table drop the $150 assigned-evaluation path; rural Outaouais codes (J0X, J0V) model as
+  Gatineau (`QC_RURAL` / `QC_AREA` in the CA planner), with every rural Québec FSA mapped to the nearest covered city.
+- **Consent (A):** one rule on every surface: a request goes to one participating company, never more. "Request quotes" is "Match me with
+  one contractor" (CA) and "Help me find an installer" (US). The CA privacy page has the affiliate section; product pages disclose above
+  the first merchant link. US rebate records can carry a "Changing" note (Mass Save's 2027 drop, Austin Energy's loan date confirmed by
+  the lender, California HOMES not open yet).
+- **Prerequisite first (B):** neither planner tells everyone to "book the audit". CA: a province program carries `auditRequired`
+  (`programs.json`, overridable per entry in `provinces.json`); step 1 names the programs that need the evaluation, or says it's optional
+  and the quotes can start; city-only programs (Toronto HELP) show only on an exact city match, never for a rural code modelled on that
+  city. US: `rebatePrereqs()` in `src/lib/us/plan-payload.ts` reads "assessment first / program contractor / pre-approval" from each
+  record's text into `pre`, shown as chips; step 1 says which rebate pays on the assessment's findings.
+- **Utility gate (B, US):** step 1 asks "Who sends your electric bill?" in every metro where a utility runs programs (`utilitiesFor`,
+  `ask`), with "Another utility" and "Not sure". A rebate tied to a utility that isn't the homeowner's stays only through its gas side
+  (the utility sells gas here and the home burns gas: `applies()` / `gasCustomer()` in `plan-client.ts`); with "Not sure" it carries an
+  "if your utility" chip; what was left out is named once so a mis-tap is easy to spot. Programs are tied to utilities by name mentions in
+  their `runBy`/name (`tiedTo`), so a sponsor must be named in the record: Boston's Mass Save records say "(Eversource and National Grid in
+  the Boston area)" so municipal-light-plant customers aren't shown Mass Save for an all-electric home.
+- **Honest totals (B, CA):** "Rebates in this plan" splits set amounts from amounts sized from a typical home, flags the product and
+  R-value conditions on each item, and keeps the announced federal heat pump rebate ($2,000, not open) apart from the programs open now.
+- **Usage over dollars (B):** both planners take a year of usage (kWh, m³ or litres; therms or gallons) under "Better: enter a year of
+  usage" and calibrate from it (`calibrate(..., { mode: 'usage' })`); the dollar sliders stay as the fallback. No gas question is shown
+  to a home with no gas appliance.
+
 ## State (2026-11-04)
 - Built and tested but **not live yet** (the laptop was unreachable for the push): the three-site build, the building site, the removal
   from the residential sites, the planner fix for a blocked Next on step 2 (`e601ec6`), the site-switch open-redirect fix and two other

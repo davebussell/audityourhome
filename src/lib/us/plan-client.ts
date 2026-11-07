@@ -44,6 +44,8 @@ type Rebate = {
   n: string; amt: string | null; url: string | null; cat: string; keys: string[]; st: string[]; ut: string[]; chip: Chip; open: boolean; iq: boolean;
   /** limited to one heating fuel */
   fu: 'oil' | 'elec' | 'gas' | 'fossil' | null;
+  /** what it needs before the work: 'audit' (an assessment first), 'contractor' (the program's own), 'reserve' (pre-approval) */
+  pre: string[];
 };
 /** a metro's own climate notes; `k` names its climate profile */
 type Needs = { k: string; note: string | null; hz: string[] };
@@ -507,12 +509,18 @@ export function startPlanner() {
     metro: MetroRec | null; cm: MetroRec | null; needs: Needs | null; prof: Profile | null; cls: ClimClass | null;
     coolDom: boolean; hot: boolean; ducted: boolean; util: string;
     cool: Cool | null; eb: ElecBills | null;
+    usage: { fuel: number; kwh: number; kwhSummer: number } | null;
   }
 
   function elecBills(): ElecBills | null {
     const s = parseFloat(elS.value), w = parseFloat(elW.value);
     if (!(s > 0) || !(w > 0)) return null;
     return { s, sm: Number(elSm.value), w, wm: Number(elWm.value) };
+  }
+  /** A year of usage typed from the bills (therms or gallons of the heating fuel; kWh with an optional summer month): outranks the dollar bills. */
+  function readUsage() {
+    const num = (id: string) => { const v = parseFloat((document.getElementById(id) as HTMLInputElement | null)?.value ?? ''); return Number.isFinite(v) && v > 0 ? v : 0; };
+    return { fuel: num('fuelUnits'), kwh: num('elecKwhY'), kwhSummer: num('elecKwhS') };
   }
 
   const DUCTED_HEAT = ['gas', 'elecfurnace', 'heatpump', 'geothermal', 'propane', 'oil'];
@@ -528,7 +536,10 @@ export function startPlanner() {
     const clim = climateFor(loc.clim);
     const input: HouseInput = { age: a.age, htype: a.htype, size: a.size as HouseInput['size'], found: a.found, sys: hi.sys, wh: wk };
     const m = clim ? houseModel(input, clim, prices.p) : null;
-    const bill = billTouched && hi.fuel !== 'elec' && m ? parseFloat(billEl.value) || null : null;
+    const u = readUsage();
+    // yearly fuel usage, when given, becomes the bill the model calibrates to (usage × the state's price, so it round-trips exactly)
+    const bill = m && hi.fuel !== 'elec' && u.fuel > 0 && m.heat.price ? (u.fuel * m.heat.price) / 12
+      : billTouched && hi.fuel !== 'elec' && m ? parseFloat(billEl.value) || null : null;
     let cal: UsCalibration = m && bill ? calibrateFuelBill(m, hi.sys, bill) : NO_CAL;
     const metro = loc.metro ? D.metros[loc.metro] : null;
     const cm = loc.clim ? D.metros[loc.clim] : null;
@@ -565,12 +576,17 @@ export function startPlanner() {
         }
         if (res.ok && res.mode === 'heating' && hi.fuel === 'elec') cal = calibrateElectricHeat(m, res.heatKwh);
       }
+      // a year of kWh for an electrically heated home: heating is what's left after twelve summer months (or a typical share)
+      if (hi.fuel === 'elec' && u.kwh > 0) {
+        const heatKwh = u.kwhSummer > 0 ? Math.max(0, u.kwh - 12 * u.kwhSummer) : u.kwh * (MODEL.calibration as { elecHeatShare: { withOtherWaterHeater: number } }).elecHeatShare.withOtherWaterHeater;
+        if (heatKwh > 0) cal = calibrateElectricHeat(m, heatKwh);
+      }
       cool = { ci, base, measures, kwh: base.kwh * factor, factor, raw, clamped, res, price: prices.p.electricity };
     }
     return {
       a, loc, hi, wk, prices, clim, m, cal, input, bill, metro, cm, needs, prof, cls: prof?.cls ?? null,
       coolDom: !!clim && clim.cdd65 > clim.hdd65, hot: !!clim && hotZone(clim.zone), ducted,
-      util: a.util, cool, eb,
+      util: a.util, cool, eb, usage: u.fuel > 0 || u.kwh > 0 ? u : null,
     };
   }
 
@@ -628,6 +644,11 @@ export function startPlanner() {
         : `Optional: a summer and a winter electric bill let us size your air conditioning from your own use. Enter what each bill came to and the month it mostly covers.`;
       elecPreview();
     }
+    const fuField = document.getElementById('fuelUnitsField')!;
+    fuField.hidden = electric || !c.m;
+    const FUEL_UNITS_LABEL: Record<string, string> = { gas: 'Natural gas, last 12 months (therms)', oil: 'Heating oil, last 12 months (gallons)', propane: 'Propane, last 12 months (gallons)' };
+    document.getElementById('fuelUnitsLabel')!.textContent = FUEL_UNITS_LABEL[c.hi.fuel] ?? 'Heating fuel, last 12 months';
+    document.getElementById('elecKwhSField')!.hidden = !electric;
     if (electric || !c.m) return;
     document.getElementById('fuelBillLabel')!.textContent = FUEL_BILL_LABEL[c.hi.fuel];
     const typical = typicalFuelBill(c.m) ?? 0;
@@ -675,6 +696,13 @@ export function startPlanner() {
 
   const utilRec = (id: string, c: Ctx) => c.metro?.u.list.find((u) => u.id === id) ?? null;
   const utilName = (id: string, c: Ctx) => utilRec(id, c)?.n.replace(/\s*\(.*$/, '') ?? id;
+  /** The metro's programs differ by utility and the homeowner hasn't said which they have. */
+  const utilUnknown = (c: Ctx) => !!c.metro?.u.ask[c.loc.state] && (!c.util || c.util === 'unsure');
+  /** A rebate tied to some of the metro's utilities while the homeowner's is unknown: it may or may not apply. */
+  const utilGated = (r: { ut: string[] }, c: Ctx) => utilUnknown(c) && r.ut.length > 0 && !(gasCustomer(c) && r.ut.every((id) => utilRec(id, c)?.gas));
+  const PRE_WORDS: Record<string, string> = { audit: 'assessment first', contractor: 'program contractor', reserve: 'pre-approval first' };
+  const preChips = (r: Rebate) => r.pre.map((k) => ` <span class="chip chip-info">${PRE_WORDS[k] ?? k}</span>`).join('');
+  const utilLink = (_c: Ctx, text = 'tell us who sends your electric bill') => `<button type="button" class="linkish" data-open-step="1">${text}</button>`;
 
   /**
    * A program or rebate applies to this home's side of the metro and its electric utility. A
@@ -685,7 +713,21 @@ export function startPlanner() {
     if (x.st.length && !x.st.includes(c.loc.state)) return false;
     if (!x.ut.length || !c.util || c.util === 'unsure') return true;
     if (x.ut.includes(c.util)) return true;
-    return x.ut.every((id) => utilRec(id, c)?.gas);
+    // another company sends the electric bill ("Another utility" included): the program still reaches this home only
+    // through its gas side, so every utility it's tied to must sell gas here and the home must burn gas
+    return gasCustomer(c) && x.ut.every((id) => utilRec(id, c)?.gas);
+  }
+  /** The home buys gas (heats or makes hot water with it), so a gas utility's programs can reach it. */
+  const gasCustomer = (c: Ctx) => ['gas', 'gasboiler'].includes(c.a.heat) || String(c.a.wh ?? '').startsWith('gas');
+  /** Utilities whose programs stay in the plan through their gas side although another company sends the electric bill. */
+  const gasKept = (c: Ctx) => !c.metro || !c.util || c.util === 'unsure' || !gasCustomer(c) ? []
+    : [...new Set(([...c.metro.rb, ...c.metro.a] as { ut: string[]; st: string[]; open: boolean }[]).filter((x) => x.open && x.ut.length && !x.ut.includes(c.util) && applies(x, c)).flatMap((x) => x.ut.map((id) => utilName(id, c))))];
+  /** Open rebates tied to a utility that isn't the homeowner's: named once so a mis-tap on step 1 is easy to spot. */
+  function leftOutForUtility(c: Ctx): string[] {
+    if (!c.metro || !c.util || c.util === 'unsure') return [];
+    const names = c.metro.rb.filter((r) => r.open && !r.iq && r.cat !== 'financing' && r.ut.length && !applies(r, c))
+      .map((r) => r.ut.map((id) => utilName(id, c)).join(' / '));
+    return [...new Set(names)];
   }
   /** "For SRP customers" on a program tied to some of the utilities here, unless it's the homeowner's own. */
   function forWhom(x: { ut: string[] }, c: Ctx): string {
@@ -885,20 +927,34 @@ export function startPlanner() {
         <p class="small">Ask for them by name when you book, and ask whether the visit includes them. <button type="button" class="linkish" data-copy-tests>Copy my test checklist</button></p>`
       : '<p>In a condo or apartment, ask the association about a building-level audit; the health checks below still apply to your unit.</p>';
     const reb = nextRebates(c, seq);
+    // Prerequisite first: the audit is step 1 because a rebate below needs it, or because it's the best way to size
+    // the work; where nothing needs it, the plan says so instead of sending everyone to an audit.
+    const needAudit = reb.filter((r) => r.pre.includes('audit'));
+    const gated = reb.filter((r) => utilGated(r, c));
+    const leftOut = leftOutForUtility(c);
+    const auditTitle = needAudit.length
+      ? `Book your home energy audit first: ${esc(needAudit.map((r) => r.n.replace(/\s*\(.*$/, '')).slice(0, 2).join(' and '))} ${needAudit.length === 1 ? 'pays' : 'pay'} on its findings`
+      : fs.audit || fs.pick
+        ? 'Book your home energy audit (none of your rebates requires it; it sizes the work and often pays for itself)'
+        : 'Get an audit if you want measured numbers; none of your rebates requires one';
     const rebates = reb.length
-      ? `<ul class="next-opts">${reb.map((r) => `<li>${ext(r.url, r.n)}${r.amt ? `: <span class="small">${esc(r.amt)}</span>` : ''}${forWhom(r, c) ? ` <span class="small">(${esc(forWhom(r, c))})</span>` : ''}</li>`).join('')}</ul>
-        <p class="small">Most rebates need the work done by an approved contractor, and some need the audit first: check before you sign.</p>`
-      : herLine(c);
+      ? `<ul class="next-opts">${reb.map((r) => `<li>${ext(r.url, r.n)}${r.amt ? `: <span class="small">${esc(r.amt)}</span>` : ''}${forWhom(r, c) ? ` <span class="small">(${esc(forWhom(r, c))})</span>` : ''} ${preChips(r)}${utilGated(r, c) ? ' <span class="chip chip-limited">if your utility</span>' : ''}</li>`).join('')}</ul>
+        <p class="small">${needAudit.length ? 'The ones marked “assessment first” pay only on an assessment’s findings, so book it before you sign a contract. ' : ''}${reb.some((r) => r.pre.includes('contractor')) ? 'Those marked “program contractor” pay only when their own listed contractors do the work. ' : ''}${gated.length ? `${gated.length === reb.length ? 'These' : 'Some of these'} depend on your electric utility: ${utilLink(c)} and we’ll keep only the ones you can use.` : ''}${leftOut.length ? ` Left out because they’re only for ${esc(leftOut.join(' and '))} customers; ${utilLink(c, 'change your utility')} if that’s wrong.` : ''}</p>`
+      : leftOut.length
+        ? `<p>The rebates we track for your top upgrades are only for ${esc(leftOut.join(' and '))} customers, so they’re left out; ${utilLink(c, 'change your utility')} if that’s wrong. <a href="/programs/states/${c.loc.st.slug}/">${esc(sn(c.loc.st))} rebates and programs →</a>${D.rebateFinderUrl ? ` ENERGY STAR’s ${ext(D.rebateFinderUrl, 'Rebate Finder')} searches utility offers by ZIP code.` : ''}</p>`
+        : herLine(c);
     el.innerHTML = `
       <div class="card next-card">
         <h3>Your next 3 steps</h3>
         <ol class="next-steps">
-          <li><h4>Book your home energy audit</h4>${book}${cta ? `<p class="next-cta">${cta}</p>` : ''}</li>
+          <li><h4>${auditTitle}</h4>${book}${cta ? `<p class="next-cta">${cta}</p>` : ''}</li>
           <li><h4>Ask for these tests</h4>${tests}</li>
-          <li><h4>Line up the rebates for after the audit</h4>${rebates}</li>
+          <li><h4>${needAudit.length ? 'Line up the rebates for after the audit' : 'Line up the rebates before you sign'}</h4>${rebates}</li>
         </ol>
-        <p class="small next-foot">This plan is a pre-audit estimate from your answers and typical homes. The audit measures your house and turns these ranges into numbers you can act on.</p>
+        <p class="small next-foot">This plan is a pre-audit estimate from your answers and typical homes. An audit measures your house and turns these ranges into numbers you can act on.</p>
       </div>`;
+    // the utility question lives on step 1, or on step 2 when the home page's quick start skipped step 1
+    el.querySelectorAll<HTMLButtonElement>('button[data-open-step]').forEach((b) => b.addEventListener('click', () => openWizard(quickStart ? 2 : Number(b.dataset.openStep))));
     const sticky = document.getElementById('stickyBookBtn') as HTMLAnchorElement | null;
     if (sticky) {
       sticky.href = bookHref;
@@ -1072,7 +1128,7 @@ export function startPlanner() {
     const maybe = open.length ? [] : unconfirmedRebates(c).filter(fits).slice(0, 1);
     const her = c.loc.st.her;
     const out = [
-      ...open.map((r) => `<span class="rebate"><span class="chip chip-active">Rebate</span> ${ext(r.url, r.n)}${r.amt ? ` <span class="small">${esc(r.amt)}</span>` : ''}${forWhom(r, c) ? ` <span class="small">(${esc(forWhom(r, c))})</span>` : ''}</span>`),
+      ...open.map((r) => `<span class="rebate"><span class="chip ${utilGated(r, c) ? 'chip-limited' : 'chip-active'}">${utilGated(r, c) ? 'Rebate, if your utility' : 'Rebate'}</span> ${ext(r.url, r.n)}${r.amt ? ` <span class="small">${esc(r.amt)}</span>` : ''}${forWhom(r, c) ? ` <span class="small">(${esc(forWhom(r, c))})</span>` : ''}${preChips(r)}</span>`),
       ...maybe.map((r) => `<span class="rebate"><span class="chip chip-neutral">Status not stated</span> ${ext(r.url, r.n)} <span class="small">(the program page gives no open or closed status: check before you count on it${forWhom(r, c) ? `; ${esc(lcfirst(forWhom(r, c)))}` : ''})</span></span>`),
     ];
     if (her) {
@@ -1304,7 +1360,7 @@ export function startPlanner() {
       auditCard = `
         <div class="card card-pad prog-card">
           <h4>Home energy assessments in ${esc(areaShort(c.loc.metro!))}</h4>
-          ${c.util && !['unsure', 'other'].includes(c.util) ? `<p class="small">Showing programs for ${esc(utilName(c.util, c))} customers and programs open to everyone.</p>` : ''}
+          ${c.util === 'other' ? `<p class="small">Another company sends your electric bill, so the local utilities’ own programs are left out${gasKept(c).length ? `, except ${esc(gasKept(c).join(' and '))}’s, which reach its gas customers too` : ''}.</p>` : c.util && c.util !== 'unsure' ? `<p class="small">Showing programs for ${esc(utilName(c.util, c))} customers and programs open to everyone.</p>` : ''}
           ${list.map((x) => `
             <div class="prog-row">
               <span class="pname">${x.ul ? esc(x.n) : ext(x.url, x.n)}</span>
@@ -1767,8 +1823,9 @@ export function startPlanner() {
     if (a.syms.length) q.set('sym', a.syms.join(','));
     if (a.goals.length) q.set('goal', a.goals.join(','));
     if (a.clim && !c.loc.metro) q.set('clim', a.clim);
-    if (c.bill) q.set('bill', String(c.bill));
+    if (c.bill && !c.usage?.fuel) q.set('bill', String(Math.round(c.bill)));
     if (c.eb) { q.set('es', String(c.eb.s)); q.set('esm', String(c.eb.sm)); q.set('ew', String(c.eb.w)); q.set('ewm', String(c.eb.wm)); }
+    if (c.usage) { if (c.usage.fuel) q.set('fu', String(c.usage.fuel)); if (c.usage.kwh) q.set('ek', String(c.usage.kwh)); if (c.usage.kwhSummer) q.set('eks', String(c.usage.kwhSummer)); }
     q.set('done', '1');
     planHash = q.toString();
     history.replaceState(null, '', `${location.pathname}#${planHash}`);
@@ -1858,6 +1915,9 @@ export function startPlanner() {
       billEl.max = String(Math.max(Number(billEl.max), Math.ceil(Number(bill) / 50) * 50));
       billEl.value = String(Number(bill));
       fmtBill();
+    }
+    for (const [key, id] of [['fu', 'fuelUnits'], ['ek', 'elecKwhY'], ['eks', 'elecKwhS']] as const) {
+      if (Number(q.get(key)) > 0) { (document.getElementById(id) as HTMLInputElement).value = String(Number(q.get(key))); (document.getElementById('usage') as HTMLDetailsElement).open = true; }
     }
     if (Number(q.get('es')) > 0 && Number(q.get('ew')) > 0) {
       elS.value = String(Number(q.get('es')));

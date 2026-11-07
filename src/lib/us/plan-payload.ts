@@ -365,7 +365,7 @@ function housingPlace(notes: string | undefined): string | null {
 const slugId = (s: string) => s.toLowerCase().replace(/&/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 /** Names a program might use for a utility: "SRP (Salt River Project)" → SRP, Salt River Project. */
-function utilAliases(name: string): string[] {
+function utilAliases(name: string, placeWords: string[] = []): string[] {
   const out: string[] = [];
   const base = name.split(' (')[0].trim().replace(/,.*$/, '').trim();
   out.push(base);
@@ -373,6 +373,10 @@ function utilAliases(name: string): string[] {
   if (inner && inner.length <= 40 && !/^(a|an|the|investor|community|city|municipal|fmpa)\b/i.test(inner)) out.push(inner);
   const first = base.split(/\s+/)[0];
   if (/^[A-Z][A-Z&]{1,6}$/.test(first) && !out.includes(first)) out.push(first);
+  // "Eversource Energy" is "Eversource" on program pages: a two-word name ending in Energy loses the tail, unless the
+  // first word is a place (Austin Energy, Tampa Electric) that would match the metro's own text everywhere
+  const two = base.match(/^([A-Z][A-Za-z]{3,})\s+Energy$/);
+  if (two && !placeWords.some((w) => w.toLowerCase() === two[1].toLowerCase()) && !out.includes(two[1])) out.push(two[1]);
   return out.filter((a) => a.length >= 2);
 }
 const mentions = (alias: string, text: string) => new RegExp(`(?<![A-Za-z])${alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![A-Za-z])`).test(text);
@@ -382,12 +386,13 @@ interface UtilityRec { id: string; n: string; al: string[]; st: string[]; runs: 
 
 function utilitiesFor(m: Metro, progText: string[]): { list: UtilityRec[]; ask: Record<string, boolean> } {
   const states: string[] = m.data.states ?? [];
+  const placeWords = `${m.data.name ?? ''} ${m.data.metroName ?? ''} ${m.data.principalCity ?? ''}`.split(/[^A-Za-z]+/).filter(Boolean);
   const gasNames = ((m.data.utilities?.gas ?? []) as any[]).map((g) => String(g.name));
   const list = ((m.data.utilities?.electric ?? []) as any[])
     // retail providers deliver over another company's wires; community choice aggregators bill through the utility
     .filter((u) => !/^(Retail electric providers|Other )/.test(u.name) && !/community choice/i.test(u.name))
     .map((u) => {
-      const al = utilAliases(u.name);
+      const al = utilAliases(u.name, placeWords);
       const short = al.find((a) => /^[A-Z][A-Z&]{1,6}$/.test(a));
       const n = u.name.length <= 44 ? u.name : al[0] + (short && short !== al[0] ? ` (${short})` : '');
       return {
@@ -399,12 +404,13 @@ function utilitiesFor(m: Metro, progText: string[]): { list: UtilityRec[]; ask: 
         gas: gasNames.some((g) => al.some((a) => mentions(a, g))),
       };
     });
-  // ask "Who sends your electric bill?" where two or more utilities run programs on this side of
-  // the metro and the answer can rule some out (an electric-only utility's programs)
+  // ask "Who sends your electric bill?" wherever a utility on this side of the metro runs its own
+  // programs: a metro is wider than any utility's territory (Denver has co-ops beside Xcel, Boston has
+  // municipal light plants outside Mass Save), so the plan must know before it calls a rebate yours
   const ask: Record<string, boolean> = {};
   for (const s of states) {
     const runners = list.filter((u) => u.st.includes(s) && u.runs > 0);
-    ask[s] = runners.length >= 2 && runners.some((u) => !u.gas);
+    ask[s] = runners.length >= 1;
   }
   return { list, ask };
 }
@@ -495,6 +501,16 @@ function rebateKeys(r: any): string[] {
   return [...keys];
 }
 
+/** What a rebate needs before the work, read from its research text: an assessment first, the program's own contractor, pre-approval. */
+function rebatePrereqs(x: any): string[] {
+  const t = `${x.whoQualifies ?? ''} ${x.amount ?? ''} ${x.status ?? ''}`;
+  const out: string[] = [];
+  if (/\b(home energy assessment|energy assessment|energy audit|home audit|audit first|assessment first|after (an|the|a) (assessment|audit)|recommend(ed|ations) (by|from) (an|the|a) (assessment|audit|energy specialist))\b/i.test(t)) out.push('audit');
+  if (/\b(participating|approved|program|network|registered|qualified|certified|trade ally|installer network)\s+(contractor|installer|trade)/i.test(t) || /contractor (network|list|must be)/i.test(t)) out.push('contractor');
+  if (/\b(pre-?approv|pre-?authoriz|reservation|reserve (funds|funding|a rebate)|apply before|application before)/i.test(t)) out.push('reserve');
+  return out;
+}
+
 function rebateRecord(x: any, m: Metro, utils: UtilityRec[]) {
   const chip = statusChip(x.status);
   return {
@@ -510,6 +526,7 @@ function rebateRecord(x: any, m: Metro, utils: UtilityRec[]) {
     /** open now; otherwise the program page states no status (shown as unconfirmed, never as open) */
     open: programOpen(x.status),
     iq: x.category === 'income-qualified' || IQ_NAME.test(String(x.name)),
+    pre: rebatePrereqs(x),
   };
 }
 

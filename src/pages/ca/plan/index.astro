@@ -132,6 +132,8 @@ for (const b of PROVINCE_BOOKING) {
   provPrograms[b.slug] = openPrograms(b.slug).map((p) => ({
     name: p.name, headline: p.headline, status: p.status, city: p.city ?? null,
     href: p.programSlug && programSlugs.has(p.programSlug) ? `/programs/${p.programSlug}/` : p.url,
+    // true when the program pays only on work done between a pre- and a post-work EnerGuide evaluation
+    auditRequired: p.auditRequired ?? Boolean(p.programSlug && programs.find((x) => x.slug === p.programSlug)?.auditRequired),
   }));
 }
 (payload as Record<string, unknown>).provPrograms = provPrograms;
@@ -149,6 +151,10 @@ for (const [prov, p] of Object.entries((rebatesData as unknown as { provinces: R
   }
   rebates[prov] = out;
 }
+// the federal heat pump rebate (announced, not open): the planner shows it apart from the programs open now
+const fedAshp = ((rebatesData as unknown as { federal?: { measures?: Record<string, RebateEntryLite[]> } }).federal?.measures?.ashp ?? [])
+  .map((e) => Object.fromEntries([...KEEP, 'statusNote'].filter((k) => e[k] !== undefined && e[k] !== null).map((k) => [k, e[k]])));
+rebates.federal = { ashp: fedAshp };
 (payload as Record<string, unknown>).rebates = rebates;
 
 // ---- how to read each test's result (Canadian bands only)
@@ -427,6 +433,24 @@ const privacyLine = ACCOUNTS_ENABLED
             Why we ask: estimates for a “typical” house can be far from your real bills. With your
             bills, every saving below is scaled to how much energy your house actually uses.
           </p>
+          <details class="usage" id="usage">
+            <summary>Better: enter a year of usage from your bills (kWh, m³ or litres)</summary>
+            <p class="small">Usage beats dollars: it isn’t thrown off by fixed charges, rate tiers or price changes. Your utility’s online account shows the last 12 months. Leave blank what you don’t know; we’ll use the sliders or the typical figures instead.</p>
+            <div class="usage-grid">
+              <div class="field">
+                <label for="elecKwh">Electricity, last 12 months (kWh)</label>
+                <input id="elecKwh" name="elecKwh" type="number" inputmode="numeric" min="0" max="100000" step="10" placeholder="e.g. 12,400" />
+              </div>
+              <div class="field" id="gasM3Field">
+                <label for="gasM3">Natural gas, last 12 months (m³)</label>
+                <input id="gasM3" name="gasM3" type="number" inputmode="numeric" min="0" max="20000" step="10" placeholder="e.g. 2,100" />
+              </div>
+              <div class="field" id="otherLField" hidden>
+                <label for="otherL">Oil or propane, last 12 months (litres)</label>
+                <input id="otherL" name="otherL" type="number" inputmode="numeric" min="0" max="20000" step="10" placeholder="e.g. 1,800" />
+              </div>
+            </div>
+          </details>
         </fieldset>
 
         <div class="wizard-actions">
@@ -643,9 +667,18 @@ const privacyLine = ACCOUNTS_ENABLED
   #planner, #results, #results [id], #assumptions { scroll-margin-top: 84px; }
   #matchLine .linkish { font: inherit; font-weight: 700; color: var(--pine-deep); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 2.5px; cursor: pointer; }
   .bench-card { border-left: 4px solid var(--steel); padding: 22px 26px; margin-bottom: 18px; }
-  .bench-card .figures { display: flex; flex-wrap: wrap; gap: 28px; margin: 10px 0 6px; }
-  .bench-card .fig .n { font-family: var(--display); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; }
-  .bench-card .fig .l { font-size: 13px; color: var(--muted); }
+  .bench-card .figures, .reb-tally .figures { display: flex; flex-wrap: wrap; gap: 28px; margin: 10px 0 6px; }
+  .bench-card .fig .n, .reb-tally .fig .n { font-family: var(--display); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; }
+  .bench-card .fig .l, .reb-tally .fig .l { font-size: 13px; color: var(--muted); }
+  .reb-tally { padding: 16px 20px; margin: 10px 0 16px; box-shadow: none; }
+  .reb-tally h4 { margin: 0 0 2px; font-size: 15px; }
+  .reb-tally .fig { max-width: 380px; }
+  .reb-tally .fig .n { color: var(--pine); }
+  .reb-tally p.small { margin: 8px 0 0; }
+  .usage { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .usage summary { cursor: pointer; font-weight: 600; color: var(--steel); }
+  .usage-grid { display: grid; gap: 12px 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 8px; }
+  .usage-grid input { width: 100%; }
   .bench-up { color: var(--heat-deep); }
   .bench-ok { color: var(--pine); }
   .kv { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
@@ -1267,11 +1300,18 @@ const privacyLine = ACCOUNTS_ENABLED
     if (!touched.other) { otherEl.value = g.other; fmtOut(otherEl, document.getElementById('otherOut')!); }
     const usesOther = g.m.hi.slider === 'other' || whFuel(g.m.wk, g.m.hi) === 'other';
     (document.getElementById('otherField') as HTMLElement).hidden = !usesOther;
+    (document.getElementById('otherLField') as HTMLElement).hidden = !usesOther || !['oil', 'propane'].includes(fieldVal('heat'));
     const hint = document.getElementById('gasHint');
-    const usesGas = g.m.bills.gas > 0;
-    if (hint) hint.textContent = usesGas
-      ? `Pre-set to a typical similar home near ${g.m.R.name}. Drag to match your bill.`
-      : '$0 = no gas service';
+    // No gas appliance in the answers: no gas question. (A home heated by electricity is never asked what it spends on gas.)
+    const usesGas = g.m.bills.gas > 0 || touched.gas;
+    (document.getElementById('gasField') as HTMLElement).hidden = !usesGas;
+    (document.getElementById('gasM3Field') as HTMLElement).hidden = !usesGas;
+    if (hint) hint.textContent = `Pre-set to a typical similar home near ${g.m.R.name}. Drag to match your bill.`;
+  }
+  /** Yearly usage typed from the bills, when given: it outranks the sliders. */
+  function readUsage() {
+    const num = (id: string) => { const v = parseFloat((document.getElementById(id) as HTMLInputElement | null)?.value ?? ''); return Number.isFinite(v) && v > 0 ? v : 0; };
+    return { kwh: num('elecKwh'), m3: num('gasM3'), litres: num('otherL') };
   }
 
   // ---------- rebates (same data and maths as the upgrade calculator) ----------
@@ -1283,15 +1323,50 @@ const privacyLine = ACCOUNTS_ENABLED
     gas: 'gas', gasboiler: 'gas', electric: 'electricity', elecfurnace: 'electricity', heatpump: 'electricity', geothermal: 'electricity',
     oil: 'oil', propane: 'propane', wood: 'wood', outdoorwood: 'wood', pellet: 'wood',
   };
-  function rebateFor(cat: string, prov: string, qty: Record<string, unknown>): { amount: number; program: string } | null {
+  /**
+   * The best open rebate for an upgrade, with how far to trust the number: "confirmed" when the program pays a set amount
+   * for work like this, "estimated" when it pays by the square foot, ton or cost (we size it from a typical home like
+   * yours), and the product or threshold conditions the planner can't check for you.
+   */
+  type RebatePick = { amount: number; program: string; slug?: string; sure: 'confirmed' | 'estimated'; conditions: string[]; basis: string };
+  const WINDOW_REQ: Record<string, string> = { energyStar: 'ENERGY STAR certified windows', triple: 'triple-pane ENERGY STAR windows', mostEfficient: 'ENERGY STAR Most Efficient windows' };
+  function rebateConditions(e: RebateEntry, cat: string): string[] {
+    const c: string[] = [];
+    if (e.windowReq) c.push(`the windows are ${WINDOW_REQ[e.windowReq] ?? e.windowReq}`);
+    if (e.minTargetR) c.push(`${cat === 'attic-insulation' ? 'the attic reaches' : 'it reaches'} R-${e.minTargetR}`);
+    if (e.minRAdded && !e.minTargetR) c.push(`at least R-${e.minRAdded} is added`);
+    if (e.maxExistingR) c.push(`the existing insulation is R-${e.maxExistingR} or less`);
+    if (e.minSqft) c.push(`the area is at least ${e.minSqft.toLocaleString('en-CA')} sq ft`);
+    if (e.requiresDoubling) c.push('the R-value at least doubles');
+    if (e.scope === 'whole') c.push('it’s a whole-home system');
+    if (e.scope === 'partial') c.push('it’s a partial-home (ductless) system');
+    return c;
+  }
+  /** What an estimated amount was sized from, for the chip. */
+  function rebateBasis(e: RebateEntry, qty: Record<string, unknown>): string {
+    if (e.kind === 'perTon' && qty.tons) return `a ${qty.tons}-ton system`;
+    if (e.kind === 'perKBtu' && qty.kBtu) return `${Math.round(Number(qty.kBtu))},000 BTU/h${qty.coldClimate ? ', cold-climate rate' : ''}`;
+    if ((e.kind === 'perSqft' || e.kind === 'perSqftR' || e.kind === 'per100SqftR') && qty.sqft) return `about ${Math.round(Number(qty.sqft)).toLocaleString('en-CA')} sq ft`;
+    if (e.kind === 'pctCost') return 'a typical cost';
+    return 'a typical home';
+  }
+  function rebateFor(cat: string, prov: string, qty: Record<string, unknown>): RebatePick | null {
     const list = (D.rebates[prov]?.[MEASURE_KEY[cat]] ?? []) as RebateEntry[];
-    let best: { amount: number; program: string } | null = null;
+    let best: RebatePick | null = null;
     for (const e of list) {
       if (e.defaultOff) continue;
       const r = rebateAmount(e, qty as any);
-      if (r.eligible && r.amount && r.amount > 0 && (!best || r.amount > best.amount)) best = { amount: r.amount, program: e.program };
+      if (r.eligible && r.amount && r.amount > 0 && (!best || r.amount > best.amount)) {
+        const conditions = rebateConditions(e, cat);
+        best = { amount: r.amount, program: e.program, slug: (e as any).slug, sure: e.kind === 'flat' || e.kind === 'perCount' ? 'confirmed' : 'estimated', conditions, basis: rebateBasis(e, qty) };
+      }
     }
     return best;
+  }
+  /** The federal heat pump rebate, announced but not open: counted apart from the programs open now. */
+  function federalHeatPumpAnnounced(): { amount: number; note: string } | null {
+    const e = ((D.rebates.federal?.ashp ?? []) as RebateEntry[]).find((x) => x.status === 'announced');
+    return e ? { amount: 2000, note: e.statusNote ?? 'Announced, not open yet' } : null;
   }
 
   // ---------- sequence ----------
@@ -1404,7 +1479,20 @@ const privacyLine = ACCOUNTS_ENABLED
     ].filter(Boolean).join(' · ');
     $('#rEra').textContent = ERA_NOTE[a.age] ?? '';
 
-    const bills = { gas: gasBill, elec: elecBill, other: otherBill, real: billsReal };
+    const usage = readUsage();
+    const usageReal = usage.kwh > 0 || usage.m3 > 0 || usage.litres > 0;
+    // usage × today's price = the monthly bill the rest of the plan works from, so the benchmark and the sliders agree
+    const pr = R.prices;
+    const perLitre = a.heat === 'oil' ? pr.oil : a.heat === 'propane' ? pr.propane : null;
+    const fromUsage = {
+      gas: usage.m3 > 0 && pr.gas?.now ? (usage.m3 * pr.gas.now) / 12 : 0,
+      elec: usage.kwh > 0 && pr.electricity.now ? (usage.kwh * pr.electricity.now) / 12 : 0,
+      other: usage.litres > 0 && perLitre ? (usage.litres * perLitre) / 12 : 0,
+    };
+    const bills = {
+      gas: fromUsage.gas || gasBill, elec: fromUsage.elec || elecBill, other: fromUsage.other || otherBill,
+      real: billsReal || usageReal, usage: usageReal ? usage : null,
+    };
     const cal = calibrationFor(m, bills);
     const picks = testPicks(a.age, m.hi.screen, syms, goals, a.htype, water, a.heat, isON);
     renderNext(ctx, picks);
@@ -1428,6 +1516,7 @@ const privacyLine = ACCOUNTS_ENABLED
       sec: a.sec.join(','), water, sym: syms.join(','), goal: goals.join(','),
       gas: touched.gas && gasBill ? String(gasBill) : '', elec: touched.elec && elecBill ? String(elecBill) : '',
       other: touched.other && otherBill ? String(otherBill) : '', done: '1',
+      ekwh: usage.kwh ? String(usage.kwh) : '', gm3: usage.m3 ? String(usage.m3) : '', ol: usage.litres ? String(usage.litres) : '',
     };
     const hp = new URLSearchParams();
     Object.entries(params).forEach(([k, v]) => { if (v) hp.set(k, v); });
@@ -1505,9 +1594,10 @@ const privacyLine = ACCOUNTS_ENABLED
     }
     const tests = picks.filter((p) => !p.health).slice(0, 4).concat(picks.filter((p) => p.health && p.level === 'strongly-flagged').slice(0, 2));
     const testLinks = tests.map((p) => `<a href="${esc(p.href)}">${esc(p.name)}</a>`).join('');
-    let progs = ((D.provPrograms[ctx.provSlug] ?? []) as { name: string; headline: string; href: string; status: string; city?: string | null }[])
-      // City-only programs (Toronto HELP) only for that city.
-      .filter((p) => !p.city || p.city === ctx.R.slug);
+    let progs = ((D.provPrograms[ctx.provSlug] ?? []) as { name: string; headline: string; href: string; status: string; city?: string | null; auditRequired?: boolean }[])
+      // City-only programs (Toronto HELP) only when the postal code is in that city: a rural code modelled on the nearest city
+      // borrows its climate and prices, never its municipal programs.
+      .filter((p) => !p.city || (ctx.R.exact && p.city === ctx.R.slug));
     if (ctx.provSlug === 'north') {
       // One record covers all three territories: keep this territory's programs only.
       const rx = ctx.loc.province === 'YT' ? /^Yukon/i : ctx.loc.province === 'NU' ? /^Nunavut/i : /^(NWT|Northwest)/i;
@@ -1515,15 +1605,34 @@ const privacyLine = ACCOUNTS_ENABLED
       if (mine.length) progs = mine;
     }
     const progItems = progs.length
-      ? progs.slice(0, 4).map((p) => `<li><a href="${esc(p.href)}">${esc(p.name)}</a>${p.headline ? ` — ${esc(p.headline)}` : ''}${p.status === 'income' ? ' <span class="chip chip-limited">income-qualified</span>' : ''}</li>`).join('')
+      ? progs.slice(0, 4).map((p) => `<li><a href="${esc(p.href)}">${esc(p.name)}</a>${p.headline ? ` — ${esc(p.headline)}` : ''}${p.status === 'income' ? ' <span class="chip chip-limited">income-qualified</span>' : ''}${p.auditRequired ? ' <span class="chip chip-info">evaluation first</span>' : ' <span class="chip chip-neutral">no evaluation needed</span>'}</li>`).join('')
       : `<li>${esc(ctx.provName)} has no province-wide home rebate right now. Check your city and utility: <a href="/provinces/${esc(ctx.provSlug)}/">${esc(ctx.provName)} guide</a>.</li>`;
+    // Prerequisite first: the evaluation is step 1 only where a program pays on it. Elsewhere it's optional and the
+    // work (or the quotes) can start right away.
+    const needsIt = progs.filter((p) => p.auditRequired && p.status !== 'income');
+    const shortNames = (list: typeof progs) => [...new Set(list.map((p) => shortLabel(p.name)))].slice(0, 2);
+    const stepTitle = needsIt.length
+      ? `Book your EnerGuide evaluation first: ${esc(shortNames(needsIt).join(' and '))} ${shortNames(needsIt).length === 1 ? 'needs' : 'need'} it before the work`
+      : b?.optional
+        ? 'Decide whether you want an EnerGuide evaluation (optional here, up to $500 back)'
+        : progs.length
+          ? `An EnerGuide evaluation is optional in ${esc(ctx.provName)}: the open rebates don’t need one`
+          : 'Book your EnerGuide evaluation (the home energy audit)';
+    const stepWhy = needsIt.length
+      ? ''
+      : progs.length && !b?.optional
+        ? `<p class="small">No current ${esc(ctx.provName)} rebate pays on the evaluation, so you can go straight to quotes. It’s still the only way to get measured numbers for your house, and the ranked list it produces is what the sequence below estimates.</p>`
+        : '';
+    const stepFoot = needsIt.length
+      ? `Programs that use the EnerGuide evaluation need the first visit before any work starts, so book it before you sign a contract.`
+      : `None of these needs an evaluation before the work; each has its own contractor and product rules, linked above.`;
     $('#rNext').innerHTML = `
       <section class="card next-steps" id="next-steps" aria-labelledby="next-h">
         <h3 id="next-h">Your next 3 steps</h3>
         <ol class="ns-list">
           <li>
-            <p class="ns-t">${b?.optional ? 'Decide whether you want an EnerGuide evaluation (optional here, up to $500 back)' : 'Book your EnerGuide evaluation (the home energy audit)'}</p>
-            <p>${esc(b?.how ?? 'Book the evaluation with an NRCan-licensed service organization that serves your area.')}</p>
+            <p class="ns-t">${stepTitle}</p>
+            <p>${esc(b?.how ?? 'Book the evaluation with an NRCan-licensed service organization that serves your area.')}</p>${stepWhy}
             ${b ? `<p class="ns-cost"><b>Cost:</b> ${esc(b.cost)}${b.help ? ` · <b>Help:</b> ${esc(b.help)}` : ''} <span class="small">(checked ${esc(b.checked)})</span></p>` : ''}
             <p class="ns-cta">${primary}${secondary}</p>
           </li>
@@ -1533,9 +1642,9 @@ const privacyLine = ACCOUNTS_ENABLED
             <p><button type="button" class="btn btn-ghost btn-sm" id="copyTestsTop">Copy my test checklist</button></p>
           </li>
           <li>
-            <p class="ns-t">After the audit, apply for the rebates</p>
+            <p class="ns-t">${needsIt.length ? 'After the evaluation, apply for the rebates' : 'Line up the rebates before you sign'}</p>
             <ul class="ns-progs">${progItems}</ul>
-            <p class="small">Programs that use the EnerGuide evaluation need the first visit before any work starts, so book it before you sign a contract.</p>
+            <p class="small">${stepFoot}</p>
           </li>
         </ol>
       </section>`;
@@ -1598,11 +1707,14 @@ const privacyLine = ACCOUNTS_ENABLED
     el.innerHTML = `<div class="rsec"><h3>Your concerns, explained</h3><p class="sub">What usually causes each problem you flagged, how the audit confirms it, and the fixes, cheapest first.</p><div class="concern-list">${cards}</div></div>`;
   }
 
-  type Bills = { gas: number; elec: number; other: number; real: boolean };
+  type Bills = { gas: number; elec: number; other: number; real: boolean; usage?: { kwh: number; m3: number; litres: number } | null };
   function calibrationFor(m: ReturnType<typeof houseModel>, b: Bills) {
     if (!b.real) return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'none', waterHeaterSameFuel: false });
-    const monthly = m.hi.slider === 'gas' ? b.gas : m.hi.slider === 'elec' ? b.elec : b.other;
     const same = whFuel(m.wk, m.hi) === m.hi.slider;
+    // A year of usage in the heating fuel's own units calibrates directly, with no price assumption in the way.
+    const units = b.usage ? (m.hi.slider === 'gas' ? b.usage.m3 : m.hi.slider === 'elec' ? b.usage.kwh : /^(oil|propane)/.test(m.hi.sys) ? b.usage.litres : 0) : 0;
+    if (units > 0) return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'usage', annualUnits: units, waterHeaterSameFuel: same });
+    const monthly = m.hi.slider === 'gas' ? b.gas : m.hi.slider === 'elec' ? b.elec : b.other;
     if (!(monthly > 0)) return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'none', waterHeaterSameFuel: same });
     return calibrate(m.demand, m.hi.sys, m.R.hdd, m.R.prices, { mode: 'bill', monthlyBill: monthly, waterHeaterSameFuel: same });
   }
@@ -1782,6 +1894,7 @@ const privacyLine = ACCOUNTS_ENABLED
     const main: string[] = [];
     const laterRows: string[] = [];
     const usedPayNotes = new Set<string>();
+    const tally = { confirmed: 0, estimated: 0, conditional: 0, programs: new Set<string>(), hasHeatPump: false };
     for (const item of seq) {
       const sm = findMeasure(item.category, a.age, m.hi.screen);
       const s = itemSaving(item.category, a, m, cal);
@@ -1855,7 +1968,17 @@ const privacyLine = ACCOUNTS_ENABLED
       if (payNote) usedPayNotes.add(payNote);
       const costTxt = cost ? `typical cost ${money(cost[0])}–${money(cost[1])}` : sm?.typicalCost ? `typical cost ${esc(localizeCost(sm.typicalCost, isON))}` : '';
       const onChip = isON && ON_REBATE[item.category] ? `<span class="chip chip-active">${ON_REBATE[item.category]}</span>${isToronto ? ' <span class="chip chip-neutral">+ HELP financing</span>' : ''}` : '';
-      const rebChip = !onChip && reb ? `<span class="chip chip-active">rebate: at least ${money(reb.amount)} (${esc(shortLabel(reb.program))})</span>` : '';
+      let rebChip = '';
+      if (!onChip && reb) {
+        const label = reb.sure === 'confirmed' ? `rebate: ${money(reb.amount)}` : `rebate: about ${money(reb.amount)} for ${esc(reb.basis)}`;
+        rebChip = `<span class="chip ${reb.sure === 'confirmed' ? 'chip-active' : 'chip-info'}">${label} (${esc(shortLabel(reb.program))})</span>`;
+        if (reb.conditions.length) rebChip += `<span class="chip chip-limited">if ${esc(reb.conditions.join('; '))}</span>`;
+        tally.programs.add(shortLabel(reb.program));
+        if (reb.conditions.length) tally.conditional += reb.amount;
+        else if (reb.sure === 'confirmed') tally.confirmed += reb.amount;
+        else tally.estimated += reb.amount;
+      }
+      if (hpCase) tally.hasHeatPump = true;
       main.push(`
         <div class="seq-item">
           <h4>${esc(title)}${s.note && item.category !== 'attic-insulation' ? ` <span class="small">(${esc(s.note)})</span>` : ''}</h4>
@@ -1873,10 +1996,26 @@ const privacyLine = ACCOUNTS_ENABLED
     const basis = cal.calibrated
       ? `<span class="chip chip-active">Scaled to your bills</span> Dollar figures use your bills and ${esc(m.R.name)}-area prices and climate.`
       : `<span class="chip chip-neutral">Typical house estimate</span> Based on a typical house of your era near ${esc(m.R.name)}. <a href="#" id="addBills">Add your bills</a> to scale these to your house.`;
+    // Rebates in this plan, in three honest piles: programs open now (set amounts, then amounts sized from a typical home),
+    // amounts that hinge on a product or threshold we can't check, and money that's announced but not open yet.
+    const fed = tally.hasHeatPump ? federalHeatPumpAnnounced() : null;
+    const openNow = tally.confirmed + tally.estimated + tally.conditional;
+    const piles: string[] = [];
+    if (openNow > 0) {
+      const how = tally.conditional > 0
+        ? (tally.conditional >= openNow ? 'all of it depends on meeting the product and R-value rules flagged on each item' : `${money(tally.conditional)} of it depends on the product and R-value rules flagged on each item`)
+        : 'set amounts from programs open now';
+      piles.push(`<div class="fig"><div class="n">${money(openNow)}</div><div class="l">from ${esc([...tally.programs].slice(0, 3).join(' and '))}, open now; ${how}</div></div>`);
+    }
+    if (fed) piles.push(`<div class="fig"><div class="n">+ ${money(fed.amount)}</div><div class="l">federal heat pump rebate: ${esc(fed.note.replace(/^Announced/, 'announced'))}, so count on it only once it opens</div></div>`);
+    const tallyHtml = piles.length && !isON
+      ? `<div class="card reb-tally"><h4>Rebates in this plan</h4><div class="figures">${piles.join('')}</div><p class="small">Amounts are sized from a typical home like yours and are lower bounds; each program has its own contractor and paperwork rules. Where two programs pay for the same work we count the better one, never both. Income-qualified programs are listed separately below.</p></div>`
+      : '';
     el.innerHTML = `
       <div class="rsec">
         <h3>Your upgrade sequence</h3>
         <p class="sub">${basis}</p>
+        ${tallyHtml}
         <p class="order-rule"><b>How we order it:</b> the way energy advisors do. Seal air leaks before you insulate, and insulate before you replace heating and cooling equipment, so the new system can be smaller. The exception is expensive heat (oil, propane or electric resistance): there a heat pump usually saves the most, so it moves up, sized with a heat-loss calculation. The problems and goals you picked move matching items up the list. <b>Payback</b> is how many years of bill savings it takes to cover the cost.</p>
         <div class="seq">${main.join('')}</div>
         <p class="small">Savings don’t simply add up: once the attic is insulated there’s less heat left to save elsewhere. We value savings at the price of your next unit of energy and stay on the low side on purpose.</p>
@@ -2311,6 +2450,10 @@ const privacyLine = ACCOUNTS_ENABLED
     set('gasBill', q.get('gas'));
     set('elecBill', q.get('elec'));
     set('otherBill', q.get('other'));
+    set('elecKwh', q.get('ekwh'));
+    set('gasM3', q.get('gm3'));
+    set('otherL', q.get('ol'));
+    if (q.get('ekwh') || q.get('gm3') || q.get('ol')) (document.getElementById('usage') as HTMLDetailsElement).open = true;
     if (q.get('gas')) touched.gas = true;
     if (q.get('elec')) touched.elec = true;
     if (q.get('other')) touched.other = true;

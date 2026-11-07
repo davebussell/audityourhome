@@ -555,7 +555,8 @@ export function rebateAmount(e: RebateEntry, q: RebateQty): RebateResult {
       a = pos(q.tons) ? (q.ducted && e.ductedRate ? e.ductedRate : rate) * q.tons : null;
       break;
     case 'perKBtu':
-      a = pos(q.kBtu) ? rate * q.kBtu : null;
+      // Hydro-Québec's LogisVert pays $120 per 1,000 BTU/h for a cold-climate model and $50 for a plain ENERGY STAR one
+      a = pos(q.kBtu) ? (q.coldClimate && e.coldClimateRate ? e.coldClimateRate : rate) * q.kBtu : null;
       break;
     case 'pctCost': {
       if (!pos(q.cost)) return { amount: null, eligible: true, reason: 'Enter your cost to see this rebate' };
