@@ -94,14 +94,27 @@ const leadSub = NETLIFY_FORMS
       <p class="eyebrow">US Home Energy Planner</p>
       <h1>What does <em>your</em> home need?</h1>
       <p class="lede">
-        Six short steps, about 2 minutes, no email. You’ll get what homes in your climate usually need,
-        an upgrade plan with conservative heating and cooling savings at your state’s energy prices, the
-        tests worth asking for, and the programs and rebates open where you live.
+        Free, about 2 minutes, no email. Start with the rebates for work you already have in mind, or build
+        the full plan: what homes in your climate usually need, an upgrade plan with conservative heating and
+        cooling savings at your state’s energy prices, the tests worth asking for, and the programs open where you live.
       </p>
       <p class="privacy-line">
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 4 5v4.6c0 3.6 2.5 6.7 6 7.9 3.5-1.2 6-4.3 6-7.9V5l-6-2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m7.4 10 1.9 1.9 3.4-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         The planner runs in your browser. Nothing you enter is stored or sent anywhere.
       </p>
+      <div class="intent" id="intent" role="group" aria-labelledby="intent-q">
+        <p class="intent-q" id="intent-q">What would you like help with?</p>
+        <div class="intent-cards">
+          <button type="button" class="intent-card" data-intent="rebates">
+            <b>Find rebates for work I’m planning</b>
+            <span>Four short questions: a heat pump, insulation, windows… and which programs pay for them, in what order.</span>
+          </button>
+          <button type="button" class="intent-card is-on" data-intent="full" aria-pressed="true">
+            <b>Figure out what my house needs</b>
+            <span>Six steps: what homes in your climate need, what to fix first, what it saves, and the rebates.</span>
+          </button>
+        </div>
+      </div>
       <div id="journeyWizard"><JourneyBar country="us" current={1} compact /></div>
     </div>
 
@@ -142,12 +155,33 @@ const leadSub = NETLIFY_FORMS
           </div>
         </fieldset>
 
+        <!-- REBATES PATH, STEP 2: the projects -->
+        <fieldset class="step" data-step="p">
+          <legend><span class="step-of">Step 2 of 4</span><h2>What are you thinking about improving?</h2></legend>
+          <div class="quick-slot"></div>
+          <p class="small">Pick everything that applies. Each one gets its own rebate check.</p>
+          <div class="field">
+            <div class="radio-row wrap" id="projRow" role="group" aria-label="Projects">
+              <label class="radio-pill"><input type="checkbox" name="proj" value="heat-pump" /><span>Heat pump (heating and cooling)</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="attic-insulation" /><span>Attic insulation</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="air-sealing" /><span>Air sealing / drafts</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="duct-sealing" /><span>Duct sealing</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="windows-doors" /><span>Windows or doors</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="water-heating" /><span>Water heater</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="controls" /><span>Smart thermostat</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="window-film" /><span>Shade screens or window film</span></label>
+              <label class="radio-pill"><input type="checkbox" name="proj" value="solar" /><span>Solar or a battery</span></label>
+            </div>
+          </div>
+          <p class="small"><button type="button" class="linkish" id="notSureBtn">Not sure what to improve? Build the full plan instead →</button></p>
+        </fieldset>
+
         <!-- STEP 2 -->
         <fieldset class="step" data-step="2">
           <legend><span class="step-of">Step 2 of 6</span><h2>Tell us about the house</h2></legend>
           <!-- filled when the home page quick start skips step 1: where we placed the ZIP code, and the utility question -->
           <p class="zip-match" id="zipMatch" hidden></p>
-          <div id="utilSlot2"></div>
+          <div id="utilSlot2" class="quick-slot"></div>
           <div class="field">
             <span class="lbl" id="ageLbl">When was it built? <span class="hint-inline">(required, but a rough guess is fine)</span></span>
             <div class="radio-row" role="radiogroup" aria-labelledby="ageLbl">
@@ -267,6 +301,38 @@ const leadSub = NETLIFY_FORMS
               <label class="radio-pill"><input type="radio" name="ac" value="room" /><span>Window or portable units</span></label>
               <label class="radio-pill"><input type="radio" name="ac" value="heatpump" /><span>The heat pump cools</span></label>
               <label class="radio-pill"><input type="radio" name="ac" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- REBATES PATH, STEP 4: where the project stands -->
+        <fieldset class="step" data-step="t">
+          <legend><span class="step-of">Step 4 of 4</span><h2>Where are you in the project?</h2></legend>
+          <div class="field">
+            <span class="lbl">Status <span class="hint-inline">(most programs must be joined before the work starts)</span></span>
+            <div class="radio-row wrap" role="radiogroup" aria-label="Project status">
+              <label class="radio-pill"><input type="radio" name="stage" value="researching" checked /><span>Just researching</span></label>
+              <label class="radio-pill"><input type="radio" name="stage" value="quotes" /><span>Getting quotes</span></label>
+              <label class="radio-pill"><input type="radio" name="stage" value="contracted" /><span>Contractor chosen or contract signed</span></label>
+              <label class="radio-pill"><input type="radio" name="stage" value="started" /><span>Work has started</span></label>
+              <label class="radio-pill"><input type="radio" name="stage" value="done" /><span>Work is finished</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">When do you hope to do the work?</span>
+            <div class="radio-row wrap" role="radiogroup" aria-label="Timing">
+              <label class="radio-pill"><input type="radio" name="when" value="asap" /><span>As soon as possible</span></label>
+              <label class="radio-pill"><input type="radio" name="when" value="3mo" /><span>Next 3 months</span></label>
+              <label class="radio-pill"><input type="radio" name="when" value="year" /><span>3–12 months</span></label>
+              <label class="radio-pill"><input type="radio" name="when" value="later" /><span>Later</span></label>
+              <label class="radio-pill"><input type="radio" name="when" value="unsure" checked /><span>Not sure</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl">Include income-qualified programs? <span class="hint-inline">(we never ask what you earn)</span></span>
+            <div class="radio-row" role="radiogroup" aria-label="Income-qualified programs">
+              <label class="radio-pill"><input type="radio" name="inc" value="unsure" checked /><span>Show them, I’ll check</span></label>
+              <label class="radio-pill"><input type="radio" name="inc" value="no" /><span>No, skip them</span></label>
             </div>
           </div>
         </fieldset>
@@ -395,19 +461,20 @@ const leadSub = NETLIFY_FORMS
         <JourneyBar country="us" current={2} hereLabel="Next step" />
       </div>
 
-      <div id="rNext"></div>
+      <div id="rRebates"></div>
+      <div id="rNext" class="full-only"></div>
       <div id="rNeeds"></div>
-      <div id="rConcerns"></div>
-      <div id="rBenchmark"></div>
-      <div id="rSequence"></div>
-      <div id="rWatch"></div>
-      <div id="rTests"></div>
+      <div id="rConcerns" class="full-only"></div>
+      <div id="rBenchmark" class="full-only"></div>
+      <div id="rSequence" class="full-only"></div>
+      <div id="rWatch" class="full-only"></div>
+      <div id="rTests" class="full-only"></div>
       <div id="rPrograms"></div>
       <div id="rFind"></div>
-      <div id="rCompare"></div>
-      <div id="rSystems"></div>
-      <div id="rNumbers"></div>
-      <div id="rResources"></div>
+      <div id="rCompare" class="full-only"></div>
+      <div id="rSystems" class="full-only"></div>
+      <div id="rNumbers" class="full-only"></div>
+      <div id="rResources" class="full-only"></div>
 
       <div class="card card-pad audit-cta">
         <h3>Estimates end where the audit begins</h3>
@@ -704,6 +771,36 @@ const leadSub = NETLIFY_FORMS
   .slider-field output { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--heat-deep); font-variant-numeric: tabular-nums; }
   .slider-hint { margin: 6px 0 0; }
   .bill-note { margin-top: 14px; max-width: 70ch; }
+  /* the two paths: cards in the intro */
+  .intent { margin: 6px 0 22px; }
+  .intent-q { margin: 0 0 8px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .intent-cards { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); max-width: 760px; }
+  .intent-card { text-align: left; font: inherit; cursor: pointer; background: var(--card); border: 1.5px solid var(--line-strong); border-radius: var(--radius); padding: 12px 16px 13px; display: grid; gap: 4px; color: var(--ink); box-shadow: var(--shadow-sm); }
+  .intent-card:hover { border-color: var(--steel); }
+  .intent-card.is-on { border-color: var(--heat); box-shadow: 0 0 0 3px var(--heat-tint), var(--shadow-sm); }
+  .intent-card b { font-family: var(--display); font-size: 16px; }
+  .intent-card span { font-size: 14px; color: var(--muted); line-height: 1.45; }
+  #planner .linkish { font: inherit; font-weight: 600; color: var(--steel); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 2.5px; cursor: pointer; }
+  /* the rebates-first results */
+  #results[data-mode='rebates'] .full-only { display: none; }
+  .rb-first { padding: 22px 26px; margin-bottom: 18px; border-left: 4px solid var(--pine); }
+  .rb-first h3 { margin: 0 0 4px; }
+  .rb-first .chip { white-space: normal; }
+  .rb-list { display: grid; gap: 14px; margin-top: 14px; }
+  .rb-item { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; background: var(--card); }
+  .rb-item h4 { margin: 0 0 8px; font-size: 17px; }
+  .rb-row { padding: 8px 0; border-top: 1px dashed var(--line); }
+  .rb-row:first-of-type { border-top: 0; padding-top: 0; }
+  .rb-prog { margin: 0 0 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+  .rb-prog a { font-weight: 700; }
+  .rb-row p.small { margin: 2px 0 0; color: var(--muted); max-width: 78ch; }
+  .rb-change { color: var(--heat-deep) !important; }
+  .rb-note { margin: 6px 0 0; color: var(--muted); }
+  .rb-h2 { margin: 22px 0 8px; font-size: 17px; }
+  .rb-steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+  .rb-steps li { line-height: 1.55; }
+  .rb-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 10px; }
+  @media (max-width: 640px) { .rb-first { padding: 18px 16px; } .rb-item { padding: 12px 14px; } }
   .usage { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
   .usage summary { cursor: pointer; font-weight: 600; color: var(--steel); }
   .usage-grid { display: grid; gap: 12px 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 8px; max-width: 760px; }

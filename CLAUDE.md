@@ -149,6 +149,19 @@ claim in the thread was checked against the official page before anything change
 - **Usage over dollars (B):** both planners take a year of usage (kWh, m³ or litres; therms or gallons) under "Better: enter a year of
   usage" and calibrate from it (`calibrate(..., { mode: 'usage' })`); the dollar sliders stay as the fallback. No gas question is shown
   to a home with no gas appliance.
+- **Rebates first (C):** both planners open with "What would you like help with?": *Find rebates for work I'm planning* runs a
+  four-step path through the same form (location → projects → heating → where the project stands: status, timing, income-qualified
+  programs or not) and ends in a rebate check per project; *Figure out what my house needs* is the six-step plan. The paths share one
+  `show()`/`validate()` with step ids `1,'p',3,'t'` vs `1..6` (`FLOWS`, `setIntent()`, `maxIdx` by position); the steps nav is rebuilt
+  per path. Results carry `data-mode="rebates"`, which hides the `.full-only` sections, and "Build my full plan" switches paths with every
+  answer kept. The state lives in the hash as `mode=rebates&proj=…&stage=&when=&inc=` (CA also `nwin`, `ndoor`). CA
+  (`finishRebates()` in `src/pages/ca/plan/index.astro`): every open entry of `src/data/calc/rebates.json` for the project, sized
+  with `rebateAmount()` from a typical home (set amounts vs "about $X for …"), its product and R-value conditions, prerequisites read at
+  build time (`rebateFacts()`: `pre` audit/reserve/contractor, `doors`, `deadline`, `amountText`, `cond`), a tally that counts the best
+  program per project, and "what to do first" (evaluation first / optional / pre-approval / envelope before heat pump / what to ask
+  for on quotes / federal timing). An entry can say `doors: false` (Rénoclimat); the regexes treat "evaluation is optional" as not
+  requiring one. US (`finishRebates()` in `src/lib/us/plan-client.ts`): the metro's open rebates whose `keys` cover the project, with
+  `pre` chips, `chg` (the "Changing" note) and `who`, the utility gate, and the same first-steps logic with `firstStop()`.
 
 ## State (2026-11-04)
 - Built and tested but **not live yet** (the laptop was unreachable for the push): the three-site build, the building site, the removal

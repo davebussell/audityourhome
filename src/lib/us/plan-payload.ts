@@ -74,6 +74,8 @@ function tidyQuotes(s: string): string {
 }
 
 /** Up to `max` characters of whole sentences (at least the first sentence, cut at a word if it's much longer). */
+/** The whole note, cut at a word boundary when it runs long (a sentence-based cut would stop at "Installing in 2026?"). */
+const clipText = (t: string, n: number) => (t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…');
 function sentences(text: string | null | undefined, max: number): string | null {
   const s = clean(text ?? '').replace(/\s+/g, ' ').trim();
   if (!s) return null;
@@ -527,6 +529,10 @@ function rebateRecord(x: any, m: Metro, utils: UtilityRec[]) {
     open: programOpen(x.status),
     iq: x.category === 'income-qualified' || IQ_NAME.test(String(x.name)),
     pre: rebatePrereqs(x),
+    /** a dated change to the offer (a rate cut, a deadline), for the rebates-first path */
+    chg: x.change ? clipText(String(x.change), 220) : null,
+    /** who qualifies, in a sentence or two */
+    who: x.whoQualifies ? sentences(String(x.whoQualifies), 160) : null,
   };
 }
 

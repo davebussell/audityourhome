@@ -484,6 +484,8 @@ export interface RebateEntry {
   rented?: boolean;
   /** window rebates: the new windows must be at least this good */
   windowReq?: 'energyStar' | 'triple' | 'mostEfficient';
+  /** a per-opening window rebate: whether exterior doors count (unset = the entry's wording decides) */
+  doors?: boolean;
 }
 
 export interface RebateQty {

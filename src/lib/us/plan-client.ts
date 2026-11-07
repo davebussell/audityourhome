@@ -46,6 +46,8 @@ type Rebate = {
   fu: 'oil' | 'elec' | 'gas' | 'fossil' | null;
   /** what it needs before the work: 'audit' (an assessment first), 'contractor' (the program's own), 'reserve' (pre-approval) */
   pre: string[];
+  /** a dated change to the offer, and who qualifies (the rebates-first path shows both) */
+  chg: string | null; who: string | null;
 };
 /** a metro's own climate notes; `k` names its climate profile */
 type Needs = { k: string; note: string | null; hz: string[] };
@@ -97,9 +99,20 @@ export function startPlanner() {
   const elW = document.getElementById('elecW') as HTMLInputElement;
   const elWm = document.getElementById('elecWm') as HTMLSelectElement;
   const elOut = document.getElementById('elecOut')!;
-  const TOTAL = 6;
-  let step = 1;
-  let maxStep = 1;
+  /**
+   * Two paths through the same form. "full": the six steps. "rebates": location → the projects → heating → where the
+   * project stands, then a rebate check per project (the "rebates first" path from the November 6 review).
+   */
+  type StepId = number | 'p' | 't';
+  const FLOWS: Record<'full' | 'rebates', StepId[]> = { full: [1, 2, 3, 4, 5, 6], rebates: [1, 'p', 3, 't'] };
+  const FLOW_NAMES: Record<'full' | 'rebates', string[]> = { full: ['Location', 'Your home', 'Heating and cooling', 'Problems', 'Goals', 'Bills'], rebates: ['Location', 'Projects', 'Heating and cooling', 'Timing'] };
+  let mode: 'full' | 'rebates' = 'full';
+  const flow = () => FLOWS[mode];
+  const TOTAL = () => flow().length;
+  const stepId = (v: string): StepId => (/^\d+$/.test(v) ? Number(v) : (v as StepId));
+  let step: StepId = 1;
+  /** how far along the current flow the visitor has been (an index into flow()) */
+  let maxIdx = 0;
   let billTouched = false;
   let monthsTouched = false;
   let zipTouched = false;
@@ -268,30 +281,57 @@ export function startPlanner() {
   const pickedLabel = (name: string, value: string) =>
     form.querySelector<HTMLElement>(`[name="${name}"][value="${CSS.escape(value)}"] + span`)?.textContent?.trim() ?? value;
 
-  function show(n: number) {
-    step = n;
-    maxStep = Math.max(maxStep, n);
-    form.querySelectorAll<HTMLElement>('fieldset.step').forEach((f) => f.classList.toggle('on', f.dataset.step === String(n)));
+  /** The step list above the form follows the path: its items are rebuilt when the path changes. */
+  function renderStepsNav() {
+    stepsNav.innerHTML = flow().map((id, i) => `<li data-step="${id}"><button type="button" data-goto="${id}">${FLOW_NAMES[mode][i]}</button></li>`).join('');
+  }
+  /**
+   * Switch paths. Answers already given stay in the form, and the visitor lands on the step at the same position of the
+   * other path (the projects step for "your home", and so on); the furthest point reached carries over by position.
+   */
+  function setIntent(next: 'full' | 'rebates'): StepId {
+    const prevIdx = Math.max(0, flow().indexOf(step));
+    const prevMax = maxIdx;
+    mode = next;
+    document.querySelectorAll<HTMLButtonElement>('.intent-card').forEach((c) => {
+      const on = c.dataset.intent === next;
+      c.classList.toggle('is-on', on);
+      c.setAttribute('aria-pressed', String(on));
+    });
+    renderStepsNav();
+    maxIdx = Math.min(prevMax, TOTAL() - 1);
+    return flow()[Math.min(prevIdx, TOTAL() - 1)];
+  }
+  function show(id: StepId) {
+    step = id;
+    const i = Math.max(0, flow().indexOf(id));
+    maxIdx = Math.max(maxIdx, i);
+    form.querySelectorAll<HTMLElement>('fieldset.step').forEach((f) => f.classList.toggle('on', f.dataset.step === String(id)));
     stepsNav.querySelectorAll<HTMLElement>('li').forEach((li) => {
-      const s = Number(li.dataset.step);
-      li.classList.toggle('on', s === n);
-      li.classList.toggle('done', s < n || (s <= maxStep && s !== n));
+      const sid = stepId(li.dataset.step ?? '');
+      const k = flow().indexOf(sid);
+      li.classList.toggle('on', sid === id);
+      li.classList.toggle('done', k < i || (k <= maxIdx && sid !== id));
       const b = li.querySelector('button');
       if (b) {
-        b.disabled = s > maxStep;
-        if (s === n) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+        b.disabled = k > maxIdx;
+        if (sid === id) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
       }
     });
-    backBtn.hidden = n === 1;
-    nextBtn.textContent = n === TOTAL ? 'See my plan' : 'Next';
-    if (n === 1) zipFeedback(false);
-    if (n === 2) { eraHint(); syncMatch(); }
-    if (n === 4) syncSymptoms();
-    if (n === 6) initBills();
+    backBtn.hidden = i === 0;
+    nextBtn.textContent = i === TOTAL() - 1 ? (mode === 'rebates' ? 'See my rebates' : 'See my plan') : 'Next';
+    if (id === 1) zipFeedback(false);
+    if (id === 2 || id === 'p') {
+      // the quick start skipped step 1: the "where we placed you" line and the utility question follow the visitor to this step
+      if (quickStart) { const slot = form.querySelector(`fieldset[data-step="${id}"] .quick-slot`); if (slot && zipMatch) slot.append(zipMatch, utilField); }
+      eraHint(); syncMatch();
+    }
+    if (id === 4) syncSymptoms();
+    if (id === 6) initBills();
     clearStepErrors();
     // the step's own question gets focus, not the optional utility question moved onto step 2
-    const first = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] .field:not(.util-field) input:not([type=hidden])`)
-      ?? form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] input:not([type=hidden])`);
+    const first = form.querySelector<HTMLElement>(`fieldset[data-step="${id}"] .field:not(.util-field) input:not([type=hidden])`)
+      ?? form.querySelector<HTMLElement>(`fieldset[data-step="${id}"] input:not([type=hidden])`);
     first?.focus({ preventScroll: true });
     if (plannerEl.getBoundingClientRect().top < 0) plannerEl.scrollIntoView({ block: 'start' });
   }
@@ -312,7 +352,7 @@ export function startPlanner() {
    * dropped in beside the question is off-screen and the button looks dead: bring the question into
    * view, outline it, and put focus on it. Picking an answer clears it again (the change listener below).
    */
-  function stepError(n: number, msg: string) {
+  function stepError(n: StepId, msg: string) {
     const field = form.querySelector<HTMLElement>(`fieldset[data-step="${n}"] .field:not(.util-field)`)!;
     // a fresh element each time, so pressing Next again is announced and nudges again
     field.querySelector('.step-error')?.remove();
@@ -330,7 +370,7 @@ export function startPlanner() {
     field.querySelector<HTMLElement>('input')?.focus({ preventScroll: true });
   }
 
-  function validate(n: number): boolean {
+  function validate(n: StepId): boolean {
     if (n === 1) {
       zipTouched = true;
       const r = zipFeedback(true);
@@ -340,15 +380,27 @@ export function startPlanner() {
       stepError(2, 'Pick the closest era to continue; a rough guess still gives a useful plan.');
       return false;
     }
+    if (n === 'p' && !multiVal('proj').length) {
+      stepError('p', 'Pick at least one project, or switch to the full plan below.');
+      return false;
+    }
     return true;
   }
 
   nextBtn.addEventListener('click', () => {
     if (!validate(step)) return;
-    if (step < TOTAL) show(step + 1);
+    const i = flow().indexOf(step);
+    if (i < TOTAL() - 1) show(flow()[i + 1]);
     else finish();
   });
-  backBtn.addEventListener('click', () => show(Math.max(1, step - 1)));
+  backBtn.addEventListener('click', () => show(flow()[Math.max(0, flow().indexOf(step) - 1)]));
+  // the two paths: cards in the intro, "not sure" on the projects step, "build my full plan" in the rebate results
+  document.querySelectorAll<HTMLButtonElement>('.intent-card').forEach((c) => c.addEventListener('click', () => {
+    const next = c.dataset.intent === 'rebates' ? 'rebates' : 'full';
+    if (next !== mode) show(setIntent(next));
+    plannerEl.scrollIntoView({ block: 'start' });
+  }));
+  document.getElementById('notSureBtn')?.addEventListener('click', () => { setIntent('full'); show(2); });
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     nextBtn.click();
@@ -357,10 +409,11 @@ export function startPlanner() {
   stepsNav.addEventListener('click', (e) => {
     const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-goto]');
     if (!b || b.disabled) return;
-    const n = Number(b.dataset.goto);
+    const n = stepId(b.dataset.goto ?? '1');
     if (n === step) return;
     // show() clears step errors, so an unanswered earlier step is opened first and then flagged
-    for (let s = step; s < n; s++) if (!validate(s)) { if (s !== step) { show(s); validate(s); } return; }
+    const from = flow().indexOf(step), to = flow().indexOf(n);
+    for (let k = from; k < to; k++) { const s = flow()[k]; if (!validate(s)) { if (s !== step) { show(s); validate(s); } return; } }
     show(n);
   });
   // answering the flagged question clears its message and outline
@@ -783,7 +836,163 @@ export function startPlanner() {
   /** the sticky bar's words when the primary button isn't a booking link */
   let bookLabel = '';
 
+  /* ------------------------------------------------------------------ the rebates-first path */
+
+  const PROJ_LABEL: Record<string, string> = {
+    'heat-pump': 'Heat pump', 'attic-insulation': 'Attic insulation', 'air-sealing': 'Air sealing', 'duct-sealing': 'Duct sealing',
+    'windows-doors': 'Windows or doors', 'water-heating': 'Water heater', controls: 'Smart thermostat', 'window-film': 'Shade screens or window film', solar: 'Solar or a battery',
+  };
+  const PRE_LABEL: Record<string, string> = { audit: 'assessment first', reserve: 'pre-approval first', contractor: 'program contractor' };
+
+  function finishRebates() {
+    const c = context();
+    if (!c) { show(1); validate(1); return; }
+    const { a, loc } = c;
+    const projects = multiVal('proj');
+    if (!projects.length) { show('p'); validate('p'); return; }
+    const stage = fieldVal('stage') || 'researching';
+    const when = fieldVal('when') || 'unsure';
+    const inc = fieldVal('inc') || 'unsure';
+    const late = stage === 'started' || stage === 'done';
+    const where = loc.metro ? `${metroName(loc.metro)} metro area, ${loc.st.n}` : loc.st.n;
+    $('#rTitle').textContent = `Rebates for your ${projects.length === 1 ? PROJ_LABEL[projects[0]].toLowerCase() : `${projects.length} projects`}`;
+    $('#rSub').textContent = [
+      `heated by ${c.hi.label}`,
+      `${where} (ZIP ${loc.zip5})`,
+      c.util && !['unsure', 'other'].includes(c.util) ? `${utilName(c.util, c)} customer` : c.util === 'other' ? 'another electric utility' : '',
+      stage === 'researching' ? 'just researching' : stage === 'quotes' ? 'getting quotes' : stage === 'contracted' ? 'contractor chosen' : stage === 'started' ? 'work started' : 'work finished',
+    ].filter(Boolean).join(' · ');
+
+    // every open rebate for each project (not only the best): the homeowner compares, we don't pick
+    const all = openRebates(c).filter((r) => r.cat !== 'financing' && fuelOk(r, c) && (inc !== 'no' || !r.iq));
+    const unconfirmed = unconfirmedRebates(c).filter((r) => r.cat !== 'financing' && fuelOk(r, c) && (inc !== 'no' || !r.iq));
+    const checks = projects.map((cat) => ({
+      cat, label: PROJ_LABEL[cat] ?? cat,
+      rows: all.filter((r) => r.keys.includes(cat)),
+      maybe: unconfirmed.filter((r) => r.keys.includes(cat)).slice(0, 2),
+    }));
+    const leftOut = leftOutForUtility(c);
+    const rowHtml = (r: Rebate) => {
+      const lateRow = late && (r.pre.includes('audit') || r.pre.includes('reserve'));
+      const chips = [
+        lateRow ? `<span class="chip chip-closed">likely too late: ${r.pre.includes('audit') ? 'the assessment' : 'pre-approval'} had to come before the work</span>` : `<span class="chip ${utilGated(r, c) ? 'chip-limited' : 'chip-active'}">${utilGated(r, c) ? 'Open, if your utility' : 'Open'}</span>`,
+        ...(r.iq ? ['<span class="chip chip-limited">income-qualified</span>'] : []),
+        ...r.pre.map((k) => `<span class="chip ${k === 'contractor' ? 'chip-neutral' : 'chip-info'}">${PRE_LABEL[k] ?? k}</span>`),
+      ].join(' ');
+      const who = forWhom(r, c);
+      return `<div class="rb-row">
+        <p class="rb-prog">${ext(r.url, r.n)} ${chips}</p>
+        ${r.amt ? `<p class="small">${esc(r.amt)}</p>` : ''}
+        ${r.who && !lateRow ? `<p class="small"><b>Who:</b> ${esc(r.who)}${who ? ` (${esc(lcfirst(who))})` : ''}</p>` : who ? `<p class="small">${esc(who)}</p>` : ''}
+        ${r.chg && !lateRow ? `<p class="small rb-change"><b>Changing:</b> ${esc(r.chg)}</p>` : ''}
+        ${stage === 'contracted' && !lateRow && (r.pre.includes('audit') || r.pre.includes('reserve')) ? `<p class="small rb-change">You’ve chosen a contractor: make sure ${r.pre.includes('audit') ? 'the assessment' : 'the pre-approval'} is done before any work starts, or this one won’t pay.</p>` : ''}
+      </div>`;
+    };
+    const projHtml = checks.map((ch) => {
+      let note = '';
+      if (!ch.rows.length) {
+        note = ch.cat === 'solar'
+          ? `We don’t track a solar or battery rebate for your area; the federal 25D credit ended for spending after December 31, 2025. Check <a href="/programs/states/${loc.st.slug}/">${esc(sn(loc.st))}’s programs</a> and your utility.`
+          : `No open rebate we track for ${esc(sn(loc.st))} pays for this${leftOut.length ? ' (the local utility programs are left out for your utility)' : ''}. <a href="/programs/states/${loc.st.slug}/">${esc(sn(loc.st))} rebates and programs →</a>${D.rebateFinderUrl ? ` ENERGY STAR’s ${ext(D.rebateFinderUrl, 'Rebate Finder')} searches utility offers by ZIP code.` : ''}`;
+      }
+      const maybeHtml = ch.maybe.map((r) => `<div class="rb-row"><p class="rb-prog">${ext(r.url, r.n)} <span class="chip chip-neutral">Status not stated</span></p><p class="small">The program page gives no open or closed status: check before you count on it.${r.amt ? ` ${esc(r.amt)}` : ''}</p></div>`).join('');
+      return `<div class="rb-item"><h4>${esc(ch.label)}</h4>${ch.rows.map(rowHtml).join('')}${maybeHtml}${note ? `<p class="small rb-note">${note}</p>` : ''}</div>`;
+    }).join('');
+
+    // what to do first
+    const counted = checks.flatMap((ch) => ch.rows.filter((r) => !(late && (r.pre.includes('audit') || r.pre.includes('reserve')))));
+    const names = (list: Rebate[]) => [...new Set(list.map((r) => r.n.replace(/\s*\(.*$/, '')))].slice(0, 2);
+    const needAudit = names(counted.filter((r) => r.pre.includes('audit')));
+    const needReserve = names(counted.filter((r) => r.pre.includes('reserve')));
+    const needContractor = names(counted.filter((r) => r.pre.includes('contractor')));
+    const gated = counted.filter((r) => utilGated(r, c));
+    const fs = firstStop(c);
+    const steps: string[] = [];
+    if (late) {
+      steps.push(`<li><b>The work has ${stage === 'done' ? 'been done' : 'started'}.</b> Programs that need an assessment or pre-approval before the work won’t pay for it now; rebates paid on receipts may still, within their deadlines. Keep every invoice, the contractor’s licence number and the equipment’s model numbers.</li>`);
+    } else if (needAudit.length) {
+      const x = fs.audit;
+      steps.push(`<li><b>Book your home energy assessment first.</b> ${esc(needAudit.join(' and '))} pay${needAudit.length === 1 ? 's' : ''} only on an assessment’s findings, so book it before you sign a contract.${x ? ` Start with ${ext(x.url, x.n)}${x.cost ? ` (${esc(x.cost)})` : ''}${x.how ? `: ${esc(x.how)}` : '.'}` : fs.pick ? ` Your utility’s assessment comes first: ${fs.perUtil.map((u) => `${esc(u.u)} customers, ${ext(u.a.url, u.a.n)}`).join('; ')}.` : ' <a href="/find/">How to find a certified auditor →</a>'}</li>`);
+    } else if (counted.length) {
+      steps.push(`<li><b>No assessment required for these rebates.</b> You can go straight to quotes.${fs.audit ? ` An assessment still sizes the work and often pays for itself: ${ext(fs.audit.url, fs.audit.n)}${fs.audit.cost ? ` (${esc(fs.audit.cost)})` : ''}.` : ''}</li>`);
+    } else {
+      steps.push(`<li><b>Start with an assessment if you want measured numbers.</b>${fs.audit ? ` ${ext(fs.audit.url, fs.audit.n)}${fs.audit.cost ? ` (${esc(fs.audit.cost)})` : ''}.` : ' <a href="/find/">How to find a certified auditor →</a>'}</li>`);
+    }
+    if (needReserve.length && !late) steps.push(`<li><b>Get pre-approval before you sign.</b> ${esc(needReserve.join(' and '))} pay${needReserve.length === 1 ? 's' : ''} nothing for work started before approval; the participating contractor usually files it.</li>`);
+    if (gated.length) steps.push(`<li><b>Settle which utility you have.</b> ${gated.length === counted.length ? 'These' : 'Some of these'} depend on your electric utility: ${utilLink(c)} and we’ll keep only the ones you can use.</li>`);
+    if (leftOut.length) steps.push(`<li><b>Left out for your utility:</b> programs only for ${esc(leftOut.join(' and '))} customers; ${utilLink(c, 'change your utility')} if that’s wrong.</li>`);
+    const envelope = projects.some((p) => ['attic-insulation', 'air-sealing', 'duct-sealing'].includes(p));
+    if (envelope && projects.includes('heat-pump')) steps.push(`<li><b>Envelope first, heat pump second.</b> Seal and insulate, then size the heat pump to the improved house (ask for a Manual J load calculation): it can be smaller, and the rebate per ton doesn’t reward oversizing.</li>`);
+    const asks: string[] = [];
+    if (projects.includes('heat-pump')) asks.push('the outdoor and indoor model numbers, the AHRI number and the rated capacity at 5 °F on the quote');
+    if (projects.includes('windows-doors')) asks.push('the ENERGY STAR certification of each window model in writing before you order');
+    if (projects.includes('attic-insulation')) asks.push('the R-value before and after, and the area, on the invoice');
+    if (!late) steps.push(`<li><b>Get quotes${needContractor.length ? ' from the program’s contractors' : ''}.</b>${needContractor.length ? ` ${esc(needContractor.join(' and '))} pay${needContractor.length === 1 ? 's' : ''} only when a contractor in their network does the work.` : ''}${asks.length ? ` Ask for ${esc(asks.join('; '))}.` : ''}</li>`);
+    const changing = counted.filter((r) => r.chg);
+    if (changing.length && when !== 'later') steps.push(`<li><b>Timing.</b> ${changing.map((r) => `${esc(r.n.replace(/\s*\(.*$/, ''))}: ${esc(r.chg!)}`).join(' ')}</li>`);
+    const her = loc.st.her;
+    if (her && !her.taking) steps.push(`<li><b>Worth waiting for?</b> ${esc(her.lede)} <a href="/programs/states/${loc.st.slug}/">${esc(sn(loc.st))} rebates and how to apply →</a>${when === 'asap' || when === '3mo' ? ' It won’t be open in time for work done now.' : ''}</li>`);
+    if (projects.includes('solar') && envelope) steps.push(`<li><b>Solar last.</b> Do the envelope work first so the panels have less load to cover.</li>`);
+
+    $('#rRebates').innerHTML = `
+      <section class="card rb-first" id="next-steps" aria-labelledby="rb-h">
+        <h3 id="rb-h">What pays for your ${projects.length === 1 ? 'project' : 'projects'} ${loc.metro ? `in ${esc(areaShort(loc.metro))}` : `in ${esc(sn(loc.st))}`}</h3>
+        <p class="sub">Every open program we track that pays for the work you picked, checked against the official pages with the date on each program page. Where two pay for the same work, read both; most won’t stack.</p>
+        <div class="rb-list">${projHtml}</div>
+        <h4 class="rb-h2">What to do first</h4>
+        <ol class="rb-steps">${steps.join('')}</ol>
+        ${inc === 'no' ? '<p class="small">Income-qualified programs are left out at your request.</p>' : ''}
+        <p class="rb-ctas">
+          <button type="button" class="btn btn-primary" id="toFull">Build my full plan (3 more questions)</button>
+          <a class="btn btn-ghost" href="#rFind">Find a certified auditor</a>
+          ${projects.includes('heat-pump') ? '<a class="btn btn-ghost" href="/heat-pumps/#quote">Help me find a heat pump installer</a>' : ''}
+        </p>
+        <p class="small">The full plan adds what homes in your climate need, what each upgrade saves at ${esc(sn(loc.st))} prices, the tests to ask for, and the order that keeps you from redoing work.</p>
+      </section>`;
+    document.getElementById('toFull')?.addEventListener('click', () => { setIntent('full'); openWizard(2); });
+    $('#rRebates').querySelectorAll<HTMLButtonElement>('button[data-open-step]').forEach((b) => b.addEventListener('click', () => openWizard(quickStart ? 'p' : Number(b.dataset.openStep))));
+
+    renderNeeds(c);
+    renderPrograms(c);
+    renderFind(c);
+    ['rNext', 'rConcerns', 'rBenchmark', 'rSequence', 'rWatch', 'rTests', 'rCompare', 'rSystems', 'rNumbers', 'rResources'].forEach((id) => { const el = document.getElementById(id); if (el) el.innerHTML = ''; });
+    const sticky = document.getElementById('stickyBookBtn') as HTMLAnchorElement | null;
+    if (sticky) { sticky.href = '#rFind'; sticky.removeAttribute('target'); sticky.textContent = needAudit.length && !late ? 'Book my assessment' : 'Find an auditor'; }
+
+    plannerEl.hidden = true;
+    if (journeyWizard) journeyWizard.hidden = true;
+    resultsEl.hidden = false;
+    resultsEl.dataset.mode = 'rebates';
+    writeHash(c, { mode: 'rebates', proj: projects.join(','), stage, when, inc });
+    prefillLeadRebates(c, checks);
+    glossLink();
+    const t = $('#rTitle');
+    t.setAttribute('tabindex', '-1');
+    t.focus({ preventScroll: true });
+    resultsEl.scrollIntoView({ block: 'start' });
+  }
+
+  /** The question form's message for the rebates path: the projects and what each one appears to qualify for. */
+  function prefillLeadRebates(c: Ctx, checks: { label: string; rows: Rebate[] }[]) {
+    const box = document.getElementById('us-lead-form');
+    if (!box) return;
+    const f = box.querySelector('form');
+    const lines = [
+      'From the AuditYourHome rebate check:',
+      `Home: heated by ${c.hi.label}; ZIP ${c.loc.zip5}${c.loc.metro ? ` (${metroName(c.loc.metro)} metro area)` : ''}${c.util && !['unsure', 'other'].includes(c.util) ? `; electric utility ${utilName(c.util, c)}` : ''}`,
+      ...checks.map((ch) => `${ch.label}: ${ch.rows.length ? ch.rows.slice(0, 2).map((r) => r.n.replace(/\s*\(.*$/, '')).join(', ') : 'no open rebate found'}`),
+      `My rebate check: ${location.origin}${location.pathname}#${planHash}`,
+    ];
+    const summary = lines.join('\n');
+    if (!f) return;
+    const ta = f.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    if (ta && !ta.dataset.touched) ta.value = summary;
+    const pc = f.querySelector<HTMLInputElement>('input[name="postal"]');
+    if (pc && !pc.dataset.touched) pc.value = c.loc.zip5;
+  }
+
   function finish() {
+    if (mode === 'rebates') return finishRebates();
     const c = context();
     if (!c) { show(1); validate(1); return; }
     const { a, loc } = c;
@@ -801,6 +1010,8 @@ export function startPlanner() {
     const seq = sequenceFor(c);
     lastSeq = seq;
     const energy = a.htype === 'condo' ? [] : energyTests(testInput(c), D.tests);
+    $('#rRebates').innerHTML = '';
+    resultsEl.dataset.mode = 'full';
     renderNext(c, seq, energy);
     renderNeeds(c);
     renderConcerns(c);
@@ -1815,9 +2026,10 @@ export function startPlanner() {
 
   const KEYS = ['zip', 'util', 'age', 'htype', 'size', 'found', 'water', 'win', 'prev', 'heat', 'hage', 'wh', 'ac'] as const;
   let planHash = '';
-  function writeHash(c: Ctx) {
+  function writeHash(c: Ctx, extra: Record<string, string> = {}) {
     const a = c.a;
     const q = new URLSearchParams();
+    for (const [k, v] of Object.entries(extra)) if (v) q.set(k, v);
     for (const k of KEYS) if (a[k]) q.set(k, a[k]);
     if (a.sec.length) q.set('sec', a.sec.join(','));
     if (a.syms.length) q.set('sym', a.syms.join(','));
@@ -1847,11 +2059,11 @@ export function startPlanner() {
   });
 
   /** Back to the wizard with every answer kept (Edit answers, Add your bills). */
-  function openWizard(n: number) {
+  function openWizard(n: StepId) {
     resultsEl.hidden = true;
     plannerEl.hidden = false;
     if (journeyWizard) journeyWizard.hidden = false;
-    maxStep = TOTAL;
+    maxIdx = TOTAL() - 1;
     show(n);
     plannerEl.scrollIntoView({ block: 'start' });
   }
@@ -1863,7 +2075,7 @@ export function startPlanner() {
     if (journeyWizard) journeyWizard.hidden = false;
     history.replaceState(null, '', location.pathname);
     planHash = '';
-    maxStep = 1;
+    maxIdx = 0;
     show(1);
     plannerEl.scrollIntoView({ block: 'start' });
   });
@@ -1926,16 +2138,22 @@ export function startPlanner() {
       if (sm >= 0 && sm <= 11 && q.has('esm')) { elSm.value = String(sm); monthsTouched = true; }
       if (wm >= 0 && wm <= 11 && q.has('ewm')) { elWm.value = String(wm); monthsTouched = true; }
     }
+    // the rebates path: its projects and timing
+    if (q.get('mode') === 'rebates') setIntent('rebates');
+    (q.get('proj') ?? '').split(',').filter(Boolean).forEach((v) => set('proj', v));
+    set('stage', q.get('stage'));
+    set('when', q.get('when'));
+    set('inc', q.get('inc'));
     const ok = !!locate(zipEl.value, climPick.value).loc;
-    if (q.get('done') === '1' && fieldVal('age') && ok) { maxStep = TOTAL; finish(); return; }
+    if (q.get('done') === '1' && ok && (mode === 'rebates' ? multiVal('proj').length : fieldVal('age'))) { maxIdx = TOTAL() - 1; finish(); return; }
     // the home page already asked for the ZIP code (and maybe the year), so pick up at step 2. Step 1
     // never shows, so step 2 says where we placed the ZIP code and, where utilities run different
     // programs (APS or SRP, Seattle City Light or PSE), asks who sends the electric bill.
     if (ok) {
       quickStart = true;
       if (utilSlot2) utilSlot2.appendChild(utilField);
-      maxStep = 2;
-      show(2);
+      maxIdx = 1;
+      show(flow()[1]);
       // on a phone the hero fills the screen: bring the step into view
       if (plannerEl.getBoundingClientRect().top > window.innerHeight * 0.6) plannerEl.scrollIntoView({ block: 'start' });
       return;
