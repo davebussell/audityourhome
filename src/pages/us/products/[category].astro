@@ -86,6 +86,8 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
       </p>
     )}
 
+    <AffiliateDisclosure />
+
     <div class="pick-list">
       {c.picks.map((p) => (
         <article class="card pick">
@@ -118,8 +120,6 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
         </div>
       )}
     </div>
-
-    <AffiliateDisclosure />
 
     <div class="card card-pad next">
       <div>

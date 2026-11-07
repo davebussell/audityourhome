@@ -57,6 +57,27 @@ MINUS = '−'
 esc = html.escape
 
 
+
+# Rénoclimat's authorized organization for each city's administrative region (Québec.ca, "Liste des conseillers Rénoclimat"):
+# region 06 Montréal, 13 Laval, 05 Estrie → Énergie3R; 07 Outaouais, 04 Mauricie, 02 Saguenay–Lac-Saint-Jean, 14 Lanaudière → ExpertBâtiment;
+# 03 Capitale-Nationale, 12 Chaudière-Appalaches, 16 Montérégie → Legault-Dubois. Only files under the pre-October 2026 rules still go through them.
+QC_RENOCLIMAT_ORG = {
+    'montreal': 'Énergie3R', 'laval': 'Énergie3R', 'sherbrooke': 'Énergie3R',
+    'gatineau': 'ExpertBâtiment Services-Conseils', 'trois-rivieres': 'ExpertBâtiment Services-Conseils',
+    'saguenay': 'ExpertBâtiment Services-Conseils', 'terrebonne': 'ExpertBâtiment Services-Conseils',
+    'quebec-city': 'Legault-Dubois', 'levis': 'Legault-Dubois', 'longueuil': 'Legault-Dubois', 'saint-jean-sur-richelieu': 'Legault-Dubois',
+}
+
+def tidy_numbers(x):
+    """Write whole-number floats from the Census tables (38.0) as ints (38), so a regenerated page only differs where its text did."""
+    if isinstance(x, float) and x.is_integer():
+        return int(x)
+    if isinstance(x, dict):
+        return {k: tidy_numbers(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return [tidy_numbers(v) for v in x]
+    return x
+
 def a(href, text, ext=False):
     rel = ' rel="noopener"' if ext or href.startswith('http') else ''
     return f'<a href="{esc(href, quote=True)}"{rel}>{text}</a>'
@@ -232,9 +253,9 @@ PT = {
         wells=("There's no free provincial service: send samples to a lab accredited by Quebec's environment ministry (the CEAEQ list), which supplies the bottles. The ministry recommends testing for bacteria at least twice a year, in spring and fall, plus a chemical analysis while the well is in use.",
                'https://www.environnement.gouv.qc.ca/eau/potable/depliant/'),
         wellCost='Paid, accredited lab',
-        evalPrice=("In Quebec, EnerGuide evaluations are booked through the provincial Rénoclimat program: the pre-retrofit evaluation costs $150 plus taxes, reimbursed when you receive financial assistance under the program, and the first post-retrofit evaluation is free.",
-                   'https://www.quebec.ca/en/housing-territory/heating-energy-consumption/financial-assistance-retrofits/renoclimat/energy-evaluations/energy-evaluation-fees'),
-        evalShort='$150 + tax (Rénoclimat)',
+        evalPrice=("In Quebec, an EnerGuide evaluation has been optional under Rénoclimat's rules since October 1, 2026: you book it with any NRCan-licensed service organization at its own price, and Rénoclimat pays up to $500 toward it when you also claim an eligible upgrade. The old path (a $150 evaluation assigned by the program, refunded with your rebate) only continues for files started before October 1 or evaluations requested by October 12, 2026.",
+                   'https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations'),
+        evalShort='Market price; up to $500 back (Rénoclimat)',
     ),
     'BC': dict(
         co=(False, "B.C. doesn't require CO alarms in existing homes; the province recommends them wherever there's a fuel-burning appliance, fireplace or attached garage, and the building code requires them in new homes.",
@@ -919,8 +940,11 @@ def providers_block(c, svc):
         special = ("In Nova Scotia, EnerGuide home energy assessments are booked through Efficiency Nova Scotia's Home Energy Assessment program, "
                    "which assigns one of its Delivery Agent Partners; NRCan's list shows no separate service organizations for Nova Scotia postal codes.")
     elif c['prov'] == 'QC':
-        special = ("In Quebec, EnerGuide evaluations for existing homes run through the provincial Rénoclimat program; the organizations below are "
-                   "the ones NRCan lists for " + c['name'] + " postal codes.")
+        org = QC_RENOCLIMAT_ORG.get(c['slug'])
+        special = ("Since October 1, 2026, Rénoclimat no longer assigns the evaluator: an optional pre-work evaluation can be booked with any of the "
+                   "NRCan-licensed organizations below, and the program pays up to $500 toward it when you claim an eligible upgrade. "
+                   + (f"Files started under the old rules went through the program's regional organization, {org}. " if org else '')
+                   + "Hydro-Québec's LogisVert heat-pump grant needs no evaluation at all.")
     elif c['prov'] == 'YT':
         special = "In Yukon, the territorial government's Energy Branch is the licensed service organization and arranges assessments with local energy advisors."
     elif c['prov'] == 'NT':
@@ -1046,10 +1070,16 @@ def gen_home_energy_audit(c, src):
     if c['prov'] in ('ON', 'BC', 'AB', 'SK', 'MB', 'NL'):
         cost.append(p("Most providers quote the initial (pre-upgrade) and follow-up (post-upgrade) visits separately. Rebate programs that pay on measured improvement need both, so ask for the combined price."))
     secs.append({'h2': f"What it costs in {c['name']}", 'html': ''.join(cost)})
-    steps = ul(["<strong>Initial evaluation, about 2–3 hours.</strong> The advisor measures and inspects the house and runs the blower door test.",
-                "<strong>Report and EnerGuide rating.</strong> You get the home's energy rating in gigajoules per year and a list of recommended upgrades with estimated savings.",
-                "<strong>Do the work.</strong> Most rebate programs only count upgrades done after the initial evaluation.",
-                "<strong>Follow-up evaluation.</strong> A second visit measures the improvement, which is what most rebates pay on."])
+    if c['prov'] == 'QC':
+        steps = ul(["<strong>Initial evaluation, about 2–3 hours (optional since October 1, 2026).</strong> The advisor measures and inspects the house and runs the blower door test.",
+                    "<strong>Report and EnerGuide rating.</strong> You get the home's energy rating in gigajoules per year and a list of recommended upgrades with estimated savings.",
+                    "<strong>Do the work with licensed contractors.</strong> Rénoclimat pays per square foot of insulation and per ENERGY STAR Most Efficient window, but only for work done by contractors with the matching RBQ licence who sign its conformity attestation; LogisVert pays its heat-pump grant without an evaluation.",
+                    "<strong>Claim after the work.</strong> No follow-up evaluation is needed under the new rules: submit the invoices, the attestation and, if you had one, the evaluation (up to $500 back) through Rénoclimat's portal."])
+    else:
+        steps = ul(["<strong>Initial evaluation, about 2–3 hours.</strong> The advisor measures and inspects the house and runs the blower door test.",
+                    "<strong>Report and EnerGuide rating.</strong> You get the home's energy rating in gigajoules per year and a list of recommended upgrades with estimated savings.",
+                    "<strong>Do the work.</strong> Most rebate programs only count upgrades done after the initial evaluation.",
+                    "<strong>Follow-up evaluation.</strong> A second visit measures the improvement, which is what most rebates pay on."])
     secs.append({'h2': 'How a home energy assessment (EnerGuide evaluation) works', 'html': steps + p(a(SV['home-energy-audit']['guide'], 'Read the full guide to home energy audits') + '.')})
     pg['sections'] = secs
     pg['providers'] = providers_block(c, 'home-energy-audit')
@@ -2192,7 +2222,7 @@ def build():
             'providers': c['providers'], 'nearby': c['nearby'], 'municipal': municipal_for(c), 'programs': programs_for(c),
             'hub': hub, 'pages': pages,
         }
-        json.dump(city_out, open(f'{outdir}/cities/{c["slug"]}.json', 'w'), ensure_ascii=False, separators=(',', ':'))
+        json.dump(tidy_numbers(city_out), open(f'{outdir}/cities/{c["slug"]}.json', 'w'), ensure_ascii=False, separators=(',', ':'))
         index_cities.append({'slug': c['slug'], 'name': c['name'], 'label': c['label'], 'prov': c['prov'], 'provName': c['provName'],
                              'provSlug': c['provSlug'], 'population': c['population'], 'facts': facts,
                              'metrics': {s['slug']: hub_metric(c, s['slug']) for s in SERVICES}})
@@ -2201,7 +2231,7 @@ def build():
                                metricNote=METRIC_NOTE.get(s['slug'])) for s in SERVICES],
              'cities': index_cities,
              'provinceOrder': ['BC', 'AB', 'SK', 'MB', 'ON', 'QC', 'NB', 'NS', 'PE', 'NL', 'YT', 'NT']}
-    json.dump(index, open(f'{outdir}/index.json', 'w'), ensure_ascii=False, indent=1)
+    json.dump(tidy_numbers(index), open(f'{outdir}/index.json', 'w'), ensure_ascii=False, indent=1)
     # Province-by-province CO alarm and well-water rules for the national test guides (/tests/carbon-monoxide/, /tests/well-water/).
     prov_meta = {}
     for c in CITIES:

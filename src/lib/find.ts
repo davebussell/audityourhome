@@ -23,6 +23,8 @@ export interface ProvinceBooking {
   help: string;
   /** Who runs bookings when the province does (empty when you book directly) */
   bookWith?: { label: string; href: string };
+  /** The province's main program no longer requires a pre-work evaluation (Quebec since October 1, 2026) */
+  optional?: boolean;
   checked: string;
   sources: Source[];
 }
@@ -96,13 +98,16 @@ export const PROVINCE_BOOKING: ProvinceBooking[] = [
   {
     slug: 'quebec',
     name: 'Quebec',
-    route: 'Through Rénoclimat (evaluation now optional)',
-    how: 'Rénoclimat changed on October 1, 2026: an evaluation is now optional, and the program pays up to $500 toward one. The old evaluation-first rules apply only if you requested a pre-work evaluation by October 12, 2026. Work must be done by RBQ-licensed contractors.',
-    cost: 'Price not published since the October 1, 2026 changes',
-    help: 'Rénoclimat pays up to $500 toward an evaluation · LogisVert heat pump grants',
-    bookWith: { label: 'Rénoclimat (Gouvernement du Québec)', href: 'https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adapatation-inondations' },
-    checked: 'October 8, 2026',
-    sources: [{ label: 'Gouvernement du Québec — Rénoclimat, what’s new', href: 'https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adapatation-inondations' }],
+    route: 'Directly with any licensed service organization (evaluation optional since October 1, 2026)',
+    how: 'Rénoclimat changed on October 1, 2026: a pre-work evaluation is optional (recommended, not required), you book it with any NRCan-licensed service organization at its own price, and the program pays up to $500 toward it when you also claim an eligible upgrade. The program no longer assigns the evaluator or takes bookings; the old evaluation-first rules only finish files started before October 1 (evaluations requested by October 12, 2026). Rénoclimat work must be done by RBQ-licensed contractors, and LogisVert’s heat-pump grant needs no evaluation.',
+    cost: 'Set by the organization (the program’s $150 fee is gone)',
+    help: 'Rénoclimat pays up to $500 toward an evaluation with an eligible upgrade · LogisVert heat pump grants need none',
+    optional: true,
+    checked: 'November 7, 2026',
+    sources: [
+      { label: 'Gouvernement du Québec — Rénoclimat, what’s new since October 1, 2026', href: 'https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations' },
+      { label: 'Gouvernement du Québec — Rénoclimat service organizations by region', href: 'https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/liste-conseillers-renoclimat' },
+    ],
   },
   {
     slug: 'new-brunswick',

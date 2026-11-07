@@ -157,7 +157,7 @@ const winIntro = isCA
     </section>
 
     <div class="lf-wrap">
-      <QuoteForm market={market} context="types" heading="Get quotes for a geothermal or specialty heat pump" />
+      <QuoteForm market={market} context="types" heading={market === 'ca' ? 'Get matched with a geothermal or specialty heat pump contractor' : 'Find geothermal and specialty heat pump installers'} />
     </div>
     <section class="related">
       <div class="nb"><a class="all" href={`/heat-pumps/`}>Back to the comparison guide →</a></div>

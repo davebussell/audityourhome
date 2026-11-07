@@ -155,7 +155,7 @@ const jump: [string, string][] = [
   ['rebates', 'Rebates'],
   ['regions', isCA ? 'By province' : 'By metro'],
   ['faq', 'FAQ'],
-  ['quote', 'Get quotes'],
+  ['quote', isCA ? 'Get matched' : 'Find installers'],
 ];
 const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premium: 3 };
 ---

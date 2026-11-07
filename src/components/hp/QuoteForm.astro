@@ -21,12 +21,12 @@ interface Props {
 }
 const { market, brand = '', region = '', context } = Astro.props;
 const isCA = market === 'ca';
-const heading = Astro.props.heading ?? 'Get heat pump quotes';
+const heading = Astro.props.heading ?? (isCA ? 'Get matched with a heat pump contractor' : 'Find heat pump installers near you');
 const sub =
   Astro.props.sub ??
   (isCA
-    ? 'Tell us about your home and what you want to heat or cool. We match you with one heating and cooling contractor or registered energy advisor who serves your area and knows the rebates.'
-    : 'Tell us about your home and what you want to heat or cool. A person reads every request and replies with the contractors and rebate programs that serve your ZIP code.');
+    ? 'Tell us about your home and what you want to heat or cool. We introduce you to one heating and cooling contractor who serves your area and knows the rebates (or, where no contractor takes part yet, one registered energy advisor who does). One company, never a list: your details aren’t blasted to five installers.'
+    : 'Tell us about your home and what you want to heat or cool. A person reads every request and replies by email with the contractors and rebate programs that serve your ZIP code; we don’t send your details to installers.');
 const onNetlify = NETLIFY_FORMS;
 const action = `/heat-pumps/thanks/?sent=1`;
 const uid = `hpq-${Math.random().toString(36).slice(2, 8)}`;
@@ -39,7 +39,7 @@ const body = isCA
   : 'ZIP code:\nType of home:\nHow it is heated now:\nDucts (yes/no/not sure):\nWhat I want (whole home, some rooms, replace AC, add to furnace):\nBrands I am considering:\nTimeline:\n';
 const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 const consent = isCA
-  ? 'Send my request to one heating and cooling contractor or registered energy advisor who serves my area. They pay AuditYourHome a referral fee; I pay nothing and I’m not obliged to buy.'
+  ? 'Share the details in this form with one heating and cooling contractor (or, where none takes part yet, one registered energy advisor) who serves my area, and never with more than one company. That company pays AuditYourHome a referral fee; I pay nothing and I’m not obliged to buy.'
   : 'AuditYourHome may reply to me by email about this request. My details aren’t shared with anyone without asking me first.';
 ---
 
@@ -155,17 +155,17 @@ const consent = isCA
         <textarea id={`${uid}-msg`} name="message" rows="3" maxlength="2000" placeholder={isCA ? 'e.g. 1960s bungalow, electric baseboards, want to qualify for the provincial heat pump rebate' : 'e.g. 1980s two-story, gas furnace and a 15-year-old AC, upstairs runs hot, want a heat pump that heats and cools'}></textarea>
       </div>
       <label class="hpq-check"><input type="checkbox" name="consent" value="yes" required /> <span>{consent}</span></label>
-      <button class="btn btn-primary" type="submit">Request quotes</button>
-      <p class="meta">We use these details only to answer this request. <a href="/privacy/">Privacy</a></p>
+      <button class="btn btn-primary" type="submit">{isCA ? 'Match me with one contractor' : 'Help me find an installer'}</button>
+      <p class="meta">{isCA ? 'We share these details only with the one company we match you with.' : 'We use these details only to answer this request.'} <a href="/privacy/#requests">Privacy</a></p>
     </form>
   ) : (
     <div class="hpq-fallback">
       <p>
         Email us your {isCA ? 'postal code' : 'ZIP code'}, the type of home, how it's heated and cooled now, whether it has ducts and what you
-        want to heat or cool, including rooms that run hot or cold. A person reads every message and replies with {isCA ? 'a contractor or registered energy advisor who serves your area' : 'the contractors and programs that serve your area'}.
+        want to heat or cool, including rooms that run hot or cold. A person reads every message and {isCA ? 'introduces you to one contractor (or registered energy advisor) who serves your area' : 'replies with the contractors and programs that serve your area'}.
       </p>
       <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
-      <p class="meta">{isCA ? 'Participating contractors and advisors pay us a referral fee; you pay nothing.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/">Privacy</a></p>
+      <p class="meta">{isCA ? 'The one company we introduce you to pays us a referral fee; you pay nothing.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/#requests">Privacy</a></p>
     </div>
   )}
 </div>

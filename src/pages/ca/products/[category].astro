@@ -60,6 +60,8 @@ const heroPhoto: string | undefined = PRODUCT_PHOTO[category ?? ''];
       {heroPhoto && <Photo name={heroPhoto} eager />}
     </div>
 
+    <AffiliateDisclosure />
+
     <div class="pick-list">
       {c.picks.map((p) => (
         <article class="card pick">
@@ -85,8 +87,6 @@ const heroPhoto: string | undefined = PRODUCT_PHOTO[category ?? ''];
         {c.notes.map((n) => <li>{n}</li>)}
       </ul>
     </div>
-
-    <AffiliateDisclosure />
 
     <div class="card card-pad next">
       <div>

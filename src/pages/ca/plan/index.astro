@@ -103,7 +103,7 @@ const CC = climateCa as unknown as CaClimate;
 // ---- how booking works in each province (src/lib/find.ts), with the territories split out
 const booking: Record<string, unknown> = {};
 for (const b of PROVINCE_BOOKING) {
-  booking[b.slug] = { name: b.name, route: b.route, how: b.how, cost: b.cost, help: b.help, bookWith: b.bookWith ?? null, checked: b.checked };
+  booking[b.slug] = { name: b.name, route: b.route, how: b.how, cost: b.cost, help: b.help, bookWith: b.bookWith ?? null, optional: !!b.optional, checked: b.checked };
 }
 const north = PROVINCE_BOOKING.find((b) => b.slug === 'north');
 booking['north-YT'] = {
@@ -472,7 +472,7 @@ const privacyLine = ACCOUNTS_ENABLED
           Everything above comes from how homes like yours typically perform (scaled to your bills
           if you entered them), not from measurements of your house. An EnerGuide evaluation, with a
           blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers
-          for your address, and it’s the first step for the biggest rebates.
+          for your address, and in most provinces it’s the first step for the rebates that pay on measured improvement.
         </p>
       </div>
 
@@ -1043,17 +1043,32 @@ const privacyLine = ACCOUNTS_ENABLED
   }
 
   /** Rural and uncovered postal areas: pick a covered city in the same part of the province. */
+  // Quebec's rural (x0x) and small-city forward sortation areas, by the region each one is in, to the closest city we model.
+  // Outaouais (J0X, J0V) goes with Gatineau, not Sherbrooke: Wakefield is 30 km from Gatineau and 400 km from Sherbrooke.
+  const QC_RURAL: Record<string, string> = {
+    J0X: 'gatineau', J0V: 'gatineau', J0W: 'gatineau', J0Y: 'gatineau', J0Z: 'gatineau',
+    J0T: 'terrebonne', J0R: 'terrebonne', J0K: 'terrebonne', J0N: 'laval',
+    J0L: 'saint-jean-sur-richelieu', J0J: 'saint-jean-sur-richelieu', J0H: 'longueuil', J0P: 'montreal', J0S: 'montreal',
+    J0A: 'sherbrooke', J0B: 'sherbrooke', J0E: 'sherbrooke', J0G: 'sherbrooke', J0C: 'trois-rivieres', J0M: 'saguenay',
+    G0A: 'quebec-city', G0C: 'quebec-city', G0E: 'quebec-city', G0G: 'quebec-city', G0J: 'quebec-city', G0K: 'quebec-city',
+    G0L: 'quebec-city', G0T: 'quebec-city', G0Z: 'quebec-city', G0H: 'saguenay', G0V: 'saguenay', G0W: 'saguenay', G0Y: 'saguenay',
+    G0M: 'levis', G0N: 'levis', G0R: 'levis', G0S: 'levis', G0P: 'trois-rivieres', G0X: 'trois-rivieres',
+  };
+  const QC_AREA: Record<string, string> = {
+    G6: 'levis', G7: 'saguenay', G8: 'trois-rivieres', G9: 'trois-rivieres',
+    J2: 'sherbrooke', J3: 'longueuil', J4: 'longueuil', J5: 'terrebonne', J6: 'terrebonne', J7: 'laval', J8: 'gatineau', J9: 'gatineau',
+  };
   function nearestByFsa(fsa: string): string | null {
     const a = fsa[0], b = fsa[1], ab = fsa.slice(0, 2);
     const M: Record<string, string> = {
       K: 'ottawa', N: 'london', P: 'sudbury', L: b === '0' ? 'barrie' : 'toronto', M: 'toronto',
-      G: ab === 'G7' ? 'saguenay' : 'quebec-city', H: 'montreal', J: ab === 'J8' || ab === 'J9' ? 'gatineau' : 'sherbrooke',
+      G: 'quebec-city', H: 'montreal', J: 'sherbrooke',
       V: b === '0' ? 'kamloops' : 'vancouver',
       T: b === '0' || b === '4' ? 'red-deer' : ['1', '2', '3'].includes(b) ? 'calgary' : 'edmonton',
       S: ['7', '0'].includes(b) ? 'saskatoon' : 'regina',
     };
     if (ab === 'P7') return 'thunder-bay';
-    const slug = M[a];
+    const slug = QC_RURAL[fsa] ?? QC_AREA[ab] ?? M[a];
     return slug && D.calc.cities[slug] ? slug : null;
   }
 
@@ -1470,7 +1485,7 @@ const privacyLine = ACCOUNTS_ENABLED
         stickyBtn.target = '_blank';
         stickyBtn.rel = 'noopener';
       } else {
-        stickyText.textContent = 'Next: get matched with a registered energy advisor';
+        stickyText.textContent = b?.optional ? 'Next: an optional evaluation, or straight to the work' : 'Next: get matched with a registered energy advisor';
         stickyBtn.textContent = 'Get matched';
         stickyBtn.href = '#lead-form';
         stickyBtn.removeAttribute('target');
@@ -1507,7 +1522,7 @@ const privacyLine = ACCOUNTS_ENABLED
         <h3 id="next-h">Your next 3 steps</h3>
         <ol class="ns-list">
           <li>
-            <p class="ns-t">Book your EnerGuide evaluation (the home energy audit)</p>
+            <p class="ns-t">${b?.optional ? 'Decide whether you want an EnerGuide evaluation (optional here, up to $500 back)' : 'Book your EnerGuide evaluation (the home energy audit)'}</p>
             <p>${esc(b?.how ?? 'Book the evaluation with an NRCan-licensed service organization that serves your area.')}</p>
             ${b ? `<p class="ns-cost"><b>Cost:</b> ${esc(b.cost)}${b.help ? ` · <b>Help:</b> ${esc(b.help)}` : ''} <span class="small">(checked ${esc(b.checked)})</span></p>` : ''}
             <p class="ns-cta">${primary}${secondary}</p>
@@ -2167,9 +2182,13 @@ const privacyLine = ACCOUNTS_ENABLED
       </div>`;
   }
 
-  function renderAuditCta(_ctx: Ctx) {
+  function renderAuditCta(ctx: Ctx) {
     // How to book in this province is in "Your next 3 steps" at the top; don't repeat it here.
-    $('#rAuditCtaText').textContent = 'Everything above comes from how homes like yours typically perform (scaled to your bills if you entered them), not from measurements of your house. An EnerGuide evaluation, with a blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers for your address, and it’s the first step for the biggest rebates.';
+    const b = bookingFor(ctx);
+    const base = 'Everything above comes from how homes like yours typically perform (scaled to your bills if you entered them), not from measurements of your house. An EnerGuide evaluation, with a blower door test, thermal imaging and a heat-loss model, turns these ranges into numbers for your address';
+    $('#rAuditCtaText').textContent = b?.optional
+      ? `${base}. In ${ctx.provName} it has been optional since October 1, 2026: Rénoclimat pays up to $500 toward one when you also claim an eligible upgrade, and LogisVert’s heat-pump grant needs no evaluation, so it’s worth having for the measurements, not for the rebates.`
+      : `${base}, and in most provinces it’s the first step for the rebates that pay on measured improvement.`;
   }
 
   function prefillLead(arch: any, a: Answers, syms: string[], goals: string[], ctx: Ctx, testsList: string[], m: ReturnType<typeof houseModel>, water: string) {

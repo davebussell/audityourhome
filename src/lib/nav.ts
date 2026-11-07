@@ -214,7 +214,7 @@ export const NAV_CA: NavItem[] = [
         ],
       },
     ],
-    panelFoot: { href: '/heat-pumps/#quote', label: 'Get heat pump quotes from a contractor who knows the rebates →' },
+    panelFoot: { href: '/heat-pumps/#quote', label: 'Get matched with one heat pump contractor who knows the rebates →' },
   },
   {
     id: 'learn',
@@ -436,7 +436,7 @@ export const NAV_US: NavItem[] = [
         ],
       },
     ],
-    panelFoot: { href: '/heat-pumps/#quote', label: 'Ask for heat pump quotes in your area →' },
+    panelFoot: { href: '/heat-pumps/#quote', label: 'Find heat pump installers in your area →' },
   },
   { id: 'find', label: 'Find an auditor', href: '/find/' },
   { id: 'programs', label: 'Rebates & programs', href: '/programs/' },

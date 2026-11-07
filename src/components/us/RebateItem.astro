@@ -24,6 +24,7 @@ const { r } = Astro.props;
     </p>
   </div>
   <div class="rb-detail">
+    {r.change && <p class="rb-change"><span class="lbl">Changing</span> {r.change}</p>}
     <p class="rb-amt"><span class="lbl">Amount</span> {r.amount ?? 'Not published'}</p>
     {r.whoQualifies && <p class="rb-who"><span class="lbl">Who qualifies</span> {r.whoQualifies}</p>}
   </div>
@@ -40,6 +41,8 @@ const { r } = Astro.props;
   .rb-by { margin: -3px 0 0; font-size: 13px; color: var(--faint); line-height: 1.45; }
   .rb-amt, .rb-who { margin: 0; font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
   .rb-amt { color: var(--ink); }
+  .rb-change { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); background: var(--warn-tint); border-left: 3px solid var(--warn); padding: 8px 12px; border-radius: 0 8px 8px 0; }
+  .rb-change .lbl { color: var(--warn); }
   .rb-who { color: var(--muted); }
   .lbl { display: block; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
   .rb-src { margin: 0; }

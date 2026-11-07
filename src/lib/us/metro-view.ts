@@ -331,6 +331,8 @@ export interface RebateView {
   live: boolean;
   url: string | null;
   checked: string | null;
+  /** A dated change to the offer that affects timing (a rate cut on a set date, a deadline), shown as a callout */
+  change: string | null;
 }
 
 export function rebateGroups(m: Metro): { key: string; label: string; items: RebateView[]; live: number }[] {
@@ -350,6 +352,7 @@ export function rebateGroups(m: Metro): { key: string; label: string; items: Reb
         live: isOpenChip(chip),
         url: r.url ?? null,
         checked: r.checked ?? null,
+        change: r.change ?? null,
       } as RebateView,
     };
   });

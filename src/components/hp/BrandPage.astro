@@ -70,7 +70,7 @@ const jump: [string, string][] = [
   ['verdict', 'Strengths and watch-outs'],
   ['rebates', 'Rebate fit'],
   ...(b.recentNews.length && (isCA || b.recentNews.some((n) => usText(n.text))) ? ([['news', 'News']] as [string, string][]) : []),
-  ['quote', 'Get quotes'],
+  ['quote', isCA ? 'Get matched' : 'Find installers'],
 ];
 const wCard = (label: string, x: Warranty | null) => ({ label, x });
 const warrantyCards = b.warrantyVariants?.length

@@ -16,27 +16,27 @@ const { market } = Astro.props;
 const isCA = market === 'ca';
 ---
 
-<Base title="Your heat pump quote request | AuditYourHome" description="What happens after you ask for heat pump quotes." indexable={false}>
+<Base title={isCA ? "Your heat pump match request | AuditYourHome" : "Your heat pump request | AuditYourHome"} description={isCA ? "What happens after you ask to be matched with a heat pump contractor." : "What happens after you ask us about heat pump installers."} indexable={false}>
   <div class="container hp" style="padding-bottom:48px">
     <JourneyBar country={market} current={2} ticks={false} />
     <div class="page-hero">
       <div class="hero-text" data-sent="yes" hidden>
-        <p class="eyebrow">Heat pump quotes</p>
+        <p class="eyebrow">{isCA ? 'Heat pump match' : 'Heat pump installers'}</p>
         <h1>Thanks. Your request reached us.</h1>
         <p class="lede measure">
           A person reads every request, usually within one business day.
           {isCA
-            ? ' We’ll introduce you to one contractor or registered energy advisor who serves your area and knows the rebates.'
+            ? ' We’ll introduce you to one heating and cooling contractor who serves your area and knows the rebates (or one registered energy advisor where no contractor takes part yet), and to nobody else.'
             : ' We’ll reply by email with the contractors and rebate programs that serve your ZIP code.'}
         </p>
       </div>
       <div class="hero-text" data-sent="no">
-        <p class="eyebrow">Heat pump quotes</p>
-        <h1>What happens after you ask for quotes</h1>
+        <p class="eyebrow">{isCA ? 'Heat pump match' : 'Heat pump installers'}</p>
+        <h1>{isCA ? 'What happens after you ask to be matched' : 'What happens after you ask about installers'}</h1>
         <p class="lede measure">
-          If you sent a request from our quote form, a person reads it and replies by email, usually within one business
+          If you sent a request from our heat pump form, a person reads it and replies by email, usually within one business
           day. If you landed here another way, nothing has been sent yet:
-          <a href={`/heat-pumps/#quote`}>the quote form is on the heat pump guide</a>.
+          <a href={`/heat-pumps/#quote`}>the form is on the heat pump guide</a>.
         </p>
       </div>
     </div>
