@@ -34,7 +34,7 @@ const metaLine =
   country === 'us'
     ? 'United States, metro by metro'
     : country === 'ca'
-      ? 'Canada-wide, province by province · Version française à venir'
+      ? 'Canada-wide, province by province'
       : 'Canada and the United States';
 ---
 
@@ -132,7 +132,7 @@ const metaLine =
         customers, specific homes or any listed provider, and the infrared views are illustrative,
         not measurements.
       </p>
-      <p class="meta">© <span id="year">{year}</span> {site.name} · {metaLine} · Know your home before you spend on it.</p>
+      <p class="meta">© <span id="year">{year}</span> {site.name} · {metaLine}{country === 'ca' && <Fragment> · <a href="/fr/" hreflang="fr-CA" lang="fr">Site en français (Québec)</a></Fragment>} · Know your home before you spend on it.</p>
     </div>
   </div>
 </footer>

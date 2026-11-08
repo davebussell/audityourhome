@@ -228,7 +228,7 @@ const privacyLine = ACCOUNTS_ENABLED
   : 'Your answers stay in your browser: this page has no analytics, and nothing is sent unless you ask to be matched.';
 ---
 
-<Base title={title} description={description} schema={schema} analytics={false}>
+<Base title={title} description={description} schema={schema} analytics={false} altPath="/fr/planificateur/">
   <div class="container">
     <div class="page-hero plan-hero">
       <p class="eyebrow">Home Energy Planner · free</p>
@@ -1748,7 +1748,7 @@ const privacyLine = ACCOUNTS_ENABLED
         : tally.estimated > 0 ? 'sized from a typical home like yours where the program pays by area or capacity' : 'set amounts';
       figs.push(`<div class="fig"><div class="n">${money(openNow)}</div><div class="l">from ${esc([...tally.programs].slice(0, 3).join(' and '))}, open now; ${how}</div></div>`);
     }
-    if (fed) figs.push(`<div class="fig"><div class="n">+ ${money(fed.amount)}</div><div class="l">federal heat pump rebate, ${esc(fed.note.replace(/^Announced/, 'announced'))}: ${when === 'asap' || when === '3mo' ? 'it won’t be open in time for work done now' : 'worth waiting for if the heat pump can wait'}</div></div>`);
+    if (fed) figs.push(`<div class="fig"><div class="n">+ ${money(fed.amount)}</div><div class="l">federal heat pump rebate, ${esc(fed.note.replace(/^Announced/, 'announced'))}: ${when === 'asap' || when === '3mo' ? 'a heat pump installed now (on or after November 1, 2026) is claimed when the portal opens, so keep the receipts' : 'claimed once the portal opens, for installs from November 1, 2026 on'}</div></div>`);
     if (!figs.length) figs.push(`<div class="fig"><div class="n">$0</div><div class="l">no open rebate we track in ${esc(provName)} pays for ${projects.length === 1 ? 'this project' : 'these projects'} as described</div></div>`);
 
     // each project
@@ -1813,7 +1813,7 @@ const privacyLine = ACCOUNTS_ENABLED
     if (wantsHp || projects.includes('geothermal')) asks.push('the outdoor and indoor model numbers, the AHRI number and the rated output at −8 °C and −15 °C on the quote');
     if (projects.some((p) => /insulation/.test(p))) asks.push('the R-value before and after, and the area, on the invoice');
     if (!late) steps.push(`<li><b>Get quotes${contractorProgs.length ? ` from the program’s contractors` : ''}.</b>${contractorProgs.length ? ` ${esc(contractorProgs.join(' and '))} pay${contractorProgs.length === 1 ? 's' : ''} only when a contractor in their network (or holding the required licence) does the work.` : ''}${asks.length ? ` Ask for ${esc(asks.join('; '))}.` : ''}</li>`);
-    if (fed && when !== 'asap' && when !== '3mo') steps.push(`<li><b>Heat pump timing.</b> The federal $2,000 is ${esc(fed.note.replace(/^Announced/, 'announced'))}, needs no evaluation and stacks with provincial rebates: if the heat pump can wait, get the quotes now and install when it opens.</li>`);
+    if (fed) steps.push(`<li><b>Federal heat pump rebate.</b> The federal $2,000 (up to $10,000 at or below the median income) is ${esc(fed.note.replace(/^Announced/, 'announced'))}, needs no evaluation and, per the announcement, stacks with provincial rebates. The heat pump needn’t wait for it: have an HVAC contractor supply and install a model on the federal eligible product list, keep receipts with the installer’s name and the AHRI number, and apply when the portal opens in early 2027.</li>`);
     if (projects.includes('solar') && envelope) steps.push(`<li><b>Solar last.</b> Do the envelope work first so the panels have less load to cover.</li>`);
 
     // the province's programs, with income-qualified ones only when asked for
@@ -2480,7 +2480,7 @@ const privacyLine = ACCOUNTS_ENABLED
         : 'set amounts from programs open now';
       piles.push(`<div class="fig"><div class="n">${money(openNow)}</div><div class="l">from ${esc([...tally.programs].slice(0, 3).join(' and '))}, open now; ${how}</div></div>`);
     }
-    if (fed) piles.push(`<div class="fig"><div class="n">+ ${money(fed.amount)}</div><div class="l">federal heat pump rebate: ${esc(fed.note.replace(/^Announced/, 'announced'))}, so count on it only once it opens</div></div>`);
+    if (fed) piles.push(`<div class="fig"><div class="n">+ ${money(fed.amount)}</div><div class="l">federal heat pump rebate: ${esc(fed.note.replace(/^Announced/, 'announced'))}, so count on it only once it opens (early 2027)</div></div>`);
     const tallyHtml = piles.length && !isON
       ? `<div class="card reb-tally"><h4>Rebates in this plan</h4><div class="figures">${piles.join('')}</div><p class="small">Amounts are sized from a typical home like yours and are lower bounds; each program has its own contractor and paperwork rules. Where two programs pay for the same work we count the better one, never both. Income-qualified programs are listed separately below.</p></div>`
       : '';
@@ -2568,7 +2568,7 @@ const privacyLine = ACCOUNTS_ENABLED
       </details>`;
   }
 
-  const FED_HP_NOTE = '<strong>Coming early 2027:</strong> the federal <a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a> will pay $2,000, or up to $10,000 below the median income, toward a cold-climate air-source heat pump. No EnerGuide evaluation is needed, and it can be combined with provincial rebates.';
+  const FED_HP_NOTE = '<strong>Coming early 2027:</strong> the federal <a href="/programs/national-heat-pump-rebate/">National Heat Pump Rebate</a> will pay $2,000, or up to $10,000 at or below the median income, toward an eligible heat pump installed by an HVAC contractor, and heat pumps installed from November 1, 2026 count once it opens. No EnerGuide evaluation is needed, and the announcement said it can be combined with provincial rebates.';
   function renderPrograms(loc: Extract<Loc, { kind: 'ca' }>, goals: string[], isON: boolean, isToronto: boolean) {
     const el = $('#rPrograms');
     const byId = (id: string) => D.programs.find((p: any) => p.id === id);

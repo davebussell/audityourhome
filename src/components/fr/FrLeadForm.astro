@@ -1,0 +1,145 @@
+---
+/**
+ * The match form in French (the Netlify form `audit-request`, the same one the English LeadForm.astro posts to, with a
+ * `langue` field so the email says which language the request came in). It lands on /fr/merci/.
+ */
+import { SITE } from '../../config/site';
+import { NETLIFY_FORMS, FORM_NAMES } from '../../config/forms';
+import { buildingUrl } from '../../config/building';
+
+interface Props {
+  heading?: string;
+  sub?: string;
+  /** Pre-select a region */
+  region?: string;
+  /** Context tag submitted with the lead */
+  context?: string;
+}
+const {
+  heading = 'Être mis en relation avec un conseiller reconnu',
+  sub = 'Dites-nous où vous êtes et ce que vous prévoyez. Nous vous présentons un organisme de services autorisé qui dessert votre région : aucune liste partagée, aucun pourriel.',
+  region = '',
+  context = 'fr-general',
+} = Astro.props;
+
+const netlifyForm = NETLIFY_FORMS;
+const hasEndpoint = netlifyForm || SITE.formEndpoint.length > 0;
+const mailtoFallback = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(`Demande d’évaluation (${context})`)}`;
+const REGIONS: [string, string][] = [
+  ['quebec-outaouais', 'Outaouais (Gatineau, Wakefield, Chelsea…)'],
+  ['quebec-montreal', 'Montréal'],
+  ['quebec-laval', 'Laval'],
+  ['quebec-monteregie', 'Montérégie (Longueuil, Saint-Jean-sur-Richelieu…)'],
+  ['quebec-lanaudiere-laurentides', 'Lanaudière et Laurentides (Terrebonne, Repentigny…)'],
+  ['quebec-capitale', 'Capitale-Nationale (Québec)'],
+  ['quebec-chaudiere', 'Chaudière-Appalaches (Lévis)'],
+  ['quebec-estrie', 'Estrie (Sherbrooke)'],
+  ['quebec-mauricie', 'Mauricie (Trois-Rivières)'],
+  ['quebec-saguenay', 'Saguenay–Lac-Saint-Jean'],
+  ['quebec', 'Ailleurs au Québec'],
+  ['other-canada', 'Ailleurs au Canada'],
+];
+const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="card leadform" id="lead-form" data-clarity-mask="true">
+  <h3>{heading}</h3>
+  <p class="small">{sub}</p>
+
+  {hasEndpoint ? (
+    <form
+      method="POST"
+      action={netlifyForm ? '/fr/merci/?sent=1' : SITE.formEndpoint}
+      name={netlifyForm ? FORM_NAMES.auditRequest : undefined}
+      data-netlify={netlifyForm ? 'true' : undefined}
+      netlify-honeypot={netlifyForm ? 'bot-field' : undefined}
+      class="lf-netlify"
+      data-context={context}
+    >
+      {netlifyForm && <input type="hidden" name="form-name" value={FORM_NAMES.auditRequest} />}
+      <input type="hidden" name="context" value={context} />
+      <input type="hidden" name="langue" value="fr" />
+      {netlifyForm && <input type="hidden" name="subject" value={`Demande d’évaluation en français (${context})`} />}
+      {netlifyForm && <p class="lf-hide" aria-hidden="true"><label>Laissez ce champ vide <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>}
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-name`}>Nom</label>
+          <input id={`${uid}-name`} name="name" type="text" autocomplete="name" maxlength="120" required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-email`}>Courriel</label>
+          <input id={`${uid}-email`} name="email" type="email" autocomplete="email" maxlength="200" required />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for={`${uid}-postal`}>Code postal</label>
+          <input id={`${uid}-postal`} name="postal" type="text" autocomplete="postal-code" maxlength="7" required />
+        </div>
+        <div class="field">
+          <label for={`${uid}-region`}>Région</label>
+          <select id={`${uid}-region`} name="region">
+            <option value="">Choisissez votre région…</option>
+            {REGIONS.map(([v, l]) => <option value={v} selected={v === region}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for={`${uid}-building`}>Type de bâtiment</label>
+        <select id={`${uid}-building`} name="building">
+          <option value="house">Maison (détachée, jumelée ou en rangée)</option>
+          <option value="duplex-triplex">Duplex ou triplex</option>
+          <option value="condo-unit">Unité de condo</option>
+        </select>
+        <p class="small lf-bldg">Immeuble de 4 logements ou plus, ou propriété commerciale? <a href={buildingUrl('/request/')} hreflang="en-CA">Passez par AuditYourBuilding.com (en anglais) →</a></p>
+      </div>
+      <div class="field">
+        <label for={`${uid}-phone`}>Téléphone <span class="optional">(facultatif)</span></label>
+        <input id={`${uid}-phone`} name="phone" type="tel" autocomplete="tel" maxlength="40" />
+      </div>
+      <div class="field">
+        <label for={`${uid}-message`}>Que prévoyez-vous? <span class="optional">(facultatif)</span></label>
+        <textarea id={`${uid}-message`} name="message" rows="3" maxlength="4000" placeholder="p. ex. bungalow de 1972 chauffé aux plinthes électriques, je pense à une thermopompe et à isoler le grenier; quelles subventions s’appliquent?"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Demander ma mise en relation</button>
+      <p class="meta consent">En envoyant ce formulaire, vous acceptez que nous transmettions votre demande et les renseignements ci-dessus à un seul organisme de services autorisé qui dessert votre région, pour qu’il communique avec vous. Les conseillers participants nous versent des frais de référence; vous ne payez rien, et cela n’influence jamais le répertoire. Voir notre <a href="/fr/confidentialite/">note de confidentialité</a>.</p>
+    </form>
+  ) : (
+    <div class="fallback">
+      <p>
+        Écrivez-nous ce que vous prévoyez, votre code postal et le type de maison (maison, duplex, triplex ou unité de condo) :
+        nous vous répondrons avec des organismes de services autorisés pour votre région et les subventions qui s’appliquent.
+      </p>
+      <a class="btn btn-primary" href={mailtoFallback}>Écrire à {SITE.contactEmail}</a>
+      <p class="meta">Une personne répond à cette boîte. Les conseillers participants nous versent des frais de référence; vous ne payez rien.</p>
+    </div>
+  )}
+</div>
+
+<script>
+  // Netlify form: record the lead in analytics without any personal details.
+  document.querySelectorAll<HTMLFormElement>('form.lf-netlify').forEach((f) => {
+    f.addEventListener('submit', () => {
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+      try {
+        w.gtag?.('event', 'generate_lead', { form_name: 'audit_request', country: 'ca', language: 'fr', page_context: f.dataset.context });
+      } catch {
+        /* analytics is optional */
+      }
+    });
+  });
+</script>
+<style>
+  .leadform { padding: 28px 30px; border-top: 4px solid var(--heat); }
+  .leadform h3 { margin-bottom: 4px; }
+  .optional { font-weight: 400; color: var(--faint); }
+  .consent { margin-top: 12px; }
+  .lf-hide { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .fallback { display: grid; gap: 10px; justify-items: start; }
+  .leadform input[type='tel'] {
+    width: 100%; font-family: var(--body); font-size: 16px; color: var(--ink); background: #fff;
+    border: 1.5px solid var(--line-strong); border-radius: 8px; padding: 11px 14px;
+  }
+  .lf-bldg { margin: 8px 0 0; }
+  @media (max-width: 640px) { .leadform { padding: 22px 18px; } }
+</style>

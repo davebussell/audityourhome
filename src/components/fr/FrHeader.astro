@@ -1,0 +1,81 @@
+---
+/**
+ * The header of the French pages (audityourhome.ca/fr/…): a short plain navigation, the English switch, and the
+ * planner call to action. Same look as the English header (Header.astro), without the mega menus.
+ */
+import Logo from '../Logo.astro';
+import { publicPath } from '../../lib/country';
+
+interface Props {
+  /** The same page in English (root form), for the language switch; defaults to the English home page */
+  altPath?: string;
+}
+const { altPath = '/' } = Astro.props;
+const path = publicPath(Astro.url.pathname);
+const NAV = [
+  { href: '/fr/planificateur/', label: 'Planificateur' },
+  { href: '/fr/programmes/', label: 'Subventions' },
+  { href: '/fr/villes/', label: 'Villes du Québec' },
+  { href: '/fr/trouver-un-conseiller/', label: 'Trouver un conseiller' },
+  { href: '/fr/comment-ca-marche/', label: 'Comment ça marche' },
+];
+const isActive = (href: string) => path === href || (href !== '/fr/' && path.startsWith(href));
+---
+
+<header class="site-header" id="siteHeader">
+  <div class="container inner">
+    <Logo href="/fr/" />
+    <nav aria-label="Principale" class="mainnav">
+      <a class="lang-m" href={altPath} hreflang="en-CA" lang="en" aria-label="English version">EN</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="frnav" id="menuBtn">Menu</button>
+      <ul class="deskrow" id="frnav">
+        {NAV.map((i) => (
+          <li><a href={i.href} aria-current={isActive(i.href) ? 'page' : undefined}>{i.label}</a></li>
+        ))}
+        <li class="lang-li"><a href={altPath} hreflang="en-CA" lang="en" class="lang" aria-label="English version of this page">English</a></li>
+        <li class="cta"><a href="/fr/planificateur/" class="btn btn-primary btn-sm">Vérifier ma maison</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(12px) saturate(1.3); border-bottom: 1px solid var(--line-strong); position: sticky; top: 0; z-index: 50; }
+  .inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 66px; }
+  .mainnav { display: flex; align-items: center; height: 100%; gap: 8px; }
+  .deskrow { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
+  .deskrow a:not(.btn) { display: block; padding: 9px 9px; font-weight: 600; font-size: 14px; color: var(--ink); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .deskrow a:not(.btn):hover { color: var(--heat-deep); }
+  .deskrow a[aria-current='page']:not(.btn) { border-bottom-color: var(--heat); color: var(--heat-deep); }
+  .deskrow a.lang { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .cta { margin-left: 8px; }
+  .cta .btn { white-space: nowrap; }
+  .lang-m { display: none; font-family: var(--mono); font-size: 12.5px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-decoration: none; padding: 8px 10px; border: 1.5px solid var(--line-strong); border-radius: 999px; }
+  .menu-btn { display: none; font: inherit; font-weight: 700; font-size: 14px; background: transparent; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; color: var(--ink); cursor: pointer; }
+  .menu-btn[aria-expanded='true'] { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  @media (max-width: 1060px) {
+    .menu-btn, .lang-m { display: inline-block; }
+    .lang-li { display: none; }
+    .deskrow { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; background: var(--card); border-bottom: 1px solid var(--line-strong); box-shadow: var(--shadow-md); padding: 8px 22px 18px; }
+    .deskrow.open { display: flex; }
+    .deskrow a:not(.btn) { padding: 13px 2px; border-bottom: 1px solid var(--line); font-size: 16px; }
+    .deskrow a[aria-current='page']:not(.btn) { border-bottom-color: var(--line); }
+    .cta { margin: 14px 0 0; }
+    .cta .btn { width: 100%; justify-content: center; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const list = document.getElementById('frnav');
+  if (btn && list) {
+    const set = (open: boolean) => {
+      list.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+    list.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+  }
+</script>

@@ -1,0 +1,92 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import { SITE } from '../../../config/site';
+import { breadcrumbSchema } from '../../../lib/schema';
+
+const title = 'À propos d’AuditYourHome, et comment nous traitons les données | AuditYourHome';
+const description =
+  'Pourquoi AuditYourHome existe, comment les fiches des conseillers sont compilées et vérifiées, comment les données sur les programmes restent à jour, et les règles éditoriales que nous nous imposons.';
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'À propos', path: '/fr/a-propos/' },
+  ]),
+];
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const d = new Date(SITE.dataReviewDateISO + 'T12:00:00');
+const dateFr = `${d.getDate() === 1 ? '1er' : d.getDate()} ${MOIS[d.getMonth()]} ${d.getFullYear()}`;
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-hero')} lang="fr" altPath="/about/">
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">À propos</p>
+        <h1>Pourquoi ce site existe</h1>
+        <p class="lede measure">
+          Les outils officiels pour trouver un conseiller en efficacité énergétique sont de simples listes. Les programmes de
+          subventions ferment avec deux semaines de préavis pendant que la moitié d’Internet continue de les annoncer. Et les grandes
+          plateformes de « soumissions » vendent les demandes d’évaluation énergétique à des vendeurs de panneaux solaires et de
+          chauffage. Les propriétaires méritaient une meilleure porte d’entrée, alors nous l’avons construite : ce site pour le
+          Canada, et <a href="https://audityourhome.com/" hreflang="en-US">audityourhome.com</a> pour les États-Unis.
+        </p>
+      </div>
+      <Photo name={'home-hero'} eager hud="Lumière visible" />
+    </div>
+
+    <div class="measure prose">
+      <h2>Les règles que nous suivons</h2>
+      <p>
+        <strong>Seulement de vrais conseillers.</strong> Chaque organisme que nous listons au Canada est un organisme de services
+        autorisé par Ressources naturelles Canada (RNCan), dont les conseillers en efficacité énergétique enregistrés réalisent les
+        évaluations ÉnerGuide que demandent les programmes de subventions. Au Québec, depuis le 1er octobre 2026, Rénoclimat ne vous
+        assigne plus d’évaluateur : vous choisissez vous-même l’organisme, et nous disons lequel dessert votre région. Nous ne listons
+        pas les entrepreneurs dont « l’évaluation gratuite » est un argument de vente, et nous le disons clairement.
+      </p>
+      <p>
+        <strong>Pas de classement payé.</strong> L’ordre des fiches favorise la transparence (prix publiés d’abord) et les organismes
+        communautaires, jamais le paiement. Si un jour nous vendons des placements, ils seront identifiés comme tels, à part des
+        fiches ordinaires.
+      </p>
+      <p>
+        <strong>Comment nous gagnons notre vie.</strong> Les conseillers qui y adhèrent nous versent des frais de référence pour les
+        demandes exclusives de propriétaires que nous leur acheminons (<a href="/for-professionals/" hreflang="en-CA">40 $ par demande
+        après dix gratuites, en anglais</a>), et les entrepreneurs en chauffage et climatisation paient le même genre de frais pour une
+        mise en relation au sujet d’une thermopompe. Cela n’influence jamais les conseillers que nous listons ni leur ordre, chaque
+        demande va à une seule entreprise, et vous pouvez toujours joindre directement n’importe quel conseiller listé. Nos guides
+        d’appareils de mesure utilisent des liens d’affiliation Amazon, qui peuvent nous rapporter une commission sans frais pour
+        vous; aucun fabricant ne paie pour y figurer.
+      </p>
+      <p>
+        <strong>Des affirmations datées.</strong> Chaque fait sur un programme porte la date à laquelle nous l’avons vérifié sur la
+        page officielle, actuellement le {dateFr}. Nous listons les programmes fermés exprès, parce que « annonce encore la
+        Subvention canadienne pour des maisons plus vertes » est la façon la plus rapide de repérer une source périmée.
+      </p>
+      <p>
+        <strong>Des estimations présentées comme des estimations.</strong> Les économies du plan gratuit sont des fourchettes fondées
+        sur le comportement typique de maisons semblables; les prix de l’énergie, les consommations de référence et les fourchettes
+        d’économies qui les sous-tendent sont publiés sur <a href="/plan/#assumptions" hreflang="en-CA">la page du planificateur</a>.
+        Une évaluation énergétique de votre vraie maison les remplace : c’est tout l’intérêt.
+      </p>
+      <p>
+        <strong>Les corrections sont rapides.</strong> Les fiches sont compilées à partir de sources publiques (liées sur chaque
+        profil). Si quelque chose est inexact, écrivez à <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> et nous le
+        corrigerons ou le retirerons sans tarder. Les organismes peuvent réclamer leur profil gratuitement.
+      </p>
+      <h2>Le site en français</h2>
+      <p>
+        Les pages en français couvrent d’abord ce qui compte pour un propriétaire au Québec : les programmes (Rénoclimat, LogisVert,
+        la remise fédérale pour les thermopompes), les villes du Québec, la recherche d’un conseiller, le fonctionnement d’une
+        évaluation et nos engagements. Le planificateur interactif, les guides de tests et les calculateurs sont encore en anglais;
+        nous les traduisons au fur et à mesure. Si une page vous manque en français,
+        <a href={`mailto:${SITE.contactEmail}`}>dites-le-nous</a>.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .prose h2 { margin-top: 28px; }
+</style>

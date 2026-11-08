@@ -1,0 +1,176 @@
+---
+/**
+ * How to book an EnerGuide evaluation in Québec since October 1, 2026, in French: the route, the cost, the
+ * organizations (from the city data) with the cities each one serves, and the match form.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import FrLeadForm from '../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { bookingFor } from '../../../lib/find';
+import { VILLES, VILLES_CHECKED, organismesLabel } from '../../../lib/fr/villes';
+
+const qc = bookingFor('quebec')!;
+const title = 'Trouver un conseiller en efficacité énergétique au Québec (évaluation ÉnerGuide) | AuditYourHome';
+const description =
+  'Comment réserver une évaluation énergétique résidentielle (évaluation ÉnerGuide) au Québec depuis le 1er octobre 2026 : vous choisissez l’organisme de services autorisé, Rénoclimat rembourse jusqu’à 500 $, et voici les organismes qui desservent 11 villes du Québec, avec leurs numéros.';
+
+const faqs = [
+  { q: 'Qui fait une évaluation énergétique au Québec?', a: 'Un conseiller en efficacité énergétique enregistré qui travaille pour un organisme de services autorisé par Ressources naturelles Canada (RNCan). Sa visite s’appelle une évaluation ÉnerGuide, et c’est celle que les programmes de subventions reconnaissent. Une visite de vente présentée comme une « évaluation gratuite » ne compte pas.' },
+  { q: 'Dois-je passer par Rénoclimat pour réserver?', a: 'Plus maintenant. Depuis le 1er octobre 2026, Rénoclimat ne prend plus les réservations et n’assigne plus d’évaluateur : vous appelez directement un organisme autorisé qui dessert votre code postal, au prix qu’il fixe. L’évaluation est facultative pour Rénoclimat, qui rembourse jusqu’à 500 $ si vous réclamez ensuite une mesure admissible. Les dossiers ouverts sous les anciennes règles (évaluation demandée au plus tard le 12 octobre 2026) continuent avec l’organisme régional du programme.' },
+  { q: 'Ma ville n’est pas dans la liste?', a: 'Les organismes autorisés desservent des codes postaux, pas seulement des villes : la liste de la ville couverte la plus proche est un bon point de départ, et la plupart de ses organismes se déplacent dans les environs. Vous pouvez aussi nous écrire votre code postal, et nous vous dirons qui le dessert.' },
+  { q: 'Combien ça coûte?', a: 'Le prix est fixé par l’organisme; l’ancien tarif de 150 $ du programme n’existe plus. Demandez deux ou trois prix et vérifiez que le test d’infiltrométrie est compris. Rénoclimat rembourse jusqu’à 500 $ avec une mesure admissible; LogisVert n’exige aucune évaluation pour ses subventions.' },
+];
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Trouver un conseiller', path: '/fr/trouver-un-conseiller/' },
+  ]),
+  faqSchema(faqs),
+];
+
+/** Every organization named on a Québec city page, with the cities it lists. */
+const orgs = new Map<string, { name: string; phone: string | null; villes: { name: string; fr: string; coverage: number }[] }>();
+for (const v of VILLES) for (const p of v.providers) {
+  const key = p.name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const o = orgs.get(key) ?? { name: p.name, phone: p.phone, villes: [] };
+  o.villes.push({ name: v.name, fr: v.fr, coverage: p.coverage });
+  if (!o.phone && p.phone) o.phone = p.phone;
+  orgs.set(key, o);
+}
+const organismes = [...orgs.values()].sort((a, b) => b.villes.length - a.villes.length || a.name.localeCompare(b.name, 'fr'));
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('home-energy-audit')} lang="fr" altPath="/find/">
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane"><a href="/fr/">Accueil</a> <span aria-hidden="true">/</span> <span>Trouver un conseiller</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Trouver un conseiller · Québec</p>
+        <h1>Trouver un conseiller en efficacité énergétique au Québec</h1>
+        <p class="lede">
+          Au Canada, l’évaluation énergétique d’une maison s’appelle une <strong>évaluation ÉnerGuide</strong>. Elle est faite par
+          un conseiller enregistré qui travaille pour un organisme de services autorisé par Ressources naturelles Canada (RNCan),
+          et c’est celle que les programmes de subventions reconnaissent. Au Québec, depuis le 1er octobre 2026, vous la réservez
+          vous-même.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#organismes">Les organismes par ville</a>
+          <a class="btn btn-ghost" href="/fr/planificateur/">Votre plan gratuit d’abord</a>
+        </div>
+      </div>
+      <Photo name={'home-energy-audit'} eager hud="Évaluation ÉnerGuide" />
+    </div>
+
+    <section class="card prov" aria-labelledby="h-route">
+      <div class="prov-head">
+        <h2 id="h-route">Comment ça se réserve au Québec</h2>
+        <p class="route">Directement avec un organisme autorisé · évaluation facultative depuis le 1er octobre 2026</p>
+      </div>
+      <p class="how">
+        Rénoclimat a changé le 1er octobre 2026 : l’évaluation avant travaux est facultative (recommandée, pas obligatoire), vous la
+        réservez auprès de n’importe quel organisme de services autorisé par RNCan, au prix qu’il fixe, et le programme rembourse
+        jusqu’à 500 $ pour celle-ci quand vous réclamez aussi une mesure admissible. Le programme n’assigne plus l’évaluateur et ne
+        prend plus les réservations; les anciennes règles ne servent qu’à terminer les dossiers commencés avant le 1er octobre
+        (évaluations demandées au plus tard le 12 octobre 2026). Les travaux Rénoclimat doivent être faits par des entrepreneurs
+        licenciés par la RBQ, et la subvention LogisVert pour une thermopompe n’exige aucune évaluation.
+      </p>
+      <dl class="prov-facts">
+        <div><dt>Coût typique</dt><dd>Fixé par l’organisme (le tarif de 150 $ du programme n’existe plus)</dd></div>
+        <div><dt>Aide pour le coût</dt><dd>Rénoclimat rembourse jusqu’à 500 $ avec une mesure admissible · aucune évaluation requise pour LogisVert</dd></div>
+      </dl>
+      <p class="prov-links small">
+        <a href="/fr/programmes/">Subventions et programmes au Québec</a>
+        <span class="src"> · Vérifié le 7 novembre 2026 : {qc.sources.map((s, i) => (
+          <span>{i > 0 && ', '}<a href={s.href} rel="noopener" target="_blank">{i === 0 ? 'Québec.ca — Rénoclimat, nouveautés depuis le 1er octobre 2026' : 'Québec.ca — organismes de services Rénoclimat par région'}&nbsp;↗</a></span>
+        ))}</span>
+      </p>
+    </section>
+
+    <section class="orgs" id="organismes" aria-labelledby="h-orgs">
+      <h2 id="h-orgs">Les organismes autorisés qui desservent nos {VILLES.length} villes</h2>
+      <p class="measure small">
+        D’après le registre des organismes de services autorisés de RNCan (vérifié le {VILLES_CHECKED}), et la part des secteurs
+        postaux urbains de chaque ville que l’organisme dit desservir. Un organisme dessert aussi les codes postaux autour de ses
+        villes.
+      </p>
+      <ul class="org-grid">
+        {organismes.map((o) => (
+          <li class="card org">
+            <strong>{o.name}</strong>
+            {o.phone && <a class="tel" href={`tel:${o.phone.replace(/[^\d+]/g, '')}`}>{o.phone}</a>}
+            <span class="vl">
+              {o.villes.map((x, i) => <span>{i > 0 && ' · '}<a href={`/fr/villes/${x.fr}/#conseillers`}>{x.name}</a> <small>{x.coverage} %</small></span>)}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <h3>Par ville</h3>
+      <ul class="city-grid">
+        {VILLES.map((v) => (
+          <li>
+            <a href={`/fr/villes/${v.fr}/#conseillers`}>
+              <span class="cn">{v.name}</span>
+              <span class="cc">{organismesLabel(v.facts.providers)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="card card-pad elsewhere">
+      <h2>Votre ville n’y est pas?</h2>
+      <p class="mb-0">
+        Les organismes desservent des codes postaux autour de chaque ville, alors la ville la plus proche est un bon point de départ.
+        Ou <a href="#lead-form">envoyez-nous votre code postal</a> et nous vous dirons qui le dessert. Si ce n’est pas déjà fait,
+        <a href="/fr/planificateur/">faites d’abord votre plan gratuit</a> : il liste les tests à demander.
+      </p>
+    </div>
+
+    <section class="faqs">
+      <h2>Bon à savoir</h2>
+      <div class="measure">
+        {faqs.map((f) => (
+          <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+        ))}
+      </div>
+    </section>
+
+    <FrLeadForm context="fr-trouver" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--muted); }
+  .crumbs a { color: var(--muted); }
+  .prov { padding: 22px 24px; box-shadow: none; display: grid; gap: 10px; margin: 6px 0 30px; }
+  .prov-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+  .prov h2 { font-size: 24px; margin: 0; }
+  .route { margin: 0; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pine); }
+  .how { margin: 0; max-width: 75ch; }
+  .prov-facts { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; }
+  .prov-facts div { display: grid; gap: 2px; }
+  .prov-facts dt { font-family: var(--display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
+  .prov-facts dd { margin: 0; font-size: 15px; }
+  @media (max-width: 640px) { .prov-facts { grid-template-columns: 1fr; } }
+  .prov-links { margin: 4px 0 0; color: var(--muted); }
+  .prov-links .src a { overflow-wrap: anywhere; }
+  .orgs h2 { font-size: 24px; margin-bottom: 8px; }
+  .orgs h3 { font-size: 16px; margin: 22px 0 8px; }
+  .org-grid { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .org { padding: 14px 16px; display: grid; gap: 4px; box-shadow: none; }
+  .org .tel { font-weight: 600; text-decoration: none; }
+  .org .vl { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+  .org .vl small { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+  .city-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .city-grid a { display: grid; gap: 1px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; text-decoration: none; color: var(--ink); background: var(--card); }
+  .city-grid a:hover { border-color: var(--heat); }
+  .city-grid .cn { font-weight: 600; font-size: 14.5px; }
+  .city-grid .cc { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .elsewhere { margin: 30px 0 26px; border-left: 4px solid var(--pine); }
+  .elsewhere h2 { font-size: 20px; margin-bottom: 6px; }
+  .faqs h2 { font-size: 24px; margin-bottom: 8px; }
+  .faqs { margin-bottom: 26px; }
+</style>

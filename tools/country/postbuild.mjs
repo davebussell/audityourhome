@@ -171,17 +171,29 @@ for (const c of SITE_KEYS) {
   }
   cpSync(join(DIST, c), out, { recursive: true });
 
-  // hreflang between the home sites' twins (both carry both links), stripping anything the build left
+  // hreflang between the home sites' twins (both carry both links), stripping the English links the build left.
+  // The layout's own fr-CA/en-CA pair (a French page under /fr/ and its English twin, Canadian site only) is kept:
+  // a French page keeps both as emitted; an English twin keeps fr-CA and gets its en-* links back here, so a page
+  // with a US twin ends up with fr-CA + en-CA + en-US and a Canada-only one with fr-CA + en-CA.
   let linked = 0;
   if (COUNTRIES.includes(c)) {
     for (const file of walk(out)) {
       const rel = file.slice(out.length).replace(/\\/g, '/').replace(/index\.html$/, '') || '/';
       let html = readFileSync(file, 'utf8');
       const before = html;
-      html = html.replace(/<link rel="alternate" hreflang="[^"]+" href="[^"]+">/g, '');
-      if (!noindex(html) && indexable[c].has(rel) && indexable[other(c)].has(rel)) {
-        const tags = COUNTRIES.map((k) => `<link rel="alternate" hreflang="${SITES[k].locale}" href="${SITES[k].url}${rel}">`).join('');
-        html = html.replace('</head>', `${tags}</head>`);
+      const isFrench = c === 'ca' && rel.startsWith('/fr/');
+      if (!isFrench) {
+        html = html.replace(/<link rel="alternate" hreflang="en-[A-Z]{2}" href="[^"]+">/g, '');
+        const hasFrench = html.includes('hreflang="fr-CA"');
+        if (!noindex(html) && indexable[c].has(rel) && indexable[other(c)].has(rel)) {
+          const tags = COUNTRIES.map((k) => `<link rel="alternate" hreflang="${SITES[k].locale}" href="${SITES[k].url}${rel}">`).join('');
+          html = html.replace('</head>', `${tags}</head>`);
+          linked++;
+        } else if (hasFrench) {
+          html = html.replace('</head>', `<link rel="alternate" hreflang="${site.locale}" href="${site.url}${rel}"></head>`);
+          linked++;
+        }
+      } else if (!noindex(html)) {
         linked++;
       }
       if (html !== before) writeFileSync(file, html);

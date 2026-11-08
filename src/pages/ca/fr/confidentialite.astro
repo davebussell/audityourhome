@@ -1,0 +1,102 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { SITE, ACCOUNTS } from '../../../config/site';
+
+const title = 'Confidentialité | AuditYourHome';
+const description = 'Ce qu’AuditYourHome recueille, pourquoi, où c’est conservé, qui le voit, et comment l’obtenir ou le faire supprimer. En langage clair, mis à jour le 7 novembre 2026.';
+const updated = '7 novembre 2026';
+const address = ACCOUNTS.mailingAddress || 'Wakefield (Québec)';
+---
+
+<Base title={title} description={description} lang="fr" altPath="/privacy/">
+  <div class="container">
+    <div class="page-hero">
+      <p class="eyebrow">Mise à jour le {updated}</p>
+      <h1>La confidentialité, en langage clair</h1>
+      <p class="lede">Ce que nous recueillons, pourquoi, où c’est conservé, qui le voit, et comment le récupérer ou le faire supprimer.</p>
+    </div>
+    <div class="measure prose">
+      <h2>Qui nous sommes</h2>
+      <p>
+        AuditYourHome est exploité par Click Shift Marketing, {address}. La personne responsable de la protection des
+        renseignements personnels est Dave Bussell, propriétaire : <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        Écrivez-lui pour toute question, demande ou plainte concernant vos renseignements.
+      </p>
+
+      <h2>Le planificateur et les calculateurs</h2>
+      <p>
+        Le planificateur énergétique et les calculateurs fonctionnent dans votre navigateur. Les codes postaux, les factures et les
+        réponses que vous entrez sont traités sur votre appareil et ne nous sont pas envoyés. Vos réponses restent dans votre
+        navigateur : le planificateur les garde dans la partie de l’adresse de la page qui suit le signe « # », que les navigateurs
+        n’envoient pas à nos serveurs, et nos outils de mesure d’audience ne les reçoivent pas. Elles ne sont partagées que si vous
+        copiez vous-même le lien de votre plan pour l’envoyer à quelqu’un.
+      </p>
+
+      <h2 id="demandes">Demandes et questions</h2>
+      <p>
+        Quand vous demandez une mise en relation, par le formulaire du planificateur, le formulaire de demande d’évaluation ou le
+        formulaire sur les thermopompes, nous transmettons les renseignements que vous avez inscrits dans ce formulaire à
+        <strong>une seule</strong> entreprise participante qui dessert votre région : un organisme de services autorisé (conseiller en
+        efficacité énergétique) pour une demande d’évaluation, ou un entrepreneur en chauffage et climatisation pour une demande de
+        thermopompe (là où aucun entrepreneur ne participe encore, un conseiller qui connaît les subventions aux thermopompes). Nous
+        utilisons vos renseignements pour cette présentation et pour rien d’autre. Cette entreprise nous verse des frais de référence;
+        vous ne payez rien. Nous ne vendons jamais de listes de contacts et n’envoyons jamais une demande à plus d’une entreprise.
+        Les questions générales envoyées par courriel reçoivent une réponse de notre part et ne sont partagées avec personne.
+      </p>
+      <p>
+        Les formulaires sont traités par Netlify, l’entreprise qui héberge ce site. Elle conserve ce que vous envoyez aux
+        États-Unis et nous le transmet par courriel; nous le gardons seulement le temps de traiter votre demande. Si vous nous
+        écrivez, nous avons votre adresse courriel et nous l’utilisons pour vous répondre.
+      </p>
+      <p>
+        Notre site américain, <a href="https://audityourhome.com/privacy/" hreflang="en-US">audityourhome.com</a>, a sa propre page
+        de confidentialité (en anglais).
+      </p>
+
+      <h2>Mesure d’audience</h2>
+      <p>
+        Sur les pages publiques, nous utilisons Google Analytics et Microsoft Clarity pour voir quelles pages sont utiles et où les
+        gens bloquent. Ces outils déposent des témoins (cookies) et enregistrent l’utilisation des pages; Clarity peut rejouer une
+        visite, en masquant ce que vous tapez dans nos formulaires. Ni l’un ni l’autre ne reçoit vos réponses au planificateur. Vous
+        pouvez les bloquer avec les réglages de confidentialité de votre navigateur ou un bloqueur de publicité : le site fonctionne
+        de la même façon.
+      </p>
+
+      <h2>Les témoins que nous posons nous-mêmes</h2>
+      <p>
+        Un seul : un témoin qui retient que vous avez choisi ce site plutôt que notre site américain, pour que nous cessions de vous
+        proposer de changer. Il ne contient aucun renseignement personnel et expire après un an.
+      </p>
+
+      <h2>Liens d’affiliation</h2>
+      <p>
+        Nos guides d’appareils de mesure renvoient à Amazon. Les liens vers amazon.com portent notre identifiant d’associé Amazon :
+        si vous achetez quelque chose après avoir suivi l’un d’eux, nous pouvons toucher une commission, sans frais supplémentaires
+        pour vous; les liens vers amazon.ca ne portent aucun identifiant tant que notre compte d’associé canadien n’est pas approuvé.
+        La politique de confidentialité d’Amazon s’applique sur son site, et aucun fabricant ne paie pour figurer dans les guides.
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Vous pouvez demander ce que nous détenons sur vous, le faire corriger, en obtenir une copie dans un format courant ou le faire
+        supprimer. Vous pouvez retirer votre consentement à tout moment. Si notre réponse ne vous satisfait pas, vous pouvez porter
+        plainte à la <a href="https://www.cai.gouv.qc.ca/" rel="noopener">Commission d’accès à l’information du Québec</a> ou au
+        <a href="https://www.priv.gc.ca/fr/" rel="noopener">Commissariat à la protection de la vie privée du Canada</a>.
+      </p>
+
+      <h2>Combien de temps nous le gardons</h2>
+      <p>Les courriels que vous nous envoyez sont conservés le temps nécessaire pour y donner suite.</p>
+
+      <p class="small">
+        Si nous changeons notre façon de traiter les renseignements personnels, nous mettrons cette page et sa date à jour.
+        Questions : <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+    </div>
+  </div>
+</Base>
+<style>
+  .prose p { margin-bottom: 16px; }
+  .prose h2 { font-size: 22px; margin: 28px 0 8px; }
+  .prose h2:first-child { margin-top: 0; }
+  .prose { padding-bottom: 56px; }
+</style>

@@ -1,0 +1,137 @@
+---
+/**
+ * The French door to the planner. The interactive planner itself (/plan/) is still in English: this page says
+ * what it does, hands the two first answers to it, and lists what it will say about a Québec home.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+
+const title = 'Votre plan énergétique gratuit pour une maison du Québec (planificateur) | AuditYourHome';
+const description =
+  'Le planificateur gratuit d’AuditYourHome : six courtes étapes, sans courriel, pour savoir ce dont votre maison a probablement besoin, ce que chaque amélioration pourrait économiser au prix d’Hydro-Québec, et les subventions Rénoclimat, LogisVert et fédérales qui s’appliquent. L’outil est en anglais; cette page vous y guide.';
+const faqs = [
+  { q: 'Le planificateur est-il en français?', a: 'Pas encore : l’outil interactif est en anglais, et nous le traduisons après les pages sur les programmes et les villes. Cette page explique chaque étape en français, et le formulaire ci-dessus envoie vos deux premières réponses au planificateur. Les résultats parlent de Rénoclimat, de LogisVert et des règles du Québec, pas seulement de l’Ontario.' },
+  { q: 'Mes réponses sont-elles envoyées quelque part?', a: 'Non. Le planificateur fonctionne dans votre navigateur et garde vos réponses dans la partie de l’adresse qui suit le signe #, que les navigateurs n’envoient pas aux serveurs. Rien ne part tant que vous ne demandez pas vous-même une mise en relation avec un conseiller.' },
+  { q: 'Que vaut une estimation sans visite?', a: 'C’est une fourchette fondée sur des maisons semblables : votre époque de construction, votre chauffage, vos symptômes et vos factures. Elle dit quoi regarder et quoi demander; l’évaluation ÉnerGuide mesure votre vraie maison et la remplace.' },
+  { q: 'Que fait le parcours « subventions d’abord »?', a: 'Si vous savez déjà quels travaux vous voulez faire, il saute l’analyse de la maison : lieu, projets, chauffage, puis où en est le projet. Il sort une vérification des subventions pour chaque projet (ce que Rénoclimat et LogisVert paient, à quelles conditions, et quoi faire en premier) et peut ensuite bâtir le plan complet avec les mêmes réponses.' },
+];
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Planificateur', path: '/fr/planificateur/' },
+  ]),
+  faqSchema(faqs),
+];
+const etapes = [
+  { n: '1', h: 'Location (votre emplacement)', p: 'Les trois premiers caractères de votre code postal suffisent. Le planificateur reconnaît les codes du Québec, y compris les secteurs ruraux de l’Outaouais (J0X, J0V), qu’il modélise sur la ville couverte la plus proche.' },
+  { n: '2', h: 'Your home (votre maison)', p: 'L’époque de construction, le type (maison, duplex ou triplex, condo), la surface approximative et le nombre d’étages. L’époque dit beaucoup : une maison de 1972 a rarement plus de R-20 au grenier.' },
+  { n: '3', h: 'Heating and cooling (chauffage et climatisation)', p: 'Plinthes électriques, fournaise, chaudière, thermopompe, poêle; l’énergie; le chauffe-eau. Aucune question sur le gaz si vous n’avez pas d’appareil au gaz.' },
+  { n: '4', h: 'Problems (les symptômes)', p: 'Pièces froides, courants d’air, barrages de glace, sous-sol humide, factures élevées : chaque symptôme pointe vers un test précis.' },
+  { n: '5', h: 'Goals (vos objectifs)', p: 'Réduire les factures, être plus confortable, remplacer un appareil en fin de vie, préparer une thermopompe, vendre la maison.' },
+  { n: '6', h: 'Bills (vos factures)', p: 'Mieux : une année de consommation (kWh, m³ ou litres), qui calibre les estimations; sinon, un montant mensuel approximatif.' },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('energy-bill-analysis')} lang="fr" altPath="/plan/">
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane"><a href="/fr/">Accueil</a> <span aria-hidden="true">/</span> <span>Planificateur</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Planificateur gratuit · six étapes · sans courriel</p>
+        <h1>Sachez ce dont votre maison a besoin avant de dépenser</h1>
+        <p class="lede measure">
+          Le planificateur estime ce qui se cache probablement derrière vos murs, ce que chaque amélioration pourrait économiser au
+          prix de l’électricité québécoise, les tests à demander par leur nom et les subventions qui s’appliquent, avant qu’une
+          personne ne se déplace. <strong>L’outil est en anglais pour l’instant</strong>; voici ce qu’il demande et ce qu’il répond.
+        </p>
+        <form class="card qs" action="/plan/" method="GET" aria-label="Commencer votre plan" data-clarity-mask="true">
+          <h2>Commencer : deux réponses</h2>
+          <div class="field">
+            <label for="fr-postal">Code postal <span class="hint-sm">(les trois premiers caractères suffisent)</span></label>
+            <input id="fr-postal" name="postal" type="text" placeholder="p. ex. J8X 2A1" autocomplete="postal-code" maxlength="7" />
+          </div>
+          <div class="field">
+            <span class="lbl-sm">Année de construction</span>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Avant 1946</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>1946–1965</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1966-1980" /><span>1966–1980</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1981-1995" /><span>1981–1995</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="1996-2010" /><span>1996–2010</span></label>
+              <label class="radio-pill"><input type="radio" name="age" value="2011-plus" /><span>2011 ou après</span></label>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Ouvrir le planificateur (en anglais) →</button>
+          <p class="meta">Fonctionne dans votre navigateur. Vos réponses ne sont envoyées nulle part, sauf si vous demandez une mise en relation avec un conseiller.</p>
+        </form>
+      </div>
+      <Photo name="energy-bill-analysis" eager hud="12 mois de factures" />
+    </div>
+
+    <h2 class="sec">Les six étapes, en français</h2>
+    <div class="timeline">
+      {etapes.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid-2 outs">
+      <div class="card card-pad">
+        <h3>Ce que le plan répond</h3>
+        <ul>
+          <li>L’histoire probable de votre époque de construction : isolation, étanchéité, fenêtres, ventilation.</li>
+          <li>Les économies estimées de chaque amélioration, en dollars par année au tarif D d’Hydro-Québec, présentées comme des fourchettes.</li>
+          <li>Les tests à demander par leur nom : infiltrométrie, thermographie, calcul des pertes de chaleur, radon.</li>
+          <li>Les subventions dans ce plan : Rénoclimat et LogisVert, avec les montants fixes séparés de ceux dimensionnés sur une maison type, les conditions de produit et de valeur R, et la remise fédérale à part, parce qu’elle n’est pas encore ouverte.</li>
+          <li>L’étape suivante, dans le bon ordre : l’évaluation est facultative au Québec, alors le plan dit quand les soumissions peuvent commencer tout de suite.</li>
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>Ou : les subventions d’abord</h3>
+        <p>Vous savez déjà quels travaux vous voulez faire? Choisissez <em>Find rebates for work I’m planning</em> à la première question : quatre étapes (lieu, projets, chauffage, où en est le projet) et une vérification des subventions pour chaque projet.</p>
+        <p class="mb-0"><a class="btn btn-ghost" href="/plan/">Ouvrir le planificateur →</a></p>
+      </div>
+    </div>
+
+    <h2 class="sec">Questions fréquentes</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <p class="small links">
+      Les hypothèses du planificateur (prix de l’énergie, consommations de référence, fourchettes d’économies) sont publiées sur
+      <a href="/plan/#assumptions" hreflang="en-CA">la page du planificateur</a>. Ensuite : <a href="/fr/trouver-un-conseiller/">trouver un conseiller au Québec</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--muted); }
+  .crumbs a { color: var(--muted); }
+  .qs { padding: 22px 24px; border-top: 4px solid var(--heat); margin-top: 18px; max-width: 560px; }
+  .qs h2 { font-size: 20px; margin-bottom: 10px; }
+  .qs .meta { margin-top: 10px; }
+  .hint-sm { font-weight: 400; color: var(--faint); font-size: 13px; }
+  .lbl-sm { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .sec { margin: 30px 0 12px; font-size: 24px; }
+  .timeline { display: grid; gap: 12px; max-width: 800px; }
+  .tstep { display: flex; gap: 18px; padding: 18px 22px; align-items: flex-start; }
+  .tn { font-family: var(--mono); font-weight: 600; font-size: 14px; color: var(--heat); padding-top: 3px; }
+  .tstep h3 { margin-bottom: 4px; font-size: 17px; }
+  .tstep p { font-size: 15px; color: var(--muted); }
+  .outs { margin-top: 26px; }
+  .outs ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .links { margin: 22px 0 30px; color: var(--muted); }
+  @media (max-width: 560px) { .tstep { gap: 12px; padding: 16px; } }
+</style>

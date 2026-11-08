@@ -1,0 +1,227 @@
+---
+/**
+ * Québec in French: the province guide (/provinces/quebec/ in English): the housing stock, the two climates,
+ * the programs that are live, the federal picture, the 11 cities and the home-health checklist.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import EraBar from '../../../components/EraBar.astro';
+import FrLeadForm from '../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { VILLES, VILLES_CHECKED, n, deg, noteFr } from '../../../lib/fr/villes';
+import programmes from '../../../data/fr/programmes.json';
+
+const title = 'Évaluation énergétique au Québec : Rénoclimat, LogisVert, remise fédérale et guides par ville | AuditYourHome';
+const description =
+  'Le guide québécois de l’évaluation énergétique résidentielle : ce que paient Rénoclimat (sans évaluation depuis le 1er octobre 2026) et LogisVert, la remise fédérale pour les thermopompes de 2027, les deux climats du Québec, et des guides pour 11 villes, de Gatineau à Saguenay.';
+
+const faqs = [
+  { q: 'Faut-il encore une évaluation Rénoclimat au Québec?', a: 'Non, depuis le 1er octobre 2026. L’évaluation avant travaux est facultative; Rénoclimat rembourse jusqu’à 500 $ pour celle-ci si vous réclamez au moins une mesure admissible, et vous la réservez vous-même auprès de n’importe quel organisme de services autorisé par RNCan. Les dossiers ouverts sous les anciennes règles (évaluation demandée au plus tard le 12 octobre 2026) gardent leurs deux évaluations.' },
+  { q: 'Qui paie pour une thermopompe au Québec?', a: 'LogisVert d’Hydro-Québec : 50 $ par tranche de 1 000 BTU/h pour un modèle ENERGY STAR, 120 $ pour un modèle classé climat froid, jusqu’à 6 700 $, sans évaluation. Dès 2027, la remise fédérale ajoute 2 000 $, ou jusqu’à 10 000 $ au revenu médian ou moins, et les thermopompes installées depuis le 1er novembre 2026 comptent rétroactivement.' },
+  { q: 'Mon chauffage au mazout : y a-t-il encore de l’aide?', a: 'Chauffez vert ne paie plus les conversions du mazout et du propane depuis le 31 mars 2026, et le programme fédéral mazout-thermopompe a fermé le 31 juillet 2026. Il reste LogisVert pour la thermopompe, la remise fédérale en 2027, et des programmes municipaux à Gatineau, Laval et Montréal.' },
+  { q: 'Le radon est-il un problème au Québec?', a: 'L’enquête pancanadienne de 2024 a mesuré environ 1 maison québécoise sur 6 à la ligne directrice de 200 Bq/m³ ou au-dessus, et Sherbrooke figure parmi les municipalités les plus touchées au pays. Un test de longue durée (91 jours ou plus, en hiver) est la seule façon de savoir pour votre maison.' },
+];
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Québec', path: '/fr/quebec/' },
+  ]),
+  faqSchema(faqs),
+];
+const groupes = [
+  { profil: 'Grands Lacs–Saint-Laurent', resume: 'Hivers froids et étés chauds et humides : étanchéisez le grenier, asséchez le sous-sol, prévoyez la climatisation.', villes: VILLES.filter((v) => noteFr(v)?.profil === 'Grands Lacs–Saint-Laurent') },
+  { profil: 'Est très froid', resume: 'Hivers profonds et enneigés : arrêtez les barrages de glace, et jumelez une thermopompe pour climat froid à un chauffage d’appoint.', villes: VILLES.filter((v) => noteFr(v)?.profil === 'Est très froid') },
+];
+const temps = VILLES.map((v) => v.facts.designHeat);
+const sante = [
+  { nom: 'Radon', href: '/tests/radon/', note: 'La ceinture appalachienne et des poches partout dans la province testent haut; l’île de Montréal varie d’un pâté de maisons à l’autre. Chaque maison : une trousse par hiver, surtout avec une chambre ou un bureau au sous-sol.' },
+  { nom: 'Puits dans les régions', href: '/tests/well-water/', note: 'Les propriétaires de puits testent par des laboratoires privés accrédités : les bactéries chaque saison, la chimie périodiquement. Gardez les rapports; les notaires les demandent.' },
+  { nom: 'Ventilation des plex', href: '/tests/ventilation-assessment/', note: 'Des logements empilés avec une seule enveloppe qui fuit et aucune ventilation mécanique : le cas d’humidité signature du Québec. Mesurez les ventilateurs, puis corrigez les causes.' },
+  { nom: 'Héritages du mazout', href: '/tests/carbon-monoxide/', note: 'Les fournaises au mazout et leurs réservoirs persistent dans les régions : entretien annuel, avertisseurs de CO à jour et, au remplacement, LogisVert fait de la thermopompe la soumission évidente à demander.' },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-quebec')} lang="fr" altPath="/provinces/quebec/">
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane"><a href="/fr/">Accueil</a> <span aria-hidden="true">/</span> <span>Québec</span></nav>
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Guide provincial · statut vérifié pour chaque programme</p>
+        <h1>L’évaluation énergétique résidentielle au Québec</h1>
+        <p class="lede measure">
+          Le Québec a deux grands programmes. Rénoclimat, du gouvernement, paie l’isolation et les fenêtres à haute performance et,
+          depuis le 1er octobre 2026, n’exige plus d’évaluation (il rembourse jusqu’à 500 $ pour celle-ci); il a aussi ajouté un volet
+          de protection contre les inondations. LogisVert, d’Hydro-Québec, paie les thermopompes, l’isolation du toit des maisons
+          chauffées à l’électricité, les appareils et le solaire. La remise fédérale pour les thermopompes s’ajoute en 2027.
+        </p>
+      </div>
+      <Photo name="region-quebec" eager hud="Québec" />
+    </div>
+
+    <div class="measure prose">
+      <h2>Le parc de maisons, lu comme un évaluateur</h2>
+      <p>
+        Les plex de Montréal, avec leurs escaliers extérieurs, leurs murs mitoyens et leur ossature de 1900–1950, sont une discipline
+        de rénovation à part; les régions ajoutent des maisons de ferme et des bungalows du milieu du siècle chauffés à tout, des
+        plinthes électriques au mazout. Les hivers sont assez longs pour que les travaux d’enveloppe se rentabilisent même au bas prix
+        de l’électricité québécoise, environ 8,3 ¢/kWh à Montréal en 2025, l’un des plus bas en Amérique du Nord.
+      </p>
+    </div>
+
+    <section class="climates" id="climat">
+      <h2 class="sec">Les deux climats du Québec : ce que les maisons y demandent</h2>
+      <p class="measure">
+        L’électricité chauffe la plupart des maisons (70 % aux plinthes ou à un autre chauffage électrique, 16 % avec une thermopompe).
+        Le verglas, les fortes pluies et les inondations printanières sont les principaux aléas. Les températures de calcul d’hiver
+        de nos onze villes vont de {deg(Math.max(...temps))} à {deg(Math.min(...temps))}.
+      </p>
+      <p class="measure radon-line"><strong>Radon :</strong> environ 1 maison sur 6 testée à 200 Bq/m³ ou plus dans l’enquête de 2024, région de Montréal comprise; Sherbrooke figure parmi les municipalités les plus touchées au Canada.</p>
+      {groupes.map((g) => (
+        <div class="cgroup card card-pad">
+          <h3>{g.profil}</h3>
+          <p class="cg-sum">{g.resume}</p>
+          <p class="cg-cities small">
+            {g.villes.length === 1 ? 'Cette ville' : `${g.villes.length} villes`} de ce climat :{' '}
+            {g.villes.map((v, i) => <span>{i > 0 && ', '}<a href={`/fr/villes/${v.fr}/`}>{v.name}</a></span>)}
+          </p>
+        </div>
+      ))}
+    </section>
+
+    <h2 class="sec">Les programmes au Québec : ce qui est vraiment en vigueur</h2>
+    <div class="prog-grid">
+      {programmes.programmes.map((p) => (
+        <article class={`card card-pad pcard s-${p.statut}`}>
+          <div class="phead">
+            <span class={`chip ${p.statut === 'active' ? 'chip-active' : 'chip-info'}`}>{p.statut === 'active' ? 'en vigueur' : 'annoncé'}</span>
+            <p class="phl">{p.evaluationRequise ? 'Évaluation requise' : 'Aucune évaluation requise'}</p>
+          </div>
+          <h3>{p.nom}</h3>
+          <p class="pnote">{p.manchette}</p>
+          <p class="meta"><a href={`/fr/programmes/${p.slug}/`}><strong>Le guide complet →</strong></a> · <a href={p.urlOfficielle} rel="noopener">Page officielle ↗</a> · vérifié le {p.verifie}</p>
+        </article>
+      ))}
+      <article class="card card-pad pcard s-closed">
+        <div class="phead">
+          <span class="chip chip-closed">inscriptions closes</span>
+          <p class="phl">Ménages à revenu modeste</p>
+        </div>
+        <h3>LogisVert — ménages à revenu modeste (volet abordabilité fédéral)</h3>
+        <p class="pnote">Les améliorations gratuites d’Hydro-Québec pour les ménages à revenu modeste, livraison québécoise du programme fédéral d’abordabilité, ont fermé les inscriptions pour la saison 2026–2027 et traitent les demandes déjà reçues.</p>
+        <p class="meta"><a href="https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/modest-income-households/" rel="noopener">Page officielle ↗</a> · vérifié le 8 octobre 2026</p>
+      </article>
+    </div>
+
+    <div class="card card-pad fed">
+      <h3>Le portrait fédéral</h3>
+      <div class="fed-rows">
+        <p class="fed-line"><span class="chip chip-info">annoncé</span> <strong>Programme national de remise pour les thermopompes :</strong> ouverture au début de 2027; 2 000 $, ou jusqu’à 10 000 $ au revenu médian ou moins; les thermopompes installées depuis le 1er novembre 2026 comptent une fois le programme ouvert. <a href="/fr/programmes/remise-federale-thermopompe/">Ce qu’on sait →</a></p>
+        <p class="fed-line"><span class="chip chip-closed">terminé</span> <strong>Subvention et prêt canadiens pour des maisons plus vertes :</strong> la subvention a fermé en février 2024, le prêt a cessé de prendre des demandes le 1er octobre 2025.</p>
+        <p class="fed-line"><span class="chip chip-closed">terminé</span> <strong>Programme pour la conversion de l’huile de chauffage à la thermopompe :</strong> fermé aux nouvelles demandes le 31 juillet 2026. Au Québec, où RNCan le livrait directement, il payait jusqu’à 10 000 $ aux ménages admissibles selon le revenu.</p>
+      </div>
+    </div>
+
+    <a class="card card-pad hp-link" href="/fr/thermopompes/">
+      <span class="hp-t">Les thermopompes au Québec →</span>
+      <span class="hp-d">Ce que LogisVert et la remise fédérale paient, la règle ENERGY STAR et le classement climat froid, le calcul des pertes de chaleur, le tarif biénergie, et pourquoi isoler d’abord.</span>
+    </a>
+
+    <h2 class="sec">Guides locaux pour {VILLES.length} villes du Québec</h2>
+    <p class="small measure">
+      Chaque page de ville donne son climat, l’âge de ses maisons, la façon dont on s’y chauffe, le radon, les organismes de services
+      qui la desservent et les programmes de la Ville. La barre montre ses maisons par époque de construction, les plus vieilles
+      d’abord; DJC veut dire degrés-jours de chauffage. Données vérifiées le {VILLES_CHECKED}.
+    </p>
+    <div class="pc-grid">
+      {VILLES.map((v) => (
+        <a class="pc" href={`/fr/villes/${v.fr}/`}>
+          <span class="pcn">{v.name}</span>
+          <EraBar era={v.facts.era} name={v.name} lang="fr" />
+          <span class="pcf">{n(v.facts.hdd)} DJC · {Math.round(v.facts.housesPre1961 ?? 0)} % avant 1961</span>
+          {noteFr(v) && <span class="pcp">{noteFr(v)!.profil}</span>}
+        </a>
+      ))}
+    </div>
+
+    <h2 class="sec">Surveiller et tester au Québec</h2>
+    <p class="small measure">La géologie, les sources d’eau et le climat fixent la liste de vérification. Chaque élément renvoie à son guide complet (en anglais).</p>
+    <div class="hh-grid">
+      {sante.map((h) => (
+        <article class="card card-pad hh">
+          <h3><a href={h.href} hreflang="en-CA">{h.nom}</a></h3>
+          <p class="mb-0">{h.note}</p>
+        </article>
+      ))}
+    </div>
+
+    <h2 class="sec">Questions fréquentes</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <div class="card card-pad next-cta">
+      <div>
+        <h3>Passez votre maison au planificateur</h3>
+        <p class="mb-0 small">Code postal à l’entrée, plan à la sortie : l’histoire probable de votre époque de construction, les tests à demander par leur nom et les programmes québécois qui correspondent à votre situation. Le planificateur est en anglais pour l’instant.</p>
+      </div>
+      <a class="btn btn-primary" href="/fr/planificateur/">Vérifier ma maison →</a>
+    </div>
+
+    <p class="also">Les autres provinces : <a href="/provinces/" hreflang="en-CA">le guide par province, en anglais</a>.</p>
+
+    <FrLeadForm heading="Trouver un conseiller reconnu au Québec" sub="Des organismes de services autorisés par RNCan desservent chaque région. Dites-nous où vous êtes et ce que vous prévoyez : nous vous présentons celui qui dessert votre secteur, avec les programmes québécois signalés." context="fr-quebec" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--muted); }
+  .crumbs a { color: var(--muted); }
+  .prose h2 { font-size: 23px; margin: 8px 0 10px; }
+  .sec { margin: 32px 0 10px; font-size: 23px; }
+  .climates { margin-top: 8px; }
+  .radon-line { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--steel); border-radius: var(--radius); padding: 10px 14px; }
+  .cgroup { margin-top: 12px; border-left: 4px solid var(--pine); }
+  .cgroup h3 { font-size: 18px; margin: 0 0 4px; }
+  .cg-sum { margin: 0 0 6px; font-size: 15px; }
+  .cg-cities { margin: 0; color: var(--muted); }
+  .prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 14px 0 18px; }
+  .pcard { display: grid; gap: 6px; align-content: start; }
+  .pcard.s-active { border-left: 4px solid var(--pine); }
+  .pcard.s-announced { border-left: 4px solid var(--steel); }
+  .pcard.s-closed { border-left: 4px solid var(--dead); }
+  .phead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .phl { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink); margin: 0; }
+  .pcard h3 { font-size: 17.5px; margin: 0; }
+  .pnote { font-size: 14px; color: var(--muted); margin: 0; }
+  .pcard .meta a { color: var(--heat-deep); text-decoration: none; }
+  .fed { border-left: 4px solid var(--steel); margin: 6px 0 10px; }
+  .fed h3 { margin-bottom: 10px; }
+  .fed-rows { display: grid; gap: 10px; }
+  .fed-line { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .fed-line .chip { margin-right: 6px; }
+  .fed-line strong { color: var(--ink); }
+  .fed-line a { color: var(--heat-deep); text-decoration: none; }
+  .hp-link { display: grid; gap: 4px; margin: 4px 0 10px; border-left: 4px solid var(--heat); text-decoration: none; color: var(--ink); }
+  .hp-link:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .hp-t { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--heat-deep); }
+  .hp-d { font-size: 14.5px; color: var(--muted); }
+  .pc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 14px 0 8px; }
+  .pc { display: grid; gap: 6px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .pc:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .pcn { font-family: var(--display); font-weight: 700; font-size: 16px; }
+  .pcf { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .pcp { font-size: 12px; color: var(--heat-deep); font-weight: 600; }
+  .hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  @media (max-width: 780px) { .hh-grid { grid-template-columns: 1fr; } }
+  .hh { border-left: 4px solid var(--steel); }
+  .hh h3 { font-size: 16.5px; margin-bottom: 6px; }
+  .hh h3 a { color: var(--ink); text-decoration: none; }
+  .hh h3 a:hover { color: var(--heat-deep); }
+  .hh p { font-size: 14.5px; }
+  .next-cta { display: flex; gap: 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--pine); margin: 26px 0 14px; }
+  .next-cta h3 { margin-bottom: 4px; }
+  .also { font-size: 13.5px; color: var(--muted); margin-bottom: 26px; }
+</style>

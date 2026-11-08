@@ -1,0 +1,79 @@
+---
+/**
+ * The Québec cities in French: one card per city, the era bar and the headline numbers, like /cities/ for Québec.
+ */
+import Base from '../../../../layouts/Base.astro';
+import Photo from '../../../../components/Photo.astro';
+import EraBar from '../../../../components/EraBar.astro';
+import { ogFor } from '../../../../lib/photos';
+import { breadcrumbSchema } from '../../../../lib/schema';
+import { VILLES, VILLES_CHECKED, n, organismesLabel } from '../../../../lib/fr/villes';
+
+const title = `Évaluations énergétiques et tests résidentiels dans ${VILLES.length} villes du Québec | AuditYourHome`;
+const description = `Guides locaux pour ${VILLES.length} villes du Québec : climat, âge des maisons, chauffage, radon, organismes de services autorisés et programmes de subventions de chaque ville, de Montréal à Saguenay.`;
+const schema = [breadcrumbSchema([{ name: 'Accueil', path: '/fr/' }, { name: 'Villes', path: '/fr/villes/' }])];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-quebec')} lang="fr" altPath="/cities/">
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">{VILLES.length} villes · données vérifiées le {VILLES_CHECKED}</p>
+        <h1>De Gatineau à Saguenay, les maisons de votre ville ont une histoire</h1>
+        <p class="lede measure">
+          Chaque ville ci-dessous a son guide : son climat, l’âge de ses maisons, la façon dont on s’y chauffe, le radon, les
+          organismes de services autorisés qui la desservent et les programmes qui s’y appliquent. La barre de chaque fiche
+          montre les maisons de la ville selon l’époque de construction, les plus vieilles d’abord.
+        </p>
+      </div>
+      <Photo name="region-quebec" eager hud="Québec" />
+    </div>
+
+    <p class="legend small">
+      <span class="li"><span class="sw" style="--c:#F4A53F"></span>avant 1961</span>
+      <span class="li"><span class="sw" style="--c:#E8622A"></span>1961–1990</span>
+      <span class="li"><span class="sw" style="--c:#C04A86"></span>1991–2000</span>
+      <span class="li"><span class="sw" style="--c:#7A63E0"></span>2001 ou après</span>
+      <span class="src">· maisons par période de construction, Recensement de 2021 (Statistique Canada)</span>
+    </p>
+
+    <ul class="clist">
+      {VILLES.map((v) => (
+        <li>
+          <a href={`/fr/villes/${v.fr}/`}>
+            <span class="cn">{v.name}</span>
+            <EraBar era={v.facts.era} name={v.name} lang="fr" />
+            <span class="cf">
+              <span>{n(v.facts.hdd)} DJC</span>
+              <span>{Math.round(v.facts.housesPre1961 ?? 0)} % avant 1961</span>
+              <span>{organismesLabel(v.facts.providers)}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="small measure note">
+      DJC : degrés-jours de chauffage; plus le nombre est élevé, plus la saison de chauffage est longue et froide. La part des maisons
+      d’avant 1961 compte parce que les vieilles maisons fuient généralement plus et sont moins isolées.
+      Les 59 autres villes canadiennes que nous couvrons sont <a href="/cities/" hreflang="en-CA">en anglais</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 6px 0 14px; }
+  .legend .li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; background: var(--c); }
+  .legend .src { color: var(--faint); }
+  .clist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+  .clist a {
+    display: grid; gap: 7px; padding: 12px 14px 13px; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); text-decoration: none; color: var(--ink); height: 100%;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .clist a:hover { border-color: var(--heat); box-shadow: var(--shadow-md); color: var(--ink); }
+  .cn { font-family: var(--display); font-weight: 700; font-size: 16.5px; }
+  .cf { display: flex; flex-wrap: wrap; gap: 4px 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .note { margin: 22px 0 30px; }
+</style>

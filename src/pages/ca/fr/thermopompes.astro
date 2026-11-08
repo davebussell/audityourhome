@@ -1,0 +1,263 @@
+---
+/**
+ * Heat pumps in Québec, in French: what each fuel costs to deliver a gigajoule at the calculators' prices,
+ * what LogisVert and the federal rebate pay and their equipment rules, the cold-climate designation, sizing
+ * (CSA F280), the dual-energy rate and the order of work. The model lists and brands stay on the English page.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import FrLeadForm from '../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+import { costsCA, PRICES_CA_AS_OF } from '../../../lib/heatpumps';
+import { VILLES, deg, n, dateFr } from '../../../lib/fr/villes';
+import programmes from '../../../data/fr/programmes.json';
+
+const montreal = VILLES.find((v) => v.slug === 'montreal')!;
+const saguenay = VILLES.find((v) => v.slug === 'saguenay')!;
+const cMtl = costsCA('QC', montreal.facts.hdd);
+const cSag = costsCA('QC', saguenay.facts.hdd);
+const LABEL: Record<string, string> = {
+  'hp-cold': 'Thermopompe pour climat froid',
+  'hp-std': 'Thermopompe ordinaire',
+  elec: 'Plinthes ou fournaise électriques',
+  gas: 'Fournaise au gaz naturel (95 %)',
+  oil: 'Fournaise au mazout (85 %)',
+  propane: 'Fournaise au propane (93 %)',
+};
+const money = (v: number) => `${v.toFixed(2).replace('.', ',')} $`;
+const cop = (v: number) => v.toFixed(1).replace('.', ',');
+const hpRow = cMtl.rows.find((r) => r.key === 'hp-cold')!;
+const elecRow = cMtl.rows.find((r) => r.key === 'elec')!;
+const gasRow = cMtl.rows.find((r) => r.key === 'gas');
+const temps = VILLES.map((v) => v.facts.designHeat);
+const logisvert = programmes.programmes.find((p) => p.slug === 'logisvert')!;
+const federal = programmes.programmes.find((p) => p.slug === 'remise-federale-thermopompe')!;
+
+const title = 'Thermopompes au Québec (2026) : subventions LogisVert et fédérale, coûts, climat froid, dimensionnement | AuditYourHome';
+const description =
+  `Ce qu’une thermopompe coûte à faire fonctionner au Québec contre les plinthes, le gaz et le mazout, ce que paient LogisVert (50 $ à 120 $ par 1 000 BTU/h) et la remise fédérale de 2027, la règle ENERGY STAR et le classement climat froid, le calcul CSA F280 et pourquoi isoler d’abord.`;
+const faqs = [
+  { q: 'Une thermopompe fonctionne-t-elle vraiment à −25 °C?', a: 'Un modèle classé climat froid, oui : la désignation ENERGY STAR exige un COP d’au moins 1,75 à −15 °C et au moins 70 % de la capacité de chauffage de 8,3 °C encore disponible à −15 °C. Par grand froid, elle produit moins et le chauffage d’appoint (vos plinthes, par exemple) prend le relais; c’est normal et prévu dans le dimensionnement.' },
+  { q: 'Combien LogisVert paie-t-il?', a: '50 $ par tranche de 1 000 BTU/h de capacité de chauffage à −8 °C pour un modèle ENERGY STAR, 120 $ pour un modèle classé climat froid, jusqu’à 6 700 $ selon Hydro-Québec. Le modèle doit figurer sur la liste des thermopompes admissibles, être acheté chez un détaillant du Québec et installé par un entrepreneur licencié par la RBQ; la demande se fait dans les neuf mois.' },
+  { q: 'Dois-je attendre la remise fédérale?', a: 'Non. La page du programme dit que les thermopompes installées le 1er novembre 2026 ou après par un entrepreneur en CVCA pourront être réclamées rétroactivement quand le portail ouvrira, au début de 2027. Gardez les reçus avec le nom de l’installateur et le numéro AHRI, et choisissez un modèle de la liste fédérale.' },
+  { q: 'Quelle capacité me faut-il?', a: 'Celle que donne un calcul des pertes de chaleur CSA F280 de votre maison, idéalement après l’isolation. Une subvention au BTU peut tenter de surdimensionner, mais une thermopompe trop grosse coûte en confort, en cycles courts et en efficacité.' },
+  { q: 'J’ai un chauffage au gaz : une thermopompe vaut-elle la peine?', a: gasRow ? `Au prix du gaz dans nos données (${gasRow.note.replace('¢ per m³', ' ¢ le m³').replace('.', ',')}), une fournaise au gaz à 95 % livre un gigajoule pour ${money(gasRow.cost)} contre ${money(hpRow.cost)} pour une thermopompe pour climat froid dans le climat de Montréal : la thermopompe coûte moins cher à faire fonctionner, et l’offre biénergie d’Hydro-Québec (7 300 $ pour les clients d’Énergir, 6 800 $ pour ceux d’Enbridge Gaz Québec) paie pour l’ajouter à un système à air pulsé, avec le tarif DT.` : 'Comparez le coût par gigajoule ci-dessus; l’offre biénergie d’Hydro-Québec paie pour ajouter une thermopompe centrale à un système au gaz à air pulsé.' },
+];
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Thermopompes', path: '/fr/thermopompes/' },
+  ]),
+  faqSchema(faqs),
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('heat-loss-calculation')} lang="fr" altPath="/heat-pumps/quebec/">
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane"><a href="/fr/">Accueil</a> <span aria-hidden="true">/</span> <span>Thermopompes</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Thermopompes · Québec</p>
+        <h1>Les thermopompes au Québec : coûts, subventions et choix pour climat froid</h1>
+        <p class="lede measure">
+          Au Québec, la plupart des maisons se chauffent à l’électricité, et l’électricité y est parmi les moins chères en Amérique
+          du Nord : une thermopompe remplace surtout des plinthes, et chaque gigajoule de chaleur lui coûte deux fois moins. Voici ce
+          qu’elle coûte à faire fonctionner, ce que LogisVert et Ottawa paient, comment la choisir et la dimensionner pour des
+          températures de calcul qui vont de {deg(Math.max(...temps))} à {deg(Math.min(...temps))} dans nos onze villes.
+        </p>
+      </div>
+      <Photo name="heat-loss-calculation" eager hud="Pièce par pièce · CSA F280" />
+    </div>
+
+    <nav class="jump" aria-label="Sur cette page">
+      <a href="#couts">Coûts de fonctionnement</a>
+      <a href="#subventions">Subventions</a>
+      <a href="#choisir">Choisir</a>
+      <a href="#dimensionner">Dimensionner</a>
+      <a href="#bienergie">Biénergie</a>
+      <a href="#etapes">Les étapes</a>
+    </nav>
+
+    <section id="couts" class="sec">
+      <h2>Ce qu’un gigajoule de chaleur coûte avec chaque énergie</h2>
+      <p class="measure">
+        Aux prix de nos calculateurs ({PRICES_CA_AS_OF ? `au ${dateFr(PRICES_CA_AS_OF)}` : 'prix récents'}; électricité au tarif D
+        d’Hydro-Québec, deuxième palier, taxes comprises), pour le climat de Montréal ({n(montreal.facts.hdd)} degrés-jours) et celui
+        de Saguenay ({n(saguenay.facts.hdd)} degrés-jours). Le COP saisonnier est la chaleur livrée sur toute une saison, chauffage
+        d’appoint et dégivrage compris; nous le fixons légèrement sous les résultats modélisés parce que les mesures sur le terrain
+        sont plus basses.
+      </p>
+      <div class="tbl-wrap">
+        <table class="costs stack">
+          <thead><tr><th>Système</th><th>Montréal, $ par GJ</th><th>Saguenay, $ par GJ</th><th>Hypothèse</th></tr></thead>
+          <tbody>
+            {cMtl.rows.map((r) => {
+              const s = cSag.rows.find((x) => x.key === r.key);
+              const hyp = r.key === 'hp-cold' ? `COP saisonnier ${cop(cMtl.band.coldClimate)} à Montréal, ${cop(cSag.band.coldClimate)} à Saguenay`
+                : r.key === 'hp-std' ? `COP saisonnier ${cop(cMtl.band.standard)} à Montréal, ${cop(cSag.band.standard)} à Saguenay`
+                : r.note.replace('¢ per kWh', ' ¢ le kWh').replace('¢ per m³', ' ¢ le m³').replace(' per litre, 12-month average', ' le litre, moyenne sur 12 mois').replace(' per litre', ' le litre').replace(/^\$(\d+)\.(\d+)/, '$1,$2 $').replace(/(\d)\.(\d)/, '$1,$2');
+              return (
+                <tr class={r.key === 'hp-cold' ? 'hi' : ''}>
+                  <td>{LABEL[r.key] ?? r.label}</td>
+                  <td data-label="Montréal, $ par GJ">{money(r.cost)}</td>
+                  <td data-label="Saguenay, $ par GJ">{s ? money(s.cost) : '—'}</td>
+                  <td class="hyp" data-label="Hypothèse">{hyp}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p class="small measure">
+        Une maison type chauffée aux plinthes consomme quelques dizaines de gigajoules par hiver : à {money(elecRow.cost)} contre
+        {' '}{money(hpRow.cost)} le gigajoule, la thermopompe pour climat froid coupe la facture de chauffage d’environ
+        {' '}{Math.round((1 - hpRow.cost / elecRow.cost) * 100)} % dans le climat de Montréal, et elle climatise l’été. Les tableaux par
+        ville, les modèles homologués et les marques sont sur <a href="/heat-pumps/quebec/" hreflang="en-CA">la page anglaise</a>.
+      </p>
+    </section>
+
+    <section id="subventions" class="sec">
+      <h2>Ce que les programmes paient</h2>
+      <div class="sgrid">
+        <article class="card card-pad s">
+          <span class="chip chip-active">En vigueur</span>
+          <h3>LogisVert d’Hydro-Québec</h3>
+          <p><strong>50 $</strong> par tranche de 1 000 BTU/h de capacité de chauffage à −8 °C pour une thermopompe ENERGY STAR, <strong>120 $</strong> pour un modèle classé climat froid, jusqu’à 6 700 $; <strong>+100 $</strong> par 1 000 BTU/h dans les immeubles à logements multiples admissibles (installations à partir du 15 juin 2026). Géothermie : 750 $ par 1 000 BTU/h pour un nouveau système (maximum 54 000 $), 250 $ pour un remplacement.</p>
+          <p class="small">Modèle sur la liste des thermopompes admissibles (ENERGY STAR obligatoire depuis le 26 novembre 2025; unité extérieure d’au moins 12 000 BTU/h), acheté chez un détaillant du Québec, installé par un entrepreneur licencié par la RBQ; demande dans les neuf mois; aucune évaluation. Vérifié le {logisvert.verifie}.</p>
+          <a href="/fr/programmes/logisvert/">Le guide LogisVert →</a>
+        </article>
+        <article class="card card-pad s">
+          <span class="chip chip-info">Annoncé · début 2027</span>
+          <h3>Programme national de remise pour les thermopompes</h3>
+          <p><strong>2 000 $</strong>, ou <strong>jusqu’à 10 000 $</strong> pour un ménage au revenu médian ou moins (au Québec, 41 228 $ après impôt pour une personne, 82 097 $ pour deux, 107 865 $ pour trois, 134 232 $ pour quatre, 140 225 $ pour cinq ou plus). Les thermopompes installées depuis le 1er novembre 2026 comptent rétroactivement; rien n’est payé avant l’ouverture du portail.</p>
+          <p class="small">Modèle de la liste fédérale (numéro AHRI), acheté auprès d’un entrepreneur en CVCA et installé par lui; reçus dans les six mois; une remise par ménage; aucune évaluation. L’annonce du 8 octobre disait qu’elle se cumule avec les programmes provinciaux. Vérifié le {federal.verifie}.</p>
+          <a href="/fr/programmes/remise-federale-thermopompe/">Ce qu’on sait →</a>
+        </article>
+        <article class="card card-pad s">
+          <span class="chip chip-active">En vigueur · confirmez le financement</span>
+          <h3>Offre biénergie d’Hydro-Québec (maisons au gaz)</h3>
+          <p><strong>7 300 $</strong> pour les clients d’Énergir ou <strong>6 800 $</strong> pour ceux d’Enbridge Gaz Québec pour ajouter une thermopompe centrale électrique à un système au gaz naturel à air pulsé, dans une maison détachée, jumelée ou en rangée ou un condo avec son propre système; facturation au tarif DT.</p>
+          <p class="small">On passe par le distributeur de gaz (Énergir 1 844 480-1313; Enbridge Gaz Québec 1 819 771-8321). La page nomme encore Chauffez vert sans afficher de date, alors confirmez que l’offre est financée. Les maisons déjà chauffées à l’électricité ne sont pas admissibles.</p>
+        </article>
+        <article class="card card-pad s">
+          <span class="chip chip-active">Municipal</span>
+          <h3>Remplacer un chauffage au mazout</h3>
+          <p><a href="/fr/villes/gatineau/">Gatineau</a> paie 75 % du remplacement d’un système au mazout par un système tout électrique, jusqu’à 3 500 $; <a href="/fr/villes/laval/">Laval</a> donne 2 000 $ pour une maison unifamiliale (la moitié pour un système biénergie); le <a href="/fr/villes/montreal/">RénoPlex de Montréal</a> paie 1 350 $ par logement pour passer du mazout ou du gaz à une thermopompe centrale.</p>
+          <p class="small">Chauffez vert ne paie plus les conversions du mazout et du propane depuis le 31 mars 2026, et le programme fédéral mazout-thermopompe a fermé le 31 juillet 2026.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="choisir" class="sec">
+      <h2>Choisir : ENERGY STAR, climat froid, capacité à −8 °C</h2>
+      <div class="measure prose">
+        <p>
+          <strong>ENERGY STAR d’abord.</strong> LogisVert ne paie rien pour une thermopompe installée depuis le 26 novembre 2025 qui n’est
+          pas certifiée ENERGY STAR, et la remise fédérale exige un modèle de sa liste. Le numéro de modèle de l’unité extérieure se
+          vérifie avant de signer, pas après.
+        </p>
+        <p>
+          <strong>Climat froid, le vrai critère.</strong> La désignation « climat froid » d’ENERGY STAR (version 6.2) exige à la fois un
+          COP d’au moins 1,75 à −15 °C, au moins 70 % de la capacité de chauffage de 8,3 °C encore disponible à −15 °C, et des
+          rendements saisonniers plus élevés (HSPF2 d’au moins 8,5 pour un système bibloc sans conduits, 8,1 avec conduits). C’est
+          ce classement qui fait passer LogisVert de 50 $ à 120 $ par 1 000 BTU/h, et c’est lui qui compte quand la température de
+          calcul est de {deg(montreal.facts.designHeat)} à Montréal ou de {deg(saguenay.facts.designHeat)} à Saguenay.
+        </p>
+        <p>
+          <strong>La capacité à −8 °C.</strong> LogisVert calcule sa subvention sur la capacité de chauffage à −8 °C, pas sur la capacité
+          nominale : deux modèles « de 24 000 BTU/h » peuvent livrer des chaleurs très différentes par temps froid. Comparez les fiches
+          à −8 °C et à −15 °C, pas les étiquettes.
+        </p>
+        <p>
+          <strong>Mural ou central?</strong> Un appareil mural (mini-split) chauffe et climatise une pièce ouverte et laisse les plinthes
+          en appoint dans les chambres : c’est le cas le plus courant au Québec. Une thermopompe centrale remplace une fournaise à air
+          pulsé et dessert toute la maison par les conduits, avec la fournaise ou un serpentin électrique en appoint.
+        </p>
+      </div>
+    </section>
+
+    <section id="dimensionner" class="sec">
+      <h2>Dimensionner : le calcul CSA F280, et l’isolation d’abord</h2>
+      <div class="measure prose">
+        <p>
+          La bonne capacité sort d’un calcul des pertes de chaleur selon la norme CSA F280 de votre maison, fait par l’installateur ou
+          par un conseiller en efficacité énergétique, pas d’une règle au pied carré. Une subvention au BTU peut tenter de
+          surdimensionner; une thermopompe trop grosse fait des cycles courts, déshumidifie mal l’été et coûte plus cher à l’achat.
+        </p>
+        <p>
+          Isolez et étanchéisez avant de dimensionner : une maison dont le grenier passe à R-60 et dont les fuites sont bouchées a
+          besoin d’une thermopompe plus petite, et Rénoclimat paie ces travaux au pied carré (jusqu’à 2 000 $ pour le toit, 7 000 $
+          pour les murs, 2 500 $ pour les fondations). Si l’isolation vient après, la thermopompe aura été choisie pour la maison qui
+          fuyait. <a href="/fr/comment-ca-marche/">Une évaluation ÉnerGuide</a> donne les deux chiffres : où isoler, et la charge
+          de chauffage qui en résulte.
+        </p>
+      </div>
+    </section>
+
+    <section id="bienergie" class="sec">
+      <h2>Le tarif biénergie (DT)</h2>
+      <p class="measure">
+        Le tarif DT s’adresse aux maisons chauffées principalement à l’électricité avec un appoint au combustible (gaz naturel, mazout,
+        propane ou granules). Sous −12 °C ou −15 °C selon la région, le système passe au combustible et l’électricité coûte plus cher;
+        le reste du temps, l’électricité est facturée à un prix plus bas. Hydro-Québec dit que le tarif DT est généralement moins cher
+        que le tarif D si on utilise la bonne énergie au bon moment, mais qu’il peut coûter plus cher selon vos habitudes. Un
+        entrepreneur en chauffage remplit le certificat d’admissibilité biénergie, et vous payez l’inspection et les modifications.
+      </p>
+    </section>
+
+    <section id="etapes" class="sec">
+      <h2>Les étapes, dans l’ordre</h2>
+      <ol class="steps measure">
+        <li><p>Isolez et étanchéisez d’abord, ou au moins faites évaluer la maison : la charge de chauffage change avec l’enveloppe.</p></li>
+        <li><p>Demandez un calcul des pertes de chaleur CSA F280 à deux ou trois installateurs, et des soumissions qui nomment le modèle, sa capacité à −8 °C et à −15 °C et son numéro AHRI.</p></li>
+        <li><p>Vérifiez le modèle sur la liste des thermopompes admissibles de LogisVert et sur la liste fédérale des produits admissibles avant de signer.</p></li>
+        <li><p>Faites installer par un entrepreneur inscrit au Registraire des entreprises et licencié par la RBQ (un entrepreneur en CVCA, pour la remise fédérale), et gardez des factures complètes : nom de l’installateur, marque, modèle, numéro AHRI, nombre d’unités, coût total.</p></li>
+        <li><p>Réclamez LogisVert dans les neuf mois (portail en français), puis la remise fédérale quand son portail ouvrira au début de 2027, avec les mêmes reçus.</p></li>
+      </ol>
+    </section>
+
+    <h2 class="faqh">Questions fréquentes</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <p class="small srcs">
+      Sources : les pages LogisVert et biénergie d’Hydro-Québec et la page fédérale du programme (voir <a href="/fr/programmes/logisvert/">LogisVert</a> et <a href="/fr/programmes/remise-federale-thermopompe/">la remise fédérale</a>); ENERGY STAR Program Requirements for Heat Pumps, version 6.2 (critères climat froid); prix de l’énergie de nos calculateurs; bandes de COP saisonnier d’après Dunsky/CCI 2024 et les études de terrain (RDH pour FortisBC, projet pilote du Yukon).
+    </p>
+
+    <FrLeadForm heading="Un conseiller pour le calcul des pertes de chaleur" sub="Une thermopompe bien dimensionnée commence par une maison bien mesurée. Dites-nous où vous êtes : nous vous présentons un organisme de services autorisé qui dessert votre région." context="fr-thermopompes" />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--muted); }
+  .crumbs a { color: var(--muted); }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 10px; }
+  .jump a { font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink); border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; background: var(--card); }
+  .jump a:hover { border-color: var(--heat); color: var(--heat-deep); }
+  .sec { padding: 28px 0 0; scroll-margin-top: 80px; }
+  .sec h2 { font-size: 24px; margin-bottom: 10px; }
+  .tbl-wrap { overflow-x: auto; margin: 14px 0 10px; }
+  .costs { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .costs th, .costs td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .costs th { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .costs tr.hi td { background: var(--wash); font-weight: 600; }
+  .costs .hyp { color: var(--muted); font-size: 13.5px; font-weight: 400; }
+  .sgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 12px; }
+  .s { display: grid; gap: 8px; align-content: start; border-left: 4px solid var(--pine); }
+  .s .chip { justify-self: start; }
+  .s h3 { font-size: 18px; margin: 0; }
+  .s p { margin: 0; font-size: 15px; }
+  .s p.small { color: var(--muted); }
+  .prose p { margin-bottom: 14px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 8px 0 6px; display: grid; gap: 10px; }
+  .steps li { position: relative; padding: 13px 16px 13px 56px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 15px; top: 12px; width: 27px; height: 27px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 13.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .faqh { margin: 32px 0 10px; font-size: 24px; }
+  .srcs { color: var(--muted); margin: 22px 0 26px; max-width: 80ch; }
+</style>

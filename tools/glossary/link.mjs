@@ -280,7 +280,8 @@ function main() {
     for (const file of walk(join(DIST, c))) {
       const rel = file.slice(DIST.length).replace(/\\/g, '/').replace(/index\.html$/, '');
       const html = readFileSync(file, 'utf8');
-      if (noindex(html) || isStub(html) || rel === `/${c}/glossary/` || html.includes('id="gl-data"')) {
+      // The French pages (/ca/fr/) are left alone: the glossary is English.
+      if (noindex(html) || isStub(html) || rel === `/${c}/glossary/` || rel.startsWith('/ca/fr/') || html.includes('id="gl-data"')) {
         stats.skipped++;
         continue;
       }

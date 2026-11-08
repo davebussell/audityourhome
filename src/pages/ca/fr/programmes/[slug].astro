@@ -1,0 +1,157 @@
+---
+/**
+ * A Québec-facing program in French: Rénoclimat, LogisVert and the federal heat pump rebate, from
+ * src/data/fr/programmes.json (hand-translated from src/data/programs.json; keep the two in step).
+ */
+import Base from '../../../../layouts/Base.astro';
+import Photo from '../../../../components/Photo.astro';
+import FrLeadForm from '../../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
+import data from '../../../../data/fr/programmes.json';
+
+export function getStaticPaths() {
+  return data.programmes.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+type Programme = (typeof data.programmes)[number];
+interface Props { p: Programme }
+const { p } = Astro.props;
+
+const STATUT: Record<string, [string, string]> = {
+  active: ['chip-active', 'En vigueur'],
+  'active-limited': ['chip-limited', 'En vigueur, avec limites'],
+  announced: ['chip-info', 'Annoncé, pas encore ouvert'],
+  closed: ['chip-closed', 'Terminé'],
+};
+const [statutCls, statutLabel] = STATUT[p.statut] ?? ['chip-neutral', p.statut];
+const title = `${p.titre} | AuditYourHome`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Programmes', path: '/fr/programmes/' },
+    { name: p.nomCourt, path: `/fr/programmes/${p.slug}/` },
+  ]),
+  faqSchema(p.faq),
+];
+const PHOTO: Record<string, string> = { renoclimat: 'attic-insulation-inspection', logisvert: 'heat-loss-calculation', 'remise-federale-thermopompe': 'region-quebec' };
+const photo = PHOTO[p.slug] ?? 'region-quebec';
+const HUD: Record<string, string> = { 'attic-insulation-inspection': 'Épaisseur · valeur R', 'heat-loss-calculation': 'Pièce par pièce · CSA F280', 'region-quebec': 'Québec' };
+const thermopompe = /thermopompe/i.test(`${p.nom} ${p.manchette}`);
+---
+
+<Base title={title} description={p.description} schema={schema} ogImage={ogFor(photo)} lang="fr" altPath={`/programs/${p.enSlug}/`}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane">
+      <a href="/fr/programmes/">Programmes</a> <span aria-hidden="true">/</span>
+      <a href="/fr/quebec/">Québec</a> <span aria-hidden="true">/</span>
+      <span>{p.nomCourt}</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <div class="headrow">
+          <h1>{p.nom}</h1>
+          <span class={`chip ${statutCls}`}>{statutLabel}</span>
+        </div>
+        <p class="lede measure">{p.manchette}</p>
+        <p class="meta">Géré par {p.gereePar} · vérifié sur la page officielle le {p.verifie}</p>
+      </div>
+      <Photo name={photo} eager hud={HUD[photo] ?? false} />
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-pad">
+        <h3>{p.statut === 'closed' ? 'Ce que le programme offrait' : 'Ce que le programme paie'}</h3>
+        <ul class="amounts">
+          {p.montants.map((a) => (
+            <li><span class="money">{a.valeur}</span><span>{a.etiquette}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h3>La question de l’évaluation</h3>
+        <p>
+          {p.evaluationRequise ? <span class="chip chip-info">Évaluation requise</span> : <span class="chip chip-neutral">Aucune évaluation requise</span>}
+        </p>
+        <p>{p.noteEvaluation}</p>
+        <h3 style="margin-top:18px;">Qui est admissible</h3>
+        <p class="mb-0">{p.admissibilite}</p>
+      </div>
+    </div>
+
+    <h2 class="sec">{p.statut === 'announced' ? 'Comment ça fonctionnera' : 'Comment faire la demande, étape par étape'}</h2>
+    <ol class="steps measure">
+      {p.etapes.map((s) => <li><p>{s}</p></li>)}
+    </ol>
+
+    <div class="card card-pad gotchas">
+      <h3>Les pièges</h3>
+      <ul>
+        {p.pieges.map((g) => <li>{g}</li>)}
+      </ul>
+    </div>
+
+    <div class="card card-pad note">
+      <h4>Bon à savoir</h4>
+      <p class="mb-0">{p.aSavoir}</p>
+    </div>
+
+    <h2 class="sec">Questions fréquentes</h2>
+    <div class="measure">
+      {p.faq.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <p class="official">
+      <a class="btn btn-ghost" href={p.urlOfficielle} rel="noopener" target="_blank">Page officielle du programme ↗</a>
+      <span class="small">Confirmez toujours les détails sur la page officielle avant de dépenser : les programmes changent plus vite que n’importe quel suivi.</span>
+    </p>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {p.sources.map((s) => <li><a href={s.href} rel="noopener">{s.etiquette} (vérifié le {p.verifie})</a></li>)}
+      </ul>
+    </div>
+
+    <div class="related">
+      {thermopompe && <a class="btn btn-primary" href="/fr/thermopompes/">Les thermopompes au Québec : coûts, subventions et modèles pour climat froid →</a>}
+      {p.liens.map((l) => <a class="btn btn-ghost" href={l.href}>{l.etiquette}</a>)}
+      <a class="btn btn-ghost" href="/fr/programmes/">Tous les programmes</a>
+      <a class="btn btn-ghost" href={`/programs/${p.enSlug}/`} hreflang="en-CA">Cette page en anglais</a>
+    </div>
+
+    <FrLeadForm
+      heading={p.slug === 'renoclimat' ? 'Commencez par l’évaluation (facultative, mais payante)' : 'Un conseiller pour dimensionner le projet'}
+      sub={p.slug === 'renoclimat'
+        ? 'Rénoclimat rembourse jusqu’à 500 $ pour une évaluation ÉnerGuide faite par un organisme de services autorisé, à condition de réclamer ensuite une mesure admissible. Nous vous présentons un organisme qui dessert votre région.'
+        : 'Une thermopompe bien dimensionnée commence par un calcul des pertes de chaleur. Nous vous présentons un organisme de services autorisé qui dessert votre région.'}
+      context={`fr-programme-${p.slug}`}
+    />
+  </div>
+</Base>
+
+<style>
+  .crumbs { padding-top: 24px; font-size: 13.5px; color: var(--muted); }
+  .crumbs a { color: var(--muted); }
+  .headrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .headrow h1 { margin-bottom: 0; }
+  .amounts { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .amounts li { display: grid; grid-template-columns: fit-content(45%) 1fr; gap: 4px 12px; align-items: baseline; }
+  .amounts .money { font-size: 17px; overflow-wrap: anywhere; }
+  .sec { margin: 30px 0 12px; font-size: 23px; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 10px; }
+  .steps li { position: relative; padding: 13px 16px 13px 56px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 15px; top: 12px; width: 27px; height: 27px; border-radius: 50%; background: var(--heat); color: #fff; font-family: var(--mono); font-weight: 600; display: grid; place-items: center; font-size: 13.5px; }
+  .steps p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .gotchas { border-left: 4px solid var(--warn); margin: 22px 0 0; }
+  .gotchas ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 14.5px; }
+  .note { border-left: 4px solid var(--steel); margin: 18px 0; }
+  .note h4 { margin-bottom: 6px; }
+  .official { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 22px 0; }
+  .srcs { border-left: 4px solid var(--steel); margin: 10px 0 18px; }
+  .srcs ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
+  .related { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 26px; }
+</style>

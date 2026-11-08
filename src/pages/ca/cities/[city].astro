@@ -56,9 +56,11 @@ const statusChip: Record<string, [string, string]> = {
   closed: ['chip-closed', 'Closed'],
 };
 const clim = placeClimate('ca', city.slug);
+/** The Québec cities have a French page under /fr/villes/ (Québec City's French slug is 'quebec') */
+const frPath = city.prov === 'QC' ? `/fr/villes/${city.slug === 'quebec-city' ? 'quebec' : city.slug}/` : undefined;
 ---
 
-<Base title={title} description={hub.description} schema={schema} ogImage={ogFor(photoKey)}>
+<Base title={title} description={hub.description} schema={schema} ogImage={ogFor(photoKey)} altPath={frPath}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/cities/">Cities</a> <span aria-hidden="true">/</span>

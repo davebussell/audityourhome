@@ -1,0 +1,167 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import FrLeadForm from '../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
+
+const title = 'Comment fonctionne une évaluation énergétique au Québec (évaluation ÉnerGuide, étape par étape) | AuditYourHome';
+const description =
+  'Ce qui se passe lors d’une évaluation énergétique résidentielle (évaluation ÉnerGuide) au Québec : la réservation d’un conseiller, le test d’infiltrométrie, votre cote ÉnerGuide et le rapport de rénovation, et ce que Rénoclimat et LogisVert paient depuis le 1er octobre 2026.';
+
+const faqs = [
+  { q: 'Combien de temps dure l’évaluation?', a: 'Prévoyez de 2 à 3 heures sur place pour une maison typique. Le conseiller doit avoir accès à la trappe du grenier, au sous-sol, à la salle mécanique et à chaque mur extérieur. La visite de suivi après les travaux est plus courte.' },
+  { q: 'Qu’est-ce qu’un test d’infiltrométrie (porte soufflante)?', a: 'Un ventilateur calibré installé dans une porte extérieure aspire l’air de la maison jusqu’à une pression d’essai normalisée. On mesure ainsi l’étanchéité de la maison et on sent où l’air extérieur entre. C’est la mesure qui distingue une vraie évaluation énergétique d’une visite de vente.' },
+  { q: 'L’évaluation est-elle obligatoire pour Rénoclimat?', a: 'Plus depuis le 1er octobre 2026. L’évaluation avant travaux est facultative (mais recommandée) et Rénoclimat rembourse jusqu’à 500 $ pour celle-ci lorsque vous réclamez au moins une mesure admissible. Vous choisissez vous-même l’organisme de services; le programme n’assigne plus d’évaluateur. Les dossiers ouverts sous les anciennes règles (évaluation demandée au plus tard le 12 octobre 2026) suivent l’ancien parcours.' },
+  { q: 'Qu’est-ce que je reçois après la visite?', a: 'Votre cote ÉnerGuide et son étiquette, plus un rapport de rénovation : une liste classée des améliorations avec les économies estimées pour votre maison. Les programmes qui exigent une évaluation s’en servent pour déterminer ce qui est admissible.' },
+  { q: 'Ai-je besoin de la visite de suivi?', a: 'Seulement si une subvention en dépend. Au Québec, les mesures Rénoclimat du nouveau parcours se réclament avec les factures et l’attestation de conformité de l’entrepreneur, sans deuxième visite; les dossiers ouverts sous les anciennes règles gardent leur évaluation après travaux. Les subventions LogisVert d’Hydro-Québec n’exigent aucune évaluation.' },
+];
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Comment ça marche', path: '/fr/comment-ca-marche/' },
+  ]),
+  faqSchema(faqs),
+];
+
+interface Step { n: string; h: string; p: string; link?: { href: string; label: string } }
+const before: Step[] = [
+  {
+    n: '01',
+    h: 'Réservez un conseiller en efficacité énergétique',
+    p: 'Les évaluations ÉnerGuide sont réalisées par des conseillers enregistrés auprès de Ressources naturelles Canada (RNCan), qui travaillent pour des organismes de services autorisés : les seuls dont les rapports comptent pour les subventions. Au Québec, vous les réservez directement, au prix fixé par l’organisme; Rénoclimat ne prend plus les réservations et ne fixe plus le prix (l’ancien tarif de 150 $ n’existe plus).',
+    link: { href: '/fr/trouver-un-conseiller/', label: 'Comment réserver au Québec' },
+  },
+];
+const visit: Step[] = [
+  {
+    n: '02',
+    h: 'La visite et les mesures',
+    p: 'Le conseiller mesure l’isolation du grenier, des murs et du sous-sol, relève vos fenêtres et vos portes, note vos appareils de chauffage, de climatisation et de chauffe-eau, et photographie le tout pour l’assurance de la qualité.',
+    link: { href: '/tests/', label: 'Ce que chaque test vérifie (en anglais)' },
+  },
+  {
+    n: '03',
+    h: 'Le test d’infiltrométrie',
+    p: 'Un ventilateur calibré dépressurise la maison pour mesurer précisément les fuites d’air. Pendant qu’il tourne, vous et le conseiller sentez où l’air extérieur entre : trappe du grenier, solives de rive, luminaires encastrés, moulures. C’est le moment où la maison cesse d’être un mystère.',
+    link: { href: '/tests/blower-door/', label: 'Le test d’infiltrométrie en détail (en anglais)' },
+  },
+  {
+    n: '04',
+    h: 'Votre cote et votre rapport de rénovation',
+    p: 'Vous recevez une cote ÉnerGuide (en gigajoules par année : plus c’est bas, mieux c’est), une étiquette officielle et un rapport de rénovation qui classe les améliorations selon ce qu’elles feraient économiser dans votre maison.',
+  },
+];
+const after: Step[] = [
+  {
+    n: '05',
+    h: 'Faites les travaux et réclamez vos subventions',
+    p: 'Au Québec, Rénoclimat paie l’isolation du toit, des murs et des fondations au pied carré et les fenêtres ENERGY STAR Les plus efficaces à 300 $ par ouverture, pour des travaux faits par un entrepreneur détenant la licence RBQ voulue; vous réclamez après les travaux, avec les factures et l’attestation de conformité, dans le portail Rénoclimat. LogisVert (Hydro-Québec) paie les thermopompes par tranche de 1 000 BTU/h et l’isolation du toit des maisons chauffées à l’électricité. Dès 2027, la remise fédérale de 2 000 $ pour une thermopompe s’ajoutera.',
+    link: { href: '/fr/programmes/', label: 'Les programmes et leurs montants' },
+  },
+  {
+    n: '06',
+    h: 'Gardez les preuves',
+    p: 'Factures, numéro de licence RBQ de l’entrepreneur, attestation de conformité signée, photos et fiches techniques des produits : c’est ce que le portail demandera. Les dossiers Rénoclimat ouverts sous les anciennes règles gardent leur visite de suivi, où le conseiller mesure l’amélioration. Vous conservez les chiffres avant-après, utiles à la revente.',
+    link: { href: '/fr/programmes/renoclimat/', label: 'Les règles de Rénoclimat depuis le 1er octobre 2026' },
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('blower-door-test')} lang="fr" altPath="/how-it-works/">
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane">
+      <a href="/fr/">Accueil</a> <span aria-hidden="true">/</span> <span>Comment ça marche</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Comment ça marche</p>
+        <h1>Ce qui se passe vraiment lors d’une évaluation énergétique</h1>
+        <p class="lede measure">
+          Au Canada, l’évaluation énergétique d’une maison s’appelle une évaluation ÉnerGuide. C’est une visite de mesure, pas une
+          visite de vente : un conseiller enregistré teste votre maison avec de vrais instruments et vous remet une liste classée
+          d’améliorations. Voici tout le parcours, de la réservation au chèque de subvention.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/fr/planificateur/">Commencer par votre plan gratuit</a>
+          <a class="btn btn-ghost" href="/fr/trouver-un-conseiller/">Trouver un conseiller au Québec</a>
+        </div>
+      </div>
+      <Photo name={'blower-door-test'} eager hud="Dépressurisée à 50 Pa" />
+    </div>
+
+    <p class="plan-note card card-pad">
+      <strong>Avant toute visite :</strong> le <a href="/fr/planificateur/">planificateur gratuit</a> vous donne une estimation de ce
+      dont votre maison a probablement besoin, de ce qu’elle pourrait économiser et des tests à demander. C’est un point de départ;
+      l’évaluation mesure votre vraie maison.
+    </p>
+
+    <h2 class="phase">La réservation</h2>
+    <div class="timeline">
+      {before.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+            {s.link && <p class="tlink"><a href={s.link.href}>{s.link.label} →</a></p>}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="phase" id="visite">La visite et le rapport</h2>
+    <div class="timeline">
+      {visit.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+            {s.link && <p class="tlink"><a href={s.link.href}>{s.link.label} →</a></p>}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="phase">Après la visite</h2>
+    <div class="timeline">
+      {after.map((s) => (
+        <div class="tstep card">
+          <span class="tn">{s.n}</span>
+          <div>
+            <h3>{s.h}</h3>
+            <p class="mb-0">{s.p}</p>
+            {s.link && <p class="tlink"><a href={s.link.href}>{s.link.label} →</a></p>}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2>Questions fréquentes</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-body"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+
+    <FrLeadForm heading="Prêt à mesurer plutôt qu’à deviner?" context="fr-comment-ca-marche" />
+  </div>
+</Base>
+
+<style>
+  .plan-note { border-left: 4px solid var(--pine); margin: 0 0 26px; max-width: 800px; box-shadow: none; }
+  .phase { font-size: clamp(22px, 2.8vw, 28px); margin: 8px 0 12px; scroll-margin-top: 80px; }
+  .timeline { display: grid; gap: 14px; margin-bottom: 30px; max-width: 800px; }
+  .tstep { display: flex; gap: 20px; padding: 22px 26px; align-items: flex-start; }
+  .tn { font-family: var(--mono); font-weight: 600; font-size: 14px; color: var(--heat); padding-top: 3px; }
+  .tstep h3 { margin-bottom: 4px; }
+  .tstep p { font-size: 15px; color: var(--muted); }
+  .tlink { margin: 8px 0 0; font-weight: 600; font-size: 14.5px; }
+  @media (max-width: 560px) { .tstep { gap: 12px; padding: 18px 16px; } }
+</style>

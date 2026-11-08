@@ -1,0 +1,275 @@
+---
+/**
+ * The French home page (/fr/): the Québec-facing door to the site. The planner, the three steps, the heat
+ * signature, the tests, the three programs, the eleven cities, straight answers, and the match form.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/Photo.astro';
+import ThermalCompare from '../../../components/ThermalCompare.astro';
+import EraBar from '../../../components/EraBar.astro';
+import FrLeadForm from '../../../components/fr/FrLeadForm.astro';
+import { SITE } from '../../../config/site';
+import { organizationSchema, faqSchema } from '../../../lib/schema';
+import { VILLES, VILLES_CHECKED, n, dateFr } from '../../../lib/fr/villes';
+import programmes from '../../../data/fr/programmes.json';
+
+const title = 'AuditYourHome en français — évaluation énergétique, subventions et conseillers au Québec';
+const description =
+  'Trouvez un conseiller en efficacité énergétique reconnu par RNCan, sachez ce que votre maison a besoin avant de dépenser, et obtenez les subventions vraiment en vigueur au Québec : Rénoclimat, LogisVert et la remise fédérale pour les thermopompes.';
+const revue = dateFr(SITE.dataReviewDateISO);
+
+const faqs = [
+  { q: 'Combien coûte une évaluation énergétique au Québec?', a: 'Le prix est fixé par l’organisme de services depuis que Rénoclimat a cessé de fixer un tarif de 150 $ le 1er octobre 2026; demandez deux ou trois prix et vérifiez que le test d’infiltrométrie est compris. Rénoclimat rembourse jusqu’à 500 $ si vous réclamez ensuite une mesure admissible, et LogisVert n’exige aucune évaluation.' },
+  { q: 'L’évaluation est-elle obligatoire pour les subventions?', a: 'Plus au Québec : Rénoclimat l’a rendue facultative le 1er octobre 2026, LogisVert n’en a jamais exigé, et la remise fédérale pour les thermopompes n’en demande pas. Elle reste la meilleure façon de savoir quoi faire en premier et de dimensionner une thermopompe pour la maison isolée; dans d’autres provinces, plusieurs programmes l’exigent encore.' },
+  { q: 'Qui fait vraiment l’évaluation?', a: 'Un conseiller en efficacité énergétique enregistré qui travaille pour un organisme de services autorisé par Ressources naturelles Canada (RNCan). Chaque organisme que nous nommons est autorisé par RNCan; nous ne présentons pas les vendeurs de panneaux solaires ou de chauffage comme des « évaluateurs ».' },
+  { q: 'La Subvention canadienne pour des maisons plus vertes existe-t-elle encore?', a: `Non : elle a fermé aux nouvelles demandes en février 2024, et le prêt sans intérêt a cessé de prendre des demandes le 1er octobre 2025. Bien des sites l’annoncent encore. Un nouveau Programme national de remise pour les thermopompes (2 000 $, ou jusqu’à 10 000 $ au revenu médian ou moins) ouvre au début de 2027, et les thermopompes installées depuis le 1er novembre 2026 comptent. Aujourd’hui, l’argent en vigueur est québécois : Rénoclimat et LogisVert, vérifiés le ${revue}.` },
+];
+const schema = [organizationSchema(), faqSchema(faqs)];
+const tests = [
+  { slug: 'blower-door-test', nom: 'Test d’infiltrométrie', note: 'Votre chiffre d’étanchéité' },
+  { slug: 'thermal-imaging', nom: 'Thermographie', note: 'Trouve les murs vides' },
+  { slug: 'attic-insulation-inspection', nom: 'Inspection du grenier', note: 'Épaisseur, trous et givre' },
+  { slug: 'radon-testing', nom: 'Test de radon', note: 'Celui que chaque maison doit faire' },
+  { slug: 'combustion-safety-test', nom: 'Sécurité des appareils à combustion', note: 'Avant d’étanchéiser la maison' },
+  { slug: 'well-water-testing', nom: 'Eau de puits', note: 'Bactéries, puis chimie' },
+];
+---
+
+<Base title={title} description={description} schema={schema} sky="hero" lang="fr" altPath="/">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Québec · les améliorations commencent par la mesure</p>
+        <h1>Connaissez votre maison avant de dépenser pour elle.</h1>
+        <p class="lede">
+          Trouvez un conseiller en efficacité énergétique <strong>enregistré auprès de RNCan</strong>, sachez ce que votre
+          maison a probablement besoin, et obtenez les subventions <strong>vraiment en vigueur</strong> au Québec :
+          <a href="/fr/programmes/renoclimat/">Rénoclimat</a> pour l’isolation et les fenêtres,
+          <a href="/fr/programmes/logisvert/">LogisVert</a> pour les thermopompes, et la
+          <a href="/fr/programmes/remise-federale-thermopompe/">remise fédérale</a> qui s’ajoute en 2027.
+        </p>
+        <ul class="trust-list">
+          <li>Chaque organisme nommé est autorisé par RNCan : pas d’« évaluation gratuite » qui cache une vente</li>
+          <li>Données sur les programmes vérifiées sur les pages officielles · dernière revue le {revue}</li>
+          <li>Planificateur gratuit : ce que la maison a besoin et ce qu’elle économise, avant toute visite</li>
+        </ul>
+      </div>
+
+      <form class="card hero-form" action="/plan/" method="GET" aria-label="Commencer votre plan énergétique" data-clarity-mask="true">
+        <h2>Votre plan énergétique gratuit</h2>
+        <p class="small">Six courtes étapes, environ deux minutes, sans courriel. Commencez par ces deux réponses. <a href="/fr/planificateur/">Le planificateur est en anglais</a> pour l’instant.</p>
+        <div class="field">
+          <label for="h-postal">Code postal <span class="hint-sm">(les trois premiers caractères suffisent)</span></label>
+          <input id="h-postal" name="postal" type="text" placeholder="p. ex. J8X 2A1" autocomplete="postal-code" maxlength="7" />
+        </div>
+        <div class="field">
+          <span class="lbl-sm">Année de construction</span>
+          <div class="radio-row">
+            <label class="radio-pill"><input type="radio" name="age" value="pre-1946" /><span>Avant 1946</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1946-1965" /><span>1946–1965</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1966-1980" /><span>1966–1980</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1981-1995" /><span>1981–1995</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="1996-2010" /><span>1996–2010</span></label>
+            <label class="radio-pill"><input type="radio" name="age" value="2011-plus" /><span>2011 ou après</span></label>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Bâtir mon plan →</button>
+        <p class="meta">Fonctionne dans votre navigateur. Vos réponses ne sont envoyées nulle part, sauf si vous demandez une mise en relation avec un conseiller.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="container">
+      <div class="grid-3 steps">
+        <div class="step-card">
+          <Photo name="energy-bill-analysis" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">1</span>
+            <h3>Votre plan gratuit</h3>
+            <p>Le planificateur lit l’époque, le chauffage et les symptômes de votre maison, puis estime ce qui se cache probablement derrière les murs, ce que chaque amélioration pourrait économiser dans votre climat et les subventions qui s’appliquent, avant qu’une personne ne se déplace.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="home-energy-audit" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">2</span>
+            <h3>Réservez l’évaluation</h3>
+            <p>L’évaluation est une évaluation ÉnerGuide faite par un conseiller enregistré. Au Québec, vous la réservez directement auprès d’un organisme autorisé, ou nous vous présentons un seul organisme qui dessert votre région.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <Photo name="attic-insulation-inspection" ratio="16 / 9" hud={false} plain sizes="(max-width: 640px) calc(100vw - 44px), 360px" />
+          <div class="step-body">
+            <span class="step-no">3</span>
+            <h3>La visite et le rapport</h3>
+            <p>Le conseiller mesure votre maison (infiltrométrie, grenier, système de chauffage) et vous remet une cote et une liste classée d’améliorations : les chiffres sur lesquels reposent vos subventions.</p>
+          </div>
+        </div>
+      </div>
+      <p class="steps-after small">
+        Viennent ensuite les travaux et les subventions.
+        <a href="/fr/comment-ca-marche/">Comment se déroule une évaluation</a> · <a href="/fr/trouver-un-conseiller/">Comment réserver au Québec</a> · <a href="/fr/programmes/">Les subventions</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="thermal-band">
+    <div class="container thermal-grid">
+      <div class="thermal-copy">
+        <p class="eyebrow">Là où les maisons fuient vraiment</p>
+        <h2>Votre maison a une signature thermique</h2>
+        <p>
+          Dans une caméra infrarouge, chaque maison brille là où elle fait défaut : passages d’air vers le grenier, cavités de murs
+          vides, solives de rive, murs de fondation nus. Le planificateur prédit le motif de votre maison d’après son époque; le
+          <strong>test d’infiltrométrie</strong> et la <strong>thermographie</strong> de l’évaluation le mesurent exactement.
+          Glissez sur la photo pour voir ce que voit la caméra.
+        </p>
+        <div class="test-chips">
+          <a href="/tests/#blower-door" hreflang="en-CA">Infiltrométrie</a>
+          <a href="/tests/#thermal-imaging" hreflang="en-CA">Thermographie</a>
+          <a href="/tests/#heat-loss-calc" hreflang="en-CA">Pertes de chaleur</a>
+          <a href="/tests/#radon" hreflang="en-CA">Radon</a>
+          <a href="/tests/" class="all" hreflang="en-CA">Tous les tests (en anglais) →</a>
+        </div>
+      </div>
+      <div class="thermal-art">
+        <ThermalCompare lang="fr" />
+      </div>
+    </div>
+  </section>
+
+  <section class="upclose">
+    <div class="container">
+      <p class="eyebrow">Les tests, de près</p>
+      <h2>Ce qu’un évaluateur fait vraiment dans votre maison</h2>
+      <p class="small">Chaque guide (ce que le test mesure, ce qu’il coûte, quand le demander) est encore en anglais.</p>
+      <div class="uc-row">
+        {tests.map((t) => (
+          <a class="pcard-link uc" href={`/services/${t.slug}/`} hreflang="en-CA">
+            <Photo name={t.slug} sizes="(max-width: 700px) 68vw, 200px" hud={false} plain />
+            <div class="pcard-body">
+              <h3>{t.nom}</h3>
+              <p>{t.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="subventions" class="alt">
+    <div class="container">
+      <p class="eyebrow">Subventions au Québec</p>
+      <h2>Les subventions qui valent la peine de planifier</h2>
+      <p class="small measure">Vérifiées sur les pages officielles; chaque fiche porte la date de la vérification.</p>
+      <div class="reb-grid">
+        {programmes.programmes.map((p) => (
+          <a class="card reb" href={`/fr/programmes/${p.slug}/`}>
+            <h3>{p.nom}</h3>
+            <span class={`chip ${p.statut === 'active' ? 'chip-active' : 'chip-info'}`}>{p.statut === 'active' ? 'En vigueur' : 'Annoncé · 2027'}</span>
+            <span class="reb-h">{p.manchette}</span>
+            <span class="go">Le guide complet →</span>
+          </a>
+        ))}
+      </div>
+      <p class="small dir-cta" style="margin-top:18px;">Avec les programmes fédéraux fermés, les programmes municipaux et le guide du Québec : <a href="/fr/programmes/">tous les programmes</a> · <a href="/fr/quebec/">le guide québécois</a> · <a href="/fr/thermopompes/">les thermopompes</a></p>
+    </div>
+  </section>
+
+  <section class="c2c">
+    <div class="container">
+      <p class="eyebrow">De Gatineau à Saguenay</p>
+      <h2>{VILLES.length} villes du Québec, chacune lue comme le ferait un évaluateur</h2>
+      <p class="small measure">Climat, âge des maisons, chauffage, radon, organismes de services et programmes de la Ville. La barre montre les maisons par époque de construction, les plus vieilles d’abord; données vérifiées le {VILLES_CHECKED}.</p>
+      <div class="bigcities">
+        {VILLES.map((v) => (
+          <a href={`/fr/villes/${v.fr}/`}>
+            <span class="bn">{v.name}</span>
+            <EraBar era={v.facts.era} name={v.name} lang="fr" />
+            <span class="small">{n(v.facts.hdd)} DJC</span>
+          </a>
+        ))}
+        <a class="allc" href="/fr/villes/">Les {VILLES.length} villes →</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Des réponses directes</h2>
+      <div class="measure">
+        {faqs.map((f) => (
+          <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+        ))}
+      </div>
+      <p class="small" style="margin-top:14px;">Le reste du site (les 59 autres villes, les guides de tests, les calculateurs, le répertoire ontarien) est <a href="/" hreflang="en-CA">en anglais</a>; <a href="/fr/a-propos/">pourquoi ce site existe</a>.</p>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="container">
+      <FrLeadForm context="fr-accueil" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 64px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .trust-list { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; }
+  .trust-list li { padding-left: 26px; position: relative; font-size: 15px; }
+  .trust-list li::before { content: "✓"; position: absolute; left: 0; color: var(--pine); font-weight: 700; }
+  .hero-form { padding: 26px 28px; border-top: 4px solid var(--heat); }
+  .hero-form h2 { font-size: 21px; margin-bottom: 4px; }
+  .lbl-sm { font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; }
+  .hero-form .meta { margin-top: 10px; }
+  .hint-sm { font-weight: 400; color: var(--faint); font-size: 0.88em; }
+  .steps { margin-top: 18px; }
+  .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .step-card :global(.frame) { border-radius: 0; box-shadow: none; }
+  .step-body { position: relative; padding: 26px 26px 24px; }
+  .step-no {
+    position: absolute; top: -18px; left: 24px;
+    display: inline-flex; width: 36px; height: 36px; border-radius: 50%;
+    background: var(--heat); color: #fff; font-family: var(--display); font-weight: 800;
+    align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--card);
+  }
+  .step-card p { margin: 0; font-size: 15px; color: var(--muted); }
+  .steps-after { margin: 18px 0 0; line-height: 1.8; }
+  .thermal-band { background: var(--navy); color: var(--navy-ink); padding: 56px 0; }
+  .thermal-band h2 { color: #fff; }
+  .thermal-band p { color: var(--navy-muted); }
+  .thermal-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 880px) { .thermal-grid { grid-template-columns: 1fr; } }
+  .thermal-art { min-width: 0; }
+  .test-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .test-chips a { display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none; color: var(--navy-ink); border: 1.5px solid var(--navy-line); border-radius: 999px; padding: 7px 15px; }
+  .test-chips a:hover { border-color: #F08246; color: #fff; }
+  .test-chips a.all { background: var(--heat); border-color: var(--heat); color: #fff; }
+  .upclose { padding: 60px 0 40px; }
+  .uc-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+  .uc .pcard-body h3 { font-size: 15.5px; }
+  .uc .pcard-body p { font-size: 13.5px; }
+  .uc :global(.hud) { display: none; }
+  @media (max-width: 1100px) { .uc-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 700px) {
+    .uc-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; margin-right: -22px; padding-right: 22px; }
+    .uc-row .uc { flex: 0 0 68%; scroll-snap-align: start; }
+  }
+  section.alt { background: var(--wash); }
+  .reb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 22px; }
+  .reb { padding: 18px 20px; display: grid; gap: 8px; align-content: start; text-decoration: none; color: var(--ink); box-shadow: none; transition: border-color 0.15s ease; }
+  .reb:hover { border-color: var(--heat); color: var(--ink); }
+  .reb h3 { font-size: 18px; margin: 0; }
+  .reb .chip { justify-self: start; }
+  .reb-h { color: var(--muted); font-size: 14px; line-height: 1.45; }
+  .reb .go { font-weight: 700; font-size: 14px; color: var(--heat-deep); margin-top: 2px; }
+  .c2c { padding: 56px 0 30px; }
+  .bigcities { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 22px; }
+  .bigcities a { display: grid; gap: 6px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+  .bigcities a:hover { border-color: var(--heat); }
+  .bn { font-weight: 700; font-size: 14.5px; }
+  .bigcities a.allc { background: var(--ink); color: #fff; border-color: var(--ink); align-content: center; font-weight: 700; font-size: 14.5px; }
+</style>

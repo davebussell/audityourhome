@@ -27,19 +27,23 @@ interface Props {
   housesLabel?: string;
   /** Climate source named in the caption (default: NRCan HOT2000) */
   climateSource?: string;
+  /** 'fr' on the French pages: every string in French */
+  lang?: 'en' | 'fr';
 }
 
+const { lang = 'en' } = Astro.props;
+const fr = lang === 'fr';
 const {
   slug, name, era, houses, hdd, designHeat, heading,
-  housesLabel = 'single-detached, semi-detached, row and duplex',
-  climateSource = 'NRCan HOT2000 climate data',
+  housesLabel = fr ? 'unifamiliales détachées, jumelées, en rangée et duplex' : 'single-detached, semi-detached, row and duplex',
+  climateSource = fr ? 'données climatiques HOT2000 de RNCan' : 'NRCan HOT2000 climate data',
 } = Astro.props;
 
 const ERAS = [
-  { key: 'pre1961', label: 'Before 1961', color: '#F4A53F', glow: 0.85, win: 0.95 },
+  { key: 'pre1961', label: fr ? 'Avant 1961' : 'Before 1961', color: '#F4A53F', glow: 0.85, win: 0.95 },
   { key: 'y1961to1990', label: '1961–1990', color: '#E8622A', glow: 0.62, win: 0.8 },
   { key: 'y1991to2000', label: '1991–2000', color: '#C04A86', glow: 0.4, win: 0.6 },
-  { key: 'since2001', label: '2001 or later', color: '#7A63E0', glow: 0.22, win: 0.42 },
+  { key: 'since2001', label: fr ? '2001 ou après' : '2001 or later', color: '#7A63E0', glow: 0.22, win: 0.42 },
 ] as const;
 
 const shares = ERAS.map((e) => Math.max(0, Number(era[e.key] ?? 0)));
@@ -76,12 +80,12 @@ const flakes = Array.from({ length: flakeCount }, () => ({
   o: +(0.3 + rnd() * 0.45).toFixed(2),
 }));
 const weatherNote = rain
-  ? 'Rain marks the mild, wet winters: here moisture, not deep cold, is the main winter risk.'
-  : 'More snow in the drawing means more heating degree-days: a longer, colder heating season.';
+  ? (fr ? 'La pluie marque les hivers doux et humides : ici, l’humidité, pas le grand froid, est le principal risque d’hiver.' : 'Rain marks the mild, wet winters: here moisture, not deep cold, is the main winter risk.')
+  : (fr ? 'Plus il neige dans le dessin, plus il y a de degrés-jours de chauffage : une saison de chauffage plus longue et plus froide.' : 'More snow in the drawing means more heating degree-days: a longer, colder heating season.');
 
-const fmt = (v: number) => v.toLocaleString('en-CA');
-const pctTxt = (v: number | null) => (v == null ? '—' : `${Math.round(v)}%`);
-const degTxt = `${designHeat < 0 ? '−' : ''}${Math.abs(designHeat).toFixed(1)}°C`;
+const fmt = (v: number) => v.toLocaleString(fr ? 'fr-CA' : 'en-CA');
+const pctTxt = (v: number | null) => (v == null ? '—' : `${Math.round(v)}${fr ? ' %' : '%'}`);
+const degTxt = `${designHeat < 0 ? '−' : ''}${Math.abs(designHeat).toFixed(1).replace('.', fr ? ',' : '.')}${fr ? ' °C' : '°C'}`;
 const uid = `hp-${slug}`;
 const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', ');
 ---
@@ -90,8 +94,8 @@ const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', '
   {heading && <p class="hp-h">{heading}</p>}
   <div class="hp-frame">
     <svg viewBox="0 0 600 150" role="img" aria-labelledby={`${uid}-t ${uid}-d`} preserveAspectRatio="xMidYMid meet">
-      <title id={`${uid}-t`}>{name}'s houses by when they were built</title>
-      <desc id={`${uid}-d`}>Ten house shapes, one for each tenth of {name}'s {fmt(houses)} houses. {summary}. Older houses glow hotter.</desc>
+      <title id={`${uid}-t`}>{fr ? `Les maisons de ${name} selon l’époque de construction` : `${name}'s houses by when they were built`}</title>
+      <desc id={`${uid}-d`}>{fr ? `Dix maisons, une pour chaque dixième des ${fmt(houses)} maisons de ${name}. ${summary}. Les vieilles maisons brillent plus fort.` : `Ten house shapes, one for each tenth of ${name}'s ${fmt(houses)} houses. ${summary}. Older houses glow hotter.`}</desc>
       <defs>
         <linearGradient id={`${uid}-sky`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#1B2A3A" />
@@ -174,7 +178,7 @@ const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', '
         );
       })}
     </svg>
-    <span class="hp-hud" aria-hidden="true" data-no-gloss><i></i>{degTxt} design · {fmt(hdd)} HDD</span>
+    <span class="hp-hud" aria-hidden="true" data-no-gloss><i></i>{degTxt} {fr ? 'de calcul' : 'design'} · {fmt(hdd)} {fr ? 'DJC' : 'HDD'}</span>
   </div>
   <ul class="hp-legend">
     {ERAS.map((e, i) => (
@@ -182,11 +186,23 @@ const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', '
     ))}
   </ul>
   <figcaption id={`${uid}-cap`}>
-    Each house stands for one in ten of {name}'s {fmt(houses)} houses ({housesLabel}),
-    drawn by when it was built. The glow shows the usual pattern: older houses tend to be leakier and less insulated.
-    {weatherNote} Sources: Statistics Canada 2021 Census
-    (<a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" rel="noopener">table 98-10-0233-01</a>),
-    {climateSource}.
+    {fr ? (
+      <Fragment>
+        Chaque maison représente une maison sur dix des {fmt(houses)} maisons de {name} ({housesLabel}), dessinée selon son
+        époque de construction. La lueur montre la tendance habituelle : les vieilles maisons fuient plus et sont moins isolées.
+        {' '}{weatherNote} Sources : Statistique Canada, Recensement de 2021
+        (<a href="https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=9810023301" rel="noopener">tableau 98-10-0233-01</a>),
+        {' '}{climateSource}.
+      </Fragment>
+    ) : (
+      <Fragment>
+        Each house stands for one in ten of {name}'s {fmt(houses)} houses ({housesLabel}),
+        drawn by when it was built. The glow shows the usual pattern: older houses tend to be leakier and less insulated.
+        {weatherNote} Sources: Statistics Canada 2021 Census
+        (<a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810023301" rel="noopener">table 98-10-0233-01</a>),
+        {climateSource}.
+      </Fragment>
+    )}
   </figcaption>
 </figure>
 

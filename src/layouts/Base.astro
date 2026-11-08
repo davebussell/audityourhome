@@ -6,6 +6,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import OtherSite from '../components/OtherSite.astro';
 import Sky from '../components/Sky.astro';
+import FrHeader from '../components/fr/FrHeader.astro';
+import FrFooter from '../components/fr/FrFooter.astro';
 import '../styles/global.css';
 import '../styles/glossary.css';
 import '../styles/sky-art.css';
@@ -26,9 +28,13 @@ interface Props {
   analytics?: boolean;
   /** The page ends in a full-width dark band: it runs straight into the footer (no gap, no cloud edge; see sky.css) */
   flushFooter?: boolean;
+  /** 'fr': a French page of the Canadian site (under /fr/): French header and footer, lang fr-CA, no "other site" bar */
+  lang?: 'en' | 'fr';
+  /** The same page in the other language (root form), for hreflang and the language bar */
+  altPath?: string;
 }
 
-const { title, description, schema = [], indexable = true, ogImage, analytics = true, sky = 'page', flushFooter = false } = Astro.props;
+const { title, description, schema = [], indexable = true, ogImage, analytics = true, sky = 'page', flushFooter = false, lang: pageLang = 'en', altPath } = Astro.props;
 /* Pages are built under /ca/ and /us/ and published at the root of each country's own domain. */
 const country = countryOf(Astro.url.pathname);
 const site = siteFor(country);
@@ -36,8 +42,14 @@ const ogDefault = country === 'us' ? '/og-default-us.png' : '/og-default.png';
 const ogUrl = new URL(ogImage ?? ogDefault, site.url).href;
 const canonical = new URL(publicPath(Astro.url.pathname), site.url).href;
 const blocks = [websiteSchema(country), ...schema].map((b) => absolutize(b, site.url));
-const lang = country ? COUNTRIES[country].locale : 'en';
+const lang = pageLang === 'fr' ? 'fr-CA' : country ? COUNTRIES[country].locale : 'en';
+const ogLocale = pageLang === 'fr' ? 'fr_CA' : country ? COUNTRIES[country].ogLocale : null;
 const contentGroup = country ?? 'global';
+const selfPath = publicPath(Astro.url.pathname);
+/** the language pair, when the page has a twin: fr-CA and en-CA both point at the Canadian site */
+const langLinks = altPath && country === 'ca'
+  ? [{ hreflang: 'fr-CA', href: new URL(pageLang === 'fr' ? selfPath : altPath, site.url).href }, { hreflang: 'en-CA', href: new URL(pageLang === 'fr' ? altPath : selfPath, site.url).href }]
+  : [];
 ---
 
 <!doctype html>
@@ -53,7 +65,8 @@ const contentGroup = country ?? 'global';
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />
-    {country && <meta property="og:locale" content={COUNTRIES[country].ogLocale} />}
+    {ogLocale && <meta property="og:locale" content={ogLocale} />}
+    {langLinks.map((l) => <link rel="alternate" hreflang={l.hreflang} href={l.href} />)}
     <meta name="ayh-country" content={contentGroup} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
@@ -96,11 +109,13 @@ const contentGroup = country ?? 'global';
   </head>
   <body>
     <Sky kind={sky} />
-    <OtherSite country={country ?? 'ca'} />
-    <Header />
+    {pageLang === 'fr' ? <FrHeader altPath={altPath} /> : <Fragment><OtherSite country={country ?? 'ca'} /><Header /></Fragment>}
+    {pageLang !== 'fr' && altPath && (
+      <p class="lang-bar"><a href={altPath} hreflang="fr-CA" lang="fr">Cette page existe en français →</a></p>
+    )}
     <main id="main" class:list={{ flush: flushFooter }}>
       <slot />
     </main>
-    <Footer />
+    {pageLang === 'fr' ? <FrFooter /> : <Footer />}
   </body>
 </html>

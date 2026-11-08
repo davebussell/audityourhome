@@ -1,0 +1,139 @@
+---
+/**
+ * The Québec program tracker in French: Rénoclimat, LogisVert and the federal heat pump rebate (full French
+ * pages), the other federal programs in a line each, and the municipal programs, which live on the city pages.
+ */
+import Base from '../../../../layouts/Base.astro';
+import Photo from '../../../../components/Photo.astro';
+import FrLeadForm from '../../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
+import { SITE } from '../../../../config/site';
+import data from '../../../../data/fr/programmes.json';
+import { VILLES, municipalFr, STATUT_MUNI } from '../../../../lib/fr/villes';
+
+const title = 'Subventions à la rénovation énergétique au Québec (2026) : Rénoclimat, LogisVert, remise fédérale | AuditYourHome';
+const description =
+  'Ce qui est vraiment en vigueur pour un propriétaire au Québec : Rénoclimat (isolation, fenêtres, sans évaluation depuis le 1er octobre 2026), LogisVert d’Hydro-Québec (thermopompes, isolation du toit), la remise fédérale pour les thermopompes de 2027, les programmes fédéraux fermés et les subventions municipales, vérifiés sur les pages officielles.';
+
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const d = new Date(SITE.dataReviewDateISO + 'T12:00:00');
+const revue = `${d.getDate() === 1 ? '1er' : d.getDate()} ${MOIS[d.getMonth()]} ${d.getFullYear()}`;
+
+const STATUT: Record<string, [string, string]> = {
+  active: ['chip-active', 'En vigueur'],
+  announced: ['chip-info', 'Annoncé'],
+  closed: ['chip-closed', 'Terminé'],
+};
+const faqs = [
+  { q: 'Faut-il une évaluation énergétique pour avoir une subvention au Québec?', a: 'Plus pour les deux grands programmes : Rénoclimat l’a rendue facultative le 1er octobre 2026 (et rembourse jusqu’à 500 $ pour celle-ci si vous réclamez une mesure), et LogisVert n’en a jamais exigé. La remise fédérale pour les thermopompes n’en demande pas non plus. L’évaluation reste la meilleure façon de savoir quoi faire en premier et de dimensionner une thermopompe pour la maison isolée.' },
+  { q: 'Peut-on cumuler Rénoclimat et LogisVert?', a: 'Pas pour les mêmes travaux : le guide de Rénoclimat n’autorise pas le cumul de son aide avec une autre aide d’un organisme gouvernemental québécois ou fédéral pour les mêmes travaux. Les deux paient l’isolation du toit; choisissez l’un ou l’autre pour ce poste. Une thermopompe (LogisVert) et des murs isolés (Rénoclimat) sont des travaux différents.' },
+  { q: 'Y a-t-il un crédit d’impôt pour la rénovation énergétique au Québec?', a: 'Non. La liste des crédits d’impôt pour les particuliers de Revenu Québec, consultée le 8 octobre 2026, n’en contient aucun pour l’efficacité énergétique. Les aides sont des subventions : Rénoclimat, LogisVert et, dès 2027, la remise fédérale.' },
+  { q: 'La Subvention canadienne pour des maisons plus vertes existe-t-elle encore?', a: 'Non. La subvention a fermé aux nouvelles demandes en février 2024, et le prêt sans intérêt a cessé de prendre des demandes le 1er octobre 2025. Les sites qui l’annoncent encore sont périmés.' },
+];
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Programmes', path: '/fr/programmes/' },
+  ]),
+  faqSchema(faqs),
+];
+const munis = VILLES.map((v) => ({ v, m: municipalFr(v) })).filter((x) => x.m.length > 0);
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('attic-insulation-inspection')} lang="fr" altPath="/programs/">
+  <div class="container">
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Suivi des programmes · Québec</p>
+        <h1>Ce qui est vraiment en vigueur en ce moment</h1>
+        <p class="lede measure">
+          Les programmes de subventions ouvrent, rétrécissent et ferment avec peu de préavis : le prêt pour des maisons plus
+          vertes est mort avec deux semaines d’avis. Chaque fiche ci-dessous est vérifiée sur sa page officielle et datée.
+          Dernière revue complète : <strong>{revue}</strong>.
+        </p>
+      </div>
+      <Photo name={'attic-insulation-inspection'} eager hud="Épaisseur · valeur R" />
+    </div>
+
+    <p class="small measure how">
+      Aucun des trois grands programmes n’exige plus d’évaluation, mais isoler d’abord et dimensionner la thermopompe ensuite reste
+      le bon ordre. <a href="/fr/comment-ca-marche/">Comment se déroule une évaluation →</a>
+    </p>
+
+    <h2 class="grp">Les trois programmes qui comptent au Québec</h2>
+    <div class="pgrid">
+      {data.programmes.map((p) => (
+        <a class={`card prog s-${p.statut}`} href={`/fr/programmes/${p.slug}/`}>
+          <span class="phead"><span class={`chip ${STATUT[p.statut]?.[0] ?? 'chip-neutral'}`}>{STATUT[p.statut]?.[1] ?? p.statut}</span><span class="who">{p.gereePar}</span></span>
+          <strong class="pn">{p.nom}</strong>
+          <span class="ps">{p.manchette}</span>
+          <span class="pk">{p.evaluationRequise ? 'Évaluation requise' : 'Aucune évaluation requise'} · vérifié le {p.verifie}</span>
+        </a>
+      ))}
+    </div>
+
+    <h2 class="grp">Le portrait fédéral</h2>
+    <div class="card card-pad fed">
+      <p class="fed-line"><span class="chip chip-info">Annoncé</span> <strong>Programme national de remise pour les thermopompes :</strong> ouverture au début de 2027; 2 000 $, ou jusqu’à 10 000 $ au revenu médian ou moins; les thermopompes installées depuis le 1er novembre 2026 comptent rétroactivement. <a href="/fr/programmes/remise-federale-thermopompe/">Ce qu’on sait →</a></p>
+      <p class="fed-line"><span class="chip chip-closed">Terminé</span> <strong>Subvention et prêt canadiens pour des maisons plus vertes :</strong> la subvention a fermé en février 2024; le prêt a cessé de prendre des demandes le 1er octobre 2025. <a href="/programs/canada-greener-homes-grant/" hreflang="en-CA">Détails (en anglais) →</a></p>
+      <p class="fed-line"><span class="chip chip-closed">Terminé</span> <strong>Programme pour la conversion de l’huile de chauffage à la thermopompe :</strong> fermé aux nouvelles demandes le 31 juillet 2026. <a href="/programs/oil-to-heat-pump-affordability/" hreflang="en-CA">Détails (en anglais) →</a></p>
+      <p class="fed-line"><span class="chip chip-closed">Inscriptions closes</span> <strong>Volet abordabilité (ménages à revenu modeste), livré par Hydro-Québec :</strong> les inscriptions 2026–2027 de LogisVert pour les ménages à revenu modeste sont terminées; les demandes reçues sont traitées. <a href="/programs/canada-greener-homes-affordability-program/" hreflang="en-CA">Détails (en anglais) →</a></p>
+      <p class="fed-line"><span class="chip chip-active">En vigueur</span> <strong>Remboursement de prime Éco Amélioration de la SCHL :</strong> 25 % de la prime d’assurance hypothécaire SCHL remboursée après 20 000 $ de rénovations énergétiques. <a href="/programs/cmhc-eco-improvement/" hreflang="en-CA">Détails (en anglais) →</a></p>
+    </div>
+
+    <h2 class="grp">Les programmes municipaux</h2>
+    <p class="small measure">Quelques villes ajoutent leur propre aide, surtout pour remplacer un chauffage au mazout. Chaque fiche est détaillée sur la page de la ville.</p>
+    <div class="mgrid">
+      {munis.map(({ v, m }) => (
+        <div class="card card-pad muni">
+          <h3><a href={`/fr/villes/${v.fr}/`}>{v.name}</a></h3>
+          <ul>
+            {m.map((x) => (
+              <li>
+                <span class={`chip ${STATUT_MUNI[x.status]?.[0] ?? 'chip-neutral'}`}>{STATUT_MUNI[x.status]?.[1] ?? x.status}</span>
+                <a href={x.url} rel="noopener">{x.nom}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="grp">Questions fréquentes</h2>
+    <div class="measure">
+      {faqs.map((f) => (
+        <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>
+      ))}
+    </div>
+
+    <p class="small also">
+      Les programmes des autres provinces sont sur <a href="/programs/" hreflang="en-CA">le suivi en anglais</a>.
+    </p>
+
+    <FrLeadForm heading="Un conseiller qui connaît ces programmes" sub="Dites-nous où vous êtes et ce que vous prévoyez : nous vous présentons un organisme de services autorisé qui dessert votre région. Aucune liste partagée, aucun pourriel." context="fr-programmes" />
+  </div>
+</Base>
+
+<style>
+  .how { margin: 0 0 22px; }
+  .grp { font-size: 23px; margin: 30px 0 12px; }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .prog { display: grid; gap: 8px; align-content: start; padding: 18px 20px; text-decoration: none; color: var(--ink); border-left: 4px solid var(--pine); }
+  .prog.s-announced { border-left-color: var(--steel); }
+  .prog:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .phead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .who { font-size: 12.5px; color: var(--muted); }
+  .pn { font-family: var(--display); font-size: 18px; }
+  .ps { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .pk { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--pine); text-transform: uppercase; }
+  .fed { border-left: 4px solid var(--steel); display: grid; gap: 10px; }
+  .fed-line { font-size: 14px; color: var(--muted); margin: 0; }
+  .fed-line .chip { margin-right: 6px; }
+  .fed-line strong { color: var(--ink); }
+  .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .muni h3 { font-size: 17px; margin: 0 0 8px; }
+  .muni ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+  .muni li { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  .also { margin: 26px 0; }
+</style>

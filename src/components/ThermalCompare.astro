@@ -14,14 +14,23 @@ interface Props {
   caption?: string;
   /** Hot-spot labels revealed on the infrared side */
   labels?: boolean;
+  /** 'fr' on the French pages: labels, tags and the control's name in French */
+  lang?: 'en' | 'fr';
 }
 
+const { lang = 'en' } = Astro.props;
+const fr = lang === 'fr';
 const {
   eager = false,
   sizes = '(max-width: 880px) calc(100vw - 44px), 520px',
-  caption = 'Illustration: a 1950s bungalow in visible light and as an infrared camera would show it on a cold night. Heat escapes where air leaks and insulation is thin.',
+  caption = fr
+    ? 'Illustration : un bungalow des années 1950 en lumière visible et tel qu’une caméra infrarouge le montrerait par une nuit froide. La chaleur s’échappe là où l’air fuit et où l’isolation est mince.'
+    : 'Illustration: a 1950s bungalow in visible light and as an infrared camera would show it on a cold night. Heat escapes where air leaks and insulation is thin.',
   labels = true,
 } = Astro.props;
+const T = fr
+  ? { eaves: 'avant-toit', doors: 'contour des portes', windows: 'cadres de fenêtres', rim: 'solive de rive', vis: 'Lumière visible', ir: 'Infrarouge', range: 'Comparer la photo et la vue infrarouge : glissez vers la gauche pour révéler plus d’infrarouge' }
+  : { eaves: 'eaves', doors: 'door edges', windows: 'window frames', rim: 'rim joist', vis: 'Visible light', ir: 'Infrared', range: 'Compare the photo with the infrared view: move left to reveal more infrared' };
 
 const vis = PHOTOS['home-hero'];
 const ir = PHOTOS['home-hero-thermal'];
@@ -44,17 +53,17 @@ const common = {
       <Picture src={ir.src} alt={ir.alt} {...common} class="tc-img" />
       {labels && (
         <ul class="tc-spots" aria-hidden="true">
-          <li style="left: 80%; top: 31%">eaves</li>
-          <li style="left: 38%; top: 45%">door edges</li>
-          <li style="left: 62%; top: 49%">window frames</li>
-          <li style="left: 71%; top: 61%">rim joist</li>
+          <li style="left: 80%; top: 31%">{T.eaves}</li>
+          <li style="left: 38%; top: 45%">{T.doors}</li>
+          <li style="left: 62%; top: 49%">{T.windows}</li>
+          <li style="left: 71%; top: 61%">{T.rim}</li>
         </ul>
       )}
     </div>
     <div class="tc-handle" aria-hidden="true"><span>‹ ›</span></div>
-    <span class="tc-tag tc-l" aria-hidden="true">Visible light</span>
-    <span class="tc-tag tc-r" aria-hidden="true"><i></i>Infrared</span>
-    <input class="tc-range" type="range" min="0" max="100" value="50" step="1" aria-label="Compare the photo with the infrared view: move left to reveal more infrared" />
+    <span class="tc-tag tc-l" aria-hidden="true">{T.vis}</span>
+    <span class="tc-tag tc-r" aria-hidden="true"><i></i>{T.ir}</span>
+    <input class="tc-range" type="range" min="0" max="100" value="50" step="1" aria-label={T.range} />
   </div>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>

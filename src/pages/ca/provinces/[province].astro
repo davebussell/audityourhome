@@ -50,7 +50,7 @@ const climateGroups = (pc?.profileList ?? []).map((pr) => ({
 const cityProfileLabel = (slug: string) => placeClimate('ca', slug)?.profile.label;
 ---
 
-<Base title={title} description={description} schema={schema} ogImage={ogFor(PROV_SLUG_PHOTO[p.slug] ?? 'home-hero')}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(PROV_SLUG_PHOTO[p.slug] ?? 'home-hero')} altPath={p.slug === 'quebec' ? '/fr/quebec/' : undefined}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/provinces/">Provinces</a> <span aria-hidden="true">/</span> <span>{p.name}</span></nav>
     <div class="page-hero has-photo">

@@ -58,9 +58,11 @@ const PROGRAM_PHOTO: Record<string, string> = {
   'oil-to-heat-pump-affordability': 'heat-loss-calculation',
 };
 const heroPhoto = PROGRAM_PHOTO[p.slug] ?? (p.provinceSlug ? PROV_SLUG_PHOTO[p.provinceSlug] : undefined) ?? 'home-hero';
+/** The Québec-facing programs have a French page under /fr/programmes/ */
+const FR_PATH: Record<string, string> = { renoclimat: '/fr/programmes/renoclimat/', logisvert: '/fr/programmes/logisvert/', 'national-heat-pump-rebate': '/fr/programmes/remise-federale-thermopompe/' };
 ---
 
-<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heroPhoto)} altPath={FR_PATH[p.slug]}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/programs/">Rebates &amp; programs</a> <span aria-hidden="true">/</span>

@@ -1,0 +1,189 @@
+{
+ "_note": "The French program pages (/fr/programmes/<slug>/). Each record is the French rendering of the English record in src/data/programs.json (enSlug), translated by hand on 2026-11-07 from that record and checked against the official French pages where they exist. Keep the facts in step with the English record: when programs.json changes, change this file.",
+ "programmes": [
+  {
+   "slug": "renoclimat",
+   "enSlug": "renoclimat",
+   "nom": "Rénoclimat",
+   "nomCourt": "Rénoclimat",
+   "titre": "Rénoclimat (2026) : montants, admissibilité et marche à suivre depuis le 1er octobre",
+   "description": "Rénoclimat depuis le 1er octobre 2026 : jusqu’à 21 500 $ par maison pour l’isolation du toit, des murs et des fondations et les fenêtres ENERGY STAR Les plus efficaces, sans évaluation obligatoire, plus un volet Adaptation contre les inondations. Montants, conditions, étapes et pièges, vérifiés sur la page officielle.",
+   "gereePar": "Gouvernement du Québec (ministère de l’Environnement, MELCCFP)",
+   "statut": "active",
+   "verifie": "8 octobre 2026",
+   "manchette": "Depuis le 1er octobre 2026 : jusqu’à 21 500 $ par maison pour l’isolation du toit, des murs et des fondations et les fenêtres ENERGY STAR Les plus efficaces, sans évaluation obligatoire, plus un nouveau volet de protection contre les inondations",
+   "evaluationRequise": false,
+   "noteEvaluation": "Plus depuis le 1er octobre 2026. L’évaluation ÉnerGuide avant travaux est maintenant facultative mais recommandée, et Rénoclimat rembourse jusqu’à 500 $ pour celle-ci si vous réclamez aussi au moins une mesure admissible. Vous choisissez l’évaluateur : n’importe quel conseiller en efficacité énergétique d’un organisme de services autorisé pour les maisons existantes. Seuls les dossiers sous les anciennes règles (évaluation avant travaux demandée au plus tard le 12 octobre 2026) passent encore par des évaluations avant et après.",
+   "admissibilite": "Les propriétaires de maisons, de duplex, de triplex et d’immeubles résidentiels à logements multiples au Québec, d’au plus trois étages et d’une empreinte au sol de 600 m² ou moins, construits et habités depuis au moins cinq ans, chauffés à l’année et raccordés au réseau d’Hydro-Québec ou à un réseau municipal ou coopératif. Les travaux doivent être faits le 1er octobre 2026 ou après par un entrepreneur détenant les licences RBQ voulues (pas par vous) et inscrits sur une attestation de conformité que l’entrepreneur signe. Les résidences secondaires sont admissibles pour l’isolation et les fenêtres, mais pas pour l’alimentation de secours, les batteries ni la protection contre les inondations.",
+   "montants": [
+    {"etiquette": "Isolation du toit à 1,75 $/pi² (grenier jusqu’à R-60, toit cathédrale ou plat jusqu’à R-40)", "valeur": "jusqu’à 2 000 $"},
+    {"etiquette": "Isolation des murs extérieurs à 3,50 $/pi² (ajout d’au moins R-9)", "valeur": "jusqu’à 7 000 $"},
+    {"etiquette": "Isolation des fondations et des planchers (murs de sous-sol 2,50 $/pi²; murs et planchers de vide sanitaire 3,50 $/pi²)", "valeur": "jusqu’à 2 500 $"},
+    {"etiquette": "Fenêtres et portes-fenêtres, ENERGY STAR Les plus efficaces seulement (300 $ chacune)", "valeur": "jusqu’à 4 500 $"},
+    {"etiquette": "Évaluation ÉnerGuide facultative", "valeur": "jusqu’à 500 $"},
+    {"etiquette": "Raccordement d’alimentation de secours / batterie stationnaire (pas pour les résidences secondaires)", "valeur": "1 000 $ / 4 000 $"},
+    {"etiquette": "Maximum par maison (31 000 $ pour un duplex, un triplex ou un immeuble à logements multiples)", "valeur": "21 500 $"},
+    {"etiquette": "Protection contre les inondations (nouveau volet Adaptation) : pompe avec batterie, clapet antiretour ou barrière amovible", "valeur": "700 $ à 1 000 $ chacun"}
+   ],
+   "etapes": [
+    "Facultatif mais utile : avant de rénover, réservez une évaluation ÉnerGuide auprès de n’importe quel conseiller en efficacité énergétique d’un organisme de services autorisé. Rénoclimat rembourse jusqu’à 500 $ si vous réclamez aussi une mesure admissible.",
+    "Vérifiez les cibles avant de signer un contrat : l’isolation du grenier doit ajouter au moins R-20 et atteindre R-60 (R-40 pour un toit cathédrale ou plat), les murs doivent gagner au moins R-9, la plupart des surfaces exigent au moins 300 pi² isolés, et les fenêtres doivent être des modèles ENERGY STAR Les plus efficaces.",
+    "Engagez des entrepreneurs dont les licences RBQ correspondent aux travaux, et faites faire les travaux le 1er octobre 2026 ou après. Chaque entrepreneur remplit et signe le formulaire d’attestation de conformité.",
+    "Conservez les factures, l’attestation, les photos et l’autocollant ENERGY STAR de chaque fenêtre. Inscrivez-vous au formulaire d’avis du programme pour savoir quand le nouveau portail Rénoclimat ouvrira.",
+    "Faites votre demande dans le portail dans les 12 mois suivant la fin de chaque mesure. Rénoclimat paie par chèque, le moindre de votre coût avant taxes ou du montant du programme.",
+    "Les thermopompes passent par LogisVert d’Hydro-Québec, qui a sa propre demande."
+   ],
+   "pieges": [
+    "Les portes, l’étanchéisation, les VRC et la récupération de chaleur des eaux de drainage ne sont plus admissibles sous les nouvelles règles, et le remboursement de 150 $ pour l’évaluation a disparu (la nouvelle aide à l’évaluation va jusqu’à 500 $).",
+    "Les fenêtres doivent être ENERGY STAR Les plus efficaces. Les fenêtres ENERGY STAR ordinaires, le remplacement du vitrage ou du châssis seulement et les fenêtres dans de nouvelles ouvertures ne donnent rien.",
+    "Les travaux que vous faites vous-même ne sont pas admissibles : l’entrepreneur licencié par la RBQ et l’attestation signée sont obligatoires.",
+    "Les recommandations d’un rapport ÉnerGuide ne qualifient pas automatiquement les travaux. Ils doivent atteindre les cibles de valeur R et les surfaces minimales de Rénoclimat.",
+    "Chaque mesure se réclame une fois par maison (sauf les fenêtres), et les travaux faits avant le 1er octobre 2026 ne sont pas admissibles sous les nouvelles règles.",
+    "Les dossiers sous les anciennes règles ont une date butoir : l’évaluation après travaux doit être faite au plus tard le 31 mars 2027."
+   ],
+   "aSavoir": "Rénoclimat a changé le 1er octobre 2026. L’ancien parcours (une évaluation à 150 $ remboursée, des travaux entre deux évaluations et des subventions pour les portes, l’étanchéisation, les VRC et la récupération de chaleur des eaux de drainage) ne s’applique plus qu’aux dossiers déjà ouverts et aux évaluations avant travaux demandées au plus tard le 12 octobre 2026, dont l’évaluation après travaux doit être faite au plus tard le 31 mars 2027. Sous les nouvelles règles, vous réclamez après les travaux par un portail Rénoclimat en ligne que Québec dit encore en construction et qui devrait ouvrir cet automne, dans les 12 mois suivant la fin de chaque mesure. Le programme court jusqu’au 31 mars 2029 ou jusqu’à épuisement de son budget. Son guide n’autorise pas le cumul de Rénoclimat avec une autre aide d’un organisme gouvernemental québécois ou fédéral, crédits d’impôt compris, pour les mêmes travaux : vérifiez avant de réclamer la même isolation du toit à Rénoclimat et au LogisVert d’Hydro-Québec.",
+   "faq": [
+    {"q": "Comment faire une demande à Rénoclimat en 2026?", "a": "Depuis le 1er octobre 2026, vous faites la demande après les travaux. Engagez des entrepreneurs ayant les licences RBQ voulues, faites signer l’attestation de conformité par chacun, puis soumettez vos factures et l’attestation par le nouveau portail Rénoclimat en ligne dans les 12 mois suivant la fin des travaux. Québec dit que le portail est encore en construction et devrait ouvrir cet automne : conservez vos documents et inscrivez-vous à l’avis par courriel du programme. L’évaluation énergétique est facultative; Rénoclimat rembourse jusqu’à 500 $ pour celle-ci si vous réclamez aussi une mesure."},
+    {"q": "Qu’est-ce que le volet Adaptation de Rénoclimat?", "a": "Un volet de protection contre les inondations ajouté le 1er octobre 2026 pour les résidences principales et les immeubles à logements multiples. Le parcours simplifié paie jusqu’à 1 000 $ pour une pompe submersible avec batterie, 700 $ pour un clapet antiretour et 800 $ pour une barrière amovible, sans diagnostic. Les maisons en zone inondable peuvent prendre le parcours accompagné : un diagnostic de résilience climatique obligatoire (jusqu’à 1 000 $), puis des travaux comme la protection des fondations, l’étanchéisation des ouvertures ou le rehaussement de la maison, jusqu’à 35 000 $ ou 75 % des coûts admissibles avant taxes."},
+    {"q": "Qu’est-ce qui a changé dans Rénoclimat le 1er octobre 2026?", "a": "L’évaluation est devenue facultative (jusqu’à 500 $ pour celle-ci), l’évaluation après travaux a été abandonnée, et l’isolation se paie maintenant au pied carré : jusqu’à 2 000 $ pour le toit, 7 000 $ pour les murs extérieurs et 2 500 $ pour les fondations d’une maison. Les fenêtres paient 300 $ chacune, jusqu’à 4 500 $, mais seulement pour les modèles ENERGY STAR Les plus efficaces. Les portes, l’étanchéisation, les VRC et la récupération de chaleur des eaux de drainage ont été retirés; les raccordements d’alimentation de secours (jusqu’à 1 000 $), les batteries stationnaires (jusqu’à 4 000 $) et le volet Adaptation contre les inondations ont été ajoutés. Le maximum par maison est de 21 500 $."},
+    {"q": "Puis-je encore utiliser les anciennes règles de Rénoclimat?", "a": "Seulement si votre dossier était déjà ouvert avant le 1er octobre 2026, ou si vous avez demandé un rendez-vous d’évaluation avant travaux au plus tard le 12 octobre 2026. L’évaluation après travaux de ces dossiers doit être faite au plus tard le 31 mars 2027. Le service à la clientèle du programme : 1 866 266-0008."},
+    {"q": "Y a-t-il un crédit d’impôt québécois pour la rénovation en 2026?", "a": "Pas pour la rénovation énergétique. La liste des crédits d’impôt pour les particuliers de Revenu Québec, consultée le 8 octobre 2026, ne contient aucun crédit pour la rénovation ou l’efficacité énergétique; ses crédits liés à l’habitation couvrent la mise aux normes des installations septiques et l’achat d’une habitation. Rénoclimat et LogisVert sont des subventions, et le guide de Rénoclimat dit que son aide ne se cumule pas avec une autre aide gouvernementale québécoise ou fédérale, crédits d’impôt compris, pour les mêmes travaux."},
+    {"q": "Quelle est la différence entre Rénoclimat et LogisVert?", "a": "Rénoclimat, géré par le gouvernement du Québec, paie l’isolation, les fenêtres à haute performance, l’alimentation de secours, les batteries et la protection contre les inondations. LogisVert, d’Hydro-Québec, paie les thermopompes, les appareils, les panneaux solaires et, dans les maisons chauffées principalement à l’électricité, l’isolation du toit avec calfeutrage. Ni l’un ni l’autre n’exige d’évaluation maintenant, mais isoler d’abord, puis dimensionner la thermopompe pour la maison améliorée, reste le bon ordre."}
+   ],
+   "urlOfficielle": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations",
+   "sources": [
+    {"href": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat/nouveautes-adaptation-inondations", "etiquette": "Québec.ca — Rénoclimat, nouveautés depuis le 1er octobre 2026 : montants, volet Adaptation, transition (mis à jour le 6 octobre 2026)"},
+    {"href": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-tableau-comparatif-avant-apres.pdf", "etiquette": "Québec.ca — Rénoclimat, tableau comparatif des anciens et des nouveaux critères (PDF)"},
+    {"href": "https://cdn-contenu.quebec.ca/cdn-contenu/environnement/transition-energetique/residentiel-renoclimat/renoclimat-guide-participant.pdf", "etiquette": "Guide du participant Rénoclimat en vigueur le 1er octobre 2026 (PDF) : admissibilité, montants, délai de 12 mois, fin le 31 mars 2029"},
+    {"href": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/renoclimat", "etiquette": "Québec.ca — page du programme Rénoclimat"}
+   ],
+   "liens": [
+    {"href": "/fr/programmes/logisvert/", "etiquette": "LogisVert : les thermopompes"},
+    {"href": "/fr/comment-ca-marche/", "etiquette": "Comment se déroule une évaluation"},
+    {"href": "/fr/trouver-un-conseiller/", "etiquette": "Trouver un conseiller au Québec"}
+   ]
+  },
+  {
+   "slug": "logisvert",
+   "enSlug": "logisvert",
+   "nom": "LogisVert d’Hydro-Québec",
+   "nomCourt": "LogisVert",
+   "titre": "LogisVert (2026) : subventions d’Hydro-Québec pour les thermopompes, l’isolation du toit, les appareils et le solaire",
+   "description": "LogisVert d’Hydro-Québec : 50 $ à 120 $ par tranche de 1 000 BTU/h pour une thermopompe (jusqu’à 6 700 $), 1 500 $ pour l’isolation du toit avec calfeutrage, appareils et panneaux solaires, sans évaluation. Montants, règles ENERGY STAR, étapes et pièges, vérifiés sur la page officielle.",
+   "gereePar": "Hydro-Québec",
+   "statut": "active",
+   "verifie": "19 octobre 2026",
+   "manchette": "Subventions d’Hydro-Québec pour les thermopompes de 50 $ à 120 $ par tranche de 1 000 BTU/h, jusqu’à 6 700 $, plus 1 500 $ pour l’isolation du toit avec calfeutrage, les appareils et le solaire : aucune évaluation requise",
+   "evaluationRequise": false,
+   "noteEvaluation": "Aucune évaluation requise : les subventions s’appliquent directement à l’équipement admissible. Une évaluation ÉnerGuide reste tout de même le premier pas intelligent, pour que la thermopompe soit dimensionnée pour une enveloppe améliorée, pas pour la maison qui fuit.",
+   "admissibilite": "Les propriétaires de maisons, de condos, de plex et d’immeubles résidentiels au Québec alimentés par le réseau d’Hydro-Québec ou par un réseau autonome, municipal ou coopératif. Les locataires peuvent réclamer les subventions pour la cuisinière à induction et la sécheuse à thermopompe. La subvention pour l’isolation du toit et le calfeutrage vise les maisons chauffées principalement à l’électricité, une fois par maison.",
+   "montants": [
+    {"etiquette": "Thermopompe ENERGY STAR, par tranche de 1 000 BTU/h à −8 °C", "valeur": "50 $"},
+    {"etiquette": "Thermopompe pour climat froid, par tranche de 1 000 BTU/h à −8 °C (Hydro-Québec : jusqu’à 6 700 $)", "valeur": "120 $"},
+    {"etiquette": "Bonification dans les immeubles à logements multiples admissibles, installations à partir du 15 juin 2026 (total de 220 $ par 1 000 BTU/h)", "valeur": "+100 $ par 1 000 BTU/h"},
+    {"etiquette": "Isolation du toit à R-50 avec calfeutrage, maisons chauffées principalement à l’électricité", "valeur": "1 500 $"},
+    {"etiquette": "Géothermie : nouveau système 750 $ (maximum 54 000 $ par maison; limité à 72 000 BTU/h depuis le 25 août 2025) ou remplacement 250 $ (maximum 18 000 $), par 1 000 BTU/h", "valeur": "250 $ à 750 $"},
+    {"etiquette": "Accumulateur de chaleur électrique, déduit par l’installateur (22 000 $ avec une thermopompe centrale)", "valeur": "15 000 $"},
+    {"etiquette": "Cuisinière à induction ou sécheuse à thermopompe", "valeur": "250 $ chacune"},
+    {"etiquette": "Panneaux solaires (au plus 40 % du coût)", "valeur": "1 000 $ par kW"},
+    {"etiquette": "Plusieurs mesures dans une même demande", "valeur": "+5 %"}
+   ],
+   "etapes": [
+    "Vérifiez que le modèle figure sur la liste des thermopompes admissibles d’Hydro-Québec. Les thermopompes installées le 26 novembre 2025 ou après doivent être certifiées ENERGY STAR, et l’unité extérieure doit avoir une capacité nominale de climatisation d’au moins 12 000 BTU/h.",
+    "Faites faire un calcul des pertes de chaleur avant les soumissions : la subvention grandit avec la capacité, mais une thermopompe surdimensionnée vous coûte en confort et en efficacité.",
+    "Achetez chez un détaillant du Québec et faites affaire avec un entrepreneur inscrit au Registraire des entreprises qui détient les sous-catégories de licence RBQ voulues pour les travaux.",
+    "Faites la demande dans le portail LogisVert (en français) dans les neuf mois suivant l’installation, avec la preuve de propriété et la facture. La géothermie et l’accumulateur de chaleur fonctionnent autrement : l’installateur déduit ces subventions sur la facture.",
+    "Vous isolez aussi? Décidez si les travaux de toit passent par LogisVert ou par Rénoclimat, et faites-les avant la thermopompe pour qu’elle soit dimensionnée pour la maison améliorée."
+   ],
+   "pieges": [
+    "Une thermopompe installée le 26 novembre 2025 ou après qui n’est pas certifiée ENERGY STAR ne reçoit rien : vérifiez le numéro de modèle avant de signer.",
+    "Remplacer une seule unité intérieure ou extérieure, remplacer une thermopompe après un bris, installer des unités intérieures hors de l’espace habitable isolé (dans le grenier, par exemple), ou installer ou remplacer une thermopompe centrale dans une maison munie d’un système géothermique : rien de cela n’est admissible.",
+    "La subvention pour l’isolation du toit exige R-50 sur 100 % du toit plus le calfeutrage de chaque endroit listé (fenêtres, portes, trappe du grenier, prises et plus), par un entrepreneur dont la licence RBQ comprend la sous-catégorie 7.0.",
+    "La bonification pour les immeubles à logements multiples ne se cumule pas avec la bonification de 5 % pour mesures multiples ni avec aucune autre offre d’Hydro-Québec ou d’un gouvernement.",
+    "Une subvention au BTU peut tenter de surdimensionner; le calcul des pertes de chaleur CSA F280 est votre défense."
+   ],
+   "aSavoir": "La mesure qu’Hydro-Québec a retirée le 25 août 2025 était « thermopompe à haute efficacité et travaux de calfeutrage » (140 $ par 1 000 BTU/h). L’isolation du toit avec calfeutrage (1 500 $) figure toujours dans le guide de participation résidentiel (version 1.10, 15 septembre 2026). Les subventions ne peuvent pas dépasser votre coût d’achat et d’installation avant taxes (40 % pour le solaire), et vous avez neuf mois après l’installation pour faire la demande. Le portail de demande est en français seulement. Depuis la refonte de Rénoclimat le 1er octobre 2026, les deux programmes paient pour l’isolation du toit, et le guide de Rénoclimat n’autorise pas le cumul de son aide avec une autre aide gouvernementale québécoise ou fédérale pour les mêmes travaux : vérifiez avant de réclamer les mêmes travaux deux fois. La page d’Hydro-Québec note aussi que le 8 octobre 2026 le gouvernement fédéral a annoncé un financement pour les thermopompes à partir de 2027; elle dit que les détails ne sont pas encore connus et que les demandes LogisVert sont traitées comme d’habitude.",
+   "faq": [
+    {"q": "Combien LogisVert paie-t-il pour une thermopompe?", "a": "50 $ par tranche de 1 000 BTU/h de capacité de chauffage à −8 °C pour une thermopompe certifiée ENERGY STAR, ou 120 $ pour un modèle classé climat froid; la page d’Hydro-Québec parle de jusqu’à 6 700 $. Les thermopompes installées le 26 novembre 2025 ou après doivent être certifiées ENERGY STAR, l’unité extérieure doit avoir au moins 12 000 BTU/h de capacité nominale de climatisation, et vous devez acheter chez un détaillant du Québec. Vérifié le 19 octobre 2026."},
+    {"q": "LogisVert exige-t-il une évaluation énergétique?", "a": "Non. Mais dimensionner la thermopompe à partir d’un calcul des pertes de chaleur CSA F280, idéalement après avoir isolé, est ce qui la fait bien fonctionner. La subvention paie dans tous les cas; votre confort, non."},
+    {"q": "Puis-je encore obtenir de l’argent de LogisVert pour l’isolation?", "a": "Oui, pour l’isolation du toit avec calfeutrage : 1 500 $ dans une maison chauffée principalement à l’électricité, si le toit atteint R-50 sur 100 % de sa surface et que le calfeutrage listé est fait par un entrepreneur ayant la licence RBQ voulue. La mesure qui a pris fin le 25 août 2025 était la thermopompe à haute efficacité avec travaux de calfeutrage. Les subventions pour les murs, les fondations et les fenêtres sont chez Rénoclimat."},
+    {"q": "Qu’est-ce que le tarif biénergie (DT) d’Hydro-Québec?", "a": "Le tarif DT s’adresse aux maisons chauffées principalement à l’électricité avec un appoint au combustible : gaz naturel, mazout, propane ou granules de bois. Sous −12 °C ou −15 °C selon la région, le système passe au combustible et l’électricité coûte plus cher; le reste du temps, l’électricité est facturée à un prix plus bas. Hydro-Québec dit que le tarif DT est généralement moins cher que le tarif D si on utilise la bonne énergie au bon moment, mais qu’il peut coûter plus cher selon vos habitudes. Un entrepreneur en chauffage remplit le certificat d’admissibilité biénergie, et vous payez l’inspection et les modifications nécessaires."},
+    {"q": "Y a-t-il des subventions d’Hydro-Québec pour les maisons chauffées au gaz?", "a": "L’offre biénergie d’Hydro-Québec affiche 7 300 $ pour les clients d’Énergir et 6 800 $ pour les clients d’Enbridge Gaz Québec pour ajouter une thermopompe centrale électrique à un système au gaz naturel à air pulsé dans une maison détachée, jumelée ou en rangée, ou un condo ayant son propre système de chauffage. La page nomme encore le programme Chauffez vert de Québec mais n’affiche aucune date, et Québec a mis fin à l’aide de Chauffez vert pour les conversions du mazout et du propane le 31 mars 2026 : quand vous contactez votre distributeur de gaz pour faire la demande, confirmez que l’offre est encore financée. Les maisons déjà chauffées à l’électricité ne sont pas admissibles."}
+   ],
+   "urlOfficielle": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html",
+   "sources": [
+    {"href": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/residential.html", "etiquette": "Hydro-Québec — LogisVert, clientèle résidentielle (version anglaise de la page) : montants, règle ENERGY STAR, bonifications, délai de neuf mois, mesure retirée"},
+    {"href": "https://www.hydroquebec.com/data/logisvert/logisvert-guide-participation-residentiel-fr.pdf", "etiquette": "Guide de participation LogisVert à l’intention de la clientèle résidentielle (PDF, français)"},
+    {"href": "https://www.hydroquebec.com/residential/energy-wise/financial-assistance/logisvert/installer.html", "etiquette": "Hydro-Québec — LogisVert pour les entreprises d’installation : géothermie, plafond de 54 000 $ et accumulateur de chaleur"},
+    {"href": "https://www.hydroquebec.com/residential/customer-space/rates/rate-dt.html", "etiquette": "Hydro-Québec — tarif DT (biénergie)"},
+    {"href": "https://www.hydroquebec.com/residential/energy-wise/offers-to-save/dual-energy-offer.html", "etiquette": "Hydro-Québec — offre biénergie (Chauffez vert) : 7 300 $ Énergir, 6 800 $ Enbridge Gaz Québec"},
+    {"href": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energie/aide-financiere-renovation-ecoenergetique/chauffez-vert-mazout-propane", "etiquette": "Québec.ca — Chauffez vert, conversion du mazout et du propane : plus d’aide depuis le 31 mars 2026 (mis à jour le 6 juillet 2026)"}
+   ],
+   "liens": [
+    {"href": "/fr/thermopompes/", "etiquette": "Les thermopompes au Québec : choisir, dimensionner, réclamer"},
+    {"href": "/fr/programmes/renoclimat/", "etiquette": "Rénoclimat : l’isolation et les fenêtres"},
+    {"href": "/fr/programmes/remise-federale-thermopompe/", "etiquette": "La remise fédérale de 2027"}
+   ]
+  },
+  {
+   "slug": "remise-federale-thermopompe",
+   "enSlug": "national-heat-pump-rebate",
+   "nom": "Programme national de remise pour les thermopompes",
+   "nomCourt": "Remise fédérale pour les thermopompes",
+   "titre": "Remise fédérale pour les thermopompes (2027) : jusqu’à 10 000 $, qui est admissible, quand elle ouvre",
+   "description": "Le nouveau Programme national de remise pour les thermopompes du Canada : jusqu’à 10 000 $ pour les ménages au revenu médian ou moins, 2 000 $ pour les autres, sans évaluation ÉnerGuide, ouverture au début de 2027. Les thermopompes installées depuis le 1er novembre 2026 comptent rétroactivement. Le tableau des revenus, les règles et ce qui n’est pas encore fixé.",
+   "gereePar": "Gouvernement du Canada (Environnement et Changement climatique Canada)",
+   "statut": "announced",
+   "verifie": "7 novembre 2026",
+   "manchette": "Ouverture au début de 2027 : jusqu’à 10 000 $ au revenu médian ou moins, 2 000 $ pour les autres propriétaires, et les thermopompes installées depuis le 1er novembre 2026 comptent rétroactivement",
+   "evaluationRequise": false,
+   "noteEvaluation": "Aucune évaluation ÉnerGuide avant ou après l’installation : la page du programme le dit, et la liste des critères n’en contient pas. Un calcul des pertes de chaleur CSA F280 reste la bonne façon de dimensionner la thermopompe.",
+   "admissibilite": "Vous habitez au Canada et vous êtes propriétaire de la maison (elle n’a pas à être votre résidence principale, alors un logement locatif est admissible; une maison appartenant au gouvernement autochtone local l’est aussi). La thermopompe doit figurer sur la liste fédérale des produits admissibles, identifiée par son numéro AHRI, et être achetée auprès d’un entrepreneur en chauffage, ventilation et climatisation (CVCA) et installée par lui. Toute source de chauffage actuelle compte (électricité, gaz naturel, mazout, propane, diesel, charbon ou bois), les installations d’urgence comme les installations planifiées, et vous n’avez pas à retirer l’ancien système. Une remise par ménage, et aucune là où de l’argent fédéral a déjà payé une thermopompe à cette adresse. Le palier allant jusqu’à 10 000 $ exige un revenu familial après impôt égal ou inférieur au revenu médian de votre province pour la taille de votre ménage : au Québec, 41 228 $ pour une personne, 82 097 $ pour deux, 107 865 $ pour trois, 134 232 $ pour quatre et 140 225 $ pour cinq ou plus (médianes de Statistique Canada 2021 ajustées à 2025). Les thermopompes louées pourraient être couvertes plus tard.",
+   "montants": [
+    {"etiquette": "Ménages au revenu familial après impôt médian ou moins (une remise par ménage)", "valeur": "jusqu’à 10 000 $"},
+    {"etiquette": "Ménages au-dessus du revenu médian", "valeur": "2 000 $"},
+    {"etiquette": "Thermopompes installées le 1er novembre 2026 ou après, réclamées à l’ouverture du portail", "valeur": "comptent rétroactivement"},
+    {"etiquette": "Approbation après la demande en ligne, selon l’annonce du 8 octobre", "valeur": "en 24 heures"},
+    {"etiquette": "Paiement après le dépôt des reçus, selon l’annonce", "valeur": "en 5 jours"}
+   ],
+   "etapes": [
+    "Vérifiez que le modèle figure sur la liste fédérale des produits admissibles (par numéro AHRI) avant de signer : l’admissibilité se juge selon les règles en vigueur le jour de l’installation.",
+    "Achetez-la auprès d’un entrepreneur en CVCA et faites-la installer par lui, le 1er novembre 2026 ou après. Les installations antérieures ne sont pas couvertes.",
+    "Conservez des reçus qui montrent votre nom et votre adresse, le nom de l’installateur, la marque, le modèle et le numéro AHRI, le nombre d’unités et le coût total du projet : le portail demandera tout cela, dans les six mois (la page ne dit pas six mois à partir de quoi, alors n’attendez pas).",
+    "Quand le portail ouvrira, au début de 2027, faites la demande en ligne. Pour le palier allant jusqu’à 10 000 $, vous fournissez votre numéro d’assurance sociale, transmis à l’Agence du revenu du Canada pour vérifier le revenu du ménage. Rien n’est payé tant que la demande n’est pas approuvée.",
+    "Ajoutez votre subvention provinciale : l’annonce du 8 octobre disait que les deux se cumulent. Suivez les règles du programme provincial, comme la liste des thermopompes admissibles de LogisVert.",
+    "Inscrivez-vous sur la page du gouvernement du Canada pour recevoir les avis de lancement, et faites la demande seulement par son propre portail."
+   ],
+   "pieges": [
+    "Rien n’est payé avant le lancement du programme (début 2027) et l’approbation de votre demande : budgétez comme si la remise arrivait des mois après l’installation.",
+    "Seules les thermopompes installées le 1er novembre 2026 ou après comptent; une remise par ménage, et aucune si de l’argent fédéral a déjà payé une thermopompe à cette adresse.",
+    "Les reçus dans les six mois, avec le nom de l’installateur et le numéro AHRI : une simple soumission ne suffira pas.",
+    "Le palier de 10 000 $ est soumis à un test de revenu familial après impôt par province et par taille de ménage (Québec : 41 228 $ pour une personne jusqu’à 140 225 $ pour cinq ou plus), vérifié auprès de l’ARC avec votre NAS. Au-dessus de la ligne, c’est 2 000 $.",
+    "La page parle de « systèmes de thermopompe admissibles qui peuvent chauffer toute votre maison » et renvoie aux numéros AHRI de la liste; le document d’information d’octobre parlait de modèles à air pour climat froid et ne disait rien des systèmes géothermiques.",
+    "Attendez-vous à des arnaques : faites la demande seulement par le portail du gouvernement du Canada quand il ouvrira, et ne payez jamais personne pour « réserver » une remise."
+   ],
+   "aSavoir": "Fait partie d’un plan fédéral de 2 milliards de dollars sur huit ans annoncé le 8 octobre 2026 pour soutenir un million de rénovations résidentielles, dont jusqu’à 820 000 ménages qui passent à la thermopompe. La page du programme, mise à jour le 5 novembre 2026, dit qu’il devrait être lancé au début de 2027 et se terminer en mars 2034, que l’admissibilité se juge selon les règles en vigueur à la date de l’installation, et qu’aucun paiement n’est versé avant le lancement et l’approbation d’une demande. L’annonce du 8 octobre disait que les deux niveaux de remise peuvent se cumuler avec les programmes provinciaux; la page du programme elle-même n’aborde pas le cumul. Ottawa ferme le Programme pour la conversion de l’huile de chauffage à la thermopompe, qui ne prend plus de demandes depuis le 31 juillet 2026.",
+   "faq": [
+    {"q": "Quand la remise fédérale pour les thermopompes ouvre-t-elle?", "a": "Au début de 2027, par un portail en ligne, et elle devrait durer jusqu’en mars 2034. Elle n’était pas ouverte le 7 novembre 2026; la page du gouvernement permet de s’inscrire aux avis de lancement."},
+    {"q": "Combien vaut la remise fédérale pour une thermopompe?", "a": "Jusqu’à 10 000 $ pour les ménages dont le revenu familial après impôt est égal ou inférieur au revenu médian de leur province pour la taille de leur ménage, et 2 000 $ pour les ménages au-dessus. La page ne dit pas comment le montant est fixé à l’intérieur du palier allant jusqu’à 10 000 $."},
+    {"q": "Une thermopompe installée maintenant est-elle admissible?", "a": "Oui, si elle a été installée le 1er novembre 2026 ou après par un entrepreneur en CVCA et qu’elle respecte les règles en vigueur ce jour-là : la page du programme dit que ces ménages pourront demander une remise rétroactive quand le portail ouvrira au début de 2027. Rien n’est payé avant. Gardez les reçus avec le nom de l’installateur et le numéro AHRI."},
+    {"q": "Faut-il une évaluation énergétique pour la remise fédérale?", "a": "Non. La page du programme dit qu’aucune évaluation de la consommation énergétique n’est requise avant ou après l’installation. Un calcul des pertes de chaleur reste la meilleure façon de dimensionner la thermopompe."},
+    {"q": "Peut-on la cumuler avec LogisVert?", "a": "L’annonce du 8 octobre 2026 disait que les deux niveaux de remise peuvent se cumuler avec les programmes provinciaux existants; la page du programme n’en parle pas. LogisVert a ses propres règles (modèle sur sa liste, achat chez un détaillant du Québec, demande dans les neuf mois), alors suivez les deux."},
+    {"q": "Quelles thermopompes sont admissibles?", "a": "Les modèles de la liste fédérale des produits admissibles, identifiés par leur numéro AHRI, achetés auprès d’un entrepreneur en CVCA et installés par lui. L’annonce d’octobre décrivait des thermopompes à air électriques pour climat froid et disait que la liste compte plus de 100 000 options."},
+    {"q": "Quel est le plafond de revenu?", "a": "Un revenu familial après impôt égal ou inférieur au revenu médian de votre province pour la taille de votre ménage : au Québec, 41 228 $ (une personne), 82 097 $ (deux), 107 865 $ (trois), 134 232 $ (quatre) et 140 225 $ (cinq ou plus). Médianes de Statistique Canada 2021 ajustées pour l’inflation à 2025. Au-dessus de la ligne, vous recevez 2 000 $."},
+    {"q": "Est-ce le retour de la Subvention canadienne pour des maisons plus vertes?", "a": "Non. La Subvention canadienne pour des maisons plus vertes a fermé aux nouvelles demandes en 2024 et payait bien des types de travaux, avec des évaluations ÉnerGuide avant et après. La nouvelle remise vise les thermopompes seulement et n’exige aucune évaluation."}
+   ],
+   "urlOfficielle": "https://www.canada.ca/fr/environnement-changement-climatique/campagnes/renovations-ecoenergetiques-un-million-logements.html",
+   "sources": [
+    {"href": "https://www.canada.ca/fr/environnement-changement-climatique/campagnes/renovations-ecoenergetiques-un-million-logements.html", "etiquette": "Gouvernement du Canada — Programme national de remise pour les thermopompes (page mise à jour le 4 novembre 2026) : admissibilité, installations rétroactives depuis le 1er novembre 2026, tableau des revenus, reçus, fin en mars 2034"},
+    {"href": "https://www.pm.gc.ca/en/news/news-releases/2026/10/08/prime-minister-carney-announces-landmark-investment-retrofit-one", "etiquette": "Cabinet du premier ministre — annonce du 8 octobre 2026 (montants, approbation en 24 heures, aucune évaluation, cumul avec les programmes provinciaux; en anglais)"},
+    {"href": "https://globalnews.ca/news/12092747/heat-pump-rebate-program-carney/", "etiquette": "La Presse Canadienne via Global News — lancement au début de l’année prochaine, détails non finalisés, fin du programme mazout-thermopompe (en anglais)"},
+    {"href": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/canada-greener-homes-initiative/oil-heat-pump-affordability-program", "etiquette": "RNCan — Programme pour la conversion de l’huile de chauffage à la thermopompe : demandes closes le 31 juillet 2026 (en anglais)"}
+   ],
+   "liens": [
+    {"href": "/fr/programmes/logisvert/", "etiquette": "LogisVert : la subvention québécoise à cumuler"},
+    {"href": "/fr/thermopompes/", "etiquette": "Les thermopompes au Québec"}
+   ]
+  }
+ ]
+}

@@ -3,15 +3,18 @@
 interface Props {
   era: { pre1961: number | null; y1961to1990: number | null; y1991to2000: number | null; since2001: number | null };
   name: string;
+  /** 'fr' on the French pages: the accessible label in French */
+  lang?: 'en' | 'fr';
 }
-const { era, name } = Astro.props;
+const { era, name, lang = 'en' } = Astro.props;
+const fr = lang === 'fr';
 const segs = [
-  { v: era.pre1961 ?? 0, c: '#F4A53F', l: 'before 1961' },
+  { v: era.pre1961 ?? 0, c: '#F4A53F', l: fr ? 'avant 1961' : 'before 1961' },
   { v: era.y1961to1990 ?? 0, c: '#E8622A', l: '1961–1990' },
   { v: era.y1991to2000 ?? 0, c: '#C04A86', l: '1991–2000' },
-  { v: era.since2001 ?? 0, c: '#7A63E0', l: '2001 or later' },
+  { v: era.since2001 ?? 0, c: '#7A63E0', l: fr ? '2001 ou après' : '2001 or later' },
 ];
-const label = `${name} houses: ` + segs.map((s) => `${Math.round(s.v)}% ${s.l}`).join(', ');
+const label = (fr ? `Maisons de ${name} : ` : `${name} houses: `) + segs.map((s) => `${Math.round(s.v)}${fr ? ' %' : '%'} ${s.l}`).join(', ');
 ---
 
 <span class="erabar" role="img" aria-label={label} title={label}>

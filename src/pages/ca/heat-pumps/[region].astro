@@ -82,7 +82,7 @@ const jump: [string, string][] = [
 ];
 ---
 
-<Base title={title} description={description} schema={schema} ogImage={ogFor(heatPhoto)}>
+<Base title={title} description={description} schema={schema} ogImage={ogFor(heatPhoto)} altPath={r.slug === 'quebec' ? '/fr/thermopompes/' : undefined}>
   <div class="container hp">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>{r.name}</span></nav>
     <div class:list={['page-hero', { 'has-photo': heatPhoto }]}>

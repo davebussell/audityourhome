@@ -1,0 +1,261 @@
+---
+/**
+ * A Québec city in French: climate, housing age, heating, radon, who does the evaluations, the city's own
+ * programs, the provincial and federal ones, and the match form. Numbers from src/data/fr/villes.json
+ * (tools/fr/build-villes.mjs), sentences from src/lib/fr/villes.ts.
+ */
+import Base from '../../../../layouts/Base.astro';
+import Photo from '../../../../components/Photo.astro';
+import HousingPortrait from '../../../../components/HousingPortrait.astro';
+import FrLeadForm from '../../../../components/fr/FrLeadForm.astro';
+import { ogFor } from '../../../../lib/photos';
+import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
+import {
+  VILLES, VILLES_CHECKED, type Ville, n, deg, saison, climatPhrase, logementPhrase, chauffagePhrase, radonPhrase, puitsPhrase,
+  municipalFr, STATUT_MUNI, noteFr, organismesLabel,
+} from '../../../../lib/fr/villes';
+import programmes from '../../../../data/fr/programmes.json';
+
+export function getStaticPaths() {
+  return VILLES.map((v) => ({ params: { ville: v.fr }, props: { v } }));
+}
+interface Props { v: Ville }
+const { v } = Astro.props;
+const f = v.facts;
+
+const REGION: Record<string, string> = {
+  montreal: 'quebec-montreal', laval: 'quebec-laval', gatineau: 'quebec-outaouais', longueuil: 'quebec-monteregie',
+  'saint-jean-sur-richelieu': 'quebec-monteregie', terrebonne: 'quebec-lanaudiere-laurentides', 'quebec-city': 'quebec-capitale',
+  levis: 'quebec-chaudiere', sherbrooke: 'quebec-estrie', 'trois-rivieres': 'quebec-mauricie', saguenay: 'quebec-saguenay',
+};
+const SERVICES: [string, string][] = [
+  ['home-energy-audit', 'Évaluation énergétique résidentielle'],
+  ['blower-door-test', 'Test d’infiltrométrie'],
+  ['thermal-imaging', 'Inspection par thermographie'],
+  ['heat-loss-calculation', 'Calcul des pertes de chaleur'],
+  ['duct-leakage-testing', 'Test d’étanchéité des conduits'],
+  ['combustion-safety-test', 'Test de sécurité des appareils à combustion'],
+  ['ventilation-assessment', 'Évaluation de la ventilation et de l’humidité'],
+  ['attic-insulation-inspection', 'Inspection de l’isolation du grenier'],
+  ['energy-bill-analysis', 'Analyse des factures d’énergie'],
+  ['radon-testing', 'Test de radon'],
+  ['carbon-monoxide-testing', 'Test de monoxyde de carbone'],
+  ['mold-testing', 'Test de moisissures et de qualité de l’air'],
+  ['asbestos-testing', 'Test d’amiante et de vermiculite'],
+  ['lead-paint-testing', 'Test de peinture au plomb'],
+  ['well-water-testing', 'Analyse de l’eau de puits'],
+];
+
+const pre61 = Math.round(f.housesPre1961 ?? 0);
+const title = `Évaluation énergétique et tests résidentiels à ${v.name} : climat, maisons, subventions | AuditYourHome`;
+const description = `${v.name} : ${n(f.hdd)} degrés-jours de chauffage, ${pre61} % des maisons d’avant 1961, ${organismesLabel(f.providers)} pour l’évaluation ÉnerGuide, Rénoclimat, LogisVert, la remise fédérale et les programmes de la Ville, avec les tests qui comptent ici.`;
+const lede = `${v.name} compte environ ${n(f.hdd)} degrés-jours de chauffage par année (${saison(f.hdd)}), ${pre61} % de ses maisons datent d’avant 1961, et ${f.providers > 0 ? `${organismesLabel(f.providers)} ${f.providers === 1 ? 'dessert' : 'desservent'} ses codes postaux` : 'nous pouvons vous dire quel organisme de services dessert votre code postal'}.`;
+
+const muni = municipalFr(v);
+const note = noteFr(v);
+const chauffage = chauffagePhrase(v);
+const radon = radonPhrase(v);
+const provNote = f.providers > 0
+  ? `Depuis le 1er octobre 2026, Rénoclimat n’assigne plus l’évaluateur : une évaluation ÉnerGuide avant travaux, facultative, se réserve auprès de n’importe lequel des organismes autorisés par RNCan ci-dessous, et le programme rembourse jusqu’à 500 $ pour celle-ci quand vous réclamez une mesure admissible. La subvention LogisVert d’Hydro-Québec pour une thermopompe n’exige aucune évaluation. La couverture est la part des secteurs postaux urbains de ${v.name} que chaque organisme dit desservir.`
+  : null;
+const faqs = [
+  { q: `Combien coûte une évaluation énergétique à ${v.name}?`, a: 'Le prix est fixé par l’organisme de services, comme partout au Québec depuis que Rénoclimat a cessé de fixer un tarif de 150 $ le 1er octobre 2026. Demandez deux ou trois prix, vérifiez que le test d’infiltrométrie est inclus, et comptez que Rénoclimat rembourse jusqu’à 500 $ si vous réclamez ensuite une mesure admissible.' },
+  { q: `Quelles subventions s’appliquent à une maison de ${v.name}?`, a: `Rénoclimat (isolation du toit, des murs et des fondations, fenêtres ENERGY STAR Les plus efficaces, jusqu’à 21 500 $ par maison), LogisVert d’Hydro-Québec (thermopompes de 50 $ à 120 $ par 1 000 BTU/h, isolation du toit dans les maisons chauffées à l’électricité) et, dès 2027, la remise fédérale pour les thermopompes (2 000 $, ou jusqu’à 10 000 $ au revenu médian ou moins, pour les thermopompes installées depuis le 1er novembre 2026)${muni.length ? `, plus ${muni.length === 1 ? 'le programme de la Ville décrit plus bas' : 'les programmes de la Ville décrits plus bas'}` : ''}.` },
+  { q: `Faut-il tester le radon à ${v.name}?`, a: 'Oui, dans chaque maison : un test de longue durée (au moins 91 jours, en saison de chauffage) contre la ligne directrice canadienne de 200 Bq/m³, surtout s’il y a une chambre ou un bureau au sous-sol. Les enquêtes régionales donnent une probabilité, pas un résultat pour votre maison.' },
+];
+const schema = [
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/fr/' },
+    { name: 'Villes', path: '/fr/villes/' },
+    { name: v.name, path: `/fr/villes/${v.fr}/` },
+  ]),
+  faqSchema(faqs),
+];
+const STATUT_PROG: Record<string, [string, string]> = { active: ['chip-active', 'En vigueur'], announced: ['chip-info', 'Annoncé · ouvre en 2027'] };
+const SOURCES = [
+  { href: 'https://www.canada.ca/fr/sante-canada/services/sante-environnement-milieu-travail/rapports-publications/radiation/enquete-pancanadienne-concentrations-radon-habitations-rapport-final-sante-canada-2012.html', label: 'Santé Canada — Enquête pancanadienne sur les concentrations de radon dans les habitations, rapport final (2012), tableau 5' },
+  { href: 'https://evictradon.org/wp-content/uploads/2025/11/2024-Cross-Canada-Radon-Survey-Report-V24.pdf', label: 'Evict Radon National Study avec Santé Canada — 2024 Cross-Canada Survey of Radon Exposure (rapport v1.1, en anglais)' },
+  { href: 'https://open.canada.ca/data/fr/dataset/4672733b-bbb6-4299-a57f-f19ab475ac11', label: 'RNCan — Carte climatique HOT2000 : degrés-jours de chauffage et températures de calcul pour 403 endroits' },
+  { href: 'https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=9810023301', label: 'Statistique Canada — Recensement de 2021, ménages selon la période de construction et le type de logement (tableau 98-10-0233-01)' },
+  { href: 'https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=3810028601', label: 'Statistique Canada — Enquête sur les ménages et l’environnement 2023, principaux systèmes de chauffage (tableau 38-10-0286-01)' },
+  { href: 'https://ressources-naturelles.canada.ca/efficacite-energetique/efficacite-energetique-residentielle/trouver-organismes-services-maisons-existantes', label: 'RNCan — Organismes de services pour les maisons existantes (liste vérifiée le 25 septembre 2026)' },
+];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogFor('region-quebec')} lang="fr" altPath={`/cities/${v.slug}/`}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Fil d’Ariane">
+      <a href="/fr/villes/">Villes</a> <span aria-hidden="true">/</span>
+      <a href="/fr/quebec/">Québec</a> <span aria-hidden="true">/</span>
+      <span>{v.name}</span>
+    </nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Québec · données vérifiées le {VILLES_CHECKED}</p>
+        <h1>Évaluation énergétique et tests résidentiels à {v.name}</h1>
+        <p class="lede">{lede}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#conseillers">Qui fait les évaluations à {v.name} →</a>
+          <a class="btn btn-ghost" href="/fr/planificateur/">Votre plan gratuit</a>
+        </div>
+      </div>
+      <Photo name="region-quebec" eager hud="Québec" />
+    </div>
+
+    <HousingPortrait
+      slug={v.slug}
+      name={v.name}
+      era={f.era}
+      houses={f.houses}
+      hdd={f.hdd}
+      designHeat={f.designHeat}
+      heading={`Comment ${v.name} est bâtie`}
+      lang="fr"
+    />
+
+    <section class="facts">
+      <h2>{v.name} en bref</h2>
+      <div class="fgrid">
+        <div class="card card-pad"><p class="eyebrow">Climat</p><p>{climatPhrase(v)}</p></div>
+        <div class="card card-pad"><p class="eyebrow">Logement</p><p>{logementPhrase(v)}</p></div>
+        {chauffage && <div class="card card-pad"><p class="eyebrow">Chauffage</p><p>{chauffage} Électricité : {v.utilities.electricity ?? 'Hydro-Québec'}{v.utilities.gas ? ` · gaz naturel : ${v.utilities.gas}` : ''}.</p></div>}
+        {radon && <div class="card card-pad"><p class="eyebrow">Radon</p><p>{radon}</p></div>}
+        <div class="card card-pad"><p class="eyebrow">Eau de puits</p><p>{puitsPhrase(v)}</p></div>
+      </div>
+    </section>
+
+    {note && (
+      <section class="needs card card-pad">
+        <p class="eyebrow">Ce que ça change pour votre maison · profil {note.profil}</p>
+        <p class="measure">{note.note}</p>
+        <ul class="aleas">
+          {note.aleas.map((a) => <li>{a}</li>)}
+        </ul>
+      </section>
+    )}
+
+    <section class="who" id="conseillers">
+      <h2>Qui fait les évaluations ÉnerGuide à {v.name}</h2>
+      {provNote && <p class="measure">{provNote}</p>}
+      {v.providers.length > 0 ? (
+        <ul class="orgs">
+          {v.providers.map((p) => (
+            <li class="card">
+              <strong>{p.name}</strong>
+              <span class="cov">{p.coverage} % de la ville</span>
+              {p.phone && <a href={`tel:${p.phone.replace(/[^\d+]/g, '')}`}>{p.phone}</a>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="measure">Aucun organisme ne liste les codes postaux de {v.name} pour l’instant. <a href="#lead-form">Demandez-nous</a> : nous vous dirons qui dessert votre secteur.</p>
+      )}
+      <p class="small measure">
+        Un organisme de services est une entreprise autorisée par Ressources naturelles Canada (RNCan) à réaliser des évaluations ÉnerGuide;
+        ce sont ses conseillers en efficacité énergétique enregistrés qui font la visite. <a href="/fr/comment-ca-marche/">Ce qui se passe pendant la visite →</a>
+      </p>
+    </section>
+
+    {muni.length > 0 && (
+      <section class="muni">
+        <h2>{muni.length === 1 ? 'Le programme de la Ville' : 'Les programmes de la Ville'} de {v.name}</h2>
+        <div class="mgrid">
+          {muni.map((m) => (
+            <div class="card card-pad">
+              <h3><a href={m.url} rel="noopener">{m.nom}</a> <span class={`chip ${STATUT_MUNI[m.status]?.[0] ?? 'chip-neutral'}`}>{STATUT_MUNI[m.status]?.[1] ?? m.status}</span></h3>
+              {m.resume && <p class="small mb-0">{m.resume}</p>}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="progsec">
+      <h2>Subventions pour les maisons de {v.name}</h2>
+      <div class="progs">
+        {programmes.programmes.map((p) => (
+          <a class="card prog" href={`/fr/programmes/${p.slug}/`}>
+            <span class="pk">{p.gereePar.split(' (')[0]}</span>
+            <strong>{p.nom}</strong>
+            <span class="ps">{p.manchette}</span>
+            {STATUT_PROG[p.statut] && <span class={`chip ${STATUT_PROG[p.statut][0]}`}>{STATUT_PROG[p.statut][1]}</span>}
+          </a>
+        ))}
+      </div>
+      <p class="small">Aussi, en anglais : le <a href="/programs/cmhc-eco-improvement/" hreflang="en-CA">remboursement de prime Éco Amélioration de la SCHL</a> et le <a href="/programs/canada-greener-homes-affordability-program/" hreflang="en-CA">volet abordabilité pour les ménages à revenu modeste</a> (inscriptions 2026–2027 closes au Québec).</p>
+    </section>
+
+    <section class="svc">
+      <h2>Guides de services pour {v.name}</h2>
+      <p class="small measure">Nos quinze guides locaux (ce que chaque test mesure, ce qu’il coûte, qui le fait) sont encore en anglais.</p>
+      <ul class="svclist">
+        {SERVICES.map(([slug, nom]) => <li><a href={`/services/${slug}/${v.slug}/`} hreflang="en-CA">{nom}</a></li>)}
+      </ul>
+    </section>
+
+    <h2 class="faqh">Questions fréquentes</h2>
+    <div class="measure">
+      {faqs.map((x) => (
+        <details class="faq"><summary>{x.q}</summary><div class="faq-body"><p>{x.a}</p></div></details>
+      ))}
+    </div>
+
+    {v.nearby.length > 0 && (
+      <section class="nearby">
+        <h2>Villes près de {v.name}</h2>
+        <div class="nb">
+          {v.nearby.map((x) => (
+            <a href={x.qc ? `/fr/villes/${x.fr}/` : `/cities/${x.slug}/`} hreflang={x.qc ? undefined : 'en-CA'}><span>{x.name}{x.qc ? '' : ' (en anglais)'}</span><span class="km">{x.km} km</span></a>
+          ))}
+          <a class="all" href="/fr/villes/">Les {VILLES.length} villes du Québec →</a>
+        </div>
+      </section>
+    )}
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        {SOURCES.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <p class="meta">Données vérifiées le {VILLES_CHECKED}. Les températures de calcul viennent de la station {f.station} ({f.stationKm} km).</p>
+    </div>
+
+    <FrLeadForm heading={`Vous prévoyez des travaux à ${v.name}?`} region={REGION[v.slug] ?? 'quebec'} context={`fr-ville-${v.slug}`} />
+  </div>
+</Base>
+
+<style>
+  .facts, .who, .muni, .progsec, .svc, .nearby { padding: 34px 0 0; }
+  .facts h2, .who h2, .muni h2, .progsec h2, .svc h2, .faqh { font-size: 26px; }
+  .faqh { margin: 34px 0 10px; }
+  .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .fgrid { grid-template-columns: 1fr; } }
+  .fgrid p:last-child { margin: 0; font-size: 15px; }
+  .fgrid .eyebrow { margin-bottom: 6px; }
+  .needs { margin-top: 28px; border-left: 4px solid var(--pine); }
+  .needs .eyebrow { margin-bottom: 8px; }
+  .needs p { font-size: 15px; }
+  .aleas { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14.5px; color: var(--muted); }
+  .orgs { list-style: none; margin: 14px 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .orgs li { padding: 14px 16px; display: grid; gap: 4px; box-shadow: none; }
+  .orgs .cov { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .orgs a { font-weight: 600; text-decoration: none; }
+  .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .mgrid h3 { font-size: 17px; margin-bottom: 8px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .progs { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 12px; }
+  .prog { display: grid; gap: 6px; align-content: start; padding: 16px 18px; text-decoration: none; color: var(--ink); border-left: 4px solid var(--pine); }
+  .prog:hover { box-shadow: var(--shadow-md); color: var(--ink); }
+  .prog .pk { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--pine); text-transform: uppercase; }
+  .prog .ps { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .prog .chip { justify-self: start; }
+  .svclist { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 6px 18px; font-size: 14.5px; }
+  .nb { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nb a { display: inline-flex; align-items: center; gap: 10px; border: 1.5px solid var(--line-strong); border-radius: 999px; padding: 8px 16px; text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--ink); background: var(--card); }
+  .nb a:hover { border-color: var(--ink); }
+  .nb .km { font-family: var(--mono); font-size: 12px; color: var(--faint); font-weight: 500; }
+  .nb a.all { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .srcs { border-left: 4px solid var(--steel); margin: 30px 0 26px; }
+  .srcs ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  .srcs a { overflow-wrap: anywhere; }
+</style>

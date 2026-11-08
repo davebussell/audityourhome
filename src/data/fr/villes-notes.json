@@ -1,0 +1,60 @@
+{
+ "_note": "French 'what this means for your house' notes for the Québec city pages, translated on 2026-11-07 from the per-place notes and hazards in src/data/climate/ca.json (which carry the sources). Keyed by the English city slug.",
+ "notes": {
+  "montreal": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "L’électricité de Montréal est parmi les moins chères en Amérique du Nord (environ 8,3 ¢/kWh) et la plupart des maisons se chauffent avec elle : une thermopompe pour climat froid apporte surtout du confort, de la climatisation et des économies par rapport aux plinthes. Les orages d’été récents ont refoulé les égouts et inondé des sous-sols, alors protégez le sous-sol d’abord.",
+   "aleas": ["Debby a établi un record de 154 mm de pluie en une journée à l’aéroport le 9 août 2024.", "De 30 à 37 mm de verglas en avril 2023; environ 500 000 clients montréalais ont perdu le courant.", "74 cm de neige en quatre jours jusqu’au 17 février 2025.", "Radon : environ 1 maison sur 6 de la région de Montréal testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "quebec-city": {
+   "profil": "Est très froid",
+   "note": "Québec a les charges de neige les plus lourdes de toutes les villes que nous couvrons : l’étanchéité et l’isolation du grenier sont la meilleure défense contre les barrages de glace. Environ 78 % des maisons de la région se chauffent aux plinthes ou à un autre chauffage électrique, et 12 % ont déjà une thermopompe.",
+   "aleas": ["Juillet le plus pluvieux en 150 ans en 2023; vérifiez le drainage du sous-sol.", "Vagues de froid près de −25 °C : une thermopompe a besoin ici d’un chauffage d’appoint.", "Radon : environ 1 maison québécoise sur 6 testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "laval": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Les lourdes charges de neige de Laval rendent l’étanchéité du grenier importante contre les barrages de glace, et ses inondations de 2017 et 2019 font de l’eau au sous-sol une priorité. La plupart des maisons de la région de Montréal se chauffent à l’électricité, et environ 15 % ont déjà une thermopompe.",
+   "aleas": ["Laval a déclaré l’état d’urgence lors des inondations du printemps 2017 et a été inondée de nouveau en 2019.", "Les pluies de Debby, en août 2024, ont inondé plus de 1 000 maisons dans le sud du Québec.", "Radon : environ 1 maison sur 6 de la région de Montréal testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "gatineau": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Gatineau connaît des vagues de froid près de −25 °C et des étés humides, et la plupart des maisons se chauffent à l’électricité (environ 60 % aux plinthes ou à un autre chauffage électrique) : une thermopompe pour climat froid peut réduire les factures d’hiver et ajouter la climatisation. Gardez les plinthes comme chauffage d’appoint.",
+   "aleas": ["Les inondations printanières de 2017 et 2019 ont frappé Gatineau; plus de 6 000 logements d’Ottawa–Gatineau ont été touchés en 2019.", "La tornade Dunrobin–Gatineau de septembre 2018 a atteint EF-3, avec des vents jusqu’à 265 km/h.", "De 25 à 30 mm de verglas lors de la tempête d’avril 2023.", "Radon : plus de 1 maison sur 6 d’Ottawa–Gatineau testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "longueuil": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Longueuil a reçu jusqu’à 120 mm de pluie le 13 septembre 2022 : vérifiez le drainage du sous-sol et la pompe de puisard avant de finir un sous-sol. Les lourdes charges de neige rendent aussi l’étanchéité du grenier payante contre les barrages de glace.",
+   "aleas": ["La tempête de verglas d’avril 2023 a privé de courant plus d’un million de clients au Québec.", "Les pluies de Debby, en août 2024, ont inondé plus de 1 000 maisons dans le sud du Québec.", "Radon : environ 1 maison sur 6 de la région de Montréal testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "sherbrooke": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Sherbrooke figure parmi les municipalités canadiennes où le radon est le plus élevé dans l’enquête nationale de 2024 : un test de longue durée est important. C’est aussi la ville la plus froide de cette région, avec des vagues de froid près de −28 °C : choisissez une thermopompe pour climat froid et gardez un chauffage d’appoint.",
+   "aleas": ["Radon : l’enquête de 2024 place Sherbrooke parmi les 18 municipalités les plus touchées au Canada.", "Les inondations du printemps 2019 ont chassé des résidents de leur maison, de Pembroke à Sherbrooke.", "Lourdes charges de neige; les greniers qui perdent de la chaleur sont sujets aux barrages de glace.", "Environ 9,5 jours par année avec un refroidissement éolien sous −30."]
+  },
+  "levis": {
+   "profil": "Est très froid",
+   "note": "Lévis garde 10 cm ou plus de neige au sol environ 127 jours par année, avec de lourdes charges de neige : étanchéisez et isolez le grenier pour prévenir les barrages de glace. La plupart des maisons de la région de Québec se chauffent à l’électricité.",
+   "aleas": ["Environ 5 jours par année de pluie verglaçante ou de bruine verglaçante.", "Québec, de l’autre côté du fleuve, a connu son juillet le plus pluvieux en 150 ans en 2023.", "Radon : environ 1 maison québécoise sur 6 testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "saguenay": {
+   "profil": "Est très froid",
+   "note": "Saguenay garde 10 cm ou plus de neige au sol environ 134 jours par année, et les vagues de froid atteignent environ −30 °C. La plupart des maisons se chauffent aux plinthes ou à un autre chauffage électrique : une thermopompe pour climat froid avec les plinthes en appoint peut réduire les coûts.",
+   "aleas": ["Environ 11 jours par année de pluie verglaçante ou de bruine verglaçante.", "Environ 32 jours par année avec un refroidissement éolien sous −30.", "Lourdes charges de neige; les greniers qui perdent de la chaleur sont sujets aux barrages de glace.", "Radon : environ 1 maison québécoise sur 6 testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "trois-rivieres": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Trois-Rivières a la plus longue saison de chauffage et les charges de neige les plus lourdes de cette région, et environ 79 % des maisons se chauffent aux plinthes ou à un autre chauffage électrique. Une thermopompe pour climat froid avec les plinthes en appoint, plus l’étanchéité du grenier contre les barrages de glace, forment le cœur du plan.",
+   "aleas": ["Lourdes charges de neige; les greniers qui perdent de la chaleur sont sujets aux barrages de glace.", "Les orages de juillet 2023 ont laissé 500 000 clients d’Hydro-Québec sans courant au plus fort de la panne.", "Radon : environ 1 maison québécoise sur 6 testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "terrebonne": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Terrebonne a de lourdes charges de neige et des vagues de froid près de −25 °C : l’étanchéité du grenier et une thermopompe pour climat froid avec les plinthes en appoint sont de bons premiers pas. Mascouche, la voisine, a été frappée par une tornade EF2 en juin 2021.",
+   "aleas": ["Jusqu’à 120 mm de pluie sont tombés tout près le 13 septembre 2022.", "Les pluies de Debby, en août 2024, ont inondé plus de 1 000 maisons dans le sud du Québec.", "Radon : environ 1 maison sur 6 de la région de Montréal testée à la ligne directrice ou au-dessus en 2024."]
+  },
+  "saint-jean-sur-richelieu": {
+   "profil": "Grands Lacs–Saint-Laurent",
+   "note": "Saint-Jean-sur-Richelieu a des étés très humides, avec environ 50 jours par année à un humidex de 30 ou plus, et des vagues de froid près de −24 °C. Une thermopompe pour climat froid peut climatiser l’été et réduire le coût du chauffage aux plinthes, qu’on garde en appoint.",
+   "aleas": ["Lourdes charges de neige; les greniers qui perdent de la chaleur sont sujets aux barrages de glace.", "Les pluies de Debby, en août 2024, ont inondé plus de 1 000 maisons dans le sud du Québec.", "Radon : environ 1 maison québécoise sur 6 testée à la ligne directrice ou au-dessus en 2024."]
+  }
+ }
+}
