@@ -186,7 +186,8 @@ directory) is linked "en anglais"; say so rather than hiding it.
   (French summaries of the six municipal programs, keyed by URL) and `src/data/fr/villes-notes.json` (the climate notes and hazards,
   keyed by city slug) are hand-written. Re-run the generator after `gen_pages.py`.
 - **Components with a French mode** (`lang="fr"`): `EraBar`, `HousingPortrait`, `ThermalCompare`; `Photo` takes a French `hud` string.
-  `FrLeadForm.astro` posts to the same Netlify form `audit-request` with a hidden `langue=fr` and lands on `/fr/merci/`.
+  `FrLeadForm.astro` posts to the same Netlify form `audit-request` (hidden `langue=fr`, which Netlify doesn't store; the French
+  `subject` and the `fr-…` `context` mark the request) and lands on `/fr/merci/`.
 - **Numbers in French:** `n()` formats with `fr-CA` (narrow no-break space), `deg()` gives `−24,3 °C`, percentages are `14 %`.
 - **Federal heat pump rebate (checked 2026-11-07):** the program page (updated November 5, 2026) now says heat pumps installed on or
   after **November 1, 2026** by an HVAC contractor are claimed retroactively once the portal opens (early 2027), nothing is paid before
@@ -194,13 +195,27 @@ directory) is linked "en anglais"; say so rather than hiding it.
   table (Québec: $41,228 for one person to $140,225 for five or more). `programs.json`, `rebates.json`, `provinces.json`, the CA planner's
   federal-timing text and the rebates article were updated; the French page has the same facts.
 
-## State (2026-11-04)
-- Built and tested but **not live yet** (the laptop was unreachable for the push): the three-site build, the building site, the removal
-  from the residential sites, the planner fix for a blocked Next on step 2 (`e601ec6`), the site-switch open-redirect fix and two other
-  bugs found by the end-to-end pass (`61a9abb`), and the US pictures and charts (`802bd77`). Until they are deployed, the live
-  planner still blocks Next on step 2 until the visitor picks a build era, and `/switch/?to=` still accepts off-site paths.
-- Ship order: push, deploy the building site over the placeholder (no DNS step: the domain, www and certificate already work), check
-  it, then deploy .ca, then .com (their redirects would otherwise send visitors to a page that isn't there yet).
+## State (2026-11-11)
+- **Live: everything through `4fead21`** (the US pictures, the planner and switch fixes, the three-site build and audityourbuilding.com,
+  the sky look, and buckets A–D of the November 6 review including the French site). Pushed from Dave's laptop on 2026-11-11 (the cloud
+  task can't push: the repo isn't in its sources; the commits came over as `_to_delete\ayh-nov10.bundle`, were fetched into the
+  laptop's `two-sites` branch from the device shell, and Dave ran `_to_delete\push-nov10.bat` = `git push origin two-sites:main`;
+  Computer use never reached the session, so it couldn't drive Git GUI). Then deployed in ship order, from `git archive`:
+  **audityourbuilding.com** `6af4bbb129c81bd78b208fe0` (replaced the "Launching soon" deploy `6aeb3cb6f3fadba36951c0d6`; the old `notify`
+  form and its one signup, from 2026-11-08, are still in Netlify Forms), **audityourhome.ca** `6af4bc6a7df88c1242ef9672` (1,946 pages, 21
+  redirect rules), **audityourhome.com** `6af4bd55eaccbc9e59813cdf` (643 redirect rules).
+- Checked live from the desktop app's browser pane on Dave's laptop (in Canada): the building site's home, Toronto page and request form at
+  375px and 1280px, one GA include per page (so no Netlify snippet double-count); on .ca `/ca/plan/` → `/plan/`, `/geo.json` → `ca`,
+  `/switch/?to=%2Fplan%2F` → the planner, `/services/commercial-energy-audit/toronto/` → the building site, the French pages (`lang="fr-CA"`,
+  fr-CA/en-CA hreflang, 375px and 1280px) and the federal rebate page's November 1 rule; on .com `/provinces/ontario/`, `/fr/` and `/plan/` →
+  .ca for a Canadian visitor, `/cities/phoenix/` stays, the commercial address → the building site, the US planner's two paths, Boston's
+  sponsor note at 375px. The `ayh_site` cookie the check set in the pane was cleared afterwards.
+- Forms: `building-audit-request` detected on the building site (0 submissions; its email notification still has to be set in the Netlify
+  UI); .ca `audit-request` and `heat-pump-quote`; .com `us-question`, `heat-pump-quote` and the legacy `audit-request`. Netlify's field list for
+  `audit-request` doesn't include the French form's `langue`, so don't count on it: French requests show as such in `subject`
+  ("Demande d'évaluation en français (…)") and `context` (`fr-…`), which are registered.
+- Still Dave's: the building form's notification email, Search Console for audityourhome.ca and audityourbuilding.com, the audityourhouse.com
+  alias and DNS (see 2026-11-02), and bucket E of the November 6 review (parked).
 
 ## State (2026-11-02)
 - `main` = the two-site split (this section) + the footer features from clickshift.ca/proudtowork.ca (where we work, connect with
