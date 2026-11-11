@@ -1,11 +1,11 @@
 ---
 /**
- * The sky behind the top of a page: a gradient, a sun, three layers of slowly drifting cloud and, on home pages, a paper plane
- * crossing. Pure decoration (aria-hidden, no pointer events), drawn by src/styles/sky.css. Rendered once, first in <body>, by
- * both layouts; the shapes are CSS backgrounds, so the markup costs a few hundred bytes a page.
+ * The wash behind the top of a page: a pale blue-to-paper gradient with a faint, still haze (a faint drawing grid on the building
+ * site). Pure decoration (aria-hidden, no pointer events), drawn by src/styles/sky.css. Rendered once, first in <body>, by both
+ * layouts.
  *
  *   kind="page"  the band behind a normal page's heading (default)
- *   kind="hero"  taller, with the plane: for the home pages
+ *   kind="hero"  taller: for the home pages
  */
 interface Props {
   kind?: 'page' | 'hero';
@@ -13,9 +13,4 @@ interface Props {
 const { kind = 'page' } = Astro.props;
 ---
 
-<div class="sky" data-kind={kind} aria-hidden="true">
-  <i class="sky-far"></i>
-  {kind === 'hero' && <b class="sky-plane"></b>}
-  <i class="sky-mid"></i>
-  <i class="sky-near"></i>
-</div>
+<div class="sky" data-kind={kind} aria-hidden="true"></div>

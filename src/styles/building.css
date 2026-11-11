@@ -9,8 +9,8 @@ html[data-site='building'] {
   --paper: #F3F6F9;
   --card: #FFFFFF;
   --ink: #0F1D2B;
-  --muted: #46586E;       /* 5.2:1 on the top of the sky, 3.7:1 where a cloud outline crosses it */
-  --faint: #52657A;       /* 5.5:1 on the paper, 4.3:1 on the top of the sky: keep it off the sky */
+  --muted: #46586E;
+  --faint: #52657A;       /* 5.5:1 on the paper */
   --line: #DAE3EC;
   --line-strong: #C2CEDA;
 
@@ -37,10 +37,10 @@ html[data-site='building'] {
   --bp-ink: #CFE3FA;
   --grid: rgba(31, 95, 168, 0.075);
 
-  /* the sky (sky.css) drawn paler: a blueprint sheet with clouds on it rather than a summer day */
-  --sky-1: #C8DCEE;
-  --sky-2: #DAE8F4;
-  --sky-3: #E8F1F8;
+  /* the wash behind the page top (sky.css), cooler than the home sites', with a faint drawing grid */
+  --sky-1: #DCE6F0;
+  --sky-2: #E6EDF4;
+  --sky-3: #EDF2F7;
   --wash: #E8EFF6;
 
   --shadow-sm: 0 1px 2px rgba(15, 29, 43, 0.06);

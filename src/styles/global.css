@@ -1,10 +1,9 @@
 /* ============================================================
    AuditYourHome — design system
-   Light and airy: a sky-white ground, thermal-orange accent (the
-   sunrise on the horizon), pine green for money/verification, deep
-   sky blue for the dark bands. The clouds, the flight path and the
-   plane live in sky.css. Fonts: Archivo (display), Public Sans
-   (body), IBM Plex Mono (data).
+   Light and calm: a pale blue-white ground, thermal-orange accent,
+   pine green for money/verification, deep blue for the dark bands.
+   The quiet wash behind the top of each page lives in sky.css.
+   Fonts: Archivo (display), Public Sans (body), IBM Plex Mono (data).
    ============================================================ */
 
 :root {
@@ -36,12 +35,11 @@
   --warn: #A97710;
   --warn-tint: #F7EFDC;
 
-  /* sky: the page's top bands, from high blue to the paper at the horizon */
-  --sky-1: #8CC9F2;
-  --sky-2: #B9E0F8;
-  --sky-3: #DDF0FB;
+  /* the wash behind the page top (sky.css): pale enough that the orange hero label keeps 4.5:1 on it */
+  --sky-1: #D9EAF6;
+  --sky-2: #E6F1FA;
+  --sky-3: #EFF6FC;
   --wash: #EAF4FB;
-  --sun: #FFD27A;
 
   --shadow-sm: 0 1px 2px rgba(19, 39, 59, 0.06), 0 2px 8px rgba(31, 95, 168, 0.05);
   --shadow-md: 0 2px 4px rgba(19, 39, 59, 0.05), 0 14px 34px rgba(31, 95, 168, 0.13);

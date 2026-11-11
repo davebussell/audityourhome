@@ -10,13 +10,12 @@ import FrHeader from '../components/fr/FrHeader.astro';
 import FrFooter from '../components/fr/FrFooter.astro';
 import '../styles/global.css';
 import '../styles/glossary.css';
-import '../styles/sky-art.css';
 import '../styles/sky.css';
 
 interface Props {
   title: string;
   description: string;
-  /** The sky behind the top of the page: "hero" (taller, with the plane) on the home pages */
+  /** The wash behind the top of the page: "hero" (taller) on the home pages */
   sky?: 'page' | 'hero';
   /** Extra JSON-LD blocks for this page */
   schema?: Record<string, unknown>[];
@@ -26,7 +25,7 @@ interface Props {
   ogImage?: string;
   /** Load Google Analytics and Clarity. Off on account pages, whose addresses carry sign-in tokens. */
   analytics?: boolean;
-  /** The page ends in a full-width dark band: it runs straight into the footer (no gap, no cloud edge; see sky.css) */
+  /** The page ends in a full-width dark band: it runs straight into the footer (no gap; see sky.css) */
   flushFooter?: boolean;
   /** 'fr': a French page of the Canadian site (under /fr/): French header and footer, lang fr-CA, no "other site" bar */
   lang?: 'en' | 'fr';

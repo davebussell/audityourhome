@@ -122,9 +122,7 @@ const hudText = typeof hud === 'string' ? hud : hud ? p.hud : undefined;
     border-radius: 50%;
     background: var(--heat);
     box-shadow: 0 0 0 3px rgba(224, 92, 31, 0.28);
-    animation: rec 2.4s ease-in-out infinite;
   }
-  @keyframes rec { 50% { opacity: 0.35; } }
   /* smaller marks and label on small frames (cards, thumbnails) */
   @container (max-width: 340px) {
     .vf { inset: 8px; --l: 11px; --t: 1.5px; }

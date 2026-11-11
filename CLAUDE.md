@@ -88,36 +88,34 @@ condo units; the building site is for owners and managers of commercial, institu
   projects (Forms → Settings → notifications to dave@clickshift.ca).
 - **Never mention** WillScot (WSC), Transcat (TRNS) or McGrath RentCorp (MGRC) on any of his sites.
 
-## The sky look (2026-11-04; Dave: "more fun and uplifting … the floating in the clouds and flying to a better place kind of feeling")
-All three sites share one look: a band of sky behind the top of every page with slowly drifting clouds, a paper plane, the audit steps
-drawn as a flight path, a lift-off moment when a plan is ready, and a cloud edge on top of every footer. The home sites are a summer sky;
-the building site is the same sky as a pale blueprint (grid and line-art clouds). None of it needs JavaScript.
-- **Files:** `src/styles/sky.css` (hand-written: band, cloud layers, plane, footer edge, lift-off), `src/styles/sky-art.css`
-  (**generated**: the cloud tiles, the plane and the edge mask as data: URIs in CSS variables; change `tools/sky/make-sky-art.mjs` and run
-  `node tools/sky/make-sky-art.mjs`, never edit the CSS), `src/components/Sky.astro` (the markup, first child of `<body>` in `Base.astro` and
-  `BuildingBase.astro`, `aria-hidden`) and `src/components/JourneyBar.astro` (the flight path: an SVG route behind four numbered stops; the
-  plane flies from the previous stop to the current one).
-- **Props:** `sky="hero"` (taller band, with the plane crossing it) on the three home pages, `'page'` elsewhere. `flushFooter` on a page that
-  ends in a full-width dark band (the .ca home's service-organization band, the building home's request band): no gap and no cloud edge
-  before the footer (`main.flush + footer…` in `sky.css`).
-- **Lift-off:** give `class="liftoff-host"` to the element that appears when a result is ready (`.results-head` in both planners, the
-  `[data-sent="yes"]` block on the three thanks pages). Its `::before` (plane and trail) and `::after` (puff) are CSS animations that start
-  the moment the element stops being `hidden`; the "Cleared for take-off" chip is a `<p class="liftoff-chip">` inside it.
-- **Palette:** tokens in `global.css` `:root` (`--sky-1/2/3`, `--wash`, `--sun`; paper `#F5FAFE`, navy `#10304D`; `--heat` orange unchanged);
-  the building site's own in `building.css` under `html[data-site='building']`. Hero labels (`.hero`, `.page-hero`, `.results-head` `.eyebrow`)
-  are white tags in `--heat-deep`, because plain orange on the blue is only 2.3:1; keep `--faint` and small orange text off the sky (breadcrumbs
-  and "stage N of 4" use `--muted`). The building site's cloud outlines are pale (`#9BBBDA`) and its `--muted` darker (`#46586E`) on purpose:
-  muted text keeps 5:1 on the top of the sky and 3.7:1 where a line crosses it. Measured with
-  `scratchpad/qa/sky/contrast-collect.mjs` + `contrast-analyse.py` (text hidden, pixels behind each text run), not from the tokens alone. Not changed, and below AA already before the sky: white text on the orange buttons (3.7:1) and the `--warn` chips.
-- **Reduced motion:** everything that moves is a CSS animation, so the global `prefers-reduced-motion` rule in `global.css`
-  (`animation: none !important`) stops all of it, and every animated element's own style is its resting state (plane parked by the sun,
-  lift-off hidden, journey plane at its stop). Check: `document.getAnimations().length === 0` under Playwright's `reducedMotion: 'reduce'`.
+## The quiet sky (2026-11-11; replaced the 2026-11-04 "sky look" after feedback that it looked kitschy)
+On 2026-11-04 Dave asked for "the floating in the clouds and flying to a better place kind of feeling": drifting clouds, a sun, a paper
+plane, the audit steps as a flight path, a lift-off when a plan was ready and a cloud edge on every footer. On 2026-11-11 he passed on
+feedback that it looked kitschy and chose "Quiet sky" for all three sites: keep a soft blue-to-white wash at the top of each page, drop
+every picture and every animation. Don't bring back clouds, planes, lift-off, flight wording ("Cleared for take-off") or looping motion.
+- **Files:** `src/styles/sky.css` (the wash, plus `main.flush + footer…`), `src/components/Sky.astro` (one empty `aria-hidden` div, first
+  child of `<body>` in `Base.astro` and `BuildingBase.astro`). `sky-art.css` and `tools/sky/make-sky-art.mjs` were deleted.
+- **The wash:** a gradient `--sky-1` → `--sky-2` (at 150px) → `--sky-3` → `--paper`, with two soft white radial lights on top (`.sky::before`),
+  440px tall on pages and 680px with `sky="hero"` (360/540px on phones). The building site uses the same wash, cooler, with a faint
+  drawing grid (28px, 5% blue) that fades out by 90% of the band. Tokens: `global.css` `:root` (`#D9EAF6 / #E6F1FA / #EFF6FC`) and
+  `building.css` under `html[data-site='building']` (`#DCE6F0 / #E6EDF4 / #EDF2F7`).
+- **Why that pale:** hero labels (`.eyebrow`, mono, `--heat-deep` `#B84713`) sit straight on the wash with no tag behind them, and need 4.5:1.
+  Measured on 2026-11-11 with `scratchpad/qa/sky/contrast-collect.mjs` + `contrast-analyse.py` (text hidden, pixels behind each text run):
+  every hero label passes, tightest 4.54:1 (US planner, phone). Darken the wash and that breaks first. Below AA and unchanged since before
+  the sky: white text on the orange buttons (3.7:1), the `--warn` chips (3.4:1) and the red "Your" in the building logo (a logo).
+- **Journey bar** (`src/components/JourneyBar.astro`): a plain stepper. A thin four-part line (done stages in `--pine`, the current one in
+  `--heat`, aria-hidden) over four numbered cards, which are the real links. `ticks` marks earlier stages done (the planner results);
+  on phones the cards go two by two and only the current one keeps its description.
+- **Footer:** a straight edge with the normal gap. `flushFooter` on a page that ends in a full-width dark band (the .ca home's
+  service-organization band, the building home's request band) removes the gap.
+- **Motion:** none at rest. Small hover and focus transitions only (0.12–0.4s: borders, shadows, a 2px card lift, a slight photo zoom);
+  the photo "REC" dot and the housing-portrait glow are static.
+  The glossary popover fade and the planner's validation nudge are the only keyframes left. Check: `document.getAnimations().length === 0`
+  on a loaded page (`scratchpad/qa/sky/anims.mjs`).
 - **Gotcha, CSS order:** the bundler emits shared CSS chunks alphabetically by chunk name, not in import order, so two equal-specificity
   rules in `global.css`, `sky.css` and `building.css` can swap. The building site's overrides therefore use `html[data-site='building'] …`
   (higher specificity) and its tokens are set on `html[data-site='building']`, not `:root`. Scoped component styles (`[data-astro-cid]`,
   specificity 0,2,0) beat a plain class in `sky.css` too.
-- **Weight:** about 5.7 KB gzipped of CSS (2.4 KB of it the generated art) in the shared stylesheet, which is cached across pages; no images,
-  no extra requests, no JavaScript.
 
 ## The November 6 review (Dave mailed himself a four-part review of both home sites: "Audit Your Home . ca fixes")
 Dave chose four of its five buckets: **A** quick factual and consent fixes (`9aa20fe`), **B** planner logic (prerequisite-first next

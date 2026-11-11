@@ -5,7 +5,6 @@ import BHeader from '../components/building/BHeader.astro';
 import BFooter from '../components/building/BFooter.astro';
 import Sky from '../components/Sky.astro';
 import '../styles/global.css';
-import '../styles/sky-art.css';
 import '../styles/sky.css';
 import '../styles/building.css';
 
@@ -20,7 +19,7 @@ interface Props {
   ogImage?: string;
   /** The page ends in a full-width dark band: take away the gap above the footer */
   flushFooter?: boolean;
-  /** The sky behind the top of the page: "hero" (taller, with the plane) on the home page */
+  /** The wash behind the top of the page: "hero" (taller) on the home page */
   sky?: 'page' | 'hero';
 }
 

@@ -125,7 +125,7 @@ const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', '
         const e = ERAS[g];
         const x = 20 + i * 56 + 3;
         return (
-          <g transform={`translate(${x} 40)`} class="house" style={`--d:${(i * 0.23).toFixed(2)}s`}>
+          <g transform={`translate(${x} 40)`} class="house">
             <circle class="glow" cx="25" cy="50" r="36" fill={`url(#${uid}-g${g})`} />
             {g === 0 && (
               <g stroke={e.color} stroke-width="2" stroke-linejoin="round" fill="#1B2A3A">
@@ -219,8 +219,7 @@ const summary = ERAS.map((e, i) => `${e.label}: ${pctTxt(shares[i])}`).join(', '
   }
   .hp-frame { position: relative; border-radius: 14px; overflow: hidden; background: #121d29; box-shadow: var(--shadow-md); }
   .hp-frame svg { display: block; width: 100%; height: auto; }
-  .house .glow { animation: hpglow 3.6s ease-in-out infinite; animation-delay: var(--d); transform-box: fill-box; transform-origin: center; }
-  @keyframes hpglow { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+  .house .glow { opacity: 0.9; }
   .hp-hud {
     position: absolute;
     right: 12px;
