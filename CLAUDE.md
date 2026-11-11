@@ -212,8 +212,16 @@ directory) is linked "en anglais"; say so rather than hiding it.
   federal-timing text and the rebates article were updated; the French page has the same facts.
 
 ## State (2026-11-11)
-- **Live: everything through `4fead21`** (the US pictures, the planner and switch fixes, the three-site build and audityourbuilding.com,
-  the sky look, and buckets A–D of the November 6 review including the French site). Pushed from Dave's laptop on 2026-11-11 (the cloud
+- **Live: everything through `fa368d6`**, the quiet sky (see above). Same route as below: `_to_delete\ayh-nov11-quiet.bundle` fetched
+  into the laptop's `two-sites` branch, Dave ran `push-nov10.bat` (pushed `d57bc3a` and `fa368d6`), then deployed in ship order from
+  `git archive`: **audityourbuilding.com** `6af4ce7ed8661217efec6e73`, **audityourhome.ca** `6af4cedaa6c736a91a850d05`, **audityourhome.com**
+  `6af4cf75f844a78e68e41f69` (redirect rules unchanged: 2, 21 and 643). Checked live from the laptop's browser pane at 375px and 1280px: the
+  new wash with no animations and no old sky CSS on the three home pages, the building Toronto page, the .ca thanks page and .com Phoenix;
+  .ca `/ca/plan/` → `/plan/`, `/geo.json` → `ca`, `/fr/` in `fr-CA`; the commercial address on both home sites and .com `/` and
+  `/provinces/ontario/` still redirecting a Canadian visitor; every form still listed. The `ayh_site=us` cookie set to view the .com home
+  from Canada was cleared afterwards.
+- **Before that, from the morning deploys: everything through `4fead21`** (the US pictures, the planner and switch fixes, the
+  three-site build and audityourbuilding.com, the sky look, and buckets A–D of the November 6 review including the French site). Pushed from Dave's laptop on 2026-11-11 (the cloud
   task can't push: the repo isn't in its sources; the commits came over as `_to_delete\ayh-nov10.bundle`, were fetched into the
   laptop's `two-sites` branch from the device shell, and Dave ran `_to_delete\push-nov10.bat` = `git push origin two-sites:main`;
   Computer use never reached the session, so it couldn't drive Git GUI). Then deployed in ship order, from `git archive`:
