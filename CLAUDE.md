@@ -285,6 +285,25 @@ directory) is linked "en anglais"; say so rather than hiding it.
   table (Québec: $41,228 for one person to $140,225 for five or more). `programs.json`, `rebates.json`, `provinces.json`, the CA planner's
   federal-timing text and the rebates article were updated; the French page has the same facts.
 
+## State (2026-11-12)
+- **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality
+  monitors), and the other session's auto-reply function (`submission-created`, live on .ca; switched off in code on .com and the building
+  site). Deploys from `git archive 82ade9f`: **audityourhome.ca** `6af6338efdc2d32c7b5c4127` (21 redirect rules, 1 function),
+  **audityourhome.com** `6af6342f05727cb2b188c221` (654 redirect rules, 1 function). audityourbuilding.com was not redeployed (its pages
+  are unchanged); it is still `6af4ce7ed8661217efec6e73`. Dave chose "Deploy all" knowing the auto-reply would go live on .ca with it.
+- The first push of the day was refused: another session had pushed `0c2a283` and `14a75e7` (auto-reply, Resend notes) to `main`. Our four
+  commits were rebased on top (new hashes `9e106b2`, `ef04ff1`, `c02590d`, `82ade9f`) and pushed with `push-nov10.bat`. **Before bundling,
+  check GitHub first**: the laptop's Linux shell can read the public repo (`git ls-remote origin refs/heads/main`, or a fetch into
+  `refs/remotes/origin/main`), so a moved `main` shows up before Dave runs the push file.
+- Checked live from the laptop's browser pane: .ca zone page (h1 and title "Best heat pumps for Southern Ontario and southern Quebec", one
+  situation panel shown, 9 cards) at 375px and 1280px, the radon gear page at 1280px (seven seller links), every new and changed page
+  answering 200 (picks index and zones, how we pick, BC and Ontario with two zone blocks, `/fr/thermopompes/` with two), `/ca/plan/` →
+  `/plan/`, `/geo.json` → `ca`; .com hot-humid, very-cold and marine zone pages and the Miami and Phoenix pages direct; with the
+  `ayh_site=us` cookie set through `/switch/` the picks index, how we pick, the hub and both gear pages (AQ page at 375px), and the privacy
+  page's new `#requests` anchor; without it, shared pages redirect a Canadian visitor to .ca again (cookie cleared afterwards). Forms still
+  listed on both projects. The auto-reply has had no submission yet, so its first log entry is still to read (Netlify → audityourhome-ca →
+  Logs → Functions).
+
 ## State (2026-11-11)
 - **Live: everything through `fa368d6`**, the quiet sky (see above). Same route as below: `_to_delete\ayh-nov11-quiet.bundle` fetched
   into the laptop's `two-sites` branch, Dave ran `push-nov10.bat` (pushed `d57bc3a` and `fa368d6`), then deployed in ship order from
