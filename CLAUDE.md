@@ -84,8 +84,8 @@ condo units; the building site is for owners and managers of commercial, institu
   "Launching soon" page (deploy `6aeb3cb6f3fadba36951c0d6`, a Netlify form `notify` with one signup in it). Our first deploy replaces
   that page, so it needs Dave's OK in the chat; the old deploy stays in Netlify's history and can be re-published there. The `notify` form
   has one signup (a visitor's email, which we have not read): Dave should look at it, and export it if he wants to write to that person,
-  before the page is replaced. A new form (`building-audit-request`) needs its email notification set in the Netlify UI like the other
-  projects (Forms → Settings → notifications to dave@clickshift.ca).
+  before the page is replaced. The project's form notification ("Email dave@clickshift.ca on new submission from any form", checked
+  2026-11-12) covers the new `building-audit-request` form too.
 - **Never mention** WillScot (WSC), Transcat (TRNS) or McGrath RentCorp (MGRC) on any of his sites.
 
 ## Auto-replies and partner routing (added 2026-11-12, Dave's decision)
@@ -226,11 +226,10 @@ directory) is linked "en anglais"; say so rather than hiding it.
   fr-CA/en-CA hreflang, 375px and 1280px) and the federal rebate page's November 1 rule; on .com `/provinces/ontario/`, `/fr/` and `/plan/` →
   .ca for a Canadian visitor, `/cities/phoenix/` stays, the commercial address → the building site, the US planner's two paths, Boston's
   sponsor note at 375px. The `ayh_site` cookie the check set in the pane was cleared afterwards.
-- Forms: `building-audit-request` detected on the building site (0 submissions; its email notification still has to be set in the Netlify
-  UI); .ca `audit-request` and `heat-pump-quote`; .com `us-question`, `heat-pump-quote` and the legacy `audit-request`. Netlify's field list for
+- Forms: `building-audit-request` detected on the building site (0 submissions; the project's "any form" email notification covers it); .ca `audit-request` and `heat-pump-quote`; .com `us-question`, `heat-pump-quote` and the legacy `audit-request`. Netlify's field list for
   `audit-request` doesn't include the French form's `langue`, so don't count on it: French requests show as such in `subject`
   ("Demande d'évaluation en français (…)") and `context` (`fr-…`), which are registered.
-- Still Dave's: the building form's notification email, Search Console for audityourhome.ca and audityourbuilding.com, the audityourhouse.com
+- Still Dave's: Search Console for audityourhome.ca and audityourbuilding.com, the audityourhouse.com
   alias and DNS (see 2026-11-02), and bucket E of the November 6 review (parked).
 
 ## State (2026-11-02)
