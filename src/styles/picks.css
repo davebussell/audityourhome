@@ -45,6 +45,7 @@ h3.tp-title { font-size: 20px; }
 .tp-card[data-slot='performance'] { border-top-color: var(--heat); }
 .tp-card[data-slot='value'] { border-top-color: var(--pine); }
 .tp-card[data-slot='diy'] { border-top-color: var(--navy); }
+.tp-card[data-slot='easy'] { border-top-color: var(--navy); }
 .tp-slot {
   font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0;
   color: var(--muted);
@@ -120,3 +121,15 @@ h3.tp-title { font-size: 20px; }
   table.stack.pk-weights td.num:last-child { border-bottom: 0; }
   table.stack.pk-weights td.num::before { margin-top: 0; }
 }
+
+/* ---------------------------------------------------------------- gear picks (/products/<category>/) */
+.gp { margin: 8px 0 22px; padding: 0; scroll-margin-top: 80px; }
+.gp-cards { margin-top: 14px; }
+.gp-why { font-size: 14.5px; color: var(--muted); margin: 0; line-height: 1.5; }
+.gp-sellers .btn { white-space: nowrap; }
+.gp-pricenote { margin: 12px 0 0; }
+.gp-how { margin-top: 16px; scroll-margin-top: 90px; }
+.gp-how h3 { margin: 0 0 6px; }
+.gp-how ul { margin: 6px 0 10px; padding-left: 20px; display: grid; gap: 6px; }
+.gp-how .srcs-t { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }
+.gp-src { padding-left: 18px; }

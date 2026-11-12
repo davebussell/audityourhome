@@ -1,0 +1,359 @@
+{
+  "checked": "2026-11-12",
+  "note": "Hand-kept gear picks (Phase 2 of the top-picks plan). Categories not listed here still use src/data/products.json picks. Prices are what the named seller listed on the checked date; they move. tools/picks/check.mjs validates this file.",
+  "slots": {
+    "performance": {
+      "label": "Best performance",
+      "question": "Which one measures best?"
+    },
+    "easy": {
+      "label": "Easiest to live with",
+      "question": "Which one will you keep using?"
+    },
+    "value": {
+      "label": "Best value",
+      "question": "Which one gets you an answer you can act on for the least money?"
+    }
+  },
+  "categories": {
+    "radon-monitors": {
+      "decidedBy": "How closely it agrees with a reference radon chamber, whether it reports the long-term average that decisions are made on, and the cost of a result you can act on.",
+      "gates": {
+        "ca": [
+          "Monitors must be on C-NRPP's list of approved consumer radon monitors, the only independent check of consumer monitors in North America. Its not-approved list has 23 models, many of them recalled by Health Canada.",
+          "Kits must be long-term (91 days or more) alpha-track detectors from a C-NRPP-listed maker, with the lab analysis included.",
+          "It must report a long-term average, not only today's number: radon swings with the weather, and Health Canada's guideline (200 Bq/m³) applies to the average."
+        ],
+        "us": [
+          "Monitors must be on the list of consumer radon monitors approved by Canada's C-NRPP, the only independent check of consumer monitors in North America. Its not-approved list has 23 models, many of them recalled by Health Canada.",
+          "Kits must be long-term (90 days or more) detectors with the lab analysis included, from a national radon program.",
+          "It must report a long-term average, not only today's number: radon swings with the weather, and EPA's action level (4 pCi/L) is judged on the average."
+        ]
+      },
+      "markets": {
+        "ca": {
+          "performance": {
+            "name": "Ecosense RadonEye",
+            "model": "RD200",
+            "why": "One of the most consistent consumer monitors in an independent 11-month chamber test, with a fresh reading every 10 minutes: the one to watch what air sealing or a mitigation fan actually did.",
+            "facts": [
+              "On C-NRPP's approved list; stated accuracy ±10% at 370 Bq/m³",
+              "New reading every 10 minutes, shown as an hourly rolling average",
+              "Plugs in; short- and long-term averages in the free app"
+            ],
+            "price": "About $215 at the maker's Canadian store",
+            "sellers": [
+              {
+                "name": "Amazon.ca",
+                "amazon": "Ecosense RadonEye RD200 radon monitor"
+              },
+              {
+                "name": "Best Buy",
+                "url": "https://www.bestbuy.ca/en-ca/product/ecosense-rd200-radoneye-smart-radon-detector/19707335"
+              }
+            ]
+          },
+          "easy": {
+            "name": "Ecosense EcoQube Flex",
+            "why": "Runs on batteries, so it moves from the basement to the bedroom, and its always-on screen shows the averages without opening an app.",
+            "facts": [
+              "On C-NRPP's approved list",
+              "Two AA batteries: about 2 years with app syncing, up to 7 offline (maker's figures)",
+              "E-ink screen with 24-hour to weekly averages and a year of storage"
+            ],
+            "watch": "New in late 2025, so there is no long-term drift data yet.",
+            "sellers": [
+              {
+                "name": "Amazon.ca",
+                "amazon": "Ecosense EcoQube Flex radon monitor"
+              },
+              {
+                "name": "Best Buy",
+                "url": "https://www.bestbuy.ca/en-ca/product/ecosense-ecoqube-flex-smart-radon-detector-battery-powered-continuous-radon-monitor-for-home-use/19646468"
+              }
+            ]
+          },
+          "value": {
+            "name": "Long-term alpha-track kit",
+            "model": "Radonova Radtrak3 or AccuStar AT-100",
+            "why": "The test Health Canada's guidance is written around: three months or more in the lowest lived-in room, then the lab gives you the average you decide on.",
+            "facts": [
+              "Both detectors are C-NRPP-listed",
+              "Lab analysis and return postage included in the price",
+              "Leave it 91 to 365 days, ideally through the heating season"
+            ],
+            "price": "$63 for a Radtrak3 at the BC Lung Foundation's shop; kits run about $30 to $65",
+            "sellers": [
+              {
+                "name": "BC Lung Foundation",
+                "url": "https://thelungassociationbc.squarespace.com/shop-online/radtrak2"
+              },
+              {
+                "name": "Best Buy",
+                "url": "https://bestbuy.ca/en-ca/product/long-term-radon-test-kit-for-canadians-accustarcanada-1at-alpha-track-designed-for-accurate-measurement-and-monitoring-of-radon-levels/18626534"
+              },
+              {
+                "name": "Amazon.ca",
+                "amazon": "long term radon test kit alpha track Canada lab fee included"
+              }
+            ]
+          }
+        },
+        "us": {
+          "performance": {
+            "name": "Ecosense RadonEye",
+            "model": "RD200",
+            "why": "One of the most consistent consumer monitors in an independent 11-month chamber test, with a fresh reading every 10 minutes: the one to watch what sealing a crack or a new mitigation fan actually did.",
+            "facts": [
+              "On Canada's C-NRPP list of approved consumer monitors (the US has no equivalent list)",
+              "New reading every 10 minutes, shown as an hourly rolling average",
+              "Plugs in; short- and long-term averages in the free app; 2-year warranty if registered"
+            ],
+            "price": "US$169 at Ecosense",
+            "sellers": [
+              {
+                "name": "Amazon",
+                "amazon": "Ecosense RadonEye RD200 radon monitor"
+              },
+              {
+                "name": "Ecosense",
+                "url": "https://ecosense.io/products/radoneye"
+              }
+            ]
+          },
+          "easy": {
+            "name": "Ecosense EcoQube Flex",
+            "why": "Runs on batteries, so it moves from the basement to the bedroom, and its always-on screen shows the averages without opening an app.",
+            "facts": [
+              "On C-NRPP's approved list",
+              "Two AA batteries: about 2 years with app syncing, up to 7 offline (maker's figures)",
+              "E-ink screen with 24-hour to weekly averages and a year of storage"
+            ],
+            "watch": "New in late 2025, so there is no long-term drift data yet.",
+            "price": "US$189 at Ecosense",
+            "sellers": [
+              {
+                "name": "Amazon",
+                "amazon": "Ecosense EcoQube Flex radon monitor"
+              },
+              {
+                "name": "Ecosense",
+                "url": "https://ecosense.io/products/ecoqube-flex"
+              }
+            ]
+          },
+          "value": {
+            "name": "Kansas State University long-term radon kit",
+            "why": "Three to twelve months in the lowest lived-in level, then a lab reports the average: the most defensible answer for the least money.",
+            "facts": [
+              "Run by Kansas State University's National Radon Program Services",
+              "US$30 with the lab analysis (Radonova, Illinois) included",
+              "US addresses only; the mail-in order form isn't offered in New Jersey"
+            ],
+            "price": "US$30 all in; the short-term kit is US$20",
+            "sellers": [
+              {
+                "name": "Kansas State (SOSRadon)",
+                "url": "https://sosradon.org/node/4"
+              },
+              {
+                "name": "Amazon",
+                "amazon": "long term radon test kit alpha track lab fee included"
+              }
+            ]
+          }
+        }
+      },
+      "sources": [
+        {
+          "label": "C-NRPP: approved and not-approved consumer radon monitors",
+          "url": "https://c-nrpp.ca/consumer-erm-report/"
+        },
+        {
+          "label": "C-NRPP: listed radon measurement devices (alpha-track detectors)",
+          "url": "https://c-nrpp.ca/approved-radon-measurement-devices/",
+          "markets": [
+            "ca"
+          ]
+        },
+        {
+          "label": "WPB Enterprises: 11-month chamber test of 26 consumer monitors (Indoor Environments 2025)",
+          "url": "https://www.wpb-radon.com/BillsResearchPapers/Consumer%20Radon%20Monitors%202025.pdf"
+        },
+        {
+          "label": "Ecosense: RadonEye and EcoQube Flex specifications",
+          "url": "https://ecosense.io/products/ecoqube-flex"
+        },
+        {
+          "label": "Kansas State University: radon test kits",
+          "url": "https://sosradon.org/node/4",
+          "markets": [
+            "us"
+          ]
+        }
+      ]
+    },
+    "air-quality-monitors": {
+      "decidedBy": "Which sensors it has (a true NDIR carbon dioxide sensor, particles, radon), whether it shows readings without an app, battery life, and any subscription.",
+      "gates": [
+        "Must measure carbon dioxide and fine particles (PM2.5), or carbon dioxide with a true NDIR sensor: those two numbers answer the ventilation and smoke questions.",
+        "Readings on the device itself, no subscription required.",
+        "Radon readings count only if the monitor is on C-NRPP's approved list."
+      ],
+      "markets": {
+        "ca": {
+          "performance": {
+            "name": "Airthings View Plus",
+            "why": "The one monitor that covers the whole house question: radon, fine particles, carbon dioxide and VOCs on one wall-mounted screen.",
+            "facts": [
+              "Its radon readings are on C-NRPP's approved list",
+              "Six AA batteries for up to 2 years, or USB-C power",
+              "Wi-Fi and Bluetooth; no subscription"
+            ],
+            "price": "About $350 to $450 (September 2026 planning band)",
+            "sellers": [
+              {
+                "name": "Amazon.ca",
+                "amazon": "Airthings View Plus air quality monitor"
+              },
+              {
+                "name": "Best Buy",
+                "url": "https://www.bestbuy.ca/en-ca/product/airthings-view-plus-air-quality-monitor/15732155"
+              }
+            ]
+          },
+          "easy": {
+            "name": "Aranet4 Home",
+            "why": "The carbon dioxide monitor people leave on the shelf for years: an e-ink screen you read at a glance and batteries that last up to four years.",
+            "facts": [
+              "True NDIR CO₂ sensor, ±(30 ppm + 3%)",
+              "Up to 4 years on batteries; readable without the app",
+              "No subscription; 2-year warranty"
+            ],
+            "watch": "No particle sensor: pair it with the value pick if wildfire smoke reaches you.",
+            "price": "About $250 to $320 (September 2026 planning band)",
+            "sellers": [
+              {
+                "name": "Amazon.ca",
+                "amazon": "Aranet4 Home CO2 monitor"
+              },
+              {
+                "name": "Aranet",
+                "url": "https://aranet.com/en/home/shop/aranet4-home"
+              }
+            ]
+          },
+          "value": {
+            "name": "IKEA ALPSTUGA",
+            "why": "Carbon dioxide, fine particles, temperature and humidity on its own screen for the price of a filter: enough to know when to open a window and when smoke has come in.",
+            "facts": [
+              "Shows CO₂, PM2.5, temperature and humidity without an app",
+              "Its CO₂ sensor is a cheaper non-NDIR type, rated ±(100 ppm + 10%)",
+              "Needs a USB-C power adapter (sold separately); app control needs a Thread hub"
+            ],
+            "price": "$49.99 at IKEA, plus $9.99 for the power adapter",
+            "sellers": [
+              {
+                "name": "IKEA",
+                "url": "https://www.ikea.com/ca/en/p/alpstuga-air-quality-sensor-smart-70609396/"
+              }
+            ],
+            "onlySeller": "Sold only by IKEA."
+          }
+        },
+        "us": {
+          "performance": {
+            "name": "Airthings View Plus",
+            "why": "The one monitor that covers the whole house question: radon, fine particles, carbon dioxide and VOCs on one wall-mounted screen.",
+            "facts": [
+              "Its radon readings are on Canada's C-NRPP approved list",
+              "Six AA batteries for up to 2 years, or USB-C power",
+              "Wi-Fi and Bluetooth; no subscription"
+            ],
+            "price": "US$329.99 at Airthings",
+            "sellers": [
+              {
+                "name": "Amazon",
+                "amazon": "Airthings View Plus air quality monitor"
+              },
+              {
+                "name": "Airthings",
+                "url": "https://www.airthings.com/view-plus"
+              }
+            ]
+          },
+          "easy": {
+            "name": "Aranet4 Home",
+            "why": "The carbon dioxide monitor people leave on the shelf for years: an e-ink screen you read at a glance and batteries that last up to four years.",
+            "facts": [
+              "True NDIR CO₂ sensor, ±(30 ppm + 3%)",
+              "Up to 4 years on batteries; readable without the app",
+              "No subscription; 2-year warranty"
+            ],
+            "watch": "No particle sensor: pair it with the value pick if wildfire smoke reaches you.",
+            "price": "US$189 at Aranet",
+            "sellers": [
+              {
+                "name": "Amazon",
+                "amazon": "Aranet4 Home CO2 monitor"
+              },
+              {
+                "name": "Aranet",
+                "url": "https://aranet.com/en/home/shop/aranet4-home"
+              }
+            ]
+          },
+          "value": {
+            "name": "IKEA ALPSTUGA",
+            "why": "Carbon dioxide, fine particles, temperature and humidity on its own screen for about thirty dollars: enough to know when to open a window and when smoke has come in.",
+            "facts": [
+              "Shows CO₂, PM2.5, temperature and humidity without an app",
+              "Its CO₂ sensor is a cheaper non-NDIR type, rated ±(100 ppm + 10%)",
+              "Needs a USB-C power adapter; app control needs a Thread hub"
+            ],
+            "price": "US$29.99 at IKEA",
+            "sellers": [
+              {
+                "name": "IKEA",
+                "url": "https://www.ikea.com/us/en/p/alpstuga-air-quality-sensor-smart-70609396/"
+              }
+            ],
+            "onlySeller": "Sold only by IKEA."
+          }
+        }
+      },
+      "sources": [
+        {
+          "label": "Airthings: View Plus specifications (updated October 23, 2026)",
+          "url": "https://www.airthings.com/compare/airthings-view-plus-vs-amazon-smart-air-quality-monitor"
+        },
+        {
+          "label": "Aranet: Aranet4 Home specifications",
+          "url": "https://aranet.com/en/home/shop/aranet4-home"
+        },
+        {
+          "label": "IKEA Canada: ALPSTUGA",
+          "url": "https://www.ikea.com/ca/en/p/alpstuga-air-quality-sensor-smart-70609396/",
+          "markets": [
+            "ca"
+          ]
+        },
+        {
+          "label": "IKEA US: ALPSTUGA",
+          "url": "https://www.ikea.com/us/en/p/alpstuga-air-quality-sensor-smart-70609396/",
+          "markets": [
+            "us"
+          ]
+        },
+        {
+          "label": "ALPSTUGA teardown: Sensirion SEN63C module and its specifications",
+          "url": "https://holliger.me/posts/ikea_co2"
+        },
+        {
+          "label": "C-NRPP: approved consumer radon monitors",
+          "url": "https://c-nrpp.ca/consumer-erm-report/"
+        }
+      ]
+    }
+  }
+}

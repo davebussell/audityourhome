@@ -1,0 +1,89 @@
+---
+/**
+ * Three gear picks for one category and country (best performance, easiest to live with, best value), from
+ * src/data/picks/gear.json, with two sellers per pick where more than one sells it, and the gates and sources
+ * behind the picks. Used by /products/<category>/ on both sites; categories not in gear.json keep their old list.
+ */
+import gear from '../../data/picks/gear.json';
+import { amazonCA, amazonUS } from '../../lib/affiliate';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+import '../../styles/picks.css';
+
+interface Props {
+  market: Market;
+  slug: string;
+}
+const { market, slug } = Astro.props;
+const G = gear as any;
+const cat = G.categories[slug];
+const picks = cat?.markets?.[market];
+const SLOTS = ['performance', 'easy', 'value'] as const;
+const checked = fmtDate(G.checked, market);
+const amazon = market === 'ca' ? amazonCA : amazonUS;
+const sellerHref = (s: any) => (s.amazon ? amazon(s.amazon) : s.url);
+const sellerRel = (s: any) => (s.amazon ? 'nofollow sponsored noopener' : 'nofollow noopener');
+// gates and sources can differ by country: gates are a list or { ca, us }; a source can carry markets: ['us']
+const gates: string[] = cat ? (Array.isArray(cat.gates) ? cat.gates : cat.gates[market] ?? []) : [];
+const sources: any[] = cat ? cat.sources.filter((x: any) => !x.markets || x.markets.includes(market)) : [];
+---
+
+{cat && picks && (
+  <section class="gp" id="picks" aria-labelledby="gp-h" data-gp data-market={market} data-cat={slug}>
+    <div class="tp-head">
+      <h2 class="tp-title" id="gp-h">Our three picks</h2>
+      <p class="tp-sub" data-no-gloss>Checked {checked} · <a href="#how-picked">How we picked</a></p>
+    </div>
+    <div class="tp-cards gp-cards">
+      {SLOTS.map((slot) => {
+        const p = picks[slot];
+        if (!p) return null;
+        return (
+          <article class="tp-card" data-slot={slot}>
+            <p class="tp-slot">{G.slots[slot].label}</p>
+            <h3 class="tp-name">{p.name}</h3>
+            {p.model && <p class="tp-model" data-no-gloss>{p.model}</p>}
+            <p class="gp-why">{p.why}</p>
+            <ul class="tp-facts">{p.facts.map((f: string) => <li>{f}</li>)}</ul>
+            {p.watch && <p class="tp-warn">{p.watch}</p>}
+            {p.price && <p class="tp-money" data-no-gloss>{p.price}</p>}
+            <div class="tp-actions gp-sellers">
+              {p.sellers.map((s: any, i: number) => (
+                <a class:list={['btn', 'btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']} href={sellerHref(s)} rel={sellerRel(s)} target="_blank"
+                  data-gp-seller={s.name}>{s.name} ↗</a>
+              ))}
+            </div>
+            {p.onlySeller && <p class="tp-ru">{p.onlySeller}</p>}
+          </article>
+        );
+      })}
+    </div>
+    <p class="meta gp-pricenote">Prices are what each seller listed on {checked}; they move. Amazon buttons open a search for the exact model.</p>
+
+    <div class="card card-pad gp-how" id="how-picked">
+      <h3>How we picked</h3>
+      <p class="small">{cat.decidedBy}</p>
+      <ul class="small">{gates.map((g: string) => <li>{g}</li>)}</ul>
+      <p class="small">
+        No maker pays to be considered. We haven't run our own side-by-side tests of these units yet; the picks rest on the
+        independent results and the makers' published specifications below.
+      </p>
+      <p class="srcs-t">Sources</p>
+      <ul class="meta gp-src">{sources.map((s: any) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
+    </div>
+  </section>
+)}
+
+<script>
+  // GA4: which seller a pick sends people to (category, slot and seller names only)
+  type G = (...a: unknown[]) => void;
+  document.querySelectorAll<HTMLElement>('[data-gp]').forEach((root) => {
+    root.querySelectorAll<HTMLAnchorElement>('[data-gp-seller]').forEach((a) => {
+      a.addEventListener('click', () => {
+        const g = (window as unknown as { gtag?: G }).gtag;
+        const card = a.closest<HTMLElement>('.tp-card');
+        if (typeof g === 'function')
+          g('event', 'gear_seller', { market: root.dataset.market ?? '', category: root.dataset.cat ?? '', slot: card?.dataset.slot ?? '', seller: a.dataset.gpSeller ?? '' });
+      });
+    });
+  });
+</script>

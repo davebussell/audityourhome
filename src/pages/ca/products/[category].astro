@@ -7,6 +7,8 @@ import { SITE } from '../../../config/site';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { amazonCA, amazonUS } from '../../../lib/affiliate';
 import productsData from '../../../data/products.json';
+import GearPicks from '../../../components/picks/GearPicks.astro';
+import gear from '../../../data/picks/gear.json';
 
 export function getStaticPaths() {
   return productsData.categories.map((c) => ({ params: { category: c.slug } }));
@@ -14,6 +16,9 @@ export function getStaticPaths() {
 
 const { category } = Astro.params;
 const c = productsData.categories.find((x) => x.slug === category)!;
+// the three-slot picks (gear.json) replace the old list where a category has them
+const g = (gear.categories as any)[category ?? '']?.markets?.ca;
+const gNames: string[] = g ? ['performance', 'easy', 'value'].map((k) => g[k]?.name).filter(Boolean) : [];
 
 const ELEMENT_LABEL: Record<string, string> = {
   air: 'Air',
@@ -22,7 +27,9 @@ const ELEMENT_LABEL: Record<string, string> = {
 };
 
 const title = `${c.name} — picks, sizing, and honest notes | AuditYourHome`;
-const description = `${c.short} ${c.picks.map((p) => p.name).join(', ')} — what each is for, planning prices, and the buying notes that matter in Canadian homes.`;
+const description = g
+  ? `${c.short} Our picks: ${gNames.join(', ')}, with the gates and sources behind them.`
+  : `${c.short} ${c.picks.map((p) => p.name).join(', ')} — what each is for, planning prices, and the buying notes that matter in Canadian homes.`;
 
 const schema = [
   breadcrumbSchema([
@@ -62,6 +69,7 @@ const heroPhoto: string | undefined = PRODUCT_PHOTO[category ?? ''];
 
     <AffiliateDisclosure />
 
+    {g ? <GearPicks market="ca" slug={c.slug} /> : (<>
     <div class="pick-list">
       {c.picks.map((p) => (
         <article class="card pick">
@@ -80,6 +88,7 @@ const heroPhoto: string | undefined = PRODUCT_PHOTO[category ?? ''];
     </div>
 
     <p class="meta pricenote">{productsData.pricesNote}</p>
+    </>)}
 
     <div class="card card-pad notes">
       <h3>Before you buy</h3>

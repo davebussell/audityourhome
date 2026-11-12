@@ -1,10 +1,16 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import gearData from '../../../data/picks/gear.json';
 import Photo from '../../../components/Photo.astro';
 import { ogFor } from '../../../lib/photos';
 import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
 import { breadcrumbSchema } from '../../../lib/schema';
 import productsData from '../../../data/us/products.json';
+/** the three-slot picks' names (gear.json) where a category has them */
+const gearNames = (slug: string): string | null => {
+  const m = (gearData.categories as any)[slug]?.markets?.us;
+  return m ? ['performance', 'easy', 'value'].map((k) => m[k]?.name).filter(Boolean).join(' · ') : null;
+};
 
 const updated = productsData.meta.updated;
 
@@ -54,7 +60,7 @@ const ogImage = ogFor('mold-testing');
           <p class="el">{ELEMENT_LABEL[c.element] ?? c.element}</p>
           <h2>{c.name}</h2>
           <p class="short">{c.short}</p>
-          <p class="picks">{c.picks.map((p) => p.name).join(' · ')}</p>
+          <p class="picks">{gearNames(c.slug) ?? c.picks.map((p) => p.name).join(' · ')}</p>
           <p class="go">See the picks →</p>
         </a>
       ))}

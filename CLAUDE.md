@@ -187,6 +187,28 @@ upgrades, then the flow between pages, then the building site.
   stay the maker's. BC has two "Home Renovation Rebate" offers, so rebate names are de-duplicated (`uniqueNames()`), and income-qualified
   or free-upgrade programs are left out of the card line (they stay on the province and metro pages).
 
+## Gear picks (2026-11-12, Phase 2 of the plan, first two categories)
+The `/products/<category>/` pages are moving from three loosely labelled picks to the plan's three slots. For gear the middle slot is
+**Easiest to live with** (do-it-yourself makes no sense for a monitor). Done so far: **radon monitors and kits** and **air quality monitors**,
+on both sites. Still on the old list (`src/data/products.json`, `src/data/us/products.json`) and next in line: air purifiers, CO alarms,
+dehumidifiers and hygrometers, water testing. Research notes for those (specs, prices, sellers, sources) were gathered on 2026-11-12;
+dehumidifiers still need ENERGY STAR integrated energy factors per model (the product finder's PDF exports,
+`energystar.gov/productfinder/product/certified-dehumidifiers/details/<id>/export/pdf`, can be read with WebFetch), and water testing
+should build on the per-province well testing data already in `src/data/calc/health.json` (free bacteria tests in ON, AB, PE, NL, YT).
+- **Data:** `src/data/picks/gear.json`, by hand: `checked`, slot wording, and per category `decidedBy`, `gates` (a list, or `{ ca, us }`),
+  `sources` (each may carry `markets: ['us']`), and per country three picks with `name`, `model`, `why`, `facts`, `watch`, `price` (what the
+  named seller listed on `checked`), `sellers` (Amazon as a search query through `src/lib/affiliate.ts`, or an https URL), and `onlySeller`
+  when only one store sells it (IKEA). Two sellers per pick is Dave's rule; `tools/picks/check.mjs` fails the build on a missing slot, fact,
+  gate, source or second seller without a reason, and warns on a missing price. Same 90/180-day review clock as the heat pump picks.
+- **Markup:** `src/components/picks/GearPicks.astro` (cards reuse the `.tp-card` styles; slot `easy` takes the navy accent) with a "How we
+  picked" box: what decides the slot, the gates, and the sources. It says plainly that we haven't run our own side-by-side tests yet; Dave
+  chose first-hand tests of radon and air monitors this winter, and their results belong there once they exist. The category pages render
+  it when `gear.json` has the category and keep the old list otherwise; the `/products/` indexes list the new picks' names in slot order.
+- **The radon gate:** C-NRPP's approved list of consumer monitors (https://c-nrpp.ca/consumer-erm-report/) is the only independent list in
+  North America, so it gates both sites. Airthings' Corentium Home 2 (June 2025) is not on it yet; the original Corentium Home is. US
+  long-term kit: Kansas State University's National Radon Program Services ($30 with the lab). Canada: C-NRPP-listed alpha-track kits.
+- **Analytics:** `gear_seller` (`market`, `category`, `slot`, `seller`) when someone follows a seller button. Keys only.
+
 ## The November 6 review (Dave mailed himself a four-part review of both home sites: "Audit Your Home . ca fixes")
 Dave chose four of its five buckets: **A** quick factual and consent fixes (`9aa20fe`), **B** planner logic (prerequisite-first next
 step, municipality gating, eligibility statuses, utility gate, usage inputs), **C** a shorter "rebates first" planner path, **D** a French

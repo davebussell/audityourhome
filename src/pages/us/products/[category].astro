@@ -7,6 +7,8 @@ import { AFFILIATE } from '../../../config/site';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { amazonUS } from '../../../lib/affiliate';
 import productsData from '../../../data/us/products.json';
+import GearPicks from '../../../components/picks/GearPicks.astro';
+import gear from '../../../data/picks/gear.json';
 
 export function getStaticPaths() {
   return productsData.categories.map((c) => ({ params: { category: c.slug } }));
@@ -14,6 +16,9 @@ export function getStaticPaths() {
 
 const { category } = Astro.params;
 const c = productsData.categories.find((x) => x.slug === category)!;
+// the three-slot picks (gear.json) replace the old list where a category has them
+const g = (gear.categories as any)[category ?? '']?.markets?.us;
+const gNames: string[] = g ? ['performance', 'easy', 'value'].map((k) => g[k]?.name).filter(Boolean) : [];
 const updated = productsData.meta.updated;
 
 const ELEMENT_LABEL: Record<string, string> = {
@@ -23,7 +28,9 @@ const ELEMENT_LABEL: Record<string, string> = {
 };
 
 const title = `${c.name} for US homes: picks and buying notes | AuditYourHome`;
-const description = `${c.short} ${c.picks.map((p) => p.name).join(', ')}: what each is for and the buying notes that matter in US homes.`;
+const description = g
+  ? `${c.short} Our picks: ${gNames.join(', ')}, with the gates and sources behind them.`
+  : `${c.short} ${c.picks.map((p) => p.name).join(', ')}: what each is for and the buying notes that matter in US homes.`;
 
 const schema = [
   breadcrumbSchema([
@@ -81,13 +88,14 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
 
     {AFFILIATE.amazonTagUS && (
       <p class="aff-note">
-        Buttons open amazon.com search results. As an Amazon Associate, AuditYourHome earns from
+        {g ? 'Amazon buttons open' : 'Buttons open'} amazon.com search results. As an Amazon Associate, AuditYourHome earns from
         qualifying purchases, at no extra cost to you.
       </p>
     )}
 
     <AffiliateDisclosure />
 
+    {g ? <GearPicks market="us" slug={c.slug} /> : (<>
     <div class="pick-list">
       {c.picks.map((p) => (
         <article class="card pick">
@@ -105,6 +113,7 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
     </div>
 
     <p class="meta pricenote">{productsData.pricesNote}</p>
+    </>)}
 
     <div class="card card-pad notes">
       <h3>Before you buy</h3>
