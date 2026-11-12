@@ -1,0 +1,95 @@
+---
+/**
+ * "Which zone am I in?": the first three characters of a postal code (Canada) or a ZIP code (US) lead to that
+ * zone's picks page. Runs in the browser; nothing typed is sent anywhere or stored. Only the zone key is
+ * remembered on the device (so the hub can offer "your zone" next time), and analytics get the zone key only.
+ */
+import { FSA_ZONE_RULES, zip3Zones, zones, zoneHref, type Lang } from '../../lib/picks';
+import { US_METROS, type Market } from '../../lib/heatpumps';
+import '../../styles/picks.css';
+
+interface Props {
+  market: Market;
+  lang?: Lang;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const map = isCA ? { rules: FSA_ZONE_RULES } : { zip3: zip3Zones() };
+const labels = Object.fromEntries(zones(market).map((z) => [z.key, z.label]));
+const uid = `zf-${market}`;
+---
+
+<div class="card zf" data-zf data-market={market}>
+  <form>
+    <label for={`${uid}-in`}>{isCA ? 'First three characters of your postal code' : 'Your ZIP code'}</label>
+    <div class="zf-row">
+      <input id={`${uid}-in`} name="code" inputmode={isCA ? 'text' : 'numeric'} autocomplete="off" maxlength={isCA ? 7 : 5}
+        placeholder={isCA ? 'e.g. K1A' : 'e.g. 85004'} />
+      <button class="btn btn-primary btn-sm" type="submit">See my picks</button>
+    </div>
+  </form>
+  <p class="zf-msg" aria-live="polite" hidden></p>
+  <script type="application/json" class="zf-data" set:html={JSON.stringify({ map, labels, metros: US_METROS.length, hrefs: Object.fromEntries(Object.keys(labels).map((k) => [k, zoneHref(k)])) })}></script>
+</div>
+
+<script>
+  type G = (...a: unknown[]) => void;
+  document.querySelectorAll<HTMLElement>('[data-zf]').forEach((root) => {
+    const market = root.dataset.market;
+    const data = JSON.parse(root.querySelector('.zf-data')?.textContent ?? '{}');
+    const form = root.querySelector('form')!;
+    const input = root.querySelector('input')!;
+    const msg = root.querySelector<HTMLElement>('.zf-msg')!;
+    const key = `ayh_zone_${market}`;
+    // a message is text plus [label, href] links, built as nodes (no HTML strings)
+    type Part = string | [string, string];
+    const say = (parts: Part[], tone = '') => {
+      msg.replaceChildren(...parts.map((x) => {
+        if (typeof x === 'string') return document.createTextNode(x);
+        const a = document.createElement('a');
+        a.textContent = x[0];
+        a.href = x[1];
+        return a;
+      }));
+      msg.dataset.tone = tone;
+      msg.hidden = false;
+    };
+    try {
+      const saved = localStorage.getItem(key);
+      if (saved && data.labels[saved]) say(['Last time you looked at ', [data.labels[saved], data.hrefs[saved]], '.']);
+    } catch {}
+    const lookup = (raw: string): string | null | '' => {
+      const s = raw.toUpperCase().replace(/\s+/g, '');
+      if (market === 'ca') {
+        if (!/^[A-Z]\d[A-Z]/.test(s)) return null;
+        const fsa = s.slice(0, 3);
+        const r = data.map.rules;
+        for (const len of [3, 2]) {
+          const hit = r.byPrefix[fsa.slice(0, len)];
+          if (hit !== undefined) return hit;
+        }
+        return r.byLetter[fsa[0]] ?? null;
+      }
+      if (!/^\d{3}/.test(s)) return null;
+      return data.map.zip3[s.slice(0, 3)] ?? '';
+    };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const z = lookup(input.value);
+      if (z === null) {
+        say([market === 'ca' ? 'That doesn’t look like a Canadian postal code. Try the first three characters, like K1A.' : 'That doesn’t look like a ZIP code. Try five digits, like 85004.'], 'warn');
+        return;
+      }
+      if (z === '') {
+        say(market === 'ca'
+          ? ['Rural BC postal codes span several zones. Pick the one closest to you: ', [data.labels['coastal-bc'], data.hrefs['coastal-bc']], ' or ', [data.labels['bc-southern-interior'], data.hrefs['bc-southern-interior']], '.']
+          : [`That ZIP code is outside the ${data.metros} metros we cover in detail. Pick the zone closest to your climate below.`], 'warn');
+        return;
+      }
+      try { localStorage.setItem(key, z); } catch {}
+      const g = (window as unknown as { gtag?: G }).gtag;
+      if (typeof g === 'function') g('event', 'zone_set', { market: market ?? '', zone: z });
+      window.location.assign(data.hrefs[z]);
+    });
+  });
+</script>

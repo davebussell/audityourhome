@@ -7,6 +7,7 @@
 import Base from '../../../layouts/Base.astro';
 import Photo from '../../../components/Photo.astro';
 import FrLeadForm from '../../../components/fr/FrLeadForm.astro';
+import TopPicks from '../../../components/picks/TopPicks.astro';
 import { ogFor } from '../../../lib/photos';
 import { breadcrumbSchema, faqSchema } from '../../../lib/schema';
 import { costsCA, PRICES_CA_AS_OF } from '../../../lib/heatpumps';
@@ -72,6 +73,7 @@ const schema = [
     </div>
 
     <nav class="jump" aria-label="Sur cette page">
+      <a href="#choix">Nos choix</a>
       <a href="#couts">Coûts de fonctionnement</a>
       <a href="#subventions">Subventions</a>
       <a href="#choisir">Choisir</a>
@@ -79,6 +81,18 @@ const schema = [
       <a href="#bienergie">Biénergie</a>
       <a href="#etapes">Les étapes</a>
     </nav>
+
+    <section id="choix" class="sec">
+      <h2>Nos trois choix de thermopompes pour le Québec</h2>
+      <p class="sec-intro">
+        Le Québec couvre deux zones climatiques : la vallée du Saint-Laurent (Montréal, Gatineau, Sherbrooke, Trois-Rivières) et l’Est très
+        froid (Québec, Lévis, Saguenay). Pour chacune, une thermopompe à acheter si la performance compte avant tout, une que vous pouvez
+        installer vous-même et la meilleure valeur, selon les cotes certifiées ENERGY STAR et les garanties des fabricants. Les fiches
+        détaillées sont en anglais.
+      </p>
+      <TopPicks market="ca" zoneKey="great-lakes-st-lawrence" region="quebec" level={3} lang="fr" heading="Vallée du Saint-Laurent : Montréal, Gatineau, Sherbrooke" quoteHref="#lead-form" quoteLabel="Demander un conseiller" id="tp-fr-glsl" />
+      <TopPicks market="ca" zoneKey="very-cold-east" region="quebec" level={3} lang="fr" heading="Est très froid : Québec, Lévis, Saguenay" quoteHref="#lead-form" quoteLabel="Demander un conseiller" id="tp-fr-vce" />
+    </section>
 
     <section id="couts" class="sec">
       <h2>Ce qu’un gigajoule de chaleur coûte avec chaque énergie</h2>

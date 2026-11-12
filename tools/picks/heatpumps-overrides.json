@@ -1,0 +1,127 @@
+{
+  "_readme": "Editor's input to tools/picks/build_heatpumps.py. Slot wording, gate wording, cost ranges with their sources, the do-it-yourself lines, brand exclusions and per-zone locks. A lock replaces a computed pick; give the reason in its 'editorNote'. Re-run the script after any change.",
+  "checked": "2026-11-12",
+  "slots": {
+    "performance": {
+      "label": "Best performance",
+      "question": "What would you buy if comfort and running cost mattered most?",
+      "short": "The highest-scoring system for this climate on the certified ratings"
+    },
+    "diy": {
+      "label": "Best do-it-yourself",
+      "question": "What can a handy owner install safely, legally and with the warranty intact?",
+      "short": "Pre-charged lines and a warranty that covers an owner install; no rebate"
+    },
+    "value": {
+      "label": "Best value",
+      "question": "What gives the most back for the money here?",
+      "short": "The best performer from a budget or mid-priced brand, with the rebates that apply"
+    }
+  },
+  "gatesText": [
+    "Sold in the country, with warranty terms we have read for that country. Brands whose terms we haven't confirmed yet aren't eligible.",
+    "A current refrigerant (R-454B or R-32).",
+    "A variable-speed compressor.",
+    "In cold zones, ENERGY STAR's cold-climate designation; in Canada, also NRCan's rebate thresholds (COP of at least 1.8 at −15°C and at least 70% of rated output there).",
+    "In very cold zones, at least 80% of rated heat output kept at −15°C (5°F); in the North, 85%.",
+    "Like for like: 2 to 4 tons for houses with ducts, 1 to 2 tons for a ductless head, 0.5 to 1 ton for one room."
+  ],
+  "valueTiers": [
+    "budget",
+    "mid"
+  ],
+  "diy": {
+    "brands": [
+      "mrcool"
+    ],
+    "seriesContains": [
+      "DIY"
+    ],
+    "why": "Sold for homeowner installation with pre-charged quick-connect line sets; MrCool's DIY warranty needs no registration and covers installs in the US and Canada."
+  },
+  "diyNone": {
+    "default": "No owner-installable system passes the gates for this climate."
+  },
+  "runnerUpManual": {
+    "us/room/diy": {
+      "brand": "Midea",
+      "name": "Midea window heat pump (PWHP)",
+      "note": "No holes in the wall: it sits in a sash window and heats to −13°F. About US$2,800–3,000 through Midea distributors (Fast Company, December 2025).",
+      "url": "https://www.fastcompany.com/91448042/midea-heat-pump-review"
+    }
+  },
+  "costs": {
+    "ca": {
+      "ducted": {
+        "low": 12000,
+        "high": 18000,
+        "plus": true,
+        "label": "Installed, cold-climate ducted system",
+        "source": "FurnacePrices.ca, heat pump prices (updated September 1, 2026)",
+        "url": "https://www.furnaceprices.ca/heat-pumps/heat-pump-prices/",
+        "sourceFr": "FurnacePrices.ca, prix des thermopompes (mis à jour le 1er septembre 2026)",
+        "short": "FurnacePrices.ca, September 2026",
+        "shortFr": "FurnacePrices.ca, septembre 2026"
+      },
+      "ductless": {
+        "low": 5000,
+        "high": 8000,
+        "label": "Installed, one indoor head",
+        "source": "FurnacePrices.ca, heat pump prices (updated September 1, 2026)",
+        "url": "https://www.furnaceprices.ca/heat-pumps/heat-pump-prices/",
+        "sourceFr": "FurnacePrices.ca, prix des thermopompes (mis à jour le 1er septembre 2026)",
+        "short": "FurnacePrices.ca, September 2026",
+        "shortFr": "FurnacePrices.ca, septembre 2026"
+      },
+      "room": {
+        "low": 5000,
+        "high": 8000,
+        "label": "Installed, one indoor head",
+        "source": "FurnacePrices.ca, heat pump prices (updated September 1, 2026)",
+        "url": "https://www.furnaceprices.ca/heat-pumps/heat-pump-prices/",
+        "sourceFr": "FurnacePrices.ca, prix des thermopompes (mis à jour le 1er septembre 2026)",
+        "short": "FurnacePrices.ca, September 2026",
+        "shortFr": "FurnacePrices.ca, septembre 2026"
+      }
+    },
+    "us": {
+      "ducted": {
+        "avg": 14529,
+        "perTon": 3790,
+        "label": "Installed, average for a ducted system before incentives",
+        "source": "EnergySage marketplace quotes (updated March 19, 2026)",
+        "url": "https://www.energysage.com/green-heating-and-cooling/air-source-heat-pumps/costs-and-benefits-air-source-heat-pumps/",
+        "short": "EnergySage, March 2026"
+      },
+      "ductless": {
+        "high": 8000,
+        "label": "Installed, per indoor head: a few thousand dollars, up to about $8,000",
+        "source": "EnergySage (updated October 29, 2025)",
+        "url": "https://www.energysage.com/heat-pumps/how-much-does-a-mini-split-cost/",
+        "short": "EnergySage, October 2025"
+      },
+      "room": {
+        "high": 8000,
+        "label": "Installed, per indoor head: a few thousand dollars, up to about $8,000",
+        "source": "EnergySage (updated October 29, 2025)",
+        "url": "https://www.energysage.com/heat-pumps/how-much-does-a-mini-split-cost/",
+        "short": "EnergySage, October 2025"
+      }
+    }
+  },
+  "exclude": {
+    "ca": [],
+    "us": []
+  },
+  "locks": {},
+  "zoneNotes": {
+    "ca": {
+      "very-cold-east": "Design temperatures here run from −25°C to −29°C, colder than the −15°C point every rating stops at. Ask the installer for the maker’s output at your design temperature, and keep a backup heat source.",
+      "prairies": "Design temperatures here run from −26°C to −33°C, colder than the −15°C point every rating stops at. Ask the installer for the maker’s output at your design temperature, and keep a backup heat source.",
+      "north": "At −36°C to −39°C design temperatures every air-source heat pump needs a backup heat source. These picks carry most of the winter and the shoulder seasons; envelope work comes first here."
+    },
+    "us": {
+      "very-cold": "Minneapolis design temperatures fall well below the 5°F point every rating stops at. Ask the installer for the maker’s output at your design temperature, and keep a backup heat source."
+    }
+  }
+}

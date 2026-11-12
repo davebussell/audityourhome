@@ -1,0 +1,229 @@
+---
+/**
+ * /heat-pumps/picks/<zone>/ on both sites: the three picks for one climate zone in every situation, and the
+ * evidence behind each one (why it won, what to watch, the certified numbers, the runner-up). One page per zone,
+ * not per city: what changes from city to city is the rebate, which the province and metro pages carry.
+ */
+import Base from '../../layouts/Base.astro';
+import TopPicks from './TopPicks.astro';
+import QuoteForm from '../hp/QuoteForm.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import {
+  zone as getZone, zones, SITUATIONS, SLOTS, slotLabel, slotShort, situationLong, situationLabel, pickName, pickFacts, capacityText,
+  warrantyText, costLine, zonePlaces, provincesOfZone, metrosOfZone, placeName, zoneHref, PICKS_HREF, HOW_HREF, PICKS_CHECKED_ISO,
+  PICKS_DATA_AS_OF, lineUrl, brandPage, zoneWhere, type Pick, type Slot, type Situation,
+} from '../../lib/picks';
+import { brandInfo, caRegion, ESTAR, fmtDate, tierLabel, type Market } from '../../lib/heatpumps';
+import '../../styles/hp.css';
+import '../../styles/picks.css';
+
+interface Props {
+  market: Market;
+  zoneKey: string;
+}
+const { market, zoneKey } = Astro.props;
+const isCA = market === 'ca';
+const z = getZone(market, zoneKey)!;
+const places = zonePlaces(market, zoneKey, 5);
+const checked = fmtDate(PICKS_CHECKED_ISO, market);
+const t5 = isCA ? '−15°C (5°F)' : '5°F';
+const t47 = isCA ? '8.3°C (47°F)' : '47°F';
+const regions = isCA
+  ? provincesOfZone(zoneKey).map((s) => ({ href: `/heat-pumps/${s}/`, name: caRegion(s)?.name ?? s }))
+  : metrosOfZone(zoneKey).map((s) => ({ href: `/heat-pumps/${s}/`, name: placeName('us', s) }));
+const others = zones(market).filter((x) => x.key !== zoneKey);
+
+const pct = (x: number | null) => (x == null ? '—' : `${Math.round(x * 100)}%`);
+const f1 = (x: number | null) => (x == null ? '—' : (Math.round(x * 10) / 10).toFixed(1));
+const f2 = (x: number | null) => (x == null ? '—' : x.toFixed(2));
+const btu = (x: number | null) => (x == null ? '—' : `${x.toLocaleString(isCA ? 'en-CA' : 'en-US')} BTU/h`);
+
+function whyWon(p: Pick, slot: Slot, sit: Situation): string[] {
+  const sp = z.situations[sit];
+  const out: string[] = [];
+  if (slot === 'performance') out.push(`Highest score of the ${sp.eligible} certified systems that passed our gates for this zone and size.`);
+  if (slot === 'value') out.push(`Highest score among brands in the ${p.priceTier === 'budget' ? 'budget' : 'mid'} price tier, out of the same ${sp.eligible} systems.`);
+  if (slot === 'diy') out.push('Sold for homeowner installation: pre-charged quick-connect line sets, and a warranty with no registration that covers owner installs in the US and Canada.');
+  out.push(...pickFacts(p, z, market));
+  if (p.mostEff) out.push('ENERGY STAR Most Efficient.');
+  return out;
+}
+function watchOuts(p: Pick, slot: Slot, sit: Situation): string[] {
+  const out: string[] = [];
+  if (p.warranty.registrationRequired) out.push('The longer warranty needs registration within the maker’s deadline (usually 60 or 90 days after installation). Do it the week it goes in.');
+  if (slot === 'diy') {
+    out.push('Most rebates pay only through a participating or licensed contractor, so expect no rebate on a self-install.');
+    out.push(
+      /115/.test(p.outdoor)
+        ? 'This size runs on 115 volts but still wants its own circuit: have an electrician check the panel.'
+        : 'The outdoor unit needs its own 240-volt circuit: hire an electrician for that part, with a permit.',
+    );
+    if (p.supplementOnly) out.push(`In this climate it keeps ${pct(p.ret)} of its heat at ${t5}: plan it as a supplement to the heat you have, not a replacement.`);
+  } else {
+    out.push('Sizing decides comfort more than the badge: ask for a room-by-room heat-loss calculation, not a rule of thumb.');
+  }
+  if (p.claim) out.push(`The maker's cold-weather claim, in its own words: ${p.claim.replace(/\s+/g, ' ').slice(0, 260)}${p.claim.length > 260 ? '…' : ''}`);
+  if (sit === 'ducted') out.push('Have the installer check that the existing ducts can carry the airflow a heat pump needs.');
+  return out;
+}
+const sources = (() => {
+  const seen = new Map<string, string>();
+  for (const s of SITUATIONS) {
+    for (const slot of SLOTS) {
+      const p = z.situations[s][slot] as Pick | null | undefined;
+      if (!p) continue;
+      const w = (brandInfo(p.slug) as any)?.warranty?.[market];
+      if (w?.url) seen.set(w.url, `${p.brand} warranty terms (${isCA ? 'Canada' : 'US'})`);
+      const lu = lineUrl(p);
+      if (lu) seen.set(lu, `${p.brand}: ${p.line ?? p.series ?? 'product line'}`);
+    }
+  }
+  return [...seen.entries()].map(([url, label]) => ({ url, label }));
+})();
+
+// the title and h1 name the region the way people search for it; the zone's own label is the eyebrow and the breadcrumb
+const where = zoneWhere(market, z.key);
+const title = `Best heat pumps for ${where} | AuditYourHome`;
+const description = `Three heat pump picks for ${where}: best performance, best to install yourself and best value, with and without ducts. Scored on certified ratings and warranty.`;
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Heat pumps', path: '/heat-pumps/' },
+    { name: 'Our picks', path: PICKS_HREF },
+    { name: z.label, path: zoneHref(zoneKey) },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span>
+      <a href={PICKS_HREF}>Our picks</a> <span aria-hidden="true">/</span> <span>{z.label}</span>
+    </nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">{isCA ? z.label : `${z.label} climate`} · picks checked {checked}</p>
+        <h1>Best heat pumps for {where}</h1>
+        <p class="lede measure">
+          {z.oneLiner} For {places.join(', ')} and the towns around them: one system to buy if performance matters most, one a handy owner
+          can install, and the best value, for a house with ducts, a house without them, and a single room.
+        </p>
+      </div>
+    </div>
+
+    <TopPicks market={market} zoneKey={zoneKey} heading="The three picks" quoteOnPage />
+
+    <p class="sec-intro">
+      Rebates change from {isCA ? 'province to province' : 'city to city'}; your {isCA ? 'province' : 'metro'} page has the amounts and the
+      rules: {regions.map((r, i) => <>{i > 0 && ', '}<a href={r.href}>{r.name}</a></>)}.
+    </p>
+
+    <section id="evidence" class="sec">
+      <h2>Why each pick won</h2>
+      <p class="sec-intro">
+        Every system here is certified by ENERGY STAR (list pulled {fmtDate(PICKS_DATA_AS_OF.energyStar, market)}) and passed the same gates.
+        The numbers are ENERGY STAR's for the exact outdoor and indoor pairing; warranty terms are the maker's for {isCA ? 'Canada' : 'the US'}.
+        <a href={HOW_HREF}>How we pick</a> explains the gates and the weights.
+      </p>
+      {SITUATIONS.map((sit) => (
+        <>
+          <h3 class="sub-h" id={sit}>{situationLong(sit)}</h3>
+          <div class="pk-evidence">
+            {SLOTS.map((slot) => {
+              const p = z.situations[sit][slot] as Pick | null | undefined;
+              if (!p) return (
+                <article class="card pk-item" id={`${sit}-${slot}`}>
+                  <p class="tp-slot">{slotLabel(slot)}</p>
+                  <h4>No pick here</h4>
+                  <p class="muted">{z.situations[sit].diyReason}</p>
+                </article>
+              );
+              const bp = brandPage(p, market);
+              return (
+                <article class="card pk-item" id={`${sit}-${slot}`}>
+                  <p class="tp-slot">{slotLabel(slot)} · {situationLabel(sit).toLowerCase()}</p>
+                  <h4 class="pk-name">{pickName(p)}</h4>
+                  <p class="tp-model">Outdoor {p.outdoor}{p.indoor ? ` · indoor ${p.indoor}` : ''}{p.ahri ? ` · AHRI ${p.ahri}` : ''}</p>
+                  <div class="pk-grid">
+                    <div>
+                      <h5>Why it won</h5>
+                      <ul>{whyWon(p, slot, sit).map((x) => <li>{x}</li>)}</ul>
+                      <h5>What to watch</h5>
+                      <ul>{watchOuts(p, slot, sit).map((x) => <li>{x}</li>)}</ul>
+                      {p.runnerUp && (
+                        <p class="meta">
+                          Runner-up from another brand: {pickName(p.runnerUp)} ({p.runnerUp.outdoor}): COP {f2(p.runnerUp.cop5)} at {t5}, keeps {pct(p.runnerUp.ret)} of its heat
+                          there, SEER2 {f1(p.runnerUp.seer2)}.
+                        </p>
+                      )}
+                      {bp && <p class="meta"><a href={bp}>{p.brand}: warranty, lines and every certified model</a></p>}
+                    </div>
+                    <table class="pk-specs">
+                      <caption class="sr-only">Certified ratings for {pickName(p)}</caption>
+                      <tbody>
+                        <tr><th scope="row">Cooling capacity</th><td>{capacityText(p, market)}</td></tr>
+                        <tr><th scope="row">Heat at {t47}, rated</th><td>{btu(p.cap47)}</td></tr>
+                        <tr><th scope="row">Heat at {t5}, maximum</th><td>{btu(p.cap5)} ({pct(p.ret)} of rated)</td></tr>
+                        <tr><th scope="row">COP at {t5}</th><td>{f2(p.cop5)}</td></tr>
+                        <tr><th scope="row">HSPF2 / SEER2 / EER2</th><td>{f1(p.hspf2)} / {f1(p.seer2)} / {f1(p.eer2)}</td></tr>
+                        <tr><th scope="row">Refrigerant, compressor</th><td>{p.refrig}, {(p.staging ?? '').toLowerCase()}</td></tr>
+                        <tr><th scope="row">Warranty ({isCA ? 'Canada' : 'US'})</th><td>{warrantyText(p, market)}</td></tr>
+                        <tr><th scope="row">Brand's price range</th><td>{p.priceTier ? tierLabel(p.priceTier) : '—'}</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          {costLine(market, sit) && (
+            <p class="meta">
+              Price: {costLine(market, sit)!.text} (<a href={costLine(market, sit)!.url} rel="noopener">{costLine(market, sit)!.source}</a>). We show ranges for the
+              type of system, not prices per model: installed prices depend far more on the house and the contractor than on the badge.
+            </p>
+          )}
+        </>
+      ))}
+    </section>
+
+    <section id="before" class="sec">
+      <h2>Before you sign a quote</h2>
+      <ol class="measure">
+        <li>Ask for a room-by-room heat-loss calculation{isCA ? ' (CSA F280)' : ' (Manual J)'} and the AHRI certificate for the exact outdoor and indoor pairing quoted.</li>
+        <li>Check the pairing against the rebate's list: {isCA ? "NRCan's eligible products, ENERGY STAR Cold Climate for LogisVert, or BC's own list" : 'ENERGY STAR, plus any cold-climate or efficiency rule your utility sets'}.</li>
+        <li>Ask how backup heat is set: it should switch on only below the temperature the heat pump can no longer carry the house.</li>
+        <li>Get the permit and registration in writing: who registers the warranty, and by when.</li>
+        <li>Compare at least two quotes for the same pairing, or a close match from the runner-up.</li>
+      </ol>
+    </section>
+
+    <section id="zones" class="sec">
+      <h2>Other zones</h2>
+      <p class="sec-intro">The picks change with the climate. <a href={PICKS_HREF}>Find your zone by {isCA ? 'postal code' : 'ZIP code'}</a> or pick one:</p>
+      <div class="pills">{others.map((o) => <a href={zoneHref(o.key)}>{o.label}</a>)}</div>
+    </section>
+
+    <section class="sec" id="quote-sec">
+      <QuoteForm market={market} context={`picks-${zoneKey}`} heading={isCA ? 'Get quotes for one of these picks' : 'Find installers for one of these picks'} />
+    </section>
+
+    <section class="sec">
+      <h2 class="sub-h">Sources</h2>
+      <ul class="meta">
+        <li><a href={ESTAR.dataset} rel="noopener">{ESTAR.name}</a>, pulled {fmtDate(PICKS_DATA_AS_OF.energyStar, market)}</li>
+        {sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}
+        {SITUATIONS.map((s) => costLine(market, s)).filter((c, i, a) => c && a.findIndex((x) => x?.url === c.url) === i).map((c) => (
+          <li><a href={c!.url} rel="noopener">{c!.source}</a></li>
+        ))}
+        <li><a href={HOW_HREF}>How we pick</a>: the gates, the weights and what would change a pick</li>
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .pk-item h4.pk-name { font-size: 19px; margin: 2px 0 6px; }
+  .pk-grid h5 { font-size: 14px; margin: 10px 0 6px; }
+  .pk-grid h5:first-child { margin-top: 0; }
+</style>

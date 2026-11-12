@@ -7,6 +7,8 @@
 import Base from '../../layouts/Base.astro';
 import ModelTable from './ModelTable.astro';
 import QuoteForm from './QuoteForm.astro';
+import ZoneFinder from '../picks/ZoneFinder.astro';
+import { zones as pickZones, zoneHref, zonePlaces, pickName, slotLabel, PICKS_HREF, HOW_HREF, type Pick } from '../../lib/picks';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 import {
   type Market, totals, leaders, brandsBySize, brandInfo, statsFor, brandHref, FAMILIES, ESTAR, ESTAR_URL, AHRI_URL,
@@ -146,7 +148,8 @@ const schema = [
   faqSchema(faqs),
 ];
 const jump: [string, string][] = [
-  ['picks', 'Picks by need'],
+  ['top-picks', 'Our picks'],
+  ['picks', 'Brand shortlists'],
   ['compare', 'Compare brands'],
   ['cold', 'Cold-weather leaders'],
   ['cooling', 'Cooling leaders'],
@@ -205,9 +208,36 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
     </nav>
 
+    <section id="top-picks" class="sec">
+      <h2>Our three picks for your area</h2>
+      <p class="sec-intro">
+        The right heat pump depends on your climate. For each {isCA ? 'of Canada\u2019s 7 climate zones' : 'of 9 US climate zones'} we pick one system to buy if
+        performance matters most, one a handy owner can install, and the best value, for a house with ducts, without ducts, or one room.
+        <a href={HOW_HREF}>How we pick</a>.
+      </p>
+      <ZoneFinder market={market} />
+      <p class="zf-after">Or choose your zone below. The picks shown are for a house without ducts; each zone's page also covers houses with ducts and single rooms.</p>
+      <div class="zone-list">
+        {pickZones(market).map((z) => {
+          const s = z.situations.ductless;
+          return (
+            <a class="card zone-item" href={zoneHref(z.key)}>
+              <h3>{z.label}</h3>
+              <p>{zonePlaces(market, z.key, 4).join(', ')}</p>
+              {(['performance', 'diy', 'value'] as const).map((slot) => {
+                const p = s[slot] as Pick | null | undefined;
+                return p ? <p class="zone-top"><strong>{slotLabel(slot)}:</strong> {pickName(p)}</p> : null;
+              })}
+            </a>
+          );
+        })}
+      </div>
+      <p class="tp-more"><a class="btn btn-ghost btn-sm" href={PICKS_HREF}>All zones and picks</a></p>
+    </section>
+
     <section id="picks" class="sec">
-      <h2>Picks by need</h2>
-      <p class="sec-intro">Shortlists from the data below. A brand on a shortlist still needs a good installer and the right size for your home.</p>
+      <h2>Brand shortlists by need</h2>
+      <p class="sec-intro">Shortlists from the data below, by brand rather than by model. A brand on a shortlist still needs a good installer and the right size for your home.</p>
       <div class="cards">
         {picks.filter((p) => p.brands.length).map((p) => (
           <article class="card c">

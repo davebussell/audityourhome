@@ -945,6 +945,7 @@ export function startPlanner() {
         <p class="rb-ctas">
           <button type="button" class="btn btn-primary" id="toFull">Build my full plan (3 more questions)</button>
           <a class="btn btn-ghost" href="#rFind">Find a certified auditor</a>
+          ${projects.includes('heat-pump') && loc.clim && D.metros[loc.clim]?.needs?.k ? `<a class="btn btn-ghost" href="/heat-pumps/picks/${D.metros[loc.clim].needs.k}/">Our three heat pump picks for your climate</a>` : ''}
           ${projects.includes('heat-pump') ? '<a class="btn btn-ghost" href="/heat-pumps/#quote">Help me find a heat pump installer</a>' : ''}
         </p>
         <p class="small">The full plan adds what homes in your climate need, what each upgrade saves at ${esc(sn(loc.st))} prices, the tests to ask for, and the order that keeps you from redoing work.</p>
@@ -1218,7 +1219,7 @@ export function startPlanner() {
         ${p.smoke ? `<p class="small needs-smoke"><b>Smoke days:</b> ${esc(p.smoke)} Sealing air leaks keeps more smoke outside; ask the auditor whether your system can take a MERV 13 filter.</p>` : ''}
         <p class="small"><b>When to book:</b> ${esc(p.season)}</p>
         ${here && n.note ? `<p class="small">${esc(n.note)}</p>` : ''}
-        <p class="small links">${here ? `<a href="/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a> <a href="/heat-pumps/${c.loc.metro}/">Heat pumps in ${esc(areaShort(c.loc.metro!))} →</a>` : `<a href="/cities/${c.loc.clim}/">The ${esc(metroName(c.loc.clim))} metro guide →</a>`}</p>
+        <p class="small links">${here ? `<a href="/cities/${c.loc.metro}/">The ${esc(metroName(c.loc.metro))} metro guide →</a> <a href="/heat-pumps/${c.loc.metro}/">Heat pumps in ${esc(areaShort(c.loc.metro!))} →</a>` : `<a href="/cities/${c.loc.clim}/">The ${esc(metroName(c.loc.clim))} metro guide →</a>`}${n.k ? ` <a href="/heat-pumps/picks/${n.k}/" data-pick-link="${n.k}">Our three heat pump picks for this climate →</a>` : ''}</p>
       </div>`;
   }
 

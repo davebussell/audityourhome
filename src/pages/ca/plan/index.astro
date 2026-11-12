@@ -1821,7 +1821,10 @@ const privacyLine = ACCOUNTS_ENABLED
       .filter((p) => inc !== 'no' || p.status !== 'income');
     const progItems = progs.slice(0, 5).map((p) => `<li><a href="${esc(p.href)}">${esc(p.name)}</a>${p.headline ? ` — ${esc(p.headline)}` : ''}${p.status === 'income' ? ' <span class="chip chip-limited">income-qualified</span>' : ''}${p.auditRequired ? ' <span class="chip chip-info">evaluation first</span>' : ' <span class="chip chip-neutral">no evaluation needed</span>'}</li>`).join('');
 
-    const ctaHp = wantsHp ? `<a class="btn btn-ghost" href="/heat-pumps/#quote">Match me with one heat pump contractor</a>` : '';
+    const pickZone = C.key && D.climate.profiles[C.key] ? C.key : null;
+    const ctaHp = wantsHp
+      ? `${pickZone ? `<a class="btn btn-ghost" href="/heat-pumps/picks/${pickZone}/" data-pick-link="${pickZone}">Our three heat pump picks for ${esc(D.climate.profiles[pickZone].label)}</a> ` : ''}<a class="btn btn-ghost" href="/heat-pumps/#quote">Match me with one heat pump contractor</a>`
+      : '';
     $('#rRebates').innerHTML = `
       <section class="card rb-first" id="next-steps" aria-labelledby="rb-h">
         <h3 id="rb-h">What pays for your ${projects.length === 1 ? 'project' : 'projects'} in ${esc(provName)}</h3>
@@ -2524,9 +2527,11 @@ const privacyLine = ACCOUNTS_ENABLED
     if (m.acKwh > 0) {
       const ep = R.prices.electricity.now;
       const old = a.ac === 'central-old';
+      const hz = climateFor(R.slug).key;
+      const hpZone = hz && D.climate.profiles[hz] ? hz : null;
       cards.push(`<div class="sys-card"><h4>Cooling: ${esc(m.acNote)}</h4>
         <p class="small">About <b>${Math.round(m.acKwh).toLocaleString('en-CA')} kWh</b> a summer (${money(m.acKwh * ep)}) with ${R.cdd} cooling degree-days near ${esc(R.name)}.${old ? ' An older central air conditioner is a natural time to switch to a heat pump: one unit then cools and heats.' : ''}</p>
-        <p class="small"><a href="/learn/air-conditioning/">Air conditioning and cooling →</a></p></div>`);
+        <p class="small"><a href="/learn/air-conditioning/">Air conditioning and cooling →</a></p>${old && hpZone ? `<p class="small"><a href="/heat-pumps/picks/${hpZone}/" data-pick-link="${hpZone}">Our three heat pump picks for ${esc(D.climate.profiles[hpZone].label)} →</a></p>` : ''}</div>`);
     }
     if (a.win !== 'unsure') {
       const wk = winKey(a.win, a.age);

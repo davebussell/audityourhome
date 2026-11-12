@@ -1,0 +1,225 @@
+---
+/**
+ * Three heat pump picks (best performance, best do-it-yourself, best value) for one climate zone, with a switch
+ * between situations (no ducts, a house with ducts, one room). Data: src/lib/picks.ts. Used on the heat pump hub,
+ * the zone pages, the province and metro pages and the French heat pump page.
+ *
+ *   <TopPicks market="ca" zoneKey="great-lakes-st-lawrence" region="ontario" />
+ *   <TopPicks market="us" zoneKey="hot-dry" region="phoenix" heading="Our picks for Phoenix" />
+ *
+ * Without JavaScript all three situations show one under the other; with it, the switch shows one at a time.
+ * "Get quotes for this" fills the page's quote form (when there is one) with the pick, and analytics get the
+ * zone, slot and brand only, never anything the visitor typed.
+ */
+import {
+  zone as getZone, SITUATIONS, SLOTS, slotLabel, slotShort, situationLabel, situationLong, pickName, pickFacts, capacityText,
+  costLine, rebateNoteCA, rebateNoteUS, quotePrefill, zoneHref, HOW_HREF, lineUrl, PICKS_CHECKED_ISO, zoneWords, programNameFr,
+  type Situation, type Slot, type Lang, type Pick,
+} from '../../lib/picks';
+import type { Market } from '../../lib/heatpumps';
+import '../../styles/picks.css';
+
+interface Props {
+  market: Market;
+  zoneKey: string;
+  /** province slug (Canada) or metro slug (US): adds the local rebate line and the do-it-yourself warning */
+  region?: string;
+  heading?: string;
+  /** h2 by default; h3 when several zones sit on one page */
+  level?: 2 | 3;
+  initial?: Situation;
+  lang?: Lang;
+  /** true when the page has its own #quote form to fill */
+  quoteOnPage?: boolean;
+  /** send the quote button somewhere else (the French page's advisor form) */
+  quoteHref?: string;
+  quoteLabel?: string;
+  id?: string;
+}
+const { market, zoneKey, region, level = 2, initial = 'ductless', lang = 'en', quoteOnPage = true } = Astro.props;
+const z = getZone(market, zoneKey);
+const fr = lang === 'fr';
+const id = Astro.props.id ?? `tp-${zoneKey}`;
+const zl = z ? zoneWords(z, lang) : null;
+const heading = Astro.props.heading ?? (fr ? `Nos trois choix pour la zone ${zl?.label}` : `Our three picks for ${z?.label}`);
+const reb = region ? (market === 'ca' ? rebateNoteCA(region) : rebateNoteUS(region)) : null;
+const checked = new Date(`${PICKS_CHECKED_ISO}T12:00:00Z`).toLocaleDateString(fr ? 'fr-CA' : market === 'ca' ? 'en-CA' : 'en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const H = level === 3 ? 'h3' : 'h2';
+const CardH = level === 3 ? 'h4' : 'h3';
+const howHref = fr ? '/heat-pumps/how-we-pick/' : HOW_HREF;
+const pct = (x: number | null) => (x == null ? '' : `${Math.round(x * 100)}${fr ? '\u00a0%' : '%'}`);
+const quoteHref = (_p: Pick, _s: Slot, _sit: Situation) => Astro.props.quoteHref ?? (quoteOnPage ? '#quote' : `${zoneHref(zoneKey)}#quote`);
+const T = fr
+  ? {
+      situation: 'Votre situation', quotes: 'Obtenir des soumissions', why: 'Pourquoi ce choix', maker: 'Page du fabricant',
+      runner: 'Si elle n’est pas offerte :', none: 'Aucun choix', noInstaller: 'Pas d’installateur à payer : vous achetez la trousse.',
+      noRebate: (n: string) => `Une installation par vous-même ne donne pas droit à ${n}.`, rebates: 'Subventions ici :', amounts: 'montants',
+      supplement: (r: string) => `Ici, prévoyez-la comme appoint : elle garde ${r} de sa chaleur à\u00a0−15\u00a0°C.`, how: 'Comment nous choisissons', checked: 'vérifié le',
+    }
+  : {
+      situation: 'Your situation', quotes: 'Get quotes for this', why: 'Why we picked it', maker: "Maker's page",
+      runner: "If it's not available:", none: 'No pick', noInstaller: 'No installer to pay: you buy the kit.',
+      noRebate: (n: string) => `A self-install doesn't qualify for ${n}.`, rebates: 'Rebates here:', amounts: 'see what they pay',
+      supplement: (r: string) => `Here, plan it as a supplement: it keeps ${r} of its heat at ${market === 'ca' ? '−15°C' : '5°F'}.`, how: 'How we pick', checked: 'checked',
+    };
+---
+
+{z && (
+  <section class="tp" id={id} data-tp data-market={market} data-zone={zoneKey} aria-labelledby={`${id}-h`}>
+    <div class="tp-head">
+      <H id={`${id}-h`} class="tp-title">{heading}</H>
+      <p class="tp-sub" data-no-gloss>
+        {`${fr ? 'Climat : ' : 'Climate: '}${zl?.kind} · ${T.checked} ${checked} · `}<a href={howHref}>{T.how}</a>
+      </p>
+    </div>
+    {zl?.note && <p class="tp-note">{zl.note}</p>}
+    <div class="tp-tabs" role="tablist" aria-label={T.situation} hidden data-no-gloss>
+      {SITUATIONS.map((s) => (
+        <button type="button" role="tab" id={`${id}-tab-${s}`} aria-controls={`${id}-${s}`} aria-selected={s === initial ? 'true' : 'false'} data-sit={s}>
+          {situationLabel(s, lang)}
+        </button>
+      ))}
+    </div>
+    {SITUATIONS.map((s) => {
+      const sp = z.situations[s];
+      const cost = costLine(market, s, lang);
+      return (
+        <div class:list={['tp-panel', s === initial && 'is-on']} id={`${id}-${s}`} role="tabpanel" aria-labelledby={`${id}-tab-${s}`} data-sit={s}>
+          <p class="tp-sit" data-no-gloss>{situationLong(s, lang)}</p>
+          <div class="tp-cards">
+            {SLOTS.map((slot) => {
+              const p = sp[slot] as Pick | null | undefined;
+              if (!p) {
+                return (
+                  <article class="tp-card tp-empty" data-slot={slot}>
+                    <p class="tp-slot">{slotLabel(slot, lang)}</p>
+                    <CardH class="tp-name">{T.none}</CardH>
+                    <p class="tp-why">{sp.diyReason ?? ''}</p>
+                  </article>
+                );
+              }
+              const facts = pickFacts(p, z, market, lang);
+              const maker = lineUrl(p);
+              return (
+                <article class="tp-card" data-slot={slot} data-brand={p.slug}>
+                  <p class="tp-slot">{slotLabel(slot, lang)}</p>
+                  <CardH class="tp-name">{pickName(p, lang)}</CardH>
+                  <p class="tp-model" data-no-gloss>{`${p.outdoor} · ${capacityText(p, market, lang)}`}</p>
+                  <ul class="tp-facts">{facts.map((f) => <li>{f}</li>)}</ul>
+                  {slot === 'diy' && p.supplementOnly && <p class="tp-warn">{T.supplement(pct(p.ret))}</p>}
+                  {slot === 'diy' ? (
+                    <p class="tp-money">
+                      {`${T.noInstaller} ${reb?.diyNo ? T.noRebate(fr ? programNameFr(reb.diyNo) : reb.diyNo) : fr ? 'Les subventions exigent presque toujours un entrepreneur.' : 'Rebates almost always need a contractor.'}`}
+                    </p>
+                  ) : (
+                    <p class="tp-money">
+                      {cost && <span>{`${cost.text} `}<span class="tp-src">{`(${cost.short})`}</span></span>}
+                      {reb && reb.names.length > 0 && (
+                        <span class="tp-reb">
+                          {`${T.rebates} ${(fr ? reb.names.map(programNameFr) : reb.names).join(', ')} (`}<a href={fr ? '#subventions' : reb.href}>{T.amounts}</a>)
+                        </span>
+                      )}
+                    </p>
+                  )}
+                  <div class="tp-actions">
+                    {slot === 'diy' ? (
+                      maker && <a class="btn btn-ghost btn-sm" href={maker} rel="noopener" data-pick-act="maker">{T.maker}</a>
+                    ) : (
+                      <a class="btn btn-primary btn-sm" href={quoteHref(p, slot, s)} data-pick-act="quote" data-quote={quotePrefill(p, slot)}>{Astro.props.quoteLabel ?? T.quotes}</a>
+                    )}
+                    <a class="tp-whylink" href={`${zoneHref(zoneKey)}#${s}-${slot}`} data-pick-act="why">{T.why}</a>
+                  </div>
+                  {p.runnerUp && (
+                    <p class="tp-ru" data-no-gloss>
+                      {`${T.runner} ${pickName(p.runnerUp, lang)} `}<span class="tp-src">{`(${p.runnerUp.outdoor})`}</span>
+                    </p>
+                  )}
+                  {p.runnerUpManual && (
+                    <p class="tp-ru">
+                      {fr ? 'Autre option : ' : 'Also consider: '}<a href={p.runnerUpManual.url} rel="noopener">{p.runnerUpManual.name}</a>{`. ${p.runnerUpManual.note}`}
+                    </p>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      );
+    })}
+  </section>
+)}
+{z && (
+  <script is:inline>
+    (function (s) {
+      if (!s) return;
+      s.classList.add('tp-js');
+      var t = s.querySelector('.tp-tabs');
+      if (t) t.hidden = false;
+    })(document.currentScript && document.currentScript.previousElementSibling);
+  </script>
+)}
+
+<script>
+  // Situation switch, quote-form fill and analytics for every picks block on the page.
+  type G = (...a: unknown[]) => void;
+  const send = (name: string, params: Record<string, string>) => {
+    const g = (window as unknown as { gtag?: G }).gtag;
+    if (typeof g === 'function') g('event', name, params);
+  };
+  document.querySelectorAll<HTMLElement>('[data-tp]').forEach((root) => {
+    const tabs = root.querySelector<HTMLElement>('.tp-tabs');
+    const panels = [...root.querySelectorAll<HTMLElement>('.tp-panel')];
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('.tp-tabs [role="tab"]')];
+    const base = { zone: root.dataset.zone ?? '', market: root.dataset.market ?? '' };
+    const show = (sit: string, focus = false) => {
+      buttons.forEach((b) => {
+        const on = b.dataset.sit === sit;
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+        if (on && focus) b.focus();
+      });
+      panels.forEach((p) => p.classList.toggle('is-on', p.dataset.sit === sit));
+    };
+    if (tabs && buttons.length) {
+      tabs.hidden = false;
+      root.classList.add('tp-js');
+      const first = panels.find((p) => p.classList.contains('is-on'))?.dataset.sit ?? buttons[0].dataset.sit ?? 'ductless';
+      show(first);
+      buttons.forEach((b, i) => {
+        b.addEventListener('click', () => {
+          show(b.dataset.sit ?? '');
+          send('pick_situation', { ...base, situation: b.dataset.sit ?? '' });
+        });
+        b.addEventListener('keydown', (e) => {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          e.preventDefault();
+          const next = buttons[(i + (e.key === 'ArrowRight' ? 1 : buttons.length - 1)) % buttons.length];
+          show(next.dataset.sit ?? '', true);
+        });
+      });
+    }
+    root.querySelectorAll<HTMLAnchorElement>('[data-pick-act]').forEach((a) => {
+      a.addEventListener('click', () => {
+        const card = a.closest<HTMLElement>('.tp-card');
+        const panel = a.closest<HTMLElement>('.tp-panel');
+        const params = { ...base, slot: card?.dataset.slot ?? '', brand: card?.dataset.brand ?? '', situation: panel?.dataset.sit ?? '' };
+        const act = a.dataset.pickAct;
+        send(act === 'quote' ? 'pick_quote' : act === 'maker' ? 'pick_maker' : 'pick_open', params);
+        if (act === 'quote' && a.getAttribute('href') === '#quote') {
+          const field = document.querySelector<HTMLInputElement>('#quote input[name="brands"]');
+          if (field && a.dataset.quote) field.value = a.dataset.quote;
+        }
+      });
+    });
+    // one view event per block, when it first scrolls into sight
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          send('pick_view', base);
+          io.disconnect();
+        }
+      }, { threshold: 0.3 });
+      io.observe(root);
+    }
+  });
+</script>

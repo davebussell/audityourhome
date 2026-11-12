@@ -13,6 +13,8 @@ import CostTable from '../../../components/hp/CostTable.astro';
 import RebateCard from '../../../components/hp/RebateCard.astro';
 import QuoteForm from '../../../components/hp/QuoteForm.astro';
 import RegionalNeeds from '../../../components/RegionalNeeds.astro';
+import TopPicks from '../../../components/picks/TopPicks.astro';
+import { zoneOfPlace, zone as pickZone } from '../../../lib/picks';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { ogFor } from '../../../lib/photos';
 import { relatedMetros } from '../../../lib/us/metro-view';
@@ -169,7 +171,10 @@ const schema = [
 const costJump: [string, string][] = cool
   ? coolingLed ? [['cooling', 'Cooling costs'], ['costs', 'Heating costs']] : [['costs', 'Heating costs'], ['cooling', 'Cooling costs']]
   : [['costs', 'Running costs']];
+const pickKey = zoneOfPlace('us', m.slug);
+const hasPicks = Boolean(pickKey && pickZone('us', pickKey));
 const jump: [string, string][] = [
+  ...(hasPicks ? ([['picks', 'Our picks']] as [string, string][]) : []),
   ['climate', 'Climate and sizing'],
   ...(pc ? ([['needs', 'What to look for']] as [string, string][]) : []),
   ...costJump,
@@ -236,6 +241,12 @@ const jump: [string, string][] = [
     <nav class="jump" aria-label="On this page">
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
     </nav>
+
+    {hasPicks && (
+      <section id="picks" class="sec">
+        <TopPicks market="us" zoneKey={pickKey!} region={m.slug} heading={`Our three picks for ${name}`} initial={pickZone('us', pickKey!)!.kind.startsWith('hot') ? 'ducted' : 'ductless'} />
+      </section>
+    )}
 
     <section id="climate" class="sec">
       <h2>Climate and sizing</h2>

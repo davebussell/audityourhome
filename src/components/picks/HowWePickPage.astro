@@ -1,0 +1,164 @@
+---
+/**
+ * /heat-pumps/how-we-pick/ on both sites: the method behind the heat pump picks, printed from the same data the
+ * picks are built from (src/data/picks/heatpumps.json "method"), so the page can't drift from the scoring.
+ */
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { PICKS_METHOD, PICKS_CHECKED_ISO, PICKS_DATA_AS_OF, PICKS_COSTS, PICKS_HREF, HOW_HREF, zones, slotLabel, type Slot } from '../../lib/picks';
+import { brandSlugs, brandInfo, ESTAR, fmtDate, type Market } from '../../lib/heatpumps';
+import '../../styles/hp.css';
+import '../../styles/picks.css';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const M = PICKS_METHOD;
+const kinds = Object.keys(M.weights) as string[];
+const metrics = ['cop5', 'ret', 'hspf2', 'seer2', 'eer2', 'warranty'];
+const metricLabel: Record<string, string> = {
+  cop5: isCA ? 'COP at −15°C' : 'COP at 5°F', ret: isCA ? 'Heat kept at −15°C' : 'Heat kept at 5°F', hspf2: 'HSPF2', seer2: 'SEER2', eer2: 'EER2', warranty: 'Warranty',
+};
+const zonesByKind: Record<string, string[]> = {};
+for (const z of zones(market)) (zonesByKind[z.kind] ??= []).push(z.label);
+const usedKinds = kinds.filter((k) => zonesByKind[k]);
+const notYet = brandSlugs(market).filter((s) => {
+  const b = brandInfo(s) as any;
+  const w = b?.warranty?.[market] ?? {};
+  return b?.soldIn?.[market] === true && !(w.parts || w.compressor);
+}).map((s) => brandInfo(s).name);
+const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+const slots: Slot[] = ['performance', 'diy', 'value'];
+const decide: Record<Slot, string> = {
+  performance: 'The top score for the zone among every certified system that passed the gates, in the size range for the situation.',
+  diy: 'The best-scoring system sold for owner installation, with pre-charged quick-connect lines and a warranty that holds without a contractor. In very cold zones it shows as a supplement when it keeps less heat than the zone needs.',
+  value: 'The top score among brands we place in the budget or mid price tier. It must pass every gate the performance pick passes.',
+};
+const costList = Object.values(PICKS_COSTS[market]).filter((c, i, a) => a.findIndex((x: any) => x.url === (c as any).url) === i) as any[];
+const title = 'How we pick heat pumps: gates, weights and sources | AuditYourHome';
+const description = 'The rules behind our heat pump picks: which systems are eligible, how each climate zone weighs efficiency, cold-weather output, cooling and warranty, and where the numbers come from.';
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Heat pumps', path: '/heat-pumps/' },
+    { name: 'How we pick', path: HOW_HREF },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>How we pick</span>
+    </nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Method · checked {fmtDate(PICKS_CHECKED_ISO, market)}</p>
+        <h1>How we pick heat pumps</h1>
+        <p class="lede measure">
+          Every pick is computed from ENERGY STAR's certified ratings and the warranty terms we have read, using the same gates and the same
+          weights for every brand. An editor can override a computed pick, and the reason is then printed on the page. No brand pays to be
+          considered, and no pick is for sale.
+        </p>
+      </div>
+    </div>
+
+    <section class="sec" id="slots">
+      <h2>Three picks, three questions</h2>
+      <div class="tablewrap card">
+        <table class="stack dt">
+          <caption class="sr-only">The three picks and how each is decided</caption>
+          <thead><tr><th scope="col">Pick</th><th scope="col">The question it answers</th><th scope="col">How it's decided</th></tr></thead>
+          <tbody>
+            {slots.map((s) => (
+              <tr>
+                <td data-label="Pick"><strong>{slotLabel(s)}</strong></td>
+                <td data-label="The question">{M.slots[s].question}</td>
+                <td data-label="How it's decided">{decide[s]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="sec-intro">
+        We pick separately for three situations, because they need different equipment: a house with ducts (a central system of 2 to 4 tons),
+        a house without ducts (a wall-mounted head of 1 to 2 tons for a floor or an open main level) and one room (half a ton to 1 ton).
+      </p>
+    </section>
+
+    <section class="sec" id="gates">
+      <h2>The gates</h2>
+      <p class="sec-intro">A system must pass all of these before it is scored. They are pass or fail, never a few points off.</p>
+      <ul class="measure">{(M.gates as string[]).map((g) => <li>{g}</li>)}</ul>
+      {notYet.length > 0 && (
+        <p class="sec-intro">
+          Not eligible yet, because we haven't read their warranty terms for {isCA ? 'Canada' : 'the US'}: {notYet.join(', ')}. They will be scored
+          as soon as we have.
+        </p>
+      )}
+    </section>
+
+    <section class="sec" id="weights">
+      <h2>How each climate weighs the numbers</h2>
+      <p class="sec-intro">
+        Each number is scaled from 0 to 1 across the systems that passed the gates, then weighted. Cold zones lean on efficiency and output at
+        {isCA ? ' −15°C' : ' 5°F'}; hot zones on cooling efficiency, and on EER2 where afternoons are hottest. Warranty is the maker's registered
+        term in {isCA ? 'Canada' : 'the US'}, our stand-in for reliability until we have enough installer and owner feedback.
+      </p>
+      <div class="tablewrap card">
+        <table class="stack dt pk-weights">
+          <caption class="sr-only">Weights by climate kind</caption>
+          <thead>
+            <tr>
+              <th scope="col">Climate</th>
+              {metrics.map((k) => <th scope="col" class="num">{metricLabel[k]}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {usedKinds.map((k) => (
+              <tr>
+                <td data-label="Climate"><strong>{cap(M.kindLabel[k])}</strong><span class="sub">{zonesByKind[k].join(', ')}</span></td>
+                {metrics.map((m) => (
+                  <td class="num" data-label={metricLabel[m]}>{M.weights[k][m] ? `${Math.round(M.weights[k][m] * 100)}%` : '—'}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sec" id="limits">
+      <h2>What we don't do, yet</h2>
+      <ul class="measure">
+        <li>We don't test heat pumps in a lab. The numbers are ENERGY STAR's certified ratings for each exact outdoor and indoor pairing.</li>
+        <li>We don't rate reliability beyond the warranty. Brand-level surveys exist, but we can't publish them; installer and owner feedback will come in as we broker quotes.</li>
+        <li>We don't price individual models. Installed prices depend on the house and the contractor far more than on the badge, so cards show the published range for the type of system.</li>
+        <li>Every rating stops at {isCA ? '−15°C (5°F)' : '5°F'}. In colder places, ask the installer for the maker's output at your design temperature.</li>
+      </ul>
+    </section>
+
+    <section class="sec" id="change">
+      <h2>What changes a pick</h2>
+      <ul class="measure">
+        <li>A new ENERGY STAR list (we refresh it monthly) with a better-scoring system, or a pick dropped from it.</li>
+        <li>A change to a maker's warranty or to where it sells.</li>
+        <li>A rebate rule that a pick stops meeting.</li>
+        <li>An editor's override, always with the reason printed beside the pick.</li>
+      </ul>
+      <p class="sec-intro">{isCA ? <>Changes are listed on the <a href="/updates/">updates page</a>.</> : 'Changes are dated on this page and on each zone page.'}</p>
+    </section>
+
+    <section class="sec" id="sources">
+      <h2>Data and dates</h2>
+      <ul class="meta">
+        <li><a href={ESTAR.dataset} rel="noopener">{ESTAR.name}</a>, pulled {fmtDate(PICKS_DATA_AS_OF.energyStar, market)}</li>
+        <li>Brand research (where each brand sells, warranty terms, price tier, do-it-yourself terms): makers' own pages, read {fmtDate(PICKS_DATA_AS_OF.brands, market)}</li>
+        {costList.map((c) => <li><a href={c.url} rel="noopener">{c.source}</a></li>)}
+        <li>Picks checked {fmtDate(PICKS_CHECKED_ISO, market)}. <a href={PICKS_HREF}>See the picks for your zone</a>.</li>
+      </ul>
+    </section>
+  </div>
+</Base>

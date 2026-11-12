@@ -11,6 +11,8 @@ import CostTable from '../../../components/hp/CostTable.astro';
 import RebateCard from '../../../components/hp/RebateCard.astro';
 import QuoteForm from '../../../components/hp/QuoteForm.astro';
 import RegionalNeeds from '../../../components/RegionalNeeds.astro';
+import TopPicks from '../../../components/picks/TopPicks.astro';
+import { zonesOfProvince, zone as pickZone, PICKS_HREF } from '../../../lib/picks';
 import { provinceClimate } from '../../../lib/climate';
 import { breadcrumbSchema } from '../../../lib/schema';
 import { PROV_SLUG_PHOTO, ogFor } from '../../../lib/photos';
@@ -71,7 +73,11 @@ const schema = [
     { name: r.name, path: `/heat-pumps/${r.slug}/` },
   ]),
 ];
+// our picks: one block per climate zone in the province (Ontario and Quebec have two, BC two)
+const pickZones = zonesOfProvince(r.slug).filter((k) => pickZone('ca', k));
+const profileName = (k: string) => provClimate?.profileList.find((p: any) => p.key === k || p.label === pickZone('ca', k)?.label)?.regionName;
 const jump: [string, string][] = [
+  ...(pickZones.length ? ([['picks', 'Our picks']] as [string, string][]) : []),
   ['climate', 'Climate and sizing'],
   ...(provClimate?.profileList.length ? ([['needs', 'What to look for']] as [string, string][]) : []),
   ['costs', 'Running costs'],
@@ -127,6 +133,24 @@ const jump: [string, string][] = [
     <nav class="jump" aria-label="On this page">
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
     </nav>
+
+    {pickZones.length > 0 && (
+      <section id="picks" class="sec">
+        {pickZones.length === 1 ? (
+          <TopPicks market="ca" zoneKey={pickZones[0]} region={r.slug} heading={`Our three picks for ${r.slug === 'north' ? 'the North' : r.name}`} />
+        ) : (
+          <>
+            <h2>Our three picks for {r.name}</h2>
+            <p class="sec-intro">
+              {r.name} spans two climate zones, so there are two sets of picks. Not sure which is yours? <a href={PICKS_HREF}>Find it by postal code</a>.
+            </p>
+            {pickZones.map((k) => (
+              <TopPicks market="ca" zoneKey={k} region={r.slug} level={3} heading={profileName(k) ?? pickZone('ca', k)!.label} />
+            ))}
+          </>
+        )}
+      </section>
+    )}
 
     <section id="climate" class="sec">
       <h2>Climate and sizing</h2>

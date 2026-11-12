@@ -5,10 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node tools/glossary/link.mjs && node tools/country/postbuild.mjs",
+    "build": "node tools/picks/check.mjs && astro build && node tools/glossary/link.mjs && node tools/country/postbuild.mjs",
     "preview": "astro preview",
     "check": "astro check",
-    "test:calc": "node scripts/test-calc.mjs"
+    "test:calc": "node scripts/test-calc.mjs",
+    "picks": "python3 tools/picks/build_heatpumps.py && node tools/picks/check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.0",

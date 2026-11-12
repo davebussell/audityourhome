@@ -1,0 +1,11 @@
+---
+import ZonePage from '../../../../components/picks/ZonePage.astro';
+import { zones } from '../../../../lib/picks';
+
+export function getStaticPaths() {
+  return zones('us').map((z) => ({ params: { zone: z.key } }));
+}
+const { zone } = Astro.params;
+---
+
+<ZonePage market="us" zoneKey={zone as string} />

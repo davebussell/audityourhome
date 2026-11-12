@@ -1,0 +1,75 @@
+---
+/**
+ * /heat-pumps/picks/ on both sites: find your climate zone, then its three picks. Lists every zone with its
+ * picks for a house without ducts (the most common first heat pump) and links to the full zone pages.
+ */
+import Base from '../../layouts/Base.astro';
+import ZoneFinder from './ZoneFinder.astro';
+import { breadcrumbSchema } from '../../lib/schema';
+import { zones, zonePlaces, zoneHref, pickName, slotLabel, HOW_HREF, PICKS_HREF, PICKS_CHECKED_ISO, type Pick } from '../../lib/picks';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+import '../../styles/hp.css';
+import '../../styles/picks.css';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const list = zones(market);
+const checked = fmtDate(PICKS_CHECKED_ISO, market);
+const title = isCA
+  ? 'Best heat pumps for each climate zone in Canada | AuditYourHome'
+  : 'Best heat pumps for your climate: our picks by zone | AuditYourHome';
+const description = isCA
+  ? 'Three heat pump picks for each of Canada’s 7 climate zones: best performance, best to install yourself and best value, for houses with ducts, without ducts and single rooms.'
+  : 'Three heat pump picks for each of 9 US climate zones: best performance, best to install yourself and best value, for houses with ducts, without ducts and single rooms.';
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Heat pumps', path: '/heat-pumps/' },
+    { name: 'Our picks', path: PICKS_HREF },
+  ]),
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/heat-pumps/">Heat pumps</a> <span aria-hidden="true">/</span> <span>Our picks</span>
+    </nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Heat pump picks · checked {checked}</p>
+        <h1>{isCA ? 'Three heat pumps for your part of Canada' : 'Three heat pumps for your climate'}</h1>
+        <p class="lede measure">
+          The best heat pump in {isCA ? 'Vancouver' : 'Miami'} is the wrong one in {isCA ? 'Winnipeg' : 'Minneapolis'}. For each climate zone we pick one system to buy if
+          performance matters most, one a handy owner can install, and the best value, scored on certified ratings and warranty terms.
+        </p>
+      </div>
+    </div>
+
+    <ZoneFinder market={market} />
+    <p class="zf-after">Prefer to choose? Every zone is listed below. <a href={HOW_HREF}>How we pick</a>.</p>
+
+    <section class="sec" id="zones">
+      <h2>{isCA ? 'The 7 zones' : 'The 9 zones'}</h2>
+      <p class="sec-intro">Picks shown for a house without ducts; each zone page also covers houses with ducts and single rooms.</p>
+      <div class="zone-list">
+        {list.map((z) => {
+          const s = z.situations.ductless;
+          return (
+            <a class="card zone-item" href={zoneHref(z.key)}>
+              <h3>{z.label}</h3>
+              <p>{zonePlaces(market, z.key, 4).join(', ')}</p>
+              {(['performance', 'diy', 'value'] as const).map((slot) => {
+                const p = s[slot] as Pick | null | undefined;
+                return p ? <p class="zone-top"><strong>{slotLabel(slot)}:</strong> {pickName(p)}</p> : null;
+              })}
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  </div>
+</Base>

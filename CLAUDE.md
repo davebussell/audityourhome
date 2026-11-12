@@ -135,6 +135,58 @@ every picture and every animation. Don't bring back clouds, planes, lift-off, fl
   (higher specificity) and its tokens are set on `html[data-site='building']`, not `:root`. Scoped component styles (`[data-astro-cid]`,
   specificity 0,2,0) beat a plain class in `sky.css` too.
 
+## Top picks: heat pumps (2026-11-12, Phase 0 and Phase 1 of the plan)
+On 2026-11-12 Dave asked for "our top three recommendations based on a full analysis" in every product category, instead of pages of
+data: the best quality or highest performing option, the best self-install option and the best economical/return on investment option, per
+region, on both home sites and later the building site. The plan is the Claude Doc "Top picks and site flow: improvement plan"
+(claude.ai/artifact/MxfwsnxcMpRZ4SPQwL64Vy). Dave approved all eight of its decisions the same day ("Love the plan and agree with the
+recommendations"): slot names **Best performance / Best do-it-yourself / Best value** (the middle one renamed only where do-it-yourself makes
+no sense); do-it-yourself picks are shown even when they lose a rebate, with the warning; picks per **climate profile** (the 16 in
+`src/data/climate/{ca,us}.json`), with rebates and prices per province or metro; **warranty terms stand in for reliability** until brokered
+quotes give installer feedback; gear (radon and air monitors) gets first-hand tests; **two sellers per gear pick**; installed prices are
+**ranges** from published sources plus brokered quotes, never a single price; **heat pumps first**. Roadmap after this: gear and the other
+upgrades, then the flow between pages, then the building site.
+- **Data:** `tools/picks/build_heatpumps.py` builds `src/data/picks/heatpumps.json` from `src/data/heatpumps/estar.json` (ENERGY STAR rows,
+  built by `tools/heatpumps/build_estar.py`; the cloud proxy blocks data.energystar.gov, so refresh it where the site is reachable and never
+  route around the block), `brands.json` (where each brand sells, warranty per country, price tier, lines) and the climate profiles.
+  Hand-kept inputs live in `tools/picks/heatpumps-overrides.json`: `checked` (the review date printed on every card), slot wording, the
+  gates text, value tiers, the do-it-yourself rule, manual runner-ups (`us/room/diy`: Midea's window heat pump), installed-price ranges with
+  sources (`costs`: FurnacePrices.ca for Canada, EnergySage for the US), `exclude`, `locks` (pin a pick) and zone notes. `npm run picks` =
+  build + check. Re-run it after a new ENERGY STAR pull or a brands.json change, read the diff of heatpumps.json, then bump `checked`.
+- **Method** (also printed on `/heat-pumps/how-we-pick/`, from the same JSON, so the page can't drift): three situations (`ducted` 22,000–48,000
+  BTU/h, `ductless` one head of 11,000–24,000, `room` 6,000–12,500); gates: brand confirmed on sale in that country, warranty terms read for
+  that country, A2L refrigerant (R-454B or R-32), variable-speed, ENERGY STAR cold-climate in cold and mixed zones, NRCan-rebate-like in Canada's cold zones, and in
+  very cold and extreme zones at least 80% / 85% of rated heat kept at 5°F (−15°C). Each metric is scaled 0–1 across the systems that passed
+  and weighted by the zone's kind (`WEIGHTS`: cold kinds lean on COP and heat kept at 5°F, hot ones on SEER2/EER2). Performance = top score
+  (runner-up from another brand); value = top score among budget and mid-tier brands; do-it-yourself = the best MrCool DIY series that
+  passes the cold gate, marked "plan it as a supplement" (`supplementOnly`) below the zone's minimum heat kept. 144 picks across 16 zones.
+- **Build gate:** `tools/picks/check.mjs` runs first in `npm run build` and fails it when a performance or value pick is missing, a brand
+  isn't on sale there or has no warranty terms, a pick uses an older refrigerant, a Canadian cold-zone pick no longer meets NRCan's
+  thresholds, a picked pairing has left the ENERGY STAR data, or `checked` is more than 180 days old (warning at 90).
+- **Not eligible yet** (no warranty terms read for that country): Canada LG, Samsung, Panasonic, York, Nordyne brands, Midea, TCL, Innova;
+  US Panasonic, Hitachi, TCL, AUX, Cooper & Hunter, DuraSTAR, Innova. Reading their warranty pages into `brands.json` lets them compete.
+  Other known gaps: no per-model installed prices (ranges by system type only), and every rating stops at 5°F (−15°C).
+- **Pages:** `/heat-pumps/picks/` (zone finder + every zone), `/heat-pumps/picks/<zone>/` (7 Canadian, 9 US: the three picks per situation,
+  "Why each pick won" with the specs table, the price line, a checklist and the quote form), `/heat-pumps/how-we-pick/`. Routes in
+  `src/pages/{ca,us}/heat-pumps/picks/` and `how-we-pick.astro`; markup in `src/components/picks/` (`TopPicks`, `ZonePage`, `ZoneFinder`,
+  `PicksIndexPage`, `HowWePickPage`), words and lookups in `src/lib/picks.ts`, styles in `src/styles/picks.css`. The title and h1 name
+  the region the way people search ("Best heat pumps for Southern Ontario and southern Quebec", `zoneWhere()`); the zone's label is the eyebrow.
+- **Where the picks show:** the hub's `#top-picks` (finder + zone list); every Canadian province page `#picks` (BC, Ontario and Quebec span
+  two zones and get one block per zone, headed by the profile's region name); every US metro page `#picks` (hot kinds open on
+  "House with ducts"); `/fr/thermopompes/` `#choix` in French (two Quebec zones, "Demander un conseiller" goes to the French form); the CA
+  planner's rebates path (a button beside "Match me with one heat pump contractor") and the full plan's older-central-AC card; the US planner's rebates path and
+  its climate section. "Get quotes for this" fills the quote form's `brands` field with the pick's name and model (no personal data).
+- **Zone finder:** `ZoneFinder.astro` maps the first three characters of a postal code (`FSA_ZONE_RULES`: by letter, then two- and
+  three-character prefixes; rural BC `V0` asks the reader to choose) or a ZIP3 (`zip3Zones()`: the metro's zone, or the nearest metro within
+  200 miles) to a zone and goes to its page. Nothing typed is sent or stored; only the zone key is kept (`localStorage` `ayh_zone_ca|us`).
+- **Analytics (GA4, keys only):** `pick_view` (a block first scrolls into view), `pick_situation` (tab), `pick_quote`, `pick_maker`,
+  `pick_open` ("Why we picked it"), with `market`, `zone`, `situation`, `slot`, `brand`; `zone_set` (`market`, `zone`) from the finder.
+  Never send a postal code, ZIP or anything a visitor typed.
+- **Gotchas:** the global `section { padding: 64px 0 }` hits `section.tp`, so `.tp` sets `padding: 0`. French cards need no-break spaces
+  before `°C` and `%` (` `) and French joining words in multi-brand names (`pickName(p, 'fr')`: "Comfort-Aire et Century"); line names
+  stay the maker's. BC has two "Home Renovation Rebate" offers, so rebate names are de-duplicated (`uniqueNames()`), and income-qualified
+  or free-upgrade programs are left out of the card line (they stay on the province and metro pages).
+
 ## The November 6 review (Dave mailed himself a four-part review of both home sites: "Audit Your Home . ca fixes")
 Dave chose four of its five buckets: **A** quick factual and consent fixes (`9aa20fe`), **B** planner logic (prerequisite-first next
 step, municipality gating, eligibility statuses, utility gate, usage inputs), **C** a shorter "rebates first" planner path, **D** a French
