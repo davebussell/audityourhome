@@ -88,6 +88,24 @@ condo units; the building site is for owners and managers of commercial, institu
   projects (Forms → Settings → notifications to dave@clickshift.ca).
 - **Never mention** WillScot (WSC), Transcat (TRNS) or McGrath RentCorp (MGRC) on any of his sites.
 
+## Auto-replies and partner routing (added 2026-11-12, Dave's decision)
+- `netlify/functions/submission-created.mjs` runs on every VERIFIED Netlify Forms submission (spam never reaches it). Logic in
+  `netlify/autoreply/core.mjs` (pure, testable: `plan(payload)` returns the emails to send); partners in `netlify/autoreply/partners.mjs`.
+- It emails the person straight away from the site's own address (reply-to dave@clickshift.ca), in French for French requests: what
+  happens next, matching the form's promise (one company sees it, usually within one business day). Forms: `audit-request`,
+  `heat-pump-quote`, `us-question`, `building-audit-request`. Wording follows the request's service (`serviceOf()`: the `service`
+  field, else the `context`), so a radon or lead-paint request isn't told about an EnerGuide visit.
+- **Routing (Dave, 2026-11-12): only to partners who have agreed.** A request is forwarded to one partner only when that partner has
+  `agreed: true` and matches the site, form, service and postal prefix or region. Otherwise the reply says we'll match them by hand and
+  the morning lead digest (scheduled task "Morning lead digest", 7:40 daily) shows it to Dave. Energy Werx, Energie3R and Greener Homes
+  (Surrey) are listed with `agreed: false`: each got its first request by hand on 2026-11-12, free, with no agreement yet.
+- **Sending:** Resend (account "clickshift", GitHub login). `SITES` in core.mjs has `live` per domain: audityourhome.ca is live (domain
+  added in Resend 2026-11-12, DNS at GoDaddy: TXT `resend._domainkey`, CNAME `send` and `rsend` → `*.forge.rmta.net`; the receiving MX was
+  left out on purpose). audityourhome.com and audityourbuilding.com stay `live: false` until Dave upgrades Resend (the free plan allows
+  3 domains: guiltfreetakeout.com, bethepuck.com, audityourhome.ca) and their domains are verified. The function needs
+  `RESEND_API_KEY` in the Netlify project; without it it logs "skipped" and sends nothing. Dave creates and pastes keys; never handle one.
+- Test without sending: stub `globalThis.fetch` and call `handler({ body: JSON.stringify({ payload }) })`, or call `plan()` directly.
+
 ## The quiet sky (2026-11-11; replaced the 2026-11-04 "sky look" after feedback that it looked kitschy)
 On 2026-11-04 Dave asked for "the floating in the clouds and flying to a better place kind of feeling": drifting clouds, a sun, a paper
 plane, the audit steps as a flight path, a lift-off when a plan was ready and a cloud edge on every footer. On 2026-11-11 he passed on
