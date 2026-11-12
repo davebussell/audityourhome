@@ -114,7 +114,7 @@ const schema = [
 
     <TopPicks market={market} zoneKey={zoneKey} heading="The three picks" quoteOnPage />
 
-    <p class="sec-intro">
+    <p class="sec-intro pk-after">
       Rebates change from {isCA ? 'province to province' : 'city to city'}; your {isCA ? 'province' : 'metro'} page has the amounts and the
       rules: {regions.map((r, i) => <>{i > 0 && ', '}<a href={r.href}>{r.name}</a></>)}.
     </p>
