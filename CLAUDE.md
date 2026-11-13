@@ -367,6 +367,26 @@ Eight more guides on the GuideShell frame, a hub, and the commercial one on the 
   is blocked here); French versions under `/fr/`; per-province pages for each guide (the place tables carry the local numbers for now); a
   quote form on the furnace, AC and boiler guides (Dave's call: it changes what the referral partner receives).
 
+## From another conversation: selling do-it-yourself heat pumps (2026-11-13, a plan only; nothing built in this repo yet)
+Dave asked another chat for a plan to sell install-it-yourself heat pumps through audityourhome.ca. It is the Claude Doc "Selling DIY heat
+pumps through AuditYourHome.ca: plan" (claude.ai/artifact/DKd9dRFvhy2SBwAeGVPtgM). Read it before touching the do-it-yourself picks.
+- **Its recommendation:** referral first (Kanartic, made in Québec, and MRCOOL DIY through its Canadian distributor Acclimatic), framed as
+  "you mount it, licensed trades finish it"; take orders on the site only after referrals prove demand (its gates: 300 outbound clicks or
+  10 tracked sales in 60 days, then 10 sales a month and a workable dealer margin).
+- **Its rule for copy: never publish "no professional needed" for Canada.** Québec requires a licensed electrical contractor, refrigerant
+  work is certified-trade work everywhere, and BC's safety authority says retail availability doesn't mean a unit can be self-installed.
+  A fully self-installed unit loses the main rebates; Kanartic says an RBQ-licensed commissioning visit keeps LogisVert (unconfirmed with
+  Hydro-Québec), and LogisVert needs a unit bought from a Québec retailer.
+- **Where our pages stand against that rule (checked 2026-11-13):** the heat pump buying guide's "Can I install a heat pump myself?" answer
+  says the warranty "holds without a contractor" and mentions the circuit and the lost rebate, but not that the wiring and the refrigerant
+  start-up are licensed work. Fix it when the plan's Phase 1 is built, or sooner if Dave asks.
+- **Its Phase 1 is work for this repo:** an "Install it yourself" section on the .ca site (the Best do-it-yourself picks with buy links and
+  the affiliate disclosure, a per-province "what you do / what the electrician does / what the commissioning technician does", a
+  DIY-against-rebate calculator, French versions for Québec, outbound click events in GA4, keys only).
+- **Outreach on 2026-11-13 (from dave@clickshift.ca):** Acclimatic, Klimaire and Hydro-Québec's LogisVert desk by email, Kanartic through its
+  contact form. No replies by the evening of the 13th. With Dave: a FlexOffers publisher account for Senville's Canadian programme, and
+  the RBQ question (its form needs a phone number; the text is a Gmail draft).
+
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality
   monitors), and the other session's auto-reply function (`submission-created`, live on .ca; switched off in code on .com and the building
