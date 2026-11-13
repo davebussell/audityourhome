@@ -6,6 +6,7 @@
  * same data as the picks, the planner and the province and metro pages; nothing is typed in by hand.
  */
 import GuideShell from '../guide/GuideShell.astro';
+import GuideList from '../guide/GuideList.astro';
 import ZoneFinder from '../picks/ZoneFinder.astro';
 import QuoteForm from './QuoteForm.astro';
 import {
@@ -386,6 +387,8 @@ const asOf = [
   <div class="sec">
     <QuoteForm market={market} context="buying-guide" />
   </div>
+
+  <GuideList current="heat-pumps" />
 
   <Fragment slot="method">
     <p class="g-note">

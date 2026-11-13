@@ -1,0 +1,75 @@
+---
+/**
+ * A table of one guide's numbers by place. It leads with the largest city in each province (Canada) or the largest
+ * metros (US) and keeps every other place we cover one click away, so a phone gets a short table and the page still
+ * carries the local figure for all of them. Each column is a function of the place's row (src/lib/guide-run.ts).
+ */
+import { leadRows, byRegion, type GRow } from '../../lib/guide-run';
+import type { Market } from '../../lib/heatpumps';
+
+export interface Col {
+  label: string;
+  cell: (r: GRow) => string;
+  /** a small second line under the figure */
+  sub?: (r: GRow) => string | null;
+  /** 'win' or 'lose' to mark the better or worse figure */
+  cls?: (r: GRow) => string;
+}
+interface Props {
+  market: Market;
+  rows: GRow[];
+  cols: Col[];
+  caption: string;
+  /** how many metros the US table leads with */
+  lead?: number;
+}
+const { market, rows, cols, caption, lead = 10 } = Astro.props;
+const isCA = market === 'ca';
+const head = isCA ? 'City' : 'Metro area';
+const top = leadRows(rows, market, lead);
+const groups = isCA ? byRegion(rows) : [{ name: '', list: [...rows].sort((a, b) => b.population - a.population) }];
+const more = rows.length - top.length;
+---
+
+<div class="tablewrap card">
+  <table class="stack dt g-num">
+    <caption class="sr-only">{caption}</caption>
+    <thead><tr><th scope="col">{head}</th>{cols.map((c) => <th scope="col" class="num">{c.label}</th>)}</tr></thead>
+    <tbody>
+      {top.map((r) => (
+        <tr>
+          <td data-label={head}><a href={r.href}>{r.name}</a>{isCA && <span class="sub">{r.region}</span>}</td>
+          {cols.map((c) => (
+            <td class={`num ${c.cls?.(r) ?? ''}`} data-label={c.label}><span class="g-v">{c.cell(r)}{c.sub?.(r) && <span class="sub">{c.sub(r)}</span>}</span></td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+{more > 0 && (
+  <details class="g-all">
+    <summary>{isCA ? `All ${rows.length} cities, province by province` : `All ${rows.length} metro areas`}</summary>
+    <div class="tablewrap card">
+      <table class="stack dt g-num">
+        <caption class="sr-only">{`${caption}: every place we cover`}</caption>
+        <thead><tr><th scope="col">{head}</th>{cols.map((c) => <th scope="col" class="num">{c.label}</th>)}</tr></thead>
+        <tbody>
+          {groups.map((g) => (
+            <>
+              {g.name && <tr class="g-group"><th scope="colgroup" colspan={cols.length + 1}>{g.name}</th></tr>}
+              {g.list.map((r) => (
+                <tr>
+                  <td data-label={head}><a href={r.href}>{r.name}</a></td>
+                  {cols.map((c) => (
+                    <td class={`num ${c.cls?.(r) ?? ''}`} data-label={c.label}><span class="g-v">{c.cell(r)}{c.sub?.(r) && <span class="sub">{c.sub(r)}</span>}</span></td>
+                  ))}
+                </tr>
+              ))}
+            </>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </details>
+)}

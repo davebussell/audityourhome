@@ -106,6 +106,16 @@ const schema = [
     publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
   },
 ];
+/** The buying guide that goes with a topic, listed first under "Related". */
+const BUYING: Record<string, [string, string][]> = {
+  'heating-systems': [['/buying-guides/furnaces/', 'Furnace buying guide'], ['/buying-guides/boilers/', 'Boiler buying guide'], ['/heat-pumps/buying-guide/', 'Heat pump buying guide']],
+  'water-heaters': [['/buying-guides/water-heaters/', 'Water heater buying guide']],
+  'air-conditioning': [['/buying-guides/air-conditioners/', 'Air conditioner buying guide']],
+  thermostats: [['/buying-guides/smart-thermostats/', 'Smart thermostat buying guide']],
+  'hrv-erv': [['/buying-guides/hrv-erv/', 'HRV and ERV buying guide']],
+  ventilation: [['/buying-guides/hrv-erv/', 'HRV and ERV buying guide']],
+  'hvac-maintenance': [['/buying-guides/duct-cleaning/', 'Duct cleaning: when to skip it'], ['/buying-guides/air-filtration/', 'Air filter buying guide']],
+};
 ---
 
 <Base title={`${x.title} | AuditYourHome`} description={x.description} schema={schema} ogImage={ogImage}>
@@ -187,6 +197,7 @@ const schema = [
     <div class="related">
       <h2 class="rel-h">Related on AuditYourHome</h2>
       <div class="rel-links">
+        {(BUYING[x.slug] ?? []).map(([href, label]) => <a class="btn btn-ghost btn-sm" href={href}>{label}</a>)}
         {x.related.map((r) => <a class="btn btn-ghost btn-sm" href={r.href}>{r.label}</a>)}
         <a class="btn btn-ghost btn-sm" href="/learn/">All “Keeping the heat in” topics</a>
       </div>

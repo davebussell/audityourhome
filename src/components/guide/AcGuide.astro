@@ -1,0 +1,217 @@
+---
+/**
+ * /buying-guides/air-conditioners/ on both home sites: whether you need one, what each efficiency rating costs to
+ * run in every place we cover, sizing, price, and when a heat pump is the better buy. Figures are worked out at
+ * build time (src/lib/guide-run.ts) from each place's cooling season and electricity price.
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import {
+  guideRows, guide, HUB, FACTS, src, baseAsOf, refHouseWords, PRICES_SOURCE, US_MIN_SEER2, REF_HOUSE,
+  coolKwh, coolCost, coolCostSeer, acHighStep, spread, spreadWords, rangeWords, money, type GRow,
+} from '../../lib/guide-run';
+import { MODEL } from '../../lib/calc/data';
+import { defaultAcTons } from '../../lib/calc/engine';
+import { type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('air-conditioners');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const A = FACTS.ac;
+const heatLoss = isCA ? 'CSA F280' : 'Manual J';
+const $ = (x: number | null) => money(x, market);
+const int = (x: number | null) => (x == null ? '—' : Math.round(x / 10) * 10).toLocaleString(isCA ? 'en-CA' : 'en-US');
+
+const rows = guideRows(market).filter((r) => r.coolK != null);
+const less = (a: (r: GRow) => number | null, b: (r: GRow) => number | null) => (r: GRow) => { const x = a(r), y = b(r); return x == null || y == null ? null : x - y; };
+const atMin = (r: GRow) => coolCost(r, r.minSeer2);
+const sMin = spread(rows, atMin);
+const sStar = spread(rows, less(atMin, (r) => coolCost(r, A.estarSeer2)));
+const sHigh = spread(rows, acHighStep);
+const sOld = spread(rows, less((r) => coolCostSeer(r, A.oldSeer), atMin));
+const years = FACTS.horizon.hvacYears;
+const minWords = isCA ? `SEER2 ${A.caMinSeer2}` : `SEER2 ${US_MIN_SEER2.north} in northern states and ${US_MIN_SEER2.south} in the Southeast and Southwest`;
+const tons = defaultAcTons(REF_HOUSE.m2);
+
+const cols: Col[] = [
+  { label: 'Cooling a year, new unit at the minimum', cell: (r) => `${int(coolKwh(r, r.minSeer2))} kWh`, sub: (r) => `SEER2 ${r.minSeer2}` },
+  { label: `Old unit (SEER ${A.oldSeer})`, cell: (r) => $(coolCostSeer(r, A.oldSeer)) },
+  { label: 'New, legal minimum', cell: (r) => $(atMin(r)) },
+  { label: `ENERGY STAR (SEER2 ${A.estarSeer2})`, cell: (r) => $(coolCost(r, A.estarSeer2)) },
+  { label: `High efficiency (SEER2 ${A.highSeer2})`, cell: (r) => $(coolCost(r, A.highSeer2)), sub: (r) => `${$(acHighStep(r))} less than the minimum` },
+];
+
+const caCost = A.caInstalled;
+const usCost = A.usInstalled;
+const costLine = isCA
+  ? `${$(caCost.low)} to ${$(caCost.high)} installed, and ${$(caCost.ductwork[0])} to ${$(caCost.ductwork[1])} more if the ducts need work`
+  : `about ${$(usCost.typical)} installed for a typical central air conditioner, in ${usCost.dollarYear} dollars`;
+const title = `Air conditioner buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `How to choose a central air conditioner in ${country}: what each SEER2 rating costs to run where you live, sizing, price, and when a heat pump is the better buy.`;
+
+const faqs = [
+  { q: `How much does central air cost in ${country}?`, a: `Expect ${costLine} (${isCA ? 'HomeStars' : 'US EIA, 2023'}). ${isCA ? '' : 'Prices have risen since, so treat it as a floor. '}The size of the house, the ducts and the efficiency rating move the price. Compare at least two quotes for the same model.` },
+  { q: 'Is a high-SEER air conditioner worth it?', a: `It depends on how long your summer is. For ${refHouseWords(market)}, a SEER2 ${A.highSeer2} unit saves ${spreadWords(sHigh, market)} against one at the legal minimum. Over ${years} years that is worth between ${$((sHigh?.min ?? 0) * years)} and ${$((sHigh?.max ?? 0) * years)} extra, depending on the place. Ask for the price difference on the quote and compare.` },
+  { q: 'What SEER2 rating should I buy?', a: `The legal minimum for a new split system is ${minWords}. ENERGY STAR asks for SEER2 ${A.estarSeer2} and EER2 ${A.estarEer2.toFixed(1)}. Where the cooling season is short, the minimum or ENERGY STAR level is usually the sensible buy; where it is long and electricity is expensive, the higher ratings pay back.` },
+  { q: 'Should I buy an air conditioner or a heat pump?', a: `A heat pump is an air conditioner that also heats. If the furnace is old too, or you heat with electricity, oil or propane, price a heat pump: the difference between the two quotes is what the heating costs you. Our heat pump guide has the numbers for your place.` },
+  { q: 'What size air conditioner do I need?', a: `The size comes from a load calculation (${heatLoss}) for your house, not from the old unit or a rule per square foot. An oversized air conditioner costs more, switches on and off and removes less humidity.` },
+  { q: 'What is the difference between SEER and SEER2?', a: `SEER2 is the rating from the test used since 2023, with more realistic duct pressure. The same unit scores a little lower: SEER2 is about ${A.seer2PerSeer} times SEER, so an old SEER 14 unit is about SEER2 ${(14 * A.seer2PerSeer).toFixed(1)}.` },
+];
+
+const sources = [
+  ...(isCA ? [src('nrcan-ac-split'), src('nrcan-ac-home')] : [{ label: 'US eCFR, 10 CFR 430.32: minimum efficiency for central air conditioners by region', url: 'https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-C/section-430.32' }, { label: 'US EIA, 2020 Residential Energy Consumption Survey (cooling electricity by climate)', url: 'https://www.eia.gov/consumption/residential/data/2020/' }]),
+  src('estar-cac-62'),
+  isCA ? src('homestars-ac') : src('eia-equipcosts'),
+  ...(isCA ? [] : [src('achr-r410a')]),
+  PRICES_SOURCE,
+];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Air conditioners · ${year}`}
+  h1={`Air conditioner buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Air conditioners', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Do you need one'], ['run', 'Cost to run'], ['ratings', 'Ratings'], ['size', 'Sizing'], ['cost', 'Cost to buy'], ['vs', 'Or a heat pump'], ['rebates', 'Rebates'], ['checklist', 'Quote checklist']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`How much an efficient air conditioner saves depends on how long your summer is and what you pay for electricity. This guide works it out for ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'} and takes the decision in order.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>{`A new unit at the legal minimum (${minWords}) costs ${spreadWords(sMin, market)} to run for our reference house.`}</li>
+      <li>{`Stepping up to SEER2 ${A.highSeer2} saves ${rangeWords(sHigh, market)}. ${isCA ? 'In most of Canada that is too little to repay a large price premium.' : 'That is a lot in the hottest places and little in the mildest.'}`}</li>
+      <li>{`Replacing a unit from before about 2006 (SEER ${A.oldSeer}) saves ${rangeWords(sOld, market)} even with the least efficient new one.`}</li>
+      <li>A heat pump cools exactly like an air conditioner and also heats. If the furnace is due too, price both.</li>
+      <li>{`The size comes from a load calculation (${heatLoss}). Bigger is not better: an oversized unit removes less humidity.`}</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Do you need a new air conditioner?</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">Whether to buy an air conditioner, by situation</caption>
+        <thead><tr><th scope="col">Your situation</th><th scope="col">What we'd do</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Your situation"><strong>No air conditioning, and a few hot weeks a year</strong></td><td data-label="What we'd do">{isCA ? <>Start with shade, attic insulation and air sealing: <a href="/issues/summer-overheating/">why the house overheats</a>. Then cool the rooms you use with one ductless head or a room unit.</> : <>Start with shade, attic insulation and air sealing: <a href="/issues/hot-upstairs/">why the upstairs is hot</a>. Then cool the rooms you use with one ductless head or a room unit.</>}</td></tr>
+          <tr><td data-label="Your situation"><strong>{`A central unit from before about 2006 (SEER ${A.oldSeer} or less)`}</strong></td><td data-label="What we'd do">{`Replace it when it next needs a major repair. Even a minimum-efficiency unit saves ${rangeWords(sOld, market)}.`}</td></tr>
+          <tr><td data-label="Your situation"><strong>A unit under about 12 years old that still cools</strong></td><td data-label="What we'd do">Keep it. Clean the outdoor coil, change the filter and have the charge checked.</td></tr>
+          <tr><td data-label="Your situation"><strong>The air conditioner is failing and the furnace is old</strong></td><td data-label="What we'd do">Price a heat pump. <a href="#vs">Air conditioner or heat pump</a>.</td></tr>
+          <tr><td data-label="Your situation"><strong>A house without ducts</strong></td><td data-label="What we'd do">A ductless mini-split, which is a heat pump: <a href="/heat-pumps/buying-guide/">the heat pump guide</a>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card g-test">
+      <h3>Cut the load before you size the unit</h3>
+      <p>An air conditioner is sized to the heat the house gains on a hot afternoon. Less heat coming in means a smaller unit and a lower bill.</p>
+      <ul>
+        <li>A <a href="/tests/blower-door/">blower door test</a> finds the air leaks that let hot, humid air in.</li>
+        <li>An <a href="/tests/attic-inspection/">attic inspection</a> shows whether the insulation is doing its job.</li>
+        <li><a href="/plan/">The planner</a> puts the upgrades for your home in order.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What each rating costs to run where you live</h2>
+    <p class="sec-intro">{`A year of cooling for ${refHouseWords(market)} with central air, at each place's electricity price. ${isCA ? "The method is NRCan's, scaled to each city's cooling degree days." : "Use is based on the EIA's survey of homes with central air, scaled to each metro's normal cooling degree days."}`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="A year of central air conditioning by efficiency rating" />
+    <div class="g-prose">
+      <p>{`Read the last column against the quote. Over ${years} years, the step from the minimum to SEER2 ${A.highSeer2} is worth ${$((sHigh?.min ?? 0) * years)} in ${sHigh?.least.name} and ${$((sHigh?.max ?? 0) * years)} in ${sHigh?.most.name}. If the efficient model costs more than that figure for your place, the cheaper one is the better buy on running cost. Quieter operation and better humidity control are the other reasons to pay more.`}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="ratings">
+    <h2>The ratings on the label</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>SEER2.</strong>{` Cooling delivered over a season for each unit of electricity. Higher is better. The legal minimum for a new split system is ${minWords}.`}</li>
+        <li><strong>EER2.</strong> Efficiency on the hottest afternoons. It matters most where summers are long and very hot.</li>
+        <li><strong>ENERGY STAR.</strong>{` SEER2 ${A.estarSeer2} and EER2 ${A.estarEer2.toFixed(1)} or better for a split system.`}</li>
+        <li><strong>Stages.</strong> A single-stage unit is on or off. Two-stage and variable-speed units run longer at low power, which is quieter and removes more humidity.</li>
+        <li><strong>Refrigerant.</strong>{isCA ? ' Newer equipment uses R-454B or R-32. Ask which one the quote uses: the older R-410A will cost more to service as it is phased down.' : ` ${A.refrigerant} Ask which refrigerant the quote uses.`}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="size">
+    <h2>Sizing</h2>
+    <div class="g-prose">
+      <ul>
+        <li>{`Ask for a load calculation (${heatLoss}) with the quote, not a size copied from the old unit.`}</li>
+        {isCA && <li>{`NRCan's rough rule of thumb is ${MODEL.cooling.btuhPerM2} Btu/h of cooling for each square metre of living space, which gives about ${tons} tons for our reference house. Treat it as a check on the quote, not as the answer.`}</li>}
+        <li>An oversized unit cools the air fast and switches off before it has dried it, so the house feels clammy.</li>
+        <li>Have the installer confirm the ducts and the furnace blower can move the air the new unit needs.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="cost">
+    <h2>What it costs to buy</h2>
+    <div class="g-prose">
+      <p>{`Expect ${costLine} (`}<a href={FACTS.sources[isCA ? 'homestars-ac' : 'eia-equipcosts'].url} rel="noopener">{isCA ? 'HomeStars' : 'US EIA, 2023'}</a>{`).${isCA ? '' : ' Prices have risen since, so treat it as a floor.'} Ask for the efficiency upgrade, any duct work and the electrical work as separate lines so you can compare quotes.`}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="vs">
+    <h2>Air conditioner or heat pump</h2>
+    <div class="g-prose">
+      <p>A central heat pump is the same outdoor unit and indoor coil as an air conditioner, with a valve that lets it run in reverse to heat. It cools the same way and costs the same to cool with at the same rating.</p>
+      <ul>
+        <li><strong>If you heat with electricity, oil or propane,</strong> a heat pump cuts the cost of heat nearly everywhere we cover.</li>
+        <li><strong>If you heat with gas,</strong> it depends on local prices. <a href="/heat-pumps/vs-gas-furnace/">Heat pump against gas furnace, place by place</a>.</li>
+        <li><strong>Either way,</strong> ask for both quotes. The difference between them is the real price of the heating. Check it against the rebates for your place.</li>
+      </ul>
+      <p><a href="/heat-pumps/buying-guide/">The heat pump buying guide</a> has the types, our picks by climate and the rebates.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="rebates">
+    <h2>Rebates</h2>
+    <div class="g-prose">
+      {isCA ? (
+        <p>None of the rebate programs we track pays for an air conditioner that only cools. Most pay for a heat pump, which is one more reason to price both. <a href="/programs/">Every program we track</a>.</p>
+      ) : (
+        <p>The federal tax credit for central air conditioners (25C) ended for equipment placed in service after December 31, 2025. Check whether your electric utility pays for an efficient unit or a heat pump. <a href="/programs/">The programs we track</a>, by state.</p>
+      )}
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you sign: the quote checklist</h2>
+    <div class="g-prose">
+      <ol>
+        <li>The exact outdoor and indoor model numbers, with the SEER2 and EER2 of that pairing.</li>
+        <li>{`The load calculation (${heatLoss}) the size is based on.`}</li>
+        <li>The refrigerant, and whether the line set is being replaced.</li>
+        <li>A check that the ducts and the blower can carry the airflow.</li>
+        <li>The price of the same job with a heat pump.</li>
+        <li>Who registers the warranty, and by when.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="air-conditioners" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {isCA
+        ? `Cooling use follows NRCan's operating-cost formula (equivalent full-load hours from each city's cooling degree days and design temperature), for a ${tons}-ton unit, with NRCan's usage factor. Electricity is priced at each city's marginal rate. Real use depends on the thermostat setting and how the house is shaded.`
+        : `Cooling use starts from the EIA's 2020 survey of single-family homes with central air in each climate, rescaled to the reference house and each metro's 1991 to 2020 cooling degree days, at the state's average residential electricity price. Real use depends on the thermostat setting and how the house is shaded.`}
+    </p>
+  </Fragment>
+</GuideShell>

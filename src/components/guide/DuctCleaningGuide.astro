@@ -1,0 +1,161 @@
+---
+/**
+ * /buying-guides/duct-cleaning/ on both home sites: when duct cleaning is worth paying for, when to skip it, what a
+ * proper job includes, and what the money does better elsewhere (filters, duct sealing). The one local figure is
+ * what leaky ducts cost in every place we cover (src/lib/guide-run.ts); the guidance is the US EPA's and CMHC's.
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import { guideRows, guide, HUB, FACTS, src, baseAsOf, refHouseWords, PRICES_SOURCE, yearBy, coolCost, spread, spreadWords, rangeWords, money, pct0, type GRow } from '../../lib/guide-run';
+import { MODEL } from '../../lib/calc/data';
+import { type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('duct-cleaning');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const D = FACTS.ducts;
+const $ = (x: number | null) => money(x, market);
+const usd = (x: number) => `${isCA ? 'US' : ''}$${x.toLocaleString('en-US')}`;
+
+// places where most homes have ducts to leak: a furnace (gas or oil) is the usual heating
+const rows = guideRows(market).filter((r) => MODEL.systems[r.sys].fuel !== 'electricity');
+const both = (r: GRow) => { const h = yearBy(r, r.sys); return h == null ? null : h + (coolCost(r, r.minSeer2) ?? 0); };
+const leak = (share: number) => (r: GRow) => { const b = both(r); return b == null ? null : b * share; };
+const sLow = spread(rows, leak(D.leakShare[0]));
+const sHigh = spread(rows, leak(D.leakShare[1]));
+const cols: Col[] = [
+  { label: 'A year of heating and cooling', cell: (r) => $(both(r)), sub: (r) => MODEL.systems[r.sys].short },
+  { label: `If ${pct0(D.leakShare[0])} never reaches the rooms`, cell: (r) => $(leak(D.leakShare[0])(r)) },
+  { label: `If ${pct0(D.leakShare[1])} never reaches the rooms`, cell: (r) => $(leak(D.leakShare[1])(r)) },
+];
+const title = `Duct cleaning: is it worth it? (${year}) | AuditYourHome`;
+const description = `What the US EPA and CMHC found about duct cleaning, the cases where it is worth paying for, what a proper job includes, and what to spend the money on instead.`;
+
+const faqs = [
+  { q: 'Is duct cleaning worth it?', a: `In most homes, no. The US EPA does not recommend cleaning ducts routinely, only as needed, and CMHC's research found little or no difference in airborne particles or airflow afterwards. It is worth it in three cases: visible mould inside the ducts, vermin, or ducts clogged with dust and debris, for example after a renovation.` },
+  { q: 'How much does duct cleaning cost?', a: `The US EPA puts a typical job at ${usd(D.epaCost[0])} to ${usd(D.epaCost[1])} for each heating and cooling system. Be wary of prices far below that, and check the quote covers every part of the system.` },
+  { q: 'Does duct cleaning save energy?', a: `There is little evidence that cleaning the ducts alone does. Sealing leaky ducts is what saves energy: ENERGY STAR says ${pct0(D.leakShare[0])} to ${pct0(D.leakShare[1])} of the air moving through a typical duct system is lost through leaks and poor connections.` },
+  { q: 'How often should ducts be cleaned?', a: `There is no schedule to follow. Clean them when there is a reason: mould you can see, signs of rodents or insects, or enough debris to block the airflow. A good furnace filter, changed on time, keeps most dust out in the first place.` },
+  { q: 'Should the ducts be sprayed with a disinfectant or sealant?', a: `Say no unless there is a specific, confirmed problem. The EPA says research has not shown these products work in ducts or what they do to health, and CMHC advises declining offers to spray or fog ducts with biocides.` },
+];
+const sources = [src('epa-ducts'), src('cmhc-ducts'), src('estar-duct-sealing'), src('epa-merv'), PRICES_SOURCE];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Duct cleaning · ${year}`}
+  h1="Duct cleaning: when it is worth it, and when to skip it"
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Duct cleaning', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Do you need it'], ['job', 'A proper job'], ['skip', 'What to decline'], ['instead', 'What to do instead'], ['leaks', 'What leaky ducts cost'], ['checklist', 'Before you book']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    Duct cleaning is sold as a fix for dust, allergies and high bills. The two agencies that studied it found it does little for any of them in most homes. This guide covers the cases where it is worth paying for, and where the same money does more.
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>The US EPA: "Duct cleaning has never been shown to actually prevent health problems." It recommends cleaning only as needed.</li>
+      <li>CMHC's research found little or no change in airborne particles or airflow after cleaning.</li>
+      <li>It is worth doing for visible mould in the ducts, vermin, or ducts clogged with debris.</li>
+      <li>{`A proper job costs about ${usd(D.epaCost[0])} to ${usd(D.epaCost[1])} a system, by the EPA's figures. Check that a cheaper offer covers the whole system.`}</li>
+      <li>{`Leaky ducts are the bigger problem: ${pct0(D.leakShare[0])} to ${pct0(D.leakShare[1])} of the air is lost in a typical system. Seal them and fit a better filter first.`}</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Do your ducts need cleaning?</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">When duct cleaning is and is not worth it</caption>
+        <thead><tr><th scope="col">What you see</th><th scope="col">Clean the ducts?</th><th scope="col">What else to do</th></tr></thead>
+        <tbody>
+          <tr><td data-label="What you see"><strong>Visible mould inside metal ducts or on parts of the system</strong></td><td data-label="Clean?">Yes.</td><td data-label="What else">Find and fix the moisture first, or it comes back. Insulated duct that is wet or mouldy has to be replaced, not cleaned. <a href="/tests/mold-iaq/">Mould and air quality testing</a>.</td></tr>
+          <tr><td data-label="What you see"><strong>Droppings, nests or insects in the ducts</strong></td><td data-label="Clean?">Yes.</td><td data-label="What else">Close the way in.</td></tr>
+          <tr><td data-label="What you see"><strong>Ducts clogged with dust or debris, or dust blowing from the registers</strong></td><td data-label="Clean?">Yes. It can happen after a renovation or in a new house.</td><td data-label="What else">Fit a better filter and seal the return ducts.</td></tr>
+          <tr><td data-label="What you see"><strong>A dusty house, allergies, or nothing in particular</strong></td><td data-label="Clean?">No.</td><td data-label="What else">A better filter, changed on time. <a href={`${HUB}air-filtration/`}>The air filter guide</a>.</td></tr>
+          <tr><td data-label="What you see"><strong>High bills or rooms that never get comfortable</strong></td><td data-label="Clean?">No.</td><td data-label="What else">Test the ducts for leaks and seal them. <a href="#leaks">What leaky ducts cost</a>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="g-note">Sources: the US EPA's guidance on duct cleaning and CMHC's "Should you get your heating ducts cleaned?". Some dust on a return grille is normal and is not a sign the ducts need cleaning.</p>
+  </section>
+
+  <section class="sec" id="job">
+    <h2>What a proper job includes</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>The whole system.</strong> Supply and return ducts, registers, the blower, the coils and the drain pan. Cleaning only the ducts leaves the dirt in the parts that matter most.</li>
+        <li><strong>Access.</strong> The crew opens access ports or panels so the whole run can be reached and inspected.</li>
+        <li><strong>Containment.</strong> A vacuum that exhausts outdoors, or one with HEPA filtration if it exhausts indoors. Floors and furniture are covered.</li>
+        <li><strong>Proof.</strong> Ask to see inside the ducts before and after.</li>
+        <li><strong>Price.</strong>{` The EPA's typical range is ${usd(D.epaCost[0])} to ${usd(D.epaCost[1])} a system. Be wary of an offer far below that, and check it covers the whole system.`}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="skip">
+    <h2>What to decline</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Biocides and "sanitising" sprays.</strong> The EPA says research has not shown they work in ducts, or what breathing them does. CMHC advises declining offers to spray or fog ducts.</li>
+        <li><strong>Sealants sprayed inside the ducts</strong> to "encapsulate" dust. The EPA says their safety and usefulness are still in question.</li>
+        <li><strong>Claims that cleaning will lower your bills.</strong> The EPA found little evidence that cleaning the ducts alone improves efficiency.</li>
+        <li><strong>A mould finding with nothing to show.</strong> Ask to see it, and ask for a lab test of a sample before paying for treatment.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="instead">
+    <h2>Where the same money does more</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>A better filter, changed on time.</strong> It catches dust before it reaches the ducts. <a href={`${HUB}air-filtration/`}>Which rating to buy</a>.</li>
+        <li><strong>Sealing the ducts.</strong> Mastic or metal tape on the joints, never cloth duct tape, which does not last. Start with anything in an attic, crawlspace or garage.</li>
+        <li><strong>A duct leakage test.</strong> It measures how much air the ducts lose and shows whether sealing worked. <a href="/tests/duct-leakage/">How the test works</a>.</li>
+        <li><strong>Service for the furnace and air conditioner.</strong> The EPA notes that cleaning the blower, coils and heat exchanger can improve efficiency, where cleaning the ducts alone has little evidence behind it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="leaks">
+    <h2>What leaky ducts cost where you live</h2>
+    <p class="sec-intro">{`ENERGY STAR says about ${pct0(D.leakShare[0])} to ${pct0(D.leakShare[1])} of the air moving through a typical duct system is lost through leaks, holes and poor connections. This is what that share of a year's heating and cooling comes to for ${refHouseWords(market)}, in the places where most homes heat with a furnace.`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="Yearly cost of duct leakage as a share of heating and cooling" />
+    <p class="g-note">
+      {`This is the most the leaks can cost, for ducts that run outside the heated and cooled part of the house (an attic, a crawlspace, a garage). Where ducts run inside it, such as a heated basement, most of the leaked heat still ends up indoors, though not in the rooms it was meant for. Across these ${rows.length} places the lower share comes to ${rangeWords(sLow, market)} and the higher to ${rangeWords(sHigh, market)}.`}
+    </p>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you book</h2>
+    <div class="g-prose">
+      <ol>
+        <li>Name the reason: mould you can see, vermin, or debris. If there is none, spend the money on a filter and sealing.</li>
+        <li>Ask what is included: every duct, the blower, the coils and the drain pan.</li>
+        <li>Ask how long it will take and how many people will come.</li>
+        <li>Get the price in writing, for the whole job, before anyone arrives.</li>
+        <li>Decline sprays and sealants unless a specific problem has been shown to you.</li>
+        <li>Check the furnace filter and the registers afterwards, and ask to see inside the ducts.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="duct-cleaning" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`The table takes a year of heating (at the heating most homes in each place have) and of central air conditioning at the legal minimum efficiency for the reference house, and shows ${pct0(D.leakShare[0])} and ${pct0(D.leakShare[1])} of it. It is a measure of scale, not a prediction for your house: a duct leakage test gives your own figure. We don't sell or refer duct cleaning.`}
+    </p>
+  </Fragment>
+</GuideShell>

@@ -1,0 +1,69 @@
+---
+/**
+ * /buying-guides/ on both home sites: every buying guide, each with the figure it works out for the places we
+ * cover, and what the guides have in common (local numbers, sources and dates, a named editor, no paid placement).
+ */
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema, EDITOR } from '../../lib/schema';
+import { GUIDES, HUB, GUIDES_CHECKED, guideRows, hubLines, pricesAsOf, refHouseWords } from '../../lib/guide-run';
+import { runSummary } from '../../lib/hp-run';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+import '../../styles/hp.css';
+import '../../styles/guide.css';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const rows = guideRows(market);
+const S = runSummary(market);
+const lines: Record<string, string> = {
+  ...hubLines(market),
+  'heat-pumps': `Cheaper to run than a 95% gas furnace in ${S.hpWins.length} of the ${S.withGas} places we cover with piped gas.`,
+};
+const places = isCA ? `${rows.length} Canadian cities` : `${rows.length} US metro areas`;
+const title = `Home heating and cooling buying guides for ${isCA ? 'Canada' : 'the US'} | AuditYourHome`;
+const description = `Buying guides for furnaces, heat pumps, air conditioners, water heaters, thermostats and ventilation, with running costs worked out for ${places}.`;
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Buying guides', path: HUB }]),
+  { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Buying guides', itemListElement: GUIDES.map((g, i) => ({ '@type': 'ListItem', position: i + 1, name: g.name, url: g.path })) },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container hp guide">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true"> / </span><span>Buying guides</span></nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">Buying guides</p>
+        <h1>{`Buying guides with your local numbers`}</h1>
+        <p class="lede measure">{`What a furnace, heat pump or water heater saves depends on your climate and your energy prices, so each guide works the numbers out for ${places} instead of quoting one national figure.`}</p>
+        <p class="g-byline" data-no-gloss>Edited by <a href={EDITOR.path}>{EDITOR.name}</a> · Guidance checked <time datetime={GUIDES_CHECKED}>{fmtDate(GUIDES_CHECKED, market)}</time> · Energy prices <time datetime={pricesAsOf(market)}>{fmtDate(pricesAsOf(market), market)}</time></p>
+      </div>
+    </div>
+
+    <section class="sec" id="guides">
+      <h2>The guides</h2>
+      <div class="g-links g-hub">
+        {GUIDES.map((g) => (
+          <a class="card" href={g.path}>
+            <strong>{g.name}</strong>
+            <span>{g.blurb}</span>
+            <span class="g-hub-line">{lines[g.slug]}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="sec" id="how">
+      <h2>How the guides are written</h2>
+      <div class="g-prose">
+        <ul>
+          <li><strong>Local numbers.</strong>{` Running costs are worked out for each place from its climate and its energy prices, for the same reference house: ${refHouseWords(market)}. They come from the same model as `}<a href="/plan/">the planner</a>, so a price update changes every guide.</li>
+          <li><strong>Whether you need it comes first.</strong> Each guide starts with the test that shows the need and the cheaper fix, before any product.</li>
+          <li><strong>Sources and dates.</strong> Every standard, rating and price has its source and the date we last checked it at the foot of the guide.</li>
+          <li><strong>No paid placement.</strong> No maker pays to be in a guide. <a href="/about/">How the site is paid for</a>.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</Base>

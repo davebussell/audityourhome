@@ -4,7 +4,8 @@
 //   - a pick uses an older refrigerant, or (Canada, cold zones) no longer meets NRCan's rebate thresholds
 //   - a picked system has dropped out of the ENERGY STAR data the site was built from
 //   - the picks are past their review date (warning at 90 days, failure at 180)
-// and when a gear pick (src/data/picks/gear.json) is missing a slot, a seller, its facts or its sources.
+// and when a gear pick (src/data/picks/gear.json) is missing a slot, a seller, its facts or its sources,
+// or the buying guides' standards and guidance (src/data/guides/facts.json) are past the same review dates.
 // Usage: node tools/picks/check.mjs
 import fs from 'node:fs';
 import path from 'node:path';
@@ -98,9 +99,16 @@ for (const [slug, cat] of Object.entries(gear.categories)) {
   }
 }
 
+// ---------------------------------------------------------------- buying guides (src/data/guides/facts.json)
+const facts = read('src/data/guides/facts.json');
+const factsAge = (Date.now() - Date.parse(`${facts.checked}T12:00:00Z`)) / 864e5;
+if (factsAge > 180) errors.push(`buying guide standards and guidance were last checked ${facts.checked} (${Math.round(factsAge)} days ago): re-read the sources in src/data/guides/facts.json`);
+else if (factsAge > 90) warnings.push(`buying guide standards and guidance were last checked ${facts.checked} (${Math.round(factsAge)} days ago)`);
+for (const [id, x] of Object.entries(facts.sources)) if (!x.label || !/^https:\/\//.test(x.url ?? '')) errors.push(`guides: source ${id} needs a label and an https url`);
+
 warnings.forEach((w) => console.warn(`picks: warning: ${w}`));
 if (errors.length) {
   console.error(`picks: ${errors.length} problem(s):\n  ${errors.join('\n  ')}`);
   process.exit(1);
 }
-console.log(`picks: ${n} heat pump picks across ${Object.values(picks.markets).reduce((a, m) => a + Object.keys(m.zones).length, 0)} zones and ${g} gear picks in ${Object.keys(gear.categories).length} categories check out (checked ${picks.checked}, gear ${gear.checked})`);
+console.log(`picks: ${n} heat pump picks across ${Object.values(picks.markets).reduce((a, m) => a + Object.keys(m.zones).length, 0)} zones and ${g} gear picks in ${Object.keys(gear.categories).length} categories check out (checked ${picks.checked}, gear ${gear.checked}, guides ${facts.checked})`);

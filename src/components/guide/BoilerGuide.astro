@@ -1,0 +1,192 @@
+---
+/**
+ * /buying-guides/boilers/ on both home sites: what a new boiler saves in every place we cover with piped gas, why
+ * the water temperature decides whether a condensing boiler earns its rating, and the heat pump options for a house
+ * with radiators. Figures are worked out at build time (src/lib/guide-run.ts).
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import {
+  guideRows, guide, HUB, FACTS, src, baseAsOf, refHouseWords, PRICES_SOURCE,
+  yearAt, yearBy, boilerStep, spread, spreadWords, rangeWords, money, pct0, type GRow,
+} from '../../lib/guide-run';
+import { MODEL } from '../../lib/calc/data';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('boilers');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const B = FACTS.boiler;
+const SYS = MODEL.systems;
+const eOld = SYS.gasFurnaceOld.eff;
+const eMid = SYS.gasBoilerMid.eff;
+const eCond = SYS.gasBoilerCondensing.eff;
+const $ = (x: number | null) => money(x, market);
+const heatLoss = isCA ? 'CSA F280' : 'Manual J';
+const f5 = (c: number) => Math.round((c * 1.8 + 32) / 5) * 5;
+const tempRange = isCA ? `${B.returnC[0]} to ${B.returnC[1]}°C` : `${f5(B.returnC[0])} to ${f5(B.returnC[1])}°F`;
+const years = FACTS.horizon.hvacYears;
+
+const rows = guideRows(market).filter((r) => r.price.gas != null);
+const oilRows = guideRows(market).filter((r) => r.price.oil != null);
+const gas = (r: GRow, eff: number) => yearAt(r, 'gas', eff);
+const diff = (a: number, b: number) => (r: GRow) => { const x = gas(r, a), y = gas(r, b); return x == null || y == null ? null : x - y; };
+const sOld = spread(rows, boilerStep);
+const sMid = spread(rows, diff(eMid, eCond));
+const sCool = spread(rows, diff(eCond, B.rated));
+const sOil = spread(oilRows, (r) => { const a = yearAt(r, 'oil', SYS.oilFurnaceOld.eff), b = yearBy(r, 'oilBoilerNew'); return a == null || b == null ? null : a - b; });
+const cols: Col[] = [
+  { label: `Old boiler (${pct0(eOld)})`, cell: (r) => $(gas(r, eOld)) },
+  { label: `Non-condensing (${pct0(eMid)})`, cell: (r) => $(gas(r, eMid)) },
+  { label: `Condensing, hot return water (${pct0(eCond)})`, cell: (r) => $(gas(r, eCond)) },
+  { label: `Condensing, cool return water (${pct0(B.rated)})`, cell: (r) => $(gas(r, B.rated)), sub: (r) => `${$(diff(eCond, B.rated)(r))} less` },
+];
+const usCost = B.usInstalled;
+const title = `Boiler buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `How to choose a boiler in ${country}: what a condensing boiler saves where you live, why the water temperature decides it, sizing, and the heat pump options.`;
+
+const faqs = [
+  { q: 'How much does a new boiler save?', a: `Against an old standard-efficiency boiler (around ${pct0(eOld)}), a condensing boiler saves ${spreadWords(sOld, market)} for ${refHouseWords(market)}. Against a newer non-condensing boiler (${pct0(eMid)}) it saves ${rangeWords(sMid, market)}.` },
+  { q: 'Is a condensing boiler worth it?', a: `Only if it is set up to condense. A condensing boiler reaches its rating when the water comes back from the radiators at about ${tempRange} or cooler; with hotter return water it performs like a non-condensing one. An outdoor reset control, which lowers the water temperature in mild weather, is what gets it there. Set up well, it saves a further ${rangeWords(sCool, market)} over the same boiler run hot.` },
+  { q: 'What size boiler do I need?', a: `The size comes from a room-by-room heat-loss calculation (${heatLoss}), not from the old boiler's label or the length of radiator in the house. Old boilers are often far larger than the house needs, and a house that has been insulated since needs less again.` },
+  { q: 'Can I use a heat pump with radiators?', a: `Yes, two ways. A ductless heat pump heats and cools the main rooms while the boiler covers the rest and the coldest days. An air-to-water heat pump feeds the radiators directly, but it makes cooler water than a boiler, so the radiators must be large enough to heat the rooms with it.` },
+  ...(isCA ? [] : [{ q: 'How much does a new boiler cost?', a: `The US EIA put a typical gas boiler at about ${$(usCost.typical)} installed in ${usCost.dollarYear} dollars. Prices have risen since, so treat it as a floor. New venting, a chimney liner, zone valves and an indirect water heater each add to the quote.` }]),
+];
+const sources = [
+  ...(isCA ? [src('nrcan-gas-boilers')] : []),
+  src('nrcan-hwg'), src('estar-boilers'),
+  ...(isCA ? [] : [src('eia-equipcosts')]),
+  { label: 'NRCan, Combination systems (space and water heating from one appliance)', url: 'https://natural-resources.canada.ca/energy-efficiency/combination-systems' },
+  PRICES_SOURCE,
+];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Boilers · ${year}`}
+  h1={`Boiler buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Boilers', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Replace or repair'], ['run', 'Cost to run'], ['condense', 'Water temperature'], ['size', 'Sizing'], ['hp', 'Heat pump options'], ['water', 'Hot water'], ['checklist', 'Quote checklist']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`A boiler heats water for radiators or a heated floor. What a new one saves depends on your winter and your gas price, and on one setting most quotes never mention: the temperature of the water. This guide works the numbers out for ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'} with piped gas.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>{`Replacing an old boiler (around ${pct0(eOld)}) with a condensing one saves ${spreadWords(sOld, market)} for our reference house.`}</li>
+      <li>{`A condensing boiler only earns its rating when the return water is at about ${tempRange} or cooler. Otherwise it runs at about ${pct0(eCond)}.`}</li>
+      <li>{`Getting the water temperature right is worth a further ${rangeWords(sCool, market)}. Ask for an outdoor reset control and for the boiler to be set up to use it.`}</li>
+      <li>{isCA ? `New hot-water gas boilers must be at least ${pct0(B.caMin)} efficient (units made since ${fmtDate(B.caMinSince, market)}), so every new one is condensing.` : `ENERGY STAR asks for ${pct0(B.estar.gas)} AFUE for gas boilers and ${pct0(B.estar.oil)} for oil.`}</li>
+      <li>A ductless heat pump beside the boiler adds cooling and takes over much of the heating.</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Does the boiler need replacing?</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Replace it</strong> if it leaks, the heat exchanger is cracked, or a <a href="/tests/combustion-safety/">combustion safety test</a> finds it spilling exhaust.</li>
+        <li><strong>Plan the replacement</strong>{` of an old standard-efficiency boiler (around ${pct0(eOld)}): that is where the saving is largest, ${rangeWords(sOld, market)}.`}</li>
+        <li><strong>Keep and tune</strong> a newer boiler that is safe. Controls, balancing the radiators and insulating the pipes cost far less than a new boiler.</li>
+      </ul>
+    </div>
+    <div class="card g-test">
+      <h3>Before you size anything, measure the house</h3>
+      <p>Insulation and air sealing do two things for a boiler: the house needs a smaller one, and the radiators can heat it with cooler water, which is what lets a condensing boiler or a heat pump work well.</p>
+      <ul>
+        <li>A <a href="/tests/blower-door/">blower door test</a> measures how leaky the house is.</li>
+        <li>A <a href="/tests/heat-loss-calc/">{`heat-loss calculation (${heatLoss})`}</a> gives the number the boiler is sized to, room by room.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What each kind of boiler costs to run where you live</h2>
+    <p class="sec-intro">{`A year of heat for ${refHouseWords(market)}, at each place's gas price.`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="A year of heat by boiler efficiency" />
+    <p class="g-note">{`Efficiencies are NRCan's seasonal figures: about ${pct0(eMid)} for a non-condensing boiler and about ${pct0(eCond)} for a condensing boiler as most are run, against a rating of ${pct0(B.rated)} or more. The gas account's fixed charge is not included.${sOil ? ` Heating with oil: replacing an old oil boiler with a new one (${pct0(SYS.oilBoilerNew.eff)}) saves ${rangeWords(sOil, market)} in the ${sOil.n} places where we hold a home heating oil price.` : ''}`}</p>
+  </section>
+
+  <section class="sec" id="condense">
+    <h2>The water temperature decides what you get</h2>
+    <div class="g-prose">
+      <p>{`A condensing boiler gets its extra efficiency by cooling its exhaust until the water vapour in it condenses. That only happens when the water returning from the radiators is cool enough: about ${tempRange} or less. On a system that runs hotter than that all winter, it never condenses.`}</p>
+      <ul>
+        <li><strong>Outdoor reset.</strong>{` A control that lowers the water temperature as the weather warms. ${isCA ? 'Most new hot-water boilers in Canada must have an automatic water temperature control and cannot run without it.' : 'Ask for one, and for the installer to set its curve.'} It is what puts the boiler in condensing range for most of the winter.`}</li>
+        <li><strong>Radiators.</strong> The more radiator surface a room has for the heat it loses, the cooler the water can be. Insulating the house has the same effect.</li>
+        <li><strong>The check.</strong> Ask the installer what supply and return temperatures the system will run at on a mild day and on the coldest day, and write them on the quote.</li>
+      </ul>
+      <p>{`Over ${years} years the difference between a condensing boiler run hot and one run cool is worth up to ${$((sCool?.max ?? 0) * years)} for our reference house. It costs a control and the time to set it up.`}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="size">
+    <h2>Sizing</h2>
+    <div class="g-prose">
+      <ul>
+        <li>{`Ask for a room-by-room heat-loss calculation (${heatLoss}). The old boiler's size is not a guide.`}</li>
+        <li>A modulating boiler turns its flame down in mild weather. Ask for the lowest output it can hold: one that cannot turn down far enough will switch on and off.</li>
+        <li>Steam systems are different: the boiler is matched to the radiators, and condensing boilers do not apply.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="hp">
+    <h2>Heat pump options for a house with radiators</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>A ductless heat pump beside the boiler.</strong> One or two wall heads heat and cool the main rooms; the boiler covers the rest of the house and the coldest days. <a href="/heat-pumps/buying-guide/">The heat pump guide</a> has the types, our picks and the rebates.</li>
+        <li><strong>An air-to-water heat pump.</strong> It feeds the radiators or a heated floor, with cooler water than a boiler makes. It suits heated floors and well-insulated houses with generous radiators.</li>
+        <li><strong>Either way,</strong> the work that lets a condensing boiler run cool (insulation, air sealing, reset control) is the same work that makes a house ready for a heat pump.</li>
+      </ul>
+      <p><a href="/heat-pumps/vs-gas-furnace/">What a heat pump's heat costs against gas, place by place</a>.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="water">
+    <h2>Hot water from the boiler</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>An indirect tank</strong> is a storage tank heated by the boiler. It has no burner or vent of its own.</li>
+        <li><strong>A combination ("combi") boiler</strong> heats tap water on demand and saves the space of a tank. Its hot water flow is limited, so check it against two showers running at once.</li>
+        <li>A separate water heater is still an option. <a href={`${HUB}water-heaters/`}>The water heater guide</a> has a year of hot water for each type at your prices.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you sign: the quote checklist</h2>
+    <div class="g-prose">
+      <ol>
+        <li>The exact model, its AFUE and its lowest and highest output.</li>
+        <li>{`The heat-loss calculation (${heatLoss}) the size is based on.`}</li>
+        <li>An outdoor reset control, and the supply and return temperatures it will be set to.</li>
+        <li>Venting, the condensate drain and a neutraliser if the local code asks for one.</li>
+        <li>How hot water will be made: indirect tank, combi or a separate heater.</li>
+        <li>Flushing the old system and fitting a filter to protect the new heat exchanger.</li>
+        <li>Who registers the warranty, and what yearly service it requires.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="boilers" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`The reference house is ${refHouseWords(market)}; its heat demand comes from the same model as our planner, scaled to each place's heating degree days. The old-boiler figure is NRCan's for old standard-efficiency gas equipment. We don't test boilers, and we don't yet pick models.`}
+    </p>
+  </Fragment>
+</GuideShell>

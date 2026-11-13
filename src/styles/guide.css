@@ -58,3 +58,23 @@
   .guide table.stack.g-num tr.g-group th { display: block; }
   .guide .g-short { padding: 16px 18px; }
 }
+
+/* "every place we cover", folded under a table that leads with the largest places */
+.guide details.g-all { margin-top: 10px; }
+.guide details.g-all > summary { cursor: pointer; display: inline-block; padding: 9px 14px; border: 1px solid var(--line-strong); border-radius: 999px; font-weight: 600; font-size: 14.5px; color: var(--ink); background: var(--paper); list-style: none; }
+.guide details.g-all > summary::-webkit-details-marker { display: none; }
+.guide details.g-all > summary::after { content: ' +'; color: var(--muted); }
+.guide details.g-all[open] > summary::after { content: ' −'; }
+.guide details.g-all > summary:hover, .guide details.g-all > summary:focus-visible { border-color: var(--ink); }
+.guide details.g-all > .tablewrap { margin-top: 10px; }
+.guide .g-num td .sub { white-space: normal; }
+
+/* the three or four things a guide found, as figures */
+.guide .g-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0 0 4px; }
+.guide .g-facts > div { padding: 16px 18px; }
+.guide .g-facts strong { display: block; font-family: var(--display); font-size: 24px; line-height: 1.15; color: var(--ink); }
+.guide .g-facts span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); line-height: 1.45; }
+@media (max-width: 760px) { .guide .g-facts { grid-template-columns: 1fr; } .guide .g-facts strong { font-size: 21px; } }
+
+.guide .g-more { margin: 16px 0 0; }
+.guide .g-hub a .g-hub-line { margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--line); color: var(--ink); font-size: 13.5px; }

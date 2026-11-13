@@ -128,7 +128,8 @@
 .hp .wty p { margin: 0; font-size: 14.5px; line-height: 1.55; overflow-wrap: anywhere; }
 
 /* start-here cards on the hub: the buying guide and the heat pump vs gas data page */
-.hp .hp-start { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 14px 0 0; }
+.hp .hp-start { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0 0; }
+@media (max-width: 900px) and (min-width: 641px) { .hp .hp-start { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .hp .hp-start a { display: grid; gap: 4px; padding: 16px 18px; text-decoration: none; color: var(--ink); border-left: 4px solid var(--heat); }
 .hp .hp-start a:hover { border-color: var(--line-strong); border-left-color: var(--heat); color: var(--ink); }
 .hp .hp-start strong { font-family: var(--display); font-size: 16.5px; }

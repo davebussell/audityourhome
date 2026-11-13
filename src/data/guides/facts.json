@@ -1,0 +1,289 @@
+{
+  "checked": "2026-11-13",
+  "note": "Standards, criteria and guidance the buying guides quote, each with the source it was read from on the checked date. Prices, climate and efficiencies come from the calculators' data, not from here. tools/picks/check.mjs warns when this file is 90 days old and fails the build at 180.",
+  "horizon": {
+    "hvacYears": 15,
+    "waterYears": 12,
+    "note": "Our assumption for 'what it is worth paying extra': shorter than most of this equipment lasts, so the figure is on the careful side."
+  },
+  "sources": {
+    "nrcan-gas-furnaces": {
+      "label": "NRCan, Energy Efficiency Regulations: gas furnaces (95% AFUE minimum for units made since July 3, 2019)",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/energy-efficiency-regulations/gas-furnaces"
+    },
+    "nrcan-hwg": {
+      "label": "NRCan, Heating with Gas (efficiency of older, mid-efficiency and condensing equipment)",
+      "url": "https://natural-resources.canada.ca/sites/nrcan/files/energy/pdf/energystar/Heating_With_Gas.pdf"
+    },
+    "hydro-one-furnace": {
+      "label": "Hydro One, When should I replace my furnace? (15 to 20 years)",
+      "url": "https://www.hydroone.com/saving-money-and-energy/residential/furnace-repair-or-replace"
+    },
+    "asap-furnaces": {
+      "label": "Appliance Standards Awareness Project, Furnaces (US minimum 80% AFUE since 2015; 95% from December 2028)",
+      "url": "https://appliance-standards.org/node/6761"
+    },
+    "cb-furnace-scotus": {
+      "label": "Contracting Business, Supreme Court vacates ruling on 95% furnace efficiency standard (June 9, 2026)",
+      "url": "https://www.contractingbusiness.com/industry-news/news/55383087/supreme-court-vacates-ruling-on-95-furnace-efficiency-standard"
+    },
+    "estar-furnaces": {
+      "label": "ENERGY STAR, Furnaces key product criteria (97% AFUE North, 95% South, 87% oil)",
+      "url": "https://www.energystar.gov/products/furnaces/key_product_criteria"
+    },
+    "eia-equipcosts": {
+      "label": "US EIA, Updated Buildings Sector Appliance and Equipment Costs and Efficiencies (Guidehouse and Leidos, March 2023; 2022 dollars)",
+      "url": "https://www.eia.gov/analysis/studies/buildings/equipcosts/"
+    },
+    "nrcan-ac-split": {
+      "label": "NRCan, Energy Efficiency Regulations: split-system central air conditioners (SEER2 13.4 since January 1, 2023)",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/energy-efficiency-regulations/split-system-central-air-conditioners"
+    },
+    "nrcan-ac-home": {
+      "label": "NRCan, Air conditioning your home (operating-cost formula and sizing)",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/air-conditioning-your-home"
+    },
+    "estar-cac-62": {
+      "label": "ENERGY STAR, Central Air Conditioner and Heat Pump specification, Version 6.2 (SEER2 15.2, EER2 12.0 for split systems)",
+      "url": "https://www.energystar.gov/sites/default/files/2024-12/ENERGY%20STAR%20Version%206.2%20Central%20Air%20Conditioner%20and%20Heat%20Pump%20Final%20Specification.pdf"
+    },
+    "homestars-ac": {
+      "label": "HomeStars, Central air conditioner cost guide (read November 13, 2026)",
+      "url": "https://www.homestars.com/air-conditioning/price-guides/central-air-conditioner-cost"
+    },
+    "achr-r410a": {
+      "label": "ACHR News, EPA removes R-410A installation deadline (May 21, 2026)",
+      "url": "https://www.achrnews.com/articles/166226-epa-removes-r-410a-installation-deadline"
+    },
+    "doe-water-heaters": {
+      "label": "US DOE, Consumer water heaters: standards and rulemakings (compliance with the 2024 rule from May 6, 2029)",
+      "url": "https://www.energy.gov/cmei/buildings/consumer-water-heaters"
+    },
+    "estar-thermostat-faq": {
+      "label": "ENERGY STAR, Smart thermostat FAQ (about 8% of heating and cooling bills, from field data)",
+      "url": "https://www.energystar.gov/products/heating_cooling/smart_thermostats/smart_thermostat_faq"
+    },
+    "nrcan-kthi-9": {
+      "label": "NRCan, Keeping the Heat In, Section 9: thermostats, water heaters and heating systems",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/home-energy-efficiency/keeping-heat-section-9-operating-your-house-thermostats-water-heaters-furnaces-other-heatingcooling-systems"
+    },
+    "hq-smart-thermostats": {
+      "label": "Hydro-Québec, Smart thermostats (line-voltage models for baseboards)",
+      "url": "https://hydroquebec.com/residential/energy-wise/tips/windows-heating-air-conditioning/smart-thermostats.html"
+    },
+    "nbc-932": {
+      "label": "NRC, National Building Code of Canada 2025, Section 9.32 (ventilation rates by number of bedrooms)",
+      "url": "https://publications.gc.ca/collections/collection_2026/cnrc-nrc/NR24-28-2025-eng.pdf"
+    },
+    "acca-622": {
+      "label": "ACCA, 2016 update for ASHRAE 62.2 (ventilation rate formula)",
+      "url": "https://hvac-blog.acca.org/2016-update-ashrae-62-2/"
+    },
+    "estar-hrv-spec": {
+      "label": "NRCan, ENERGY STAR technical specification for HRVs and ERVs, Version 2.3 (recovery efficiency and fan efficacy minimums)",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/heatenergy-recovery-ventilators-hrvs-ervs-energy-star-technical-specifications"
+    },
+    "nrcan-hrv-list": {
+      "label": "NRCan, ENERGY STAR heat and energy recovery ventilators",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/energy-star/products/list-certified-products/heat-energy-recovery-ventilators"
+    },
+    "hc-ventilation": {
+      "label": "Health Canada, Ventilation and the indoor environment",
+      "url": "https://www.canada.ca/en/health-canada/services/publications/healthy-living/ventilation-indoor-environment.html"
+    },
+    "air-heat": {
+      "label": "Heat capacity of air at room conditions, 1.21 kJ per cubic metre per degree (table of specific heat capacities)",
+      "url": "https://en.wikipedia.org/wiki/Table_of_specific_heat_capacities"
+    },
+    "epa-merv": {
+      "label": "US EPA, What is a MERV rating? (updated January 14, 2026)",
+      "url": "https://www.epa.gov/indoor-air-quality-iaq/what-merv-rating"
+    },
+    "epa-air-cleaners": {
+      "label": "US EPA, Guide to air cleaners in the home (updated October 1, 2026)",
+      "url": "https://www.epa.gov/indoor-air-quality-iaq/guide-air-cleaners-home"
+    },
+    "hc-air-cleaner": {
+      "label": "Health Canada, Using a portable air cleaner to improve indoor air (2024)",
+      "url": "https://www.canada.ca/content/dam/hc-sc/documents/services/air-quality/indoor-air-contaminants/choosing-portable-purifier/choosing-portable-purifier.pdf"
+    },
+    "cmhc-filter": {
+      "label": "CMHC, About Your House: Your furnace filter",
+      "url": "https://publications.gc.ca/collections/collection_2011/schl-cmhc/nh18-24/NH18-24-22-2008-eng.pdf"
+    },
+    "nrcan-gas-boilers": {
+      "label": "NRCan, Energy Efficiency Regulations: household gas boilers (90% AFUE for hot-water boilers made since July 1, 2023; page modified November 6, 2025)",
+      "url": "https://natural-resources.canada.ca/energy-efficiency/industry-energy-efficiency/energy-efficiency-regulations-standards-industry/gas-boilers-household"
+    },
+    "estar-boilers": {
+      "label": "ENERGY STAR, Boilers (90% AFUE gas, 87% oil)",
+      "url": "https://www.energystar.gov/products/boilers"
+    },
+    "epa-ducts": {
+      "label": "US EPA, Should you have the air ducts in your home cleaned? (updated February 19, 2026)",
+      "url": "https://www.epa.gov/indoor-air-quality-iaq/should-you-have-air-ducts-your-home-cleaned"
+    },
+    "cmhc-ducts": {
+      "label": "CMHC, About Your House: Should you get your heating ducts cleaned? (2007)",
+      "url": "https://publications.gc.ca/collections/collection_2011/schl-cmhc/nh18-24/NH18-24-29-2007-eng.pdf"
+    },
+    "estar-duct-sealing": {
+      "label": "ENERGY STAR, Duct sealing (20 to 30 percent of the air is lost in a typical house)",
+      "url": "https://www.energystar.gov/saveathome/heating-cooling/duct-sealing"
+    }
+  },
+  "furnace": {
+    "afue": {
+      "old": 0.6,
+      "mid": 0.8,
+      "min": 0.95,
+      "top": 0.98
+    },
+    "afueNote": "NRCan: gas furnaces from around 1970 ran at about 60%, mid-1980s models at 78 to 84%, condensing furnaces at 90 to 98%.",
+    "caMinSince": "2019-07-03",
+    "usMin": 0.8,
+    "usMinSince": 2015,
+    "usRule": {
+      "afue": 0.95,
+      "from": "2028-12-18",
+      "status": "On June 8, 2026 the US Supreme Court set aside the appeals-court decision that had upheld the rule and sent the case back; the Department of Energy has said it is considering a delay to 2030. Until a court or the Department acts, the December 18, 2028 date stands."
+    },
+    "estar": {
+      "north": 0.97,
+      "south": 0.95,
+      "oil": 0.87
+    },
+    "lifeYears": [
+      15,
+      20
+    ],
+    "usInstalled": {
+      "typical": 4130,
+      "dollarYear": 2022,
+      "src": "eia-equipcosts"
+    }
+  },
+  "ac": {
+    "caMinSeer2": 13.4,
+    "estarSeer2": 15.2,
+    "estarEer2": 12.0,
+    "highSeer2": 18,
+    "oldSeer": 10,
+    "seer2PerSeer": 0.955,
+    "caInstalled": {
+      "low": 3200,
+      "high": 8500,
+      "ductwork": [
+        1000,
+        3000
+      ],
+      "src": "homestars-ac"
+    },
+    "usInstalled": {
+      "typical": 5320,
+      "dollarYear": 2022,
+      "src": "eia-equipcosts"
+    },
+    "refrigerant": "In the US, new residential systems made or imported since January 1, 2025 must use a refrigerant with a global warming potential of 700 or less (R-454B or R-32). On May 21, 2026 the EPA removed the deadline for installing older R-410A stock, so equipment made before 2025 can still be installed until it runs out."
+  },
+  "water": {
+    "usRuleFrom": "2029-05-06"
+  },
+  "thermostat": {
+    "setbackDeg": 3,
+    "setbackHours": 16,
+    "setbackNote": "3°C (about 5°F) lower for 8 hours overnight and 8 hours while the house is empty on a workday; heat pumps are limited to the 2°C NRCan advises.",
+    "estar": {
+      "share": 0.08,
+      "dollars": 50
+    }
+  },
+  "ventilation": {
+    "caLps": {
+      "bedrooms": 3,
+      "min": 22,
+      "max": 32,
+      "src": "nbc-932"
+    },
+    "usCfm": {
+      "perSqft": 0.03,
+      "perPerson": 7.5,
+      "bedrooms": 3,
+      "src": "acca-622"
+    },
+    "sre": {
+      "at0": 0.65,
+      "atMinus25": 0.6,
+      "typical": [
+        0.7,
+        0.8
+      ],
+      "src": "estar-hrv-spec"
+    },
+    "efficacyCfmPerWatt": 1.2,
+    "airKJperM3K": 1.21,
+    "lpsPerCfm": 0.4719
+  },
+  "filtration": {
+    "merv": [
+      {
+        "merv": 8,
+        "fine": null,
+        "mid": 0.2,
+        "coarse": 0.7
+      },
+      {
+        "merv": 11,
+        "fine": 0.2,
+        "mid": 0.65,
+        "coarse": 0.85
+      },
+      {
+        "merv": 13,
+        "fine": 0.5,
+        "mid": 0.85,
+        "coarse": 0.9
+      },
+      {
+        "merv": 16,
+        "fine": 0.95,
+        "mid": 0.95,
+        "coarse": 0.95
+      }
+    ],
+    "hepa": 0.9997,
+    "cadrShare": 0.6667,
+    "fanWatts": 100,
+    "portableWatts": 40,
+    "wattsNote": "Illustrative loads for the fan-cost table: read the wattage on your own furnace or cleaner and scale."
+  },
+  "boiler": {
+    "caMin": 0.9,
+    "caMinSince": "2023-07-01",
+    "steamMin": 0.82,
+    "returnC": [
+      45,
+      50
+    ],
+    "rated": 0.95,
+    "estar": {
+      "gas": 0.9,
+      "oil": 0.87
+    },
+    "usInstalled": {
+      "typical": 5940,
+      "dollarYear": 2022,
+      "src": "eia-equipcosts"
+    }
+  },
+  "ducts": {
+    "epaCost": [
+      450,
+      1000
+    ],
+    "leakShare": [
+      0.2,
+      0.3
+    ]
+  }
+}

@@ -1,0 +1,200 @@
+---
+/**
+ * /buying-guides/water-heaters/ on both home sites: a year of hot water from each kind of heater in every place we
+ * cover, what the pricier ones are worth paying for, sizing, and the rebates. Figures come from the planner's water
+ * heating model (src/lib/guide-run.ts): three people, each place's water temperature and energy prices.
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import {
+  guideRows, guide, HUB, FACTS, src, baseAsOf, PRICES_SOURCE, PERSONS, rebatesFor,
+  waterCost, hpwhSaving, spread, spreadWords, rangeWords, count, money, type GRow,
+} from '../../lib/guide-run';
+import { MODEL, source } from '../../lib/calc/data';
+import type { WaterHeaterKey } from '../../lib/calc/engine';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('water-heaters');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const W = MODEL.water;
+const $ = (x: number | null) => money(x, market);
+const temp = (c: number) => (isCA ? `${c.toFixed(0)}°C` : `${Math.round((c * 9) / 5 + 32)}°F`);
+const litres = PERSONS * W.litresPerPerson;
+const useWords = isCA ? `${litres} litres a day` : `${Math.round(litres / 3.785)} gallons a day`;
+
+const rows = guideRows(market);
+const gasRows = rows.filter((r) => r.price.gas != null);
+const TYPES: WaterHeaterKey[] = ['gasTank', 'gasTankless', 'electricTank', 'heatPump'];
+const cheapest = (r: GRow) => TYPES.map((t) => ({ t, c: waterCost(r, t) })).filter((x) => x.c != null).sort((a, b) => (a.c as number) - (b.c as number))[0]?.t;
+const sTankless = spread(gasRows, (r) => { const a = waterCost(r, 'gasTank'), b = waterCost(r, 'gasTankless'); return a == null || b == null ? null : a - b; });
+const sHp = spread(rows, hpwhSaving);
+const hpVsGas = count(gasRows, (r) => { const a = waterCost(r, 'gasTank'), b = waterCost(r, 'heatPump'); return a == null || b == null ? null : b < a; });
+const sInlet = spread(rows, (r) => r.inletC);
+const years = FACTS.horizon.waterYears;
+const label: Record<string, string> = { gasTank: 'Gas tank', gasTankless: 'Gas tankless', electricTank: 'Electric tank', heatPump: 'Heat pump water heater' };
+const cols: Col[] = TYPES.map((t) => ({
+  label: label[t],
+  cell: (r: GRow) => $(waterCost(r, t)),
+  cls: (r: GRow) => (cheapest(r) === t ? 'win' : ''),
+}));
+const cheapestGas = TYPES.map((t) => ({ t, n: gasRows.filter((r) => cheapest(r) === t).length })).filter((x) => x.n > 0).sort((a, b) => b.n - a.n);
+const cheapestWords = cheapestGas.map((x) => `the ${label[x.t].toLowerCase()} in ${x.n}`).join(' and ');
+const hpVsElec = count(rows, (r) => { const a = waterCost(r, 'electricTank'), b = waterCost(r, 'heatPump'); return a == null || b == null ? null : b < a; });
+const perPerson = isCA ? `${W.litresPerPerson} litres` : `about ${Math.round(W.litresPerPerson / 3.785)} gallons (${W.litresPerPerson} liters)`;
+
+const tank = MODEL.costs.tankWaterHeater;
+const tankless = MODEL.costs.tanklessWaterHeater;
+const costSrc = source(tank.src);
+const hpwhRebates = isCA ? rebatesFor('hpwh') : [];
+const ruleDate = fmtDate(FACTS.water.usRuleFrom, market);
+const title = `Water heater buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `Tank, tankless or heat pump water heater in ${country}: a year of hot water from each at your local prices, what the pricier ones are worth, sizing and rebates.`;
+
+const faqs = [
+  { q: 'Is a tankless water heater worth it?', a: `On energy alone, often not. For ${PERSONS} people a gas tankless heater saves ${spreadWords(sTankless, market)} against a standard gas tank, which over ${years} years is worth ${$((sTankless?.min ?? 0) * years)} to ${$((sTankless?.max ?? 0) * years)} extra.${isCA ? ` A tankless costs ${$(tankless.low)} to ${$(tankless.high)} installed against ${$(tank.low)} to ${$(tank.high)} for a tank.` : ''} The US Department of Energy found the saving is largest in homes that use little hot water and smallest in homes that use a lot. The other reasons to buy one are endless hot water and floor space.` },
+  { q: 'How much does a heat pump water heater save?', a: `Against an electric tank it saves ${spreadWords(sHp, market)} for ${PERSONS} people, after counting the heat it takes from the house in winter. Against a gas tank it costs less to run in ${hpVsGas.yes} of the ${hpVsGas.of} places we cover with piped gas.` },
+  { q: 'Which water heater is cheapest to run?', a: `It depends on whether you have gas. In the ${gasRows.length} places we cover with piped gas, the cheapest to run is ${cheapestWords}. Without gas, a heat pump water heater costs less to run than an electric tank in ${hpVsElec.yes} of the ${hpVsElec.of} places we cover. The table has your place.` },
+  { q: 'What size water heater do I need?', a: `Start from how much hot water the household uses: NRCan's planning figure is ${perPerson} per person per day. For a tank, match the first-hour rating to your busiest hour. For a tankless heater, match the flow at your coldest incoming water temperature, which is what limits it in winter.` },
+  { q: 'Does a heat pump water heater work in a cold basement?', a: `Yes, with two cautions. It takes heat from the air around it, so in the heating season the house's heating has to replace that heat; our figures include it. And it needs enough air around it and a drain for the condensate, so check the maker's clearances before you buy.` },
+];
+
+const sources = [
+  { label: source('nrcan-water-heater-guide').title, url: source('nrcan-water-heater-guide').url },
+  { label: source('doe-tankless').title, url: source('doe-tankless').url },
+  { label: source('doe-hpwh-field').title, url: source('doe-hpwh-field').url },
+  { label: source('trca-step-hpwh').title, url: source('trca-step-hpwh').url },
+  { label: source('energystar-wh-criteria').title, url: source('energystar-wh-criteria').url },
+  ...(isCA ? [{ label: costSrc.title, url: costSrc.url }] : [src('doe-water-heaters')]),
+  PRICES_SOURCE,
+];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Water heaters · ${year}`}
+  h1={`Water heater buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Water heaters', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Replace or wait'], ['run', 'Cost to run'], ['types', 'The types'], ['size', 'Sizing'], ...(isCA ? ([['cost', 'Cost to buy']] as [string, string][]) : []), ['rebates', 'Rebates'], ['checklist', 'Quote checklist']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`Which water heater costs least to run depends on what gas and electricity cost where you live and on how cold the water arrives. This guide works out a year of hot water from each type in ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'}.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>{`With piped gas, the cheapest type to run is ${cheapestWords} of the ${gasRows.length} places we cover.`}</li>
+      <li>{`Without gas, a heat pump water heater costs less to run than an electric tank in ${hpVsElec.yes} of ${hpVsElec.of} places.`}</li>
+      <li>{`Against an electric tank, a heat pump water heater saves ${spreadWords(sHp, market)}, after counting the house heat it uses in winter.`}</li>
+      <li>{`A gas tankless heater saves ${rangeWords(sTankless, market)} against a gas tank. That rarely repays its higher price on energy alone; buy it for endless hot water or the space.`}</li>
+      <li>Most water heaters are replaced the day they fail. Choose the next one now and the better option is still on the table.</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Replace now, or wait?</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Replace now</strong> if the tank is leaking or rusting at the base, or the water runs rusty. A tank that fails floods the floor it sits on.</li>
+        <li><strong>Plan the replacement</strong> once a tank is past about ten years old. A heat pump water heater or a tankless unit usually needs new wiring, venting or a drain, which is hard to arrange in an emergency.</li>
+        <li><strong>Use less first.</strong>{` Low-flow showerheads and insulation on the first few ${isCA ? 'metres' : 'feet'} of hot pipe cut the load on whatever heater you buy.`}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>A year of hot water where you live</h2>
+    <p class="sec-intro">{`For ${PERSONS} people using ${useWords}, heated from each place's average cold-water temperature (${temp(sInlet?.min ?? 5)} in ${sInlet?.least.name} to ${temp(sInlet?.max ?? 20)} in ${sInlet?.most.name}). The cheapest type in each place is in green.`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="A year of hot water by type of water heater" />
+    <p class="g-note">
+      {`Efficiencies: gas tank ${W.types.gasTank.uef}, gas tankless ${W.types.gasTankless.uef}, electric tank ${W.types.electricTank.uef}, heat pump ${W.types.heatPump.uef} (a field figure from homes in the US Northeast; the label will show more). The heat pump column includes the extra space heating needed to replace the heat it takes from the house, priced at the heating most homes in each place have. A dash means no piped gas in our data.`}
+    </p>
+  </section>
+
+  <section class="sec" id="types">
+    <h2>The types, and who each one suits</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">Types of water heater</caption>
+        <thead><tr><th scope="col">Type</th><th scope="col">Good for</th><th scope="col">Watch for</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Type"><strong>Gas tank</strong></td><td data-label="Good for">The lowest price to buy where there is gas, and a like-for-like swap.</td><td data-label="Watch for">Venting. A condensing furnace no longer warms a shared chimney, so the water heater's vent may need changing.</td></tr>
+          <tr><td data-label="Type"><strong>Gas tankless</strong></td><td data-label="Good for">Endless hot water and a free patch of floor.</td><td data-label="Watch for">{`A saving of only ${rangeWords(sTankless, market)}, a larger gas line and new venting, and less flow when the incoming water is coldest.`}</td></tr>
+          <tr><td data-label="Type"><strong>Electric tank</strong></td><td data-label="Good for">The simplest install: no vent, no gas.</td><td data-label="Watch for">The highest running cost in most places with gas.</td></tr>
+          <tr><td data-label="Type"><strong>Heat pump water heater</strong></td><td data-label="Good for">{`Homes with an electric tank: it saves ${rangeWords(sHp, market)}.`}</td><td data-label="Watch for">It cools and dries the room it sits in, needs air space and a drain, and makes some noise.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="size">
+    <h2>Sizing</h2>
+    <div class="g-prose">
+      <ul>
+        <li>{`NRCan's planning figure is ${perPerson} of hot water per person per day. Count the people who will live in the house, not the bathrooms.`}</li>
+        <li><strong>Tanks:</strong> compare the first-hour rating on the label with your busiest hour (showers, a dishwasher and laundry together).</li>
+        <li><strong>Tankless:</strong>{` the rated flow assumes a set temperature rise. The colder the incoming water, the less flow you get, so ask for the flow at your winter water temperature. Our average inlet figures run from ${temp(sInlet?.min ?? 5)} to ${temp(sInlet?.max ?? 20)}.`}</li>
+        <li><strong>Heat pump water heaters:</strong> a larger tank lets the heat pump do more of the work before the backup element comes on.</li>
+        {isCA && <li>Public health guidance is to store water at 60°C and fit mixing valves that deliver 49°C at the taps. <a href="/learn/water-heaters/">Settings and safety</a>.</li>}
+      </ul>
+    </div>
+  </section>
+
+  {isCA && (
+    <section class="sec" id="cost">
+      <h2>What it costs to buy</h2>
+      <div class="g-prose">
+        <p>{`A storage tank costs ${$(tank.low)} to ${$(tank.high)} installed, and a tankless heater ${$(tankless.low)} to ${$(tankless.high)} (`}<a href={costSrc.url} rel="noopener">FurnacePrices.ca, August 2025</a>{`). We hold no current Canadian source for heat pump water heater prices, so ask for a quote and compare it with the saving for your place: over ${years} years it is worth ${$((sHp?.min ?? 0) * years)} to ${$((sHp?.max ?? 0) * years)} against an electric tank, before any rebate.`}</p>
+      </div>
+    </section>
+  )}
+
+  <section class="sec" id="rebates">
+    <h2>Rebates</h2>
+    <div class="g-prose">
+      {isCA ? (
+        <>
+          <p>{`The programs we track pay for heat pump water heaters in ${[...new Set(hpwhRebates.map((x) => x.region))].length} provinces:`}</p>
+          <ul>{hpwhRebates.map((x) => <li><strong>{`${x.region}: `}</strong>{`${x.amount}, `}{x.slug ? <a href={`/programs/${x.slug}/`}>{x.program}</a> : x.program}{x.who ? ` (${x.who})` : ''}</li>)}</ul>
+          <p>Most ask for an ENERGY STAR certified model. Check each program's rules before you buy.</p>
+        </>
+      ) : (
+        <p>{`The federal tax credit for water heaters (25C) ended for equipment placed in service after December 31, 2025. The Home Electrification and Appliance Rebates pay for heat pump water heaters by income, but only where a state runs them. `}<a href="/programs/home-energy-rebates/">Which states are open</a>{`. A Department of Energy rule sets new efficiency standards for most water heaters made from ${ruleDate}; check where it stands before you plan around it.`}</p>
+      )}
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you sign: the quote checklist</h2>
+    <div class="g-prose">
+      <ol>
+        <li>The exact model number and its efficiency (UEF), and the tank size or tankless flow rate.</li>
+        <li>Venting, the gas line or the electrical circuit, and the drain, priced in.</li>
+        <li>For a heat pump water heater: the room's size, the clearances and where the condensate goes.</li>
+        <li>For a tankless heater: the flow at your winter water temperature.</li>
+        <li>Removal of the old heater, permits and the warranty terms.</li>
+        <li>Proof the model is on the rebate program's list, and who applies.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="water-heaters" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`Hot water use is NRCan's ${perPerson} per person per day, heated to ${temp(W.deliveryC)} from each place's average cold-water temperature (annual mean air temperature plus ${isCA ? `${W.inletOffsetC}°C` : `${Math.round(W.inletOffsetC * 1.8)}°F`}, never below ${temp(W.inletMinC)}). The tankless figure uses rated efficiencies, which puts it at the generous end of the US Department of Energy's field range. We don't test water heaters.`}
+    </p>
+  </Fragment>
+</GuideShell>

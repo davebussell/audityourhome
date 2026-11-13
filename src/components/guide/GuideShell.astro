@@ -8,6 +8,7 @@
 import Base from '../../layouts/Base.astro';
 import { breadcrumbSchema, faqSchema, articleSchema, EDITOR } from '../../lib/schema';
 import { fmtDate, type Market } from '../../lib/heatpumps';
+import { usSpell, usSpellHtml } from '../../lib/us/spell';
 import '../../styles/hp.css';
 import '../../styles/guide.css';
 
@@ -36,8 +37,13 @@ interface Props {
   ogImage?: string;
   altPath?: string;
 }
-const { market, path, title, description, eyebrow, h1, crumbs, published, updated, asOf = [], toc, faqs, sources, methodHref, methodLabel = 'How we pick', ogImage, altPath } = Astro.props;
+const { market, path, title, description, eyebrow, h1, crumbs, published, updated, asOf = [], toc, sources, methodHref, methodLabel = 'How we pick', ogImage, altPath } = Astro.props;
 const isCA = market === 'ca';
+// The guides are written once for both sites; the US site gets American spellings (mold, liters, color).
+const spell = (html: string) => (isCA ? html : usSpellHtml(html));
+const faqs = isCA ? Astro.props.faqs : Astro.props.faqs.map((f) => ({ q: usSpell(f.q), a: usSpell(f.a) }));
+const slot = async (name: string) => (Astro.slots.has(name) ? spell(await Astro.slots.render(name)) : '');
+const [ledeHtml, shortHtml, bodyHtml, methodHtml] = await Promise.all([slot('lede'), slot('short'), slot('default'), slot('method')]);
 const schema = [
   breadcrumbSchema([{ name: 'Home', path: '/' }, ...crumbs]),
   articleSchema({ headline: h1, description, path, published, modified: updated, country: market }),
@@ -58,7 +64,7 @@ const jump: [string, string][] = [...toc, ...(faqs.length ? ([['faq', 'Questions
       <div class="hero-text">
         <p class="eyebrow">{eyebrow}</p>
         <h1>{h1}</h1>
-        <p class="lede measure"><slot name="lede" /></p>
+        <p class="lede measure" set:html={ledeHtml} />
         <p class="g-byline" data-no-gloss>
           Edited by <a href={EDITOR.path}>{EDITOR.name}</a> · Updated <time datetime={updated}>{fmtDate(updated, market)}</time>
           {published !== updated && <> · First published <time datetime={published}>{fmtDate(published, market)}</time></>}
@@ -67,10 +73,10 @@ const jump: [string, string][] = [...toc, ...(faqs.length ? ([['faq', 'Questions
       </div>
     </div>
 
-    {Astro.slots.has('short') && (
+    {shortHtml && (
       <div class="card g-short" id="short">
         <h2>The short version</h2>
-        <slot name="short" />
+        <Fragment set:html={shortHtml} />
       </div>
     )}
 
@@ -78,7 +84,7 @@ const jump: [string, string][] = [...toc, ...(faqs.length ? ([['faq', 'Questions
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
     </nav>
 
-    <slot />
+    <Fragment set:html={bodyHtml} />
 
     {faqs.length > 0 && (
       <section class="sec" id="faq">
@@ -96,10 +102,10 @@ const jump: [string, string][] = [...toc, ...(faqs.length ? ([['faq', 'Questions
 
     <section class="sec" id="sources">
       <h2>Sources and how this page is kept</h2>
-      <slot name="method" />
+      <Fragment set:html={methodHtml} />
       {asOf.length > 0 && (
         <p class="g-note" data-no-gloss>
-          <strong>What was checked when:</strong> {asOf.map((a, i) => <>{i > 0 && ' · '}{a.label} <time datetime={a.date}>{fmtDate(a.date, market)}</time></>)}.
+          <strong>What was checked when:</strong> {asOf.map((a, i) => <>{i > 0 && ' · '}{`${a.label} `}<time datetime={a.date}>{fmtDate(a.date, market)}</time></>)}.
         </p>
       )}
       <ul class="meta g-sources">

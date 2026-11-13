@@ -326,6 +326,47 @@ directory) is linked "en anglais"; say so rather than hiding it.
   table (Québec: $41,228 for one person to $140,225 for five or more). `programs.json`, `rebates.json`, `provinces.json`, the CA planner's
   federal-timing text and the rebates article were updated; the French page has the same facts.
 
+## The buying-guide set (2026-11-13; Dave: "Can you build the other guides. I will push everything after")
+Eight more guides on the GuideShell frame, a hub, and the commercial one on the building site. **Not pushed or deployed when written.**
+- **Where:** `/buying-guides/` (hub, `GuidesHub.astro`) and `/buying-guides/{furnaces,air-conditioners,water-heaters,smart-thermostats,hrv-erv,
+  air-filtration,boilers,duct-cleaning}/` on both home sites (`src/components/guide/*Guide.astro`, thin routes in `src/pages/{ca,us}/buying-guides/`).
+  The heat pump guide stays at `/heat-pumps/buying-guide/` and is listed first in `GUIDES` (`src/lib/guide-run.ts`). Building site:
+  `/commercial-hvac/` (`src/pages/bu/commercial-hvac.astro`, NRCan's staged order: equipment is replaced last).
+- **The numbers:** `src/lib/guide-run.ts`. `guideRows(market)` gives one row per Canadian city (70) or US metro (26): fuel prices per GJ,
+  the reference house's heat demand (same model as the planner; 1966–1980 detached, 149 m² / 1,600 sq ft), hot water for three people,
+  cooling kWh × SEER, the legal minimum SEER2, and the heating most homes there have (`sys`). Helpers: `yearAt/yearBy` (a year of heat),
+  `tieCop` (the COP above which a heat pump beats gas), `coolCost`, `waterCost` (heat pump water heaters include the house heat they take),
+  `setbackShare`, `ventilation` (code or ASHRAE 62.2 airflow, heat carried out, heat recovered, fan watts), `yearOfWatts`, `rebatesFor`
+  (open `hpwh` and `thermostat` rebates from the calculators' data, amounts built from `kind/rate/cap/pct`), `spread/spreadWords/rangeWords/count`.
+  `hubLines()` gives each guide's headline figure for the hub cards. Every sentence with a number is built from these; don't type one in.
+- **Standards and guidance:** `src/data/guides/facts.json` (`checked`, a `sources` map, and the constants each guide quotes: AFUE levels and
+  the US 95% rule's status, SEER2 minimums and ENERGY STAR levels, the MERV table, ventilation rates and HRV minimums, boiler rules, EPA's
+  duct-cleaning figures, the 15- and 12-year horizons used for "worth paying extra"). `tools/picks/check.mjs` warns at 90 days and fails
+  the build at 180, like the picks. Installed prices: Canada furnace and water heaters from FurnacePrices.ca (still the weak spot), Canada
+  AC from HomeStars, US furnace/AC/boiler from the EIA's 2023 equipment-cost report (2022 dollars). **Where we hold no price source (heat
+  pump water heaters, HRVs, US water heaters) the guide gives "what it is worth paying extra" instead of a price.**
+- **Tables:** `PlaceTable.astro` takes `rows` and `cols` (functions of a row). It leads with the largest city per province (Canada) or the
+  ten largest metros (US) and folds every other place into a `<details class="g-all">`, so phones get a short table and the page still
+  carries all 70 or 26 local figures. `GuideList.astro` is the "More buying guides" block at the foot of each guide.
+- **US spelling:** the guides are written once. `GuideShell` renders its slots to strings and, on the US site, runs `usSpellHtml`
+  (`src/lib/us/spell.ts`: mold, liters, meters, color, odor, vapor…) over text nodes only; FAQ text goes through `usSpell`. Units still
+  need a conditional in the guide (°C/°F, litres/gallons).
+- **Findings on 2026-11-13 (the pages say them straight):** 95%→98% furnace saves $15–$80 a year in Canada, $0–$50 in the US; a SEER2 18
+  air conditioner saves $5–$70 a year over the minimum in Canada, $35–$265 in the US; gas tankless is the cheapest water heater to run in
+  every Canadian city with gas, and a heat pump water heater beats an electric tank everywhere; an HRV's recovered heat less its fan power
+  runs from −$30 to +$40 a year where most homes heat with gas and $130–$1,200 where they heat with baseboards (it comes out ahead in 6 of
+  26 US metros); a condensing boiler is worth a further $30–$180 a year in Canada when the return water is cool enough to condense.
+- **Wiring:** Canada: a fourth "Buying guides" column in the Learn menu. US: a new top-level menu labelled **"Guides"** (not "Buying
+  guides": six items must fit the bar from 1141px; the longer label overflowed up to about 1225px). Footer links on all three sites, a third
+  card on the heat pump hub, guide buttons first under "Related" on the matching `/learn/` pages, a line on the air purifier and air
+  quality monitor product pages, and a link from `/audit-levels/` on the building site.
+- **Gotchas:** an Astro table row that mixes `<strong>` and template-literal expressions once emitted a stray `<strong>` after `</table>`
+  (everything below went bold): build such tables from an array with `set:html` for the rich cell, as the furnace guide's first table does.
+  One direct quote only (the EPA's duct-cleaning sentence); the rest of the guidance is paraphrased with the source at the foot.
+- **Not done:** model picks for furnaces, air conditioners, boilers, thermostats and HRVs (needs certified-model lists; data.energystar.gov
+  is blocked here); French versions under `/fr/`; per-province pages for each guide (the place tables carry the local numbers for now); a
+  quote form on the furnace, AC and boiler guides (Dave's call: it changes what the referral partner receives).
+
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality
   monitors), and the other session's auto-reply function (`submission-created`, live on .ca; switched off in code on .com and the building

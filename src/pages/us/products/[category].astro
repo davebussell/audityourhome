@@ -94,6 +94,9 @@ const ogImage = ogFor(OG_PHOTO[category ?? ''] ?? 'home-hero');
     )}
 
     <AffiliateDisclosure />
+    {['air-purifiers', 'air-quality-monitors'].includes(c.slug) && (
+      <p style="margin:12px 0 0"><a href="/buying-guides/air-filtration/">Air filter and purifier buying guide</a>: which filter rating to buy, how to size a purifier to a room, and what the fan costs to run where you live.</p>
+    )}
 
     {g ? <GearPicks market="us" slug={c.slug} /> : (<>
     <div class="pick-list">

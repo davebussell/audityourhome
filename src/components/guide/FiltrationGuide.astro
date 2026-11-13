@@ -1,0 +1,175 @@
+---
+/**
+ * /buying-guides/air-filtration/ on both home sites: whether you need more filtration, which furnace filter rating
+ * to buy, how to size a portable air cleaner, and what running a fan for filtration costs in every place we cover
+ * (src/lib/guide-run.ts). Ratings and guidance are the US EPA's and Health Canada's (facts.json).
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import { guideRows, guide, HUB, FACTS, src, baseAsOf, PRICES_SOURCE, yearOfWatts, spread, spreadWords, rangeWords, money, pct0 } from '../../lib/guide-run';
+import { type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('air-filtration');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const X = FACTS.filtration;
+const $ = (x: number | null) => money(x, market);
+const rows = guideRows(market);
+const W = X.fanWatts;
+const sFan = spread(rows, (r) => yearOfWatts(r, W));
+const cols: Col[] = [
+  { label: 'Electricity, per kWh', cell: (r) => `${(r.kwh * 100).toFixed(1)}¢` },
+  { label: `Each ${W} watts of fan, all year`, cell: (r) => $(yearOfWatts(r, W)) },
+  { label: `A ${X.portableWatts}-watt portable cleaner, all year`, cell: (r) => $(yearOfWatts(r, X.portableWatts)) },
+];
+const share = (x: number | null) => (x == null ? 'not rated' : `${pct0(x)} or more`);
+const room = 120;
+const cadr = Math.round(room * X.cadrShare);
+const smoke = isCA ? '/issues/wildfire-smoke/' : '/issues/dust-smoke/';
+const title = `Air filter and purifier buying guide, ${isCA ? 'Canada' : 'US'} (${year}) | AuditYourHome`;
+const description = `Which furnace filter rating to buy, how to size a portable air purifier to a room, what to avoid, and what running a fan for filtration costs in ${country}.`;
+
+const faqs = [
+  { q: 'What MERV rating should I buy?', a: `The US EPA advises a filter rated at least MERV 13, or as high as your system's fan and filter slot can take. A MERV 13 filter catches ${share(X.merv[2].fine)} of the finest particles it is tested on (0.3 to 1 micron), where a MERV 8 filter is not rated for them at all. A denser filter can cut airflow, so ask a technician before going up a step.` },
+  { q: 'How big an air purifier do I need?', a: `Match the clean air delivery rate (CADR) to the room. Health Canada's rule is a smoke CADR of at least two-thirds of the room's area in square feet: a ${room} sq ft bedroom needs a CADR of at least ${cadr}. The rating assumes a ceiling of eight feet, so go larger for higher ceilings.` },
+  { q: 'Do air purifiers use a lot of electricity?', a: `It depends on your price. Every ${W} watts running all year costs ${spreadWords(sFan, market)}. Check the wattage on the label of the furnace or the cleaner and scale from the table.` },
+  { q: 'Are ionizers and ozone generators safe?', a: `Avoid anything that makes ozone on purpose. Health Canada and the US EPA both say so: ozone can harm your health. The EPA adds that ionizers and electrostatic precipitators can produce it as a by-product. A filter and a fan do the job without that risk.` },
+  { q: 'Will a better filter fix my air quality?', a: `It removes particles: dust, pollen, smoke. It does nothing for gases such as radon or carbon monoxide, and little for moisture. Measure first so you know which problem you have.` },
+];
+const sources = [src('epa-merv'), src('epa-air-cleaners'), src('hc-air-cleaner'), src('cmhc-filter'), src('nrcan-kthi-9'), PRICES_SOURCE];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Air filters and purifiers · ${year}`}
+  h1={`Air filter and purifier buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Air filters and purifiers', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Do you need it'], ['filter', 'Furnace filters'], ['portable', 'Portable cleaners'], ['run', 'Cost to run'], ['avoid', 'What to avoid'], ['checklist', 'Before you buy']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`Filtration is two decisions: the filter in the furnace or air handler, and whether to add a portable cleaner in the rooms you use most. This guide covers both, with the rating to buy, the size to buy and what the fan costs to run in ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'}.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>Measure first. A filter removes particles; it does nothing for radon, carbon monoxide or damp.</li>
+      <li>Furnace filter: MERV 13 if the system can take it, on the US EPA's advice. Check with a technician before going denser.</li>
+      <li>{`Portable cleaner: a HEPA unit with a smoke CADR of at least two-thirds of the room's area in square feet (${cadr} for a ${room} sq ft room).`}</li>
+      <li>{`A filter only works while air moves through it. Every ${W} watts of fan running all year costs ${rangeWords(sFan, market)}.`}</li>
+      <li>Skip anything that produces ozone.</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Do you need more filtration?</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Yes,</strong> if smoke reaches you in fire season, someone in the house has asthma or allergies, or you live beside a busy road. <a href={smoke}>{isCA ? 'What to do about wildfire smoke' : 'What to do about dust and smoke'}</a>.</li>
+        <li><strong>First, stop the source.</strong> A range hood that vents outdoors and no smoking indoors come before any filter.</li>
+        <li><strong>It is the wrong tool</strong> for radon, carbon monoxide, mould or stuffy air. Those need a <a href="/tests/radon/">radon test</a>, a <a href="/tests/carbon-monoxide/">CO alarm</a>, a moisture fix or ventilation.</li>
+      </ul>
+    </div>
+    <div class="card g-test">
+      <h3>Measure before you buy</h3>
+      <p>An air quality monitor that reads fine particles (PM2.5) shows whether you have a problem, when it happens and whether the fix worked.</p>
+      <ul>
+        <li><a href="/products/air-quality-monitors/">The air quality monitors we'd buy</a>.</li>
+        <li><a href="/products/air-purifiers/">Air purifiers: what to look for</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="filter">
+    <h2>The furnace or air handler filter</h2>
+    <p class="sec-intro">MERV is the filter's rating: the higher the number, the smaller the particles it catches. These are the minimum shares caught at each rating, from the US EPA's table.</p>
+    <div class="tablewrap card">
+      <table class="stack dt g-num">
+        <caption class="sr-only">Share of particles caught by MERV rating</caption>
+        <thead><tr><th scope="col">Rating</th><th scope="col" class="num">Fine (0.3 to 1 micron): smoke</th><th scope="col" class="num">Medium (1 to 3 microns)</th><th scope="col" class="num">Coarse (3 to 10 microns): dust, pollen</th></tr></thead>
+        <tbody>
+          {X.merv.map((m) => (
+            <tr>
+              <td data-label="Rating"><strong>{`MERV ${m.merv}`}</strong></td>
+              <td class="num" data-label="Fine (0.3 to 1 micron)">{share(m.fine)}</td>
+              <td class="num" data-label="Medium (1 to 3 microns)">{share(m.mid)}</td>
+              <td class="num" data-label="Coarse (3 to 10 microns)">{share(m.coarse)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Buy MERV 13 if the system can take it.</strong> That is the US EPA's advice: at least MERV 13, or as high as the fan and filter slot allow.</li>
+        <li><strong>Check before going denser.</strong> CMHC notes some higher-rated filters cut airflow and affect how the furnace performs. Ask about a deeper filter cabinet: a thicker filter has more surface, which eases the airflow at the same rating.</li>
+        <li><strong>Change it on time.</strong> NRCan's guidance is to change or clean a forced-air filter every three months, or sooner if it is loaded.</li>
+        <li><strong>HEPA is not a MERV rating.</strong>{` A HEPA filter catches ${(X.hepa * 100).toFixed(2)}% of particles at 0.3 microns. HEPA filters are used in portable cleaners, not in a standard furnace filter slot.`}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="portable">
+    <h2>Portable air cleaners</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Size it by CADR.</strong>{` Health Canada: a smoke CADR of at least two-thirds of the room's floor area in square feet. A ${room} sq ft bedroom needs ${cadr} or more; a 300 sq ft living room needs ${Math.round(300 * X.cadrShare)}.`}</li>
+        <li><strong>Buy certified figures.</strong> Look for a CADR certified by the Association of Home Appliance Manufacturers (AHAM).</li>
+        <li><strong>Carbon is for gases.</strong> Some units add activated carbon for odours and vapours. Health Canada notes there is no widely used rating for those filters, so treat the claims with care.</li>
+        <li><strong>Place it where you are.</strong> Run it in the room you spend the most time in, with doors and windows closed, and keep the airflow clear of furniture.</li>
+        <li><strong>Count the filters.</strong> Check the replacement filter's price and how often it is needed before you buy.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What the fan costs to run where you live</h2>
+    <p class="sec-intro">{`A filter cleans air only while the fan is running, so more filtration means more fan hours. This is what a fan costs when it runs all year, at each place's electricity price.`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="Yearly cost of running a fan for filtration" />
+    <div class="g-prose">
+      <p>{`Find the wattage on your furnace's or cleaner's label and scale from the ${W}-watt column. If you run the furnace fan continuously, the motor matters: NRCan says a brushless DC (ECM) motor can cut a furnace's electricity use by more than 70% in continuous circulation. With an older motor, a portable cleaner in the bedroom is usually the cheaper way to get clean air overnight.`}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="avoid">
+    <h2>What to avoid</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Ozone generators.</strong> Health Canada and the US EPA both advise against devices that produce ozone.</li>
+        <li><strong>Ionizers and electrostatic precipitators</strong> that are not certified as low-ozone. The EPA notes they can emit ozone as a by-product.</li>
+        <li><strong>Claims about viruses, mould or "all pollutants".</strong> The EPA is plain that no air cleaner or filter removes everything.</li>
+        <li><strong>Duct cleaning sold as an air quality fix.</strong> <a href={`${HUB}duct-cleaning/`}>When duct cleaning is worth it</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you buy</h2>
+    <div class="g-prose">
+      <ol>
+        <li>Measure fine particles for a week, including while cooking and on a smoky or high-pollen day.</li>
+        <li>Note the size printed on the furnace filter and the depth of the slot.</li>
+        <li>Ask a technician whether the system can take MERV 13, or whether a deeper filter cabinet is needed.</li>
+        <li>For a portable cleaner: the room's area, the certified smoke CADR, the wattage and the filter price.</li>
+        <li>Check it does not produce ozone.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="air-filtration" />
+
+  <Fragment slot="method">
+    <p class="g-note">Fan costs are the wattage shown, running 8,760 hours, at each place's marginal electricity price. Filter ratings are the US EPA's summary of the ASHRAE test. We don't test filters or air cleaners in a lab; first-hand tests of monitors are planned and will be reported on the product pages.</p>
+  </Fragment>
+</GuideShell>

@@ -265,6 +265,21 @@ export const NAV_CA: NavItem[] = [
           { href: '/glossary/', label: 'Glossary: every term A–Z' },
         ],
       },
+      {
+        title: 'Buying guides',
+        links: [
+          { href: '/buying-guides/furnaces/', label: 'Furnaces' },
+          { href: '/heat-pumps/buying-guide/', label: 'Heat pumps' },
+          { href: '/buying-guides/air-conditioners/', label: 'Air conditioners' },
+          { href: '/buying-guides/water-heaters/', label: 'Water heaters' },
+          { href: '/buying-guides/smart-thermostats/', label: 'Smart thermostats' },
+          { href: '/buying-guides/hrv-erv/', label: 'HRVs & ERVs' },
+          { href: '/buying-guides/air-filtration/', label: 'Air filters & purifiers' },
+          { href: '/buying-guides/boilers/', label: 'Boilers' },
+          { href: '/buying-guides/duct-cleaning/', label: 'Duct cleaning' },
+          { href: '/buying-guides/', label: 'All buying guides →' },
+        ],
+      },
     ],
     panelFoot: { href: '/learn/', label: 'Keeping the heat in — all 15 topics, with the numbers behind them →' },
   },
@@ -443,6 +458,45 @@ export const NAV_US: NavItem[] = [
       },
     ],
     panelFoot: { href: '/heat-pumps/#quote', label: 'Find heat pump installers in your area →' },
+  },
+  {
+    id: 'buying',
+    // 'Guides', not 'Buying guides': six items have to fit the bar from 1141px up
+    label: 'Guides',
+    lead: {
+      title: 'Buying guides with your local numbers',
+      desc: 'What a furnace, air conditioner or water heater costs to run, worked out for 26 metro areas from local climate and prices.',
+      href: '/buying-guides/',
+      cta: 'All buying guides →',
+    },
+    columns: [
+      {
+        title: 'Heating',
+        links: [
+          { href: '/heat-pumps/buying-guide/', label: 'Heat pumps', desc: 'With our three picks for each climate' },
+          { href: '/buying-guides/furnaces/', label: 'Furnaces', desc: 'What each efficiency level costs to run' },
+          { href: '/buying-guides/boilers/', label: 'Boilers', desc: 'Why the water temperature decides it' },
+          { href: '/buying-guides/smart-thermostats/', label: 'Smart thermostats', desc: 'What a setback saves with your heating' },
+        ],
+      },
+      {
+        title: 'Cooling & hot water',
+        links: [
+          { href: '/buying-guides/air-conditioners/', label: 'Air conditioners', desc: 'What a higher SEER2 saves in your summer' },
+          { href: '/buying-guides/water-heaters/', label: 'Water heaters', desc: 'Tank, tankless or heat pump' },
+          { href: '/heat-pumps/vs-gas-furnace/', label: 'Heat pump vs gas furnace', desc: 'Running costs, metro by metro' },
+        ],
+      },
+      {
+        title: 'Air',
+        links: [
+          { href: '/buying-guides/hrv-erv/', label: 'HRVs & ERVs', desc: 'What the recovered heat is worth' },
+          { href: '/buying-guides/air-filtration/', label: 'Air filters & purifiers', desc: 'Which rating, which size' },
+          { href: '/buying-guides/duct-cleaning/', label: 'Duct cleaning', desc: 'When it is worth it, when to skip it' },
+        ],
+      },
+    ],
+    panelFoot: { href: '/plan/', label: 'Not sure where to start? The planner puts the upgrades for your home in order →' },
   },
   { id: 'find', label: 'Find an auditor', href: '/find/' },
   { id: 'programs', label: 'Rebates & programs', href: '/programs/' },

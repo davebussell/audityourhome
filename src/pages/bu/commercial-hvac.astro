@@ -1,0 +1,195 @@
+---
+/**
+ * /commercial-hvac/ on audityourbuilding.com: what to do before replacing rooftop units, boilers or chillers.
+ * The order of work is NRCan's (Major Energy Retrofit Guidelines); the local parts come from the site's own data:
+ * each city's design temperature, the incentives that pay for the study, and the reporting rules.
+ */
+import BuildingBase from '../../layouts/BuildingBase.astro';
+import RequestForm from '../../components/building/RequestForm.astro';
+import Photo from '../../components/Photo.astro';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { ogFor } from '../../lib/photos';
+import { cities, cityLabel, allIncentives, allRules, isMandatory, PROVINCE_ORDER } from '../../lib/building';
+
+const CHECKED = 'November 13, 2026';
+const title = 'Replacing commercial HVAC: what to do first | AuditYourBuilding';
+const description =
+  'Before replacing rooftop units, boilers or chillers in Canada: the order NRCan recommends, what recommissioning saves, and the incentives that pay for the study.';
+
+const SRC = {
+  merg: 'https://natural-resources.canada.ca/sites/nrcan/files/oee/buildings/pdf/RetrofitGuidelines-e.pdf',
+  rcx: 'https://natural-resources.canada.ca/energy-efficiency/building-energy-efficiency/recommissioning',
+  ashrae: 'https://www.ashrae.org/technical-resources/standards-and-guidelines/read-only-versions-of-ashrae-standards',
+};
+// NRCan's figures, as read on the checked date
+const RCX = { low: 5, high: 15, top: 30, paybackYears: 3 };
+const RETROFIT = { minor: 15, majorLow: 15, majorHigh: 40 };
+
+const stages: [string, string][] = [
+  ['Existing building commissioning', 'Find out how the building runs now and fix what is set wrong: schedules, setpoints, sensors and controls.'],
+  ['Lighting', 'Lighting changes the heat the building gives off, so it changes both the heating and the cooling load.'],
+  ['Other loads', 'Equipment, plug loads and the building envelope. Each cut here is load the new plant never has to meet.'],
+  ['Air distribution', 'Fans, ducts and ventilation rates, matched to the loads that are left.'],
+  ['Heating and cooling', 'Only now size and replace the boilers, chillers and rooftop units, to the smaller load.'],
+];
+
+// ---- design temperature by city: the largest city in each province or territory, then the spread
+const byProv = PROVINCE_ORDER.map((p) => cities.filter((c) => c.prov === p).sort((a, b) => b.population - a.population)[0]).filter(Boolean);
+const coldest = cities.reduce((a, b) => (a.facts.designHeat < b.facts.designHeat ? a : b));
+const mildest = cities.reduce((a, b) => (a.facts.designHeat > b.facts.designHeat ? a : b));
+const degC = (t: number) => `${t.toFixed(0).replace('-', '−')}°C`;
+const fmt = (n: number) => Math.round(n).toLocaleString('en-CA');
+
+// ---- incentives that pay for the work that comes before the purchase
+const open = allIncentives().filter((i) => i.status === 'open');
+const tuning = open.filter((i) => /recommission|commissioning|optimi[sz]ation|tune-up/i.test(`${i.name} ${i.summary}`));
+const mandatory = allRules().filter(isMandatory);
+
+const ask: [string, string][] = [
+  ['What load is this sized to?', 'Ask for the calculation, not the nameplate of the unit being replaced.'],
+  ['What changes if we cut the load first?', 'A smaller unit costs less to buy and runs closer to its best efficiency.'],
+  ['How does it perform at part load?', 'Most hours of the year are mild. Ask for efficiency at typical conditions, not only at full output.'],
+  ['How will it be controlled?', 'Who programs the schedules, setpoints and outdoor-air settings, and how it ties into the building automation system.'],
+  ['Who commissions it?', 'Ask for functional testing at handover and a report you keep.'],
+  ['Which refrigerant, and what does service cost?', 'Ask what the maintenance contract covers and what the warranty requires.'],
+  ['Which incentive applies, and when must we apply?', 'Ask before anything is ordered: many programs need approval first.'],
+];
+
+const faq = [
+  {
+    q: 'Should we replace commercial HVAC like for like?',
+    a: `Usually not without checking. NRCan's retrofit guidelines note that many existing systems are oversized to begin with, and that a planned replacement is the opportunity to right-size. A system sized to the building's real load costs less to buy and runs more efficiently at typical conditions.`,
+  },
+  {
+    q: 'What does recommissioning save?',
+    a: `NRCan puts the saving at ${RCX.low} to ${RCX.high}% of energy use, with a payback of less than ${RCX.paybackYears} years in most cases, and notes it can sometimes reach ${RCX.top}%. It also shows how the building actually runs, which is what the new equipment should be sized to.`,
+  },
+  {
+    q: 'Do we need an energy audit before replacing HVAC?',
+    a: `For a planned replacement, yes. An ASHRAE Level 2 audit covers the loads, the operating changes and the capital options together, and it is the level most incentives and retrofit loans ask for. A major capital project usually needs the detailed analysis of Level 3.`,
+  },
+  {
+    q: 'A unit has failed. Is there time for any of this?',
+    a: `Not for all of it, but there is time to check the size against the load, ask for the controls and commissioning to be included, and ask whether an incentive applies before the order is placed. Then plan the rest of the building's equipment properly, before the next failure.`,
+  },
+];
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Replacing commercial HVAC', path: '/commercial-hvac/' }]),
+  faqSchema(faq),
+];
+---
+
+<BuildingBase title={title} description={description} schema={schema} ogImage={ogFor('commercial-energy-audit')}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Replacing commercial HVAC</span></nav>
+
+    <div class="page-hero has-photo">
+      <div class="hero-text">
+        <p class="eyebrow">Buying guide · heating and cooling · checked {CHECKED}</p>
+        <h1>Replacing commercial HVAC: what to do before you buy</h1>
+        <p class="lede">
+          A rooftop unit, boiler or chiller is sized to the load the building puts on it. Cut the load first and the new equipment is smaller, cheaper
+          and runs better. NRCan's retrofit guidelines put heating and cooling replacement last for that reason.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/request/">Request an audit</a>
+          <a class="btn btn-ghost" href="/audit-levels/">Which audit level</a>
+        </div>
+      </div>
+      <Photo name="commercial-energy-audit" eager sizes="(max-width: 860px) calc(100vw - 44px), 500px" />
+    </div>
+
+    <section class="block">
+      <div class="sec-head"><h2>The order NRCan recommends</h2><span class="tag">Equipment comes last</span></div>
+      <div class="tablewrap card">
+        <table class="stack">
+          <thead><tr><th>Stage</th><th>What it covers</th></tr></thead>
+          <tbody>
+            {stages.map(([name, what], i) => <tr><td data-label="Stage"><strong>{`${i + 1}. ${name}`}</strong></td><td data-label="What it covers">{what}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="small after">
+        {`The order is from NRCan's `}<a href={SRC.merg} rel="noopener">Major Energy Retrofit Guidelines for commercial and institutional buildings</a>{`: each stage changes the loads the next one has to serve. By its figures a minor retrofit saves up to ${RETROFIT.minor}% of a building's energy use and a major one ${RETROFIT.majorLow} to ${RETROFIT.majorHigh}%.`}
+      </p>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Where you are now</h2><span class="tag">Pick your case</span></div>
+      <div class="tablewrap card">
+        <table class="stack">
+          <thead><tr><th>Your situation</th><th>Start with</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Your situation">Equipment is near the end of its life and a replacement is in the capital plan</td><td data-label="Start with"><strong>A Level 2 audit</strong></td><td data-label="Why">It sizes the loads and prices the options together, and it is the level most incentives and loans accept. <a href="/audit-levels/">The three levels</a>.</td></tr>
+            <tr><td data-label="Your situation">Comfort complaints or rising bills, with equipment in mid-life</td><td data-label="Start with"><strong>Recommissioning</strong></td><td data-label="Why">{`NRCan puts the saving at ${RCX.low} to ${RCX.high}% with a payback of less than ${RCX.paybackYears} years in most cases, without new equipment.`}</td></tr>
+            <tr><td data-label="Your situation">A unit has failed and must be replaced now</td><td data-label="Start with"><strong>A load check on that unit</strong></td><td data-label="Why">NRCan notes many systems are oversized to begin with. Check before copying the old nameplate, then plan the rest.</td></tr>
+            <tr><td data-label="Your situation">A switch of fuel, or a building under a reporting or performance rule</td><td data-label="Start with"><strong>A Level 3 analysis</strong></td><td data-label="Why">{`Capital-intensive changes need detailed cost and savings analysis. ${mandatory.length} mandatory reporting rules are in force in the places we cover. `}<a href="/reporting-rules/">Reporting rules</a>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>What heating equipment is sized to, city by city</h2><span class="tag">{cities.length} cities</span></div>
+      <p class="small">
+        {`Heating plant is sized to the design temperature: the cold the building has to handle in all but the coldest hours of a normal winter. In the ${cities.length} cities we cover it runs from ${degC(mildest.facts.designHeat)} in ${cityLabel(mildest)} to ${degC(coldest.facts.designHeat)} in ${cityLabel(coldest)}, which is why a design copied from another city, or from the unit being replaced, can be wrong for the building.`}
+      </p>
+      <div class="tablewrap card">
+        <table class="stack">
+          <thead><tr><th>City</th><th>Design heating temperature</th><th>Heating degree days</th></tr></thead>
+          <tbody>
+            {byProv.map((c) => (
+              <tr>
+                <td data-label="City"><a href={`/commercial-energy-audit/${c.slug}/`}>{cityLabel(c)}</a>, {c.prov}</td>
+                <td data-label="Design heating temperature">{degC(c.facts.designHeat)}</td>
+                <td data-label="Heating degree days">{fmt(c.facts.hdd)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small after">The largest city we cover in each province and territory. <a href="/commercial-energy-audit/">Every city</a>, with its utilities, rules and incentives.</p>
+    </section>
+
+    <section class="block two">
+      <div>
+        <div class="sec-head"><h2>Incentives that pay for the study</h2><span class="tag">{open.length} open programs</span></div>
+        <div class="prose">
+          <p>
+            {`Of the programs we track, ${open.length} are open and pay toward audits, engineering studies or recommissioning: the work that comes before the purchase. ${tuning.length} of them pay for recommissioning or building optimisation:`}
+          </p>
+          <ul>
+            {tuning.map((i) => <li><a href={i.source} rel="noopener">{i.name}</a> ({i.provider})</li>)}
+          </ul>
+          <p>Check each program's rules on approval before work starts and on the audit level it accepts. <a href="/incentives/">Every incentive we track</a>, by province.</p>
+        </div>
+      </div>
+      <div class="card sheet ask">
+        <p class="eyebrow">Ask every supplier</p>
+        <ol>
+          {ask.map(([q, a]) => <li><strong>{q}</strong><span>{a}</span></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><h2>Common questions</h2></div>
+      <div class="measure">
+        {faq.map((f) => <details class="faq"><summary>{f.q}</summary><div class="faq-body"><p>{f.a}</p></div></details>)}
+      </div>
+    </section>
+
+    <div class="card card-pad srcs">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href={SRC.merg} rel="noopener">NRCan: Major Energy Retrofit Guidelines for commercial and institutional buildings, Principles (2016)</a></li>
+        <li><a href={SRC.rcx} rel="noopener">NRCan: Recommissioning for existing buildings (modified January 7, 2025)</a></li>
+        <li><a href={SRC.ashrae} rel="noopener">ASHRAE: Standard 211, commercial building energy audits</a></li>
+        <li><a href="/commercial-energy-audit/">Design temperatures and heating degree days: the climate station named on each city page</a></li>
+      </ul>
+      <p class="small mb-0">Checked against these pages on {CHECKED}. We don't sell or install equipment, and no manufacturer pays to appear here.</p>
+    </div>
+
+    <RequestForm context="commercial-hvac" heading="Planning a replacement?" sub="Tell us the building and the equipment in question. We'll help you scope the audit that should come first." />
+  </div>
+</BuildingBase>

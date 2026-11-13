@@ -1,0 +1,210 @@
+---
+/**
+ * /buying-guides/hrv-erv/ on both home sites: whether the house needs a heat or energy recovery ventilator, what
+ * the recovered heat is worth against the fans' electricity in every place we cover, and HRV or ERV. The energy
+ * figures are worked out from each place's heating degree days and prices (src/lib/guide-run.ts).
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import {
+  guideRows, guide, HUB, FACTS, src, baseAsOf, refHouseWords, PRICES_SOURCE, REF_SQFT,
+  ventilation, heatBy, hrvNet, spread, spreadWords, rangeWords, count, money, pct0, type GRow,
+} from '../../lib/guide-run';
+import { MODEL } from '../../lib/calc/data';
+import { type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('hrv-erv');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const V = FACTS.ventilation;
+const $ = (x: number | null) => money(x, market);
+const years = FACTS.horizon.hvacYears;
+
+const rows = guideRows(market);
+const v0 = ventilation(rows[0], market);
+const rate = isCA ? `${Math.round(v0.lps)} litres per second (${Math.round(v0.cfm)} cfm)` : `${Math.round(v0.cfm)} cfm`;
+const rateBasis = isCA
+  ? `the National Building Code's minimum for a ${V.caLps.bedrooms}-bedroom house`
+  : `ASHRAE 62.2's rate for a ${REF_SQFT.toLocaleString('en-US')} sq ft, ${V.usCfm.bedrooms}-bedroom house`;
+const lost = (r: GRow) => { const h = heatBy(r, r.sys); return h == null ? null : ventilation(r, market).loadGJ * h; };
+const back = (r: GRow) => { const h = heatBy(r, r.sys); return h == null ? null : ventilation(r, market).recoveredGJ * h; };
+const net = (r: GRow) => hrvNet(r, market);
+const sNet = spread(rows, net);
+const sBack = spread(rows, back);
+const pays = count(rows, (r) => { const n = net(r); return n == null ? null : n > 0; });
+const elecRows = rows.filter((r) => r.sys === 'electricResistance');
+const gasRows = rows.filter((r) => MODEL.systems[r.sys].fuel === 'gas');
+const sNetElec = spread(elecRows, net);
+const sNetGas = spread(gasRows, net);
+/** "from a net cost of $30 a year in X to a net saving of $1,200 in Y", or a plain range when nothing is negative */
+const netWords = (x: typeof sNet, places = true) =>
+  !x ? 'not available'
+    : x.min >= 0 ? (places ? spreadWords(x, market) : rangeWords(x, market))
+    : x.max <= 0 ? `a net cost of ${$(-x.max)} to ${$(-x.min)} a year`
+    : `between a net cost of ${$(-x.min)} a year${places ? ` (${x.least.name})` : ''} and a net saving of ${$(x.max)}${places ? ` (${x.most.name})` : ''}`;
+const cols: Col[] = [
+  { label: 'Heat the ventilation air carries out', cell: (r) => $(lost(r)), sub: (r) => MODEL.systems[r.sys].short },
+  { label: `Recovered at ${pct0(V.sre.at0)}`, cell: (r) => $(back(r)) },
+  { label: "The fans' electricity", cell: (r) => $(ventilation(r, market).fanCost) },
+  { label: 'Net, a year', cell: (r) => $(net(r)), cls: (r) => ((net(r) ?? 0) > 0 ? 'win' : 'lose') },
+];
+const title = `HRV and ERV buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `Do you need an HRV or ERV in ${country}? What the recovered heat is worth where you live, HRV or ERV by climate, the ratings that matter and the install checklist.`;
+
+const faqs = [
+  { q: 'Does an HRV pay for itself?', a: `On energy alone it depends on what you heat with. For ${refHouseWords(market)} ventilated at ${rate}, the heat an HRV recovers, less the electricity its fans use, comes to ${netWords(sNet)}. It comes out ahead in ${pays.yes} of the ${pays.of} places we cover.${sNetElec && sNetGas ? ` Where most homes heat with electric baseboards it is ${netWords(sNetElec, false)}; where most heat with gas, ${netWords(sNetGas, false)}.` : ''} The reason to buy one is fresh air and moisture control in a tight house; the recovered heat is what makes that affordable.` },
+  { q: 'HRV or ERV: which do I need?', a: `An HRV moves heat only and sends more of the winter moisture outdoors, which suits a house that is damp in winter. An ERV also moves moisture: NRCan recommends one where cooling loads are high, where indoor air gets very dry in winter, or in very dry climates, and Health Canada notes it helps keep summer humidity out.` },
+  { q: 'Do I need an HRV at all?', a: `If the house is tight, yes: it needs a steady supply of outdoor air that the leaks no longer provide. NRCan's rule is that if a house already shows excessive condensation and the moisture sources can't be reduced, any work that makes it more airtight has to include mechanical ventilation. A blower door test tells you how tight the house is.` },
+  { q: 'What ratings should I compare?', a: `Sensible recovery efficiency (SRE) at 0°C and at −25°C, and fan efficacy (airflow per watt). ENERGY STAR in Canada requires at least ${pct0(V.sre.at0)} at 0°C and ${pct0(V.sre.atMinus25)} at −25°C; NRCan says a typical HRV recovers ${pct0(V.sre.typical[0])} to ${pct0(V.sre.typical[1])}. The Home Ventilating Institute lists certified figures for each model.` },
+  { q: 'How much maintenance does an HRV need?', a: `Clean or replace the filters every one to three months, clean the core and check the drain about twice a year, and keep the outdoor hoods clear of snow and leaves. A unit with clogged filters moves little air and can freeze.` },
+];
+const sources = [
+  isCA ? src('nbc-932') : src('acca-622'),
+  src('estar-hrv-spec'), src('nrcan-hrv-list'), src('hc-ventilation'), src('air-heat'),
+  ...(isCA ? [{ label: 'NRCan, Searchable product list (ENERGY STAR and rated HRVs and ERVs)', url: 'https://spl-lpi.nrcan-rncan.gc.ca/en-US/' }] : []),
+  PRICES_SOURCE,
+];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · HRVs and ERVs · ${year}`}
+  h1={`HRV and ERV buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'HRVs and ERVs', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Do you need one'], ['run', 'What the heat is worth'], ['type', 'HRV or ERV'], ['ratings', 'Ratings'], ['install', 'Installation'], ['care', 'Upkeep'], ['checklist', 'Quote checklist']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`A heat recovery ventilator (HRV) or energy recovery ventilator (ERV) brings in outdoor air and uses the outgoing air to warm it. Whether that pays depends on your winter and your heating, so this guide works it out for ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'}.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>You buy an HRV or ERV for air quality and moisture control in a tight house. The recovered heat is what keeps the fresh air from costing much.</li>
+      <li>{`For our reference house the recovered heat, less the fans' electricity, comes to ${netWords(sNet)}. It comes out ahead in ${pays.yes} of the ${pays.of} places we cover.`}</li>
+      {sNetElec && sNetGas && <li>{`It is worth most where heat costs most: ${netWords(sNetElec, false)} where most homes heat with baseboards, and ${netWords(sNetGas, false)} where most heat with gas.`}</li>}
+      <li>HRV for a house that is damp in winter. ERV where winter air indoors gets very dry or summers are humid.</li>
+      <li>Balancing at installation matters as much as the model. Ask for the measured airflows in writing.</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Do you need one?</h2>
+    <div class="g-prose">
+      <p>Every house needs outdoor air. A leaky house gets it through the cracks, at random and at full heating cost. A tight house needs a fan to supply it, and an HRV or ERV is the fan that gives most of the heat back.</p>
+      <ul>
+        <li><strong>Yes,</strong> if windows drip in winter, the air is stale, or you are about to air seal and insulate. NRCan's rule: where there is already excessive condensation and the moisture sources can't be cut, airtightening has to come with mechanical ventilation.</li>
+        <li><strong>Maybe not,</strong> if the house is leaky and dry in winter. Seal it first, then ventilate on purpose.</li>
+        <li><strong>Check first</strong> that the bathroom and kitchen fans work and vent outdoors. They are the cheapest fix for moisture at the source.</li>
+      </ul>
+    </div>
+    <div class="card g-test">
+      <h3>Measure before you buy</h3>
+      <ul>
+        <li>A <a href="/tests/blower-door/">blower door test</a> measures how tight the house is, which decides how much ventilation it needs.</li>
+        {isCA && <li>A <a href="/tests/ventilation-assessment/">ventilation assessment</a> measures what the fans you have actually move.</li>}
+        <li>An <a href="/products/air-quality-monitors/">air quality monitor</a> with a carbon dioxide reading shows whether bedrooms get enough fresh air overnight.</li>
+        <li>A <a href="/tests/combustion-safety/">combustion safety test</a> confirms fans are not pulling exhaust back down a chimney.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What the recovered heat is worth where you live</h2>
+    <p class="sec-intro">{`A year of continuous ventilation at ${rate}, ${rateBasis}, for ${refHouseWords(market)}. Heat is priced at the heating most homes in each place have, named under the first figure.`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="Yearly value of the heat an HRV recovers, less its fan electricity" />
+    <p class="g-note">
+      {`Recovery at ${pct0(V.sre.at0)}, the minimum ENERGY STAR sets in Canada at 0°C; better units recover more. Fan power at ${V.efficacyCfmPerWatt} cfm per watt, the same specification's minimum, which gives ${Math.round(v0.fanWatts)} watts running all year. An exhaust fan moving the same air would also use electricity, so the true extra cost is a little lower. ${isCA ? '' : 'An ERV also cuts the cooling and drying load in a humid summer, which is not counted here.'}`}
+    </p>
+    <div class="g-prose">
+      <p>{`Over ${years} years the net figure is what the recovery is worth paying for, compared with exhaust fans alone: ${(sNet?.max ?? 0) > 0 ? `up to ${$((sNet?.max ?? 0) * years)} (${sNet?.most.name})` : 'nothing'}, and nothing in places where it is negative. Where it is small or negative, the case for an HRV or ERV rests on comfort and air quality, not on the bill.`}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="type">
+    <h2>HRV or ERV</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">HRV compared with ERV</caption>
+        <thead><tr><th scope="col"></th><th scope="col">HRV</th><th scope="col">ERV</th></tr></thead>
+        <tbody>
+          <tr><td data-label=""><strong>What it moves</strong></td><td data-label="HRV">Heat only.</td><td data-label="ERV">Heat and some moisture.</td></tr>
+          <tr><td data-label=""><strong>In winter</strong></td><td data-label="HRV">Sends more of the indoor moisture outdoors, so it dries the house.</td><td data-label="ERV">Keeps some moisture in, so the air is less dry.</td></tr>
+          <tr><td data-label=""><strong>In a humid summer</strong></td><td data-label="HRV">Brings outdoor humidity in.</td><td data-label="ERV">Keeps more of it out, which helps the air conditioner.</td></tr>
+          <tr><td data-label=""><strong>Suits</strong></td><td data-label="HRV">Houses that are damp in winter.</td><td data-label="ERV">Houses that get very dry in winter, very dry climates, and places with humid summers and air conditioning.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="g-note">NRCan recommends an ERV where cooling loads are high, where indoor moisture is very low, or in very dry climates such as northern Canada. For an ERV in a cold climate, check it was tested at low temperature.</p>
+  </section>
+
+  <section class="sec" id="ratings">
+    <h2>The ratings that matter</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Sensible recovery efficiency (SRE).</strong>{` The share of heat recovered after fan energy, leakage and frost control. Compare it at 0°C and at −25°C${isCA ? '' : ' (32°F and −13°F)'}. ENERGY STAR in Canada requires at least ${pct0(V.sre.at0)} and ${pct0(V.sre.atMinus25)}.`}</li>
+        <li><strong>Fan efficacy.</strong>{` Airflow for each watt of fan power. The same specification requires at least ${V.efficacyCfmPerWatt} cfm per watt for most units. The fans run all year, so this number is on your bill every month.`}</li>
+        <li><strong>Airflow.</strong> The unit has to deliver the house's ventilation rate at low speed with capacity to spare for a boost.</li>
+        <li><strong>Certification.</strong> Look for figures certified by the Home Ventilating Institute{isCA ? ', and the ENERGY STAR mark' : ''}.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="install">
+    <h2>Installation decides whether it works</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Its own ducts, or the furnace's.</strong> NRCan notes an HRV with its own ducts can be the most efficient setup, especially in a house without ductwork. Tied into furnace ducts, it needs the furnace fan to run, so an efficient (ECM) blower motor matters.</li>
+        <li><strong>Balancing.</strong> The air in has to match the air out. Too much in pushes moist air into the walls; too much out can pull exhaust down a chimney. Ask for the measured airflows on paper.</li>
+        <li><strong>Where the air goes.</strong> Fresh air to bedrooms and living rooms, stale air from bathrooms and the kitchen area.</li>
+        {isCA && <li><strong>Who installs it.</strong> NRCan recommends a contractor trained through HRAI or, in Quebec, the CMMTQ.</li>}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="care">
+    <h2>Upkeep</h2>
+    <div class="g-prose">
+      <ul>
+        <li>Clean or replace the filters every one to three months.</li>
+        <li>Clean the core and check the condensate drain about every six months.</li>
+        <li>Keep the outdoor hoods clear of snow, leaves and lint.</li>
+        <li>Most units defrost automatically in the cold. A core that keeps freezing points to dirty filters, a defrost fault or an unbalanced system.</li>
+      </ul>
+      {isCA && <p><a href="/learn/hrv-erv/">How HRVs and ERVs work, and the signs of trouble</a>.</p>}
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you sign: the quote checklist</h2>
+    <div class="g-prose">
+      <ol>
+        <li>The model, its SRE at 0°C and −25°C, and its fan efficacy, from the certified listing.</li>
+        <li>The ventilation rate the house needs and how it was worked out.</li>
+        <li>Where each supply and exhaust point goes, and whether it has its own ducts.</li>
+        <li>Balancing after installation, with the measured airflows left with you.</li>
+        <li>The controls: continuous low speed, with a boost switch in the bathrooms.</li>
+        <li>What maintenance is yours, and where the filters are.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="hrv-erv" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`Heat carried out by ventilation air = airflow × ${V.airKJperM3K} kJ per cubic metre per degree × each place's heating degree days. We count the heating season only and assume the unit runs all year at one speed. We don't test ventilators, and we hold no current installed-price source, so the guide gives what the recovery is worth instead of a price.`}
+    </p>
+  </Fragment>
+</GuideShell>

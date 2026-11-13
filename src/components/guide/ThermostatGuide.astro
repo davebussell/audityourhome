@@ -1,0 +1,168 @@
+---
+/**
+ * /buying-guides/smart-thermostats/ on both home sites: what a setback saves with each kind of heating in every
+ * place we cover, which thermostat each kind of system takes, and the rebates. Savings use NRCan's rule (2% per
+ * degree Celsius held for eight hours) on the reference house's heating bill (src/lib/guide-run.ts).
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import {
+  guideRows, guide, HUB, FACTS, src, baseAsOf, refHouseWords, PRICES_SOURCE, rebatesFor,
+  yearBy, setbackShare, setbackSaving, spread, spreadWords, rangeWords, money, pct0, type GRow,
+} from '../../lib/guide-run';
+import { MODEL } from '../../lib/calc/data';
+import { type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('smart-thermostats');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const T = FACTS.thermostat;
+const S = MODEL.setback;
+const $ = (x: number | null) => money(x, market);
+const deg = (c: number) => (isCA ? `${c}°C` : `${Math.round(c * 1.8)}°F`);
+const shareF = setbackShare(false);
+const shareHp = setbackShare(true);
+
+const rows = guideRows(market);
+const save = (sys: Parameters<typeof yearBy>[1], hp = false) => (r: GRow) => { const y = yearBy(r, sys); return y == null ? null : y * (hp ? shareHp : shareF); };
+const sMost = spread(rows, setbackSaving);
+const sGas = spread(rows, save('gasFurnaceHigh'));
+const sBb = spread(rows, save('electricResistance'));
+const sHp = spread(rows, save('ashpCold', true));
+const cols: Col[] = [
+  { label: 'Gas furnace', cell: (r) => $(save('gasFurnaceHigh')(r)) },
+  { label: 'Electric baseboards or furnace', cell: (r) => $(save('electricResistance')(r)) },
+  { label: `Heat pump (${deg(S.heatPumpMaxDeg)} setback)`, cell: (r) => $(save('ashpCold', true)(r)) },
+  { label: 'With the heating most homes here have', cell: (r) => $(setbackSaving(r)), sub: (r) => MODEL.systems[r.sys].short },
+];
+const rebates = isCA ? rebatesFor('thermostat', 'thermostat') : [];
+const title = `Smart thermostat buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `What a smart thermostat saves in ${country} with gas, baseboards or a heat pump, worked out for your place, which model your wiring takes, and the rebates.`;
+
+const faqs = [
+  { q: 'How much does a smart thermostat save?', a: `It saves what its schedule saves. By NRCan's rule (about ${pct0(S.perDegPer8h)} of heating energy for each degree Celsius of setback held for eight hours), a ${deg(T.setbackDeg)} setback overnight and through the workday cuts heating by about ${pct0(shareF)}. For ${refHouseWords(market)} that is ${spreadWords(sMost, market)} with the heating most homes in each place have. ENERGY STAR's field data across US homes averages about ${pct0(T.estar.share)} of heating and cooling bills.` },
+  { q: 'Do smart thermostats work with electric baseboards?', a: `Not the common ones. Baseboards run on line voltage (120 or 240 volts), so they need line-voltage thermostats, one in each room or area. Hydro-Québec recommends having them installed by a master electrician. The saving is the largest of any heating type because the heat costs the most: ${rangeWords(sBb, market)} in our table.` },
+  { q: 'Should I set back a heat pump?', a: `Only a little. NRCan advises setbacks of no more than ${deg(S.heatPumpMaxDeg)} for heat pumps, or a thermostat that starts recovery early, because a deep setback brings on the backup heat and can cost more than it saves. Use the thermostat the heat pump's maker recommends, especially for a variable-speed system.` },
+  { q: 'Is a smart thermostat better than a programmable one?', a: `For the same schedule, the saving is the same. What the smart one adds is that the schedule actually gets used: it can tell when the house is empty, be changed from a phone, and report what the heating did. A home that is always occupied saves less with either.` },
+  { q: 'Do I need a C wire?', a: `Most smart thermostats for central systems need a common (C) wire for power, and some come with an adapter for systems without one. Check the wires behind your current thermostat against the maker's compatibility checker before you buy.` },
+];
+const sources = [src('nrcan-kthi-9'), src('estar-thermostat-faq'), src('hq-smart-thermostats'), { label: 'NRCan, Heating and cooling with a heat pump (setbacks of no more than 2°C)', url: 'https://natural-resources.canada.ca/energy-efficiency/energy-star/heating-cooling-heat-pump' }, PRICES_SOURCE];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Smart thermostats · ${year}`}
+  h1={`Smart thermostat buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Smart thermostats', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'What it does'], ['run', 'What it saves'], ['fit', 'Which one fits'], ['features', 'Features'], ['rebates', 'Rebates'], ['checklist', 'Before you buy']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`A thermostat saves money one way: by keeping the house cooler when nobody needs the heat. What that is worth depends on your winter, your heating and your prices, so this guide works it out for ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'}.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>{`A ${deg(T.setbackDeg)} setback overnight and through the workday cuts heating by about ${pct0(shareF)}: ${spreadWords(sMost, market)} for our reference house.`}</li>
+      <li>{`The more your heat costs, the more it saves: ${rangeWords(sBb, market)} with electric baseboards, ${rangeWords(sGas, market)} with a gas furnace.`}</li>
+      <li>{`Heat pumps take only a ${deg(S.heatPumpMaxDeg)} setback, so the saving is smaller: ${rangeWords(sHp, market)}.`}</li>
+      <li>Buy for your wiring first. Baseboards need line-voltage thermostats; central systems need low-voltage ones.</li>
+      <li>A programmable thermostat set the same way saves the same. The smart one makes sure the schedule is used.</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>What a thermostat can and can't do</h2>
+    <div class="g-prose">
+      <p>{`A house loses heat faster the warmer it is inside. Holding it cooler for part of the day cuts the loss, and NRCan puts the saving at about ${pct0(S.perDegPer8h)} of heating energy for each degree Celsius held for eight hours. The thermostat's job is to make that happen without anyone remembering to do it.`}</p>
+      <ul>
+        <li>It does not make the furnace more efficient or fix a drafty house. <a href="/tests/blower-door/">Air sealing</a> and insulation save more, and for good.</li>
+        <li>If someone is home all day and likes it warm, there is little to save. ENERGY STAR says the same of homes that are always occupied.</li>
+        {isCA && <li>{`NRCan suggests ${S.minTempC}°C when you are asleep or away and 20°C when you are home and awake.`}</li>}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What a setback saves where you live</h2>
+    <p class="sec-intro">{`A year's saving for ${refHouseWords(market)} from a ${deg(T.setbackDeg)} setback held ${T.setbackHours} hours a day (overnight and the workday), by type of heating.`}</p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="Yearly saving from a thermostat setback by heating system" />
+    <p class="g-note">{`Heating only; a smart thermostat also trims cooling in summer. A dash means no piped gas in our data. Heat pumps are held to the ${deg(S.heatPumpMaxDeg)} setback NRCan advises.`}</p>
+  </section>
+
+  <section class="sec" id="fit">
+    <h2>Which thermostat fits your heating</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">Thermostat type by heating system</caption>
+        <thead><tr><th scope="col">You heat with</th><th scope="col">What to buy</th><th scope="col">Watch for</th></tr></thead>
+        <tbody>
+          <tr><td data-label="You heat with"><strong>A furnace or central air (low-voltage wiring)</strong></td><td data-label="What to buy">Any ENERGY STAR certified smart thermostat for 24-volt systems.</td><td data-label="Watch for">Whether you have a C wire, and how many heating and cooling stages the furnace has.</td></tr>
+          <tr><td data-label="You heat with"><strong>Electric baseboards or convectors</strong></td><td data-label="What to buy">Line-voltage smart thermostats, one for each room or area.</td><td data-label="Watch for">The wattage each thermostat can switch, and installation: Hydro-Québec recommends a master electrician.</td></tr>
+          <tr><td data-label="You heat with"><strong>A heat pump</strong></td><td data-label="What to buy">The thermostat the maker recommends, or one that controls the backup heat separately.</td><td data-label="Watch for">{`Setbacks deeper than ${deg(S.heatPumpMaxDeg)}, which bring on the backup heat.`}</td></tr>
+          <tr><td data-label="You heat with"><strong>A boiler with radiators or a heated floor</strong></td><td data-label="What to buy">A thermostat made for slow systems, or thermostatic valves on the radiators.</td><td data-label="Watch for">Slow response. NRCan's setback advice excludes some hot-water systems; an outdoor reset control does more.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="features">
+    <h2>The features worth paying for</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Occupancy sensing or location.</strong> It sets back when the house is empty without a fixed timetable. NRCan says these adaptive models save more than plain programmable ones.</li>
+        <li><strong>Early recovery.</strong> It starts warming the house ahead of time, so the backup heat on a heat pump stays off.</li>
+        <li><strong>Room sensors.</strong> Useful when the thermostat sits in the wrong place, such as a hallway that is warmer than the bedrooms.</li>
+        <li><strong>Energy reports.</strong> Run-time by day shows whether a change to the house or the schedule worked.</li>
+        <li><strong>Utility programs.</strong> ENERGY STAR certified models must be able to work with utility demand-response programs, which pay you to let the utility trim the setting at peak times.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="rebates">
+    <h2>Rebates</h2>
+    <div class="g-prose">
+      {isCA ? (
+        <>
+          <p>{`The programs we track pay for thermostats in ${[...new Set(rebates.map((x) => x.region))].length} provinces and territories:`}</p>
+          <ul>{rebates.map((x) => <li><strong>{`${x.region}: `}</strong>{`${x.amount}, `}{x.slug ? <a href={`/programs/${x.slug}/`}>{x.program}</a> : x.program}{x.who ? ` (${x.who})` : ''}</li>)}</ul>
+          <p>Several pay only for certain models or for homes with a certain kind of heating. Check the list before you buy.</p>
+        </>
+      ) : (
+        <p>Check whether your electric or gas utility pays part of the price of an ENERGY STAR certified smart thermostat, or pays you for joining a demand-response program. <a href="/programs/">The programs we track</a>, by state.</p>
+      )}
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you buy</h2>
+    <div class="g-prose">
+      <ol>
+        <li>Check the voltage: low-voltage (thin coloured wires) or line-voltage (thick wires, usually baseboards).</li>
+        <li>Photograph the wires behind the old thermostat and run the maker's compatibility checker.</li>
+        <li>For a heat pump, check the maker's list of approved thermostats.</li>
+        <li>Check the rebate's model list, and whether it needs a receipt or an instant code.</li>
+        <li>Decide the schedule you will actually keep. That is where the saving comes from.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="smart-thermostats" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`Savings apply NRCan's rule (${pct0(S.perDegPer8h)} per degree Celsius per eight hours) to the reference house's heating bill at each place's prices: ${refHouseWords(market)}. ${T.setbackNote} We don't test thermostats, and we don't yet pick models.`}
+    </p>
+  </Fragment>
+</GuideShell>

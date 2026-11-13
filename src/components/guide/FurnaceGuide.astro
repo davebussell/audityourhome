@@ -1,0 +1,232 @@
+---
+/**
+ * /buying-guides/furnaces/ on both home sites. The decision in order: does the furnace need replacing, what each
+ * efficiency level costs to run in every place we cover, staging, sizing, price, and furnace against heat pump.
+ * Every dollar figure is worked out at build time (src/lib/guide-run.ts); standards come from facts.json.
+ */
+import GuideShell from './GuideShell.astro';
+import PlaceTable, { type Col } from './PlaceTable.astro';
+import GuideList from './GuideList.astro';
+import {
+  guideRows, guide, HUB, FACTS, src, baseAsOf, refHouseWords, PRICES_SOURCE,
+  yearAt, yearBy, copHere, tieCop, spread, spreadWords, rangeWords, count, money, pct0, type GRow,
+} from '../../lib/guide-run';
+import { MODEL, source } from '../../lib/calc/data';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+
+interface Props { market: Market }
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const G = guide('furnaces');
+const PUBLISHED = '2026-11-13';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const F = FACTS.furnace;
+const A = F.afue;
+const heatLoss = isCA ? 'CSA F280' : 'Manual J';
+const $ = (x: number | null) => money(x, market);
+
+const rows = guideRows(market).filter((r) => r.price.gas != null);
+const gas = (r: GRow, eff: number) => yearAt(r, 'gas', eff);
+const diff = (a: number, b: number) => (r: GRow) => { const x = gas(r, a), y = gas(r, b); return x == null || y == null ? null : x - y; };
+const sOld = spread(rows, diff(A.old, A.min));
+const sMid = spread(rows, diff(A.mid, A.min));
+const sTop = spread(rows, diff(A.min, A.top));
+const years = FACTS.horizon.hvacYears;
+const hpWins = count(rows, (r) => { const h = yearBy(r, 'ashpCold'), g = gas(r, A.min); return h == null || g == null ? null : h < g; });
+const sTie = spread(rows, (r) => tieCop(r));
+
+const cols: Col[] = [
+  { label: `Old furnace (${pct0(A.old)})`, cell: (r) => $(gas(r, A.old)) },
+  { label: isCA ? `Mid-efficiency (${pct0(A.mid)})` : `Standard (${pct0(A.mid)})`, cell: (r) => $(gas(r, A.mid)) },
+  { label: `Condensing (${pct0(A.min)})`, cell: (r) => $(gas(r, A.min)) },
+  { label: `Top of the range (${pct0(A.top)})`, cell: (r) => $(gas(r, A.top)), sub: (r) => `${$(diff(A.min, A.top)(r))} less` },
+  { label: 'Cold-climate heat pump', cell: (r) => $(yearBy(r, 'ashpCold')), sub: (r) => `seasonal COP ${copHere(r).toFixed(1)}`, cls: (r) => ((yearBy(r, 'ashpCold') ?? 9e9) < (gas(r, A.min) ?? 0) ? 'win' : '') },
+  { label: 'Heat pump is cheaper above COP', cell: (r) => tieCop(r)?.toFixed(1) ?? '—' },
+];
+
+const needRows = [
+  { have: 'A cracked heat exchanger, or carbon monoxide at the furnace', todo: 'Replace it. Have a <a href="/tests/combustion-safety/">combustion safety test</a> done on whatever stays in the house.' },
+  { have: `An old furnace with a pilot light or a metal chimney vent (around ${pct0(A.old)} to ${pct0(A.mid)})`, todo: `Plan the replacement now, before it fails in January. This is where the saving is largest: ${rangeWords(sOld, market)} against a ${pct0(A.old)} furnace.` },
+  { have: `A condensing furnace under about ${F.lifeYears[0]} years old`, todo: 'Repair it. A new furnace of the same efficiency saves nothing on fuel.' },
+  { have: 'A furnace and an air conditioner that are both near the end', todo: 'Price a heat pump before you replace either. It cools like an air conditioner and can take over most of the heating. <a href="#vs">Furnace or heat pump</a>.' },
+];
+const caCost = MODEL.costs.gasFurnace;
+const caCostSrc = source(caCost.src);
+const usCost = F.usInstalled;
+const costLine = isCA
+  ? `${$(caCost.low)} to ${$(caCost.high)} installed for a typical gas furnace`
+  : `about ${$(usCost.typical)} installed for a typical gas furnace, in ${usCost.dollarYear} dollars`;
+const ruleDate = fmtDate(F.usRule.from, market);
+const title = `Furnace buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `How to choose a furnace in ${country}: what each efficiency level costs to run where you live, when the top models pay, sizing, price, and furnace or heat pump.`;
+
+const faqs = [
+  { q: `How much does a new furnace cost in ${country}?`, a: `Expect ${costLine} (${isCA ? caCostSrc.title : FACTS.sources[usCost.src as 'eia-equipcosts'].label}). ${isCA ? '' : 'Prices have risen since then, so treat it as a floor. '}New venting, a chimney liner for the water heater, duct changes and a two-stage or modulating model add to it. Compare at least two quotes for the same model.` },
+  { q: 'Is a 98% furnace worth it over a 95% one?', a: `On fuel alone, rarely. In the ${rows.length} places we cover with piped gas, the step from ${pct0(A.min)} to ${pct0(A.top)} saves ${spreadWords(sTop, market)} for ${refHouseWords(market)}. Over ${years} years that is worth at most ${$((sTop?.max ?? 0) * years)} extra, and far less in most places. Buy a two-stage or modulating furnace for steadier, quieter heat, not for the bill.` },
+  { q: 'How much will a new furnace save?', a: `It depends on what you have. Replacing a furnace from before about 1985 (around ${pct0(A.old)}) with a ${pct0(A.min)} one saves ${spreadWords(sOld, market)} for our reference house. Replacing a mid-efficiency (${pct0(A.mid)}) furnace saves ${rangeWords(sMid, market)}.` },
+  { q: 'Should I replace my furnace with a heat pump?', a: `On running cost it depends on local prices: a cold-climate heat pump costs less to run than a ${pct0(A.min)} gas furnace in ${hpWins.yes} of the ${hpWins.of} places we cover with piped gas. If the air conditioner is also due, a heat pump that shares the ducts with a furnace (a hybrid) gets you both. Our heat pump guide and the place-by-place table take it from there.` },
+  { q: 'What size furnace do I need?', a: `The size comes from a room-by-room heat-loss calculation (${heatLoss}), not from the old furnace's label or a rule per square foot. An oversized furnace costs more, runs in short bursts and heats less evenly. If you have insulated or air sealed since the old one went in, the house needs less than it did.` },
+  ...(isCA ? [] : [{ q: 'Are 80% furnaces being banned?', a: `Not yet. The federal minimum is still ${pct0(F.usMin)} AFUE. A Department of Energy rule would require ${pct0(F.usRule.afue)} for furnaces made from ${ruleDate}. ${F.usRule.status}` }]),
+  { q: 'How long does a furnace last?', a: `Hydro One puts a typical furnace life at ${F.lifeYears[0]} to ${F.lifeYears[1]} years, and longer with regular service. Age alone is not a reason to replace one that is safe and heating the house.` },
+];
+
+const sources = [
+  ...(isCA ? [src('nrcan-gas-furnaces')] : [src('asap-furnaces'), src('cb-furnace-scotus')]),
+  src('nrcan-hwg'),
+  src('estar-furnaces'),
+  isCA ? { label: caCostSrc.title, url: caCostSrc.url } : src('eia-equipcosts'),
+  src('hydro-one-furnace'),
+  PRICES_SOURCE,
+];
+---
+
+<GuideShell
+  market={market}
+  path={G.path}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Furnaces · ${year}`}
+  h1={`Furnace buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Buying guides', path: HUB }, { name: 'Furnaces', path: G.path }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={baseAsOf(market)}
+  toc={[['need', 'Replace or repair'], ['run', 'Cost to run'], ['stages', 'Stages and blower'], ['size', 'Sizing'], ['cost', 'Cost to buy'], ['vs', 'Furnace or heat pump'], ['rebates', 'Rebates'], ['checklist', 'Quote checklist']]}
+  faqs={faqs}
+  sources={sources}
+>
+  <Fragment slot="lede">
+    {`What a new furnace saves depends on your winter, your gas price and the furnace you have now. This guide works the numbers out for ${rows.length} ${isCA ? 'Canadian cities' : 'US metro areas'} and takes the decision in order.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>{isCA ? `Every gas furnace made for Canada since ${fmtDate(F.caMinSince, market)} is at least ${pct0(A.min)} efficient, so the real choice is between ${pct0(A.min)} and ${pct0(A.top)}.` : `New furnaces come in two kinds: standard (${pct0(F.usMin)} AFUE, the federal minimum) and condensing (${pct0(A.min)} and up). ENERGY STAR asks for ${pct0(F.estar.north)} in northern states and ${pct0(F.estar.south)} in southern ones.`}</li>
+      <li>{`Replacing a mid-efficiency (${pct0(A.mid)}) furnace with a condensing (${pct0(A.min)}) one saves ${spreadWords(sMid, market)} for our reference house.`}</li>
+      <li>{`The last step, ${pct0(A.min)} to ${pct0(A.top)}, saves only ${rangeWords(sTop, market)}. Pay for two stages or a modulating burner if you want steadier heat, not to cut the bill.`}</li>
+      <li>{`A cold-climate heat pump costs less to run than a ${pct0(A.min)} furnace in ${hpWins.yes} of the ${hpWins.of} places we cover with piped gas. `}<a href="#vs">See yours</a>.</li>
+      <li>{`The size comes from a heat-loss calculation (${heatLoss}), not from the old furnace. Get it in writing.`}</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Does the furnace need replacing?</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">Whether to repair or replace a furnace</caption>
+        <thead><tr><th scope="col">What you have</th><th scope="col">What we'd do</th></tr></thead>
+        <tbody>
+          {needRows.map((r) => (
+            <tr><td data-label="What you have"><strong>{r.have}</strong></td><td data-label="What we'd do" set:html={r.todo} /></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="card g-test">
+      <h3>Before you size anything, measure the house</h3>
+      <p>A furnace is sized to the heat the house loses on a cold day. Seal the leaks and top up the attic first and the house may need a smaller one.</p>
+      <ul>
+        <li>A <a href="/tests/blower-door/">blower door test</a> measures how leaky the house is.</li>
+        <li>A <a href="/tests/heat-loss-calc/">{`heat-loss calculation (${heatLoss})`}</a> gives the number the furnace is sized to.</li>
+        <li><a href="/plan/">The planner</a> puts the upgrades for your home in order.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What each efficiency level costs to run where you live</h2>
+    <p class="sec-intro">
+      {`AFUE is the share of the gas that ends up as heat in the house over a season. ${F.afueNote} The table is a year of heat for ${refHouseWords(market)}, at each place's gas price.`}
+    </p>
+    <PlaceTable market={market} rows={rows} cols={cols} caption="A year of heat by furnace efficiency, and against a heat pump" />
+    <p class="g-note">
+      {`Marginal energy prices${isCA ? '' : ' (state averages)'}; the gas account's fixed monthly charge is not included because it does not change with the furnace. Your house will use more or less than the reference house, but the differences between columns scale with it.`}
+    </p>
+    <div class="g-prose">
+      <p>{`Three things stand out. The big saving is in retiring an old furnace: ${spreadWords(sOld, market)}. ${isCA ? `Going from a mid-efficiency furnace to a condensing one saves ${rangeWords(sMid, market)}.` : `Choosing condensing over standard saves ${rangeWords(sMid, market)}, which is why it matters most in cold states and hardly at all in warm ones.`} And the top of the range saves little more: ${rangeWords(sTop, market)}, so over ${years} years it is worth paying at most ${$((sTop?.max ?? 0) * years)} extra for those three points, and usually far less.`}</p>
+      {!isCA && <p>{`The rule to watch: a federal standard would require ${pct0(F.usRule.afue)} AFUE for furnaces made from ${ruleDate}. ${F.usRule.status}`}</p>}
+    </div>
+  </section>
+
+  <section class="sec" id="stages">
+    <h2>One stage, two stages or modulating, and the blower</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Single stage.</strong> On at full power or off. The cheapest, and fine in a small or well-insulated house.</li>
+        <li><strong>Two stage.</strong> Runs at a lower setting most of the time and at full power on the coldest days: longer, quieter cycles and more even rooms.</li>
+        <li><strong>Modulating.</strong> Adjusts in small steps. NRCan notes staged and modulating furnaces fire at 60 to 100% of capacity for steadier cycles. The fuel saving over single stage is small; the comfort difference is what you pay for.</li>
+        <li><strong>The blower motor.</strong> Ask for a brushless DC (ECM) motor. NRCan says it can cut a furnace's electricity use by more than 70% when the fan runs continuously, which matters if you filter or ventilate through the ducts.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="size">
+    <h2>Sizing</h2>
+    <div class="g-prose">
+      <ul>
+        <li>{`Ask for a room-by-room heat-loss calculation (${heatLoss}) with the quote. The old furnace's size is not a guide: it is often larger than the house needs.`}</li>
+        <li>After insulation and air sealing a furnace can be oversized and run in short bursts. Size the new one to the house as it is now.</li>
+        <li>Have the installer confirm the ducts can carry the airflow, and measure it after the install.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="cost">
+    <h2>What it costs to buy</h2>
+    <div class="g-prose">
+      <p>{`Expect ${costLine} (`}<a href={isCA ? caCostSrc.url : FACTS.sources['eia-equipcosts'].url} rel="noopener">{isCA ? 'FurnacePrices.ca, April 2026' : 'US EIA, 2023'}</a>{`).${isCA ? '' : ' Prices have risen since, so treat it as a floor.'} The house and the contractor move the price more than the badge does.`}</p>
+      <ul>
+        <li>{`Going from a ${pct0(A.mid)} furnace to a condensing one means new plastic vent pipes through the wall and a drain for the condensate.`}</li>
+        <li>If the old furnace shared a chimney with a gas water heater, ask how the water heater will be vented once the furnace no longer warms the flue.</li>
+        <li>Two-stage and modulating models, a new thermostat and duct changes each add to the quote. Ask for them as separate lines.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="vs">
+    <h2>Furnace, heat pump or both</h2>
+    <div class="g-prose">
+      <p>{`A cold-climate heat pump costs less to run than a ${pct0(A.min)} gas furnace in ${hpWins.yes} of the ${hpWins.of} places we cover with piped gas. The last column of the table above is the test for your place: the heat pump's heat is cheaper whenever its COP (units of heat per unit of electricity) is above that number. It runs from ${sTie?.min.toFixed(1)} in ${sTie?.least.name} to ${sTie?.max.toFixed(1)} in ${sTie?.most.name}.`}</p>
+      <ul>
+        <li><strong>Where the number is below the seasonal COP in the heat pump column,</strong> the heat pump is cheaper over the whole winter. <a href="/heat-pumps/buying-guide/">The heat pump guide</a> covers the types and our picks.</li>
+        <li><strong>Where it is above that,</strong> a hybrid can still pay: the heat pump heats in mild weather, when its COP is highest, and the furnace takes over in the cold. It works if the heat pump's certified COP at 8°C (47°F) is above the number for your place.</li>
+        <li><strong>Where it is higher than any heat pump's COP,</strong> gas costs less to heat with at today's prices. A heat pump still replaces the air conditioner if you want one system for both.</li>
+      </ul>
+      <p><a href="/heat-pumps/vs-gas-furnace/">Heat pump against gas furnace, place by place</a>, with the gas price at which the two tie.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="rebates">
+    <h2>Rebates</h2>
+    <div class="g-prose">
+      {isCA ? (
+        <p>None of the rebate programs we track pays for a gas furnace. They pay for heat pumps, insulation, air sealing, windows, heat pump water heaters and smart thermostats. <a href="/programs/">Every program we track</a>, with amounts and rules.</p>
+      ) : (
+        <p>The federal tax credit for furnaces (25C) ended for equipment placed in service after December 31, 2025. Check whether your gas utility pays for a high-efficiency furnace. <a href="/programs/">The programs we track</a>, by state.</p>
+      )}
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you sign: the quote checklist</h2>
+    <div class="g-prose">
+      <ol>
+        <li>The exact model number and its AFUE, and whether it is single stage, two stage or modulating.</li>
+        <li>{`The heat-loss calculation (${heatLoss}) the size is based on.`}</li>
+        <li>A brushless DC (ECM) blower motor.</li>
+        <li>How the furnace and the water heater will be vented, and where the condensate drains.</li>
+        <li>Who registers the warranty, and by when.</li>
+        <li>Permits, the gas connection and removal of the old furnace, priced in.</li>
+        <li>A second quote for the same model, and a price for a heat pump or hybrid if the air conditioner is old.</li>
+      </ol>
+    </div>
+  </section>
+
+  <GuideList current="furnaces" />
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`The reference house is ${refHouseWords(market)}; its heat demand comes from the same model as our planner, scaled to each place's heating degree days. Furnace efficiencies are NRCan's. We don't test furnaces, and we don't yet pick models: when we do, the picks will be drawn from certified lists and shown with their reasons, as the heat pump picks are.`}
+    </p>
+  </Fragment>
+</GuideShell>
