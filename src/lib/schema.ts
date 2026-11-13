@@ -89,6 +89,25 @@ export function faqSchema(faqs: { q: string; a: string }[]) {
   };
 }
 
+/** The site's editor, as named on /about/#editor (the author of the buying guides). */
+export const EDITOR = { name: 'David Bussell', path: '/about/#editor' };
+
+/** A buying guide or data page: an Article with its editor and the dates it was published and last checked. */
+export function articleSchema(a: { headline: string; description: string; path: string; published: string; modified: string; country?: Country | null }) {
+  const site = siteFor(a.country ?? 'ca');
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: a.headline,
+    description: a.description,
+    datePublished: a.published,
+    dateModified: a.modified,
+    mainEntityOfPage: a.path,
+    author: { '@type': 'Person', name: EDITOR.name, url: EDITOR.path },
+    publisher: { '@type': 'Organization', name: site.name, url: site.url },
+  };
+}
+
 export function cityDirectorySchema(region: Region, providerNames: string[]) {
   return {
     '@context': 'https://schema.org',

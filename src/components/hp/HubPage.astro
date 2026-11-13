@@ -208,6 +208,17 @@ const tierRank: Record<string, number> = { budget: 1, mid: 2, mixed: 2.5, premiu
       {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
     </nav>
 
+    <div class="hp-start">
+      <a class="card" href="/heat-pumps/buying-guide/">
+        <strong>Heat pump buying guide</strong>
+        <span>Whether it pays with what you heat with now, which type fits, sizing, costs, rebates and the quote checklist.</span>
+      </a>
+      <a class="card" href="/heat-pumps/vs-gas-furnace/">
+        <strong>Heat pump or gas furnace?</strong>
+        <span>{`Running costs in every ${isCA ? 'city' : 'metro area'} we cover, and the gas price at which the two tie.`}</span>
+      </a>
+    </div>
+
     <section id="top-picks" class="sec">
       <h2>Our three picks for your area</h2>
       <p class="sec-intro">

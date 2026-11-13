@@ -1,0 +1,60 @@
+/* ============================================================
+   Buying guides and data pages (components/guide/GuideShell.astro). Sits on hp.css: the same quiet cards, plus
+   the byline under the title, the short-version box and the "who wrote it, how it's paid for" box.
+   ============================================================ */
+
+.guide .g-byline { font-size: 14px; color: var(--muted); margin: 14px 0 0; line-height: 1.6; }
+.guide .g-byline a { font-weight: 600; }
+
+.guide .g-short { padding: 20px 24px; margin: 0 0 16px; border-left: 4px solid var(--heat); }
+.guide .g-short h2 { font-size: 20px; margin: 0 0 8px; }
+.guide .g-short ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; max-width: 80ch; }
+.guide .g-short li { line-height: 1.5; }
+
+.guide .g-prose { max-width: 76ch; }
+.guide .g-prose p { margin: 10px 0 0; line-height: 1.65; }
+.guide .g-prose ul, .guide .g-prose ol { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; line-height: 1.55; }
+.guide h3.sub-h { scroll-margin-top: 80px; }
+
+/* a call-out that answers "do I need this at all?" */
+.guide .g-test { padding: 18px 22px; margin-top: 14px; border-left: 4px solid var(--pine); max-width: 80ch; }
+.guide .g-test h3 { font-size: 17px; margin: 0 0 6px; }
+.guide .g-test p { margin: 6px 0 0; font-size: 15px; line-height: 1.6; }
+.guide .g-test ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+
+/* tables of numbers */
+.guide .g-num td.num, .guide .g-num th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.guide .g-num td.num { white-space: nowrap; }
+/* hp.css keeps table headers on one line; these tables have seven columns of them, so let them wrap */
+.hp.guide table.g-num thead th { vertical-align: bottom; line-height: 1.35; white-space: normal; }
+.hp.guide table.g-num thead th.num { min-width: 9ch; }
+.guide .g-num td:first-child { min-width: 12ch; }
+.guide .g-num td.g-places { min-width: 22ch; max-width: 34ch; line-height: 1.5; }
+.guide .g-num tr.g-group th a { color: var(--ink); }
+.guide .g-num .win { color: var(--pine); font-weight: 700; }
+.guide .g-num .lose { color: var(--muted); }
+.guide .g-num tr.g-group th { background: var(--paper); font-family: var(--display); font-size: 15px; text-align: left; padding: 12px 14px 8px; border-bottom: 2px solid var(--line-strong); }
+.guide .g-num .sub { display: block; font-size: 12.5px; color: var(--muted); font-weight: 400; }
+.guide .g-note { font-size: 13.5px; color: var(--muted); margin: 10px 0 0; max-width: 84ch; line-height: 1.55; }
+
+.guide .g-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.guide .g-links a { display: grid; gap: 4px; padding: 14px 16px; text-decoration: none; color: var(--ink); }
+.guide .g-links a:hover { border-color: var(--line-strong); color: var(--ink); }
+.guide .g-links strong { font-family: var(--display); font-size: 15.5px; }
+.guide .g-links span { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+@media (max-width: 900px) { .guide .g-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .guide .g-links { grid-template-columns: 1fr; } }
+
+.guide .g-sources { padding-left: 18px; margin: 10px 0 0; display: grid; gap: 4px; }
+.guide .g-paid { padding: 18px 22px; margin-top: 16px; max-width: 84ch; }
+.guide .g-paid p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+.guide .g-paid p + p { margin-top: 10px; }
+
+@media (max-width: 640px) {
+  .guide table.stack.g-num td.num { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; white-space: normal; text-align: right; padding: 5px 0; border-bottom: 1px solid var(--line); }
+  .guide table.stack.g-num td.num:last-child { border-bottom: 0; }
+  .guide table.stack.g-num td.num::before { margin-top: 0; text-align: left; }
+  .guide table.stack.g-num td.num .g-v { text-align: right; }
+  .guide table.stack.g-num tr.g-group th { display: block; }
+  .guide .g-short { padding: 16px 18px; }
+}

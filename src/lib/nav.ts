@@ -169,6 +169,9 @@ export const NAV_CA: NavItem[] = [
       {
         title: 'Compare',
         links: [
+          { href: '/heat-pumps/buying-guide/', label: 'Heat pump buying guide', desc: 'The decision in order, with your local numbers' },
+          { href: '/heat-pumps/picks/', label: 'Our three picks for your climate', desc: 'Best performance, do-it-yourself and value' },
+          { href: '/heat-pumps/vs-gas-furnace/', label: 'Heat pump vs gas furnace', desc: 'Running costs, city by city' },
           { href: '/heat-pumps/', label: 'Heat pump comparison guide', desc: 'Brands, models and warranties side by side' },
           { href: '/heat-pumps/brands/', label: 'Every certified brand', desc: 'Who really makes each one' },
           { href: '/heat-pumps/geothermal/', label: 'Geothermal & other types', desc: 'Ground-source, window, no outdoor unit' },
@@ -392,6 +395,9 @@ export const NAV_US: NavItem[] = [
       {
         title: 'Compare',
         links: [
+          { href: '/heat-pumps/buying-guide/', label: 'Heat pump buying guide', desc: 'The decision in order, with your local numbers' },
+          { href: '/heat-pumps/picks/', label: 'Our three picks for your climate', desc: 'Best performance, do-it-yourself and value' },
+          { href: '/heat-pumps/vs-gas-furnace/', label: 'Heat pump vs gas furnace', desc: 'Running costs, metro by metro' },
           { href: '/heat-pumps/', label: 'Heat pump comparison guide', desc: 'Brands, models and warranties side by side' },
           { href: '/heat-pumps/brands/', label: 'Every certified brand', desc: 'Who really makes each one' },
           { href: '/heat-pumps/geothermal/', label: 'Geothermal & other types', desc: 'Ground-source, window, no outdoor unit' },

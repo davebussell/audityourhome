@@ -1,0 +1,124 @@
+---
+/**
+ * The frame every buying guide and data page shares, so each one carries the same proof: a named editor, the date
+ * it was first published and the date its numbers were last checked, the short answer up front, the questions people
+ * ask (with FAQ markup), the sources with links, and how the page is paid for. The guide's own sections go in the
+ * default slot; `lede` and `short` are named slots.
+ */
+import Base from '../../layouts/Base.astro';
+import { breadcrumbSchema, faqSchema, articleSchema, EDITOR } from '../../lib/schema';
+import { fmtDate, type Market } from '../../lib/heatpumps';
+import '../../styles/hp.css';
+import '../../styles/guide.css';
+
+interface Props {
+  market: Market;
+  /** this page's address, root form */
+  path: string;
+  title: string;
+  description: string;
+  eyebrow: string;
+  h1: string;
+  /** breadcrumb trail after Home, ending with this page */
+  crumbs: { name: string; path: string }[];
+  /** ISO dates: first published and last updated */
+  published: string;
+  updated: string;
+  /** when each kind of number on the page was last checked against its source (ISO dates) */
+  asOf?: { label: string; date: string }[];
+  /** [section id, label] for the jump links; FAQ and Sources are added */
+  toc: [string, string][];
+  faqs: { q: string; a: string }[];
+  sources: { label: string; url: string }[];
+  /** the page that explains how picks and numbers are produced */
+  methodHref?: string;
+  methodLabel?: string;
+  ogImage?: string;
+  altPath?: string;
+}
+const { market, path, title, description, eyebrow, h1, crumbs, published, updated, asOf = [], toc, faqs, sources, methodHref, methodLabel = 'How we pick', ogImage, altPath } = Astro.props;
+const isCA = market === 'ca';
+const schema = [
+  breadcrumbSchema([{ name: 'Home', path: '/' }, ...crumbs]),
+  articleSchema({ headline: h1, description, path, published, modified: updated, country: market }),
+  ...(faqs.length ? [faqSchema(faqs)] : []),
+];
+const jump: [string, string][] = [...toc, ...(faqs.length ? ([['faq', 'Questions']] as [string, string][]) : []), ['sources', 'Sources']];
+---
+
+<Base title={title} description={description} schema={schema} ogImage={ogImage} altPath={altPath}>
+  <div class="container hp guide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      {crumbs.map((c, i) => (
+        <><span aria-hidden="true"> / </span>{i === crumbs.length - 1 ? <span>{c.name}</span> : <a href={c.path}>{c.name}</a>}</>
+      ))}
+    </nav>
+    <div class="page-hero">
+      <div class="hero-text">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{h1}</h1>
+        <p class="lede measure"><slot name="lede" /></p>
+        <p class="g-byline" data-no-gloss>
+          Edited by <a href={EDITOR.path}>{EDITOR.name}</a> · Updated <time datetime={updated}>{fmtDate(updated, market)}</time>
+          {published !== updated && <> · First published <time datetime={published}>{fmtDate(published, market)}</time></>}
+          {methodHref && <> · <a href={methodHref}>{methodLabel}</a></>}
+        </p>
+      </div>
+    </div>
+
+    {Astro.slots.has('short') && (
+      <div class="card g-short" id="short">
+        <h2>The short version</h2>
+        <slot name="short" />
+      </div>
+    )}
+
+    <nav class="jump" aria-label="On this page">
+      {jump.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+
+    <slot />
+
+    {faqs.length > 0 && (
+      <section class="sec" id="faq">
+        <h2>Questions people ask</h2>
+        <div class="faq">
+          {faqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="sec" id="sources">
+      <h2>Sources and how this page is kept</h2>
+      <slot name="method" />
+      {asOf.length > 0 && (
+        <p class="g-note" data-no-gloss>
+          <strong>What was checked when:</strong> {asOf.map((a, i) => <>{i > 0 && ' · '}{a.label} <time datetime={a.date}>{fmtDate(a.date, market)}</time></>)}.
+        </p>
+      )}
+      <ul class="meta g-sources">
+        {sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <div class="card g-paid">
+        <p>
+          <strong>Who wrote it.</strong> Edited by <a href={EDITOR.path}>{EDITOR.name}</a>. Every number on this page comes from the sources
+          above or is worked out from them, with the date each was last checked. Found a mistake?
+          <a href="/about/#editor">Tell the editor</a> and we'll fix it.
+        </p>
+        <p>
+          <strong>How it's paid for.</strong>
+          {isCA
+            ? ' If you ask us to match you with a contractor, the one company we introduce you to pays us a referral fee; you pay nothing.'
+            : ' On this site there are no referral fees, and we don’t pass your details to contractors.'}
+          {' '}No maker pays to be in a guide, and no fee changes a pick. <a href="/about/">More about how the site runs</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>

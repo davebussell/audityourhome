@@ -1,0 +1,306 @@
+---
+/**
+ * /heat-pumps/vs-gas-furnace/ on both sites: what a cold-climate heat pump costs to run against a 95% gas furnace
+ * in every city (Canada) or metro (US) we cover, with the gas price at which the two tie. Every number is worked out
+ * at build time from the calculators' prices and seasonal COP (src/lib/hp-run.ts), so it can't drift from the planner.
+ */
+import GuideShell from '../guide/GuideShell.astro';
+import { runRows, runSummary, listWords, baseboardWords, placesWords, REF_HOUSE, type RunRow } from '../../lib/hp-run';
+import { PRICES_CA_AS_OF, COP_NOTE, COP_NOTE_US, fmtDate, type Market } from '../../lib/heatpumps';
+import { source } from '../../lib/calc/data';
+import { PRICE_META } from '../../lib/us/data';
+import usPrices from '../../data/us/prices.json';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const rows = runRows(market);
+const S = runSummary(market);
+const PATH = '/heat-pumps/vs-gas-furnace/';
+const GUIDE = '/heat-pumps/buying-guide/';
+const PUBLISHED = '2026-11-12';
+const pricesAsOf = isCA ? PRICES_CA_AS_OF : ((usPrices as any).electricity.retrieved as string);
+const unit = isCA ? 'GJ' : 'million Btu';
+const gasUnit = isCA ? 'm³' : 'therm';
+const placeWord = isCA ? 'cities' : 'metro areas';
+const country = isCA ? 'Canada' : 'the United States';
+
+// ---- formatting
+const loc = isCA ? 'en-CA' : 'en-US';
+const cents = (x: number | null) => (x == null ? '—' : `${(x * 100).toFixed(1)}¢`);
+const gasPrice = (x: number | null) => (x == null ? '—' : isCA ? cents(x) : `$${x.toFixed(2)}`);
+const d2 = (x: number | null) => (x == null ? '—' : `$${x.toFixed(2)}`);
+const yr = (x: number | null) => (x == null ? '—' : `$${(Math.round(x / 10) * 10).toLocaleString(loc)}`);
+const pct = (x: number) => `${Math.round(x * 100)}%`;
+/** how much less the cheaper one costs per unit of heat */
+const gap = (r: RunRow) => (r.ratio == null ? null : r.ratio > 1 ? 1 - 1 / r.ratio : 1 - r.ratio);
+const verdict = (r: RunRow) => (r.ratio == null ? 'No piped gas' : r.ratio > 1 ? `Heat pump, by ${pct(gap(r)!)}` : `Gas, by ${pct(gap(r)!)}`);
+
+// ---- groups: provinces by population (Canada); one list by population (US)
+const regions = [...new Set(rows.map((r) => r.region))]
+  .map((name) => ({ name, list: rows.filter((r) => r.region === name).sort((a, b) => b.population - a.population) }))
+  .sort((a, b) => b.list.reduce((n, r) => n + r.population, 0) - a.list.reduce((n, r) => n + r.population, 0));
+/** Places in a region that share the same utility prices and seasonal COP have identical numbers: one line for them. */
+const lines = (list: RunRow[]) => {
+  const out: { r: RunRow; items: RunRow[] }[] = [];
+  for (const r of list) {
+    const hit = out.find((x) => x.r.elec === r.elec && x.r.gas === r.gas && x.r.cop === r.cop);
+    if (hit) hit.items.push(r);
+    else out.push({ r, items: [r] });
+  }
+  return out;
+};
+const groups = regions.map((g) => ({ name: g.name, href: g.list[0].href, lines: lines(g.list) }));
+const cols = 7;
+
+// ---- the findings, in words
+const hpBest = [...S.hpWins].sort((a, b) => (b.ratio as number) - (a.ratio as number))[0] ?? null;
+const gasBest = [...S.gasWins].sort((a, b) => (a.ratio as number) - (b.ratio as number))[0] ?? null;
+const biggest = [...rows].sort((a, b) => b.population - a.population)[0];
+const hpName = isCA ? 'a cold-climate heat pump' : 'an efficient heat pump';
+const headline =
+  S.hpWins.length === 0
+    ? `At today's prices a 95% gas furnace costs less to run than ${hpName} in all ${S.withGas} ${placeWord} we cover that have piped gas.`
+    : S.gasWins.length === 0
+      ? `At today's prices ${hpName} costs less to run than a 95% gas furnace in all ${S.withGas} ${placeWord} we cover that have piped gas.`
+      : `At today's prices ${hpName} costs less to run than a 95% gas furnace in ${S.hpWins.length} of the ${S.withGas} ${placeWord} we cover that have piped gas, and gas costs less in the other ${S.gasWins.length}.`;
+const whereHp = S.hpRegions.length ? `The heat pump wins everywhere we cover in ${listWords(S.hpRegions)}.` : '';
+const whereGas = S.gasRegions.length ? `Gas wins everywhere we cover in ${listWords(S.gasRegions)}.` : '';
+const whereMixed = S.mixedRegions.length ? `It depends on the city in ${listWords(S.mixedRegions)}.` : '';
+const fixedList = rows.map((r) => r.gasFixed).filter((x): x is number => x != null && x > 0);
+const fixedRange = fixedList.length ? [Math.min(...fixedList), Math.max(...fixedList)] : null;
+const exTie = biggest.tieGas;
+const sqft = Math.round((REF_HOUSE.m2 * 10.7639) / 100) * 100;
+
+const title = isCA
+  ? `Heat pump vs gas furnace costs in ${rows.length} Canadian cities | AuditYourHome`
+  : `Heat pump vs gas furnace costs in ${rows.length} US metros | AuditYourHome`;
+const description = `A heat pump costs less to run than a 95% gas furnace in ${S.hpWins.length} of ${S.withGas} ${isCA ? 'Canadian cities' : 'US metros'} with piped gas. Each place's prices, and the gas price where the two tie.`;
+
+const faqs = [
+  {
+    q: `Is a heat pump cheaper to run than a gas furnace in ${country}?`,
+    a: `${headline} ${[whereHp, whereGas, whereMixed].filter(Boolean).join(' ')} The answer follows the local prices of gas and electricity far more than the brand of heat pump.`,
+  },
+  {
+    q: 'What gas price makes a heat pump cheaper to run?',
+    a: `Divide your electricity price per kWh by the heat pump's seasonal COP, then compare it with your gas price per unit of heat from a 95% furnace. In ${biggest.name}, with electricity at ${cents(biggest.elec)} per kWh and a seasonal COP of ${biggest.cop.toFixed(1)}, the two tie when gas costs ${gasPrice(exTie)} per ${gasUnit}${biggest.gas != null ? `; gas there costs ${gasPrice(biggest.gas)}` : ''}. The table gives that tie price for every place we cover.`,
+  },
+  {
+    q: 'If gas is cheaper to run, is a heat pump ever worth it?',
+    a: `Often, for other reasons: it also cools, so it can replace an air conditioner that is due anyway; many rebates are for heat pumps; a hybrid setup keeps the furnace for the coldest days; and closing the gas account ends its fixed charges${fixedRange ? `, about $${Math.round(fixedRange[0] / 10) * 10} to $${Math.round(fixedRange[1] / 10) * 10} a year in the cities we cover` : ''}. Against oil, propane or electric baseboards the running cost usually favours the heat pump as well.`,
+  },
+  {
+    q: 'Why is the number on my bill different?',
+    a: isCA
+      ? `These are the prices of one more kWh and one more cubic metre, without the fixed monthly charges, because that is what changes when you switch how you heat. Your bill's average price includes the fixed charges, your house may need more or less heat than the reference house, and your utility may differ from the one we priced.`
+      : `These are state-wide average residential prices from the EIA, so your utility's rates can be higher or lower, and they include the fixed monthly charges. Use your own price per kWh and per therm with the tie price in the table to check your case.`,
+  },
+];
+
+const S_ = (id: string) => source(id);
+const sources = isCA
+  ? [
+      { label: 'Electricity and gas prices by city: the tariffs behind our energy cost calculators', url: '/calculators/energy-costs/' },
+      { label: S_('dunsky-cci-2024').title, url: S_('dunsky-cci-2024').url },
+      { label: S_('rdh-bc-hp').title, url: S_('rdh-bc-hp').url },
+      { label: S_('nrcan-hwg').title, url: S_('nrcan-hwg').url },
+      { label: S_('nrcan-gas-furnace-reg').title, url: S_('nrcan-gas-furnace-reg').url },
+      { label: S_('nrcan-ceud-t33').title, url: S_('nrcan-ceud-t33').url },
+    ]
+  : [
+      { label: `EIA: average residential electricity price by state (${PRICE_META.electricity.month})`, url: PRICE_META.electricity.url },
+      { label: `EIA: residential natural gas price by state (${PRICE_META.gas.lastFullYear} annual average)`, url: PRICE_META.gas.url },
+      { label: S_('dunsky-cci-2024').title, url: S_('dunsky-cci-2024').url },
+    ];
+---
+
+<GuideShell
+  market={market}
+  path={PATH}
+  title={title}
+  description={description}
+  eyebrow={`Heat pump data · ${rows.length} ${placeWord}`}
+  h1="Heat pump or gas furnace: which costs less to run where you live?"
+  crumbs={[{ name: 'Heat pumps', path: '/heat-pumps/' }, { name: 'Heat pump vs gas furnace', path: PATH }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={[{ label: isCA ? 'Energy prices (tariffs in effect)' : 'Energy prices (retrieved from the EIA)', date: pricesAsOf }]}
+  toc={[['table', 'Place by place'], ...(isCA ? ([['dollars', 'A year of heat']] as [string, string][]) : []), ['tie', 'The tie price'], ['other', 'Oil, propane, baseboards'], ['beyond', 'Beyond running cost'], ['method', 'How it’s worked out']]}
+  faqs={faqs}
+  sources={sources}
+  methodHref={GUIDE}
+  methodLabel="Heat pump buying guide"
+>
+  <Fragment slot="lede">
+    {`It depends on two prices, and they differ a lot from place to place. We worked out the cost of heat from ${hpName} and from a 95% gas furnace in ${rows.length} ${placeWord}, at each one's own energy prices and winter.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li><strong>{headline}</strong> {[whereHp, whereGas, whereMixed].filter(Boolean).join(' ')}</li>
+      {hpBest && <li>{`The heat pump's biggest lead is in ${hpBest.name}, where its heat costs ${pct(gap(hpBest)!)} less than gas heat.`}{gasBest ? ` Gas has its biggest lead in ${gasBest.name}, where it costs ${pct(gap(gasBest)!)} less.` : ''}</li>}
+      {!hpBest && gasBest && <li>{`Gas has its biggest lead in ${gasBest.name}, where its heat costs ${pct(gap(gasBest)!)} less.`}</li>}
+      {S.close.length > 0 && <li>{`It is close (within 10%) in ${placesWords(S.close, placeWord)}: there, the rebate, the air conditioner you'd otherwise buy and the gas account's fixed charges decide it.`}</li>}
+      <li>{`Against electric baseboards or an electric furnace, the same heat pump cuts the cost of heat by ${baseboardWords(S, market)}.`}</li>
+      <li>Running cost is one part of the decision. <a href={GUIDE}>The buying guide</a> covers the rest: what it costs to install, the rebates, sizing and the three systems we pick for each climate.</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="table">
+    <h2>Place by place</h2>
+    <p class="sec-intro">
+      {`Cost of one ${unit} of heat delivered to the house. The heat pump figure uses the seasonal COP for that winter (shown under it), which includes backup heat and defrost. `}
+      {isCA ? 'Cities that share a utility and a winter share a line. Each province links to its heat pump page, with the rebates.' : 'Metro areas in one state share its average prices. Each links to its own heat pump page, with the rebates.'}
+    </p>
+    <div class="tablewrap card">
+      <table class="stack dt g-num">
+        <caption class="sr-only">{`Heat pump and gas furnace running costs in ${rows.length} ${placeWord}`}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{isCA ? 'Cities' : 'Metro areas'}</th>
+            <th scope="col" class="num">{`Electricity, ${isCA ? '¢' : '¢'} per kWh`}</th>
+            <th scope="col" class="num">{`Gas, ${isCA ? '¢' : '$'} per ${gasUnit}`}</th>
+            <th scope="col" class="num">{`Heat pump, $ per ${unit}`}</th>
+            <th scope="col" class="num">{`Gas furnace, $ per ${unit}`}</th>
+            <th scope="col" class="num">Gas price where they tie</th>
+            <th scope="col">Cheaper to run</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map((g) => (
+            <>
+              <tr class="g-group"><th scope="colgroup" colspan={cols}>{isCA ? <a href={g.href}>{g.name}</a> : g.name}</th></tr>
+              {g.lines.map(({ r, items }) => (
+                <tr>
+                  <td class="g-places" data-label={isCA ? 'Cities' : 'Metro areas'}>{isCA ? items.map((x) => x.name).join(', ') : items.map((x, i) => <>{i > 0 && ', '}<a href={x.href}>{x.name}</a></>)}</td>
+                  <td class="num" data-label="Electricity, per kWh">{cents(r.elec)}</td>
+                  <td class="num" data-label={`Gas, per ${gasUnit}`}>{gasPrice(r.gas)}</td>
+                  <td class="num" data-label={`Heat pump, per ${unit}`}><span class="g-v">{d2(r.hp)}<span class="sub">{`seasonal COP ${r.cop.toFixed(1)}`}</span></span></td>
+                  <td class="num" data-label={`Gas furnace, per ${unit}`}>{d2(r.gasFurnace)}</td>
+                  <td class="num" data-label="Gas price where they tie">{r.gas == null ? '—' : gasPrice(r.tieGas)}</td>
+                  <td data-label="Cheaper to run" class={r.ratio != null && r.ratio > 1 ? 'win' : 'lose'}>{verdict(r)}</td>
+                </tr>
+              ))}
+            </>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="g-note">
+      {isCA
+        ? `Prices are the cost of one more kWh or cubic metre for a home customer, taxes in, fixed monthly charges out, at tariffs in effect on ${fmtDate(pricesAsOf, market)}. Ontario gas is Enbridge's rate for Toronto, Ottawa and Niagara.`
+        : `Prices are the EIA's state averages for home customers: electricity for ${PRICE_META.electricity.month}, natural gas for ${PRICE_META.gas.lastFullYear} (the annual average, which is steadier than a summer month).`}
+    </p>
+  </section>
+
+  {isCA && (
+    <section class="sec" id="dollars">
+      <h2>In dollars: a year of heat</h2>
+      <p class="sec-intro">{`For a detached house built from 1966 to 1980, about ${sqft.toLocaleString(loc)} sq ft, in the largest city we cover in each province and territory. Your house will differ; `}<a href="/plan/">the planner</a> estimates yours.</p>
+      <div class="tablewrap card">
+        <table class="stack dt g-num">
+          <caption class="sr-only">A year of heat for a typical house, by system</caption>
+          <thead><tr><th scope="col">City</th><th scope="col" class="num">Cold-climate heat pump</th><th scope="col" class="num">Gas furnace (95%)</th><th scope="col" class="num">Electric baseboards</th><th scope="col" class="num">Gas account's fixed charges</th></tr></thead>
+          <tbody>
+            {regions.map((g) => g.list[0]).map((r) => (
+              <tr>
+                <td data-label="City"><a href={r.href}>{r.name}</a><span class="sub">{r.region}</span></td>
+                <td class="num" data-label="Cold-climate heat pump">{yr(r.yearHp)}</td>
+                <td class="num" data-label="Gas furnace (95%)">{yr(r.yearGas)}</td>
+                <td class="num" data-label="Electric baseboards">{yr(r.yearBaseboard)}</td>
+                <td class="num" data-label="Gas account's fixed charges">{r.gasFixed ? yr(r.gasFixed) : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="g-note">The fixed charges are what the gas account costs each year before any gas is burned. They are not in the furnace column, and they stop only if nothing else in the house uses gas.</p>
+    </section>
+  )}
+
+  <section class="sec" id="tie">
+    <h2>The number to watch: the tie price</h2>
+    <div class="g-prose">
+      <p>
+        {`A furnace turns about 95% of the gas it burns into heat. A heat pump moves heat instead of making it, so over a winter it delivers ${Math.min(...rows.map((r) => r.cop)).toFixed(1)} to ${Math.max(...rows.map((r) => r.cop)).toFixed(1)} units of heat for each unit of electricity in the places on this page, less where winters are colder. That ratio is the seasonal COP.`}
+      </p>
+      <p>
+        {`So the comparison comes down to two prices. For each place, the table gives the gas price at which the two systems cost the same to run. In ${biggest.name} that is ${gasPrice(exTie)} per ${gasUnit}`}
+        {biggest.gas != null ? `, and gas there costs ${gasPrice(biggest.gas)}, so ${biggest.ratio! > 1 ? 'the heat pump is cheaper to run' : 'gas is cheaper to run'} today.` : '.'}
+        {' '}If gas gets dearer or electricity cheaper, the answer moves toward the heat pump, and the other way round.
+      </p>
+      <p>To check your own bills, use the price of your last unit of each:</p>
+      <ul>
+        <li>{isCA ? 'Heat pump, per GJ of heat: electricity price per kWh ÷ 0.0036 ÷ seasonal COP.' : 'Heat pump, per million Btu of heat: electricity price per kWh × 293 ÷ seasonal COP.'}</li>
+        <li>{isCA ? 'Gas furnace, per GJ of heat: gas price per m³ ÷ 0.0375 ÷ 0.95.' : 'Gas furnace, per million Btu of heat: gas price per therm × 10 ÷ 0.95.'}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="other">
+    <h2>Against oil, propane and electric baseboards</h2>
+    <p class="sec-intro">
+      {`Where there is no gas line, the comparison is easier. The table shows the largest ${isCA ? 'city in each province and territory' : 'metro in each state we cover'}; a blank means we hold no home price for that fuel there.`}
+    </p>
+    <div class="tablewrap card">
+      <table class="stack dt g-num">
+        <caption class="sr-only">{`Cost of heat by fuel, per ${unit}`}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{isCA ? 'City' : 'Metro area'}</th>
+            <th scope="col" class="num">Heat pump</th>
+            <th scope="col" class="num">Electric baseboards</th>
+            <th scope="col" class="num">Oil furnace (85%)</th>
+            <th scope="col" class="num">Propane furnace (93%)</th>
+            <th scope="col" class="num">Saving against baseboards</th>
+          </tr>
+        </thead>
+        <tbody>
+          {regions.map((g) => g.list[0]).map((r) => (
+            <tr>
+              <td data-label={isCA ? 'City' : 'Metro area'}><a href={r.href}>{r.name}</a><span class="sub">{r.region}</span></td>
+              <td class="num" data-label="Heat pump">{d2(r.hp)}</td>
+              <td class="num" data-label="Electric baseboards">{d2(r.baseboard)}</td>
+              <td class="num" data-label="Oil furnace (85%)">{d2(r.oil)}</td>
+              <td class="num" data-label="Propane furnace (93%)">{d2(r.propane)}</td>
+              <td class="num win" data-label="Saving against baseboards">{pct(1 - r.hp / r.baseboard)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="g-note">{`Dollars per ${unit} of heat delivered. ${isCA ? 'Oil is the 12-month average home heating oil price from Statistics Canada; propane is shown only where a province publishes a home price.' : 'Oil and propane are the EIA’s weekly home prices before tax, where it publishes them.'}`}</p>
+  </section>
+
+  <section class="sec" id="beyond">
+    <h2>What the running cost leaves out</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>Cooling.</strong> A heat pump is also an air conditioner. If yours is due for replacement, the extra cost of a heat pump over a new air conditioner is the number to weigh, not the whole price.</li>
+        <li>
+          <strong>The gas account's fixed charges.</strong> They stop only if nothing else in the house burns gas.
+          {fixedRange ? ` In the cities on this page they run from about $${Math.round(fixedRange[0] / 10) * 10} to $${Math.round(fixedRange[1] / 10) * 10} a year, and they are not in the table above.` : ' They are part of the state averages above, so a home that keeps gas for hot water or cooking saves a little less than the table suggests.'}
+        </li>
+        <li><strong>Rebates.</strong> {isCA ? "Some programs pay more to homes that heat with electricity, oil or propane than to homes on gas; Ontario's is one. Each province page lists the amounts and the rules." : 'Many utility and state rebates are for heat pumps. Each metro page lists the programs and their rules.'} <a href="/heat-pumps/#rebates">Rebates and what they require</a>.</li>
+        <li><strong>A hybrid system.</strong> A heat pump can share the ducts with a gas furnace and hand over to it on the coldest days. Where gas is cheaper to run, that keeps the bills low and still gives you efficient cooling and mild-weather heat.</li>
+        <li><strong>The house itself.</strong> Air sealing and insulation shrink the bill whatever heats the house, and they let a smaller system do the job. <a href="/plan/">The planner</a> puts those in order for your home.</li>
+        <li><strong>Prices change.</strong> These are today's prices. The tie price in the table tells you how far they would have to move to change the answer.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="method">
+    <h2>How it's worked out</h2>
+    <div class="g-prose">
+      <ul>
+        <li>{isCA ? `Energy prices: the same tariffs our calculators use, as of ${fmtDate(pricesAsOf, market)}, including the city's own utility where it differs from the provincial default.` : `Energy prices: EIA state averages, retrieved ${fmtDate(pricesAsOf, market)}.`}</li>
+        <li>Gas furnace: 95% efficient, the level of a new condensing furnace.</li>
+        <li>{isCA ? COP_NOTE : COP_NOTE_US}</li>
+        {isCA && <li>{`A year of heat: the heating need of a detached house built from 1966 to 1980, ${REF_HOUSE.m2} m² (about ${sqft.toLocaleString(loc)} sq ft), scaled to each city's heating degree days from NRCan's figures for heat needed per square metre. Your house will differ; the planner estimates yours.`}</li>}
+        <li>The numbers are computed when the site is built, from the same data as the planner, so the two always agree.</li>
+      </ul>
+    </div>
+  </section>
+</GuideShell>

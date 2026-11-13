@@ -1,0 +1,395 @@
+---
+/**
+ * /heat-pumps/buying-guide/ on both sites: the decision, in order. Whether a heat pump pays with what you heat with
+ * now, which type fits the house, the three we'd buy for the climate, what the cold-weather numbers mean, sizing,
+ * what it costs to buy and run, rebates, and what to ask on a quote. Every figure is read at build time from the
+ * same data as the picks, the planner and the province and metro pages; nothing is typed in by hand.
+ */
+import GuideShell from '../guide/GuideShell.astro';
+import ZoneFinder from '../picks/ZoneFinder.astro';
+import QuoteForm from './QuoteForm.astro';
+import {
+  zones, zone as getZone, zoneHref, zonePlaces, pickName, costLine, rebateNoteCA, rebateNoteUS,
+  PICKS_HREF, HOW_HREF, PICKS_CHECKED_ISO, PICKS_METHOD, type Pick, type Situation,
+} from '../../lib/picks';
+import {
+  totals, ESTAR, ESTAR_URL, AHRI_URL, NRCAN_LIST_URL, HP_CHECKED_ISO, PRICES_CA_AS_OF, CA_REGIONS, citiesIn, US_METROS, metroName,
+  federalHeatPumpPrograms, REBATES_US, brandSlugs, fmtInt, fmtDate, type Market,
+} from '../../lib/heatpumps';
+import { runRows, runSummary, listWords, baseboardWords, oilWords, type RunRow } from '../../lib/hp-run';
+import usPrices from '../../data/us/prices.json';
+import { MODEL, source } from '../../lib/calc/data';
+
+interface Props {
+  market: Market;
+}
+const { market } = Astro.props;
+const isCA = market === 'ca';
+const PATH = '/heat-pumps/buying-guide/';
+const VS = '/heat-pumps/vs-gas-furnace/';
+const PUBLISHED = '2026-11-12';
+const year = 2026;
+const country = isCA ? 'Canada' : 'the US';
+const t5 = isCA ? '−15°C' : '5°F';
+const unit = isCA ? 'GJ' : 'million Btu';
+const heatLoss = isCA ? 'CSA F280' : 'Manual J';
+
+// ---- certified data
+const T = totals(market);
+const coldShare = T.coldOutdoorModels / T.outdoorModels;
+const newGasShare = (T.refrigerants['R-454B'] + T.refrigerants['R-32']) / T.refrigerants.models;
+const pct = (x: number) => `${Math.round(x * 100)}%`;
+
+// ---- picks
+const Z = zones(market);
+const refZone = getZone(market, isCA ? 'great-lakes-st-lawrence' : 'cold') ?? Z[0];
+const perf = (z: (typeof Z)[number], s: Situation) => z.situations[s].performance as Pick | null | undefined;
+const refPick = perf(refZone, 'ductless');
+const diyPick = refZone.situations.ductless.diy as Pick | null | undefined;
+const gates = PICKS_METHOD.gates as string[];
+
+// ---- running costs
+const rows = runRows(market);
+const S = runSummary(market);
+const d2 = (x: number | null) => (x == null ? '—' : `$${x.toFixed(2)}`);
+const bySize = [...rows].sort((a, b) => b.population - a.population);
+const sample: RunRow[] = [];
+for (const r of bySize) if (!sample.some((x) => x.region === r.region) && sample.length < 6) sample.push(r);
+const gasLine =
+  S.hpWins.length === 0
+    ? `a 95% gas furnace costs less to run in all ${S.withGas} of the places we cover with piped gas`
+    : S.gasWins.length === 0
+      ? `it also costs less to run than a 95% gas furnace in all ${S.withGas} of the places we cover with piped gas`
+      : `it costs less to run than a 95% gas furnace in ${S.hpWins.length} of the ${S.withGas} places we cover with piped gas (${listWords(S.hpRegions.length ? S.hpRegions : S.hpWins.slice(0, 3).map((r) => r.name))}) and more in the rest`;
+const bbWords = baseboardWords(S, market);
+const oilLine = oilWords(S);
+
+// ---- buying costs
+const costs = (['ducted', 'ductless'] as Situation[]).map((s) => ({ s, c: costLine(market, s) })).filter((x) => x.c);
+
+// a second, independent figure for a ducted cold-climate system in Canada, as recorded with the planner's cost model
+const cciMatch = isCA ? /Dunsky\/CCI \(2023\$\): (\$[\d,]+)–(\$[\d,]+)/.exec((MODEL.costs as any).ashpColdDucted?.note ?? '') : null;
+const cci = cciMatch ? { low: cciMatch[1], high: cciMatch[2], src: source('dunsky-cci-2024') } : null;
+
+// ---- climate
+const caCities = isCA ? CA_REGIONS.flatMap((r) => citiesIn(r.slug)).filter((c) => c.designHeat != null) : [];
+const warmest = caCities.length ? caCities.reduce((a, b) => ((a.designHeat as number) > (b.designHeat as number) ? a : b)) : null;
+const coldest = caCities.length ? caCities.reduce((a, b) => ((a.designHeat as number) < (b.designHeat as number) ? a : b)) : null;
+const degC = (t: number) => `${t.toFixed(0).replace('-', '−')}°C`;
+
+// ---- rebates
+const fedCA = federalHeatPumpPrograms().find((p) => p.slug === 'national-heat-pump-rebate') as any;
+const fedLine = isCA
+  ? fedCA ? `Federal: the ${fedCA.name}. ${fedCA.headline}.` : ''
+  : 'Federal: the 25C tax credit ended for heat pumps placed in service after December 31, 2025. The Home Electrification and Appliance Rebates (up to $8,000 for a heat pump, by income) exist only where a state runs them.';
+const local = isCA
+  ? CA_REGIONS.map((r) => {
+      const main = citiesIn(r.slug)[0];
+      const run = main ? rows.find((x) => x.slug === main.slug) ?? null : null;
+      return { name: r.slug === 'north' ? 'the North' : r.name, href: `/heat-pumps/${r.slug}/`, run, note: rebateNoteCA(r.slug) };
+    })
+  : US_METROS.map((m) => ({ name: metroName(m), href: `/heat-pumps/${m.slug}/`, run: rows.find((x) => x.slug === m.slug) ?? null, note: rebateNoteUS(m.slug) }));
+const localLine = (l: (typeof local)[number]) => {
+  const r = l.run;
+  const parts: string[] = [];
+  const where = isCA && r ? `${r.name}: heat` : 'Heat';
+  if (r) parts.push(r.gasFurnace != null ? `${where} ${d2(r.hp)} a ${unit} by heat pump, ${d2(r.gasFurnace)} by gas` : `${where} ${d2(r.hp)} a ${unit} by heat pump, ${d2(r.baseboard)} by baseboards`);
+  if (l.note?.names.length) parts.push(`rebates: ${l.note.names.join(', ')}`);
+  return parts.join(' · ');
+};
+
+const usRetrieved = (usPrices as any).electricity.retrieved as string;
+const title = `Heat pump buying guide for ${isCA ? 'Canada' : 'the US'} (${year}) | AuditYourHome`;
+const description = `How to choose a heat pump in ${country}: whether it pays with your current fuel, which type fits, our three picks for each climate, costs, rebates and the quote checklist.`;
+
+const faqs = [
+  {
+    q: `How much does a heat pump cost in ${country} in ${year}?`,
+    a: costs.map((x) => `Installed, ${x.s === 'ducted' ? 'a central system that uses your ducts' : 'a ductless system with one indoor head'} costs ${x.c!.text.replace(/^Installed: /, '')} (${x.c!.short}).`).join(' ') + ' The house and the contractor move the price more than the brand does, so compare at least two quotes for the same model.',
+  },
+  {
+    q: isCA ? 'Do heat pumps work in Canadian winters?' : 'Do heat pumps work in cold climates?',
+    a: `A cold-climate model does. ${pct(coldShare)} of the ${fmtInt(T.outdoorModels, market)} certified outdoor models on ENERGY STAR's list for ${country} carry its cold-climate rating, which needs a COP of at least 1.75 at ${t5} and at least 70% of rated heating capacity still available there.${refPick?.ret != null ? ` Our pick for ${refZone.label}, the ${pickName(refPick)}, keeps ${pct(refPick.ret)} of its rated heat at ${t5}.` : ''} Below the temperature a system can carry the house, backup heat takes over, which is normal and part of the sizing.`,
+  },
+  {
+    q: 'What size heat pump do I need?',
+    a: `The size comes from a room-by-room heat-loss calculation (${heatLoss}), not from the size of the old furnace or a rule per square foot. Ask for it in writing with the quote. An oversized heat pump costs more, cycles on and off and removes less humidity in summer; an undersized one leans on backup heat.`,
+  },
+  {
+    q: 'Can I install a heat pump myself?',
+    a: `${diyPick ? `One line is built for it: the ${pickName(diyPick)}, with pre-charged lines and a warranty that holds without a contractor.` : 'A few systems are sold for owner installation, with pre-charged lines.'} You still need a dedicated electrical circuit, and rebates almost always require a licensed contractor, so price the rebate you would give up before you choose this route.`,
+  },
+  {
+    q: 'Is a heat pump cheaper to run than a gas furnace?',
+    a: `It depends on local prices: ${gasLine}. Against electric baseboards it cuts the cost of heat by ${bbWords}. Our place-by-place table gives the gas price at which the two tie.`,
+  },
+  {
+    q: 'What should a heat pump quote include?',
+    a: `The exact outdoor and indoor model numbers, the AHRI reference number for the pairing, the heat-loss calculation, how backup heat is set, who applies for the rebate, who registers the warranty and by when, and the electrical work. With those you can compare two quotes like for like.`,
+  },
+];
+
+const sources = [
+  { label: `${ESTAR.name}: the certified ratings for every outdoor and indoor pairing`, url: ESTAR_URL },
+  { label: 'AHRI Directory: look up a pairing by its reference number', url: AHRI_URL },
+  ...(isCA ? [{ label: "NRCan: eligible product lists for cold-climate air-source heat pumps", url: NRCAN_LIST_URL }] : []),
+  ...costs.map((x) => ({ label: x.c!.source, url: x.c!.url })).filter((x, i, a) => a.findIndex((y) => y.url === x.url) === i),
+  ...(cci ? [{ label: cci.src.title, url: cci.src.url }] : []),
+  ...(isCA && fedCA?.officialUrl ? [{ label: `Government of Canada: ${fedCA.name}`, url: fedCA.officialUrl }] : []),
+  ...(!isCA && REBATES_US.federal?.['25CUrl'] ? [{ label: 'IRS: Energy Efficient Home Improvement Credit (25C), ended for 2026 installations', url: REBATES_US.federal['25CUrl'] }] : []),
+  { label: 'Running costs place by place, with the energy prices behind them', url: VS },
+  { label: 'How we pick: the gates and the weights behind the three picks', url: HOW_HREF },
+];
+const asOf = [
+  { label: 'Picks', date: PICKS_CHECKED_ISO },
+  { label: 'ENERGY STAR list pulled', date: ESTAR.pulled },
+  { label: 'Rebates, warranties and where brands sell', date: HP_CHECKED_ISO },
+  { label: 'Energy prices', date: isCA ? PRICES_CA_AS_OF : usRetrieved },
+];
+---
+
+<GuideShell
+  market={market}
+  path={PATH}
+  title={title}
+  description={description}
+  eyebrow={`Buying guide · Heat pumps · ${year}`}
+  h1={`Heat pump buying guide for ${isCA ? 'Canada' : 'the United States'}`}
+  crumbs={[{ name: 'Heat pumps', path: '/heat-pumps/' }, { name: 'Buying guide', path: PATH }]}
+  published={PUBLISHED}
+  updated={PUBLISHED}
+  asOf={asOf}
+  toc={[['need', 'Does it pay?'], ['type', 'Which type'], ['picks', 'Our picks'], ['numbers', 'The numbers'], ['size', 'Sizing'], ['cost', 'Cost to buy'], ['run', 'Cost to run'], ['rebates', 'Rebates'], ['checklist', 'Quote checklist'], ['local', isCA ? 'Your province' : 'Your metro'], ['quote', isCA ? 'Get matched' : 'Ask us']]}
+  faqs={faqs}
+  sources={sources}
+  methodHref={HOW_HREF}
+>
+  <Fragment slot="lede">
+    {`The right heat pump depends on your winter, on what you heat with now and on the rebates where you live, so a single national answer is usually wrong. This guide takes the decision in order and puts your local numbers beside each step.`}
+  </Fragment>
+  <Fragment slot="short">
+    <ul>
+      <li>{`If you heat with electric baseboards or an electric furnace, a heat pump cuts the cost of heat by ${bbWords}.`}</li>
+      {oilLine && <li>{`Against an oil furnace, ${oilLine}.`}</li>}
+      <li>{`Against gas it depends on local prices: ${gasLine}. `}<a href={VS}>See your place</a>.</li>
+      <li>{isCA ? 'Buy for the winter you have' : 'Buy for the climate you have'}{`: ${pct(coldShare)} of certified models carry the cold-climate rating, and the best keep all of their rated heat at ${t5}. `}<a href="#picks">We pick three systems for each climate</a>.</li>
+      <li>{`The size comes from a heat-loss calculation (${heatLoss}), and the price from the house and the installer more than the badge. Get both in writing.`}</li>
+      <li>{`Rebates almost always need a licensed contractor and a model on the program's list. Check the list before you sign.`}</li>
+    </ul>
+  </Fragment>
+
+  <section class="sec" id="need">
+    <h2>Does a heat pump pay in your house? Start with what you heat with now</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">Whether a heat pump pays, by current heating</caption>
+        <thead><tr><th scope="col">You heat with</th><th scope="col">On running cost</th><th scope="col">What usually decides it</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="You heat with"><strong>Electric baseboards or an electric furnace</strong></td>
+            <td data-label="On running cost">{`The heat pump wins everywhere we cover, cutting the cost of heat by ${bbWords}.`}</td>
+            <td data-label="What decides it">Whether one ductless head can reach the rooms you use, and the rebate.</td>
+          </tr>
+          <tr>
+            <td data-label="You heat with"><strong>Oil or propane</strong></td>
+            <td data-label="On running cost">{oilLine ? `Against an oil furnace, ${oilLine}.` : 'Usually less with a heat pump.'}</td>
+            <td data-label="What decides it">{isCA ? 'The rebate, which in several provinces is larger for these homes than for homes on gas, and whether you keep the old system as backup for the coldest days.' : 'The rebate, and whether you keep the old system as backup for the coldest days.'}</td>
+          </tr>
+          <tr>
+            <td data-label="You heat with"><strong>Natural gas</strong></td>
+            <td data-label="On running cost">{`It depends on your prices: ${gasLine}.`} <a href={VS}>Place by place</a>.</td>
+            <td data-label="What decides it">Whether the air conditioner or furnace is due anyway, the rebate, and whether a hybrid setup suits you.</td>
+          </tr>
+          <tr>
+            <td data-label="You heat with"><strong>Anything, and the air conditioner is failing</strong></td>
+            <td data-label="On running cost">A heat pump cools like an air conditioner and heats in mild weather for less.</td>
+            <td data-label="What decides it">The price difference between a new air conditioner and a heat pump, which is the real cost of the upgrade.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card g-test">
+      <h3>Before you size anything, measure the house</h3>
+      <p>
+        A heat pump is sized to the heat the house loses on a cold day. Sealing air leaks and topping up the attic first can mean a
+        smaller, cheaper system and lower bills whatever heats the house.
+      </p>
+      <ul>
+        <li>A <a href="/tests/blower-door/">blower door test</a> measures how leaky the house is.</li>
+        <li>A <a href="/tests/heat-loss-calc/">{`heat-loss calculation (${heatLoss})`}</a> turns the house into the number the heat pump is sized to.</li>
+        <li><a href="/plan/">The planner</a> puts the upgrades for your home in order and shows which rebates need an audit first.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="type">
+    <h2>Which type fits your house</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>A house with ducts: a central (ducted) heat pump.</strong> It replaces the air conditioner and takes over most or all of the furnace's work, through the ducts you have. Typical sizes are 2 to 4 tons. Have the installer confirm the ducts can carry the airflow.</li>
+        <li><strong>A house without ducts: a ductless mini-split.</strong> A wall-mounted head heats and cools an open floor or main level; more heads, or a second system, cover more rooms. This is the usual choice for homes with baseboards or a boiler.</li>
+        <li><strong>One room.</strong> A small ductless head for an addition, a room over the garage or a home office.</li>
+        <li><strong>Hybrid (dual fuel).</strong> A heat pump shares the ducts with a gas furnace and hands over to it below a set temperature. Worth it where gas is cheaper to run than electricity in deep cold.</li>
+        <li><strong>Geothermal.</strong> The highest efficiency and the highest price, with drilling or trenching. <a href="/heat-pumps/geothermal/">Our geothermal page</a> covers when it makes sense.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="picks">
+    <h2>The systems we'd buy, by climate</h2>
+    <p class="sec-intro">
+      {`For each of ${isCA ? "Canada's 7" : '9 US'} climate zones we pick three systems: best performance, best to install yourself and best value. The table shows the best-performance pick; each zone's page has all three, with the reasons.`}
+      {' '}<a href={HOW_HREF}>How we pick</a>.
+    </p>
+    <ZoneFinder market={market} />
+    <div class="tablewrap card" style="margin-top:14px">
+      <table class="stack dt">
+        <caption class="sr-only">Best-performance heat pump pick by climate zone and house type</caption>
+        <thead><tr><th scope="col">Climate zone</th><th scope="col">No ducts</th><th scope="col">With ducts</th><th scope="col">One room</th></tr></thead>
+        <tbody>
+          {Z.map((z) => (
+            <tr>
+              <td data-label="Climate zone"><a href={zoneHref(z.key)}><strong>{z.label}</strong></a><span class="sub">{zonePlaces(market, z.key, 3).join(', ')}</span></td>
+              {(['ductless', 'ducted', 'room'] as Situation[]).map((s) => {
+                const p = perf(z, s);
+                return <td data-label={s === 'ductless' ? 'No ducts' : s === 'ducted' ? 'With ducts' : 'One room'}>{p ? pickName(p) : '—'}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="tp-more"><a class="btn btn-ghost btn-sm" href={PICKS_HREF}>All three picks for every zone</a></p>
+  </section>
+
+  <section class="sec" id="numbers">
+    <h2>The numbers on a spec sheet, and which ones matter</h2>
+    <div class="g-prose">
+      <ul>
+        <li><strong>{`COP at ${t5}.`}</strong>{` Units of heat delivered for each unit of electricity, on a cold day. A COP of 2 means half the electricity of a baseboard for the same heat. This is the number that sets the winter bill.`}</li>
+        <li><strong>{`Heat kept at ${t5}.`}</strong>{` The share of its rated heating capacity a system still delivers in the cold. The best keep 100% or more. The cold-climate rating allows as little as 70%, and then backup heat does more of the work.`}</li>
+        <li><strong>HSPF2 and SEER2.</strong> Seasonal heating and cooling efficiency. Higher is better; they matter most in mild winters and hot summers.</li>
+        {!isCA && <li><strong>EER2.</strong> Cooling efficiency on the hottest afternoons. It matters more than SEER2 in the desert Southwest.</li>}
+        <li><strong>Cold-climate rating.</strong>{` ENERGY STAR's needs a COP of at least 1.75 at ${t5} and 70% of rated capacity there. ${pct(coldShare)} of the ${fmtInt(T.outdoorModels, market)} certified outdoor models sold in ${country} carry it.`}</li>
+        <li><strong>Refrigerant.</strong>{` New systems use R-454B or R-32: ${pct(newGasShare)} of certified models do. Ask which one a quote uses; the older R-410A will get dearer to service.`}</li>
+        <li><strong>Variable speed.</strong> The compressor runs at the speed the house needs, which is quieter, more even and more efficient than switching on and off.</li>
+      </ul>
+      <p>Every system we pick has to pass these gates before it is scored:</p>
+      <ul>{gates.map((g) => <li>{g}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="sec" id="size">
+    <h2>Sizing and backup heat</h2>
+    <div class="g-prose">
+      <p>
+        {`A heat pump is sized to the design temperature: the cold the house must handle on all but the coldest 1% of winter hours.`}
+        {warmest && coldest ? ` In the cities we cover it runs from ${degC(warmest.designHeat as number)} in ${warmest.name} to ${degC(coldest.designHeat as number)} in ${coldest.name}, which is why one model can't be right everywhere.` : ''}
+      </p>
+      <ul>
+        <li>{`Ask for a room-by-room heat-loss calculation (${heatLoss}) with the quote. The old furnace's size is not a guide: it is often larger than the house needs.`}</li>
+        <li>{`Every certified rating stops at ${t5}. Where the design temperature is lower, ask for the maker's output at your design temperature.`}</li>
+        <li>Backup heat (electric strips, baseboards or the old furnace) should switch on only below the temperature the heat pump can no longer carry the house. Ask how it will be set.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="cost">
+    <h2>What it costs to buy</h2>
+    <div class="tablewrap card">
+      <table class="stack dt">
+        <caption class="sr-only">Installed cost by type of system</caption>
+        <thead><tr><th scope="col">System</th><th scope="col">Installed</th><th scope="col">Source</th></tr></thead>
+        <tbody>
+          {costs.map((x) => (
+            <tr>
+              <td data-label="System"><strong>{x.s === 'ducted' ? 'Central, through your ducts' : 'Ductless, one indoor head'}</strong></td>
+              <td data-label="Installed">{x.c!.text.replace(/^Installed: /, '')}</td>
+              <td data-label="Source"><a href={x.c!.url} rel="noopener">{x.c!.short}</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="g-note">
+      We show ranges for the type of system, not a price per model: the house and the contractor move the price far more than the badge.
+      Extra heads, new electrical work and duct changes add to it.
+      {cci && <>{` A second source lands in the same place: modelling for the Canadian Climate Institute put a central cold-climate system at ${cci.low} to ${cci.high} in 2023 dollars (`}<a href={cci.src.url} rel="noopener">Dunsky, Heat Pumps Pay Off</a>).</>}
+    </p>
+  </section>
+
+  <section class="sec" id="run">
+    <h2>What it costs to run</h2>
+    <p class="sec-intro">{`Cost of one ${unit} of heat delivered, at local energy prices, in the largest places we cover. `}<a href={VS}>{`All ${rows.length} places, with the gas price where the two tie`}</a>.</p>
+    <div class="tablewrap card">
+      <table class="stack dt g-num">
+        <caption class="sr-only">{`Cost of heat per ${unit} by system`}</caption>
+        <thead><tr><th scope="col">{isCA ? 'City' : 'Metro area'}</th><th scope="col" class="num">Heat pump</th><th scope="col" class="num">Gas furnace (95%)</th><th scope="col" class="num">Electric baseboards</th><th scope="col" class="num">Oil furnace (85%)</th></tr></thead>
+        <tbody>
+          {sample.map((r) => (
+            <tr>
+              <td data-label={isCA ? 'City' : 'Metro area'}><a href={r.href}>{r.name}</a></td>
+              <td class="num" data-label="Heat pump">{`${d2(r.hp)} (COP ${r.cop.toFixed(1)})`}</td>
+              <td class="num" data-label="Gas furnace (95%)">{d2(r.gasFurnace)}</td>
+              <td class="num" data-label="Electric baseboards">{d2(r.baseboard)}</td>
+              <td class="num" data-label="Oil furnace (85%)">{d2(r.oil)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="rebates">
+    <h2>Rebates, and the rules that trip people up</h2>
+    <div class="g-prose">
+      <p>{fedLine}{isCA && <> <a href="/programs/national-heat-pump-rebate/">How it works</a>.</>}</p>
+      <ul>
+        <li>{isCA ? "Most provincial programs pay only for a model on a list: NRCan's eligible products, ENERGY STAR Cold Climate in Quebec, or BC's own list. Check the exact pairing before you sign." : 'Most utility and state programs require an ENERGY STAR certified model, and many add a cold-climate or efficiency rule. Check the exact pairing before you sign.'}</li>
+        <li>Almost every program requires a licensed or participating contractor. A system you install yourself usually gets nothing.</li>
+        <li>Some need approval or an energy audit before any work starts. Work begun early is not paid.</li>
+        <li>{isCA ? "Amounts can depend on what you heat with now. Ontario's program, for one, pays homes on oil, propane or electricity more than homes on gas." : 'Amounts often depend on household income.'}</li>
+      </ul>
+      <p>{isCA ? 'Each province page below lists every program, its amount, its equipment rule and the date we checked it.' : 'Each metro page below lists every program, its amount, its equipment rule and the date we checked it.'}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="checklist">
+    <h2>Before you sign: the quote checklist</h2>
+    <div class="g-prose">
+      <ol>
+        <li>{`The exact outdoor and indoor model numbers and the AHRI reference number for the pairing. Look it up in the AHRI Directory and on ENERGY STAR's list${isCA ? ", and on NRCan's" : ''}.`}</li>
+        <li>{`The room-by-room heat-loss calculation (${heatLoss}) the size is based on.`}</li>
+        <li>How backup heat is set, and at what outdoor temperature it switches on.</li>
+        <li>Who applies for the rebate, and proof the model is on the program's list.</li>
+        <li>Who registers the warranty, and by when. Most makers give their full term only if it is registered within 60 or 90 days.</li>
+        <li>The electrical work, permits and any duct changes, priced in.</li>
+        <li>A second quote for the same pairing, or for the runner-up on our zone page.</li>
+      </ol>
+      <p>{`Brand matters less than the model, the sizing and the installer: several brands sell the same certified equipment under different names. `}<a href="/heat-pumps/#compare">{`Compare the ${brandSlugs(market).length} main brands`}</a>{` on warranty, price tier and where they sell.`}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="local">
+    <h2>{isCA ? 'The guide for your province' : 'The guide for your metro'}</h2>
+    <p class="sec-intro">{`Each page has the local design temperature, running costs against every fuel, every rebate with its rules, and our three picks for that climate.`}</p>
+    <div class="g-links">
+      {local.map((l) => (
+        <a class="card" href={l.href}>
+          <strong>{`Heat pumps in ${l.name}`}</strong>
+          <span>{localLine(l)}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="sec">
+    <QuoteForm market={market} context="buying-guide" />
+  </div>
+
+  <Fragment slot="method">
+    <p class="g-note">
+      {`Certified ratings are ENERGY STAR's for each exact outdoor and indoor pairing (${fmtInt(T.systems, market)} pairings in ${country}, list pulled ${fmtDate(ESTAR.pulled, market)}). We don't test heat pumps in a lab, and we don't rate reliability beyond the warranty terms. The picks are recomputed whenever the list or a maker's terms change, and the site won't build once they are more than 180 days old.`}
+    </p>
+  </Fragment>
+</GuideShell>

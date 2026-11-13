@@ -209,6 +209,47 @@ should build on the per-province well testing data already in `src/data/calc/hea
   long-term kit: Kansas State University's National Radon Program Services ($30 with the lab). Canada: C-NRPP-listed alpha-track kits.
 - **Analytics:** `gear_seller` (`market`, `category`, `slot`, `seller`) when someone follows a seller button. Keys only.
 
+## Buying guides (2026-11-12; Dave: "similar buyers guides" to FurnacePrices.ca's, with "an SEO and content authority edge")
+Dave sent FurnacePrices.ca's footer (best-of reviews for furnaces, central AC, heat pumps, ductless and boilers; buyer guides for furnaces,
+AC, heat pumps, boilers, HRV/ERV, air filtration, water heaters, smart thermostats, duct cleaning and commercial HVAC) and asked for the
+same kind of guides with an edge. Their pages, read that day: the "best heat pumps" page has no date or named author, a brand grade "we
+created" with no weights, and a mostly-BC rebate section with a rebate that expired in December 2023; the buying guide is national, with
+no province or city prices and unsourced cost tables. They have a named founder with press mentions, about 15 brand reviews, calculators
+and a site publishing since 2013, so we don't expect to beat them on head terms soon. **The edge every guide must carry:**
+1. **Local numbers.** A national guide plus local pages whose figures are computed from that place's climate, prices and rebates.
+2. **Proof on the page.** Exact certified models, a source and a date for every kind of number, the method, a named editor
+   (David Bussell, `/about/#editor`), an updated date, Article + FAQ markup.
+3. **Numbers only we publish**, computed from our own data (the first: heat pump vs gas furnace in every city).
+4. **"Do you need it?" first**: the test that proves the need and the cheaper fix, before any product.
+5. **Current rebates** from the program data, and (to do) French versions for Québec under `/fr/`.
+Dave chose **heat pumps first** as the template. Next, in his list's order of value: furnaces (needs certified-model data; it's furnace
+season), central AC, water heaters, smart thermostats, HRV/ERV, air filtration, boilers, duct cleaning (a "when to skip it" guide tied to the
+duct leakage test pages). The commercial HVAC guide belongs on audityourbuilding.com.
+- **The frame:** `src/components/guide/GuideShell.astro` + `src/styles/guide.css`. Props: `path`, `title`, `h1`, `eyebrow`, `crumbs`,
+  `published`, `updated`, `asOf` (label + ISO date for each kind of number, printed as "What was checked when"), `toc`, `faqs`, `sources`,
+  `methodHref`. Slots: `lede`, `short` ("The short version"), default (the sections), `method`. It prints the byline, the FAQ, the sources,
+  "Who wrote it" and "How it's paid for" (Canada: one contractor's referral fee; US: no referral fees), and emits BreadcrumbList, Article
+  (`articleSchema()` in `src/lib/schema.ts`, author = `EDITOR`) and FAQPage. Both about pages gained `#editor` ("Who edits this site").
+- **Heat pump buying guide:** `/heat-pumps/buying-guide/` on both sites (`src/components/hp/BuyingGuidePage.astro`). Order: does it pay with
+  what you heat with now → measure the house first → which type → our picks by zone (zone finder + best-performance pick per situation) →
+  what the numbers mean (and the picks' gates) → sizing → cost to buy → cost to run → rebates → quote checklist → the local pages. The
+  province pages (Canada) and metro pages (US) are its local versions; each now links up to the guide and the data page.
+- **Heat pump vs gas furnace:** `/heat-pumps/vs-gas-furnace/` (`VsGasPage.astro`), the first "numbers only we publish" page: cost of heat
+  from a cold-climate heat pump and a 95% furnace in all 70 Canadian cities and 26 US metros, the **gas price at which they tie**, a year
+  of heat for a reference house (Canada), the gas account's fixed charges, and oil, propane and baseboards. Finding on 2026-11-12: the
+  heat pump is cheaper to run than gas in 15 of 66 Canadian cities (all of Quebec, Nova Scotia and New Brunswick; within 10% in most of BC;
+  gas wins in Ontario and the Prairies) and in 12 of 26 US metros. Say it straight: the pages do.
+- **Where the numbers come from:** `src/lib/hp-run.ts` (`runRowsCA/US`, `runSummary`, wording helpers). Canada uses the calculators' city
+  prices (`resolvePrices`, marginal "variable" prices, city overrides included), `systemEfficiency('ashpCold', hdd)` and the reference house
+  (1966–1980 detached, 149 m²); the US uses `costsUS` (EIA state averages). Every sentence with a count or a range is built from these at
+  build time, so a price update rewrites the pages. Don't hand-type a figure into a guide.
+- **Known weak spot:** our Canadian installed prices cite FurnacePrices.ca (`src/data/picks/heatpumps.json` costs, and the planner's
+  `model.json` costs). The guide adds the Dunsky/Canadian Climate Institute range as a second source; brokered quotes should replace both.
+- **Gotchas:** the footer's live year is `id="year"`, so never use that id for a section (the yearly table is `#dollars`). `hp.css` keeps
+  `.hp .dt th` on one line; wide tables use `.hp.guide table.g-num thead th` to wrap. Places that share prices and seasonal COP share one
+  table line (30 Ontario cities would otherwise repeat). The heat pump menu on both sites now lists the buying guide, the picks and the
+  data page.
+
 ## The November 6 review (Dave mailed himself a four-part review of both home sites: "Audit Your Home . ca fixes")
 Dave chose four of its five buckets: **A** quick factual and consent fixes (`9aa20fe`), **B** planner logic (prerequisite-first next
 step, municipality gating, eligibility statuses, utility gate, usage inputs), **C** a shorter "rebates first" planner path, **D** a French
