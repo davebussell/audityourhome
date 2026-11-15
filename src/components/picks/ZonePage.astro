@@ -9,7 +9,7 @@ import TopPicks from './TopPicks.astro';
 import QuoteForm from '../hp/QuoteForm.astro';
 import { breadcrumbSchema } from '../../lib/schema';
 import {
-  zone as getZone, zones, SITUATIONS, SLOTS, slotLabel, slotShort, situationLong, situationLabel, pickName, pickFacts, capacityText,
+  zone as getZone, zones, SITUATIONS, SLOTS, slotLabel, slotShort, diyRules, DIY_RULES_SOURCES, situationLong, situationLabel, pickName, pickFacts, capacityText,
   warrantyText, costLine, zonePlaces, provincesOfZone, metrosOfZone, placeName, zoneHref, PICKS_HREF, HOW_HREF, PICKS_CHECKED_ISO,
   PICKS_DATA_AS_OF, lineUrl, brandPage, zoneWhere, type Pick, type Slot, type Situation,
 } from '../../lib/picks';
@@ -52,6 +52,7 @@ function watchOuts(p: Pick, slot: Slot, sit: Situation): string[] {
   const out: string[] = [];
   if (p.warranty.registrationRequired) out.push('The longer warranty needs registration within the maker’s deadline (usually 60 or 90 days after installation). Do it the week it goes in.');
   if (slot === 'diy') {
+    out.push(diyRules(market));
     out.push('Most rebates pay only through a participating or licensed contractor, so expect no rebate on a self-install.');
     out.push(
       /115/.test(p.outdoor)
@@ -78,6 +79,8 @@ const sources = (() => {
       if (lu) seen.set(lu, `${p.brand}: ${p.line ?? p.series ?? 'product line'}`);
     }
   }
+  // the do-it-yourself pick's "licensed trades finish it" note rests on these (Canada)
+  if (isCA && SITUATIONS.some((s) => z.situations[s].diy)) for (const x of DIY_RULES_SOURCES) seen.set(x.url, x.label);
   return [...seen.entries()].map(([url, label]) => ({ url, label }));
 })();
 

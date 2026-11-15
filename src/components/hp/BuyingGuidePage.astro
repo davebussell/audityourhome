@@ -11,7 +11,7 @@ import ZoneFinder from '../picks/ZoneFinder.astro';
 import QuoteForm from './QuoteForm.astro';
 import {
   zones, zone as getZone, zoneHref, zonePlaces, pickName, costLine, rebateNoteCA, rebateNoteUS,
-  PICKS_HREF, HOW_HREF, PICKS_CHECKED_ISO, PICKS_METHOD, type Pick, type Situation,
+  PICKS_HREF, HOW_HREF, PICKS_CHECKED_ISO, PICKS_METHOD, diyRules, DIY_RULES_SOURCES, DIY_RULES_CHECKED, type Pick, type Situation,
 } from '../../lib/picks';
 import {
   totals, ESTAR, ESTAR_URL, AHRI_URL, NRCAN_LIST_URL, HP_CHECKED_ISO, PRICES_CA_AS_OF, CA_REGIONS, citiesIn, US_METROS, metroName,
@@ -118,7 +118,7 @@ const faqs = [
   },
   {
     q: 'Can I install a heat pump myself?',
-    a: `${diyPick ? `One line is built for it: the ${pickName(diyPick)}, with pre-charged lines and a warranty that holds without a contractor.` : 'A few systems are sold for owner installation, with pre-charged lines.'} You still need a dedicated electrical circuit, and rebates almost always require a licensed contractor, so price the rebate you would give up before you choose this route.`,
+    a: `${isCA ? 'Part of it.' : 'Mostly, with one kind of kit.'} ${diyPick ? `One line is sold for owner installation: the ${pickName(diyPick)}, with pre-charged lines and a warranty that covers an owner install.` : 'A few systems are sold for owner installation, with pre-charged lines.'} ${isCA ? 'You mount the indoor and outdoor units and run the lines. ' : ''}${diyRules(market)} Rebates almost always require a licensed contractor, so price the rebate you would give up before you choose this route.`,
   },
   {
     q: 'Is a heat pump cheaper to run than a gas furnace?',
@@ -140,12 +140,14 @@ const sources = [
   ...(!isCA && REBATES_US.federal?.['25CUrl'] ? [{ label: 'IRS: Energy Efficient Home Improvement Credit (25C), ended for 2026 installations', url: REBATES_US.federal['25CUrl'] }] : []),
   { label: 'Running costs place by place, with the energy prices behind them', url: VS },
   { label: 'How we pick: the gates and the weights behind the three picks', url: HOW_HREF },
+  ...(isCA ? DIY_RULES_SOURCES : []),
 ];
 const asOf = [
   { label: 'Picks', date: PICKS_CHECKED_ISO },
   { label: 'ENERGY STAR list pulled', date: ESTAR.pulled },
   { label: 'Rebates, warranties and where brands sell', date: HP_CHECKED_ISO },
   { label: 'Energy prices', date: isCA ? PRICES_CA_AS_OF : usRetrieved },
+  ...(isCA ? [{ label: 'Rules for installing one yourself', date: DIY_RULES_CHECKED }] : []),
 ];
 ---
 

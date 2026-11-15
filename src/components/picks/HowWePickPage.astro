@@ -33,7 +33,7 @@ const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 const slots: Slot[] = ['performance', 'diy', 'value'];
 const decide: Record<Slot, string> = {
   performance: 'The top score for the zone among every certified system that passed the gates, in the size range for the situation.',
-  diy: 'The best-scoring system sold for owner installation, with pre-charged quick-connect lines and a warranty that holds without a contractor. In very cold zones it shows as a supplement when it keeps less heat than the zone needs.',
+  diy: `The best-scoring system sold for owner installation, with pre-charged quick-connect lines and a warranty that covers an owner install. ${market === 'ca' ? 'Owner installation means mounting it: the electrical connection and the refrigerant start-up are work for licensed trades.' : 'The new circuit is still an electrician’s job.'} In very cold zones it shows as a supplement when it keeps less heat than the zone needs.`,
   value: 'The top score among brands we place in the budget or mid price tier. It must pass every gate the performance pick passes.',
 };
 const costList = Object.values(PICKS_COSTS[market]).filter((c, i, a) => a.findIndex((x: any) => x.url === (c as any).url) === i) as any[];

@@ -179,7 +179,7 @@ const L = {
     slot: { performance: 'Best performance', diy: 'Best do-it-yourself', value: 'Best value' } as Record<Slot, string>,
     slotShort: {
       performance: 'Top score for this climate on the certified ratings',
-      diy: 'Pre-charged lines, a warranty that covers an owner install',
+      diy: 'Pre-charged lines you mount yourself; licensed trades finish it',
       value: 'Best performer from a budget or mid-priced brand',
     } as Record<Slot, string>,
     situation: { ducted: 'House with ducts', ductless: 'No ducts', room: 'One room' } as Record<Situation, string>,
@@ -193,7 +193,7 @@ const L = {
     slot: { performance: 'Meilleure performance', diy: 'Meilleure à installer soi-même', value: 'Meilleur rapport qualité-prix' } as Record<Slot, string>,
     slotShort: {
       performance: 'Meilleur score pour ce climat selon les cotes certifiées',
-      diy: 'Conduites préchargées, garantie valide si vous l’installez vous-même',
+      diy: 'Conduites préchargées que vous posez vous-même; des gens de métier terminent',
       value: 'La plus performante d’une marque économique ou de milieu de gamme',
     } as Record<Slot, string>,
     situation: { ducted: 'Maison avec conduits', ductless: 'Sans conduits', room: 'Une pièce' } as Record<Situation, string>,
@@ -206,6 +206,32 @@ const L = {
 };
 export const slotLabel = (s: Slot, lang: Lang = 'en') => L[lang].slot[s];
 export const slotShort = (s: Slot, lang: Lang = 'en') => L[lang].slotShort[s];
+
+// ---------------------------------------------------------------- what "do-it-yourself" means (rule from the 2026-11-13 selling plan)
+/**
+ * Never say "no professional needed" in Canada: the owner mounts the kit; the electrical connection and the
+ * refrigerant start-up are work for licensed trades. Read on 2026-11-13 from the three sources below; other
+ * provinces were not checked one by one, so the wording tells the reader to check theirs.
+ */
+export const DIY_RULES_CHECKED = '2026-11-13';
+export const DIY_RULES_SOURCES = [
+  { label: 'Corporation des maîtres électriciens du Québec: electrical work requires an electrical contractor, whether or not you own the building', url: 'https://www.cmeq.org/fileadmin/user_upload/Documents_reserves/Documents_administratifs/07122020_Faire_appel_a_un_entrepreneur_electricien_highres.pdf' },
+  { label: 'Gouvernement du Québec: a halocarbon qualification certificate is mandatory for work on refrigerant (updated January 11, 2024)', url: 'https://www.quebec.ca/emploi/informer-metier-profession/profession-metier-reglemente/connaitre-certificats-qualification-obligatoire/qualification-environnementale-halocarbures' },
+  { label: 'Technical Safety BC: heat pumps, regulations, requirements and certification', url: 'https://dp3bdcel5emcu.cloudfront.net/60574771-f374-45c1-89f0-7fe0e32056a4/Public/Resources/TSBC%20Heat%20Pumps%20v6%20option%201.pdf' },
+];
+/** One line for a pick card: who does what on a kit sold for owner installation. */
+export function diyWho(m: Market, lang: Lang = 'en'): string {
+  if (lang === 'fr') return 'Vous achetez la trousse et la posez; un entrepreneur électricien la raccorde et un frigoriste la met en service.';
+  return m === 'ca'
+    ? 'You buy the kit and mount it; an electrician wires it and a refrigeration technician starts it.'
+    : 'You buy the kit and mount it; have an electrician run the circuit.';
+}
+/** The longer note for a zone page or the guide (English). */
+export function diyRules(m: Market): string {
+  return m === 'ca'
+    ? 'Plan on licensed trades for two steps: the electrical connection, and opening the refrigerant valves to start the system. In Quebec the law requires an electrical contractor even in a house you own, and a certificate to work on refrigerant. In BC every heat pump needs an electrical permit, and the safety authority says a unit sold in a store is not necessarily one you may install yourself. Check your province’s rules before you buy.'
+    : 'Check your local permit and electrical rules before you buy; the new circuit is an electrician’s job.';
+}
 export const situationLabel = (s: Situation, lang: Lang = 'en') => L[lang].situation[s];
 export const situationLong = (s: Situation, lang: Lang = 'en') => L[lang].situationLong[s];
 

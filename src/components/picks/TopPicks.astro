@@ -12,7 +12,7 @@
  * zone, slot and brand only, never anything the visitor typed.
  */
 import {
-  zone as getZone, SITUATIONS, SLOTS, slotLabel, slotShort, situationLabel, situationLong, pickName, pickFacts, capacityText,
+  zone as getZone, SITUATIONS, SLOTS, slotLabel, slotShort, diyWho, situationLabel, situationLong, pickName, pickFacts, capacityText,
   costLine, rebateNoteCA, rebateNoteUS, quotePrefill, zoneHref, HOW_HREF, lineUrl, PICKS_CHECKED_ISO, zoneWords, programNameFr,
   type Situation, type Slot, type Lang, type Pick,
 } from '../../lib/picks';
@@ -52,13 +52,13 @@ const quoteHref = (_p: Pick, _s: Slot, _sit: Situation) => Astro.props.quoteHref
 const T = fr
   ? {
       situation: 'Votre situation', quotes: 'Obtenir des soumissions', why: 'Pourquoi ce choix', maker: 'Page du fabricant',
-      runner: 'Si elle n’est pas offerte :', none: 'Aucun choix', noInstaller: 'Pas d’installateur à payer : vous achetez la trousse.',
+      runner: 'Si elle n’est pas offerte :', none: 'Aucun choix', noInstaller: diyWho(market, 'fr'),
       noRebate: (n: string) => `Une installation par vous-même ne donne pas droit à ${n}.`, rebates: 'Subventions ici :', amounts: 'montants',
       supplement: (r: string) => `Ici, prévoyez-la comme appoint : elle garde ${r} de sa chaleur à\u00a0−15\u00a0°C.`, how: 'Comment nous choisissons', checked: 'vérifié le',
     }
   : {
       situation: 'Your situation', quotes: 'Get quotes for this', why: 'Why we picked it', maker: "Maker's page",
-      runner: "If it's not available:", none: 'No pick', noInstaller: 'No installer to pay: you buy the kit.',
+      runner: "If it's not available:", none: 'No pick', noInstaller: diyWho(market, 'en'),
       noRebate: (n: string) => `A self-install doesn't qualify for ${n}.`, rebates: 'Rebates here:', amounts: 'see what they pay',
       supplement: (r: string) => `Here, plan it as a supplement: it keeps ${r} of its heat at ${market === 'ca' ? '−15°C' : '5°F'}.`, how: 'How we pick', checked: 'checked',
     };

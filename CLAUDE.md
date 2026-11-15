@@ -377,9 +377,15 @@ pumps through AuditYourHome.ca: plan" (claude.ai/artifact/DKd9dRFvhy2SBwAeGVPtgM
   work is certified-trade work everywhere, and BC's safety authority says retail availability doesn't mean a unit can be self-installed.
   A fully self-installed unit loses the main rebates; Kanartic says an RBQ-licensed commissioning visit keeps LogisVert (unconfirmed with
   Hydro-Québec), and LogisVert needs a unit bought from a Québec retailer.
-- **Where our pages stand against that rule (checked 2026-11-13):** the heat pump buying guide's "Can I install a heat pump myself?" answer
-  says the warranty "holds without a contractor" and mentions the circuit and the lost rebate, but not that the wiring and the refrigerant
-  start-up are licensed work. Fix it when the plan's Phase 1 is built, or sooner if Dave asks.
+- **Our copy now follows that rule (fixed 2026-11-15, Dave: "yes - fix and then push").** The wording lives in `src/lib/picks.ts`:
+  `diyWho(market, lang)` is the line on every do-it-yourself card ("You buy the kit and mount it; an electrician wires it and a
+  refrigeration technician starts it." in Canada; the US line keeps to the electrician and the circuit), `diyRules(market)` is the first
+  watch-out on the zone pages and the body of the buying guide's "Can I install a heat pump myself?" answer (Québec: an electrical
+  contractor even in a house you own, and a certificate for refrigerant; BC: an electrical permit for every heat pump, and retail sale
+  doesn't mean self-install), and `DIY_RULES_SOURCES` (CMEQ, quebec.ca's halocarbon qualification page, Technical Safety BC) with
+  `DIY_RULES_CHECKED` print under the Canadian zone pages and the guide ("Rules for installing one yourself" in "What was checked when").
+  The slot's short label is "Pre-charged lines you mount yourself; licensed trades finish it". Nothing on the Canadian site says the
+  warranty or the install "holds without a contractor" any more; keep it that way.
 - **Its Phase 1 is work for this repo:** an "Install it yourself" section on the .ca site (the Best do-it-yourself picks with buy links and
   the affiliate disclosure, a per-province "what you do / what the electrician does / what the commissioning technician does", a
   DIY-against-rebate calculator, French versions for Québec, outbound click events in GA4, keys only).
