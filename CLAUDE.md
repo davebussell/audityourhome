@@ -393,6 +393,36 @@ pumps through AuditYourHome.ca: plan" (claude.ai/artifact/DKd9dRFvhy2SBwAeGVPtgM
   contact form. No replies by the evening of the 13th. With Dave: a FlexOffers publisher account for Senville's Canadian programme, and
   the RBQ question (its form needs a phone number; the text is a Gmail draft).
 
+## Thin content and affiliate links: the plan (2026-11-15, a plan only; nothing in it is built or decided)
+Dave's location guide Pecker & Jay ran into thin-content and affiliate trouble and had to move domains; he asked for a plan to keep the
+three audit sites clear of the same. It is the Claude Doc "Keeping the audit sites clear of thin-content and affiliate problems: plan"
+(claude.ai/artifact/SwT317jHDMUAQhfKAfzQPr). Read it before adding any page-per-place set or any affiliate or referral link.
+- **Nothing is wrong today (Search Console, read 2026-11-15):** no manual actions on any site; audityourhome.ca about 1,390 pages indexed
+  and 1 "Crawled – currently not indexed"; audityourhome.com about 3,190 indexed and 4 (its 395 "duplicate" pages are the old `/ca/`
+  addresses); audityourbuilding.com still processing. **The properties exist** (the "still Dave's: Search Console" lines further down are
+  out of date): `sc-domain:audityourhome.ca`, and URL-prefix properties for `https://audityourhome.com/` and `https://audityourbuilding.com/`.
+- **Where the exposure is:** not the affiliate links (46 links on 12 product pages, all `rel="nofollow sponsored noopener"`, disclosure
+  above the first merchant link on every page) but the city grid: 1,330 of .ca's 1,957 indexable pages (15 services × 70 cities, 4
+  calculators × 70) and 70 of the building site's 86. With place names and numbers blanked, a service-in-a-city page shares about 98% of
+  its wording with its siblings; its local facts are real but short.
+- **The measure:** "words only that page has" = words in sentences on no other city's page of the set and on none of that city's other
+  pages (name blanked, numbers kept). `python3 tools/thin/local.py dist-ca services --pair` prints it per set; `tools/thin/audit.py`
+  prints every page type's size, sameness and affiliate links. Neither runs in the build. On 2026-11-15: calculators 476–1,701 words,
+  home energy audit 447, asbestos 298, radon 275, energy bill 236, CO 234, well water 225, heat loss 207, blower door 157, mold 156,
+  thermal imaging 153, duct leakage 151, ventilation 148, attic insulation 86, combustion safety 66, lead paint 55; 362 of 1,050 service
+  pages under 150.
+- **What the searches say (.com property, Aug 24–Nov 13, where these pages lived until Nov 2):** 338 clicks in all; the energy-cost
+  calculator's city pages brought 88 of them at an average position of 8; service-city pages 102; four service sets (duct leakage,
+  ventilation, attic insulation, combustion safety) brought 5 between them. A place page earns its keep when the answer changes with the place.
+- **The plan's proposals, waiting on Dave (do not build them without his yes):** (1) noindex those four sets (280 pages) and leave them
+  out of the sitemap; (2) a gate after the build: 150 words of its own for any page that is one of a set, a page per city only when a fact
+  on it changes by city (provincial otherwise), new page-per-place sets ship noindex until they pass, a 250-word floor with a short
+  allow-list, and affiliate checks; warn first, fail the build later; (3) no new page-per-city sets, and the per-province buying guides
+  wait for search demand; (4) **affiliate and referral links never on a place page** (city, province, metro, zone, area), which means the
+  do-it-yourself heat pump buy links live only in the "Install it yourself" section and its product pages; (5) more local facts for the
+  lead paint, mold, blower door and thermal imaging city pages; (6) a weekly Search Console read; (7) the gate in the `new-site` skill.
+- **Until he decides:** don't add a page-per-place set, and don't put a buy link on a place page.
+
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality
   monitors), and the other session's auto-reply function (`submission-created`, live on .ca; switched off in code on .com and the building
