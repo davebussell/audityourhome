@@ -10,6 +10,7 @@ import { breadcrumbSchema, faqSchema } from '../../../../lib/schema';
 import { localIndex, loadCity, services, SERVICE_COUNT } from '../../../../lib/local';
 import type { LocalPage, LocalService, LocalCity } from '../../../../lib/local';
 import { ogFor } from '../../../../lib/photos';
+import policy from '../../../../data/index-policy.json';
 
 export function getStaticPaths() {
   const out = [];
@@ -38,6 +39,9 @@ const PROV_AREA: Record<string, string> = {
 const area = city.prov === 'ON' ? city.onRegion ?? 'other-ontario' : PROV_AREA[city.prov] ?? '';
 
 const path = `/services/${service.slug}/${city.slug}/`;
+// Folded sets (src/data/index-policy.json): the page stays up and linked, but carries noindex, which also keeps it out of
+// the sitemap (postbuild lists indexable pages only). The publishing gate checks that the two agree.
+const folded = service.slug in (policy.folded.ca['/services/*/*/'] ?? {});
 const schema = [
   breadcrumbSchema([
     { name: 'Home', path: '/' },
@@ -73,7 +77,7 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
   : climHasTest ? 'service' : null;
 ---
 
-<Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(service.slug)}>
+<Base title={pg.title} description={pg.description} schema={schema} ogImage={ogFor(service.slug)} indexable={!folded}>
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/services/">Services</a> <span aria-hidden="true">/</span>

@@ -1,0 +1,362 @@
+{
+  "about": "Which page sets Google is invited to index, and the rules the publishing gate (tools/thin/gate.mjs) checks after every build. The plan behind it: claude.ai/artifact/SwT317jHDMUAQhfKAfzQPr. Dave approved all seven of its decisions on 2026-11-16. Change a rule or an exception here only with his OK.",
+  "decided": "2026-11-16",
+  "enforceFrom": "2026-11-30",
+  "floors": {
+    "ownWords": 150,
+    "pageWords": 250,
+    "newSetPages": 12
+  },
+  "folded": {
+    "ca": {
+      "/services/*/*/": {
+        "duct-leakage-testing": "Thin and unsearched: about 150 words of its own per city, 1 search click in 12 weeks (Aug 24 to Nov 13, 2026).",
+        "ventilation-assessment": "Thin and unsearched: about 150 words of its own per city, 2 search clicks in 12 weeks.",
+        "attic-insulation-inspection": "Thin and unsearched: about 85 words of its own per city, 2 search clicks in 12 weeks.",
+        "combustion-safety-test": "Thin and unsearched: about 65 words of its own per city, no search clicks in 12 weeks."
+      }
+    }
+  },
+  "pending": {
+    "ca": {
+      "/services/*/*/": {
+        "lead-paint-testing": {
+          "until": "2026-12-15",
+          "why": "Searched (12 clicks, 1,610 impressions in 12 weeks) and it opens with the right local fact, the share of houses built before 1961. More local facts are being researched; fold it if none are found."
+        },
+        "mold-testing": {
+          "until": "2026-12-15",
+          "why": "Searched (6,400 impressions). Local facts to add: climate and housing data per city."
+        },
+        "blower-door-test": {
+          "until": "2026-12-15",
+          "why": "Searched (13 clicks). Local facts to add: typical air leakage by construction era."
+        },
+        "thermal-imaging": {
+          "until": "2026-12-15",
+          "why": "Searched (2,440 impressions). Local facts to add: the months a scan works in that climate."
+        }
+      }
+    }
+  },
+  "sets": {
+    "ca": [
+      {
+        "match": "/services/*/*/",
+        "type": "grid",
+        "kind": 2,
+        "place": 3,
+        "repeat": true,
+        "name": "service in a city",
+        "changesBy": "city: census housing age, climate station, radon survey region, heating fuels, utilities, local companies"
+      },
+      {
+        "match": "/calculators/*/*/",
+        "type": "grid",
+        "kind": 2,
+        "place": 3,
+        "repeat": true,
+        "name": "calculator for a city",
+        "changesBy": "city: energy prices by utility, climate, rebates"
+      },
+      {
+        "match": "/areas/*/*/",
+        "type": "grid",
+        "kind": 3,
+        "place": 2,
+        "name": "service in an Ontario area",
+        "changesBy": "area: local programs, housing, wells and radon by health unit"
+      },
+      {
+        "match": "/cities/*/",
+        "type": "place",
+        "place": 2,
+        "name": "city guide"
+      },
+      {
+        "match": "/areas/*/",
+        "type": "place",
+        "place": 2,
+        "name": "Ontario area guide"
+      },
+      {
+        "match": "/provinces/*/",
+        "type": "place",
+        "place": 2,
+        "name": "province guide"
+      },
+      {
+        "match": "/fr/villes/*/",
+        "type": "place",
+        "place": 3,
+        "name": "French city guide"
+      },
+      {
+        "match": "/heat-pumps/picks/*/",
+        "type": "place",
+        "place": 3,
+        "name": "heat pump picks by climate zone"
+      },
+      {
+        "match": "/heat-pumps/brands/*/",
+        "type": "flat",
+        "name": "heat pump brand"
+      },
+      {
+        "match": "/heat-pumps/*/",
+        "type": "flat",
+        "name": "heat pump guides and province pages"
+      },
+      {
+        "match": "/glossary/*/",
+        "type": "flat",
+        "name": "glossary entry"
+      },
+      {
+        "match": "/programs/*/",
+        "type": "flat",
+        "name": "program"
+      },
+      {
+        "match": "/articles/*/",
+        "type": "flat",
+        "name": "article"
+      },
+      {
+        "match": "/providers/*/",
+        "type": "flat",
+        "name": "company listing"
+      },
+      {
+        "match": "/tests/*/",
+        "type": "flat",
+        "name": "test guide"
+      },
+      {
+        "match": "/learn/*/",
+        "type": "flat",
+        "name": "learn guide"
+      },
+      {
+        "match": "/services/*/",
+        "type": "flat",
+        "name": "national service page"
+      },
+      {
+        "match": "/guides/*/",
+        "type": "flat",
+        "name": "guide"
+      },
+      {
+        "match": "/find/*/",
+        "type": "flat",
+        "name": "find an advisor by region"
+      },
+      {
+        "match": "/issues/*/",
+        "type": "flat",
+        "name": "common problem"
+      },
+      {
+        "match": "/buying-guides/*/",
+        "type": "flat",
+        "name": "buying guide"
+      },
+      {
+        "match": "/products/*/",
+        "type": "flat",
+        "name": "gear picks"
+      },
+      {
+        "match": "/calculators/*/",
+        "type": "flat",
+        "name": "calculator"
+      },
+      {
+        "match": "/fr/programmes/*/",
+        "type": "flat",
+        "name": "French program page"
+      },
+      {
+        "match": "/fr/*/",
+        "type": "flat",
+        "name": "French page"
+      }
+    ],
+    "us": [
+      {
+        "match": "/cities/*/",
+        "type": "place",
+        "place": 2,
+        "name": "metro guide"
+      },
+      {
+        "match": "/programs/states/*/",
+        "type": "place",
+        "place": 3,
+        "name": "state programs"
+      },
+      {
+        "match": "/heat-pumps/picks/*/",
+        "type": "place",
+        "place": 3,
+        "name": "heat pump picks by climate zone"
+      },
+      {
+        "match": "/heat-pumps/brands/*/",
+        "type": "flat",
+        "name": "heat pump brand"
+      },
+      {
+        "match": "/heat-pumps/*/",
+        "type": "flat",
+        "name": "heat pump guides and metro pages"
+      },
+      {
+        "match": "/glossary/*/",
+        "type": "flat",
+        "name": "glossary entry"
+      },
+      {
+        "match": "/programs/*/",
+        "type": "flat",
+        "name": "program"
+      },
+      {
+        "match": "/tests/*/",
+        "type": "flat",
+        "name": "test guide"
+      },
+      {
+        "match": "/issues/*/",
+        "type": "flat",
+        "name": "common problem"
+      },
+      {
+        "match": "/buying-guides/*/",
+        "type": "flat",
+        "name": "buying guide"
+      },
+      {
+        "match": "/products/*/",
+        "type": "flat",
+        "name": "gear picks"
+      }
+    ],
+    "bu": [
+      {
+        "match": "/commercial-energy-audit/*/",
+        "type": "place",
+        "place": 2,
+        "repeat": true,
+        "name": "commercial audit in a city"
+      },
+      {
+        "match": "/articles/*/",
+        "type": "flat",
+        "name": "article"
+      }
+    ]
+  },
+  "alias": {
+    "_about": "How a place is written on its pages when that differs from its slug. The gate blanks these names before comparing pages.",
+    "richmond-bc": [
+      "Richmond"
+    ],
+    "sherwood-park": [
+      "Strathcona County"
+    ],
+    "sudbury": [
+      "Greater Sudbury"
+    ],
+    "bc": [
+      "British Columbia"
+    ],
+    "pei": [
+      "Prince Edward Island"
+    ],
+    "newfoundland-labrador": [
+      "Newfoundland & Labrador",
+      "Newfoundland and Labrador"
+    ],
+    "great-lakes-st-lawrence": [
+      "Southern Ontario and southern Quebec"
+    ],
+    "cold-dry": [
+      "the Colorado Front Range"
+    ],
+    "mixed-humid-warm": [
+      "the Southeast Piedmont"
+    ]
+  },
+  "repeatShareMax": {
+    "ca": 0.63,
+    "bu": 0.82
+  },
+  "thinOk": {
+    "ca": [
+      {
+        "match": "/glossary/*/",
+        "why": "A glossary entry is short by nature."
+      },
+      {
+        "match": "/providers/*/",
+        "why": "A company listing: name, coverage, contact."
+      },
+      {
+        "match": "/services/duct-leakage-testing/",
+        "why": "A hub that lists the city pages; the full guide is the test page. To strengthen."
+      },
+      {
+        "match": "/services/blower-door-test/",
+        "why": "A hub that lists the city pages; the full guide is the test page. To strengthen."
+      },
+      {
+        "match": "/services/thermal-imaging/",
+        "why": "A hub that lists the city pages; the full guide is the test page. To strengthen."
+      },
+      {
+        "match": "/heat-pumps/picks/",
+        "why": "An index: the zone finder and the list of zones."
+      },
+      {
+        "match": "/issues/ice-dams/",
+        "why": "A short problem page, 8 words under the line."
+      },
+      {
+        "match": "/tests/screener/",
+        "why": "An interactive tool; its content is the questions."
+      }
+    ],
+    "us": [
+      {
+        "match": "/glossary/*/",
+        "why": "A glossary entry is short by nature."
+      }
+    ],
+    "bu": [
+      {
+        "match": "/request/",
+        "why": "A form."
+      },
+      {
+        "match": "/articles/",
+        "why": "An index of three articles."
+      }
+    ]
+  },
+  "affiliate": {
+    "links": "amazon\\.|amzn\\.to|[?&]tag=|awin1?\\.com|flexoffers|shareasale|bookshop\\.org",
+    "disclosure": "Amazon Associate|affiliate link|liens? affili",
+    "allowed": {
+      "ca": [
+        "/products/*/"
+      ],
+      "us": [
+        "/products/*/"
+      ],
+      "bu": []
+    },
+    "note": "A referral fee counts as an affiliate link. When the do-it-yourself heat pump links (Kanartic, MRCOOL's distributor) become paid, add their hosts to links and the Install it yourself section's paths to allowed. Never allow a place page (city, province, metro, zone, area)."
+  }
+}

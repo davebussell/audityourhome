@@ -393,7 +393,7 @@ pumps through AuditYourHome.ca: plan" (claude.ai/artifact/DKd9dRFvhy2SBwAeGVPtgM
   contact form. No replies by the evening of the 13th. With Dave: a FlexOffers publisher account for Senville's Canadian programme, and
   the RBQ question (its form needs a phone number; the text is a Gmail draft).
 
-## Thin content and affiliate links: the plan (2026-11-15, a plan only; nothing in it is built or decided)
+## Thin content and affiliate links: the plan and the publishing gate (plan 2026-11-15; Dave approved all seven decisions on 2026-11-16)
 Dave's location guide Pecker & Jay ran into thin-content and affiliate trouble and had to move domains; he asked for a plan to keep the
 three audit sites clear of the same. It is the Claude Doc "Keeping the audit sites clear of thin-content and affiliate problems: plan"
 (claude.ai/artifact/SwT317jHDMUAQhfKAfzQPr). Read it before adding any page-per-place set or any affiliate or referral link.
@@ -405,23 +405,49 @@ three audit sites clear of the same. It is the Claude Doc "Keeping the audit sit
   above the first merchant link on every page) but the city grid: 1,330 of .ca's 1,957 indexable pages (15 services × 70 cities, 4
   calculators × 70) and 70 of the building site's 86. With place names and numbers blanked, a service-in-a-city page shares about 98% of
   its wording with its siblings; its local facts are real but short.
-- **The measure:** "words only that page has" = words in sentences on no other city's page of the set and on none of that city's other
-  pages (name blanked, numbers kept). `python3 tools/thin/local.py dist-ca services --pair` prints it per set; `tools/thin/audit.py`
-  prints every page type's size, sameness and affiliate links. Neither runs in the build. On 2026-11-15: calculators 476–1,701 words,
-  home energy audit 447, asbestos 298, radon 275, energy bill 236, CO 234, well water 225, heat loss 207, blower door 157, mold 156,
-  thermal imaging 153, duct leakage 151, ventilation 148, attic insulation 86, combustion safety 66, lead paint 55; 362 of 1,050 service
-  pages under 150.
+- **The measure:** "words only that page has" = words in sentences on no other place's page of the set and on none of that place's
+  other pages (name blanked, numbers kept). `npm run gate` (= `node tools/thin/gate.mjs --sets`) prints it for every set. **The plan's
+  first table overstated it** (its script left names like "St. Catharines" and "Strathcona County" unblanked, which pushed sentences
+  every page shares under the 90% line); the gate blanks names properly and the plan doc was corrected on 2026-11-16. Medians now:
+  calculators 350–1,506 words (energy costs 665), home energy audit 395, asbestos 298, radon 257, energy bill 237, CO 230, well water
+  221, heat loss 205, thermal imaging 153, ventilation 148, duct leakage 146, mold 139, blower door 138, attic insulation 86, combustion
+  safety 66, lead paint 55; 429 of 1,050 service-in-a-city pages under 150 before the fold.
 - **What the searches say (.com property, Aug 24–Nov 13, where these pages lived until Nov 2):** 338 clicks in all; the energy-cost
   calculator's city pages brought 88 of them at an average position of 8; service-city pages 102; four service sets (duct leakage,
   ventilation, attic insulation, combustion safety) brought 5 between them. A place page earns its keep when the answer changes with the place.
-- **The plan's proposals, waiting on Dave (do not build them without his yes):** (1) noindex those four sets (280 pages) and leave them
-  out of the sitemap; (2) a gate after the build: 150 words of its own for any page that is one of a set, a page per city only when a fact
-  on it changes by city (provincial otherwise), new page-per-place sets ship noindex until they pass, a 250-word floor with a short
-  allow-list, and affiliate checks; warn first, fail the build later; (3) no new page-per-city sets, and the per-province buying guides
-  wait for search demand; (4) **affiliate and referral links never on a place page** (city, province, metro, zone, area), which means the
-  do-it-yourself heat pump buy links live only in the "Install it yourself" section and its product pages; (5) more local facts for the
-  lead paint, mold, blower door and thermal imaging city pages; (6) a weekly Search Console read; (7) the gate in the `new-site` skill.
-- **Until he decides:** don't add a page-per-place set, and don't put a buy link on a place page.
+- **Folded (decision 1):** the city pages for duct leakage testing, ventilation assessment, attic insulation inspection and combustion
+  safety test (280 pages) carry `noindex` and are out of the sitemap; they stay up and linked, and the four national service pages stay
+  indexed. The list is `folded` in `src/data/index-policy.json`; `src/pages/ca/services/[service]/[city].astro` reads it
+  (`indexable={!folded}`) and postbuild's sitemap already lists indexable pages only. .ca: 1,677 indexable pages, city grids 62.6%.
+- **The publishing gate (decisions 2 to 4):** `tools/thin/gate.mjs` runs last in `npm run build` over the three built sites. Rules and
+  exceptions live in `src/data/index-policy.json` (change them only with Dave's OK): (1) 150 words of its own for every indexable page
+  in a page-per-place set (`sets` of type `grid` or `place`), unless its kind is `folded` or has a `pending` exception with an end
+  date; (2) a page type with 12 or more indexable pages that `sets` doesn't list is a breach, so **a new set ships noindex and is listed
+  once it passes**; (3) an indexable page under 250 words needs a reason in `thinOk`; (4) affiliate links only on the page types in
+  `affiliate.allowed` (`/products/*/` today), marked `rel="sponsored"`, with the disclosure above the first one; (5) the city grids'
+  share of indexable pages may not pass `repeatShareMax` (.ca 63%, building site 82%); (6) folded pages really are noindex and nothing
+  noindex is in a sitemap. A place whose name isn't found on its own page is reported: add how it is written to `alias`.
+  **It warns until `enforceFrom` (2026-11-30) and fails the build from then on.** `THIN_GATE=warn npm run build` is the override for
+  an urgent deploy, with Dave's OK. `--pages` lists every page that breaks a rule.
+- **Open before 2026-11-30:** 25 pages would fail: 14 service-in-a-city pages just under the line in carbon monoxide testing, energy
+  bill analysis and heat loss calculation (116 to 145 words), and 11 of the 15 `/areas/*/mold-testing/` pages (109 to 145). Strengthen
+  them, or ask Dave for an exception. **Open before 2026-12-15 (decision 5):** the `pending` sets, lead paint, mold, blower door and
+  thermal imaging city pages (184 short pages). The city records hold no local facts beyond what those pages already use (checked
+  2026-11-16: climate station, design temperature, census construction eras, heating fuels, utilities, radon, wells), so new facts need
+  new public data; the ranking plan below says which. If none is found for a set, fold it.
+- **The area pages** (`/areas/<area>/<service>/`, 15 Ontario and BC areas × 6 services, 90 pages) are a third grid the plan's count
+  left out. They hold more of their own (well water 854 words, home energy audit 657, radon 530) and they rank: 24 clicks and about
+  16,500 impressions in the 12 weeks. Their local detail (the health unit, the towns with bottle pick-up) is the model for the city pages.
+- **Standing rules (decisions 3 and 4):** no new page-per-city set; a new place page is provincial unless a fact on it changes by city;
+  the per-province buying guides wait for search demand; **no affiliate or referral link on a place page** (city, province, metro,
+  zone, area), so the do-it-yourself heat pump buy links go only in the "Install it yourself" section and its product pages, whose
+  paths then get added to `affiliate.allowed` and whose hosts to `affiliate.links`.
+- **Weekly Search Console check (decision 6):** the scheduled task "Audit sites: weekly Search Console check" reads the three
+  properties in Dave's Chrome each Monday, adds a row to the "Weekly readings" table at the foot of the plan doc, and notifies him
+  only when a trip wire in the plan's Monitoring section is crossed. **The gate in the new-site skill (decision 7)** was proposed to
+  Dave as a skill update on 2026-11-16; it is his to save.
+- **What ranks, and the plan to strengthen it:** the Claude Doc "What ranks today on the audit sites: plan to strengthen and
+  fact-check it" (claude.ai/artifact/NLdkFr2wFwZPfwQchdMVR7), written 2026-11-16 from Search Console and a first accuracy pass.
 
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality
