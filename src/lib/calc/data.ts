@@ -9,6 +9,7 @@ import healthJson from '../../data/calc/health.json';
 import appliancesJson from '../../data/calc/appliances.json';
 import sourcesJson from '../../data/calc/sources.json';
 import { MODEL, climateZone, fuelOf, type Prices, type SystemKey, type RebateEntry } from './engine';
+import { longDate } from './format';
 
 export const CALC_SLUGS = ['energy-costs', 'upgrade-payback', 'home-health', 'appliance-energy'] as const;
 export type CalcSlug = (typeof CALC_SLUGS)[number];
@@ -74,13 +75,16 @@ export function citiesByProvince() {
 
 /* ------------------------------------------------------------------ prices */
 
-type ElecP = { allIn: number; allInCurrentTariff?: number | null; variable: number; utility: string; basis?: string; variableBasis?: string; sourceDate?: string; variableDate?: string; source?: string; tiers?: string; currentTariffSources?: string[]; firstStep?: { perKwh: number; threshold: string; basis: string } };
-type GasP = { allIn: number; variable: number; utility: string; basis?: string; sourceDate?: string; source?: string; taxNote?: string; taxes?: string };
+type ElecP = { checked?: string; tariffDate?: string; allIn: number; allInCurrentTariff?: number | null; variable: number; utility: string; basis?: string; variableBasis?: string; sourceDate?: string; variableDate?: string; source?: string; tiers?: string; currentTariffSources?: string[]; firstStep?: { perKwh: number; threshold: string; basis: string } };
+type GasP = { checked?: string; allIn: number; variable: number; utility: string; basis?: string; sourceDate?: string; source?: string; taxNote?: string; taxes?: string };
 type OilP = { perL: number; month?: string; avg12mo?: number; avg12moPeriod?: string; city?: string; source?: string };
 type PropP = { perL: number | null; basis?: string; sourceDate?: string; source?: string; note?: string; taxNote?: string };
 
 export interface ResolvedPrices {
   asOf: string;
+  /** when this city's electricity and gas records were last read; later than asOf where a rate change was folded in since */
+  elecAsOf: string;
+  gasAsOf: string | null;
   elec: { now: number; avg: number; variable: number; utility: string; avgBasis: string; tierHigher: boolean; varDate: string | null; varBasis: string | null; source: string | null; tiers: string | null; tariffSources: string[]; firstStep: { perKwh: number; threshold: string; basis: string } | null };
   gas: { now: number; variable: number; utility: string; date: string | null; source: string | null; taxNote: string | null } | null;
   oil: { perL: number; latest: number; month: string | null; period: string | null; city: string | null; source: string | null } | null;
@@ -89,13 +93,24 @@ export interface ResolvedPrices {
   gasNote: string | null;
 }
 
+/** "October 8, 2026", or "October 8, 2026 (electricity November 16, 2026)" where a fuel's rates were re-read since. */
+export function pricesCheckedWords(rp: ResolvedPrices): string {
+  const later: string[] = [];
+  if (rp.elecAsOf !== rp.asOf) later.push(`electricity ${longDate(rp.elecAsOf)}`);
+  if (rp.gas && rp.gasAsOf && rp.gasAsOf !== rp.asOf) later.push(`natural gas ${longDate(rp.gasAsOf)}`);
+  return later.length ? `${longDate(rp.asOf)} (${later.join(', ')})` : longDate(rp.asOf);
+}
+/** Rate changes folded in since the file's asOf date, as "What was checked when" lines for the national pages. */
+export const PRICE_UPDATES: { label: string; date: string }[] =
+  (((pricesJson as unknown as { updates?: { label: string; date: string }[] }).updates) ?? []).map((u) => ({ label: u.label, date: u.date }));
+
 export function resolvePrices(city: CalcCity): ResolvedPrices {
   const P = pricesJson.provinces[city.prov as keyof typeof pricesJson.provinces] as unknown as { electricity: ElecP; gas: GasP | null; oil: OilP | null; propane: PropP };
   const O = ((pricesJson.cityOverrides as Record<string, unknown>)[city.slug] ?? {}) as { electricity?: ElecP; gas?: GasP; oil?: OilP };
   const e = O.electricity ?? P.electricity;
   const avg = e.allInCurrentTariff ?? e.allIn;
   const avgBasis = e.allInCurrentTariff
-    ? 'average for a 1,000 kWh/month bill at tariffs in effect October 8, 2026, taxes and fixed charges in'
+    ? `average for a 1,000 kWh/month bill at tariffs in effect ${longDate(e.tariffDate ?? pricesJson.asOf)}, taxes and fixed charges in`
     : 'average for a 1,000 kWh/month bill (Hydro-Québec 2025 comparison, rates of April 1, 2025), taxes and fixed charges in';
   const g = O.gas ?? P.gas;
   const oil = O.oil ?? P.oil;
@@ -105,6 +120,8 @@ export function resolvePrices(city: CalcCity): ResolvedPrices {
   if ((city.prov === 'SK' || city.prov === 'MB') && g) gasNote = g.taxNote ?? null;
   return {
     asOf: pricesJson.asOf,
+    elecAsOf: e.checked ?? pricesJson.asOf,
+    gasAsOf: g ? (g.checked ?? pricesJson.asOf) : null,
     elec: { now: Math.max(avg, e.variable), avg, variable: e.variable, utility: e.utility, avgBasis, tierHigher: e.variable > avg, varDate: e.variableDate ?? null, varBasis: e.variableBasis ?? null, source: e.source ?? null, tiers: e.tiers ?? null, tariffSources: e.currentTariffSources ?? [], firstStep: e.firstStep ?? null },
     gas: g ? { now: g.allIn, variable: g.variable, utility: g.utility, date: g.sourceDate ?? null, source: g.source ?? null, taxNote: g.taxNote ?? null } : null,
     oil: oil ? { perL: oil.avg12mo ?? oil.perL, latest: oil.perL, month: oil.month ?? null, period: oil.avg12moPeriod ?? pricesJson.oilAvgPeriod, city: oil.city ?? null, source: oil.source ?? pricesJson.oilSource } : null,

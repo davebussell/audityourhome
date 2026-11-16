@@ -1,6 +1,6 @@
 /** Content for /calculators/upgrade-payback/<city>/ (build time). */
 import { MODEL, atticTargetR, rsiToR, fuelOf, systemEfficiency, type SystemKey } from '../engine';
-import { resolvePrices, enginePrices, defaultSystem, rebatesCompact, rebatesFull, provinceRebates, municipalPrograms, shortProgram, cityName, climateOf, type CalcCity } from '../data';
+import { resolvePrices, enginePrices, defaultSystem, rebatesCompact, rebatesFull, provinceRebates, municipalPrograms, shortProgram, cityName, climateOf, pricesCheckedWords, type CalcCity } from '../data';
 import { money, unitPrice, int, gj, longDate, pct, range } from '../format';
 import { TYPICAL_LINE, srcs, addSrc, type Fact, type Faq, type SourceRef, fit } from './common';
 import { upgradeDefaults, computeUpgrade, pbRange, MEASURE_LABEL, type UpgradePayload, type UpgradeResult } from '../../../components/calc/upgrade-payback';
@@ -83,7 +83,7 @@ export function upgradePage(city: CalcCity) {
     `Insulation, window and air-sealing savings in ${name} at 2026 prices, with open rebates and simple payback.`,
   ], 160);
   const h1 = `Insulation and upgrade payback calculator for ${name}`;
-  const kicker = `${city.provName} · climate zone ${cl.zone} · prices and rebates checked ${longDate(rp.asOf)}`;
+  const kicker = `${city.provName} · climate zone ${cl.zone} · prices and rebates checked ${pricesCheckedWords(rp)}`;
   const rbTxt = atticF.rebate ? `; the smallest open rebate that applies (${atticF.rebate.program}) is ${range(atticF.rebate.amountLow, atticF.rebate.amountHigh, money)}` : '; no open provincial rebate applies';
   const lede = `${name} has ${int(cl.hdd)} heating degree-days a year (climate zone ${cl.zone}), and NRCan recommends about <strong>R-${t.nrcan}</strong> in an attic here. For ${TYPICAL_LINE} with a ${fossil ? MODEL.systems[first.sys].short.toLowerCase() : 'baseboard heaters'}, topping up the attic from R-20 to R-${t.target} saves about <strong>${money(atticF.dollars)} a year</strong> at ${unitPrice(varPrice(first.sys), unitWord(first.sys))} and costs about ${range(atticF.costLow, atticF.costHigh, money)}${rbTxt}.${fossil ? ` In an electrically heated house the same attic saves about ${money(atticE.dollars)} a year.` : ''}`;
 

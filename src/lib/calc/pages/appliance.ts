@@ -66,8 +66,8 @@ export function appliancePage(city: CalcCity) {
   const fs = rp.elec.firstStep;
   const elecUtil = rp.elec.utility.split('(')[0].split(',')[0].trim();
   const priceNote = fs
-    ? `${elecUtil}'s first-step price with taxes, which applies to the first ${fs.threshold} your home uses; above that, each kWh costs about ${unitPrice(rp.elec.variable, 'kWh')}. Rates checked ${longDate(rp.asOf)}.`
-    : `${elecUtil}: the energy and delivery charges that rise with each kWh, taxes in. Rates checked ${longDate(rp.asOf)}.`;
+    ? `${elecUtil}'s first-step price with taxes, which applies to the first ${fs.threshold} your home uses; above that, each kWh costs about ${unitPrice(rp.elec.variable, 'kWh')}. Rates checked ${longDate(rp.elecAsOf)}.`
+    : `${elecUtil}: the energy and delivery charges that rise with each kWh, taxes in. Rates checked ${longDate(rp.elecAsOf)}.`;
   const rows = items.filter((i) => i.kind === 'annual' || i.kind === 'perBulb' || i.kind === 'typical').map((i) => ({
     id: i.id, label: i.label, oldLabel: i.oldLabel, newLabel: i.newLabel,
     oldKwh: i.kind === 'typical' ? i.typicalKwh ?? null : i.oldKwh ?? null,
@@ -87,7 +87,7 @@ export function appliancePage(city: CalcCity) {
     `What common appliances cost to run in ${name} at ${unitPrice(price, 'kWh')} (2026 rates), and what a newer model saves.`,
   ], 160);
   const h1 = `Appliance energy cost calculator for ${name}`;
-  const kicker = `${city.provName} · electricity price checked ${longDate(rp.asOf)}`;
+  const kicker = `${city.provName} · electricity price checked ${longDate(rp.elecAsOf)}`;
   const lede = `In ${name}, one more kWh from <strong>${elecUtil}</strong> costs about <strong>${unitPrice(price, 'kWh')}</strong> with taxes${fs ? ` for the first ${fs.threshold} your home uses, and ${unitPrice(rp.elec.variable, 'kWh')} above that` : ''}. At that rate an older top-freezer fridge (2002–2008) costs about ${money((fr.oldKwh ?? 0) * price)} a year to run and a 2017-or-newer one about ${money((fr.newKwh ?? 0) * price)}; a second fridge from the late 1990s in the garage costs about ${money((f2.oldKwh ?? 0) * price)} a year, all of it saved by unplugging it.`;
   const facts: Fact[] = [
     { k: 'One more kWh', v: unitPrice(price, 'kWh'), s: `${elecUtil}, taxes in` },

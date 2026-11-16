@@ -1,8 +1,26 @@
 {
  "asOf": "2026-10-08",
+ "updates": [
+  {
+   "date": "2026-11-16",
+   "label": "Ontario electricity prices",
+   "provinces": [
+    "ON"
+   ],
+   "what": "The time-of-use prices of November 1, 2026 and the Ontario Electricity Rebate of 15.7%."
+  },
+  {
+   "date": "2026-11-16",
+   "label": "Manitoba natural gas prices",
+   "provinces": [
+    "MB"
+   ],
+   "what": "Manitoba Hydro's gas rates of November 1, 2026."
+  }
+ ],
  "notes": [
   "Prices include taxes and are what a residential customer pays (see each entry for exceptions).",
-  "Electricity \"allIn\" is the average price of a 1,000 kWh/month bill including fixed charges; \"allInCurrentTariff\" rebuilds that bill from tariffs in effect on 2026-10-08. \"variable\" is the price of one more kWh in the tier an electrically heated home reaches in winter.",
+  "Electricity \"allIn\" is the average price of a 1,000 kWh/month bill including fixed charges; \"allInCurrentTariff\" rebuilds that bill from tariffs in effect on 2026-10-08, or on the record's own \"tariffDate\" where it was rebuilt later. \"variable\" is the price of one more kWh in the tier an electrically heated home reaches in winter.",
   "Natural gas \"allIn\" spreads fixed charges over 2,400 m³ a year (2,200 m³ in Ontario's former Union zones); \"variable\" excludes fixed charges.",
   "The federal consumer carbon charge has been zero since April 1, 2025 and BC's consumer carbon tax ended the same day; Quebec's cap-and-trade charge still applies to natural gas.",
   "Heating oil: Statistics Canada table 18-10-0001-01 (August 2026 and the 12-month average, September 2025 to August 2026). Oil prices rose sharply in 2026.",
@@ -13,23 +31,26 @@
   "ON": {
    "electricity": {
     "allIn": 0.179,
-    "allInCurrentTariff": 0.188,
-    "variable": 0.144,
+    "allInCurrentTariff": 0.195,
+    "variable": 0.147,
     "utility": "Toronto Hydro (provincial default; Ottawa override uses Hydro Ottawa)",
     "basis": "allIn: Hydro-Québec 2025 comparison, Toronto residential bill at 1,000 kWh/month incl. taxes (17.90 c/kWh; 15.57 c/kWh before tax). HQ's 'excluding taxes' Ontario bills already net the Ontario Electricity Rebate (13.1% on 2025-04-01); HST 13% is charged on the pre-rebate subtotal. Rates and the rebate have changed since (see allInCurrentTariff).",
-    "variableBasis": "Marginal cost of one kWh for a Toronto Hydro customer on default time-of-use pricing: TOU average 12.75 c x loss factor 1.0295 + volumetric delivery 2.401 c (transmission and riders) + regulatory 0.53 c = 16.06 c before rebate/tax, x 0.895 (OER 23.5%, HST 13%). Toronto Hydro's residential distribution charge is a fixed service charge, so it does not affect the marginal price.",
+    "variableBasis": "Marginal cost of one kWh for a Toronto Hydro customer on default time-of-use pricing: TOU average 11.854 c x loss factor 1.0295 + volumetric delivery 2.401 c (transmission and riders) + regulatory 0.53 c = 15.13 c before rebate/tax, x 0.973 (OER 15.7%, HST 13%). Toronto Hydro's residential distribution charge is a fixed service charge, so it does not affect the marginal price.",
     "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
-    "variableDate": "RPP prices effective 2025-11-01 (next reset 2026-11-01); Toronto Hydro delivery rates effective 2026-01-01",
+    "variableDate": "RPP prices effective 2026-11-01 (next reset 2027-11-01); Toronto Hydro delivery rates effective 2026-01-01",
     "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
-    "allInCurrentTariffBasis": "Same 1,000 kWh/30-day bill rebuilt from tariffs in effect 2026-10-08: RPP time-of-use average 12.75 c/kWh (OEB weights 64% off-peak 9.8 c, 18% mid-peak 15.7 c, 18% on-peak 20.3 c; Nov 1, 2025 prices) x Toronto Hydro loss factor 1.0295; Toronto Hydro 2026 fixed charges $49.11/30 days (service charge $51.18, riders, SME, SSS admin); volumetric riders 0.160 c and transmission 2.241 c/kWh; regulatory 0.53 c/kWh; then Ontario Electricity Rebate 23.5% (since Nov 1, 2025) and HST 13% on the pre-rebate subtotal (net factor 0.895).",
-    "tiers": "Tiered plan (optional): 12.0 c/kWh up to 1,000 kWh/month in winter (Nov-Apr; 600 kWh in May-Oct), 14.2 c/kWh above; an electrically heated home above the winter threshold pays about $0.157/kWh all-in at the margin. Ultra-low overnight plan: 3.9 c/kWh 11 p.m.-7 a.m. (about $0.062/kWh all-in), 39.1 c/kWh on-peak 4-9 p.m. weekdays.",
+    "allInCurrentTariffBasis": "Same 1,000 kWh/30-day bill rebuilt from tariffs in effect 2026-11-16: RPP time-of-use average 11.854 c/kWh (OEB weights 64% off-peak 9.1 c, 18% mid-peak 14.6 c, 18% on-peak 18.9 c; Nov 1, 2026 prices) x Toronto Hydro loss factor 1.0295; Toronto Hydro 2026 fixed charges $49.11/30 days (service charge $51.18, riders, SME, SSS admin); volumetric riders 0.160 c and transmission 2.241 c/kWh; regulatory 0.53 c/kWh; then Ontario Electricity Rebate 15.7% (since Nov 1, 2026; 23.5% before) and HST 13% on the pre-rebate subtotal (net factor 0.973). Delivery and regulatory charges are as read on 2026-10-08.",
+    "tiers": "Tiered plan (optional): 11.2 c/kWh up to 1,000 kWh/month in winter (Nov-Apr; 600 kWh in May-Oct), 13.2 c/kWh above; an electrically heated home above the winter threshold pays about $0.161/kWh all-in at the margin. Ultra-low overnight plan: 3.7 c/kWh 11 p.m.-7 a.m. (about $0.066/kWh all-in), 37.7 c/kWh on-peak 4-9 p.m. weekdays.",
     "currentTariffSources": [
-     "https://www.oeb.ca/sites/default/files/rpp-price-report-20251017.pdf",
-     "https://www.oeb.ca/sites/default/files/rpp-backgrounder-20251017.pdf",
+     "https://www.oeb.ca/newsroom/2026/ontario-energy-board-announces-changes-electricity-prices-households-small-businesses",
+     "https://www.oeb.ca/consumer-information-and-protection/electricity-rates/historical-electricity-rates",
+     "https://www.oeb.ca/sites/default/files/RPP%20BACKGROUNDER_FINAL_16OCT2026.pdf",
      "https://rds.oeb.ca/CMWebDrawer/Record/923998/File/document",
      "https://www.torontohydro.com/for-home/rates",
      "https://www.oeb.ca/sites/default/files/bill-graphic-sample-20191022.pdf"
-    ]
+    ],
+    "tariffDate": "2026-11-16",
+    "checked": "2026-11-16"
    },
    "gas": {
     "allIn": 0.478,
@@ -270,14 +291,15 @@
     ]
    },
    "gas": {
-    "allIn": 0.313,
-    "variable": 0.236,
+    "allIn": 0.304,
+    "variable": 0.227,
     "utility": "Manitoba Hydro natural gas (system gas commodity)",
-    "basis": "Manitoba Hydro residential natural gas effective Aug 1, 2026: basic $14.75/month; gas commodity 6.60 c/m3 (reset quarterly); delivery 15.83 c/m3 (transportation 4.58 + distribution 11.25). Annual $715.32 before tax, x 1.05, / 2,400.",
-    "sourceDate": "2026-08-01",
+    "basis": "Manitoba Hydro residential natural gas effective Nov 1, 2026: basic $14.75/month; gas commodity 5.88 c/m3 (reset quarterly); delivery 15.71 c/m3 (transportation 3.22 + distribution 12.49). Annual $695.16 before tax, x 1.05, / 2,400.",
+    "sourceDate": "2026-11-01",
     "source": "https://www.hydro.mb.ca/account/rates/residential/",
     "taxes": "partial",
-    "taxNote": "Provincial sales tax and Winnipeg municipal tax on residential natural gas could not be verified from a fetched source and are excluded; the true all-in price is likely higher."
+    "taxNote": "Provincial sales tax and Winnipeg municipal tax on residential natural gas could not be verified from a fetched source and are excluded; the true all-in price is likely higher.",
+    "checked": "2026-11-16"
    },
    "oil": {
     "perL": 1.975,
@@ -524,19 +546,22 @@
   "ottawa": {
    "electricity": {
     "allIn": 0.165,
-    "allInCurrentTariff": 0.178,
-    "variable": 0.142,
+    "allInCurrentTariff": 0.184,
+    "variable": 0.145,
     "utility": "Hydro Ottawa",
     "basis": "Hydro-Québec 2025 comparison, Ottawa residential bill at 1,000 kWh/month incl. taxes (16.50 c/kWh; 14.35 c before tax, after the 13.1% Ontario Electricity Rebate then in force).",
-    "variableBasis": "(12.75 c x 1.0332 + 2.16 + 0.007 - 0.03 + 0.53) x 0.895.",
+    "variableBasis": "(11.854 c x 1.0332 + 2.16 + 0.007 - 0.03 + 0.53) x 0.973.",
     "sourceDate": "Rates in effect 2025-04-01 (Hydro-Québec, Comparison of Electricity Prices in Major North American Cities 2025, published October 2025; no 2026 edition was online on 2026-10-08)",
-    "variableDate": "RPP 2025-11-01; delivery 2026-06-01",
+    "variableDate": "RPP 2026-11-01; delivery 2026-06-01",
     "source": "https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf",
-    "allInCurrentTariffBasis": "RPP TOU average 12.75 c x loss factor 1.0332; Hydro Ottawa delivery effective 2026-06-01 (fixed $1.2888 - $0.0391 + $0.05918/day, SME $0.0138/day, SSS admin $0.0082/day; transmission 2.16 c, low-voltage 0.007 c, RPP rider -0.03 c/kWh); regulatory 0.53 c/kWh; OER 23.5% and HST 13% (factor 0.895).",
+    "allInCurrentTariffBasis": "RPP TOU average 11.854 c (Nov 1, 2026 prices) x loss factor 1.0332; Hydro Ottawa delivery effective 2026-06-01 (fixed $1.2888 - $0.0391 + $0.05918/day, SME $0.0138/day, SSS admin $0.0082/day; transmission 2.16 c, low-voltage 0.007 c, RPP rider -0.03 c/kWh); regulatory 0.53 c/kWh; OER 15.7% (since Nov 1, 2026) and HST 13% (factor 0.973).",
     "currentTariffSources": [
      "https://www.hydroottawa.com/residential/rates-and-conditions",
-     "https://www.oeb.ca/sites/default/files/rpp-price-report-20251017.pdf"
-    ]
+     "https://www.oeb.ca/newsroom/2026/ontario-energy-board-announces-changes-electricity-prices-households-small-businesses",
+     "https://www.oeb.ca/consumer-information-and-protection/electricity-rates/historical-electricity-rates"
+    ],
+    "tariffDate": "2026-11-16",
+    "checked": "2026-11-16"
    },
    "oil": {
     "perL": 2.237,

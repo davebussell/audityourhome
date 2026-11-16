@@ -5,7 +5,7 @@
  * matches the planner; the standards and criteria quoted beside them live in src/data/guides/facts.json with their
  * sources. Nothing here is typed into a page by hand: a price update rewrites the guides.
  */
-import { CALC_CITIES, resolvePrices, cityName, defaultSystem, provinceRebates, MODEL } from './calc/data';
+import { CALC_CITIES, resolvePrices, cityName, defaultSystem, provinceRebates, MODEL, PRICE_UPDATES } from './calc/data';
 import {
   systemEfficiency, baselineDemandGJ, waterHeatingDemand, coolingKwh, defaultAcTons, setbackMeasure, fuelOf,
   type SystemKey, type WaterHeaterKey, type Fuel,
@@ -32,6 +32,7 @@ export const pricesAsOf = (m: Market): string => (m === 'ca' ? RUN_PRICES_AS_OF.
 export const baseAsOf = (m: Market) => [
   { label: 'Standards, criteria and guidance', date: factsJson.checked },
   { label: 'Energy prices', date: pricesAsOf(m) },
+  ...(m === 'ca' ? PRICE_UPDATES : []),
 ];
 /** "a detached house of 149 m² (1,600 sq ft) built between 1966 and 1980" */
 export const refHouseWords = (m: Market) =>

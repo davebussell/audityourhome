@@ -19,7 +19,7 @@ import {
 } from '../../lib/heatpumps';
 import { runRows, runSummary, listWords, baseboardWords, oilWords, type RunRow } from '../../lib/hp-run';
 import usPrices from '../../data/us/prices.json';
-import { MODEL, source } from '../../lib/calc/data';
+import { MODEL, source, PRICE_UPDATES } from '../../lib/calc/data';
 
 interface Props {
   market: Market;
@@ -147,6 +147,7 @@ const asOf = [
   { label: 'ENERGY STAR list pulled', date: ESTAR.pulled },
   { label: 'Rebates, warranties and where brands sell', date: HP_CHECKED_ISO },
   { label: 'Energy prices', date: isCA ? PRICES_CA_AS_OF : usRetrieved },
+  ...(isCA ? PRICE_UPDATES : []),
   ...(isCA ? [{ label: 'Rules for installing one yourself', date: DIY_RULES_CHECKED }] : []),
 ];
 ---

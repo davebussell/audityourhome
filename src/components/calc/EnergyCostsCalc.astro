@@ -5,6 +5,7 @@
  */
 import { MODEL, VINTAGES, VINTAGE_LABEL, HOUSE_TYPE_LABEL, SIZE_LABEL, SYSTEM_KEYS, WATER_HEATER_KEYS, fuelOf, fuelUnit } from '../../lib/calc/engine';
 import type { ResolvedPrices } from '../../lib/calc/data';
+import { pricesCheckedWords } from '../../lib/calc/data';
 import { energyDefaults, computeEnergy, renderHeating, renderSwitch, renderWater, renderCooling, type EnergyPayload } from './energy-costs';
 import { unitPrice, longDate, rateDate } from '../../lib/calc/format';
 
@@ -104,7 +105,7 @@ const elecHint = `${rp.elec.utility.split('(')[0].trim()}; ${rp.elec.tierHigher 
         </fieldset>
 
         <details class="cf prices">
-          <summary>Prices for {cityName} <span class="opt">(as of {longDate(rp.asOf)}; edit to match your bill)</span></summary>
+          <summary>Prices for {cityName} <span class="opt">(as of {pricesCheckedWords(rp)}; edit to match your bill)</span></summary>
           <div class="price-grid">
             <div class="field">
               <label for="ec-p-en">Electricity, average</label>

@@ -7,7 +7,7 @@
 import GuideShell from '../guide/GuideShell.astro';
 import { runRows, runSummary, listWords, baseboardWords, placesWords, REF_HOUSE, type RunRow } from '../../lib/hp-run';
 import { PRICES_CA_AS_OF, COP_NOTE, COP_NOTE_US, fmtDate, type Market } from '../../lib/heatpumps';
-import { source } from '../../lib/calc/data';
+import { source, PRICE_UPDATES } from '../../lib/calc/data';
 import { PRICE_META } from '../../lib/us/data';
 import usPrices from '../../data/us/prices.json';
 
@@ -127,7 +127,7 @@ const sources = isCA
   crumbs={[{ name: 'Heat pumps', path: '/heat-pumps/' }, { name: 'Heat pump vs gas furnace', path: PATH }]}
   published={PUBLISHED}
   updated={PUBLISHED}
-  asOf={[{ label: isCA ? 'Energy prices (tariffs in effect)' : 'Energy prices (retrieved from the EIA)', date: pricesAsOf }]}
+  asOf={[{ label: isCA ? 'Energy prices (tariffs in effect)' : 'Energy prices (retrieved from the EIA)', date: pricesAsOf }, ...(isCA ? PRICE_UPDATES : [])]}
   toc={[['table', 'Place by place'], ...(isCA ? ([['dollars', 'A year of heat']] as [string, string][]) : []), ['tie', 'The tie price'], ['other', 'Oil, propane, baseboards'], ['beyond', 'Beyond running cost'], ['method', 'How it’s worked out']]}
   faqs={faqs}
   sources={sources}

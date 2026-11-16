@@ -448,6 +448,28 @@ three audit sites clear of the same. It is the Claude Doc "Keeping the audit sit
   Dave as a skill update on 2026-11-16; it is his to save.
 - **What ranks, and the plan to strengthen it:** the Claude Doc "What ranks today on the audit sites: plan to strengthen and
   fact-check it" (claude.ai/artifact/NLdkFr2wFwZPfwQchdMVR7), written 2026-11-16 from Search Console and a first accuracy pass.
+- **Dave's answers on the ranking plan (2026-11-16):** start all four pieces of work (Ontario electricity prices; the well water
+  pages, naming public bodies only: health units and provincial labs, no private labs; the 25 pages just under the gate's line; a title
+  and description test on the Toronto, Montreal and Winnipeg energy cost calculators only). **Lead paint city pages stay indexed** on a
+  standing exception (`accepted` in the policy, review 2027-02-15: the gate prints a note when a review date passes, never a failure).
+  A monthly price check as a scheduled task: yes. Deploy all three sites once he has pushed (his OK covered the seven commits through
+  `b04a269`; anything later needs its own OK).
+- **Prices re-read on 2026-11-16** (`src/data/calc/prices.json`): Ontario electricity from the OEB's November 1, 2026 prices (time of
+  use 9.1 / 14.6 / 18.9 c, average 11.854 c at the OEB's 64/18/18 weights) and the Ontario Electricity Rebate of 15.7% (net factor
+  1 + 0.13 − 0.157 = 0.973): Toronto Hydro 0.188 → 0.195 all-in and 0.144 → 0.147 for one more kWh, Hydro Ottawa 0.178 → 0.184 and
+  0.142 → 0.145; delivery and regulatory charges as read on October 8. Manitoba Hydro gas from its November 1 rates (5.88 c commodity,
+  15.71 c delivery): 0.313 → 0.304 all-in, 0.236 → 0.227. Confirmed unchanged the same day: Nova Scotia Power's 19.128 c energy
+  charge, Manitoba Hydro's 9.970 c, and that Hydro-Québec's 2025 comparison is still the latest edition.
+- **How a later re-read is recorded:** the record gets `checked` (and `tariffDate` when `allInCurrentTariff` was rebuilt), its basis
+  text is rewritten with the new components, and a line goes in the file's `updates` list (`date`, `label`, `provinces`, `what`). The
+  global `asOf` moves only when every record has been re-read. Pages then say so by themselves: `pricesCheckedWords(rp)`
+  (`src/lib/calc/data.ts`) prints "October 8, 2026 (electricity November 16, 2026)" on a city's calculators, the appliance calculator
+  uses `rp.elecAsOf`, and `PRICE_UPDATES` adds the update lines to "What was checked when" on the Canadian guides, the heat pump guide
+  and the heat pump vs gas page. The arithmetic for each record is spelled out in its basis text: redo it from there, never by eye.
+- **Monthly price check:** the scheduled task "Audit sites: monthly energy price check" (the 2nd of each month, 8:24 Eastern, cloud
+  only) clones the public repo, reads every electricity and gas record's sources and reports what changed. It changes nothing. Known
+  dates: Alberta's Rate of Last Resort ends 2026-12-31; Enbridge's next quarterly reset and Nova Scotia Power's approved step are
+  2027-01-01; Manitoba Hydro gas resets 2027-02-01; SaskPower plans an increase 2027-02-01.
 
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality

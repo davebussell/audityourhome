@@ -3,7 +3,7 @@ import {
   MODEL, baselineDemandGJ, heatingCost, systemEfficiency, fuelUnit, waterHeatingDemand, waterHeaterCost, coolingKwh,
   defaultAcTons, tanklessClaim, type SystemKey, type WaterHeaterKey,
 } from '../engine';
-import { resolvePrices, enginePrices, defaultSystem, rebatesCompact, cityName, climateOf, type CalcCity, type ResolvedPrices } from '../data';
+import { resolvePrices, enginePrices, defaultSystem, rebatesCompact, cityName, climateOf, type CalcCity, type ResolvedPrices, pricesCheckedWords } from '../data';
 import { money, unitPrice, int, qty, gj, longDate, signed, pct, degC } from '../format';
 import { TYPICAL, TYPICAL_LINE, srcs, addSrc, type Fact, type Faq, type SourceRef, addTariffSources, fit } from './common';
 import type { EnergyPayload } from '../../../components/calc/energy-costs';
@@ -83,17 +83,18 @@ export function energyPage(city: CalcCity) {
   const hpVsGas = hasGas ? cost('ashpCold', 'variable').cost! - cost('gasFurnaceMid', 'variable').cost! : null;
   const hpVsElec = cost('ashpCold', 'variable').cost! - cost('electricResistance', 'variable').cost!;
   const elecUtil = rp.elec.utility.split('(')[0].split(',')[0].trim();
-  const gasUtil = rp.gas ? rp.gas.utility.split('(')[0].split(' - ')[0].split(',')[0].trim() : null;
+  // "Manitoba Hydro natural gas (system gas…)" → "Manitoba Hydro": the sentences add "natural gas" themselves
+  const gasUtil = rp.gas ? rp.gas.utility.split('(')[0].split(' - ')[0].split(',')[0].trim().replace(/\s+natural gas$/i, '') : null;
   const h2k = city.hot2000;
 
   const title = fit([`Home heating cost calculator for ${name} (2026)`, `Heating cost calculator for ${name} (2026)`, `Heating costs in ${name} (2026)`], 60);
   const leadSys = gasMid ? `${money(gasMid.cost)} with a mid-efficiency gas furnace` : `${money(elec.cost)} with electric baseboards`;
   const description = `${name}: a typical 1,600 sq ft house costs about ${gasMid ? money(gasMid.cost) + ' a year to heat with gas' : money(elec.cost) + ' a year to heat with electricity'}. Compare oil, electric and heat pumps at October 2026 prices.`;
   const h1 = `Home heating cost calculator for ${name}`;
-  const kicker = `${city.provName} · prices checked ${longDate(rp.asOf)}`;
+  const kicker = `${city.provName} · prices checked ${pricesCheckedWords(rp)}`;
   const lede = hasGas
-    ? `${name} averages ${int(hdd)} heating degree-days a year (NRCan HOT2000 data for ${h2k.station}). At prices checked ${longDate(rp.asOf)} — <strong>${elecUtil}</strong> electricity at about ${unitPrice(rp.elec.avg, 'kWh')} on average and <strong>${gasUtil}</strong> natural gas at about ${unitPrice(rp.gas!.now, 'm³')} with fixed charges — ${TYPICAL_LINE} costs about <strong>${leadSys}</strong>, ${money(ccHp.cost)} with a cold-climate heat pump and ${money(elec.cost)} with electric baseboards.`
-    : `${name} averages ${int(hdd)} heating degree-days a year (NRCan HOT2000 data for ${h2k.station}) and has no natural gas service. At prices checked ${longDate(rp.asOf)} — <strong>${elecUtil}</strong> electricity at about ${unitPrice(rp.elec.avg, 'kWh')} on average${rp.oil ? ` and heating oil at ${unitPrice(rp.oil.perL, 'L')} (12-month average)` : ''} — ${TYPICAL_LINE} costs about <strong>${leadSys}</strong>, ${money(ccHp.cost)} with a cold-climate heat pump${oilNew.cost ? ` and ${money(oilNew.cost)} with a new oil furnace` : ''}.`;
+    ? `${name} averages ${int(hdd)} heating degree-days a year (NRCan HOT2000 data for ${h2k.station}). At prices checked ${pricesCheckedWords(rp)} — <strong>${elecUtil}</strong> electricity at about ${unitPrice(rp.elec.avg, 'kWh')} on average and <strong>${gasUtil}</strong> natural gas at about ${unitPrice(rp.gas!.now, 'm³')} with fixed charges — ${TYPICAL_LINE} costs about <strong>${leadSys}</strong>, ${money(ccHp.cost)} with a cold-climate heat pump and ${money(elec.cost)} with electric baseboards.`
+    : `${name} averages ${int(hdd)} heating degree-days a year (NRCan HOT2000 data for ${h2k.station}) and has no natural gas service. At prices checked ${pricesCheckedWords(rp)} — <strong>${elecUtil}</strong> electricity at about ${unitPrice(rp.elec.avg, 'kWh')} on average${rp.oil ? ` and heating oil at ${unitPrice(rp.oil.perL, 'L')} (12-month average)` : ''} — ${TYPICAL_LINE} costs about <strong>${leadSys}</strong>, ${money(ccHp.cost)} with a cold-climate heat pump${oilNew.cost ? ` and ${money(oilNew.cost)} with a new oil furnace` : ''}.`;
 
   const facts: Fact[] = [
     { k: 'Heating degree-days', v: int(hdd), s: `NBC climate zone ${cl.zone}` },
@@ -108,7 +109,7 @@ export function energyPage(city: CalcCity) {
   const faqs: Faq[] = [];
   faqs.push({
     q: `How much does it cost to heat a house in ${name}?`,
-    a: `For ${TYPICAL_LINE}, which needs about ${gj(demand)} of heat a year in ${name}, we estimate ${gasMid ? `${money(gasMid.cost)} a year with a mid-efficiency gas furnace (about ${qty(gasMid.units)} m³), ` : ''}${money(elec.cost)} with electric baseboards (about ${qty(elec.units)} kWh) and ${money(ccHp.cost)} with a cold-climate heat pump, at average prices checked ${longDate(rp.asOf)}. Your own bills may differ; enter them in the calculator to calibrate the estimate.`,
+    a: `For ${TYPICAL_LINE}, which needs about ${gj(demand)} of heat a year in ${name}, we estimate ${gasMid ? `${money(gasMid.cost)} a year with a mid-efficiency gas furnace (about ${qty(gasMid.units)} m³), ` : ''}${money(elec.cost)} with electric baseboards (about ${qty(elec.units)} kWh) and ${money(ccHp.cost)} with a cold-climate heat pump, at average prices checked ${pricesCheckedWords(rp)}. Your own bills may differ; enter them in the calculator to calibrate the estimate.`,
   });
   if (hasGas && hpVsGas !== null) {
     faqs.push({
