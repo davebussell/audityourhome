@@ -8,7 +8,8 @@
  *   1. Words of its own. A page that is one of a page-per-place set carries at least `floors.ownWords` words in
  *      sentences found on no other place's page of its kind and on none of that place's other pages in the set
  *      (place name blanked, numbers kept). For a one-page-per-place set: words in sentences not on 90%+ of the set.
- *      A kind can be `folded` (noindex, out of the sitemap) or `pending` (an exception with an end date).
+ *      A kind can be `folded` (noindex, out of the sitemap), `pending` (an exception with an end date) or `accepted`
+ *      (Dave's standing exception, with a review date that only prompts a note).
  *   2. New sets start hidden. A page type with `floors.newSetPages` or more indexable pages that the policy does not
  *      list is a breach: ship it noindex, and list it once it passes.
  *   3. Thin floor. An indexable page under `floors.pageWords` words of main text needs an entry in `thinOk`.
@@ -182,6 +183,7 @@ function checkSite(site) {
     if (set.type !== 'grid' && set.type !== 'place') continue;
     const folded = policy.folded?.[site]?.[set.match] || {};
     const pending = policy.pending?.[site]?.[set.match] || {};
+    const accepted = policy.accepted?.[site]?.[set.match] || {};
     const kindOf = (p) => (set.type === 'grid' ? p.seg[set.kind - 1] : set.name);
     const placeOf = (p) => p.seg[set.place - 1];
     const byKind = new Map(), kc = new Map(), pc = new Map(), unnamed = new Set();
@@ -211,12 +213,17 @@ function checkSite(site) {
       }
       const isFolded = set.type === 'grid' && k in folded;
       const pend = set.type === 'grid' ? pending[k] : null;
+      const acc = set.type === 'grid' ? accepted[k] : null;
       const live = list.filter((p) => !p.noindex);
       const short = live.filter((p) => p.own < policy.floors.ownWords);
-      const state = isFolded ? 'folded' : pend ? (TODAY <= pend.until ? `pending until ${pend.until}` : `exception ended ${pend.until}`) : 'indexed';
+      const state = isFolded ? 'folded' : acc ? `standing exception, review ${acc.review}`
+        : pend ? (TODAY <= pend.until ? `pending until ${pend.until}` : `exception ended ${pend.until}`) : 'indexed';
       kinds.push({ set, kind: k, n, live: live.length, median: median(list.map((p) => p.own)), short: short.length, state });
       if (isFolded) {
         for (const p of live) breaches.push({ rule: 'folded', path: p.path, msg: 'the policy folds this set, but the page is indexable' });
+      } else if (acc) {
+        // Dave's standing exception: short pages stay indexed; the review date only prompts a note
+        if (TODAY > acc.review) notes.push(`the standing exception for ${k} was due for review on ${acc.review}: ask Dave to renew it or fold the set`);
       } else if (pend && TODAY <= pend.until) {
         if (short.length) notes.push(`${short.length} ${k} pages are under ${policy.floors.ownWords} words of their own; the exception ends ${pend.until}`);
       } else {
@@ -226,6 +233,7 @@ function checkSite(site) {
     if (unnamed.size) notes.push(`${set.match}: the place's name was not found on its own page for ${[...unnamed].sort().join(', ')}; add the name it is written with to "alias" in the policy, or the measure is skewed`);
     for (const k of Object.keys(folded)) if (!byKind.has(k)) breaches.push({ rule: 'policy', path: set.match, msg: `folded kind "${k}" does not exist` });
     for (const k of Object.keys(pending)) if (!byKind.has(k)) breaches.push({ rule: 'policy', path: set.match, msg: `pending kind "${k}" does not exist` });
+    for (const k of Object.keys(accepted)) if (!byKind.has(k)) breaches.push({ rule: 'policy', path: set.match, msg: `accepted kind "${k}" does not exist` });
   }
 
   // 2. new sets start hidden
@@ -291,7 +299,9 @@ for (const r of results) {
     line(`  thinnest sets, words only that page has: ${thin.join(' · ')}`);
     const short = judged.reduce((a, k) => a + k.short, 0);
     const pend = judged.filter((k) => k.state.startsWith('pending')).reduce((a, k) => a + k.short, 0);
-    line(`  pages under ${policy.floors.ownWords} words of their own: ${fmt(short)}${pend ? ` (${fmt(pend)} under an exception with an end date)` : ''}`);
+    const stand = judged.filter((k) => k.state.startsWith('standing')).reduce((a, k) => a + k.short, 0);
+    const why = [pend ? `${fmt(pend)} under an exception with an end date` : '', stand ? `${fmt(stand)} under a standing exception` : ''].filter(Boolean).join(', ');
+    line(`  pages under ${policy.floors.ownWords} words of their own: ${fmt(short)}${why ? ` (${why})` : ''}`);
   }
   line(`  pages under ${policy.floors.pageWords} words: ${fmt(r.thinAllowed)} with a reason on file`);
   line(`  affiliate links: ${fmt(r.affLinks)} on ${fmt(r.affPages.size)} pages`);

@@ -20,10 +20,6 @@
   "pending": {
     "ca": {
       "/services/*/*/": {
-        "lead-paint-testing": {
-          "until": "2026-12-15",
-          "why": "Searched (12 clicks, 1,610 impressions in 12 weeks) and it opens with the right local fact, the share of houses built before 1961. More local facts are being researched; fold it if none are found."
-        },
         "mold-testing": {
           "until": "2026-12-15",
           "why": "Searched (6,400 impressions). Local facts to add: climate and housing data per city."
@@ -35,6 +31,16 @@
         "thermal-imaging": {
           "until": "2026-12-15",
           "why": "Searched (2,440 impressions). Local facts to add: the months a scan works in that climate."
+        }
+      }
+    }
+  },
+  "accepted": {
+    "ca": {
+      "/services/*/*/": {
+        "lead-paint-testing": {
+          "review": "2027-02-15",
+          "why": "Dave, 2026-11-16: keep it indexed. Each page opens with the one local fact that matters, the share of the city's houses built in the lead paint years, and the set drew 12 search clicks in 12 weeks. Add a second local fact if one is found; review each quarter."
         }
       }
     }
