@@ -19,14 +19,14 @@ export const PARTNERS = [
   {
     id: 'energy-werx',
     name: 'Energy Werx',
-    email: 'info.corp@energywerx.ca',
+    email: 'info@ewx.ca',
     agreed: false,
     site: 'ca',
     forms: ['audit-request'],
     services: ['energy-audit'],
     regions: ['other-ontario', 'ottawa', 'kingston', 'peterborough', 'toronto', 'york-region', 'mississauga', 'hamilton', 'niagara', 'kitchener-waterloo', 'london', 'barrie-simcoe'],
     postal: [],
-    note: 'First two requests sent by hand 2026-11-12 (Thunder Bay, Simcoe/Grey), offered free; no agreement yet.',
+    note: 'First two requests sent by hand 2026-11-12 (Thunder Bay, Simcoe/Grey), offered free. 2026-11-18: Leslie Payne (VP / service organization manager) asked for requests to go to info@ewx.ca; told no cost. No written terms yet.',
   },
   {
     id: 'energie3r',
@@ -38,7 +38,7 @@ export const PARTNERS = [
     services: ['energy-audit'],
     regions: ['quebec'],
     postal: ['H'],
-    note: "Rénoclimat's listed organization for Montréal. First request sent by hand 2026-11-12; asked whether they do private assessments.",
+    note: "Rénoclimat's listed organization for Montréal. First request sent by hand 2026-11-12. 2026-11-18: Caroline Reeves (admin@en3r.ca) confirmed they contacted the homeowner and welcome more requests; told no cost. EnerGuide rates the whole building, not one unit of a duplex or triplex.",
   },
   {
     id: 'greener-homes-surrey',
