@@ -39,7 +39,7 @@ const body = isCA
   : 'ZIP code:\nType of home:\nHow it is heated now:\nDucts (yes/no/not sure):\nWhat I want (whole home, some rooms, replace AC, add to furnace):\nBrands I am considering:\nTimeline:\n';
 const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 const consent = isCA
-  ? 'Share the details in this form with one heating and cooling contractor (or, where none takes part yet, one registered energy advisor) who serves my area, and never with more than one company. That company pays AuditYourHome a referral fee; I pay nothing and I’m not obliged to buy.'
+  ? 'Share the details in this form with one heating and cooling contractor (or, where none takes part yet, one registered energy advisor) who serves my area, and never with more than one company. The introduction is free for me and for the company, and I’m not obliged to buy.'
   : 'AuditYourHome may reply to me by email about this request. My details aren’t shared with anyone without asking me first.';
 ---
 
@@ -165,7 +165,7 @@ const consent = isCA
         want to heat or cool, including rooms that run hot or cold. A person reads every message and {isCA ? 'introduces you to one contractor (or registered energy advisor) who serves your area' : 'replies with the contractors and programs that serve your area'}.
       </p>
       <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
-      <p class="meta">{isCA ? 'The one company we introduce you to pays us a referral fee; you pay nothing.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/#requests">Privacy</a></p>
+      <p class="meta">{isCA ? 'The introduction is free for you and for the company we introduce you to.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/#requests">Privacy</a></p>
     </div>
   )}
 </div>

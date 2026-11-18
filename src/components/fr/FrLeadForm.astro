@@ -102,7 +102,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         <textarea id={`${uid}-message`} name="message" rows="3" maxlength="4000" placeholder="p. ex. bungalow de 1972 chauffé aux plinthes électriques, je pense à une thermopompe et à isoler le grenier; quelles subventions s’appliquent?"></textarea>
       </div>
       <button class="btn btn-primary" type="submit">Demander ma mise en relation</button>
-      <p class="meta consent">En envoyant ce formulaire, vous acceptez que nous transmettions votre demande et les renseignements ci-dessus à un seul organisme de services autorisé qui dessert votre région, pour qu’il communique avec vous. Les conseillers participants nous versent des frais de référence; vous ne payez rien, et cela n’influence jamais le répertoire. Voir notre <a href="/fr/confidentialite/">note de confidentialité</a>.</p>
+      <p class="meta consent">En envoyant ce formulaire, vous acceptez que nous transmettions votre demande et les renseignements ci-dessus à un seul organisme de services autorisé qui dessert votre région, pour qu’il communique avec vous. La mise en relation est gratuite, pour vous comme pour le conseiller, et elle n’influence jamais le répertoire. Voir notre <a href="/fr/confidentialite/">note de confidentialité</a>.</p>
     </form>
   ) : (
     <div class="fallback">
@@ -111,7 +111,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         nous vous répondrons avec des organismes de services autorisés pour votre région et les subventions qui s’appliquent.
       </p>
       <a class="btn btn-primary" href={mailtoFallback}>Écrire à {SITE.contactEmail}</a>
-      <p class="meta">Une personne répond à cette boîte. Les conseillers participants nous versent des frais de référence; vous ne payez rien.</p>
+      <p class="meta">Une personne répond à cette boîte. La mise en relation est gratuite, pour vous comme pour le conseiller.</p>
     </div>
   )}
 </div>

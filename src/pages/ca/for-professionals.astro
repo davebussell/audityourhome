@@ -5,9 +5,9 @@ import { ogFor } from '../../lib/photos';
 import { SITE } from '../../config/site';
 import { breadcrumbSchema, faqSchema } from '../../lib/schema';
 
-const title = 'For energy advisors: exclusive homeowner leads — first 10 free, then $40 | AuditYourHome';
+const title = 'For energy advisors: free, exclusive homeowner leads | AuditYourHome';
 const description =
-  'Free verified listings for NRCan-licensed service organizations, plus exclusive, pre-qualified homeowner leads: your first ten free, then $40 each. Never shared, no subscription — and directory rankings are never for sale.';
+  'Free verified listings for NRCan-licensed service organizations, plus exclusive, pre-qualified homeowner leads, free while we launch. Never shared, no subscription — and directory rankings are never for sale.';
 
 const applySubject = 'Founding advisor — homeowner leads';
 const applyBody = [
@@ -22,8 +22,8 @@ const applyHref = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(appl
 
 const faqs = [
   {
-    q: 'Does paying for leads move me up the directory?',
-    a: 'No. The directory is free for every licensed service organization, and its order never depends on payment — organizations that publish their assessment pricing sort first, because homeowners reward it. Paying for leads buys you introductions, not placement.',
+    q: 'Does taking leads move me up the directory?',
+    a: 'No. The directory is free for every licensed service organization, and its order never depends on payment — organizations that publish their assessment pricing sort first, because homeowners reward it. Taking leads gets you introductions, not placement.',
   },
   {
     q: 'Are the leads shared with other advisors?',
@@ -31,11 +31,11 @@ const faqs = [
   },
   {
     q: 'What counts as a lead?',
-    a: 'A homeowner in your service area who asked to be matched and left working contact details. A request outside your area, fake or non-working contact details, or a duplicate of one you already received does not count toward your ten free or your bill.',
+    a: 'A homeowner in your service area who asked to be matched and left working contact details. A request outside your area, fake or non-working contact details, or a duplicate of one you already received is not passed on to you.',
   },
   {
     q: 'How many leads will I get?',
-    a: "Honestly: we're early. Founding advisors get first access as request volume grows, and we will tell you the actual monthly request count for your area — no inflated projections. The first ten are free precisely so you can judge the quality before paying anything.",
+    a: "Honestly: we're early. Founding advisors get first access as request volume grows, and we will tell you the actual monthly request count for your area — no inflated projections. Leads are free while we launch, so you can judge the quality for yourself.",
   },
   {
     q: 'Do I need to be NRCan-registered?',
@@ -46,8 +46,8 @@ const faqs = [
     a: 'No. This site matches homeowners with EnerGuide advisors, for houses, duplexes and triplexes. Owners of apartment, condo and commercial buildings need an engineering audit instead, so we send them to our sister site, AuditYourBuilding.com, which introduces engineering firms and energy consultants rather than EnerGuide advisors.',
   },
   {
-    q: 'How does billing work?',
-    a: 'After your first ten free leads, $40 per lead delivered, billed monthly by invoice. No subscription, no monthly minimum, no card on file — and you can stop receiving leads at any time by email.',
+    q: 'Is there a cost?',
+    a: 'No. Listings and leads are free. If we ever introduce a fee for leads, we will tell you in writing first, and you can stop receiving leads at any time by email.',
   },
 ];
 
@@ -92,13 +92,13 @@ const schema = [
       <article class="card tier tier-lead">
         <p class="t-flag">Founding advisors</p>
         <p class="t-name">Homeowner leads</p>
-        <p class="t-price">$40 <span>per lead</span></p>
-        <p class="t-sub"><strong>Your first 10 leads are free.</strong> Then pay only for leads delivered.</p>
+        <p class="t-price">Free <span>while we launch</span></p>
+        <p class="t-sub"><strong>No cost to you.</strong> We’ll tell you in writing before that ever changes.</p>
         <ul class="t-list">
           <li><strong>Exclusive</strong> — each request goes to one advisor, never shared or resold</li>
           <li><strong>Pre-qualified</strong> — era, heating, symptoms, the tests our planner flagged, rebate path and postal code arrive with the contact</li>
-          <li><strong>No subscription, no minimum</strong> — billed monthly for leads delivered; stop anytime</li>
-          <li>Outside your area or bad contact details? It doesn't count</li>
+          <li><strong>No subscription, no minimum</strong> — stop anytime by email</li>
+          <li>Outside your area or bad contact details? We don't pass it on</li>
         </ul>
         <a class="btn btn-primary" href={applyHref}>Become a founding advisor</a>
         <p class="t-note">Opens an email to {SITE.contactEmail} — a person replies within one business day.</p>
@@ -110,10 +110,10 @@ const schema = [
       <li><p><strong>A homeowner plans first.</strong> They run our planner or a guide and ask to be matched, sharing their postal code and home profile.</p></li>
       <li><p><strong>We route it to one advisor.</strong> The request goes to a single founding advisor serving that area — never to a list.</p></li>
       <li><p><strong>You get the whole picture.</strong> Contact details plus the home's era, heating, symptoms and flagged tests arrive by email, usually within one business day.</p></li>
-      <li><p><strong>You judge, then pay.</strong> Your first ten leads are free. After that, $40 per lead delivered, billed monthly.</p></li>
+      <li><p><strong>You judge.</strong> Leads are free. If that ever changes, you’ll hear from us in writing first.</p></li>
     </ol>
 
-    <h2 class="sec">What $40 buys compared to the usual channels</h2>
+    <h2 class="sec">What you get compared to the usual channels</h2>
     <div class="tablewrap card">
       <table>
         <thead>
@@ -123,7 +123,7 @@ const schema = [
           <tr><td>Shared marketplaces (Angi, HomeAdvisor, Thumbtack)</td><td>$15 – $100+</td><td>Sold to 3–5 contractors</td></tr>
           <tr><td>Google Local Services Ads</td><td>$25 – $150+</td><td>You compete in a pay-per-lead auction</td></tr>
           <tr><td>Google Ads (search)</td><td>$40 – $250+ after clicks</td><td>You pay for the clicks that don't convert, too</td></tr>
-          <tr class="us"><td><strong>AuditYourHome</strong></td><td><strong>$40 — first 10 free</strong></td><td><strong>Only you</strong></td></tr>
+          <tr class="us"><td><strong>AuditYourHome</strong></td><td><strong>Free while we launch</strong></td><td><strong>Only you</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -135,7 +135,7 @@ const schema = [
       <h3>The rules don't change</h3>
       <p class="mb-0">
         Listings stay free and complete. Directory order is never for sale. Homeowners are told, on
-        the form, that participating advisors pay us a referral fee — and they can always contact any
+        the form, how introductions work — and they can always contact any
         listed advisor directly instead. The trust layer is the product; we won't trade it for a lead.
       </p>
     </div>

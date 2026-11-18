@@ -233,7 +233,7 @@ export function alertConsentText(kinds: string[]): string {
 }
 
 export const MATCH_CONSENT =
-  'I agree that AuditYourHome may share this request and my contact details with one company that serves my area so they can contact me about it. Participating companies pay AuditYourHome a referral fee; I pay nothing for the introduction.';
+  'I agree that AuditYourHome may share this request and my contact details with one company that serves my area so they can contact me about it. The introduction is free for me and for the company.';
 
 export const money = (n?: number | null) =>
   n === null || n === undefined || !Number.isFinite(n) ? '' : `$${Math.round(n).toLocaleString('en-CA')}`;

@@ -205,7 +205,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         <textarea id={`${uid}-f-message`} name="message" rows="3" maxlength="4000" placeholder="e.g. Drafty 1968 backsplit, thinking insulation + heat pump, want to know which rebates apply"></textarea>
       </div>
       <button class="btn btn-primary" type="submit">Request my match</button>
-      <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory. See our <a href="/privacy/">privacy note</a>.</p>
+      <p class="meta consent">By submitting you agree we may share your request with one registered service organization serving your area. Introductions are free for you and for the advisor, and they never affect the directory. See our <a href="/privacy/">privacy note</a>.</p>
     </form>
   ) : (
     <div class="fallback">
@@ -216,7 +216,7 @@ const uid = `lf-${Math.random().toString(36).slice(2, 8)}`;
         <a href={buildingUrl('/request/')}>AuditYourBuilding.com</a> instead.
       </p>
       <a class="btn btn-primary" href={mailtoFallback}>Email {SITE.contactEmail}</a>
-      <p class="meta">This inbox is answered by a person. Participating advisors pay us a referral fee — you pay nothing, and it never affects the directory.</p>
+      <p class="meta">This inbox is answered by a person. Introductions are free for you and for the advisor, and they never affect the directory.</p>
     </div>
   )}
 </div>
