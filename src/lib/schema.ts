@@ -1,4 +1,4 @@
-import { SITE, siteFor } from '../config/site';
+import { siteFor } from '../config/site';
 import type { Provider, Region } from './data';
 import type { Country } from './country';
 
@@ -45,7 +45,7 @@ export function organizationSchema(country: Country | null = 'ca') {
     '@type': 'Organization',
     name: site.name,
     url: site.url,
-    email: SITE.contactEmail,
+    email: site.contactEmail,
     description: site.tagline,
   };
 }

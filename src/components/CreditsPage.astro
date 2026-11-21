@@ -9,7 +9,7 @@ import { PHOTOS, BUILDING_PHOTO_KEYS } from '../lib/photos';
 import { breadcrumbSchema } from '../lib/schema';
 import { profile } from '../lib/climate';
 import { REGION_KEYS, REGION_PHOTOS } from '../lib/us/photos';
-import { SITE, siteFor } from '../config/site';
+import { siteFor } from '../config/site';
 import type { Country } from '../lib/country';
 
 interface Props { country: Country }
@@ -35,7 +35,7 @@ const general = photos.filter((p) => !p.key.startsWith('region-'));
         Every picture on this site is an editorial-style illustration generated for it; none shows a real
         customer, a specific home or any listed provider, and the infrared views are illustrative, not
         measurements. The data drawings and the facts on each page come from the public sources listed here.
-        If a credit is wrong or missing, write to <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+        If a credit is wrong or missing, write to <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
         and it will be fixed.
       </p>
     </div>

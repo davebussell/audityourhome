@@ -4,7 +4,6 @@
  * Its pages live under src/pages/bu/ and are published at the root of its own domain (tools/country/postbuild.mjs
  * splits dist/bu/ into dist-bu/), so every link in the source is root form, as on the other two sites.
  */
-import { SITE } from './site';
 
 export const BUILDING = {
   name: 'AuditYourBuilding',
@@ -13,7 +12,8 @@ export const BUILDING = {
   tagline: 'Energy audits for commercial and multi-unit buildings: audit levels, reporting rules and incentives, city by city.',
   description:
     'AuditYourBuilding helps owners and managers of commercial, institutional, industrial and multi-unit residential buildings in Canada understand ASHRAE audit levels, the energy reporting rules that apply in their city, and the incentives that pay for audits and studies.',
-  contactEmail: SITE.contactEmail,
+  // No inquiry yet (2026-11-21), so no contact@audityourbuilding.com: Dave's inbox until the first real request.
+  contactEmail: 'dave@clickshift.ca',
   /** The Netlify project this site is published from (postbuild checks it against SITE_NAME on Netlify builds). */
   netlify: 'audityourbuilding',
   /** The residential sister sites: where a house or a single condo unit belongs. */

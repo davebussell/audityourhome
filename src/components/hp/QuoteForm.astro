@@ -1,10 +1,10 @@
 ---
 /**
  * Heat pump quote request. On Netlify builds (FORMS=netlify, see src/config/forms.ts) it's a Netlify
- * form ("heat-pump-quote") whose submissions are emailed to dave@clickshift.ca; anywhere else it falls
+ * form ("heat-pump-quote") whose submissions are emailed to the site's contact@ address; anywhere else it falls
  * back to a prefilled email so the request never dead-ends. Nothing personal goes into URLs or analytics.
  */
-import { SITE } from '../../config/site';
+import { SITES } from '../../config/site';
 import { NETLIFY_FORMS } from '../../config/forms';
 import { CA_REGIONS, US_METROS, metroName, type Market } from '../../lib/heatpumps';
 
@@ -37,7 +37,8 @@ const subject = `Heat pump quote request (${context})`;
 const body = isCA
   ? 'Postal code:\nType of home:\nHow it is heated now:\nDucts (yes/no/not sure):\nWhat I want (whole home, some rooms, replace AC, add to furnace):\nBrands I am considering:\nTimeline:\n'
   : 'ZIP code:\nType of home:\nHow it is heated now:\nDucts (yes/no/not sure):\nWhat I want (whole home, some rooms, replace AC, add to furnace):\nBrands I am considering:\nTimeline:\n';
-const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const contactEmail = SITES[market].contactEmail;
+const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 const consent = isCA
   ? 'Share the details in this form with one heating and cooling contractor (or, where none takes part yet, one registered energy advisor) who serves my area, and never with more than one company. The introduction is free for me and for the company, and I’m not obliged to buy.'
   : 'AuditYourHome may reply to me by email about this request. My details aren’t shared with anyone without asking me first.';
@@ -164,7 +165,7 @@ const consent = isCA
         Email us your {isCA ? 'postal code' : 'ZIP code'}, the type of home, how it's heated and cooled now, whether it has ducts and what you
         want to heat or cool, including rooms that run hot or cold. A person reads every message and {isCA ? 'introduces you to one contractor (or registered energy advisor) who serves your area' : 'replies with the contractors and programs that serve your area'}.
       </p>
-      <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
+      <a class="btn btn-primary" href={mailto}>Email {contactEmail}</a>
       <p class="meta">{isCA ? 'The introduction is free for you and for the company we introduce you to.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/#requests">Privacy</a></p>
     </div>
   )}

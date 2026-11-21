@@ -1,8 +1,9 @@
 /**
  * Netlify Forms switch. netlify.toml sets FORMS=netlify for builds on Netlify, where form detection
  * is turned on; every other build (GitHub Pages, local) keeps the email fallbacks, so a form never
- * posts somewhere that can't receive it. Submissions are emailed to dave@clickshift.ca by the
- * site's form notification in Netlify (Forms > Submission notifications).
+ * posts somewhere that can't receive it. Submissions are emailed to the site's contact@ address
+ * (contact@audityourhome.ca, contact@audityourhome.com) by the form notification in Netlify (Forms >
+ * Submission notifications).
  *
  * Server-side only: import this from component frontmatter, never from a client script.
  */

@@ -17,11 +17,10 @@ export const SITE = {
   description:
     'AuditYourHome helps Canadian homeowners find NRCan-registered energy advisors, compare real prices, and see which rebates are actually live right now — province by province, from Ontario\'s Home Renovation Savings to BC\'s Improvement Bonus and Efficiency Manitoba.',
   /**
-   * audityourhome.com has NO MX records (checked 25 Sep 2026), so any
-   * @audityourhome.com address silently fails. Leads and advisor applications
-   * route to Dave's working Google Workspace inbox until domain email exists.
+   * The address the Canadian site shows and replies from (Dave, 2026-11-21): a Google Group in the
+   * Click Shift Workspace that reaches Dave and team@clickshift.ca. The US site's is in `SITES.us`.
    */
-  contactEmail: 'dave@clickshift.ca',
+  contactEmail: 'contact@audityourhome.ca',
 
   /**
    * Lead form endpoint (Formspree, Basin, Netlify Forms action URL, or your own API).
@@ -47,6 +46,8 @@ export interface SiteInfo {
   description: string;
   /** Short line for the "other site" banner and the country switcher */
   blurb: string;
+  /** The address this site shows and replies from (contact@ its own domain) */
+  contactEmail: string;
 }
 
 /** One brand and domain per country. The Canadian entry mirrors `SITE`. */
@@ -58,6 +59,7 @@ export const SITES: Record<Country, SiteInfo> = {
     tagline: SITE.tagline,
     description: SITE.description,
     blurb: 'NRCan-registered energy advisors, EnerGuide evaluations and live provincial and federal rebates.',
+    contactEmail: SITE.contactEmail,
   },
   us: {
     name: 'AuditYourHome',
@@ -67,6 +69,7 @@ export const SITES: Record<Country, SiteInfo> = {
     description:
       'AuditYourHome helps US homeowners find HERS raters and BPI professionals, see what a home energy audit costs, and check which rebates, tax credits and utility programs are open right now, metro by metro.',
     blurb: 'HERS raters and BPI professionals, audit costs and the rebates, tax credits and utility programs open in your state.',
+    contactEmail: 'contact@audityourhome.com',
   },
 };
 

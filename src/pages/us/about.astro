@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/Photo.astro';
 import { ogFor } from '../../lib/photos';
-import { SITE, SITES } from '../../config/site';
+import { SITES } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
 import { switchUrl } from '../../lib/country';
 
@@ -70,7 +70,7 @@ const schema = [
       <p>
         <strong>Corrections are fast.</strong> Listings are compiled from public sources (linked on
         each page). If something's wrong, email
-        <a href={`mailto:${SITE.contactEmail}`}> {SITE.contactEmail}</a> and we'll fix or remove it
+        <a href={`mailto:${SITES.us.contactEmail}`}> {SITES.us.contactEmail}</a> and we'll fix or remove it
         promptly. Auditors and program managers can claim or correct their listings free.
       </p>
       <h2 id="editor">Who edits this site</h2>
@@ -79,12 +79,12 @@ const schema = [
         buying guides and picks are built from certified product data and official program pages, each with its source
         and the date we checked it, and <a href="/heat-pumps/how-we-pick/">the scoring method is published</a>. No
         maker pays to be included. Write to the editor at
-        <a href={`mailto:${SITE.contactEmail}`}> {SITE.contactEmail}</a>.
+        <a href={`mailto:${SITES.us.contactEmail}`}> {SITES.us.contactEmail}</a>.
       </p>
       <h2>What's next</h2>
       <p>
         More metro areas, auditor profiles verified by the auditors themselves, and online booking. If
-        you want any of that sooner, <a href={`mailto:${SITE.contactEmail}`}> tell us</a>.
+        you want any of that sooner, <a href={`mailto:${SITES.us.contactEmail}`}> tell us</a>.
       </p>
     </div>
   </div>

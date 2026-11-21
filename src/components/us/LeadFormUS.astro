@@ -2,10 +2,10 @@
 /**
  * US contact form. The US site has no partner network yet, so this promises only what a person can
  * do: point people to the certified pros and programs that serve their ZIP code. On Netlify builds
- * (FORMS=netlify) it's a Netlify form ("us-question") emailed to dave@clickshift.ca; anywhere else
+ * (FORMS=netlify) it's a Netlify form ("us-question") emailed to contact@audityourhome.com; anywhere else
  * it's an email link, so the request never dead-ends.
  */
-import { SITE } from '../../config/site';
+import { SITES } from '../../config/site';
 import { NETLIFY_FORMS, FORM_NAMES } from '../../config/forms';
 
 interface Props {
@@ -21,7 +21,8 @@ const {
 } = Astro.props;
 const subject = `US audit question (${context})`;
 const body = 'ZIP code:\nType of home (house, townhouse, condo):\nWhat I’m planning:\n';
-const mailto = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const contactEmail = SITES.us.contactEmail;
+const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 // The default copy asks people to email; the form version asks them to fill it in.
 const subText = NETLIFY_FORMS ? sub.replace(/^Email us /, 'Tell us ') : sub;
 const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
@@ -77,7 +78,7 @@ const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
     </form>
   ) : (
     <>
-      <a class="btn btn-primary" href={mailto}>Email {SITE.contactEmail}</a>
+      <a class="btn btn-primary" href={mailto}>Email {contactEmail}</a>
       <p class="meta">We don’t sell your details or share them with contractors. See our <a href="/privacy/">privacy note</a>.</p>
     </>
   )}

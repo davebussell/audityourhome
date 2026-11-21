@@ -6,19 +6,21 @@ import { PARTNERS } from './partners.mjs';
 export const SITES = {
   'audityourhome.ca': {
     key: 'ca', live: true, brand: 'AuditYourHome', url: 'https://audityourhome.ca',
-    from: 'AuditYourHome <hello@audityourhome.ca>',
+    from: 'AuditYourHome <contact@audityourhome.ca>', replyTo: 'contact@audityourhome.ca',
   },
   // Not live until their domains are verified in Resend (needs the paid plan): plan() returns nothing for them.
   'audityourhome.com': {
     key: 'us', live: false, brand: 'AuditYourHome', url: 'https://audityourhome.com',
-    from: 'AuditYourHome <hello@audityourhome.com>',
+    from: 'AuditYourHome <contact@audityourhome.com>', replyTo: 'contact@audityourhome.com',
   },
   'audityourbuilding.com': {
     key: 'bu', live: false, brand: 'AuditYourBuilding', url: 'https://audityourbuilding.com',
-    from: 'AuditYourBuilding <hello@audityourbuilding.com>',
+    from: 'AuditYourBuilding <contact@audityourbuilding.com>', replyTo: 'dave@clickshift.ca',
   },
 };
 
+// Replies go to the site's contact@ address (Dave, 2026-11-21): a Google Group that reaches Dave and team@clickshift.ca.
+// audityourbuilding.com has no contact@ yet (no inquiry so far), so its replies still go to Dave.
 export const REPLY_TO = 'dave@clickshift.ca';
 export const SIGNOFF = 'Dave Bussell';
 const FORMS = ['audit-request', 'heat-pump-quote', 'us-question', 'building-audit-request'];
@@ -198,9 +200,10 @@ export function plan(payload, partners = PARTNERS) {
   if (clean(data['bot-field'])) return [];
 
   const partner = form === 'us-question' ? null : matchPartner(site.key, form, data, partners);
-  const out = [{ kind: 'homeowner', from: site.from, to: email, reply_to: REPLY_TO, ...homeownerMessage(site, form, data, partner) }];
+  const replyTo = site.replyTo || REPLY_TO;
+  const out = [{ kind: 'homeowner', from: site.from, to: email, reply_to: replyTo, ...homeownerMessage(site, form, data, partner) }];
   if (partner) {
-    out.push({ kind: 'partner', from: site.from, to: partner.email, reply_to: REPLY_TO, cc: REPLY_TO, partner: partner.id, ...partnerMessage(site, form, data, partner) });
+    out.push({ kind: 'partner', from: site.from, to: partner.email, reply_to: replyTo, cc: replyTo, partner: partner.id, ...partnerMessage(site, form, data, partner) });
   }
   return out;
 }

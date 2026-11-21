@@ -20,7 +20,7 @@ const {
   context = 'general',
 } = Astro.props;
 
-// On Netlify builds the form posts to Netlify Forms (emailed to dave@clickshift.ca); a custom endpoint
+// On Netlify builds the form posts to Netlify Forms (emailed to contact@audityourhome.ca); a custom endpoint
 // still works if one is set; otherwise people get the email fallback.
 const netlifyForm = NETLIFY_FORMS;
 const hasEndpoint = netlifyForm || SITE.formEndpoint.length > 0;

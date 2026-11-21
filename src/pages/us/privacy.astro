@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { SITE, ACCOUNTS } from '../../config/site';
+import { SITES, ACCOUNTS } from '../../config/site';
 
 const title = 'Privacy | AuditYourHome';
 const description = 'What AuditYourHome collects, why, where it is stored, who sees it, and how to get it corrected or deleted. Plain language, updated October 29, 2026.';
@@ -19,7 +19,7 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec, Canada';
       <h2>Who we are</h2>
       <p>
         AuditYourHome is operated by Click Shift Marketing, {address}. The person in charge of protecting
-        personal information is Dave Bussell, owner: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        personal information is Dave Bussell, owner: <a href={`mailto:${SITES.us.contactEmail}`}>{SITES.us.contactEmail}</a>.
         Write to him for any question, request or complaint about your information.
       </p>
 
@@ -68,7 +68,7 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec, Canada';
       <h2>Your rights</h2>
       <p>
         You can ask what we hold about you, correct it, get a copy, or have it deleted, whatever state you live in;
-        we answer every request the same way. Email <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        we answer every request the same way. Email <a href={`mailto:${SITES.us.contactEmail}`}>{SITES.us.contactEmail}</a>.
         Because we are based in Canada, the information you send us is handled there and, through Netlify, in the
         United States.
       </p>
@@ -78,7 +78,7 @@ const address = ACCOUNTS.mailingAddress || 'Wakefield, Quebec, Canada';
 
       <p class="small">
         If we change how we handle personal information, we’ll update this page and the date at the top.
-        Questions: <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        Questions: <a href={`mailto:${SITES.us.contactEmail}`}>{SITES.us.contactEmail}</a>.
       </p>
     </div>
   </div>
