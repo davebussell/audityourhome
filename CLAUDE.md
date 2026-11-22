@@ -472,6 +472,19 @@ three audit sites clear of the same. It is the Claude Doc "Keeping the audit sit
   dates: Alberta's Rate of Last Resort ends 2026-12-31; Enbridge's next quarterly reset and Nova Scotia Power's approved step are
   2027-01-01; Manitoba Hydro gas resets 2027-02-01; SaskPower plans an increase 2027-02-01.
 
+## State (2026-11-22)
+- **Live: everything through `704150c`** on the two residential sites: advisors told introductions are free (`cecf9ef`; the .ca
+  forms, privacy, about and for-professionals pages no longer mention a $40 referral fee), partner routing (`ccf16ce`), the
+  November 16 price updates and gate exception, and per-site contact@ addresses (`704150c`, auto-replies from contact@ on .ca).
+  Deploys (Netlify build of `git archive 704150c`): **audityourhome.ca** `6b02edb0d8980ceb200cc536` (21 redirect rules, 1 function),
+  **audityourhome.com** `6b02ee6a7e0bfabe963541bc` (676 redirect rules, 1 function). The building site was not redeployed.
+  Before that, both sites were on the 2026-11-16 deploys (.ca `6afb1572507f72a9aca7866c`, .com `6afb162667dca5db762bd7b7`).
+- The cloud sandbox can't load the live domains (proxy 403), so the check was the build output and Netlify's deploy summaries;
+  forms still listed on .ca. Upload needs `NODE_USE_ENV_PROXY=1` on the `npx @netlify/mcp` command and `netlify-mcp.netlify.app`
+  allowed in the environment (added 2026-11-22).
+- **US form promise broken once:** the .com form says details aren't shared with contractors, but the Nov 19 Los Angeles request
+  (us-question) was forwarded to Building Doctors on Nov 20. A reply to the homeowner that says so is a Gmail draft for Dave.
+
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality
   monitors), and the other session's auto-reply function (`submission-created`, live on .ca; switched off in code on .com and the building
