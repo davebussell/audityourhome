@@ -133,7 +133,7 @@ function homeownerMessage(site, form, data, partner) {
   if (form === 'us-question') {
     const p = [
       opener,
-      `Thanks for your question through ${site.brand}. We read every one ourselves and will reply within one business day.`,
+      `Thanks for your request through ${site.brand}. We read every one ourselves. Within one business day we'll introduce you to one certified energy auditor or contractor who serves your area (that's the only company that sees your request) and tell you which utility programs apply.`,
       `In the meantime, your free plan is here: ${site.url}/plan/`,
       `${SIGNOFF}\n${site.brand}`,
     ];

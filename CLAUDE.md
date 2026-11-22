@@ -482,8 +482,15 @@ three audit sites clear of the same. It is the Claude Doc "Keeping the audit sit
 - The cloud sandbox can't load the live domains (proxy 403), so the check was the build output and Netlify's deploy summaries;
   forms still listed on .ca. Upload needs `NODE_USE_ENV_PROXY=1` on the `npx @netlify/mcp` command and `netlify-mcp.netlify.app`
   allowed in the environment (added 2026-11-22).
-- **US form promise broken once:** the .com form says details aren't shared with contractors, but the Nov 19 Los Angeles request
-  (us-question) was forwarded to Building Doctors on Nov 20. A reply to the homeowner that says so is a Gmail draft for Dave.
+- **US sharing model changed (Dave, 2026-11-22: "isn't that the point of them reaching out"):** the .com forms used to promise
+  that details aren't shared with contractors. Now, like Canada, both US forms (`LeadFormUS` us-question, `QuoteForm` US) carry a
+  required consent box to share the request with ONE certified auditor or contractor (one installer on the heat pump form), free,
+  never more than one company; privacy `#requests`, about, thanks, the guide footer and the us-question auto-reply say the same.
+  Gwen Johnson (Los Angeles, Nov 19) was forwarded to Building Doctors on Nov 20 under the old wording and told so on Nov 22.
+- **Nadeau Energy Solutions (`a733a23`):** HRS-eligible through The Home Inspectors Group (`hrsVia`), for-profit; Gabriel Nadeau
+  asked on 2026-11-19 and was told on 2026-11-22 it would be fixed. Confirm to him from contact@audityourhome.ca once it's live.
+- **Not deployed yet (2026-11-22):** `a733a23` and the US sharing change. This session's proxy refused `api.netlify.com` and
+  `netlify-mcp.netlify.app` (403), so the upload failed; deploy .ca and .com once those hosts are allowed.
 
 ## State (2026-11-12)
 - **Live: everything through `82ade9f`**: the heat pump picks (Phase 0 and 1), the first two gear categories (radon monitors, air quality

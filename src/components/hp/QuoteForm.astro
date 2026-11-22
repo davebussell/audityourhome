@@ -26,7 +26,7 @@ const sub =
   Astro.props.sub ??
   (isCA
     ? 'Tell us about your home and what you want to heat or cool. We introduce you to one heating and cooling contractor who serves your area and knows the rebates (or, where no contractor takes part yet, one registered energy advisor who does). One company, never a list: your details aren’t blasted to five installers.'
-    : 'Tell us about your home and what you want to heat or cool. A person reads every request and replies by email with the contractors and rebate programs that serve your ZIP code; we don’t send your details to installers.');
+    : 'Tell us about your home and what you want to heat or cool. A person reads every request and introduces you to one heat pump installer who serves your ZIP code, with the rebate programs that apply. One company, never a list: your details aren’t blasted to five installers.');
 const onNetlify = NETLIFY_FORMS;
 const action = `/heat-pumps/thanks/?sent=1`;
 const uid = `hpq-${Math.random().toString(36).slice(2, 8)}`;
@@ -41,7 +41,7 @@ const contactEmail = SITES[market].contactEmail;
 const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 const consent = isCA
   ? 'Share the details in this form with one heating and cooling contractor (or, where none takes part yet, one registered energy advisor) who serves my area, and never with more than one company. The introduction is free for me and for the company, and I’m not obliged to buy.'
-  : 'AuditYourHome may reply to me by email about this request. My details aren’t shared with anyone without asking me first.';
+  : 'Share the details in this form with one heat pump installer who serves my area, and never with more than one company. The introduction is free for me, and I’m not obliged to buy.';
 ---
 
 <div class="card hpq" id="quote" data-clarity-mask="true">
@@ -157,16 +157,16 @@ const consent = isCA
       </div>
       <label class="hpq-check"><input type="checkbox" name="consent" value="yes" required /> <span>{consent}</span></label>
       <button class="btn btn-primary" type="submit">{isCA ? 'Match me with one contractor' : 'Help me find an installer'}</button>
-      <p class="meta">{isCA ? 'We share these details only with the one company we match you with.' : 'We use these details only to answer this request.'} <a href="/privacy/#requests">Privacy</a></p>
+      <p class="meta">We share these details only with the one company we match you with. <a href="/privacy/#requests">Privacy</a></p>
     </form>
   ) : (
     <div class="hpq-fallback">
       <p>
         Email us your {isCA ? 'postal code' : 'ZIP code'}, the type of home, how it's heated and cooled now, whether it has ducts and what you
-        want to heat or cool, including rooms that run hot or cold. A person reads every message and {isCA ? 'introduces you to one contractor (or registered energy advisor) who serves your area' : 'replies with the contractors and programs that serve your area'}.
+        want to heat or cool, including rooms that run hot or cold. A person reads every message and {isCA ? 'introduces you to one contractor (or registered energy advisor) who serves your area' : 'introduces you to one installer who serves your area'}.
       </p>
       <a class="btn btn-primary" href={mailto}>Email {contactEmail}</a>
-      <p class="meta">{isCA ? 'The introduction is free for you and for the company we introduce you to.' : 'We don’t sell your details or share them with contractors.'} <a href="/privacy/#requests">Privacy</a></p>
+      <p class="meta">{isCA ? 'The introduction is free for you and for the company we introduce you to.' : 'The introduction is free, and we never sell your details.'} <a href="/privacy/#requests">Privacy</a></p>
     </div>
   )}
 </div>

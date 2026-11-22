@@ -1,7 +1,8 @@
 ---
 /**
- * US contact form. The US site has no partner network yet, so this promises only what a person can
- * do: point people to the certified pros and programs that serve their ZIP code. On Netlify builds
+ * US contact form. With the person's OK (the consent box), we introduce them to one certified auditor or
+ * contractor who serves their ZIP code, by hand, along with the programs that apply (Dave, 2026-11-22: the
+ * point of reaching out is to be connected). On Netlify builds
  * (FORMS=netlify) it's a Netlify form ("us-question") emailed to contact@audityourhome.com; anywhere else
  * it's an email link, so the request never dead-ends.
  */
@@ -16,7 +17,7 @@ interface Props {
 }
 const {
   heading = 'Not sure where to start?',
-  sub = 'Email us your ZIP code, the kind of home you have and what you’re planning. A person reads every message and replies with the certified auditors and utility programs that serve your area.',
+  sub = 'Email us your ZIP code, the kind of home you have and what you’re planning. A person reads every message, introduces you to one certified energy auditor or contractor who serves your area, and tells you which utility programs apply.',
   context = 'us-general',
 } = Astro.props;
 const subject = `US audit question (${context})`;
@@ -73,13 +74,14 @@ const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
         <label for={`${uid}-msg`}>What are you planning? <span class="optional">(optional)</span></label>
         <textarea id={`${uid}-msg`} name="message" rows="3" maxlength="4000" placeholder="e.g. Hot upstairs and high summer bills in a 1980s ranch, or a drafty older house with high heating bills"></textarea>
       </div>
-      <button class="btn btn-primary" type="submit">Send my question</button>
-      <p class="meta">A person replies by email. We don’t sell your details or share them with contractors. See our <a href="/privacy/">privacy note</a>.</p>
+      <label class="lfu-check"><input type="checkbox" name="consent" value="yes" required /> <span>Share my request with one certified energy auditor or contractor who serves my ZIP code, and never with more than one company. The introduction is free for me, and I’m not obliged to buy.</span></label>
+      <button class="btn btn-primary" type="submit">Connect me with one auditor</button>
+      <p class="meta">We share your request only with the one company we introduce you to, and we never sell your details. See our <a href="/privacy/">privacy note</a>.</p>
     </form>
   ) : (
     <>
       <a class="btn btn-primary" href={mailto}>Email {contactEmail}</a>
-      <p class="meta">We don’t sell your details or share them with contractors. See our <a href="/privacy/">privacy note</a>.</p>
+      <p class="meta">With your OK we introduce you to one auditor or contractor who serves your area, and we never sell your details. See our <a href="/privacy/">privacy note</a>.</p>
     </>
   )}
 </div>
@@ -93,6 +95,8 @@ const uid = `lfu-${Math.random().toString(36).slice(2, 8)}`;
   .lfu-form .btn { justify-self: start; }
   .lfu-hide { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .lfu-form .optional { font-weight: 400; color: var(--faint); }
+  .lfu-check { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; margin: 6px 0 10px; max-width: 62ch; }
+  .lfu-check input { margin-top: 3px; flex: none; }
 </style>
 
 <script>
