@@ -72,6 +72,7 @@ export interface ProviderItem {
   coverage: number;
   profile: string | null;
   hrs: boolean;
+  hrsVia?: string;
   gcc: boolean;
 }
 

@@ -172,9 +172,9 @@ const climVariant: 'compact' | 'service' | null = !clim ? null
                         {p.profile ? <a href={p.profile}><strong>{p.name}</strong></a> : <strong>{p.name}</strong>}
                         <span class="chips">
                           {city.prov === 'ON' && (p.hrs
-                            ? <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title="One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate">HRSP-approved: Yes</a>
+                            ? <a class="chip chip-active" href="/programs/home-renovation-savings-assessment/" title={p.hrsVia ? `Its Home Renovation Savings assessments go through ${p.hrsVia}, one of the seven approved organizations, so they can qualify for the $600 rebate` : "One of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments can qualify for the $600 rebate"}>HRSP-approved: Yes</a>
                             : <span class="chip chip-neutral" title="Not one of the seven organizations approved for Ontario's Home Renovation Savings assessment path: its assessments don't qualify for the $600 rebate">HRSP-approved: No</span>)}
-                          {p.gcc && <span class="chip chip-neutral" title="Member of the Green Communities Canada non-profit network">Non-profit network</span>}
+                          {p.gcc && <span class="chip chip-neutral" title="Delivers EnerGuide evaluations through the Green Communities Canada network">Green Communities Canada</span>}
                           {p.profile && <span class="chip chip-info">Profile</span>}
                         </span>
                       </div>

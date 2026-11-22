@@ -17,6 +17,7 @@ export interface AreaProviderItem {
   allTowns: boolean;
   profile: string | null;
   hrs: boolean;
+  hrsVia?: string;
   gcc: boolean;
 }
 

@@ -165,6 +165,8 @@ PROFILE_PREFIX = {
 }
 HRS_PREFIX = ['AmeriSpec of Canada', 'Canada Energy Audit', 'Energuy Holdings', 'Energy Werx Corp', 'Greenbrain',
               'A1 NRGwise Consulting', 'The Home Inspectors Group']
+# Advisors whose Home Renovation Savings files go through one of the seven approved organizations (confirmed by the advisor)
+HRS_VIA = {'Nadeau Energy Solutions': 'The Home Inspectors Group'}  # Gabriel Nadeau, email of 2026-11-19
 TOLLFREE = {'800', '833', '844', '855', '866', '877', '888'}
 
 
@@ -227,8 +229,12 @@ def providers_for(fsas, prov):
         slug = next((s for k, s in PROFILE_PREFIX.items() if k.lower() in raw.lower()), None)
         hrs = prov == 'ON' and any(k.lower() in raw.lower() for k in HRS_PREFIX)
         gcc = 'Green Communities Canada' in raw
-        out.append({'name': o['name'], 'phone': o['phones'][0] if o['phones'] else None,
-                    'coverage': round(100 * len(o['fsas']) / len(fs)), 'profile': slug, 'hrs': hrs, 'gcc': gcc})
+        via = next((v for k, v in HRS_VIA.items() if k.lower() in raw.lower()), None) if prov == 'ON' else None
+        item = {'name': o['name'], 'phone': o['phones'][0] if o['phones'] else None,
+                'coverage': round(100 * len(o['fsas']) / len(fs)), 'profile': slug, 'hrs': hrs or bool(via), 'gcc': gcc}
+        if via:
+            item['hrsVia'] = via
+        out.append(item)
     out.sort(key=lambda x: (-x['coverage'], x['name'].lower()))
     return out
 

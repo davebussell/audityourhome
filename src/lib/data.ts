@@ -66,6 +66,8 @@ export interface Provider {
    *  (homerenovationsavings.ca/help-and-support, checked 2026-10-02). Set explicitly on every provider: the
    *  directory shows "HRSP-approved: Yes/No" next to each one. */
   hrsApproved: boolean;
+  /** Not one of the seven itself: its HRS files go through this approved organization. */
+  hrsVia?: string;
 }
 
 /** Independent review-site links for a provider (search links — no scraped ratings). */
