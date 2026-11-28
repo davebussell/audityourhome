@@ -472,6 +472,14 @@ three audit sites clear of the same. It is the Claude Doc "Keeping the audit sit
   dates: Alberta's Rate of Last Resort ends 2026-12-31; Enbridge's next quarterly reset and Nova Scotia Power's approved step are
   2027-01-01; Manitoba Hydro gas resets 2027-02-01; SaskPower plans an increase 2027-02-01.
 
+## State (2026-11-28)
+- Ontario Home Renovation Savings: Enbridge Gas extended the program from November 30, 2026 to **March 31, 2027** (contractor notice
+  October 27, 2026; reported by GNI and Renovation Advisor; the official with-assessment page shows no dates). Every "booked by
+  Nov 30 / done by Dec 31, 2026" line now says done within 180 days and by March 31, 2027; a feed item was added to
+  `program-updates.json`. Re-read the official terms PDF when it's updated and adjust.
+- Netlify projects linked to GitHub (see Netlify below); the first linked deploys publish `a733a23` (Nadeau) and the US sharing change.
+- **Publishing gate:** 25 pages still fail from 2026-11-30; until they're fixed, deploys after Nov 30 need `THIN_GATE=warn`.
+
 ## State (2026-11-22)
 - **Live: everything through `704150c`** on the two residential sites: advisors told introductions are free (`cecf9ef`; the .ca
   forms, privacy, about and for-professionals pages no longer mention a $40 referral fee), partner routing (`ccf16ce`), the
@@ -566,8 +574,11 @@ three audit sites clear of the same. It is the Claude Doc "Keeping the audit sit
   enabled) serves **audityourhome.ca (Canada)** from `dist-ca/` (`netlify.ca.toml`).
 - Project `audityourbuilding` (`a8074ca1-136b-45bc-934c-b3e2c9470c68`, created 2026-10-29) serves **audityourbuilding.com** from `dist-bu/`
   (`netlify.bu.toml`); see "Third site" above. It was already live with a "Launching soon" page before our site existed.
-- **None is linked to this repo**: deploys are uploads, so a push changes nothing live. Never create another Netlify site for the two
-  residential domains; the building site's project is the only other one.
+- **Linked to this repo since 2026-11-28** (all three projects, branch `main`): a push to `main` builds and publishes all three sites.
+  `netlify.toml` runs `tools/deploy/netlify-build.sh`, which maps Netlify's `SITE_NAME` to `AYH_SITE` and publishes `dist-site/`
+  (a copy of that site's `dist-<site>/`). So: build locally first, push only what should go live, and batch commits (each push is
+  three production deploys, 15 Netlify credits each). The upload route in "How to deploy" still works as a fallback. Never create
+  another Netlify site for the two residential domains; the building site's project is the only other one.
 - All three tomls: `npm run build`, Node 22, `FORMS=netlify` (renders the forms as Netlify Forms) and `AYH_SITE=ca|us|bu`, which postbuild
   checks against Netlify's `SITE_NAME` so the wrong toml can't publish one site's pages to another.
 - Netlify Forms: Canada `audit-request`, `heat-pump-quote`; US `us-question`, `heat-pump-quote`; buildings `building-audit-request`.

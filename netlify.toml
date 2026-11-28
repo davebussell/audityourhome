@@ -3,10 +3,13 @@
 # netlify.ca.toml copied over this file; see CLAUDE.md). Redirect rules (old Canadian addresses → audityourhome.ca,
 # visitors from Canada → the Canadian twin page, audityourhouse.com → here, the geo endpoint for the "other site"
 # bar) are written to dist-us/_redirects by tools/country/postbuild.mjs.
+# Since 2026-11-28 the three Netlify projects (audityourhome, audityourhome-ca, audityourbuilding) are linked to this
+# repo's main branch and all use this file: tools/deploy/netlify-build.sh picks the site from Netlify's SITE_NAME and
+# copies its dist-<site>/ to dist-site/. A push to main deploys all three.
 [build]
-  command = "npm run build"
-  publish = "dist-us"
+  command = "bash tools/deploy/netlify-build.sh"
+  publish = "dist-site"
   # FORMS=netlify renders the site's forms as Netlify Forms (form detection is on for this site);
   # submissions are emailed to dave@clickshift.ca by the form notification set in the Netlify UI.
   # AYH_SITE lets the build refuse to run against the wrong Netlify site.
-  environment = { NODE_VERSION = "22", FORMS = "netlify", AYH_SITE = "us" }
+  environment = { NODE_VERSION = "22", FORMS = "netlify" }
